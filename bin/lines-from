@@ -1,0 +1,19 @@
+#!/usr/bin/perl -wn
+
+# Print all lines after the first one that matches the pattern, inclusive.
+# Does a case-insensitive match.
+
+# This should probably be implemented as an option to the "lines-after"
+# script, rather than being its own script.
+
+BEGIN {
+  $outputting = 0;
+  $pattern = shift @ARGV;
+}
+
+if ($outputting) {
+  print;
+} elsif (/$pattern/io) {
+  $outputting = 1;
+  print;
+}
