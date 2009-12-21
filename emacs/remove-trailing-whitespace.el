@@ -42,3 +42,6 @@ unless the file is maintained by someone else."
       (progn
 	(remove-trailing-whitespace)
 	(remove-trailing-newlines))))
+
+
+(provide 'remove-trailing-whitespace)
