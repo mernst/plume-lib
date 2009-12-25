@@ -40,8 +40,11 @@ unless the file is maintained by someone else."
   (if (not (and (buffer-file-name)
 		(remove-trailing-whitespace-ignored-filename (buffer-file-name))))
       (progn
-	(remove-trailing-whitespace)
-	(remove-trailing-newlines))))
+	(delete-trailing-whitespace)
+	;; I'm not sure where this is defined.  Re-enable when I figure
+	;; that out, or when I re-implement.
+	;; (remove-trailing-newlines)
+	)))
 
 
 (provide 'remove-trailing-whitespace)
