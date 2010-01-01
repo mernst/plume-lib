@@ -5,15 +5,19 @@
 # Make will silently continue if file does not exist.
 -include Makefile.user
 
-# This wildcard doesn't seem to work, so list the jar files individually.
-# CLASSPATH:=lib/*:$(JDKDIR)/lib/tools.jar
-CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers.jar:lib/commons-logging-1.1.1.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:$(JDKDIR)/lib/tools.jar
+TOOLS_JAR := ${JAVA_HOME}/lib/tools.jar
+# On MACOSX there is no separate tools.jar
+ifeq (darwin,$(OSTYPE))
+  TOOLS_JAR := /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar
+endif
 
-TOOLS_JAR := ${JDKDIR}/lib/tools.jar
+# This wildcard doesn't seem to work, so list the jar files individually.
+# CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
+CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers.jar:lib/commons-logging-1.1.1.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:$(TOOLS_JAR)/lib/tools.jar
 
 # On cygwin, translate the classpath and sourcepath to windows format.
-# Only do so if this has not already been done (which is determined by
-# looking for semicolons (;) in the classpath
+# Only do so if this has not already been done, which is determined by
+# looking for semicolons (;) in the classpath.
 ifeq (cygwin,$(OSTYPE))
   ifneq (;,$(findstring ;,$(CLASSPATH)))
     CLASSPATH := $(shell cygpath -pw "$(CLASSPATH)")
@@ -21,10 +25,6 @@ ifeq (cygwin,$(OSTYPE))
   TOOLS_JAR := '$(shell cygpath -w $(TOOLS_JAR))'
 endif
 
-# On MACOSX there is no separate tools.jar
-ifeq (darwin,$(OSTYPE))
-  TOOLS_JAR := /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar
-endif
 
 ifndef HTML_TO_TEXT
 ifneq (,$(shell which lynx 2>/dev/null))
@@ -253,6 +253,17 @@ check-nullness-plume: check-nullness-plume-withstubs
 
 check-nullness-plume-withstubs:
 	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${JAVAC_NULLNESS_STUBS} ${JAVA_FILES}
+
+# A user may set JAVAC_USER_INTERNING_ARGS, for example to: -Awarns
+JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
+JAVAC_INTERNING_STUBS = -sourcepath ${CHECKERS}/jdk/interning/src
+
+check-interning: check-interning-plume
+
+check-interning-plume: check-interning-plume-withstubs
+
+check-interning-plume-withstubs:
+	${JAVAC_COMMAND} ${JAVAC_USER_INTERNING_ARGS} ${JAVAC_INTERNING_ARGS} ${JAVAC_INTERNING_STUBS} ${JAVA_FILES}
 
 
 
