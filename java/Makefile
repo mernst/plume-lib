@@ -13,7 +13,7 @@ endif
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
-CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers.jar:lib/commons-logging-1.1.1.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:$(TOOLS_JAR)/lib/tools.jar
+CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers.jar:lib/commons-logging-1.1.1.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:$(TOOLS_JAR)
 
 # On cygwin, translate the classpath and sourcepath to windows format.
 # Only do so if this has not already been done, which is determined by
