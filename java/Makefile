@@ -52,6 +52,7 @@ JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 # JAVAC ?= javac -g -Xlint:unchecked
 # JAVAC ?= jikes -g +E +F
 JAVA ?= java -ea
+JAVADOC ?= javadoc
 
 JAR ?= jar
 
@@ -122,7 +123,7 @@ javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
 	mkdir -p api
-	javadoc -d api *.java
+	${JAVADOC} -d api *.java
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
@@ -188,7 +189,8 @@ plume.jar: .class-files-timestamp .test-timestamp lib lookup.html lookup.txt
 # Lookup targets
 #
 lookup.html: src/plume/Lookup.java
-	javadoc -docletpath .. -J-ea -quiet -doclet plume.Lookup $< > $@
+	which javadoc
+	${JAVADOC} -docletpath .. -J-ea -quiet -doclet plume.Lookup $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
