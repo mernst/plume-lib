@@ -350,7 +350,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
           throw new Error(String.format("include_re (%s) does not capture group 1 in %s",
                                         include_re, line));
         }
-        File filename = new File (UtilMDE.fix_filename(filename_string));
+        File filename = new File (UtilMDE.expandFilename(filename_string));
         // System.out.printf ("Trying to include filename %s%n", filename);
         if (!filename.isAbsolute()) {
           FlnReader reader = readers.peek();
