@@ -111,7 +111,7 @@ import plume.Hasher;
  * @see		java.lang.ref.WeakReference
  */
 
-@SuppressWarnings("nullness")
+@SuppressWarnings({"nullness","interning"})
 public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,V> {
 
     /* A WeakHashMap is implemented as a HashMap that maps WeakKeys to values.
