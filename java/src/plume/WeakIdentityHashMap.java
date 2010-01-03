@@ -117,7 +117,7 @@ import java.lang.ref.ReferenceQueue;
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
  */
-@SuppressWarnings({"unchecked", "rawtypes", "nullness"})
+@SuppressWarnings({"unchecked", "rawtypes", "nullness", "interning"})
 public class WeakIdentityHashMap<K,V>
     extends AbstractMap<K,V>
     implements Map<K,V> {

@@ -21,6 +21,7 @@ public class Triple<T1,T2,T3> {
       + ">";
   }
 
+  @SuppressWarnings("interning")
   public boolean equals(/*@Nullable*/ Object obj) {
     if (obj instanceof Triple<?,?,?>) {
       @SuppressWarnings("unchecked")

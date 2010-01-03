@@ -777,26 +777,24 @@ public final class UtilMDE {
   @SuppressWarnings("nullness") // user.home property always exists
   static final /*@NonNull*/ String userHome = System.getProperty ("user.home");
 
-  // A better name would be "expandFilename"; "fix"is too vague. -MDE
   /**
-   * Fixes a file name to do tilde expansion (to the user's home directory).
-   * There maybe other logical things to do as well.
+   * Does tilde expansion on a file name (to the user's home directory).
    */
-  public static File fix_filename (File name) {
+  public static File expandFilename (File name) {
     String path = name.getPath();
-    String newname = fix_filename (path);
-    if (newname == path)
-      return (name);
-    else
+    String newname = expandFilename (path);
+    @SuppressWarnings("interning")
+    boolean changed = (newname != path);
+    if (changed)
       return new File (newname);
+    else
+      return name;
   }
 
-  // A better name would be "expandFilename"; "fix"is too vague. -MDE
   /**
-   * Fixes a file name to do tilde expansion (to the users home directory).
-   * There maybe other logical things to do as well.
+   * Does tilde expansion on a file name (to the user's home directory).
    */
-  public static String fix_filename (String name) {
+  public static String expandFilename (String name) {
     if (name.contains ("~"))
       return (name.replace ("~", userHome));
     else
@@ -1205,7 +1203,9 @@ public final class UtilMDE {
     public T next() {
       if (hasNext()) {
         current_valid = false;
-        assert current != invalid_t;
+        @SuppressWarnings("interning")
+        boolean ok = (current != invalid_t);
+        assert ok;
         return current;
       } else {
         throw new NoSuchElementException();
@@ -1255,7 +1255,9 @@ public final class UtilMDE {
     }
 
     public T getFirst() {
-      if (first == nothing) {
+      @SuppressWarnings("interning")
+      boolean invalid = (first == nothing);
+      if (invalid) {
         throw new NoSuchElementException();
       }
       return first;
