@@ -21,6 +21,7 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 
+  @SuppressWarnings("interning")
   public boolean equals(/*@Nullable*/ Object obj) {
     if (obj instanceof Pair<?, ?>) { // generics are not checked at run time!
       @SuppressWarnings("unchecked")
