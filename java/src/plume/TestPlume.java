@@ -32,7 +32,7 @@ import java.util.regex.*;
 // WeakHasherMap.java
 
 /** Test code for the plume package. */
-@SuppressWarnings("nullness")
+@SuppressWarnings({"nullness","interning"}) // interning is due to apparent bugs
 public final class TestPlume extends TestCase {
 
   // If true, do 100 instead of 100000 iterations when testing randomElements.

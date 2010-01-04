@@ -393,6 +393,7 @@ public class MultiVersionControl {
 
 
     @Override
+    @SuppressWarnings("interning") // interning checker bug (or at least weakness)
     public boolean equals(/*@Nullable*/ Object other) {
       if (! (other instanceof Checkout))
         return false;

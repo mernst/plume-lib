@@ -189,7 +189,6 @@ plume.jar: .class-files-timestamp .test-timestamp lib lookup.html lookup.txt
 # Lookup targets
 #
 lookup.html: src/plume/Lookup.java
-	which javadoc
 	${JAVADOC} -docletpath .. -J-ea -quiet -doclet plume.Lookup $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
@@ -258,7 +257,8 @@ check-nullness-plume-withstubs:
 
 # A user may set JAVAC_USER_INTERNING_ARGS, for example to: -Awarns
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
-JAVAC_INTERNING_STUBS = -sourcepath ${CHECKERS}/jdk/interning/src
+# JAVAC_INTERNING_STUBS = -sourcepath ${CHECKERS}/jdk/interning/src
+JAVAC_INTERNING_STUBS = -Astubs=${CHECKERS}/src/checkers/interning/jdk.astub
 
 check-interning: check-interning-plume
 

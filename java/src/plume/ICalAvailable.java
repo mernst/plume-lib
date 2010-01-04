@@ -327,7 +327,7 @@ public class ICalAvailable {
    **/
   @SuppressWarnings("deprecation") // for iCal4j
   static DateTime mergeDateAndTime(DateTime date, DateTime time) {
-    if (date.getTimeZone() != time.getTimeZone()) {
+    if (! date.getTimeZone().equals(time.getTimeZone())) {
       throw new Error(String.format("non-matching timezones: %s %s", date.getTimeZone(), time.getTimeZone()));
     }
     DateTime result = new DateTime(date);
@@ -391,7 +391,9 @@ public class ICalAvailable {
         }
         continue;
       }
-      assert freefb.getParameter(Parameter.FBTYPE) == FbType.FREE;
+      @SuppressWarnings("interning")
+      boolean isFree = (freefb.getParameter(Parameter.FBTYPE) == FbType.FREE);
+      assert isFree;
       PeriodList freePeriods = freefb.getPeriods();
       if (debug) {
         System.out.printf("Free periods: %n%s%n", periodListString(freePeriods, tz1));
