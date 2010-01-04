@@ -692,7 +692,7 @@ public class MultiVersionControl {
     return new Checkout(RepoType.HG, dir, repository, null);
   }
 
-  
+
   /**
    * Given a directory named ".git" , create a corresponding Checkout object
    * for its parent.
@@ -873,6 +873,8 @@ public class MultiVersionControl {
       case GIT:
         break;
       case HG:
+        // For bitbucket.org.  (Should be early in list.)
+        replacers.add(new Replacer("^real URL is .*\\n", ""));
         replacers.add(new Replacer("(^|\\n)(abort: .*)", "$1$2: " + dir));
         replacers.add(new Replacer("(^|\\n)([MARC!?I]) ", "$1$2 " + dir + "/"));
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", ""));
@@ -885,7 +887,7 @@ public class MultiVersionControl {
         assert false;
       }
       // The \r* is necessary here; (somtimes?) there are two carriage returns.
-      replacers.add(new Replacer("Warning: untrusted X11 forwarding setup failed: xauth key data not generated\r*\nWarning: No xauth data; using fake authentication data for X11 forwarding\\.\r*\n", ""));
+      replacers.add(new Replacer("(remote: )?Warning: untrusted X11 forwarding setup failed: xauth key data not generated\r*\n(remote: )?Warning: No xauth data; using fake authentication data for X11 forwarding\\.\r*\n", ""));
       replacers.add(new Replacer("(working copy ')", "$1" + dir));
 
       pb2 = null;
