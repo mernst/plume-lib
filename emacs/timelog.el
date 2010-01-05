@@ -35,7 +35,15 @@
   (interactive)
   (find-file timelog-file)
   (goto-char (point-max))
-  (insert "-" (rounded-current-time-string))
+  (if (looking-back "-[0-9][0-9][0-9][0-9]\n?")
+      (delete-region (match-beginning 0) (point)))
+  (if (looking-back "[0-9][0-9][0-9][0-9]\n")
+      (backward-char))
+  (if (not (looking-back (rounded-current-time-string)))
+      (progn
+	(if (looking-back "\n[0-9][0-9][0-9][0-9]")
+	    (insert "-"))
+	(insert (rounded-current-time-string))))
   (message (current-time-string)))
 
 (defun rounded-current-time-string ()
