@@ -1064,9 +1064,6 @@ starting on the same paragraph at which another match ended is ignored."
 		 'fixedcase)))
 
 
-(load "timelog")
-
-
 ;; Create drop-in replacements for all-completions and try-completion that
 ;; use partial completion.  Surprisingly, no drop-in replacements are
 ;; defined, either in complete.el (defines partial-completion, but mostly
@@ -1944,10 +1941,6 @@ Uses `vc.el' or `rcs.el' depending on `ediff-version-control-package'."
 	  (intern (format "ediff-%s-internal" ediff-version-control-package))
 	  rev1 rev2 startup-hooks)
 	 ))))
-
-;; (load-library "cust-print")
-;; (format "foo %s %s quux" "bar" "baz e")
-;; (format "foo %S baz" "bar")
 
 
 (provide 'startup-functions-mde)
