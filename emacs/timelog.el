@@ -28,10 +28,11 @@
 ;; The timelog-summarize command adds up all the time for each category, so
 ;;   you can see how much time you spent on (say) service in the last (say) week.
 
-(defvar timelog-file "~/prof/timelog")
+(defvar timelog-file "~/prof/timelog"
+  "The file that records the time log.")
 
 (defun timelog ()
-  "Edit my timelog."
+  "Edit the timelog."
   (interactive)
   (find-file timelog-file)
   (goto-char (point-max))
