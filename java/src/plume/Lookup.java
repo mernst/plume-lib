@@ -111,6 +111,7 @@ public class Lookup {
   @Option ("Regex that finds an entry's description (for long entries)")
   public static /*@Nullable*/ Pattern description_re = null;
 
+  // If "", gets set to null immediately after option processing.
   @Option ("Regex that matches an entire comment (not just a comment start)")
   public static /*@Nullable*/ String comment_re = "^%.*";
 
@@ -164,7 +165,7 @@ public class Lookup {
     // comment_re starts out non-null and the option processing code can't
     // make it null, so no null pointer exception is possible in the
     // if statement predicate that immediately follows this assertion.
-    assert comment_re != null : "@SuppressWarnings(nullness)";
+    assert comment_re != null : "@SuppressWarnings(nullness): application invariant";
 
     // If the comment regular expression is empty, turn off comment processing
     if (comment_re.equals (""))

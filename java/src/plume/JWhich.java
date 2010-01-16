@@ -158,8 +158,8 @@ public class JWhich {
 
 	protected static String getClasspath() {
 		if (CLASSPATH == null) {
-			String classpath = System.getProperty("java.class.path");
-			assert classpath != null : "@SuppressWarnings(nullness)";
+			@SuppressWarnings("nullness") // java.class.path property always exists
+			/*@NonNull*/ String classpath = System.getProperty("java.class.path");
 			setClasspath(classpath);
 		}
 
@@ -202,3 +202,9 @@ public class JWhich {
 		JWhich.instanceMain(args);
 	}
 }
+
+/*
+Local Variables:
+tab-width: 2
+End:
+*/
