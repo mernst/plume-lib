@@ -451,12 +451,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     if (entry_start_re != null)
       entry_match = entry_start_re.matcher (line);
     if ((entry_match != null) && entry_match.find()) {
-      assert entry_start_re != null : "@SuppressWarnings(nullness)";
-      assert entry_stop_re != null : "@SuppressWarnings(nullness)";
+      assert entry_start_re != null : "@SuppressWarnings(nullness): dependent: entry_match != null";
+      assert entry_stop_re != null : "@SuppressWarnings(nullness): dependent: entry_start_re != null";
 
       // Remove entry match from the line
       if (entry_match.groupCount() > 0) {
-        @SuppressWarnings("nullness") // just checked that group 1 exists in regexp
+        @SuppressWarnings("nullness") // dependent: just checked that group 1 exists in match
         /*@NonNull*/ String match_group_1 = entry_match.group(1);
         line = entry_match.replaceFirst (match_group_1);
       }

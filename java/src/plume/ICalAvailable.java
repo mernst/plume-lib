@@ -225,7 +225,7 @@ public class ICalAvailable {
       System.err.println("Bad time: " + time);
       System.exit(1);
     }
-    @SuppressWarnings("nullness")
+    @SuppressWarnings("nullness") // group 1 always exists in regexp
     /*@NonNull*/ String hourString = m.group(1);
     String minuteString = m.group(3);
     String ampmString = m.group(4);
@@ -314,7 +314,7 @@ public class ICalAvailable {
     tf.setTimeZone(tz);
     StringBuilder result = new StringBuilder();
     for (Object p : pl) {
-      assert p != null : "@SuppressWarnings(nullness)";
+      assert p != null : "@SuppressWarnings(nullness): non-generic class, but it's non-null";
       result.append(rangeString((/*@NonNull*/ Period)p, tz) + "\n");
     }
     return result.toString();
