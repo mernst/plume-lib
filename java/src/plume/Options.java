@@ -166,7 +166,7 @@ public class Options {
     /** Constructor that takes one String for the type **/
     /*@Nullable*/ Constructor<?> constructor = null;
 
-    /** Factory that takes a string (some classes don't have a string constructor) */
+    /** Factory that takes a string (some classes don't have a string constructor) and always returns non-null. */
     /*@Nullable*/ Method factory = null;
 
     /**
@@ -781,13 +781,12 @@ public class Options {
               throw new Error("No constructor or factory for argument " + arg_name);
             }
             val = oi.factory.invoke (null, arg_value);
+            assert val != null : "@SuppressWarnings(nullness): application invariant";
           }
         } catch (Exception e) {
           throw new ArgException ("Invalid argument (%s) for argument %s",
                                   arg_value, arg_name);
         }
-
-        assert val != null : "@SuppressWarnings(nullness)";
 
         // Set the value
         if (oi.list != null)

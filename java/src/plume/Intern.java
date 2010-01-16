@@ -658,7 +658,8 @@ public final class Intern {
     } else {
       /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern (subseq_uninterned);
-      @SuppressWarnings("nullness") Object ignore = // safe because map does no side effects
+      @SuppressWarnings("nullness") // safe because map does no side effects
+      Object ignore = // assignment just so there is a place to hang the @SuppressWarnings annotation
       internedObjectSequenceAndIndices.put (sai, new WeakReference</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(subseq));
       return subseq;
     }
@@ -677,7 +678,8 @@ public final class Intern {
     } else {
       /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern (subseq_uninterned);
-      @SuppressWarnings("nullness") Object ignore = // safe because map does no side effects
+      @SuppressWarnings("nullness") // safe because map does no side effects
+      Object ignore = // assignment just so there is a place to hang the @SuppressWarnings annotation
       internedStringSequenceAndIndices.put (sai, new WeakReference</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(subseq));
       return subseq;
     }

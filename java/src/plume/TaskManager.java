@@ -14,7 +14,7 @@ import com.sun.javadoc.*;
  * the tasks associated with a specific milestone or person and total
  * the amount of work required.
  */
-@SuppressWarnings("nullness")
+@SuppressWarnings("nullness")   // annotate later
 public class TaskManager {
 
   public enum OutputFormat {short_ascii, short_html, milestone_html};

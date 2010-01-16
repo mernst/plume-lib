@@ -52,10 +52,11 @@ public class LimitedSizeSet<T>
   }
 
   public void addAll(LimitedSizeSet<? extends T> s) {
+    if (s == this)
+      return;
     if (repNulled())
       return;
     if (s.repNulled()) {
-      assert values != null : "@SuppressWarnings(nullness)";
       int values_length = values.length;
       // We don't know whether the elements of this and the argument were
       // disjoint.  There might be anywhere from max(size(), s.size()) to
@@ -69,13 +70,10 @@ public class LimitedSizeSet<T>
       }
     }
     for (int i=0; i<s.size(); i++) {
-      // An assertion before the loop doesn't quiet the nullness checker
-      // because the checker can't know that "s.size()" has no side effects.
-      assert s.values != null : "@SuppressWarnings(nullness)";
-      T val = s.values[i];
-      add(val);
+      assert s.values != null : "@SuppressWarnings(nullness): add's side effects do not affect s.values, and this != s";
+      add(s.values[i]);
       if (repNulled()) {
-        return;
+        return;                 // optimization, not necessary for correctness
       }
     }
   }
@@ -98,6 +96,7 @@ public class LimitedSizeSet<T>
    * the number of elements that have been inserted in the set, or
    * max_size(), whichever is less.
    **/
+  /*@Pure*/
   public int size() {
     return num_values;
   }
@@ -115,6 +114,8 @@ public class LimitedSizeSet<T>
     }
   }
 
+  /*@AssertNonNullIfFalse("values")*/
+  /*@Pure*/
   public boolean repNulled() {
     return values == null;
   }

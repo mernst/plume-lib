@@ -5,7 +5,9 @@ import java.util.*;
 /**
  * Given two sequences/iterators/whatever, this class returns a new
  * sequence/iterator/whatever which pairs the matching elements of the
- * inputs, according to their respective sort orders.
+ * inputs, according to their respective sort orders.  If the inputs have
+ * different lengths, then the extra elements at the end of the longer one
+ * are paired with null.
  *
  * <p>
  * In some cases this is just the right abstraction.  But in some cases

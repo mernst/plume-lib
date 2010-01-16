@@ -590,7 +590,7 @@ public class MultiVersionControl {
       }
     }
 
-    @SuppressWarnings("nullness") // listFiles => non-null because dir is a directory
+    @SuppressWarnings("nullness") // dependent: listFiles => non-null because dir is a directory, and we don't know that checkouts.add etc do not affect dir
     File /*@NonNull*/ [] childdirs = dir.listFiles(idf);
     if (childdirs == null) {
       System.err.printf("childdirs is null (permission or other I/O problem?) for %s%n", dir.toString());
@@ -638,7 +638,7 @@ public class MultiVersionControl {
     String repoRoot = UtilMDE.readFile(rootFile).trim();
     /*@NonNull*/ File repoFileRoot = new File(pathInRepo);
     while (repoFileRoot.getParentFile() != null) {
-      @SuppressWarnings("nullness") // just checed that parent is non-null
+      @SuppressWarnings("nullness") // just checked that parent is non-null
       /*@NonNull*/ File newRepoFileRoot = repoFileRoot.getParentFile();
       repoFileRoot = newRepoFileRoot;
     }
