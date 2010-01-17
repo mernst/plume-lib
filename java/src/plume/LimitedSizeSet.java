@@ -52,8 +52,6 @@ public class LimitedSizeSet<T>
   }
 
   public void addAll(LimitedSizeSet<? extends T> s) {
-    if (s == this)
-      return;
     if (repNulled())
       return;
     if (s.repNulled()) {
@@ -70,7 +68,7 @@ public class LimitedSizeSet<T>
       }
     }
     for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@SuppressWarnings(nullness): add's side effects do not affect s.values, and this != s";
+      assert s.values != null : "@SuppressWarnings(nullness): add's side effects do not affect s.values, whether or not this == s";
       add(s.values[i]);
       if (repNulled()) {
         return;                 // optimization, not necessary for correctness
