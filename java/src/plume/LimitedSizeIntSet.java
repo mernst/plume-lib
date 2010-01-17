@@ -57,8 +57,6 @@ public class LimitedSizeIntSet
   }
 
   public void addAll(LimitedSizeIntSet s) {
-    if (s == this)
-      return;
     if (repNulled())
       return;
     if (s.repNulled()) {
@@ -75,7 +73,7 @@ public class LimitedSizeIntSet
       }
     }
     for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@SuppressWarnings(nullness): add's side effects do not affect s.values, and this != s";
+      assert s.values != null : "@SuppressWarnings(nullness): add's side effects do not affect s.values, whether or not this == s";
       add(s.values[i]);
       if (repNulled()) {
         return;                 // optimization, not necessary for correctness
