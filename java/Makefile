@@ -13,7 +13,7 @@ endif
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
-CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers.jar:lib/commons-logging-1.1.1.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:$(TOOLS_JAR)
+CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # On cygwin, translate the classpath and sourcepath to windows format.
 # Only do so if this has not already been done, which is determined by
@@ -44,7 +44,7 @@ export CLASSPATH
 JAVAC ?= javac
 JAVAC_TARGET ?= -target 5 -source 5
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET}
-# When using the JSR 308 compiler, this expects checkers.jar on the classpath.
+# When using the JSR 308 compiler, this expects checkers-quals.jar on the classpath.
 # The "-classpath" argument is only necessary when using the JSR 308 javac,
 # since it's a shell command for "javac -jar ..." which ignores the
 # CLASSPATH environment variable and thus must be supplied explicitly.
@@ -61,8 +61,8 @@ JAR ?= jar
 AUTO_GENERATED_FILES := \
 	src/plume/MathMDE.java
 # Call to sort is to remove duplicates, which would cause javac errors.
-JAVA_FILES := $(sort $(shell find src \( -name CVS \) -prune -o -name '*.java' -print | grep -v '\.\#' | sort) ${AUTO_GENERATED_FILES})
-JAVA_LINT_FILES := $(shell find src \( -name CVS -o -name ArraysMDE.java -o -name WeakHasherMap.java -o -name Intern.java -o -name OrderedPairIterator.java -o -name WeakIdentityHashMap.java \) -prune -o -name '*.java' -print | sort)
+# Uners may override to compile a subset of files.  E.g., src/plume/JWhich.java
+JAVA_FILES ?= $(sort $(shell find src \( -name CVS \) -prune -o -name '*.java' -print | grep -v '\.\#' | sort) ${AUTO_GENERATED_FILES})
 JAVA_CPP_FILES := $(shell find src \( -name CVS \) -prune -o -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
@@ -131,7 +131,6 @@ javadoc: .javadoc-timestamp
 showvars:
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
-	@echo JAVA_LINT_FILES = $(JAVA_LINT_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
 	@echo CLASSPATH = "$(CLASSPATH)"
 	@echo jsr308_imports = $(jsr308_imports)
@@ -171,7 +170,7 @@ plume.jar: .class-files-timestamp .test-timestamp lib lookup.html lookup.txt
 	(cd jar-contents; jar xf ../lib/bcel.jar)
 	(cd jar-contents; jar xf ../lib/commons-logging-1.1.1.jar)
 	(cd jar-contents; jar xf ../lib/commons-lang-2.4.jar)
-	(cd jar-contents; jar xf ../lib/checkers.jar)
+	(cd jar-contents; jar xf ../lib/checkers-quals.jar)
 	(cd jar-contents; jar xf ../lib/ical4j.jar)
 	(cd jar-contents; jar xf ../lib/ini4j-0.5.1.jar)
 	(cd jar-contents; jar xf ../lib/junit.jar)
@@ -243,6 +242,9 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ###########################################################################
 ### Pluggable type-checking
 ###
+
+## These require checkers.jar on the classpath, not just checkers-quals.jar.
+## Can do that via PLUME_CLASSPATH_PREFIX (though other ways may be cleaner).
 
 # A user may set JAVAC_USER_NULLNESS_ARGS, for example to: -Awarns
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
