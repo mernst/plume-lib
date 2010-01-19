@@ -874,7 +874,7 @@ public class MultiVersionControl {
         break;
       case HG:
         // For bitbucket.org.  (Should be early in list.)
-        replacers.add(new Replacer("^real URL is .*\\n", ""));
+        replacers.add(new Replacer("(^|\\n)real URL is .*\\n", "$1"));
         replacers.add(new Replacer("(^|\\n)(abort: .*)", "$1$2: " + dir));
         replacers.add(new Replacer("(^|\\n)([MARC!?I]) ", "$1$2 " + dir + "/"));
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", ""));
