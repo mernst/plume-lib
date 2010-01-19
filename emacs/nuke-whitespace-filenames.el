@@ -52,3 +52,5 @@ Returns false if filename should be ignored, else delegates to
 	   (nuke-trailing-whitespace-ignored-filename-p (buffer-file-name)))
       nil
     (nuke-trailing-whitespace-check-mode)))
+
+(provide 'nuke-whitespace-filenames)
