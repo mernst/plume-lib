@@ -199,7 +199,7 @@ public class JWhich {
 	}
 
 	public static void main(String[] args) {
-		JWhich.instanceMain(args);
+		instanceMain(args);
 	}
 }
 
