@@ -1035,6 +1035,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(cvs \\[update aborted)(\\])", "$1 in " + dir + "$2"));
           break;
         case GIT:
+          replacers.add(new Replacer("(^|\\n)Already up-to-date\\.\\n", "$1"));
           pb.command("git", "pull", "-q");
           break;
         case HG:
