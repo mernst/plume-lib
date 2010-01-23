@@ -1,0 +1,25 @@
+#!/usr/bin/perl -wn
+
+# Print all lines that occur between the two specified regexps (inclusive).
+# That is, print a line matching the first regexp; then print all lines
+# up to one matching the second regexp, but stop printing; then repeat.
+
+BEGIN {
+  $outputting = 0;
+  $startpattern = shift @ARGV;
+  $endpattern = shift @ARGV;
+  # print STDERR "startpattern: $startpattern\n";
+  # print STDERR "endpattern: $endpattern\n";
+}
+
+if ($outputting) {
+  print;
+  if (/$endpattern/io) {
+    $outputting = 0;
+  }
+} else {
+  if (/$startpattern/io) {
+    $outputting = 1;
+    print;
+  }
+}
