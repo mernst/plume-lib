@@ -381,7 +381,12 @@ public class Options {
 
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field f : fields) {
-          Option option = f.getAnnotation (Option.class);
+          Option option;
+          try {
+            option = f.getAnnotation (Option.class);
+          } catch (Exception e) {
+            throw new Error("In call to f.getAnnotation(Option.class) for f=" + f, e);
+          }
           if (option == null)
             continue;
           options.add (new OptionInfo (f, option, obj));
