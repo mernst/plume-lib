@@ -39,11 +39,6 @@
 ;;      (darken-face-foreground 'font-latex-doctex-documentation-face)))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Fonts, colors, etc.
-;;;
-
-
 
 ;;; Colors
 
