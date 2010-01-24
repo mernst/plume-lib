@@ -15,8 +15,9 @@
 #  2. List mode: List all the files that are (transitively) "\input".
 #     This can be useful for getting a list of source files in a logical order,
 #     for example to be used in a Makefile or Ant buildfile (use -antlist).
-#       latex-process-inputs.pl -list main-file.tex
-#       latex-process-inputs.pl -antlist main-file.tex
+#       latex-process-inputs.pl --list main-file.tex
+#       latex-process-inputs.pl --makefilelist main-file.tex
+#       latex-process-inputs.pl --antlist main-file.tex
 
 my $debug = 0;
 # debug = 1;
@@ -24,15 +25,20 @@ my $debug = 0;
 # Process command-line arguments
 my $list_mode = 0;              # boolean indicating list mode vs. inline mode
 my $ant_list_mode = 0;
-if (@ARGV[0] eq "-help") {
+my $makefile_list_mode = 0;
+if ((@ARGV[0] eq "-help") || (@ARGV[0] eq "--help")) {
   print "Optional arguments: -list -antlist\n";
   exit(0);
-} elsif (@ARGV[0] eq "-list") {
+} elsif ((@ARGV[0] eq "-list") || (@ARGV[0] eq "--list")) {
   $list_mode = 1;
   shift @ARGV;
-} elsif (@ARGV[0] eq "-antlist") {
+} elsif ((@ARGV[0] eq "-antlist") || (@ARGV[0] eq "--antlist")) {
   $list_mode = 1;
-  $ant_list_mode = 1;
+  $makefile_list_mode = 1;
+  shift @ARGV;
+} elsif ((@ARGV[0] eq "-makefilelist") || (@ARGV[0] eq "--makefilelist")) {
+  $list_mode = 1;
+  $makefile_list_mode = 1;
   shift @ARGV;
 }
 
@@ -91,6 +97,10 @@ if ((! $list_mode) && ($text =~ /\\bibliography\{.*?\}/)) {
 if ($ant_list_mode) {
   for $file (@files) {
     print "      <arg value=\"$file\"/>\n";
+  }
+} elsif ($makefile_list_mode) {
+  for $file (@files) {
+    print "$file \\\n";
   }
 } elsif ($list_mode) {
   for $file (@files) {
