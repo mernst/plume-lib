@@ -34,6 +34,7 @@
 
 ;;; Code:
 
+(require 'vm-version)			; required by vm-mime
 (require 'vm-mime)
 (require 'w3m)
 
