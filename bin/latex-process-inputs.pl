@@ -99,9 +99,7 @@ if ($ant_list_mode) {
     print "      <arg value=\"$file\"/>\n";
   }
 } elsif ($makefile_list_mode) {
-  for $file (@files) {
-    print "$file \\\n";
-  }
+  print join(" \\\n", @files), "\n";
 } elsif ($list_mode) {
   for $file (@files) {
     print "$file\n";
