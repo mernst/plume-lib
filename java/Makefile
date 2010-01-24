@@ -123,7 +123,7 @@ javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
 	mkdir -p api
-	${JAVADOC} -d api *.java
+	${JAVADOC} -d api ${JAVA_FILES}
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
