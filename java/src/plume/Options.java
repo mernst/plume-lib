@@ -364,7 +364,9 @@ public class Options {
 
         Field[] fields = ((Class<?>) obj).getDeclaredFields();
         for (Field f : fields) {
-          debug_options.log ("Considering field %s with annotations %s%n", f,
+          debug_options.log ("Considering field %s of object %s with annotations %s%n",
+                             f,
+                             obj,
                              Arrays.toString(f.getDeclaredAnnotations()));
           Option option = f.getAnnotation (Option.class);
           if (option == null)
@@ -385,7 +387,11 @@ public class Options {
           try {
             option = f.getAnnotation (Option.class);
           } catch (Exception e) {
-            throw new Error("In call to f.getAnnotation(Option.class) for f=" + f, e);
+            // Can get java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
+            // when an annotation is not present at run time (example: @NonNull)
+            System.out.printf("In call to f.getAnnotation(Option.class) for f=%s%n", f);
+            e.printStackTrace();
+            option = null;
           }
           if (option == null)
             continue;
