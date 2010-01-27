@@ -314,7 +314,7 @@ public class ICalAvailable {
     tf.setTimeZone(tz);
     StringBuilder result = new StringBuilder();
     for (Object p : pl) {
-      assert p != null : "@SuppressWarnings(nullness): non-generic class, but it's non-null";
+      assert p != null : "@SuppressWarnings(nullness): non-generic container class; elements are non-null";
       result.append(rangeString((/*@NonNull*/ Period)p, tz) + "\n");
     }
     return result.toString();
