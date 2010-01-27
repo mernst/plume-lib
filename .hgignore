@@ -1,0 +1,33 @@
+syntax: glob
+*.class
+*.elc
+*~
+.#*
+TAGS
+java/.class-files-timestamp
+java/.javadoc-timestamp
+java/.test-timestamp
+java/Makefile.user
+java/api
+java/lookup.html
+java/lookup.jar
+java/lookup.txt
+java/plume.jar
+java/plume.tar.gz
+java/src/plume/.javadoc-timestamp
+java/src/plume/MathMDE.java
+java/src/plume/WeakIdentityHashMap.java-JDK6
+java/src/plume/lookup.jar
+java/src/plume/task_manager.jar
+java/src/plume/utilMDE.jar
+java/task_manager.jar
+
+
+syntax: regexp
+# Not a glob because it starts with # which looks like a comment.
+(.*/)?\#[^/]*\#$
+(.*/)?\.\#.*
+
+
+
+
