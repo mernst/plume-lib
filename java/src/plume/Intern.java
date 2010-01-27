@@ -507,9 +507,7 @@ public final class Intern {
     for (int k = 0; k < a.length; k++)
       assert a[k] == Intern.intern (a[k]);
 
-    // PolyNull because the value = parameter a, so the type is the same as
-    // for parameter a
-    @SuppressWarnings("nullness")
+    @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> lookup = internedStringArrays.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -530,9 +528,7 @@ public final class Intern {
    **/
   @SuppressWarnings({"interning"})
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
-    // PolyNull because the value = parameter a, so the type is the same as
-    // for parameter a
-    @SuppressWarnings("nullness")
+    @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectArrays.get(a);
     if (lookup != null) {
       return lookup.get();

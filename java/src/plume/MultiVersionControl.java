@@ -721,7 +721,7 @@ public class MultiVersionControl {
     // Pro: no need to re-implement or to call external process (which
     //   might be slow for large checkouts).
 
-    @SuppressWarnings("nullness") // SVNKit is not yet annotated
+    @SuppressWarnings("nullness") // unannotated library: SVNKit
     SVNWCClient wcClient = new SVNWCClient((/*@Nullable*/ ISVNAuthenticationManager) null, null);
     SVNInfo info;
     try {
