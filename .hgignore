@@ -2,7 +2,6 @@ syntax: glob
 *.class
 *.elc
 *~
-.#*
 TAGS
 java/.class-files-timestamp
 java/.javadoc-timestamp
@@ -27,7 +26,3 @@ syntax: regexp
 # Not a glob because it starts with # which looks like a comment.
 (.*/)?\#[^/]*\#$
 (.*/)?\.\#.*
-
-
-
-
