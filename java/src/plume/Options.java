@@ -313,6 +313,9 @@ public class Options {
    */
   private boolean use_dashes = true;
 
+  @Option ("Split arguments to lists on blanks")
+  public static boolean split_lists = false;
+
   /**
    * Synopsis of usage.  Example:  "prog [options] arg1 arg2 ..."
    * <p>
@@ -776,34 +779,24 @@ public class Options {
         }
       } else { // reference type
 
-        // Create an instance of the correct type by passing the argument value
-        // string to the constructor.  The only expected error is some sort
-        // of parse error from the constructor.
-        Object val = null;
-        try {
-          if (oi.constructor != null) {
-            val = oi.constructor.newInstance (arg_value);
-          } else if (oi.base_type.isEnum()) {
-            @SuppressWarnings({"unchecked","rawness","rawtypes"}) /// XXX rawness bug
-            Object tmpVal = Enum.valueOf ((Class<? extends Enum>)oi.base_type, arg_value);
-            val = tmpVal;
-          } else {
-            if (oi.factory == null) {
-              throw new Error("No constructor or factory for argument " + arg_name);
+        // If the argument is a list, add repeated arguments or multiple
+        // blank separated arguments to the list, otherwise just set the
+        // argument value.
+        if (oi.list != null) {
+          if (split_lists) {
+            String[] aarr = arg_value.split ("  *");
+            for (String aval : aarr) {
+              Object val = get_ref_arg (oi, arg_name, aval);
+              oi.list.add (val); // uncheck cast
             }
-            val = oi.factory.invoke (null, arg_value);
-            assert val != null : "@SuppressWarnings(nullness): application invariant";
+          } else {
+            Object val = get_ref_arg (oi, arg_name, arg_value);
+            oi.list.add (val);
           }
-        } catch (Exception e) {
-          throw new ArgException ("Invalid argument (%s) for argument %s",
-                                  arg_value, arg_name);
-        }
-
-        // Set the value
-        if (oi.list != null)
-          oi.list.add (val); // unchecked cast
-        else
+        } else {
+          Object val = get_ref_arg (oi, arg_name, arg_value);
           f.set (oi.obj, val);
+        }
       }
     } catch (ArgException ae) {
       throw ae;
@@ -812,6 +805,37 @@ public class Options {
     }
   }
 
+  /**
+   * Create an instance of the correct type by passing the argument value
+   * string to the constructor.  The only expected error is some sort
+   * of parse error from the constructor.
+   */
+  private /*@NonNull*/ Object get_ref_arg (OptionInfo oi, String arg_name, 
+                                         String arg_value) throws ArgException {
+
+    Object val = null;
+    try {
+      if (oi.constructor != null) {
+        val = oi.constructor.newInstance (arg_value);
+      } else if (oi.base_type.isEnum()) {
+        @SuppressWarnings({"unchecked","rawness","rawtypes"})/// XXX rawness bug
+        Object tmpVal = Enum.valueOf ((Class<? extends Enum>)oi.base_type,
+                                       arg_value);
+        val = tmpVal;
+      } else {
+        if (oi.factory == null) {
+          throw new Error("No constructor or factory for argument " + arg_name);
+        }
+        val = oi.factory.invoke (null, arg_value);
+      }
+    } catch (Exception e) {
+      throw new ArgException ("Invalid argument (%s) for argument %s",
+                              arg_value, arg_name);
+    }
+
+    assert val != null : "@SuppressWarnings(nullness)";
+    return val;
+  }
 
   /**
    * Returns a short name for the specified type for use in messages.
