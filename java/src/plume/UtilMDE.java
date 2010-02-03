@@ -440,6 +440,7 @@ public final class UtilMDE {
     primitiveClassesFromJvm.put("S", "short");
   }
 
+  // does not convert "V" to "void".  Should it?
   /**
    * Convert a classname from JVML format to Java format.
    * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]".
