@@ -507,7 +507,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   public static int indexOf(double[] a, double elt) {
-     for (int i=0; i<a.length; i++)
+    for (int i=0; i<a.length; i++)
       if (elt == a[i])
         return i;
     return -1;
@@ -688,7 +688,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    **/
-   public static int indexOf(double[] a, double[] sub) {
+  public static int indexOf(double[] a, double[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++)
       if (isSubarray(a, sub, i))
