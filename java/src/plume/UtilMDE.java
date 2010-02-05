@@ -440,6 +440,7 @@ public final class UtilMDE {
     primitiveClassesFromJvm.put("S", "short");
   }
 
+  // does not convert "V" to "void".  Should it?
   /**
    * Convert a classname from JVML format to Java format.
    * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]".
@@ -1530,9 +1531,21 @@ public final class UtilMDE {
    */
   public static void setFinalField(Object o, String fieldName, Object value)
     throws NoSuchFieldException, IllegalAccessException {
-      Field f = o.getClass().getDeclaredField(fieldName);
-      f.setAccessible(true);
-      f.set(o, value);
+    Class<?> c = o.getClass();
+    while (!c.equals (Object.class)) {
+      // System.out.printf ("Setting field %s in %s%n", fieldName, c);
+      try {
+        Field f = c.getDeclaredField(fieldName);
+        f.setAccessible(true);
+        f.set(o, value);
+        return;
+      } catch (NoSuchFieldException e) {
+        if (c.getSuperclass().equals (Object.class))
+          throw e;
+      }
+      c = c.getSuperclass();
+    }
+    throw new NoSuchFieldException (fieldName);
   }
 
 
