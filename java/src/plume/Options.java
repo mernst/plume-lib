@@ -160,8 +160,7 @@ public class Options {
     /*@Nullable*/ String default_str = null;
 
     /** If the option is a list, this references that list. **/
-    // Not type-safe; must suppress warnings
-    /*@Nullable*/ List<Object> list = null;
+    /*@LazyNonNull*/ List<Object> list = null;
 
     /** Constructor that takes one String for the type **/
     /*@Nullable*/ Constructor<?> constructor = null;
@@ -209,11 +208,11 @@ public class Options {
         Type raw_type = pt.getRawType();
         if (!raw_type.equals (List.class))
           throw new Error ("Unsupported option type " + pt);
+        if (default_obj == null)
+          throw new Error ("List option " + field + " must be initialized");
         @SuppressWarnings("unchecked")
         List<Object> default_obj_as_list = (List<Object>) default_obj;
         this.list = default_obj_as_list;
-        if (this.list == null)
-          throw new Error ("List option " + field + " must be initialized");
         // System.out.printf ("list default = %s%n", list);
         this.base_type = (Class<?>) pt.getActualTypeArguments()[0];
 

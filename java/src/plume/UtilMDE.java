@@ -1532,7 +1532,7 @@ public final class UtilMDE {
   public static void setFinalField(Object o, String fieldName, Object value)
     throws NoSuchFieldException, IllegalAccessException {
     Class<?> c = o.getClass();
-    while (!c.equals (Object.class)) {
+    while (c != Object.class) { // Class is interned
       // System.out.printf ("Setting field %s in %s%n", fieldName, c);
       try {
         Field f = c.getDeclaredField(fieldName);
@@ -1540,7 +1540,7 @@ public final class UtilMDE {
         f.set(o, value);
         return;
       } catch (NoSuchFieldException e) {
-        if (c.getSuperclass().equals (Object.class))
+        if (c.getSuperclass() == Object.class) // Class is interned
           throw e;
       }
       c = c.getSuperclass();
