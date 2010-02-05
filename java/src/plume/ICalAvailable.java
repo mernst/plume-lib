@@ -77,8 +77,8 @@ public class ICalAvailable {
    * Time zone as an Olson timezone ID, e.g.: America/New_York.
    * If set, then free times are printed in two time zones. */
   @Option("<timezone> optional second time zone")
-  public static String timezone2;
-  static TimeZone tz2;
+  public static /*@Nullable*/ String timezone2;
+  static /*@Nullable*/ TimeZone tz2;
 
   /// Other variables
 
@@ -419,7 +419,6 @@ public class ICalAvailable {
    * @see dateFormats
    **/
   static java.util.Date parseDate( String strDate ) throws ParseException {
-    java.util.Date result = null;
     if (Pattern.matches("^[0-9][0-9]?/[0-9][0-9]?$", date)) {
       @SuppressWarnings("deprecation") // for iCal4j
       int year = new Date().getYear() + 1900;
@@ -428,7 +427,7 @@ public class ICalAvailable {
     for (DateFormat this_df : dateFormats) {
       this_df.setLenient(false);
       try {
-        result = this_df.parse( strDate );
+        java.util.Date result = this_df.parse( strDate );
         return result;
       } catch ( ParseException e ) {
         // Try the next format in the list.
