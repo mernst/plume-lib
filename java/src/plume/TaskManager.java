@@ -21,10 +21,10 @@ public class TaskManager {
 
   // Command line options
   @Option ("-r Include only those tasks assigned to the specified person")
-  /*@Nullable*/ public static String responsible = null;
+  public static /*@Nullable*/ String responsible = null;
 
   @Option ("-m Include only those tasks required for the specified milestone")
-  /*@Nullable*/ public static String milestone = null;
+  public static /*@Nullable*/ String milestone = null;
 
   @Option ("-c Include only completed tasks")
   public static boolean completed = false;
