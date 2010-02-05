@@ -1544,6 +1544,7 @@ public final class UtilMDE {
           throw e;
       }
       c = c.getSuperclass();
+      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }
