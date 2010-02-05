@@ -168,7 +168,7 @@ public class FileIOException extends IOException {
   // Assumes the "reader" field is already set.
   // Not a setter method because field lineNumber is final, but
   // still clearer to abstract out.
-  private int getLineNumber(/*@Nullable*/ LineNumberReader reader) /*@Raw*/ {
+  private int getLineNumber(/*@Nullable*/ LineNumberReader reader) {
     if (reader != null) {
       return reader.getLineNumber();
     } else {

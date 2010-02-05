@@ -48,7 +48,7 @@ public class FuzzyFloat {
    *
    * @see #FuzzyFloat
    */
-  public void set_rel_diff (double rel_diff) /*@Raw*/ {
+  public void set_rel_diff (double rel_diff) {
     min_ratio = 1 - rel_diff;
     max_ratio = 1 + rel_diff;
     off = (rel_diff == 0.0);

@@ -95,16 +95,16 @@ public class BCELUtil {
   }
 
   /** Returns the constant string at the specified offset */
-  public static /*@Nullable*/ String get_constant_str(ConstantPool pool, int index) {
+  public static String get_constant_str(ConstantPool pool, int index) {
 
     Constant c = pool.getConstant(index);
+    assert c != null : "Bad index " + index + " into pool";
     if (c instanceof ConstantUtf8)
       return ((ConstantUtf8) c).getBytes();
     else if (c instanceof ConstantClass) {
       ConstantClass cc = (ConstantClass) c;
       return cc.getBytes(pool) + " [" + cc.getNameIndex() + "]";
     } else {
-      assert c != null;
       throw new Error("unexpected constant " + c + " class " + c.getClass());
     }
   }
