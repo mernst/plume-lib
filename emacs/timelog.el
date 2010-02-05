@@ -44,6 +44,8 @@
       (progn
 	(if (looking-back "\n[0-9][0-9][0-9][0-9]")
 	    (insert "-"))
+	(if (not (looking-back "[-\n]"))
+	    (insert "\n"))
 	(insert (rounded-current-time-string))))
   (message (current-time-string)))
 
