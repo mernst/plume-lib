@@ -208,6 +208,7 @@ public class ICalAvailable {
     return (result == null) ? timezone : result;
   }
 
+  /*@Pure*/
   static String printedTimezone(TimeZone tz) {
     String tzString = tz.getDisplayName();
     String result = printedTimezones.get(tzString);
