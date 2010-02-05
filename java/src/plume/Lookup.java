@@ -90,7 +90,7 @@ public class Lookup {
    * Specifies which item to print when there are multiple matches.
    */
   @Option ("-i Choose a specific item when there are multiple matches")
-  public static Integer item_num;
+  public static /*@Nullable*/ Integer item_num;
 
   /**
    * If true, show the filename/line number of each matching entry
@@ -291,6 +291,9 @@ public class Lookup {
 
   /**
    * Entry point for creating HTML documentation.
+   * <p>
+   * A "starting class for a doclet" must import com.sun.javadoc.* and implement the start(RootDoc) method.
+   * @see com.sun.javadoc.Doclet
    */
   public static boolean start (RootDoc doc) {
 
