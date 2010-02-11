@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Using the Mozex extension for Firefox, set the mailer to:
+#   vm-mail-to-mailto-url %r
+
+# This script is necessary because if you tried to use emacsclient (with
+# arguments) as the mailer, then mozex would send three arguments:
+#   "-e", "(vm-mail-to-mailto-url", and the URL followed by close parenthesis.
+
+exec emacsclient -e "(vm-mail-to-mailto-url \"$1\")"
