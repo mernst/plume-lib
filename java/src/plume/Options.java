@@ -174,13 +174,10 @@ public class Options {
      * from the option annotation.  The long name is the name of the
      * field.  The default value is the current value of the field.
      */
-    OptionInfo (Field field, Option option, /*@Nullable*/ /*@Raw*/ Object obj) {
+    OptionInfo (Field field, Option option, /*@Nullable*/ Object obj) {
       this.field = field;
       this.option = option;
-      @SuppressWarnings("rawness")
-      /*@NonRaw*/ Object objNonRaw = obj;
-      obj = objNonRaw;
-      this.obj = objNonRaw;
+      this.obj = obj;
       this.base_type = field.getType();
 
       // The long name is the name of the field
@@ -193,7 +190,7 @@ public class Options {
       if (!Modifier.isPublic (field.getModifiers()))
         throw new Error ("option field is not public: " + field);
       try {
-        default_obj = field.get (objNonRaw);
+        default_obj = field.get (obj);
         if (default_obj != null)
           default_str = default_obj.toString();
       } catch (Exception e) {
@@ -333,7 +330,7 @@ public class Options {
    * options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
    */
-  public Options (/*@Raw*/ Object... args) {
+  public Options (Object... args) {
     this ("", args);
   }
 
@@ -345,7 +342,7 @@ public class Options {
    * unique across all the arguments.
    * @param usage_synopsis A synopsis of how to call your program
    */
-  public Options (String usage_synopsis, /*@Raw*/ Object... args) {
+  public Options (String usage_synopsis, Object... args) {
 
     if (args.length == 0) {
       throw new Error("Must pass at least one object to Options constructor");
@@ -353,11 +350,8 @@ public class Options {
 
     this.usage_synopsis = usage_synopsis;
 
-    @SuppressWarnings("cast")
-    Object[] argsNonRaw = (Object[]) args;
-
     // Loop through each specified object or class
-    for (Object obj : argsNonRaw) {
+    for (Object obj : args) {
 
       if (obj instanceof Class<?>) {
 
@@ -810,14 +804,14 @@ public class Options {
    * of parse error from the constructor.
    */
   private /*@NonNull*/ Object get_ref_arg (OptionInfo oi, String arg_name, 
-                                         String arg_value) throws ArgException {
+                                           String arg_value) throws ArgException {
 
     Object val = null;
     try {
       if (oi.constructor != null) {
         val = oi.constructor.newInstance (arg_value);
       } else if (oi.base_type.isEnum()) {
-        @SuppressWarnings({"unchecked","rawness","rawtypes"})/// XXX rawness bug
+        @SuppressWarnings({"unchecked","rawtypes"})
         Object tmpVal = Enum.valueOf ((Class<? extends Enum>)oi.base_type,
                                        arg_value);
         val = tmpVal;
