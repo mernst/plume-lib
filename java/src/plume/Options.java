@@ -174,7 +174,7 @@ public class Options {
      * from the option annotation.  The long name is the name of the
      * field.  The default value is the current value of the field.
      */
-    OptionInfo (Field field, Option option, /*@Nullable*/ /*@Raw*/ Object obj) {
+    OptionInfo (Field field, Option option, /*@Nullable*/ Object obj) {
       this.field = field;
       this.option = option;
       @SuppressWarnings("rawness")
@@ -333,7 +333,7 @@ public class Options {
    * options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
    */
-  public Options (/*@Raw*/ Object... args) {
+  public Options (Object... args) {
     this ("", args);
   }
 
@@ -345,7 +345,7 @@ public class Options {
    * unique across all the arguments.
    * @param usage_synopsis A synopsis of how to call your program
    */
-  public Options (String usage_synopsis, /*@Raw*/ Object... args) {
+  public Options (String usage_synopsis, Object... args) {
 
     if (args.length == 0) {
       throw new Error("Must pass at least one object to Options constructor");
