@@ -385,7 +385,7 @@ public class MultiVersionControl {
     private void assertSubdirExists(File directory, String subdirName) {
       if (directory.exists()
           && ! new File(directory, subdirName).isDirectory()) {
-        System.err.printf("Directory %s exists but %s subdirectory does not exist",
+        System.err.printf("Directory %s exists but %s subdirectory does not exist%n",
                           directory, subdirName);
         System.exit(2);
       }
