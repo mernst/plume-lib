@@ -12,6 +12,15 @@ import java.io.*;
 import java.util.*;
 import java.net.URL;
 
+// Also see the "mr" program.
+// To read its documentation:  pod2man mr | nroff -man 
+// Some differences are:
+//  * mvc knows how to search for all repositories
+//  * mvc tries to improve tool output:  it tries to be as quiet as
+//    possible (this makes "mvc status" appropriate for running as a cron
+//    job, for example), and it rewrites paths from relative to absolute
+//    form.
+
 /**
  * This program, mvc for Multiple Version Control, lets you run a version
  * control command, such as "status" or "update", on a <b>set</b> of
