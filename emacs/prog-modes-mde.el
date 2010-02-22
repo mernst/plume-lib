@@ -114,7 +114,7 @@ This is good for modes like Perl, where the parser can get confused."
     (require 'dtrt-indent)
     (dtrt-indent-mode 1)
     (setq dtrt-indent-min-indent-superiority 50.0) ; default 100.0
-    (setq dtrt-indent-max-merge-deviation 40.0) ; default 20.0
+    (setq dtrt-indent-max-merge-deviation 30.0) ; default 20.0; 40.0 didn't work for me
     ;; (setq dtrt-indent-min-indent-superiority-double 40.0) ; default 100.0
     ))
 
