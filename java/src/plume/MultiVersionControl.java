@@ -19,7 +19,8 @@ import java.net.URL;
 //  * mvc tries to improve tool output:  it tries to be as quiet as
 //    possible (this makes "mvc status" appropriate for running as a cron
 //    job, for example), and it rewrites paths from relative to absolute
-//    form.
+//    form or adds pathnames.
+//  * mvc's configuration files tend to be smaller & simpler
 
 /**
  * This program, mvc for Multiple Version Control, lets you run a version
@@ -1078,8 +1079,8 @@ public class MultiVersionControl {
         // Directory does not exist
         File parent = dir.getParentFile();
         if (parent == null) {
-          System.err.println("Root directory cannot be a checkout");
-          System.exit(1);
+          System.err.printf("Directory %s does not exist, nor does its parent%n", dir);
+          continue;
         }
         switch (action) {
         case CHECKOUT:
