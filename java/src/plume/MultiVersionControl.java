@@ -1086,9 +1086,8 @@ public class MultiVersionControl {
         case CHECKOUT:
           if (! parent.exists()) {
             if (show) {
-              System.out.println("Directory does not exist"
-                                 + (dry_run ? "" : " (creating)")
-                                 + ": parent");
+              System.out.printf("Parent directory %s does not exist%s",
+                                parent, (dry_run ? "" : " (creating)"));
             }
             if (! dry_run) {
               if (! parent.mkdirs()) {
