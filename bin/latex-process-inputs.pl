@@ -20,7 +20,7 @@
 #       latex-process-inputs.pl --antlist main-file.tex
 
 my $debug = 0;
-# debug = 1;
+# $debug = 1;
 
 # Process command-line arguments
 my $list_mode = 0;              # boolean indicating list mode vs. inline mode
@@ -49,13 +49,15 @@ my @files = ($ARGV[0]);
 
 # I ought to abstract this out into a (recursively-called) procedure.
 my $text = "";
-my $line;
-while ($line = <>) {
+open(TOPLEVEL, $files[0]) or die("Can't open $files[0]");
+my @toplevel_lines = <TOPLEVEL>;
+close TOPLEVEL;
 
+for my $line (@toplevel_lines) {
   # kill comments on the line
   $line =~ s/((^|[^\\])%).*?$/$1/;
 
-  while ($line =~ s/\\(verbatim)?(input|include)\{([-a-z0-9_\.+]+)\}/___TOKEN___/i) {
+  while ($line =~ s/\\(verbatim)?(input|include)\{([-a-z0-9_\.+\/]+)\}/___TOKEN___/i) {
     my $verbatim_p = ($1 eq "verbatim");
     my $file = "$3";
     if ($file !~ m/\./) {
@@ -87,7 +89,7 @@ $text =~ s/([^\\]%).*?$/$1/gm;
 if ((! $list_mode) && ($text =~ /\\bibliography\{.*?\}/)) {
   my $bbl_file = $files[0];
   $bbl_file =~ s/\.tex$/.bbl/;
-  open(BBL, "$bbl_file") or die("Run bibtex (didn't find bbl file $bbl_file)");
+  open(BBL, "$bbl_file") or die("Run bibtex (didn't find bbl file \"$bbl_file\")");
   my @bib = <BBL>;
   close BBL;
   my $bib = join('', @bib);
