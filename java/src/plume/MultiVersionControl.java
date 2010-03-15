@@ -1054,6 +1054,7 @@ public class MultiVersionControl {
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
+          replacers.add(new Replacer("(svn: Failed to add file ')(.*')", "$1" + dir + "/" + "$2"));
           assert c.repository != null;
           pb.command("svn", "-q", "update");
         //         $filter = "grep -v \"Killed by signal 15.\"";
