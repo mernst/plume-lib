@@ -1015,11 +1015,8 @@ public class MultiVersionControl {
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
           break;
         case SVN:
-          // This ignores columns other than the first two.
-          // Handle column 1.
-          replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~])...... ", "$1$2 " + dir + "/"));
-          // Handle column 2.
-          replacers.add(new Replacer("(^|\\n).([CM])..... ", "$1$2 " + dir + "/"));
+          // Handle some changes.
+          replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~][CM ][L ]......) ", "$1$2 " + dir + "/"));
           pb.command("svn", "status");
           break;
         default:
