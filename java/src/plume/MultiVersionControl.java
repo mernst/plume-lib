@@ -881,6 +881,7 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)([?]) ", "$1$2 " + dir + "/"));
         break;
       case GIT:
+        replacers.add(new Replacer("(^|\\n)fatal:", "$1fatal in " + dir + ":"));
         break;
       case HG:
         // For bitbucket.org.  (Should be early in list.)
