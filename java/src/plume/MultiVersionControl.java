@@ -881,6 +881,7 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)([?]) ", "$1$2 " + dir + "/"));
         break;
       case GIT:
+        replacers.add(new Replacer("(^|\\n)fatal:", "$1fatal in " + dir + ":"));
         break;
       case HG:
         // For bitbucket.org.  (Should be early in list.)
@@ -1051,6 +1052,7 @@ public class MultiVersionControl {
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
+          replacers.add(new Replacer("(svn: Failed to add file ')(.*')", "$1" + dir + "/" + "$2"));
           assert c.repository != null;
           pb.command("svn", "-q", "update");
         //         $filter = "grep -v \"Killed by signal 15.\"";
