@@ -889,6 +889,7 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)(abort: .*)", "$1$2: " + dir));
         replacers.add(new Replacer("(^|\\n)([MARC!?I]) ", "$1$2 " + dir + "/"));
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", "$1"));
+        replacers.add(new Replacer("(^|\\n)(abort: repository default-push not found!: .*)", ""));
         break;
       case SVN:
         replacers.add(new Replacer("(svn: Network connection closed unexpectedly)", "$1 for " + dir));
@@ -1017,7 +1018,8 @@ public class MultiVersionControl {
           break;
         case SVN:
           // Handle some changes.
-          replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~][CM ][L ]......) ", "$1$2 " + dir + "/"));
+          // "svn status" also outputs an eighth column, only if you pass the --show-updates switch: [* ]
+          replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~][CM ][L ][+ ][$ ]) *", "$1$2 " + dir + "/"));
           pb.command("svn", "status");
           break;
         default:
