@@ -103,6 +103,7 @@ public final class UtilMDE {
   /**
    * Returns an InputStream for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -122,6 +123,7 @@ public final class UtilMDE {
   /**
    * Returns a Reader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -136,6 +138,7 @@ public final class UtilMDE {
   /**
    * Returns a Reader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -150,6 +153,7 @@ public final class UtilMDE {
   /**
    * Returns a Reader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * @param charsetName may be null, or the name of a Charset
    * <p>
    * Warning: The "gzip" program writes and reads files containing
@@ -171,6 +175,7 @@ public final class UtilMDE {
   /**
    * Returns a BufferedReader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -184,6 +189,7 @@ public final class UtilMDE {
   /**
    * Returns a BufferedReader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -197,6 +203,7 @@ public final class UtilMDE {
   /**
    * Returns a BufferedReader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -210,6 +217,7 @@ public final class UtilMDE {
   /**
    * Returns a BufferedReader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -225,6 +233,7 @@ public final class UtilMDE {
   /**
    * Returns a LineNumberReader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -238,6 +247,7 @@ public final class UtilMDE {
   /**
    * Returns a LineNumberReader for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -259,6 +269,7 @@ public final class UtilMDE {
   /**
    * Returns a BufferedWriter for the file, accounting for the possibility
    * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
@@ -271,14 +282,15 @@ public final class UtilMDE {
 
   /**
    * Returns a BufferedWriter for the file, accounting for the possibility
-   * that the file is compressed.  The parameter 'append' if true returns
-   * a file writer that appends to the end of the file instead of the
-   * beginning.
+   * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
    * just the first one:  it silently discards all characters (including
    * gzipped files) after the first gzipped file.
+   * @param append if true, the resulting BufferedWriter appends to the end
+   * of the file instead of the beginning.
    **/
   public static BufferedWriter bufferedFileWriter(String filename, boolean append) throws IOException {
     Writer file_writer;
@@ -291,7 +303,7 @@ public final class UtilMDE {
   }
 
 
-  /** @deprecated use BufferedFileReader (note lowercase first letter) */
+  /** @deprecated use bufferedFileReader (note lowercase first letter) */
   @Deprecated // since June 2005
   public static BufferedReader BufferedFileReader(String filename) throws FileNotFoundException, IOException {
     return bufferedFileReader(filename);
@@ -306,7 +318,7 @@ public final class UtilMDE {
   public static LineNumberReader LineNumberFileReader(File file) throws FileNotFoundException, IOException {
     return lineNumberFileReader(file);
   }
-  /** @deprecated use BufferedFileWriter (note lowercase first letter) */
+  /** @deprecated use bufferedFileWriter (note lowercase first letter) */
   @Deprecated // since June 2005
   public static BufferedWriter BufferedFileWriter(String filename) throws IOException {
     return bufferedFileWriter(filename);
