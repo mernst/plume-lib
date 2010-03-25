@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# If the Emacs daemon doesn't exist already, start it and connect to it.
+
+/usr/bin/emacsclient -a "" -- "$@"
+
