@@ -980,6 +980,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)(Permission denied)", "$1$2 in " + dir));
           replacers.add(new Replacer("(^|\\n)(cvs diff: cannot find )", "$1$2" + dir));
           replacers.add(new Replacer("(^|\\n)(cvs diff: in directory )", "$1$2" + dir + "/"));
+          replacers.add(new Replacer("(^|\\n)(cvs diff: ignoring )", "$1$2" + dir + "/"));
           break;
         case GIT:
           pb.command("git", "status");
