@@ -884,12 +884,13 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)fatal:", "$1fatal in " + dir + ":"));
         break;
       case HG:
-        // For bitbucket.org.  (Should be early in list.)
+        // "real URL" is for bitbucket.org.  (Should be early in list.)
         replacers.add(new Replacer("(^|\\n)real URL is .*\\n", "$1"));
         replacers.add(new Replacer("(^|\\n)(abort: .*)", "$1$2: " + dir));
         replacers.add(new Replacer("(^|\\n)([MARC!?I]) ", "$1$2 " + dir + "/"));
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", "$1"));
-        replacers.add(new Replacer("(^|\\n)(abort: repository default-push not found!: .*)", ""));
+        // Does this mask too many errors?
+        replacers.add(new Replacer("(^|\\n)(abort: repository default(-push)? not found!: .*)", ""));
         break;
       case SVN:
         replacers.add(new Replacer("(svn: Network connection closed unexpectedly)", "$1 for " + dir));
