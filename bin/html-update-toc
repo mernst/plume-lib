@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 # html-update-toc
 # Update (in place) table of contents for an HTML document.
-# Michael Ernst <mernst@csail.mit.edu>
-# Time-stamp: <2009-07-02 16:06:54 mernst>
+# Michael Ernst <mernst@cs.washington.edu>
+# Time-stamp: <2010-03-28 12:25:44 mernst>
 
 # This script edits a HTML file in place to modify an existing table of
 # contents.  The contents start (and end, respectively) with "<!-- start
