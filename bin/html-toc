@@ -1,9 +1,9 @@
 #!/usr/bin/env perl
 # html-toc
 # Generate (to standard out) table of contents for an HTML document.
-# Michael Ernst <mernst@csail.mit.edu>
+# Michael Ernst <mernst@cs.washington.edu>
 # Thanks to C. Scott Ananian <cscott@cscott.net>
-# Time-stamp: <2007-03-12 15:42:39 mernst>
+# Time-stamp: <2010-03-28 12:25:44 mernst>
 
 # See html-update-toc for documentation.
 # (Typically, you will not run this program, but will use html-update-toc

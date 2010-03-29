@@ -9,5 +9,5 @@ html-update-link-dates updates webpage text that refers to the date
 	and/or size of a linked-to file.  Requires checkargs.pm.
 
 For an example of use of both html-update-toc and html-update-link-dates, see
-http://pag.csail.mit.edu/~mernst/software/.  For an example of the size
+http://www.cs.washington.edu/homes/mernst/software/.  For an example of the size
 feature of html-update-link-dates, see http://pag.csail.mit.edu/daikon/download/.
