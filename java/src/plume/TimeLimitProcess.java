@@ -61,7 +61,13 @@ public class TimeLimitProcess {
    * @see Process.getErrorStream()
    */
   int exitValue() {
-    return p.exitValue();
+    // I'm not sure whether this is necessary; the Process.destroy()
+    // documentation doesn't specify the effect on the exit value.
+    if ((p.exitValue() == 0) && timed_out) {
+      return 255;
+    } else {
+      return p.exitValue();
+    }
   }
 
   /**
