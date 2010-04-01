@@ -816,7 +816,7 @@ public final class UtilMDE {
 
 
   /**
-   * Returns a string version of the name that can be used in java source.
+   * Returns a string version of the name that can be used in Java source.
    * On Windows, the file will return a backslash separated string.  Since
    * backslash is an escape character, it must be quoted itself inside
    * the string.
