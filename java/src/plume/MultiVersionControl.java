@@ -200,6 +200,15 @@ public class MultiVersionControl {
   @Option("Redo existing checkouts; relevant only to checkout command")
   public boolean redo_existing;
 
+  // It would be good to be able to set this per-checkout.
+  /**
+   * Terminating the process can leave the repository in a bad state, so
+   * set this rather high for safety.  Also, the timeout needs to account
+   * for the time to run hooks (that might recompile or run tests).
+   */
+  @Option("Timeout for each command, in seconds")
+  public static int timeout = 600;
+
   @Option("Print debugging output")
   public static boolean debug;
 
@@ -217,11 +226,6 @@ public class MultiVersionControl {
   private static Action STATUS = Action.STATUS;
   private static Action UPDATE = Action.UPDATE;
   private static Action LIST = Action.LIST;
-
-  // Terminating the process can leave the repository in a bad state, so
-  // set this rather high for safety.  Also, the timeout needs to account
-  // for the time to run hooks (that might recompile or run tests).
-  private static int TIMEOUT_SEC = 600;
 
   private Action action;
 
@@ -314,7 +318,7 @@ public class MultiVersionControl {
       search = false;
       show = true;
       // Checkouts can be much slower than other operations.
-      TIMEOUT_SEC = TIMEOUT_SEC * 10;
+      timeout = timeout * 10;
     }
     if (action == UPDATE) {
       print_directory = true;
@@ -1140,10 +1144,10 @@ public class MultiVersionControl {
       //  $command_cwd_sanitized =~ s/\//_/g;
       //  $tmpfile = "/tmp/cmd-output-$$-$command_cwd_sanitized";
       // my $command_redirected = "$command > $tmpfile 2>&1";
-      TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
+      TimeLimitProcess p = new TimeLimitProcess(pb.start(), timeout * 1000);
       p.waitFor();
       if (p.timed_out()) {
-        System.out.printf("Timed out (limit: %ss):%n", TIMEOUT_SEC);
+        System.out.printf("Timed out (limit: %ss):%n", timeout);
         System.out.println(command(pb));
         // Don't return; also show the output
       }
