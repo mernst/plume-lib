@@ -7,13 +7,21 @@ import java.util.*;
  * TimeLimitProcess is a subclass of Process such that the process is
  * killed if it runs for more than the specified number of milliseconds.
  * Wall clock seconds, not CPU seconds, are measured.
+ * The process should already be started when TimeLimitProcess is invoked.
  * Typical use:
  * <pre>
  *   TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
  * </pre>
+ *
+ * PROBLEM: If the process is destroyed because it times out, then its
+ * output is unreadable (Java code trying to read its output fails).  So,
+ * either this code should busy-wait reading the standard and error outputs
+ * and storing them away, or the client process should send its output to a
+ * ByteArrayOutputStream or the like, which can be read after the process
+ * terminates.
  **/
 
-public class TimeLimitProcess {
+public class TimeLimitProcess extends Process {
 
   private Process p;
   private long timeLimit;
@@ -22,6 +30,8 @@ public class TimeLimitProcess {
   private Timer timer;
 
   /**
+   * Creates a TimeLimitProcess with the given time limit, in wall clock
+   * milliseconds.
    * Requires: p != null
    * @param timeLimit in milliseconds
    **/
@@ -31,36 +41,37 @@ public class TimeLimitProcess {
     this.timeLimit = timeLimit;
     // System.out.println ("new timelimit process, timeout = " + timeLimit);
     timer.schedule(new TPTimerTask(this), timeLimit);
-  }
-
-  /**
-   * Kills the subprocess.
-   * @see Process.destroy()
-   **/
-  void destroy() {
-    p.destroy();
+    
   }
 
   /**
    * Returns true if the process has timed out (has run for more than the
    * timeLimit msecs specified in the constructor).
    */
-  boolean timed_out() {
+  public boolean timed_out() {
     return (timed_out);
   }
 
   /**
    * Returns the timeout time in msecs.
    */
-  long timeout_msecs() {
+  public long timeout_msecs() {
     return (timeLimit);
+  }
+
+  /**
+   * Kills the subprocess.
+   * @see Process.destroy()
+   **/
+  public void destroy() {
+    p.destroy();
   }
 
   /**
    * Returns the exit value for the subprocess.
    * @see Process.getErrorStream()
    */
-  int exitValue() {
+  public int exitValue() {
     return p.exitValue();
   }
 
@@ -68,7 +79,7 @@ public class TimeLimitProcess {
    * Gets the error stream of the subprocess.
    * @see Process.getErrorStream()
    */
-  InputStream getErrorStream() {
+  public InputStream getErrorStream() {
     return p.getErrorStream();
   }
 
@@ -76,7 +87,7 @@ public class TimeLimitProcess {
    * Gets the input stream of the subprocess.
    * @see Process.getInputStream()
    */
-  InputStream getInputStream() {
+  public InputStream getInputStream() {
     return p.getInputStream();
   }
 
@@ -84,7 +95,7 @@ public class TimeLimitProcess {
    * Gets the output stream of the subprocess.
    * @see Process.getOutputStream()
    */
-  OutputStream getOutputStream() {
+  public OutputStream getOutputStream() {
     return p.getOutputStream();
   }
 
@@ -92,7 +103,7 @@ public class TimeLimitProcess {
    * Causes the current thread to wait, if necessary, until the process represented by this Process object has terminated.
    * @see Process.waitFor()
    */
-  int waitFor() throws InterruptedException {
+  public int waitFor() throws InterruptedException {
     return p.waitFor();
   }
 
