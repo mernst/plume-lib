@@ -12,14 +12,18 @@ import java.io.*;
 import java.util.*;
 import java.net.URL;
 
-// Also see the "mr" program.
+// Also see the "mr" program (http://kitenet.net/~joey/code/mr/).
 // To read its documentation:  pod2man mr | nroff -man 
 // Some differences are:
 //  * mvc knows how to search for all repositories
-//  * mvc tries to improve tool output:  it tries to be as quiet as
-//    possible (this makes "mvc status" appropriate for running as a cron
-//    job, for example), and it rewrites paths from relative to absolute
-//    form or adds pathnames.
+//  * mvc uses a timeout
+//  * mvc tries to improve tool output:
+//     * mvc tries to be as quiet as possible.  The fact that it issues
+//       output only if there is a problem makes "mvc status" appropriate
+//       for running as a cron job, and reduces distraction.
+//     * mvc rewrites paths from relative to absolute form or adds
+//       pathnames, to make output comprehensible without knowing the
+//       working directory of the command.
 //  * mvc's configuration files tend to be smaller & simpler
 
 /**
@@ -196,6 +200,15 @@ public class MultiVersionControl {
   @Option("Redo existing checkouts; relevant only to checkout command")
   public boolean redo_existing;
 
+  // It would be good to be able to set this per-checkout.
+  /**
+   * Terminating the process can leave the repository in a bad state, so
+   * set this rather high for safety.  Also, the timeout needs to account
+   * for the time to run hooks (that might recompile or run tests).
+   */
+  @Option("Timeout for each command, in seconds")
+  public static int timeout = 600;
+
   @Option("Print debugging output")
   public static boolean debug;
 
@@ -213,10 +226,6 @@ public class MultiVersionControl {
   private static Action STATUS = Action.STATUS;
   private static Action UPDATE = Action.UPDATE;
   private static Action LIST = Action.LIST;
-
-  // Terminating the process can leave the repository in a bad state, so
-  // set this rather high for safety.
-  private static int TIMEOUT_SEC = 300;
 
   private Action action;
 
@@ -309,7 +318,7 @@ public class MultiVersionControl {
       search = false;
       show = true;
       // Checkouts can be much slower than other operations.
-      TIMEOUT_SEC = TIMEOUT_SEC * 10;
+      timeout = timeout * 10;
     }
     if (action == UPDATE) {
       print_directory = true;
@@ -856,14 +865,14 @@ public class MultiVersionControl {
 
 
   public void process(Set<Checkout> checkouts) {
-    String repo;
-
     ProcessBuilder pb = new ProcessBuilder("");
-    // pb.redirectErrorStream(true);
-    // pb.inheritIO(); //   This method (& functionality) only exists in Java 7!
+    ProcessBuilder pb2 = new ProcessBuilder(new ArrayList<String>());
     pb.redirectErrorStream(true);
-
-    ProcessBuilder pb2;
+    pb2.redirectErrorStream(true);
+    // I really want to be able to redirect output to a Reader, but that
+    // isn't possible.  I have to send it to a file.
+    // I can't just use the InputStream directly, because if the process is
+    // killed because of a timeout, the stream is inaccessible.
 
     CHECKOUTLOOP:
     for (Checkout c : checkouts) {
@@ -890,7 +899,7 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)([MARC!?I]) ", "$1$2 " + dir + "/"));
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", "$1"));
         // Does this mask too many errors?
-        replacers.add(new Replacer("(^|\\n)(abort: repository default(-push)? not found!: .*)", ""));
+        replacers.add(new Replacer("(^|\\n)(abort: repository default(-push)? not found!: .*\\n)", ""));
         break;
       case SVN:
         replacers.add(new Replacer("(svn: Network connection closed unexpectedly)", "$1 for " + dir));
@@ -903,9 +912,10 @@ public class MultiVersionControl {
       replacers.add(new Replacer("(remote: )?Warning: untrusted X11 forwarding setup failed: xauth key data not generated\r*\n(remote: )?Warning: No xauth data; using fake authentication data for X11 forwarding\\.\r*\n", ""));
       replacers.add(new Replacer("(working copy ')", "$1" + dir));
 
-      pb2 = null;
       pb.command("echo", "command", "not", "set");
       pb.directory(dir);
+      pb2.command(new ArrayList<String>());
+      pb2.directory(dir);
       // Set pb.command() to be the command to be executed.
       switch (action) {
       case LIST:
@@ -1002,17 +1012,11 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)(#\t)", "$1untracked: " + dir + "/"));
           // Could remove all other output, but this could suppress messages
           // replacers.add(new Replacer("(^|\\n)#.*\\n", "$1"));
-          pb2 = new ProcessBuilder("");
-          pb2.redirectErrorStream(true);
-          pb2.directory(pb.directory());
           // Or, see "git-outgoing" at http://github.com/ddollar/git-utils
           pb2.command("git", "log", "origin..HEAD");
           break;
         case HG:
           pb.command("hg", "status");
-          pb2 = new ProcessBuilder("");
-          pb2.redirectErrorStream(true);
-          pb2.directory(pb.directory());
           pb2.command("hg", "outgoing", "-l", "1");
           // The third line is either "no changes found" or "changeset".
           replacers.add(new Replacer("^comparing with .*\\nsearching for changes\\nchangeset[^\001]*", "unpushed changesets: " + pb.directory() + "\n"));
@@ -1052,7 +1056,8 @@ public class MultiVersionControl {
           break;
         case HG:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
-          pb.command("hg", "-q", "fetch");
+          pb.command("hg", "-q", "update");
+          pb2.command("hg", "-q", "fetch");
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
@@ -1111,11 +1116,19 @@ public class MultiVersionControl {
       }
 
       perform_command(pb, replacers);
-      if (pb2 != null) perform_command(pb2, replacers);
+      if (pb2.command().size() > 0) perform_command(pb2, replacers);
     }
   }
 
   void perform_command(ProcessBuilder pb, List<Replacer> replacers) {
+    File tempFile;
+    try {
+      tempFile = File.createTempFile("mvc", null);
+    } catch (IOException e) {
+      throw new Error("File.createTempFile can't create temporary file.", e);
+    }
+    tempFile.deleteOnExit();
+    pb.redirectOutput(tempFile);
 
     if (show) {
       System.out.println(command(pb));
@@ -1131,33 +1144,32 @@ public class MultiVersionControl {
       //  $command_cwd_sanitized =~ s/\//_/g;
       //  $tmpfile = "/tmp/cmd-output-$$-$command_cwd_sanitized";
       // my $command_redirected = "$command > $tmpfile 2>&1";
-      TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
+      TimeLimitProcess p = new TimeLimitProcess(pb.start(), timeout * 1000);
       p.waitFor();
       if (p.timed_out()) {
-        System.out.printf("Timed out (limit: %ss):%n", TIMEOUT_SEC);
+        System.out.printf("Timed out (limit: %ss):%n", timeout);
         System.out.println(command(pb));
-        // Is it right to ignore output streams?
-        return;
+        // Don't return; also show the output
       }
 
-      // Filter then print the output Sometimes, unpredictably this throws
-      // an IOException "stream closed" from
-      // java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:145)
-      // .  I don't know why.  Re-running immediately gives fine results.
-      String output = UtilMDE.readerContents(new BufferedReader(new InputStreamReader(p.getInputStream())));
-      if (debug_replacers) { System.out.println("preoutput=<<<" + output + ">>>"); }
-      for (Replacer r : replacers) {
-        output = r.replaceAll(output);
-        if (debug_replacers) { System.out.println("midoutput[" + r.regexp + "]=<<<" + output + ">>>"); }
-      }
-      if (debug_replacers) {
-        System.out.println("postoutput=<<<" + output + ">>>");
-        for (int i=0; i<Math.min(100,output.length()); i++) {
-          System.out.println(i + ": " + (int) output.charAt(i) + "\n        \"" + output.charAt(i) + "\"");
+      // Should I print always?
+      if (p.exitValue() != 0 || debug_replacers) {
+        // Filter then print the output.
+        // String output = UtilMDE.readerContents(new BufferedReader(new InputStreamReader(p.getInputStream())));
+        String output = UtilMDE.readFile(tempFile);
+        if (debug_replacers) { System.out.println("preoutput=<<<" + output + ">>>"); }
+        for (Replacer r : replacers) {
+          output = r.replaceAll(output);
+          if (debug_replacers) { System.out.println("midoutput[" + r.regexp + "]=<<<" + output + ">>>"); }
         }
+        if (debug_replacers) {
+          System.out.println("postoutput=<<<" + output + ">>>");
+          for (int i=0; i<Math.min(100,output.length()); i++) {
+            System.out.println(i + ": " + (int) output.charAt(i) + "\n        \"" + output.charAt(i) + "\"");
+          }
+        }
+        System.out.print(output);
       }
-      System.out.print(output);
-
 
     } catch (IOException e) {
       throw new Error(e);
