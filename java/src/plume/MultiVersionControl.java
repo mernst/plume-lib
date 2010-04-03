@@ -1128,7 +1128,13 @@ public class MultiVersionControl {
       throw new Error("File.createTempFile can't create temporary file.", e);
     }
     tempFile.deleteOnExit();
-    pb.redirectOutput(tempFile);
+    // This method only exists in Java 1.7.  Sigh.
+    // pb.redirectOutput(tempFile);
+    // Here is the bash-specific Java 1.6 workaround.  Sigh.
+    List<String> cmd = pb.command();
+    cmd.add(">");
+    cmd.add(tempFile.getAbsolutePath());
+    cmd.add("2>&1");
 
     if (show) {
       System.out.println(command(pb));
