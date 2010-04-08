@@ -1,7 +1,7 @@
 package plume;
 
 /**
- * Simple triple class.
+ * Simple mutable triple class.
  **/
 public class Triple<T1,T2,T3> {
   public T1 a;
@@ -12,6 +12,11 @@ public class Triple<T1,T2,T3> {
     this.a = a;
     this.b = b;
     this.c = c;
+  }
+
+  /** Factory method with short name and no need to name type parameters. */
+  public static <A, B, C> Triple<A, B, C> of(A a, B b, C c) {
+    return new Triple<A, B, C>(a, b, c);
   }
 
   public String toString() {
