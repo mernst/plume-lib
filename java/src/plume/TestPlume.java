@@ -46,6 +46,10 @@ public final class TestPlume extends TestCase {
     }
     junit.textui.TestRunner.run(new TestSuite(TestPlume.class));
   }
+  public static void mainFake(String[] args) {
+    testTimeLimitProcess();
+  }
+
 
   public TestPlume(String name) {
     super(name);
@@ -1376,6 +1380,85 @@ public final class TestPlume extends TestCase {
     }
     assert pairno == ints.length;
   }
+
+  ///////////////////////////////////////////////////////////////////////////
+  /// TimeLimitProcess
+  ///
+
+  // example use from the command line:
+  // java plume.TestPlume\$PrintOneIntPerSecond 5
+
+  public static class PrintOneIntPerTimePeriod {
+    /** Arguments:  how many to print; how many milliseconds between each. */
+    public static void main(String[] args) {
+      assert args.length == 2;
+      int limit = Integer.parseInt(args[0]);
+      int period = Integer.parseInt(args[1]);
+      for (int i=0; i<limit; i++) {
+        System.out.printf("out%d ", i);
+        System.err.printf("err%d ", i);
+        try {
+          Thread.sleep(period);
+        } catch (InterruptedException e) {
+          // We don't care if this is interrupted
+        }
+      }
+    }
+  }
+
+  private static Runtime runtime = java.lang.Runtime.getRuntime();
+
+  private static Triple<Integer,String,String> printFive(int timeLimitNumbers, boolean cache_stdout) {
+    int timePerNumber = 100;
+    String command = "java plume.TestPlume$PrintOneIntPerTimePeriod 5 " + timePerNumber;
+    TimeLimitProcess p;
+    try {
+      p = new TimeLimitProcess(runtime.exec(command),
+                               timeLimitNumbers*timePerNumber + timePerNumber/2,
+                               cache_stdout);
+    } catch (IOException e) {
+      throw new Error(e);
+    }
+    int result;
+    try {
+      result = p.waitFor();
+    } catch (InterruptedException e) {
+      throw new Error(e);
+    }
+    // System.out.printf("command:%s%n", command);
+    // System.out.printf("result:%s%n", result);
+    // System.out.printf("buffered stdout:%s%n", p.cached_stdout);
+    // System.out.printf("buffered stderr:%s%n", p.cached_stderr);
+    String out = UtilMDE.streamString(p.getInputStream());
+    String err = UtilMDE.streamString(p.getErrorStream());
+    // System.out.printf("out:%s%n", out);
+    // System.out.printf("err:%s%n", err);
+    return Triple.of(result, out, err);
+  }
+
+  private static void testPrintFive(int timeLimitNumbers, boolean cache_stdout, String out, String err) {
+    Triple<Integer,String,String> results = printFive(timeLimitNumbers, cache_stdout);
+    if (! results.b.equals(out)) {
+      throw new Error(String.format("Expected %s, got %s", out, results.b));
+    }
+    if (! results.c.equals(err)) {
+      throw new Error(String.format("Expected %s, got %s", err, results.c));
+    }
+  }
+
+  public static void testTimeLimitProcess() {
+    testPrintFive(10, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    testPrintFive(10, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    // This is expected to fail because of trying to read a closed stream.
+    // printFive(3, false);
+    testPrintFive(3, true, "out0 out1 out2 ", "err0 err1 err2 ");
+  }
+
+
+
+  ///////////////////////////////////////////////////////////////////////////
+  /// UtilMDE
+  ///
 
   private static BitSet randomBitSet(int length, Random r) {
     BitSet result = new BitSet(length);

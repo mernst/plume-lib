@@ -3,8 +3,10 @@ package plume;
 import java.util.*;
 import java.io.*;
 
-/* Graph utility methods.  This class does not model a graph:  all methods
- * are static. */
+/**
+ * Graph utility methods.  This class does not model a graph:  all methods
+ * are static.
+ */
 public class GraphMDE {
 
   // Algorithms for computing dominators:
@@ -32,7 +34,7 @@ public class GraphMDE {
   //        DOM[n] := new_set
   //        Changed := true
 
-  // The two algorithms are essentially the same; this implementation uses
+  // The two algorithms are essentially the same; this implementation
   // follows the Wikipedia one.
 
   /**

@@ -98,7 +98,7 @@ public final class FileCompiler {
     String command = compiler + " " + filename;
     // System.out.println ("\nexecuting compile command: " + command);
 
-    return new TimeLimitProcess(runtime.exec(command), timeLimit);
+    return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
   }
 
   /**
@@ -120,7 +120,7 @@ public final class FileCompiler {
 
     String command = compiler + " " + to_compile;
     // System.out.println ("\nexecuting compile command: " + command);
-    return new TimeLimitProcess(runtime.exec(command), timeLimit);
+    return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
   }
 
   /**
