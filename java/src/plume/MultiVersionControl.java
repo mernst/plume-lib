@@ -1121,20 +1121,16 @@ public class MultiVersionControl {
   }
 
   void perform_command(ProcessBuilder pb, List<Replacer> replacers) {
-    File tempFile;
-    try {
-      tempFile = File.createTempFile("mvc", null);
-    } catch (IOException e) {
-      throw new Error("File.createTempFile can't create temporary file.", e);
-    }
-    tempFile.deleteOnExit();
-    // This method only exists in Java 1.7.  Sigh.
+    /// The redirectOutput method only exists in Java 1.7.  Sigh.
+    /// The workaround is to make TimeLimitProcess buffer its output.
+    // File tempFile;
+    // try {
+    //   tempFile = File.createTempFile("mvc", null);
+    // } catch (IOException e) {
+    //   throw new Error("File.createTempFile can't create temporary file.", e);
+    // }
+    // tempFile.deleteOnExit();
     // pb.redirectOutput(tempFile);
-    // Here is the bash-specific Java 1.6 workaround.  Sigh.
-    List<String> cmd = pb.command();
-    cmd.add(">");
-    cmd.add(tempFile.getAbsolutePath());
-    cmd.add("2>&1");
 
     if (show) {
       System.out.println(command(pb));
@@ -1150,7 +1146,7 @@ public class MultiVersionControl {
       //  $command_cwd_sanitized =~ s/\//_/g;
       //  $tmpfile = "/tmp/cmd-output-$$-$command_cwd_sanitized";
       // my $command_redirected = "$command > $tmpfile 2>&1";
-      TimeLimitProcess p = new TimeLimitProcess(pb.start(), timeout * 1000);
+      TimeLimitProcess p = new TimeLimitProcess(pb.start(), timeout * 1000, true);
       p.waitFor();
       if (p.timed_out()) {
         System.out.printf("Timed out (limit: %ss):%n", timeout);
@@ -1158,11 +1154,17 @@ public class MultiVersionControl {
         // Don't return; also show the output
       }
 
-      // Should I print always?
-      if (p.exitValue() != 0 || debug_replacers) {
+      // Under what conditions should the output be printed?
+      //  * whenever the process exited non-normally
+      //  * for status, always
+      //  * when debugging
+      //  * other circumstances?
+      // Try printing always, to better understand this question.
+      if (true || p.exitValue() != 0 || debug_replacers) {
         // Filter then print the output.
         // String output = UtilMDE.readerContents(new BufferedReader(new InputStreamReader(p.getInputStream())));
-        String output = UtilMDE.readFile(tempFile);
+        // String output = UtilMDE.streamString(p.getInputStream());
+        String output = UtilMDE.streamString(p.getInputStream());
         if (debug_replacers) { System.out.println("preoutput=<<<" + output + ">>>"); }
         for (Replacer r : replacers) {
           output = r.replaceAll(output);
