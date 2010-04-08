@@ -916,6 +916,7 @@ public class MultiVersionControl {
       pb.directory(dir);
       pb2.command(new ArrayList<String>());
       pb2.directory(dir);
+      boolean show_normal_output = false;
       // Set pb.command() to be the command to be executed.
       switch (action) {
       case LIST:
@@ -960,6 +961,7 @@ public class MultiVersionControl {
       case STATUS:
         // I need a replacer for other version control systems, to add
         // directory names.
+        show_normal_output = true;
         switch (c.repoType) {
         case BZR:
           throw new Error("not yet implemented");
@@ -1115,12 +1117,15 @@ public class MultiVersionControl {
         }
       }
 
-      perform_command(pb, replacers);
-      if (pb2.command().size() > 0) perform_command(pb2, replacers);
+      perform_command(pb, replacers, show_normal_output);
+      if (pb2.command().size() > 0) perform_command(pb2, replacers, show_normal_output);
     }
   }
 
-  void perform_command(ProcessBuilder pb, List<Replacer> replacers) {
+  // If show_normal_output is true, then display the output even if the process
+  // completed normally.  Ordinarily, output is displayed only if the
+  // process completed erroneously.
+  void perform_command(ProcessBuilder pb, List<Replacer> replacers, boolean show_normal_output) {
     /// The redirectOutput method only exists in Java 1.7.  Sigh.
     /// The workaround is to make TimeLimitProcess buffer its output.
     // File tempFile;
@@ -1155,12 +1160,12 @@ public class MultiVersionControl {
       }
 
       // Under what conditions should the output be printed?
-      //  * whenever the process exited non-normally
       //  * for status, always
+      //  * whenever the process exited non-normally
       //  * when debugging
       //  * other circumstances?
       // Try printing always, to better understand this question.
-      if (true || p.exitValue() != 0 || debug_replacers) {
+      if (show_normal_output || p.exitValue() != 0 || debug_replacers) {
         // Filter then print the output.
         // String output = UtilMDE.readerContents(new BufferedReader(new InputStreamReader(p.getInputStream())));
         // String output = UtilMDE.streamString(p.getInputStream());
