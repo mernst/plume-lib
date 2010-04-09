@@ -1409,12 +1409,14 @@ public final class TestPlume extends TestCase {
   private static Runtime runtime = java.lang.Runtime.getRuntime();
 
   private static Triple<Integer,String,String> printFive(int timeLimitNumbers, boolean cache_stdout) {
-    int timePerNumber = 100;
+    // This value needs to be small so tests run fast, but large so that
+    // more output doesn't sneak out before the timeout kicks in.
+    int timePerNumber = 200;
     String command = "java plume.TestPlume$PrintOneIntPerTimePeriod 5 " + timePerNumber;
     TimeLimitProcess p;
     try {
       p = new TimeLimitProcess(runtime.exec(command),
-                               timeLimitNumbers*timePerNumber + timePerNumber/2,
+                               timeLimitNumbers*timePerNumber + timePerNumber/4,
                                cache_stdout);
     } catch (IOException e) {
       throw new Error(e);
