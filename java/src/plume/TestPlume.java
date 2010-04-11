@@ -1408,16 +1408,13 @@ public final class TestPlume extends TestCase {
 
   private static Runtime runtime = java.lang.Runtime.getRuntime();
 
-  private static Triple<Integer,String,String> printFive(int timeLimitNumbers, boolean cache_stdout) {
-    // This value needs to be small so tests run fast, but large so that
-    // more output doesn't sneak out before the timeout kicks in.
-    int timePerNumber = 200;
+  // timePerNumber needs to be small so tests run fast, but large so that
+  // more output doesn't sneak out before the timeout kicks in.
+  private static Triple<Integer,String,String> printFive(int timePerNumber, int timeLimit, boolean cache_stdout) {
     String command = "java plume.TestPlume$PrintOneIntPerTimePeriod 5 " + timePerNumber;
     TimeLimitProcess p;
     try {
-      p = new TimeLimitProcess(runtime.exec(command),
-                               timeLimitNumbers*timePerNumber + timePerNumber/4,
-                               cache_stdout);
+      p = new TimeLimitProcess(runtime.exec(command), timeLimit, cache_stdout);
     } catch (IOException e) {
       throw new Error(e);
     }
@@ -1438,8 +1435,8 @@ public final class TestPlume extends TestCase {
     return Triple.of(result, out, err);
   }
 
-  private static void testPrintFive(int timeLimitNumbers, boolean cache_stdout, String out, String err) {
-    Triple<Integer,String,String> results = printFive(timeLimitNumbers, cache_stdout);
+  private static void testPrintFive(int timePerNumber, int timeLimit, boolean cache_stdout, String out, String err) {
+    Triple<Integer,String,String> results = printFive(timePerNumber, timeLimit, cache_stdout);
     if (! results.b.equals(out)) {
       throw new Error(String.format("Expected %s, got %s", out, results.b));
     }
@@ -1449,11 +1446,12 @@ public final class TestPlume extends TestCase {
   }
 
   public static void testTimeLimitProcess() {
-    testPrintFive(10, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
-    testPrintFive(10, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
     // This is expected to fail because of trying to read a closed stream.
     // printFive(3, false);
-    testPrintFive(3, true, "out0 out1 out2 ", "err0 err1 err2 ");
+    testPrintFive(1000, 500, true, "out0 ", "err0 ");
+    testPrintFive(1000, 1500, true, "out0 out1 ", "err0 err1 ");
   }
 
 
