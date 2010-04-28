@@ -385,8 +385,11 @@ public class Options {
           } catch (Exception e) {
             // Can get java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
             // when an annotation is not present at run time (example: @NonNull)
+            System.out.println("vvvvvvvvvvvvvvvv");
             System.out.printf("In call to f.getAnnotation(Option.class) for f=%s%n", f);
             e.printStackTrace();
+            JWhich.printClasspath();
+            System.out.println("^^^^^^^^^^^^^^^^");
             option = null;
           }
           if (option == null)
