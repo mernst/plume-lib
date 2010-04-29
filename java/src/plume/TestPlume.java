@@ -1995,6 +1995,22 @@ public final class TestPlume extends TestCase {
 
     // This is tested by the tokens methods.
     // public static Vector makeVector(Enumeration e)
+
+    assert UtilMDE.human_readable(5).equals("5.00");
+    assert UtilMDE.human_readable(5000).equals("5.00K");
+    assert UtilMDE.human_readable(5000000).equals("5.00M");
+    assert UtilMDE.human_readable(1000000000).equals("1.00G");
+    assert UtilMDE.human_readable(1).equals("1.00");
+    assert UtilMDE.human_readable(12).equals("12.0");
+    assert UtilMDE.human_readable(123).equals("123");
+    assert UtilMDE.human_readable(1234).equals("1.23K");
+    assert UtilMDE.human_readable(12345).equals("12.3K");
+    assert UtilMDE.human_readable(123456).equals("123K");
+    assert UtilMDE.human_readable(1234567).equals("1.23M");
+    assert UtilMDE.human_readable(12345678).equals("12.3M");
+    assert UtilMDE.human_readable(123456789).equals("123M");
+    assert UtilMDE.human_readable(1234567890).equals("1.23G");
+
   }
 
   public static void testTestUtilMDE() {
