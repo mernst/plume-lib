@@ -1,0 +1,12 @@
+#!/usr/bin/perl -wp
+
+# Print all lines before the first one that matches the pattern.
+# Does a case-insensitive match.
+
+BEGIN {
+  $pattern = shift @ARGV;
+}
+
+if (/$pattern/io) {
+  exit;
+}
