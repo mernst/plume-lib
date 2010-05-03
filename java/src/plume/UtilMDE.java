@@ -2017,6 +2017,20 @@ public final class UtilMDE {
 
 
   // Returns a string of the specified length, truncated if necessary,
+  // and padded with spaces to the left if necessary.
+  public static String lpad(String s, int length) {
+    if (s.length() < length) {
+      StringBuffer buf = new StringBuffer();
+      for (int i = s.length(); i < length; i++) {
+        buf.append(' ');
+      }
+      return buf.toString() + s;
+    } else {
+      return s.substring(0, length);
+    }
+  }
+
+  // Returns a string of the specified length, truncated if necessary,
   // and padded with spaces to the right if necessary.
   public static String rpad(String s, int length) {
     if (s.length() < length) {
