@@ -27,6 +27,23 @@ import java.nio.CharBuffer;
  *   comments, and
  *   multi-line entries (paragraphs).
  * The syntax of each of these is customizable.
+ * <p>
+ *
+ * Example use:
+ * <pre>
+ *  try {
+ *    // args are filename, comment regexp, include regexp
+ *    er = new EntryReader(filename, "^#.*", null);
+ *  } catch (IOException e) {
+ *    System.err.println("Unable to read " + filename);
+ *    System.exit(2);
+ *    throw new Error("This can't happen"); // for definite assignment check
+ *  }
+ *  for (String line : er) {
+ *    ...
+ *  }
+ * </pre>
+ * 
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
  */
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
