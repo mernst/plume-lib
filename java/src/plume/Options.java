@@ -62,6 +62,12 @@ import com.sun.javadoc.FieldDoc;
  * list, then only the last occurrence is used (subsequent occurrences
  * overwrite the previous value).  <p>
  *
+ * An option may be omitted from printing as part of the usage message
+ * (for example if the option on preliminary, experimental, or for
+ * internal purposes only). To disable usage printing of a particular
+ * option, use the {@link Unpublicized} annotation on the annotation
+ * field in addition to the {@link Option} annotation.
+ *
  * The field may be of the following types:
  * <ul>
  *   <li>Primitive types:  boolean, int, and double.
@@ -168,17 +174,24 @@ public class Options {
     /** Factory that takes a string (some classes don't have a string constructor) and always returns non-null. */
     /*@Nullable*/ Method factory = null;
 
+    /** If true, this OptionInfo is not output when printing documentation
+     *  (see Options.usage()
+     */
+    boolean unpublicized;
+
+
     /**
      * Create the specified option.  If obj is null, the field must be
      * static.  The short name, type name, and description are taken
      * from the option annotation.  The long name is the name of the
      * field.  The default value is the current value of the field.
      */
-    OptionInfo (Field field, Option option, /*@Nullable*/ Object obj) {
+    OptionInfo (Field field, Option option, /*@Nullable*/ Object obj, boolean unpublicized) {
       this.field = field;
       this.option = option;
       this.obj = obj;
       this.base_type = field.getType();
+      this.unpublicized = unpublicized;
 
       // The long name is the name of the field
       long_name = field.getName();
@@ -367,9 +380,10 @@ public class Options {
           Option option = f.getAnnotation (Option.class);
           if (option == null)
             continue;
+	  boolean unpublicized = f.getAnnotation(Unpublicized.class) != null;
           if (!Modifier.isStatic (f.getModifiers()))
             throw new Error ("non-static option " + f + " in class " + obj);
-          options.add (new OptionInfo (f, option, null));
+          options.add (new OptionInfo (f, option, null, unpublicized));
         }
 
       } else { // must be an object that contains option fields
@@ -394,7 +408,8 @@ public class Options {
           }
           if (option == null)
             continue;
-          options.add (new OptionInfo (f, option, obj));
+	  boolean unpublicized = f.getAnnotation(Unpublicized.class) != null;
+          options.add (new OptionInfo (f, option, obj, unpublicized));
         }
       }
     }
@@ -682,6 +697,10 @@ public class Options {
     // Determine the length of the longest option
     int max_len = 0;
     for (OptionInfo oi : options) {
+      if (oi.unpublicized) {
+	// Option is unpublicized - will not be part of output.
+	continue;
+      }
       int len = oi.synopsis().length();
       if (len > max_len)
         max_len = len;
@@ -689,6 +708,10 @@ public class Options {
 
     // Create the usage string
     for (OptionInfo oi : options) {
+      if (oi.unpublicized) {
+	// Option is unpublicized - will not be part of output.
+	continue;
+      }
       String default_str = "[no default]";
       if (oi.default_str != null)
         default_str = String.format ("[default %s]", oi.default_str);
