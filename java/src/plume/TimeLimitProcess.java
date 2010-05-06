@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
  * The process should already be started when TimeLimitProcess is invoked.
  * Typical use:
  * <pre>
+ *   ProcessBuilder pb = ...;
  *   TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
  * </pre>
  *
