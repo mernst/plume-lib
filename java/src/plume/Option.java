@@ -1,6 +1,7 @@
-// The two files
+// The three files
 //   Option.java
 //   Options.java
+//   Unpublicized.java
 // together comprise the implementation of command-line processing.
 
 package plume;
@@ -16,14 +17,16 @@ import java.lang.annotation.*;
  *   <li>'&lt;type&gt;' is an optional description of the option type more
  *       specific than its Java type (eg, '&lt;filename&gt;' if the variable's
  *       type is String).  The less-than and greater-than symbols are required.
- *   <li>'description' is a short (often one-line) description of the option
- *       suitable for a usage message.
+ *   <li>'description' is a short (typically one-line) description of the
+ *       option suitable for a usage message.  The field's Javadoc comment
+ *       can contain a longer description.
  * </ul>
  * <p>
  *
  * The command-line options are processed by the {@link plume.Options} class.
  * For example usage, see the documentation for {@link plume.Options}.
  * @see plume.Options
+ * @see plume.Unpublicized
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
