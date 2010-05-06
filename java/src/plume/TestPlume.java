@@ -2510,6 +2510,8 @@ public final class TestPlume extends TestCase {
    */
   public static class TestOptions {
 
+    // TODO: test the @Unpublicized annotation and the usage() message.
+
     @Option ("list of patterns")
       public List<Pattern> lp = new ArrayList<Pattern>();
     @Option ("-a <filename> argument 1")
