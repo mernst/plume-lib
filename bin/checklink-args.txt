@@ -17,6 +17,8 @@
 --suppress-broken 403:http://www.cs.washington.edu/orgs/student-affairs/gsc/jobs/
 --suppress-broken 403:http://www.elsevier.nl/locate/disc/
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
+--suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
+--suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html	
 --suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
 --suppress-broken 404:http://groups.google.com/group/jsr-305/
 --suppress-broken 404:http://groups.google.com/group/jsr-305/web/proposed-annotations
@@ -57,6 +59,7 @@
 --suppress-redirect http://doi.acm.org/10.1145/1134285.1134491->http://portal.acm.org/citation.cfm?doid=1134285.1134491	
 --suppress-redirect http://doi.acm.org/10.1145/1467247.1467259->http://portal.acm.org/citation.cfm?doid=1467247.1467259	
 --suppress-redirect http://doi.acm.org/10.1145/1467247.1467260->http://portal.acm.org/citation.cfm?doid=1467247.1467260	
+--suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html	
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page	
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
 --suppress-redirect http://ieeexplore.ieee.org/->http://ieeexplore.ieee.org/Xplore/home.jsp
@@ -67,12 +70,15 @@
 --suppress-redirect http://pag.csail.mit.edu/~smcc/->http://people.csail.mit.edu/people/smcc/
 --suppress-redirect http://pag/daikon/mit/log2html.php->http://www.pag.csail.mit.edu/daikon/mit/log2html.php
 --suppress-redirect http://people.csail.mit.edu/cpacheco/randoop/->http://people.csail.mit.edu/cpacheco/randoop/1.2/doc/	
+--suppress-redirect http://portal.acm.org/sigplan/newsletter/->http://portal.acm.org/browse_dl.cfm?linked=1&part=newsletter&idx=J706&coll=portal&dl=ACM%d	
+--suppress-redirect http://sites.google.com/site/scatherinehowell/Home/CV2008.pdf->http://sites.google.com/site/scatherinehowell/Home/CV2008.pdf?attredirects=0	
 --suppress-redirect http://student.mit.edu/catalog/index.cgi->http://student.mit.edu/@8178100.17571/catalog/index.cgi	
 --suppress-redirect http://texi2html.cvshome.org/->http://ximbiot.com/cvs/
 --suppress-redirect http://www.a1trails.com/xc_ski/xc_ma.html->http://www.a1trails.com/home/nospiders.html
 --suppress-redirect http://www.a1trails.com/xc_ski/xc_nh.html->http://www.a1trails.com/home/nospiders.html
 --suppress-redirect http://www.amtrak.com/->http://www.amtrak.com/servlet/ContentServer?pagename=Amtrak/HomePage
 --suppress-redirect http://www.aro.ncren.net/->http://www.arl.army.mil/main/main/default.cfm?Action=29&Page=29	
+--suppress-redirect http://www.cascade.org/->http://www.cascade.org/Home/	
 --suppress-redirect http://www.computer.org/tse/->http://www.computer.org/portal/site/transactions/index.jsp?pageID=tse_home/
 --suppress-redirect http://www.computer.org/tse/->http://www.computer.org/portal/web/tse/	
 --suppress-redirect http://www.computer.org/tse/->http://www2.computer.org/portal/web/tse/
@@ -81,6 +87,7 @@
 --suppress-redirect http://www.cs.utexas.edu/->http://www.cs.utexas.edu/home/department/welcome.html
 --suppress-redirect http://www.csail.mit.edu/->http://www.csail.mit.edu/index.php
 --suppress-redirect http://www.dexonline.com/->http://www.dexonline.com/displayhome.ds
+--suppress-redirect http://www.elsevier.com/locate/disc/->http://www.elsevier.com/wps/find/journaldescription.cws_home/505610/description#description	
 --suppress-redirect http://www.fair.org/->http://www.fair.org/index.php	
 --suppress-redirect http://www.hotelatmit.com/->http://www.hotelatmit.com/
 --suppress-redirect http://www.ibm.com/developerworks/oss/jikes/->http://www-124.ibm.com/developerworks/oss/jikes/
@@ -89,6 +96,7 @@
 --suppress-redirect http://www.jmlspecs.org/->http://www.cs.iastate.edu/~leavens/JML/
 --suppress-redirect http://www.jmlspecs.org/->http://www.eecs.ucf.edu/~leavens/JML/
 --suppress-redirect http://www.leelin.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2Fwww.leelin.com-a.googlepages.com%2Fhome
+--suppress-redirect http://www.nps.gov/mora/->http://www.nps.gov/mora/index.htm	
 --suppress-redirect http://www.nsf.gov/home/cise/->http://www.nsf.gov/dir/index.jsp?org=CISE
 --suppress-redirect http://www.pricegrabber.com/->http://www.pricegrabber.com/spiders.php
 --suppress-redirect http://www.rational.com/licensing->http://www-306.ibm.com/software/rational/support/licensing/
@@ -98,9 +106,11 @@
 --suppress-redirect http://www.weather.com/weather/local/USWA0395->http://xhtml.weather.com/xhtml/search
 --suppress-redirect http://yoav.zibin.googlepages.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2FYoav.Zibin.googlepages.com%2Fhome
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
+--suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
 --suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www2.computer.org/portal/web/csdl/doi/	
 --suppress-redirect-prefix http://pag.csail.mit.edu/->http://groups.csail.mit.edu/pag/
 --suppress-redirect-prefix http://pag.csail.mit.edu/->http://www.pag.csail.mit.edu/
 --suppress-redirect-prefix http://pag.csail.mit.edu/~->http://people.csail.mit.edu/
 --suppress-redirect-prefix http://texi2html.cvshome.org/->https://texi2html.cvshome.org/
+--suppress-redirect-prefix http://types.cs.washington.edu/checker-framework/->http://types.cs.washington.edu/checker-framework/current/
 --suppress-redirect-prefix http://www.csail.mit.edu/~->http://people.csail.mit.edu/
