@@ -41,12 +41,17 @@ public class Lookup {
   @Option ("-h Show detailed help information")
   public static boolean help = false;
 
+  // This uses only the first file because the default search path might be
+  // something like user:system and you might want only your version of the
+  // system files.  It might be useful to also support (via another flag,
+  // or by taking over this one, or by the syntax of the separator, or in
+  // some other way) specifying multiple files on the command line.
   /**
    * Specify the colon-separated search list for the file that contains
    * information to be searched.  Only the first file found is used, though
    * it may itself contain include directives.
    */
-  @Option ("-f Specify the search list of files of information")
+  @Option ("-f Specify the search list of files of information; may only be supplied once")
   public static String entry_file = "~/lookup/root";
 
   /**
