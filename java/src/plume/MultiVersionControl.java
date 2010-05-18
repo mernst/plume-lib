@@ -1027,7 +1027,7 @@ public class MultiVersionControl {
         case SVN:
           // Handle some changes.
           // "svn status" also outputs an eighth column, only if you pass the --show-updates switch: [* ]
-          replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~][CM ][L ][+ ][$ ]) *", "$1$2 " + dir + "/"));
+          replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~ ][CM ][L ][+ ][$ ]) *", "$1$2 " + dir + "/"));
           pb.command("svn", "status");
           break;
         default:
