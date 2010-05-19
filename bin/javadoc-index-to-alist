@@ -4,8 +4,7 @@
 
 # Run like this:
 #  javadoc-index-to-alist > ~/.javadoc-index.el
-# With no arguments, it uses a default list from file ~/.javadoc-index-files
-# in this directory.
+# With no arguments, it uses a default list from file ~/.javadoc-index-files .
 # This runs javadoc-escape-anchors if necessary (see its documentation).
 
 
@@ -66,10 +65,10 @@ for my $file (@ARGV) {
     # Get rid of type parameters.
     # This cannot just use the "g" modifier (global replace), because
     # type parameters may be nested:  Enum<E extends Enum<E>>.
-    while (s%&lt;(<A HREF="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</A>( extends <A [^>]*>[^ <]*</A>)?,?)+&gt;%%) {
+    while (s%&lt;(<A HREF="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</A>( extends (\@[^ ]+ )*(<A [^>]*>[^ <]*</A>|[^ ]+))?,?)+&gt;%%) {
       # empty body
     }
-    if (m/\"type parameter in/) { die "Substitution failed:\n$_"; }
+    if (m/\"type parameter in/) { die "Substitution failed, still has \"type parameter in\":\n$_"; }
 
     # This regexp is intentionally not anchored at its beginning or end,
     # because sometimes line breaks are missing.
