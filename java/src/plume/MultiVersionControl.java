@@ -209,6 +209,9 @@ public class MultiVersionControl {
   @Option("Timeout for each command, in seconds")
   public static int timeout = 600;
 
+  @Option("-q Run quietly (e.g., no output about missing directories)")
+  public static boolean quiet;
+
   @Option("Print debugging output")
   public static boolean debug;
 
@@ -1081,7 +1084,7 @@ public class MultiVersionControl {
         System.out.println(dir + ":");
       }
       if (dir.exists()) {
-        if (action == CHECKOUT && ! redo_existing) {
+        if (action == CHECKOUT && ! redo_existing && ! quiet) {
           System.out.println("Skipping checkout (dir already exists): " + dir);
           continue;
         }
@@ -1109,7 +1112,9 @@ public class MultiVersionControl {
           break;
         case STATUS:
         case UPDATE:
-          System.out.println("Cannot find directory: " + dir);
+          if (! quiet) {
+            System.out.println("Cannot find directory: " + dir);
+          }
           continue CHECKOUTLOOP;
         case LIST:
         default:
