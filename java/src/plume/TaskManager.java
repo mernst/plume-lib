@@ -14,7 +14,6 @@ import com.sun.javadoc.*;
  * the tasks associated with a specific milestone or person and total
  * the amount of work required.
  */
-@SuppressWarnings("nullness")   // annotate later
 public class TaskManager {
 
   public enum OutputFormat {short_ascii, short_html, milestone_html};
@@ -59,11 +58,19 @@ public class TaskManager {
     String task;
     String responsible;
     /*@Nullable*/ Date assigned_date;
-    String milestone;
-    /*@Nullable*/ Float duration;
-    /*@Nullable*/ Float completed;
-    String description;
-    String notes;
+    /*@Nullable*/ String milestone;
+    Float duration;
+    Float completed;
+    /*@Nullable*/ String description;
+    /*@Nullable*/ String notes;
+
+    private void checkRep() {
+      assert filename != null : "No filename at line " + line_number;
+      assert task != null : "No task at line " + line_number;
+      assert responsible != null : "No responsible at line " + line_number;
+      assert duration != null : "No duration at line " + line_number;
+      assert completed != null : "No completed at line " + line_number;
+    }
 
     public Task (String body, String filename, long line_number)
       throws IOException {
@@ -79,8 +86,8 @@ public class TaskManager {
         // are specifed as '{item}: {value}'.  Multiple line items
         // have a start line of '{item}>' and an end line of '<{item}'
         // with any number of value lines between.
-        String item = null;
-        String value = null;
+        @NonNull String item;
+        String value;
         if (line.matches ("^[_a-zA-Z]+:.*")) {
           String[] sa = line.split (" *: *", 2);
           item = sa[0];
@@ -102,7 +109,8 @@ public class TaskManager {
 
         // parse the value based on the item and store it away
         if (item.equals ("task")) {
-          assert value != null;
+          if (value == null)
+            throw new Error("Task with no value at line " + line_number);
           task = value;
         } else if (item.equals ("responsible")) {
           if (value == null)
@@ -122,27 +130,32 @@ public class TaskManager {
             }
           }
         } else if (item.equals ("milestone")) {
-          assert value != null;
+          if (value == null)
+            throw new Error("Milestone with no value at line " + line_number);
           milestone = value;
         } else if (item.equals ("duration")) {
           if (value == null)
-            duration = null;
-          else
-            duration = Float.parseFloat (value);
+            // duration is often used without being checked against null
+            throw new Error("Duration with no value at line " + line_number);
+          duration = Float.parseFloat (value);
         } else if (item.equals ("completed")) {
           if (value == null)
-            completed = null;
-          else
-            completed = Float.parseFloat (value);
+            throw new Error("Completed with no value at line " + line_number);
+          completed = Float.parseFloat (value);
         } else if (item.equals("description")) {
+          if (value == null)
+            throw new Error("Description with no value at line " + line_number);
           description = value;
         } else if (item.equals("notes")) {
-          assert value != null;
+          if (value == null)
+            throw new Error("Notes with no value at line " + line_number);
           notes = value;
         } else {
           throw new IOException ("unknown field " + item);
         }
       }
+      // Check that all required fields are set.
+      checkRep();
     }
 
     public static String short_str (float f) {
@@ -152,31 +165,29 @@ public class TaskManager {
         return String.format ("%d", Math.round (f));
     }
 
-    public String toString_short_ascii() {
+    private String completion_str() {
+      return String.format ("%s/%s", short_str (completed),
+                            short_str(duration));
+    }
 
-      String duration_str = String.format ("%s/%s", short_str (completed),
-                                           short_str(duration));
+    public String toString_short_ascii() {
       return String.format ("%-10s %-10s %-6s %s", responsible, milestone,
-                            duration_str, task);
+                            completion_str(), task);
     }
 
     public String toString_short_html(double total) {
-      String duration_str = String.format ("%s/%s", short_str (completed),
-                                           short_str(duration));
       return String.format ("<tr> <td> %s </td><td> %s </td><td> "
                             + "%s </td><td> %f </td><td> %s </td></tr>",
-                            responsible, milestone, duration_str, total, task);
+                            responsible, milestone, completion_str(), total, task);
     }
 
     public String toString_milestone_html(double total) {
-      String duration_str = String.format ("%s/%s", short_str (completed),
-                                           short_str(duration));
       String resp_str = responsible;
       if (resp_str.equals ("none"))
         resp_str = "<font color=red><b>" + resp_str + "</b></font>";
       return String.format ("<tr> <td> %s </td><td> %s </td><td> %.1f </td><td>"
                             + "<a href=%s?file=%s&line=%d> %s </a></td></tr>",
-                            resp_str, duration_str, total,
+                            resp_str, completion_str(), total,
                             "show_task_details.php",
                             filename, line_number, task);
     }
@@ -322,7 +333,7 @@ public class TaskManager {
    * Create a new TaskManger with only those tasks assigned to responsible.
    * All tasks match a responsible value of null
    **/
-  public TaskManager responsible_match (String responsible) {
+  public TaskManager responsible_match (@Nullable String responsible) {
 
     TaskManager tm = new TaskManager();
 
@@ -336,7 +347,7 @@ public class TaskManager {
   }
 
   /** Create a new TaskManger with only those tasks in milestone **/
-  public TaskManager milestone_match (String milestone) {
+  public TaskManager milestone_match (@Nullable String milestone) {
 
     TaskManager tm = new TaskManager();
     if (milestone == null)
