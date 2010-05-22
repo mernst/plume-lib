@@ -925,53 +925,6 @@ public final class UtilMDE {
 
 
   ///////////////////////////////////////////////////////////////////////////
-  /// HashMap
-  ///
-
-  // In Python, inlining this gave a 10x speed improvement.
-  // Will the same be true for Java?
-  /**
-   * Increment the Integer which is indexed by key in the Map.
-   * If the key isn't in the HashMap, it is added.
-   * Throws an error if the key is in the HashMap but maps to a non-Integer.
-   **/
-  public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
-    Integer old = m.get(key);
-    int new_total;
-    if (old == null) {
-      new_total = count;
-    } else {
-      new_total = old.intValue() + count;
-    }
-    return m.put(key, new Integer(new_total));
-  }
-
-  public static <K,V> String mapToString(Map<K,V> m) {
-    StringBuilder sb = new StringBuilder();
-    mapToString(sb, m, "");
-    return sb.toString();
-  }
-
-  /**
-   * Write a multi-line representation of the map into the given Appendable
-   * (e.g., a StringBuilder).
-   */
-  public static <K,V> void mapToString(Appendable sb, Map<K,V> m, String linePrefix) {
-    try {
-      for (Map.Entry<K, V> entry : m.entrySet()) {
-        sb.append(linePrefix);
-        sb.append(entry.getKey().toString());
-        sb.append(" => ");
-        sb.append(entry.getValue().toString());
-        sb.append(lineSep);
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-
-  ///
   /// Hashing
   ///
 
@@ -1338,6 +1291,67 @@ public final class UtilMDE {
     }
     return result;
     */
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////
+  /// Map
+  ///
+
+  // In Python, inlining this gave a 10x speed improvement.
+  // Will the same be true for Java?
+  /**
+   * Increment the Integer which is indexed by key in the Map.
+   * If the key isn't in the Map, it is added.
+   * Throws an error if the key is in the Map but maps to a non-Integer.
+   **/
+  public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
+    Integer old = m.get(key);
+    int new_total;
+    if (old == null) {
+      new_total = count;
+    } else {
+      new_total = old.intValue() + count;
+    }
+    return m.put(key, new Integer(new_total));
+  }
+
+  public static <K,V> String mapToString(Map<K,V> m) {
+    StringBuilder sb = new StringBuilder();
+    mapToString(sb, m, "");
+    return sb.toString();
+  }
+
+  /**
+   * Write a multi-line representation of the map into the given Appendable
+   * (e.g., a StringBuilder).
+   */
+  public static <K,V> void mapToString(Appendable sb, Map<K,V> m, String linePrefix) {
+    try {
+      for (Map.Entry<K, V> entry : m.entrySet()) {
+        sb.append(linePrefix);
+        sb.append(entry.getKey().toString());
+        sb.append(" => ");
+        sb.append(entry.getValue().toString());
+        sb.append(lineSep);
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /** Returns a sorted version of m.keySet(). */
+  public static <K extends Comparable<? super K>,V> Collection<K> sortedKeySet(Map<K,V> m) {
+    ArrayList<K> theKeys = new ArrayList<K> (m.keySet());
+    Collections.sort (theKeys);
+    return theKeys;
+  }
+
+  /** Returns a sorted version of m.keySet(). */
+  public static <K,V> Collection<K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
+    ArrayList<K> theKeys = new ArrayList<K> (m.keySet());
+    Collections.sort (theKeys, comparator);
+    return theKeys;
   }
 
 
