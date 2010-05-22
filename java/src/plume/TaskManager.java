@@ -86,7 +86,7 @@ public class TaskManager {
         // are specifed as '{item}: {value}'.  Multiple line items
         // have a start line of '{item}>' and an end line of '<{item}'
         // with any number of value lines between.
-        @NonNull String item;
+        /*@NonNull*/ String item;
         String value;
         if (line.matches ("^[_a-zA-Z]+:.*")) {
           String[] sa = line.split (" *: *", 2);
@@ -333,7 +333,7 @@ public class TaskManager {
    * Create a new TaskManger with only those tasks assigned to responsible.
    * All tasks match a responsible value of null
    **/
-  public TaskManager responsible_match (@Nullable String responsible) {
+  public TaskManager responsible_match (/*@Nullable*/ String responsible) {
 
     TaskManager tm = new TaskManager();
 
@@ -347,7 +347,7 @@ public class TaskManager {
   }
 
   /** Create a new TaskManger with only those tasks in milestone **/
-  public TaskManager milestone_match (@Nullable String milestone) {
+  public TaskManager milestone_match (/*@Nullable*/ String milestone) {
 
     TaskManager tm = new TaskManager();
     if (milestone == null)
