@@ -115,7 +115,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Kills the subprocess.
-   * @see Process.destroy()
+   * @see Process#destroy()
    **/
   public void destroy() {
     p.destroy();
@@ -123,7 +123,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Returns the exit value for the subprocess.
-   * @see Process.getErrorStream()
+   * @see Process#getErrorStream()
    */
   public int exitValue() {
     // I'm not sure whether this is necessary; the Process.destroy()
@@ -137,7 +137,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Gets the error stream of the subprocess.
-   * @see Process.getErrorStream()
+   * @see Process#getErrorStream()
    */
   public InputStream getErrorStream() {
     if (cached_stderr == null) {
@@ -156,7 +156,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Gets the input stream of the subprocess.
-   * @see Process.getInputStream()
+   * @see Process#getInputStream()
    */
   public InputStream getInputStream() {
     if (cached_stdout == null) {
@@ -179,7 +179,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Gets the output stream of the subprocess.
-   * @see Process.getOutputStream()
+   * @see Process#getOutputStream()
    */
   public OutputStream getOutputStream() {
     return p.getOutputStream();
@@ -187,7 +187,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Causes the current thread to wait, if necessary, until the process represented by this Process object has terminated.
-   * @see Process.waitFor()
+   * @see Process#waitFor()
    */
   public int waitFor() throws InterruptedException {
     return p.waitFor();
