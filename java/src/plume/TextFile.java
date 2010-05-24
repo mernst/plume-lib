@@ -4,10 +4,15 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+// Deprecated.  Use MultiReader instead.
+
 // This code was originally taken from
 // http://www.onjava.com/pub/a/onjava/2005/04/20/javaIAN5.html, then
-// modified.
-// (Also see http://www.java2s.com/Code/Java/Language-Basics/Javaforinforinlinebylineiterationthroughatextfile.htm which looks very similar and may in fact be another version of the same program by the same person.)
+// modified.  (Also see
+// http://www.java2s.com/Code/Java/Language-Basics/Javaforinforinlinebylineiterationthroughatextfile.htm
+// which looks very similar and may in fact be another version of the same
+// program by the same person.)
+
 // It's been modified enough that I should just re-write from scratch.
 
 // A problem with this class is that it is difficult to give good error
