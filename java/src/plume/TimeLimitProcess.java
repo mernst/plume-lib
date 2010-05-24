@@ -246,7 +246,7 @@ public class TimeLimitProcess extends Process {
   // attempt failed.
 
   private class StdoutStreamReaderThread extends Thread {
-    /*@NonNullVariable("cached_stdout")*/
+    /*@NonNullOnEntry("cached_stdout")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
@@ -259,7 +259,7 @@ public class TimeLimitProcess extends Process {
   }
 
   private class StderrStreamReaderThread extends Thread {
-    /*@NonNullVariable("cached_stderr")*/
+    /*@NonNullOnEntry("cached_stderr")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
