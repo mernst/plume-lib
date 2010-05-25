@@ -44,7 +44,10 @@ public final class TestPlume extends TestCase {
     if ((args.length > 0) && args[0].equals("--shortrun")) {
       short_run = true;
     }
-    junit.textui.TestRunner.run(new TestSuite(TestPlume.class));
+    TestResult tr = junit.textui.TestRunner.run(new TestSuite(TestPlume.class));
+    if (tr.errorCount() > 0 || tr.failureCount() > 0) {
+      System.exit(1);
+    }
   }
   public static void mainFake(String[] args) {
     testTimeLimitProcess();
@@ -1445,13 +1448,18 @@ public final class TestPlume extends TestCase {
     }
   }
 
+  /**
+   * On a heavily-loaded machine, this test fails.
+   * Try again when the load is lower.
+   * (Better might be exponential backoff up to some limit.)
+   */
   public static void testTimeLimitProcess() {
     testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
     testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
     // This is expected to fail because of trying to read a closed stream.
     // printFive(3, false);
-    testPrintFive(1000, 500, true, "out0 ", "err0 ");
-    testPrintFive(1000, 1500, true, "out0 out1 ", "err0 err1 ");
+    testPrintFive(2000, 1000, true, "out0 ", "err0 ");
+    testPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
   }
 
 
