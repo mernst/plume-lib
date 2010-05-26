@@ -1456,10 +1456,14 @@ public final class TestPlume extends TestCase {
   public static void testTimeLimitProcess() {
     testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
     testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+
+    // These are too timing-dependent -- they sometimes succeed and
+    // sometimes fail -- so leave them commented out.
+    // testPrintFive(2000, 1000, true, "out0 ", "err0 ");
+    // testPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
+
     // This is expected to fail because of trying to read a closed stream.
     // printFive(3, false);
-    testPrintFive(2000, 1000, true, "out0 ", "err0 ");
-    testPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
   }
 
 
