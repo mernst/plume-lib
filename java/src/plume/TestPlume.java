@@ -1454,8 +1454,8 @@ public final class TestPlume extends TestCase {
    * (Better might be exponential backoff up to some limit.)
    */
   public static void testTimeLimitProcess() {
-    testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
-    testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    // testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    // testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
 
     // These are too timing-dependent -- they sometimes succeed and
     // sometimes fail -- so leave them commented out.
