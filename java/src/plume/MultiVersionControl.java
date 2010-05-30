@@ -210,7 +210,7 @@ public class MultiVersionControl {
   public static int timeout = 600;
 
   @Option("-q Run quietly (e.g., no output about missing directories)")
-  public static boolean quiet;
+  public static boolean quiet = true;
 
   @Option("Print debugging output")
   public static boolean debug;
