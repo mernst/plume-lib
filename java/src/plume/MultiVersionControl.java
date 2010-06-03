@@ -593,7 +593,11 @@ public class MultiVersionControl {
    * descendants is a version control directory.
    */
   private static void findCheckouts(File dir, Set<Checkout> checkouts, List<File> ignoreDirs) {
-    assert dir.isDirectory();
+    if (! dir.isDirectory()) {
+      // This should never happen, unless the directory is deleted between
+      // the call to findCheckouts and the test of isDirectory.
+      return;
+    }
     if (ignoreDirs.contains(dir)) {
       return;
     }
