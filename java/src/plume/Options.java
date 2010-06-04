@@ -33,7 +33,7 @@ import com.sun.javadoc.FieldDoc;
  *      MyProgram myInstance = new MyProgram();
  *      Options options = new Options("MyProgram [options] infile outfile",
  *                                    myInstance, MyUtilityClass.class);
- *      // Sets fields in object instance, and sets static fields in
+ *      // Sets fields in object myInstance, and sets static fields in
  *      // class MyUtilityClass.
  *      // Returns the original command line, with all options removed.
  *      String[] file_args = options.parse_or_usage (args);
@@ -43,7 +43,7 @@ import com.sun.javadoc.FieldDoc;
  * The {@link Option} annotation on a field specifies user documentation
  * and, optionally, a one-character short name that users may supply on the
  * command line.  The long name is taken from the name of the variable;
- * when the name contains an underscore, users may substitute a hyphen on
+ * when the name contains an underscore, the user may substitute a hyphen on
  * the command line instead. <p>
  *
  * On the command line, the values for options are specified in the form
@@ -58,15 +58,15 @@ import com.sun.javadoc.FieldDoc;
  * program (along with any preceding non-option arguments) without being
  * scanned for options. <p>
  *
- * An option may be specified multiple times.  If the field is a
- * list, each entry is be added to the list.  If the field is not a
- * list, then only the last occurrence is used (subsequent occurrences
- * overwrite the previous value).  <p>
+ * A user may provide an option multiple times on the command line.  If the
+ * field is a list, each entry is be added to the list.  If the field is
+ * not a list, then only the last occurrence is used (subsequent
+ * occurrences overwrite the previous value).  <p>
  *
- * The {@link Unpublicized} annotation causes an option not to be displayed
+ * The @{@link Unpublicized} annotation causes an option not to be displayed
  * in the usage message.  This can be useful for options that are
- * preliminary, experimental, or for internal purposes only.  The {@link
- * Unpublicized} annotation must be specified in addition to the {@link
+ * preliminary, experimental, or for internal purposes only.  The @{@link
+ * Unpublicized} annotation must be specified in addition to the @{@link
  * Option} annotation. <p> 
  *
  * The field may be of the following types:
@@ -106,7 +106,7 @@ import com.sun.javadoc.FieldDoc;
  *  }
  *</pre>
  *
- * Limitations: <ul>
+ * <b>Limitations:</b> <ul>
  *
  *  <li> Short options are only supported as separate entries
  *  (e.g., "-a -b") and not as a single group (e.g., "-ab").
@@ -124,6 +124,7 @@ import com.sun.javadoc.FieldDoc;
  * </ul>
  *
  * @see plume.Option
+ * @see plume.Unpublicized
  **/
 public class Options {
 
