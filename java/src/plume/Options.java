@@ -71,10 +71,10 @@ import com.sun.javadoc.FieldDoc;
  *
  * The field may be of the following types:
  * <ul>
- *   <li>Primitive types:  boolean, int, and double.
+ *   <li>Primitive types:  boolean, int, long, float, double.
  *       (Primitives can also be represented as wrappers (Boolean,
- *       Integer, Double).  Use of a wrapper type allows the argument
- *       to have no default value.)
+ *       Integer, Long, Float, Double).  Use of a wrapper type allows the
+ *       argument to have no default value.)
  *   <li>Reference types that have a constructor with a single string
  *       parameter.
  *   <li>java.util.regex.Pattern.
@@ -219,7 +219,7 @@ public class Options {
         ParameterizedType pt = (ParameterizedType) gen_type;
         Type raw_type = pt.getRawType();
         if (!raw_type.equals (List.class))
-          throw new Error ("Unsupported option type " + pt);
+          throw new Error ("@Option does not support type " + pt + " for field " + field);
         if (default_obj == null)
           throw new Error ("List option " + field + " must be initialized");
         @SuppressWarnings("unchecked")
@@ -765,32 +765,50 @@ public class Options {
       if (type.isPrimitive()) {
         if (type == Boolean.TYPE) {
           boolean val;
-          arg_value = arg_value.toLowerCase();
-          if (arg_value.equals ("true") || (arg_value.equals ("t")))
+          String arg_value_lowercase = arg_value.toLowerCase();
+          if (arg_value_lowercase.equals ("true") || (arg_value_lowercase.equals ("t")))
             val = true;
-          else if (arg_value.equals ("false") || arg_value.equals ("f"))
+          else if (arg_value_lowercase.equals ("false") || arg_value_lowercase.equals ("f"))
             val = false;
           else
-            throw new ArgException ("Bad boolean value for %s: %s", arg_name,
-                                    arg_value);
+            throw new ArgException ("Value \"%s\" for argument %s is not a boolean",
+                                    arg_value, arg_name);
           arg_value = (val) ? "true" : "false";
           // System.out.printf ("Setting %s to %s%n", arg_name, val);
           f.setBoolean (oi.obj, val);
         } else if (type == Integer.TYPE) {
-          int val = 0;
+          int val;
           try {
             val = Integer.decode (arg_value);
           } catch (Exception e) {
-            throw new ArgException ("Invalid integer (%s) for argument %s",
+            throw new ArgException ("Value \"%s\" for argument %s is not an integer",
                                     arg_value, arg_name);
           }
           f.setInt (oi.obj, val);
+        } else if (type == Long.TYPE) {
+          long val;
+          try {
+            val = Long.decode (arg_value);
+          } catch (Exception e) {
+            throw new ArgException ("Value \"%s\" for argument %s is not a long integer",
+                                    arg_value, arg_name);
+          }
+          f.setLong (oi.obj, val);
+        } else if (type == Float.TYPE) {
+          Float val;
+          try {
+            val = Float.valueOf (arg_value);
+          } catch (Exception e) {
+            throw new ArgException ("Value \"%s\" for argument %s is not a float",
+                                    arg_value, arg_name);
+          }
+          f.setFloat (oi.obj, val);
         } else if (type == Double.TYPE) {
-          Double val = 0.0;
+          Double val;
           try {
             val = Double.valueOf (arg_value);
           } catch (Exception e) {
-            throw new ArgException ("Invalid double (%s) for argument %s",
+            throw new ArgException ("Value \"%s\" for argument %s is not a double",
                                     arg_value, arg_name);
           }
           f.setDouble (oi.obj, val);
