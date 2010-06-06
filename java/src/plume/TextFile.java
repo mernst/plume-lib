@@ -48,31 +48,31 @@ public class TextFile implements Iterable<String> {
     /*@Nullable*/ String charsetName;
 
     public TextFile(String filename)
-	throws IOException
+        throws IOException
     {
         this(filename, null);
     }
 
     public TextFile(String filename, /*@Nullable*/ String charsetName)
-	throws IOException
+        throws IOException
     {
         this(new File(filename), charsetName);
     }
 
     public TextFile(File f)
-	throws IOException
+        throws IOException
     {
         this(f, null);
     }
 
     public TextFile(File f, /*@Nullable*/ String charsetName)
-	throws IOException
+        throws IOException
     {
-	if (!f.exists())
-	    throw new FileNotFoundException(f.getPath());
-	if (!f.canRead())
-	    throw new IOException("Can't read: " +
-				  f.getPath());
+        if (!f.exists())
+            throw new FileNotFoundException(f.getPath());
+        if (!f.canRead())
+            throw new IOException("Can't read: " +
+                                  f.getPath());
         // Not "this(new FileInputStream(f), charsetName);"
         // because a call to "this" must be the first thing in a constructor.
         this.is = new FileInputStream(f);
@@ -87,74 +87,74 @@ public class TextFile implements Iterable<String> {
     public TextFile(InputStream is, /*@Nullable*/ String charsetName)
     {
         this.is = is;
-	this.charsetName = charsetName;
+        this.charsetName = charsetName;
     }
 
     public Iterator<String> iterator() {
-	try {
-	    return new TextFileIterator(is, charsetName);
-	}
-	catch(IOException e) {
-	    throw new IllegalArgumentException(e);
-	}
+        try {
+            return new TextFileIterator(is, charsetName);
+        }
+        catch(IOException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
 
     static class TextFileIterator
-	implements Iterator<String>
+        implements Iterator<String>
     {
-	LineNumberReader in;
-	/*@Nullable*/ String nextline;
-	boolean closed = false;
+        LineNumberReader in;
+        /*@Nullable*/ String nextline;
+        boolean closed = false;
 
-	public TextFileIterator(File f, /*@Nullable*/ String charsetName)
-	    throws IOException
-	{
-	    this(new FileInputStream(f), charsetName);
+        public TextFileIterator(File f, /*@Nullable*/ String charsetName)
+            throws IOException
+        {
+            this(new FileInputStream(f), charsetName);
         }
 
-	public TextFileIterator(InputStream is, /*@Nullable*/ String charsetName)
-	    throws IOException
-	{
-	    Reader isr;
+        public TextFileIterator(InputStream is, /*@Nullable*/ String charsetName)
+            throws IOException
+        {
+            Reader isr;
             if (charsetName == null) {
                 isr = new InputStreamReader(is);
             } else {
                 isr = new InputStreamReader(is, charsetName);
             }
-	    in = new LineNumberReader(isr);
-	    getNextLine();
-	}
+            in = new LineNumberReader(isr);
+            getNextLine();
+        }
 
-	public boolean hasNext() {
-	    return nextline != null;
-	}
+        public boolean hasNext() {
+            return nextline != null;
+        }
 
-	public String next() {
+        public String next() {
             if (nextline == null) {
                 throw new NoSuchElementException();
             }
-	    String returnValue = nextline;
-	    getNextLine();
-	    return returnValue;
-	}
+            String returnValue = nextline;
+            getNextLine();
+            return returnValue;
+        }
 
-	public void remove() {
-	    throw new UnsupportedOperationException();
-	}
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
 
-	void getNextLine() {
-	    if (!closed) {
-		try { nextline = in.readLine(); }
-		catch(IOException e) {
-		    throw new IllegalArgumentException(e);
-		}
-		if (nextline == null) {
-		    try { in.close(); }
-		    catch(IOException ignored) {}
-		    closed = true;
-		}
-	    }
-	}
+        void getNextLine() {
+            if (!closed) {
+                try { nextline = in.readLine(); }
+                catch(IOException e) {
+                    throw new IllegalArgumentException(e);
+                }
+                if (nextline == null) {
+                    try { in.close(); }
+                    catch(IOException ignored) {}
+                    closed = true;
+                }
+            }
+        }
     }
 }

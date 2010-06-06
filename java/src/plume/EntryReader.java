@@ -216,16 +216,16 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
 
   private static class DummyReader extends Reader {
-    public void 	close() { throw new Error("DummyReader"); }
-    public void 	mark(int readAheadLimit) { throw new Error("DummyReader"); }
-    public boolean 	markSupported() { throw new Error("DummyReader"); }
-    public int 	read() { throw new Error("DummyReader"); }
-    public int 	read(char[] cbuf) { throw new Error("DummyReader"); }
-    public int 	read(char[] cbuf, int off, int len) { throw new Error("DummyReader"); }
-    public int 	read(CharBuffer target) { throw new Error("DummyReader"); }
-    public boolean 	ready() { throw new Error("DummyReader"); }
-    public void 	reset() { throw new Error("DummyReader"); }
-    public long 	skip(long n) { throw new Error("DummyReader"); }
+    public void close() { throw new Error("DummyReader"); }
+    public void mark(int readAheadLimit) { throw new Error("DummyReader"); }
+    public boolean markSupported() { throw new Error("DummyReader"); }
+    public int read() { throw new Error("DummyReader"); }
+    public int read(char[] cbuf) { throw new Error("DummyReader"); }
+    public int read(char[] cbuf, int off, int len) { throw new Error("DummyReader"); }
+    public int read(CharBuffer target) { throw new Error("DummyReader"); }
+    public boolean ready() { throw new Error("DummyReader"); }
+    public void reset() { throw new Error("DummyReader"); }
+    public long skip(long n) { throw new Error("DummyReader"); }
   }
 
 
