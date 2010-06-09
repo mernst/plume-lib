@@ -1,5 +1,6 @@
-// The three files
+// The four files
 //   Option.java
+//   OptionGroup.java
 //   Options.java
 //   Unpublicized.java
 // together comprise the implementation of command-line processing.
@@ -32,4 +33,5 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 public @interface Option {
   String value();
+  String[] aliases() default "";
 }

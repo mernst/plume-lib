@@ -1,5 +1,6 @@
-// The three files
+// The four files
 //   Option.java
+//   OptionGroup.java
 //   Options.java
 //   Unpublicized.java
 // together comprise the implementation of command-line processing.
@@ -40,16 +41,18 @@ import com.sun.javadoc.FieldDoc;
  *      ...
  * </pre>
  *
- * The {@link Option} annotation on a field specifies user documentation
+ * The @{@link Option} annotation on a field specifies user documentation
  * and, optionally, a one-character short name that users may supply on the
  * command line.  The long name is taken from the name of the variable;
  * when the name contains an underscore, the user may substitute a hyphen on
  * the command line instead. <p>
  *
  * On the command line, the values for options are specified in the form
- * '--longname=value', '-shortname=value', '--longname value', or
- * '-shortname value'.  The value is mandatory for all options except
- * booleans.  Booleans are set to true if no value is specified. <p>
+ * '--longname=value', '-shortname=value', '--longname value', or '-shortname
+ * value'.  If {@link #use_single_dash(boolean)} is true, then the long names
+ * take the form '-longname=value' or '-longname value'.  The value is
+ * mandatory for all options except booleans.  Booleans are set to true if no
+ * value is specified. <p>
  *
  * All arguments that start with '-' are processed as options.  To
  * terminate option processing at the first non-option argument, see {@link
@@ -61,14 +64,59 @@ import com.sun.javadoc.FieldDoc;
  * A user may provide an option multiple times on the command line.  If the
  * field is a list, each entry is be added to the list.  If the field is
  * not a list, then only the last occurrence is used (subsequent
- * occurrences overwrite the previous value).  <p>
+ * occurrences overwrite the previous value). <p>
  *
+ * <b>Unpublicized options</b> <p>
  * The @{@link Unpublicized} annotation causes an option not to be displayed
  * in the usage message.  This can be useful for options that are
  * preliminary, experimental, or for internal purposes only.  The @{@link
  * Unpublicized} annotation must be specified in addition to the @{@link
  * Option} annotation. <p> 
  *
+ * <b>Option groups</b> <p>
+ * The @{@link OptionGroup} annotation can be used to assign a name to a set of
+ * related options.  This is useful for providing organization when working with
+ * many options.  Options in the same group are displayed under the same heading
+ * in usage texts.  Option groups themselves can be unpublicized causing the
+ * set of options belonging to the group to not be displayed in the default
+ * usage message. <p>
+ *
+ * The @{@link OptionGroup} annotation must be specified on a field in addition
+ * to an @{@link Option} annotation.  The <code>@OptionGroup</code> annotation
+ * acts like a delimiter&#151;all <code>@Option</code>-annotated fields up to
+ * the next <code>@OptionGroup</code> annotation belong to the same group.
+ * When using option groups, the first <code>@Option</code>-annotated field of
+ * every class and object passed to the {@link #Options(String, Object...)}
+ * constructor must have an <code>@OptionGroup</code> annotation.  Furthermore,
+ * the first parameter of an <code>@OptionGroup</code> annotation, its name,
+ * must be unique across all classes and objects passed to the {@link
+ * #Options(String, Object...)} constructor. <p>
+ *
+ * When an @{@link Unpublicized} annotation is used on a field that is in an
+ * unpublicized option group, that field is excluded in <b>all</b> usage
+ * messages, even when passing the group's name explicitly as a parameter to
+ * {@link #usage(String...)}. <p>
+ *
+ * <b>Option aliases</b> <p>
+ * The @{@link Option} annotation has an optional parameter <code>aliases</code>
+ * which accepts an array of strings.  Each string in the array is an alias for
+ * the option being defined and can be used in place of an option's long name
+ * or short name.  Aliases should start with a single dash or double dash.  It
+ * is the user's responsibility to ensure that aliases does not cause ambiguity
+ * and do not collide with other options. <p>
+ *
+ * Note that parameters must be named when passing more than one parameter to
+ * an annotation, as in the following examples. <p>
+ * For option groups:
+ * <pre>
+ *     &#64;OptionGroup(value="Debugging Options", unpublicized=true)
+ * </pre>
+ * For option aliases:
+ * <pre>
+ *     &#64;Option(value="-h Print the detailed help", aliases={"-help", "--help"})
+ * </pre>
+ *
+ * <b>Supported field types</b> <p>
  * The field may be of the following types:
  * <ul>
  *   <li>Primitive types:  boolean, int, long, float, double.
@@ -91,7 +139,7 @@ import com.sun.javadoc.FieldDoc;
  *  public static class Test {
  *
  *    &#64;Option ("-o &lt;filename&gt; the output file ")
- *    public static File outfile = "/tmp/foobar";
+ *    public static File outfile = new File("/tmp/foobar");
  *
  *    &#64;Option ("-i ignore case")
  *    public static boolean ignore_case;
@@ -106,7 +154,10 @@ import com.sun.javadoc.FieldDoc;
  *  }
  *</pre>
  *
- * <b>Limitations:</b> <ul>
+ * For an example of this library being used in practice see {@link
+ * plume.Lookup}. <p>
+ *
+ * <b>Limitations</b> <ul>
  *
  *  <li> Short options are only supported as separate entries
  *  (e.g., "-a -b") and not as a single group (e.g., "-ab").
@@ -124,9 +175,11 @@ import com.sun.javadoc.FieldDoc;
  * </ul>
  *
  * @see plume.Option
+ * @see plume.OptionGroup
  * @see plume.Unpublicized
  **/
 public class Options {
+  private static String eol = System.getProperty("line.separator");
 
   /** Information about an option **/
   private class OptionInfo {
@@ -145,6 +198,12 @@ public class Options {
 
     /** Long argument name **/
     String long_name;
+
+    /** Aliases for this option **/
+    String[] aliases;
+
+    /** True if this option has at least one alias **/
+    boolean has_alias;
 
     /** Argument description **/
     String description;
@@ -194,6 +253,10 @@ public class Options {
       this.obj = obj;
       this.base_type = field.getType();
       this.unpublicized = unpublicized;
+      this.aliases = option.aliases();
+
+      if (aliases[0].length() > 0) // better way to write this?
+          this.has_alias = true;
 
       // The long name is the name of the field
       long_name = field.getName();
@@ -272,9 +335,13 @@ public class Options {
     /**
      * Returns a short synopsis of the option in the form
      * -s --long=<type>
+     * <strong>or</strong>
+     * -s -long=<type>
+     * if use_single_dash is true.
      **/
     public String synopsis() {
-      String name = "--" + long_name;
+      String prefix = use_single_dash ? "-" : "--";
+      String name = prefix + long_name;
       if (short_name != null)
         name = String.format ("-%s %s", short_name, name);
       name += String.format ("=<%s>", type_name);
@@ -285,11 +352,12 @@ public class Options {
      * Returns a one-line description of the option.
      */
     public String toString() {
+      String prefix = use_single_dash ? "-" : "--";
       String short_name_str = "";
       if (short_name != null)
         short_name_str = "-" + short_name + " ";
-      return String.format ("%s--%s field %s", short_name_str, long_name,
-                            field);
+      return String.format ("%s%s%s field %s", short_name_str, prefix,
+                            long_name, field);
     }
 
     /** Returns the class that declares this option. **/
@@ -297,6 +365,37 @@ public class Options {
       return field.getDeclaringClass();
     }
   }
+
+  /** Information about an option group **/
+  private class OptionGroupInfo {
+
+    /** The name of this option group **/
+    String name;
+
+    /** If true, this group of options will not be printed in usage output by
+     * default. However, the usage information for this option group can be
+     * printed by specifying the group explicitly in the call to {@link
+     * #usage}.
+     */
+    boolean unpublicized;
+
+    /** List of options that belong to this group **/
+    ArrayList<OptionInfo> optionList;
+
+    OptionGroupInfo(String name, boolean unpublicized) {
+      optionList = new ArrayList<OptionInfo>();
+      this.name = name;
+      this.unpublicized = unpublicized;
+    }
+
+    OptionGroupInfo(OptionGroup optionGroup) {
+      optionList = new ArrayList<OptionInfo>();
+      this.name = optionGroup.value();
+      this.unpublicized = optionGroup.unpublicized();
+    }
+
+  }
+
 
   /**
    * Whether to parse options after a non-option command-line argument.
@@ -317,12 +416,28 @@ public class Options {
   private Map<String,OptionInfo> name_map
     = new LinkedHashMap<String,OptionInfo>();
 
+  /** Map from option group name to option group information **/
+  private Map<String, OptionGroupInfo> group_map
+    = new LinkedHashMap<String, OptionGroupInfo>();
+
   /**
-   * Convert underscores to dashes in long options in usage messages.  Uses
+   * True if option groups are being used. False if option groups are not
+   * being used and hence all @OptionGroup annotations will be ignored.
+   */
+  private Boolean use_groups = null;
+
+  /**
+   * Convert underscores to dashes in long options in usage messages.  Users
    * may specify either the the underscore or dashed name on the command
    * line.
    */
   private boolean use_dashes = true;
+
+  /**
+   * When true, long options take the form -longOption with a single dash,
+   * rather than the default --longOption with two dashes.
+   */
+  private boolean use_single_dash = false;
 
   @Option ("Split arguments to lists on blanks")
   public static boolean split_lists = false;
@@ -367,53 +482,73 @@ public class Options {
 
     // Loop through each specified object or class
     for (Object obj : args) {
+      boolean is_class = obj instanceof Class<?>;
+      String current_group = null;
 
-      if (obj instanceof Class<?>) {
-
+      Field[] fields;
+      if (is_class) {
         if (main_class == Void.TYPE)
           main_class = (Class<?>) obj;
-
-        Field[] fields = ((Class<?>) obj).getDeclaredFields();
-        for (Field f : fields) {
-          debug_options.log ("Considering field %s of object %s with annotations %s%n",
-                             f,
-                             obj,
-                             Arrays.toString(f.getDeclaredAnnotations()));
-          Option option = f.getAnnotation (Option.class);
-          if (option == null)
-            continue;
-          boolean unpublicized = f.getAnnotation(Unpublicized.class) != null;
-          if (!Modifier.isStatic (f.getModifiers()))
-            throw new Error ("non-static option " + f + " in class " + obj);
-          options.add (new OptionInfo (f, option, null, unpublicized));
-        }
-
-      } else { // must be an object that contains option fields
-
+        fields = ((Class<?>) obj).getDeclaredFields();
+      } else {
         if (main_class == Void.TYPE)
           main_class = obj.getClass();
-
-        Field[] fields = obj.getClass().getDeclaredFields();
-        for (Field f : fields) {
-          Option option;
-          try {
-            option = f.getAnnotation (Option.class);
-          } catch (Exception e) {
-            // Can get
-            //   java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
-            // when an annotation is not present at run time (example: @NonNull)
-            System.out.printf("Exception in call to f.getAnnotation(Option.class)%n  for f=%s%n  %s%nClasspath =%n", f, e.getMessage());
-            // e.printStackTrace();
-            JWhich.printClasspath();
-            option = null;
-          }
-          if (option == null)
-            continue;
-          boolean unpublicized = f.getAnnotation(Unpublicized.class) != null;
-          options.add (new OptionInfo (f, option, obj, unpublicized));
-        }
+        fields = obj.getClass().getDeclaredFields();
       }
-    }
+
+
+      for (Field f : fields) {
+        debug_options.log ("Considering field %s of object %s with annotations %s%n",
+                           f, obj, Arrays.toString(f.getDeclaredAnnotations()));
+        Option option = safeGetAnnotation(f, Option.class);
+        if (option == null)
+          continue;
+
+        boolean unpublicized = safeGetAnnotation(f, Unpublicized.class) != null;
+
+        if (is_class && !Modifier.isStatic (f.getModifiers()))
+          throw new Error ("non-static option " + f + " in class " + obj);
+
+        OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
+        options.add(oi);
+
+        OptionGroup optionGroup = safeGetAnnotation(f, OptionGroup.class);
+
+        if (use_groups == Boolean.FALSE) {
+          if (optionGroup != null)
+            throw new Error("missing @OptionGroup annotation on the first " +
+                            "@Option-annotated field of class " + main_class);
+          else
+            continue;
+        }
+
+        if (use_groups == null) {
+          if (optionGroup != null) {
+            use_groups = Boolean.TRUE;
+          } else {
+            use_groups = Boolean.FALSE;
+            continue;
+          }
+        }
+
+        // use_groups is true at this point
+        if (current_group == null && optionGroup == null) {
+          throw new Error("missing @OptionGroup annotation in field "
+                          + f + " of class " + obj);
+        } else if (optionGroup != null) {
+          String name = optionGroup.value();
+          if (group_map.containsKey(name))
+              throw new Error("option group " + name + " declared twice");
+          OptionGroupInfo gi = new OptionGroupInfo(optionGroup);
+          group_map.put(name, gi);
+          current_group = name;
+        } // current_group is non-null at this point
+        group_map.get(current_group).optionList.add(oi);
+
+      } // loop through fields
+    } // loop through args
+
+    String prefix = use_single_dash ? "-" : "--";
 
     // Add each option to the option name map
     for (OptionInfo oi : options) {
@@ -422,12 +557,38 @@ public class Options {
           throw new Error ("short name " + oi + " appears twice");
         name_map.put ("-" + oi.short_name, oi);
       }
-      if (name_map.containsKey ("--" + oi.long_name))
+      if (name_map.containsKey (prefix + oi.long_name))
         throw new Error ("long name " + oi + " appears twice");
-      name_map.put ("--" + oi.long_name, oi);
+      name_map.put (prefix + oi.long_name, oi);
       if (use_dashes && oi.long_name.contains ("-"))
-        name_map.put ("--" + oi.long_name.replace ('-', '_'), oi);
+        name_map.put (prefix + oi.long_name.replace ('-', '_'), oi);
+      if (oi.has_alias) {
+        for (String alias : oi.aliases) {
+          if (name_map.containsKey (alias))
+            throw new Error ("alias " + oi + " appears twice");
+          name_map.put (alias, oi);
+        }
+      }
     }
+  }
+
+  private <T extends Annotation> T
+  safeGetAnnotation(Field f, Class<T> annotationClass) {
+    T annotation;
+    try {
+      annotation = f.getAnnotation(annotationClass);
+    } catch (Exception e) {
+      // Can get
+      //   java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
+      // when an annotation is not present at run time (example: @NonNull)
+      System.out.printf("Exception in call to f.getAnnotation(%s)%n  for f=%s%n"
+                        + "  %s%nClasspath =%n", annotationClass, f, e.getMessage());
+      //e.printStackTrace();
+      JWhich.printClasspath();
+      annotation = null;
+    }
+
+    return annotation;
   }
 
   /**
@@ -448,6 +609,15 @@ public class Options {
   }
 
   /**
+   * If true, long options (those derived from field names) will be parsed with
+   * a single dash prefix as in -longOption.  The default is false and long
+   * options will be parsed with a double dash prefix as in --longOption.
+   */
+  public void use_single_dash (boolean val) {
+    use_single_dash = val;
+  }
+
+  /**
    * Parses a command line and sets the options accordingly.
    * @return all non-option arguments
    * @throws ArgException if the command line contains unknown option or
@@ -463,7 +633,7 @@ public class Options {
       String arg = args[ii];
       if (arg.equals ("--")) {
         ignore_options = true;
-      } else if (arg.startsWith ("--") && !ignore_options) {
+      } else if ((arg.startsWith ("--") || arg.startsWith("-")) && !ignore_options) {
         int eq_pos = arg.indexOf ('=');
         String arg_name = arg;
         String arg_value = null;
@@ -482,24 +652,6 @@ public class Options {
         }
         // System.out.printf ("arg_name = '%s', arg_value='%s'%n", arg_name,
         //                    arg_value);
-        set_arg (oi, arg_name, arg_value);
-      } else if (arg.startsWith ("-") && !ignore_options) {
-        int eq_pos = arg.indexOf ('=');
-        String arg_name = arg;
-        String arg_value = null;
-        if (eq_pos > 0) {
-          arg_name = arg.substring (0, eq_pos);
-          arg_value = arg.substring (eq_pos+1);
-        }
-        OptionInfo oi = name_map.get (arg_name);
-        if (oi == null)
-          throw new ArgException ("unknown option '" + arg + "'");
-        if (oi.argument_required() && (arg_value == null)) {
-          ii++;
-          if (ii >= args.length)
-            throw new ArgException ("option %s requires an argument", arg);
-          arg_value = args[ii];
-        }
         set_arg (oi, arg_name, arg_value);
       } else { // not an option
         if (! parse_options_after_arg)
@@ -634,9 +786,7 @@ public class Options {
     if (usage_synopsis != null) {
       ps.printf ("Usage: %s%n", usage_synopsis);
     }
-    for (String use : usage()) {
-      ps.printf ("  %s%n", use);
-    }
+    ps.println(usage());
   }
 
   /**
@@ -645,7 +795,6 @@ public class Options {
   public void print_usage () {
     print_usage (System.out);
   }
-
 
   // This method is distinct from
   //   print_usage (PrintStream ps, String format, Object... args)
@@ -688,49 +837,169 @@ public class Options {
   }
 
   /**
-   * Returns an array of Strings, where each String describes the usage of
-   * one command-line option.  Does not include the usage synopsis.
-   **/
-  public String[] usage () {
-
-    List<String> uses = new ArrayList<String>();
-
-    // Determine the length of the longest option
-    int max_len = 0;
-    for (OptionInfo oi : options) {
-      if (oi.unpublicized) {
-        // Option is unpublicized - will not be part of output.
-        continue;
+   * Returns the String containing the usage message for command-line options.
+   * @param group_names The list of option groups to include in the usage
+   * message.  If empty, will return usage for all option groups which are not
+   * unpublicized.  Or if option groups are not being used, will return usage
+   * for all options which are not unpublicized.
+   */
+  public String usage(String... group_names) {
+    if (!use_groups) {
+      if (group_names.length > 0) {
+        throw new IllegalArgumentException(
+          "This instance of Options does not have any option groups defined");
       }
+      return format_options(options, max_opt_len(options));
+    }
+     
+    List<OptionGroupInfo> groups = new ArrayList<OptionGroupInfo>();
+    if (group_names.length > 0) {
+      for (String group_name : group_names) {
+        if (!group_map.containsKey(group_name))
+          throw new IllegalArgumentException("invalid option group: " + group_name);
+        else
+          groups.add(group_map.get(group_name));
+      }
+    } else { // return usage for all groups which are not unpublicized
+      for (OptionGroupInfo gi : group_map.values()) {
+        if (gi.unpublicized)
+          continue;
+        groups.add(gi);
+      }
+    }
+
+    List<Integer> lengths = new ArrayList<Integer>();
+    for (OptionGroupInfo gi : groups)
+      lengths.add(max_opt_len(gi.optionList));
+    int max_len = Collections.max(lengths);
+
+    StringBuilderDelimited buf = new StringBuilderDelimited(eol);
+    for (OptionGroupInfo gi : groups) {
+      buf.append(String.format("%n%s:", gi.name));
+      buf.append(format_options(gi.optionList, max_len));
+    }
+
+    return buf.toString();
+  }
+
+  /**
+   * Entry point for creating HTML documentation.  HTML documentation includes
+   * unpublicized option groups but not <code>@Unpublicized</code> options.
+   */
+  public void jdoc (RootDoc doc) {
+    // Find the overall documentation (on the main class)
+    ClassDoc main = find_class_doc (doc, main_class);
+    if (main == null) {
+      throw new Error ("can't find main class " + main_class);
+    }
+
+    // Process each option and add in the javadoc info
+    for (OptionInfo oi : options) {
+      ClassDoc opt_doc = find_class_doc (doc, oi.get_declaring_class());
+      String nameWithUnderscores = oi.long_name.replace('-', '_');
+      if (opt_doc != null) {
+        for (FieldDoc fd : opt_doc.fields()) {
+          if (fd.name().equals (nameWithUnderscores)) {
+            oi.jdoc = fd.commentText();
+            break;
+          }
+        }
+      }
+    }
+
+    // Write out the info as HTML
+    System.out.println (main.commentText());
+    System.out.println ("<p>Command line options: </p>");
+    System.out.println ("<ul>");
+
+    if (!use_groups)
+      System.out.println(format_options_html(options, 2));
+    else {
+      for (OptionGroupInfo gi : group_map.values()) {
+        System.out.println("  <li>" + gi.name);
+        System.out.println("    <ul>");
+        System.out.println(format_options_html(gi.optionList, 6));
+        System.out.println("    </ul>");
+        System.out.println("  </li>");
+      }
+    }
+    System.out.println ("</ul>");
+  }
+
+  /*@Nullable*/ ClassDoc find_class_doc (RootDoc doc, Class<?> c) {
+
+    for (ClassDoc cd : doc.classes()) {
+      if (cd.qualifiedName().equals (c.getName())) {
+        return cd;
+      }
+    }
+    return (null);
+  }
+
+  /**
+   * Format a list of options for use in generating usage messages.
+   */
+  private String format_options(List<OptionInfo> opt_list, int max_len) {
+    StringBuilderDelimited buf = new StringBuilderDelimited(eol);
+    for (OptionInfo oi : opt_list) {
+      if (oi.unpublicized)
+        continue;
+      String default_str = "[no default]";
+      if (oi.default_str != null)
+        default_str = String.format("[default %s]", oi.default_str);
+      String use = String.format("  %-" + max_len + "s - %s %s",
+                                 oi.synopsis(), oi.description, default_str);
+      buf.append(use);
+    }
+    return buf.toString();
+  }
+
+  /**
+   * Format a list of options with HTML for use in generating the HTML
+   * documentation.
+   */
+  private String format_options_html(List<OptionInfo> opt_list, int indent) {
+    StringBuilderDelimited buf = new StringBuilderDelimited(eol);
+    for (OptionInfo oi : opt_list) {
+      if (oi.unpublicized)
+        continue;
+      String default_str = "[no default]";
+      if (oi.default_str != null)
+        default_str = String.format ("[default %s]", oi.default_str);
+      String synopsis = oi.synopsis();
+      synopsis = synopsis.replaceAll ("<", "&lt;");
+      synopsis = synopsis.replaceAll (">", "&gt;");
+      String alias_str = "";
+      if (oi.has_alias) {
+        Iterator<String> it = Arrays.asList(oi.aliases).iterator();
+        StringBuilderDelimited b = new StringBuilderDelimited(", ");
+        while (it.hasNext())
+            b.append(String.format("<b>%s</b>", it.next()));
+        alias_str = "<i>Aliases</i>: " + b.toString() + " ";
+      }
+      buf.append(String.format("%" + indent + "s<li> <b>%s</b>. %s %s%s</li>",
+                 "", synopsis, oi.jdoc, alias_str, default_str));
+    }
+    return buf.toString();
+  }
+
+  private int max_opt_len(List<OptionInfo> opt_list) {
+    int max_len = 0;
+    for (OptionInfo oi : opt_list) {
+      if (oi.unpublicized)
+        continue;
       int len = oi.synopsis().length();
       if (len > max_len)
         max_len = len;
     }
-
-    // Create the usage string
-    for (OptionInfo oi : options) {
-      if (oi.unpublicized) {
-        // Option is unpublicized - will not be part of output.
-        continue;
-      }
-      String default_str = "[no default]";
-      if (oi.default_str != null)
-        default_str = String.format ("[default %s]", oi.default_str);
-      String use = String.format ("%-" + max_len + "s - %s %s",
-                                  oi.synopsis(), oi.description, default_str);
-      uses.add (use);
-    }
-
-    String[] result = uses.toArray (new String[uses.size()]);
-    return result;
-
+    return max_len;
   }
 
   /**
    * Set the specified option to the value specified in arg_value.  Throws
    * an ArgException if there are any errors.
    */
-  public void set_arg (OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
+  private void set_arg (OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
     throws ArgException {
 
     Field f = oi.field;
@@ -910,16 +1179,10 @@ public class Options {
    * if the option was not specified on the command line.
    */
   public String settings () {
-
-    String out = "";
+    StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
     // Determine the length of the longest name
-    int max_len = 0;
-    for (OptionInfo oi : options) {
-      int len = oi.long_name.length();
-      if (len > max_len)
-        max_len = len;
-    }
+    int max_len = max_opt_len(options);
 
     // Create the settings string
     for (OptionInfo oi : options) {
@@ -929,10 +1192,10 @@ public class Options {
       } catch (Exception e) {
         throw new Error ("unexpected exception reading field " + oi.field, e);
       }
-      out += String.format ("%s%n", use);
+      out.append(use);
     }
 
-    return (out);
+    return out.toString();
   }
 
   /**
@@ -940,15 +1203,14 @@ public class Options {
    * Each option is described on its own line in the output.
    */
   public String toString() {
-
-    String out = "";
+    StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
     for (OptionInfo oi: options) {
-      out += String.format ("%s%n", oi);
+      out.append(oi);
     }
-    return (out);
-  }
 
+    return out.toString();
+  }
 
   /**
    * Exceptions encountered during argument processing.
@@ -961,57 +1223,6 @@ public class Options {
     }
   }
 
-  /**
-   * Entry point for creating HTML documentation.
-   */
-  public void jdoc (RootDoc doc) {
-
-    // Find the overall documentation (on the main class)
-    ClassDoc main = find_class_doc (doc, main_class);
-    if (main == null) {
-      throw new Error ("can't find main class " + main_class);
-    }
-
-    // Process each option and add in the javadoc info
-    for (OptionInfo oi : options) {
-      ClassDoc opt_doc = find_class_doc (doc, oi.get_declaring_class());
-      String nameWithUnderscores = oi.long_name.replace('-', '_');
-      if (opt_doc != null) {
-        for (FieldDoc fd : opt_doc.fields()) {
-          if (fd.name().equals (nameWithUnderscores)) {
-            oi.jdoc = fd.commentText();
-            break;
-          }
-        }
-      }
-    }
-
-    // Write out the info as HTML
-    System.out.println (main.commentText());
-    System.out.println ("<p>Command line options: <p>");
-    System.out.println ("<ul>");
-    for (OptionInfo oi : options) {
-      String default_str = "[no default]";
-      if (oi.default_str != null)
-        default_str = String.format ("[default %s]", oi.default_str);
-      String synopsis = oi.synopsis();
-      synopsis = synopsis.replaceAll ("<", "&lt;");
-      System.out.printf ("  <li> <b>%s</b>. %s %s<p>%n", synopsis,
-                         oi.jdoc, default_str);
-    }
-    System.out.println ("</ul>");
-
-  }
-
-  /*@Nullable*/ ClassDoc find_class_doc (RootDoc doc, Class<?> c) {
-
-    for (ClassDoc cd : doc.classes()) {
-      if (cd.qualifiedName().equals (c.getName())) {
-        return cd;
-      }
-    }
-    return (null);
-  }
 
   private static class ParseResult {
     /*@Nullable*/ String short_name;
