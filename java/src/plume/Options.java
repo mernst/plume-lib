@@ -426,7 +426,7 @@ public class Options {
    * True if option groups are being used. False if option groups are not
    * being used and hence all @OptionGroup annotations will be ignored.
    */
-  private Boolean use_groups = null;
+  private /*@Interned*/ Boolean use_groups = null;
 
   /**
    * Convert underscores to dashes in long options in usage messages.  Users
