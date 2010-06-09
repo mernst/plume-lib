@@ -27,6 +27,7 @@ import java.lang.annotation.*;
  * The command-line options are processed by the {@link plume.Options} class.
  * For example usage, see the documentation for {@link plume.Options}.
  * @see plume.Options
+ * @see plume.OptionGroup
  * @see plume.Unpublicized
  */
 @Retention(RetentionPolicy.RUNTIME)
