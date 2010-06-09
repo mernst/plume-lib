@@ -88,8 +88,8 @@ import com.sun.javadoc.FieldDoc;
  * When using option groups, the first <code>@Option</code>-annotated field of
  * every class and object passed to the {@link #Options(String, Object...)}
  * constructor must have an <code>@OptionGroup</code> annotation.  Furthermore,
- * the first parameter of an <code>@OptionGroup</code> annotation, its name,
- * must be unique across all classes and objects passed to the {@link
+ * the first parameter of an <code>@OptionGroup</code> annotation (the group
+ * name) must be unique among all classes and objects passed to the {@link
  * #Options(String, Object...)} constructor. <p>
  *
  * When an @{@link Unpublicized} annotation is used on a field that is in an
@@ -179,6 +179,8 @@ import com.sun.javadoc.FieldDoc;
  * @see plume.Unpublicized
  **/
 public class Options {
+  
+  @SuppressWarnings("nullness") // line.separator property always exists
   private static String eol = System.getProperty("line.separator");
 
   /** Information about an option **/
@@ -380,7 +382,7 @@ public class Options {
     boolean unpublicized;
 
     /** List of options that belong to this group **/
-    ArrayList<OptionInfo> optionList;
+    List<OptionInfo> optionList;
 
     OptionGroupInfo(String name, boolean unpublicized) {
       optionList = new ArrayList<OptionInfo>();
@@ -412,7 +414,7 @@ public class Options {
   /** List of all of the defined options **/
   private List<OptionInfo> options = new ArrayList<OptionInfo>();
 
-  /** Map from option names (with leading dashes) to option information **/
+  /** Map from short or long option names (with leading dashes) to option information **/
   private Map<String,OptionInfo> name_map
     = new LinkedHashMap<String,OptionInfo>();
 
@@ -543,7 +545,9 @@ public class Options {
           group_map.put(name, gi);
           current_group = name;
         } // current_group is non-null at this point
-        group_map.get(current_group).optionList.add(oi);
+        @SuppressWarnings("nullness") // map key
+        /*@NonNull*/ OptionGroupInfo ogi = group_map.get(current_group);
+        ogi.optionList.add(oi);
 
       } // loop through fields
     } // loop through args
@@ -572,9 +576,13 @@ public class Options {
     }
   }
 
-  private <T extends Annotation> T
+  /**
+   * Like getAnnotation, but returns null (and prints a warning) rather
+   * than throwing an exception.
+   */
+  private <T extends Annotation> /*@Nullable*/ T
   safeGetAnnotation(Field f, Class<T> annotationClass) {
-    T annotation;
+    /*@Nullable*/ T annotation;
     try {
       annotation = f.getAnnotation(annotationClass);
     } catch (Exception e) {
@@ -626,6 +634,8 @@ public class Options {
   public String[] parse (String[] args) throws ArgException {
 
     List<String> non_options = new ArrayList<String>();
+    // If true, then "--" has been seen and any argument starting with "-"
+    // is processed as an ordinary argument, not as an option.
     boolean ignore_options = false;
 
     // Loop through each argument
