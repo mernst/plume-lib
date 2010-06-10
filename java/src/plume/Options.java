@@ -417,8 +417,23 @@ public class Options {
     = new LinkedHashMap<String, OptionGroupInfo>();
 
   /**
-   * True if option groups are being used. False if option groups are not
-   * being used and hence all @OptionGroup annotations will be ignored.
+   * The use_groups variable takes the following three values:
+   *
+   * null - The code has not yet reached an @Option-annotated field, so we do
+   * not know if the user intends to use @OptionGroup yet.
+   *
+   * FALSE - The code has encountered the first @Option field but it did not
+   * have an @OptionGroup annotation, so the user must not be using
+   * @OptionGroup annotations as this would be violating the requirement stated
+   * previously.
+   *
+   * TRUE - The code has seen an @OptionGroup annotation on the first
+   * @Option-annotated field of this class or object.  This means that an
+   * @OptionGroup annotation must be present on the first @Option-annotated
+   * field of every other class or object passed as a parameter to the Options
+   * constructor.
+   *
+   * See the Options constructor for more information on how use_groups is used.
    */
   private /*@Interned*/ Boolean use_groups = null;
 
@@ -512,6 +527,9 @@ public class Options {
 
         if (use_groups == Boolean.FALSE) {
           if (optionGroup != null)
+            // The user included an @OptionGroup annotation in their code
+            // without including an @OptionGroup annotation on the first
+            // @Option-annotated field, hence violating the requirement.
             throw new Error("missing @OptionGroup annotation on the first " +
                             "@Option-annotated field of class " + main_class);
           else
@@ -519,6 +537,8 @@ public class Options {
         }
 
         if (use_groups == null) {
+          // This is the first @Option annotation encountered so we can decide
+          // now if the user intends to use option groups.
           if (optionGroup != null) {
             use_groups = Boolean.TRUE;
           } else {
@@ -527,7 +547,11 @@ public class Options {
           }
         }
 
-        // use_groups is true at this point
+        // use_groups is true at this point.  The variable current_group is set
+        // to null at the start of every iteration through 'args'.  This is so
+        // we can check that the first @Option-annotated field of every
+        // class/object in 'args' has an @OptionGroup annotation when use_groups
+        // is true, as required.
         if (current_group == null && optionGroup == null) {
           throw new Error("missing @OptionGroup annotation in field "
                           + f + " of class " + obj);
