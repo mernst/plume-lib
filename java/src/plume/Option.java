@@ -34,5 +34,5 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 public @interface Option {
   String value();
-  String[] aliases() default "";
+  String[] aliases() default {};
 }

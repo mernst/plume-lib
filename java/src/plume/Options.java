@@ -204,9 +204,6 @@ public class Options {
     /** Aliases for this option **/
     String[] aliases;
 
-    /** True if this option has at least one alias **/
-    boolean has_alias;
-
     /** Argument description **/
     String description;
 
@@ -256,9 +253,6 @@ public class Options {
       this.base_type = field.getType();
       this.unpublicized = unpublicized;
       this.aliases = option.aliases();
-
-      if (aliases[0].length() > 0) // better way to write this?
-          this.has_alias = true;
 
       // The long name is the name of the field
       long_name = field.getName();
@@ -566,7 +560,7 @@ public class Options {
       name_map.put (prefix + oi.long_name, oi);
       if (use_dashes && oi.long_name.contains ("-"))
         name_map.put (prefix + oi.long_name.replace ('-', '_'), oi);
-      if (oi.has_alias) {
+      if (oi.aliases.length > 0) {
         for (String alias : oi.aliases) {
           if (name_map.containsKey (alias))
             throw new Error ("alias " + oi + " appears twice");
@@ -980,7 +974,7 @@ public class Options {
       synopsis = synopsis.replaceAll ("<", "&lt;");
       synopsis = synopsis.replaceAll (">", "&gt;");
       String alias_str = "";
-      if (oi.has_alias) {
+      if (oi.aliases.length > 0) {
         Iterator<String> it = Arrays.asList(oi.aliases).iterator();
         StringBuilderDelimited b = new StringBuilderDelimited(", ");
         while (it.hasNext())
