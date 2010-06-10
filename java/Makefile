@@ -263,12 +263,8 @@ JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:
 # JAVAC_INTERNING_STUBS = -sourcepath ${CHECKERS}/jdk/interning/src
 JAVAC_INTERNING_STUBS = -Astubs=${CHECKERS}/src/checkers/interning/jdk.astub
 
-check-interning: check-interning-plume
-
-check-interning-plume: check-interning-plume-withstubs
-
-check-interning-plume-withstubs:
-	${JAVAC_COMMAND} ${JAVAC_USER_INTERNING_ARGS} ${JAVAC_INTERNING_ARGS} ${JAVAC_INTERNING_STUBS} ${JAVA_FILES}
+check-interning:
+	${JAVAC_COMMAND} ${JAVAC_USER_INTERNING_ARGS} ${JAVAC_INTERNING_ARGS} ${JAVA_FILES}
 
 
 
