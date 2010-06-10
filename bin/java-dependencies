@@ -29,7 +29,7 @@ set gnu = `find --version |& grep -c GNU`
 if ($gnu) set find_args = "-noleaf"
 
 # compile the java files 
-set scratch = `mktemp -t -d build_all_list_file.XXXXXX`
+set scratch = `mktemp -d -t build_all_list_file.XXXXXX`
 $javac -d $scratch -sourcepath $sources $main 
 
 # get all of the class files built and convert their names back to
