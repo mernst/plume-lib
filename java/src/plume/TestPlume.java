@@ -2664,8 +2664,12 @@ public final class TestPlume extends TestCase {
    * Test option groups (Options)
    */
   public static void testOptionGroups() throws ArgException {
+    // TODO: The following two exception tests are not adequate.  There must be
+    // a better way to do these.
     try {
       Options options = new Options("test", TestOptionGroups1.class);
+      fail();
+    } catch (AssertionFailedError e) {
       fail("Should raise an Error");
     } catch (Error e) {
       System.out.println("-----------");
@@ -2676,6 +2680,8 @@ public final class TestPlume extends TestCase {
     try {
       Options options = new Options("test", TestOptionGroups2.class,
                                             TestOptionGroups1.class);
+      fail();
+    } catch (AssertionFailedError e) {
       fail("Should raise an Error");
     } catch (Error e) {
       System.out.println("-----------");
