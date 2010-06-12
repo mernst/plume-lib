@@ -417,25 +417,13 @@ public class Options {
     = new LinkedHashMap<String, OptionGroupInfo>();
 
   /**
-   * The use_groups variable takes the following three values:
-   *
-   * null - The code has not yet reached an @Option-annotated field, so we do
-   * not know if the user intends to use @OptionGroup yet.
-   *
-   * FALSE - The code has encountered the first @Option field but it did not
-   * have an @OptionGroup annotation, so the user must not be using
-   * @OptionGroup annotations as this would be violating the requirement stated
-   * previously.
-   *
-   * TRUE - The code has seen an @OptionGroup annotation on the first
-   * @Option-annotated field of this class or object.  This means that an
-   * @OptionGroup annotation must be present on the first @Option-annotated
-   * field of every other class or object passed as a parameter to the Options
-   * constructor.
-   *
-   * See the Options constructor for more information on how use_groups is used.
+   * If, after the Options constructor is called, use_groups is true, then the
+   * user is using @OptionGroup annotations correctly (as per the requirement
+   * specified above).  If false, then @OptionGroup annotations have not been
+   * specified on any @Option-annotated fields.  When @OptionGroup annotations
+   * are used incorrectly, an Error is thrown by the Options constructor.
    */
-  private /*@Interned*/ Boolean use_groups = null;
+  private boolean use_groups;
 
   /**
    * Convert underscores to dashes in long options in usage messages.  Users
@@ -490,6 +478,11 @@ public class Options {
     }
 
     this.usage_synopsis = usage_synopsis;
+    
+    this.use_groups = false;
+
+    // true once the first @Option annotation is observed, false until then.
+    boolean seen_first_opt = false;
 
     // Loop through each specified object or class
     for (Object obj : args) {
@@ -506,7 +499,6 @@ public class Options {
           main_class = obj.getClass();
         fields = obj.getClass().getDeclaredFields();
       }
-
 
       for (Field f : fields) {
         debug_options.log ("Considering field %s of object %s with annotations %s%n",
@@ -525,7 +517,17 @@ public class Options {
 
         OptionGroup optionGroup = safeGetAnnotation(f, OptionGroup.class);
 
-        if (use_groups == Boolean.FALSE) {
+        if (!seen_first_opt) {
+          seen_first_opt = true;
+          // This is the first @Option annotation encountered so we can decide
+          // now if the user intends to use option groups.
+          if (optionGroup != null)
+            use_groups = true;
+          else
+            continue;
+        }
+
+        if (!use_groups) {
           if (optionGroup != null)
             // The user included an @OptionGroup annotation in their code
             // without including an @OptionGroup annotation on the first
@@ -534,17 +536,6 @@ public class Options {
                             "@Option-annotated field of class " + main_class);
           else
             continue;
-        }
-
-        if (use_groups == null) {
-          // This is the first @Option annotation encountered so we can decide
-          // now if the user intends to use option groups.
-          if (optionGroup != null) {
-            use_groups = Boolean.TRUE;
-          } else {
-            use_groups = Boolean.FALSE;
-            continue;
-          }
         }
 
         // use_groups is true at this point.  The variable current_group is set
