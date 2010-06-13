@@ -427,8 +427,7 @@ public class Options {
 
   /**
    * Convert underscores to dashes in long options in usage messages.  Users
-   * may specify either the the underscore or dashed name on the command
-   * line.
+   * may specify either the underscore or dashed name on the command line.
    */
   private boolean use_dashes = true;
 
