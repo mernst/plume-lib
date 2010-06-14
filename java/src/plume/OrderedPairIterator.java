@@ -23,13 +23,13 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
   // For this constructor, the arg type is actually Iterator<T extends
   // Comparable<T>>, but T is already bound above and can't be changed.
   public OrderedPairIterator(Iterator<T> itor1, Iterator<T> itor2) {
-    this(itor1, itor2, null);
-  }
-  public OrderedPairIterator(Iterator<T> itor1, Iterator<T> itor2, /*@Nullable*/ Comparator<T> comparator) {
     this.itor1 = itor1;
     this.itor2 = itor2;
     setnext1();
     setnext2();
+  }
+  public OrderedPairIterator(Iterator<T> itor1, Iterator<T> itor2, Comparator<T> comparator) {
+    this(itor1, itor2);
     this.comparator = comparator;
   }
   /** Set the next1 variable. */

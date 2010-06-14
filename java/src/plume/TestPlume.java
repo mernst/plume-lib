@@ -44,7 +44,10 @@ public final class TestPlume extends TestCase {
     if ((args.length > 0) && args[0].equals("--shortrun")) {
       short_run = true;
     }
-    junit.textui.TestRunner.run(new TestSuite(TestPlume.class));
+    TestResult tr = junit.textui.TestRunner.run(new TestSuite(TestPlume.class));
+    if (tr.errorCount() > 0 || tr.failureCount() > 0) {
+      System.exit(1);
+    }
   }
   public static void mainFake(String[] args) {
     testTimeLimitProcess();
@@ -1445,13 +1448,22 @@ public final class TestPlume extends TestCase {
     }
   }
 
+  /**
+   * On a heavily-loaded machine, this test fails.
+   * Try again when the load is lower.
+   * (Better might be exponential backoff up to some limit.)
+   */
   public static void testTimeLimitProcess() {
-    testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
-    testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    // testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    // testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+
+    // These are too timing-dependent -- they sometimes succeed and
+    // sometimes fail -- so leave them commented out.
+    // testPrintFive(2000, 1000, true, "out0 ", "err0 ");
+    // testPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
+
     // This is expected to fail because of trying to read a closed stream.
     // printFive(3, false);
-    testPrintFive(1000, 500, true, "out0 ", "err0 ");
-    testPrintFive(1000, 1500, true, "out0 out1 ", "err0 err1 ");
   }
 
 
@@ -2569,6 +2581,130 @@ public final class TestPlume extends TestCase {
     assert args[1].equals ("two") : args[1];
     assert args[2].equals ("-b") : args[2];
     assert !t.bool;
+  }
+
+  /**
+   * Test class for option alias testing
+   */
+  public static class TestOptionsAliases {
+    @Option ("-d Set the day")
+    public String day = "Friday";
+
+    @Option (value="-t Set the temperature", aliases={"-temp"})
+    public double temperature = 42.0;
+
+    @Option (value="Print the program version", aliases={"-v", "-version", "--version"})
+    public boolean printVersion = false;
+  }
+
+  /**
+   * Test option aliases (Options)
+   */
+  public static void testOptionsAliases() throws ArgException {
+    TestOptionsAliases t = new TestOptionsAliases();
+    Options options = new Options("test", t);
+
+    options.parse("-d Monday -temp -12.3");
+    assert t.day.equals("Monday");
+    assert t.temperature == -12.3;
+    assert !t.printVersion;
+
+    options.parse("-t 21.7 -version");
+    assert t.day.equals("Monday");
+    assert t.temperature == 21.7;
+    assert t.printVersion;
+
+    t.printVersion = false;
+    options.parse("--version -temp=-60.1 --day Tuesday");
+    assert t.day.equals("Tuesday");
+    assert t.temperature == -60.1;
+    assert t.printVersion;
+  }
+
+  /**
+   * Test class for testing option groups
+   */
+  public static class TestOptionGroups1 {
+    @Option ("-m Set the mass")
+    public static int mass;
+
+    @OptionGroup("Coordinate options")
+    @Option ("-x Set the X coordinate")
+    public static int x;
+
+    @Option ("-y Set the Y coordinate")
+    public static int y;
+
+    @Option ("-z Set the Z coordinate")
+    public static int z;
+  }
+
+  /**
+   * Test class for testing option groups
+   */
+  public static class TestOptionGroups2 {
+    @OptionGroup ("General options")
+    @Option (value="-h Display help message", aliases={"-help"})
+    public static boolean help = false;
+
+    @OptionGroup(value="Internal options", unpublicized=true)
+    @Option ("Set mu")
+    public static double mu = 4902.7;
+
+    @Unpublicized
+    @Option("Set pi")
+    public static double pi = 3.14;
+
+    @OptionGroup("Display options")
+    @Option(value="Use colors", aliases={"--colour"})
+    public static boolean color = false;
+  }
+
+  /**
+   * Test option groups (Options)
+   */
+  public static void testOptionGroups() throws ArgException {
+    // TODO: The following two exception tests are not adequate.  There must be
+    // a better way to do these.
+    try {
+      Options options = new Options("test", TestOptionGroups1.class);
+      fail();
+    } catch (AssertionFailedError e) {
+      fail("Should raise an Error");
+    } catch (Error e) {
+      System.out.println("-----------");
+      System.out.println("Success: Got error: " + e);
+      System.out.println("Should get: missing @OptionGroup annotation on the first @Option-annotated field of class class plume.TestPlume$TestOptionGroups1");
+    }
+
+    try {
+      Options options = new Options("test", TestOptionGroups2.class,
+                                            TestOptionGroups1.class);
+      fail();
+    } catch (AssertionFailedError e) {
+      fail("Should raise an Error");
+    } catch (Error e) {
+      System.out.println("-----------");
+      System.out.println("Success: Got error: " + e);
+      System.out.println("Should get: missing @OptionGroup annotation in field public static int plume.TestPlume$TestOptionGroups1.mass of class class plume.TestPlume$TestOptionGroups1");
+    }
+
+    Options options = new Options("test", TestOptionGroups2.class);
+
+    assert options.usage().indexOf("General options") > -1;
+    assert options.usage().indexOf("Display options") > -1;
+    // "Internal options" is unpublicized so it should not occur in the default
+    // usage message.
+    assert options.usage().indexOf("Internal options") == -1;
+
+    assert options.usage("Internal options").indexOf("Set mu") > -1;
+    // "Set pi" should not appear in the usage message for "Internal options"
+    // because it is marked with @Unpublicized.
+    assert options.usage("Internal options").indexOf("Set pi") == -1;
+
+    options.parse("--colour --pi 3.15");
+    assert TestOptionGroups2.color;
+    assert TestOptionGroups2.pi == 3.15;
   }
 
   public static void testSplitLines() {

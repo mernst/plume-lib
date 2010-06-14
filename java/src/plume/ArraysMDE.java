@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  * Utilities for manipulating arrays.
- * This complements @link{java.util.Arrays}.
+ * This complements {@link java.util.Arrays}.
  * Also, some routines also handle Collections.
  **/
 @SuppressWarnings("interning")

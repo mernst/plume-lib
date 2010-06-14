@@ -1,5 +1,6 @@
-// The three files
+// The four files
 //   Option.java
+//   OptionGroup.java
 //   Options.java
 //   Unpublicized.java
 // together comprise the implementation of command-line processing.
@@ -26,10 +27,12 @@ import java.lang.annotation.*;
  * The command-line options are processed by the {@link plume.Options} class.
  * For example usage, see the documentation for {@link plume.Options}.
  * @see plume.Options
+ * @see plume.OptionGroup
  * @see plume.Unpublicized
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Option {
   String value();
+  String[] aliases() default {};
 }
