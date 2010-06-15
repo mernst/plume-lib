@@ -252,14 +252,10 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 # A user may set JAVAC_USER_NULLNESS_ARGS, for example to: -Awarns
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
-JAVAC_NULLNESS_STUBS = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
+CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
 
-check-nullness: check-nullness-plume
-
-check-nullness-plume: check-nullness-plume-withstubs
-
-check-nullness-plume-withstubs:
-	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${JAVAC_NULLNESS_STUBS} ${JAVA_FILES}
+check-nullness:
+	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${JAVA_FILES}
 
 # A user may set JAVAC_USER_INTERNING_ARGS, for example to: -Awarns
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
