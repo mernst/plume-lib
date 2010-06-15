@@ -531,6 +531,8 @@ public class Options {
             // The user included an @OptionGroup annotation in their code
             // without including an @OptionGroup annotation on the first
             // @Option-annotated field, hence violating the requirement.
+
+            // NOTE: changing this error string requires changes to TestPlume
             throw new Error("missing @OptionGroup annotation on the first " +
                             "@Option-annotated field of class " + main_class);
           else
@@ -543,6 +545,7 @@ public class Options {
         // class/object in 'args' has an @OptionGroup annotation when use_groups
         // is true, as required.
         if (current_group == null && optionGroup == null) {
+          // NOTE: changing this error string requires changes to TestPlume
           throw new Error("missing @OptionGroup annotation in field "
                           + f + " of class " + obj);
         } else if (optionGroup != null) {

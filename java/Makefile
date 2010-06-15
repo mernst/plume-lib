@@ -25,6 +25,9 @@ ifeq (cygwin,$(OSTYPE))
   TOOLS_JAR := '$(shell cygpath -w $(TOOLS_JAR))'
 endif
 
+# hack to add a space
+nullstring :=
+space := $(nullstring) # a space in the end
 
 ifndef HTML_TO_TEXT
 ifneq (,$(shell which lynx 2>/dev/null))
@@ -32,10 +35,10 @@ ifneq (,$(shell which lynx 2>/dev/null))
   HTML_TO_TEXT = lynx -dump file://$(shell pwd)/
 else ifneq (,$(shell which html2text 2>/dev/null))
   # Note trailing space!
-  HTML_TO_TEXT = html2text -rcfile html2textrc 
+  HTML_TO_TEXT = html2text -rcfile html2textrc$(space)
 else
   # Note trailing space!
-  HTML_TO_TEXT = cat 
+  HTML_TO_TEXT = cat$(space)
 endif
 endif
 

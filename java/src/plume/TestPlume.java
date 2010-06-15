@@ -2668,25 +2668,15 @@ public final class TestPlume extends TestCase {
     // a better way to do these.
     try {
       Options options = new Options("test", TestOptionGroups1.class);
-      fail();
-    } catch (AssertionFailedError e) {
-      fail("Should raise an Error");
     } catch (Error e) {
-      System.out.println("-----------");
-      System.out.println("Success: Got error: " + e);
-      System.out.println("Should get: missing @OptionGroup annotation on the first @Option-annotated field of class class plume.TestPlume$TestOptionGroups1");
+      assert e.getMessage().indexOf("missing @OptionGroup annotation on the first @Option-annotated field") > -1;
     }
 
     try {
       Options options = new Options("test", TestOptionGroups2.class,
                                             TestOptionGroups1.class);
-      fail();
-    } catch (AssertionFailedError e) {
-      fail("Should raise an Error");
     } catch (Error e) {
-      System.out.println("-----------");
-      System.out.println("Success: Got error: " + e);
-      System.out.println("Should get: missing @OptionGroup annotation in field public static int plume.TestPlume$TestOptionGroups1.mass of class class plume.TestPlume$TestOptionGroups1");
+      assert e.getMessage().indexOf("missing @OptionGroup annotation in field") > -1;
     }
 
     Options options = new Options("test", TestOptionGroups2.class);
