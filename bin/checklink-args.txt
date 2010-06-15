@@ -6,7 +6,7 @@
 --exclude-docs http://types.cs.washington.edu/list-archives/
 --exclude-docs mernst/(public_html/)?(ir95|advice/conference/)
 --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go 
---suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-exclude-redirect-CLAUSE
+--suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
 --suppress-broken 302:http://ieeexplore.ieee.org/
 --suppress-broken 302:http://www.hotelatmit.com/
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
@@ -24,6 +24,7 @@
 --suppress-broken 404:http://groups.google.com/group/jsr-305/web/proposed-annotations
 --suppress-broken 404:http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
 --suppress-broken 404:http://www.eclipse.org/legal/Eclipse%20EPL%202003_11_10%20Final_files/filelist.xml
+--suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles	
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
 --suppress-broken 406:http://www.seattlebicycle.org/	
@@ -56,9 +57,6 @@
 --suppress-fragment http://types.cs.washington.edu/checker-framework/doc/checkers/quals/ImplicitFor.html#annotation_type_element_detail
 --suppress-redirect http://2006.ecoop.org/->http://www.emn.fr/x-info/ecoop2006/
 --suppress-redirect http://cascade.org/->http://cascade.org/Home/	
---suppress-redirect http://doi.acm.org/10.1145/1134285.1134491->http://portal.acm.org/citation.cfm?doid=1134285.1134491	
---suppress-redirect http://doi.acm.org/10.1145/1467247.1467259->http://portal.acm.org/citation.cfm?doid=1467247.1467259	
---suppress-redirect http://doi.acm.org/10.1145/1467247.1467260->http://portal.acm.org/citation.cfm?doid=1467247.1467260	
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html	
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page	
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
@@ -70,6 +68,7 @@
 --suppress-redirect http://pag.csail.mit.edu/~smcc/->http://people.csail.mit.edu/people/smcc/
 --suppress-redirect http://pag/daikon/mit/log2html.php->http://www.pag.csail.mit.edu/daikon/mit/log2html.php
 --suppress-redirect http://people.csail.mit.edu/cpacheco/randoop/->http://people.csail.mit.edu/cpacheco/randoop/1.2/doc/	
+--suppress-redirect http://portal.acm.org/sigplan/newsletter/->http://portal.acm.org/browse_dl.cfm?linked=1&part=newsletter&idx=J706&coll=portal&dl=ACM
 --suppress-redirect http://portal.acm.org/sigplan/newsletter/->http://portal.acm.org/browse_dl.cfm?linked=1&part=newsletter&idx=J706&coll=portal&dl=ACM%d	
 --suppress-redirect http://sites.google.com/site/scatherinehowell/Home/CV2008.pdf->http://sites.google.com/site/scatherinehowell/Home/CV2008.pdf?attredirects=0	
 --suppress-redirect http://student.mit.edu/catalog/index.cgi->http://student.mit.edu/@8178100.17571/catalog/index.cgi	
@@ -108,10 +107,14 @@
 --suppress-redirect http://yoav.zibin.googlepages.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2FYoav.Zibin.googlepages.com%2Fhome
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
 --suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
+--suppress-redirect-prefix http://doi.acm.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
+--suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www.computer.org/portal/web/csdl/doi/
 --suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www2.computer.org/portal/web/csdl/doi/	
+--suppress-redirect-prefix http://maps.google.com/maps?->http://maps.google.com/m/directions?
 --suppress-redirect-prefix http://pag.csail.mit.edu/->http://groups.csail.mit.edu/pag/
 --suppress-redirect-prefix http://pag.csail.mit.edu/->http://www.pag.csail.mit.edu/
 --suppress-redirect-prefix http://pag.csail.mit.edu/~->http://people.csail.mit.edu/
 --suppress-redirect-prefix http://texi2html.cvshome.org/->https://texi2html.cvshome.org/
 --suppress-redirect-prefix http://types.cs.washington.edu/checker-framework/->http://types.cs.washington.edu/checker-framework/current/
 --suppress-redirect-prefix http://www.csail.mit.edu/~->http://people.csail.mit.edu/
+--suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/garbervetsky/->http://www-2.dc.uba.ar/exclusivos/garbervetsky/presentaciones/
