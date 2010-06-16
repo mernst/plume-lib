@@ -166,12 +166,14 @@ import com.sun.javadoc.FieldDoc;
  *
  *  <li> Types without a string constructor are not supported.
  *
- *  <li> Non-option information could be supported in the same manner
- *  as options which would be cleaner than simply returning all of the
- *  non-options as an array.
- *
  *  <li> The "--no-long" option to turn off a boolean option named "long"
  *  is not supported; use "--long=false" instead.
+ *
+ * </ul>
+ *
+ * <b>Possible enhancements</b> <ul>
+ *  <li> Positional arguments (non-options that must be provided in a given
+ *  order) could be supported.
  * </ul>
  *
  * @see plume.Option
