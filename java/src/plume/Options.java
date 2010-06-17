@@ -657,16 +657,27 @@ public class Options {
       if (arg.equals ("--")) {
         ignore_options = true;
       } else if ((arg.startsWith ("--") || arg.startsWith("-")) && !ignore_options) {
+        String arg_name;
+        String arg_value;
         int eq_pos = arg.indexOf ('=');
-        String arg_name = arg;
-        String arg_value = null;
-        if (eq_pos > 0) {
+        if (eq_pos == -1) {
+          arg_name = arg;
+          arg_value = null;
+        } else {
           arg_name = arg.substring (0, eq_pos);
           arg_value = arg.substring (eq_pos+1);
         }
         OptionInfo oi = name_map.get (arg_name);
-        if (oi == null)
-          throw new ArgException ("unknown option '" + arg + "'");
+        if (oi == null) {
+          StringBuilder msg = new StringBuilder();
+          msg.append(String.format("unknown option name '%s' in arg '%s'; known options:",
+                                   arg_name, arg));
+          for (String option_name : UtilMDE.sortedKeySet(name_map)) {
+            msg.append(" ");
+            msg.append(option_name);
+          }
+          throw new ArgException (msg.toString());
+        }
         if (oi.argument_required() && (arg_value == null)) {
           ii++;
           if (ii >= args.length)
