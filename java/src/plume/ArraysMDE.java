@@ -1551,6 +1551,7 @@ public final class ArraysMDE {
     return sb.toString();
   }
 
+  // Why don't the next 3 classes take an arbitrary collection?
   /**
    * Return a string representation of the array.
    * The representation is patterned after that of java.util.Vector.
