@@ -15,8 +15,8 @@
 #      acm-dl-abstracts.pl 'http://portal.acm.org/toc.cfm?id=964001' > popl2004-abstracts-orig.html
 #  * email from the ACM TOC Service.  Example (after saving to local file):
 #      acm-dl-abstracts.pl acm.html
-# Then, browse it or print it.  If printing, use
-#   htmldoc --webpage -t ps --outfile acm-abstracts.ps acm-abstracts-*.html
+# Then, browse it or print it.  If printing, run
+#   for i in `ls acm-abstracts-*.html`; do htmldoc --webpage -t ps --outfile $i.ps $i; done
 # because both html2ps and the Filefox print functionality tend to cut off
 # content.  (Maybe the ACM HTML is malformed, or maybe this script should be
 # enhanced.)
