@@ -7,7 +7,7 @@
 #
 
 ME="`basename $0`"
-JAVA_EXEC="$JDKDIR/bin/java"
+JAVA_EXEC="$JAVA_HOME/bin/java"
 ARGS=""
 
 while [ -n "$1" ]; do
