@@ -7,7 +7,7 @@
 #
 
 ME="`basename $0`"
-JAVAC_EXEC="$JDKDIR/bin/javac"
+JAVAC_EXEC="$JAVA_HOME/bin/javac"
 ARGS=""
 
 while [ -n "$1" ]; do
