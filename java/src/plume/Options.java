@@ -12,9 +12,12 @@ import java.util.*;
 import java.util.regex.*;
 import java.lang.reflect.*;
 import java.lang.annotation.*;
+import com.sun.javadoc.Doc;
 import com.sun.javadoc.RootDoc;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.FieldDoc;
+import com.sun.javadoc.Tag;
+import com.sun.javadoc.SeeTag;
 
 /**
  * The Options class parses command-line options and sets fields in your
@@ -934,7 +937,7 @@ public class Options {
       if (opt_doc != null) {
         for (FieldDoc fd : opt_doc.fields()) {
           if (fd.name().equals (nameWithUnderscores)) {
-            oi.jdoc = fd.commentText();
+            oi.jdoc = format_comment(fd);
             break;
           }
         }
@@ -942,7 +945,7 @@ public class Options {
     }
 
     // Write out the info as HTML
-    System.out.println (main.commentText());
+    System.out.println (format_comment(main));
     System.out.println ("<p>Command line options: </p>");
     System.out.println ("<ul>");
 
@@ -968,6 +971,37 @@ public class Options {
       }
     }
     return (null);
+  }
+
+  /**
+   * Format a javadoc comment to HTML by wrapping the text of inline @link tags
+   * and block @see tags in HTML 'code' tags.  This keeps most of the
+   * information in the comment while still being presentable. <p>
+   * 
+   * This is only a temporary solution.  Ideally, a custom doclet (perhaps
+   * subclassing HtmlDoclet) would be created which integrates command-line
+   * option documentation with the rest of the javadoc documentation for a
+   * project.
+   */
+  private String format_comment(Doc doc) {
+    StringBuilder buf = new StringBuilder();
+    Tag[] tags = doc.inlineTags();
+    for (Tag tag : tags) {
+      if (tag instanceof SeeTag)
+        buf.append("<code>" + tag.text() + "</code>");
+      else
+        buf.append(tag.text());
+    }
+    SeeTag[] seetags = doc.seeTags();
+    if (seetags.length > 0) {
+      buf.append(" See: ");
+      StringBuilderDelimited seebuf = new StringBuilderDelimited(", ");
+      for (SeeTag tag : seetags)
+        seebuf.append("<code>" + tag.text() + "</code>");
+      buf.append(seebuf);
+      buf.append(".");
+    }
+    return buf.toString();
   }
 
   /**
@@ -1009,7 +1043,7 @@ public class Options {
         StringBuilderDelimited b = new StringBuilderDelimited(", ");
         while (it.hasNext())
             b.append(String.format("<b>%s</b>", it.next()));
-        alias_str = "<i>Aliases</i>: " + b.toString() + " ";
+        alias_str = "<i>Aliases</i>: " + b.toString() + ". ";
       }
       buf.append(String.format("%" + indent + "s<li> <b>%s</b>. %s %s%s</li>",
                  "", synopsis, oi.jdoc, alias_str, default_str));
