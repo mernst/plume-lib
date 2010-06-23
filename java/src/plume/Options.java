@@ -673,11 +673,14 @@ public class Options {
         OptionInfo oi = name_map.get (arg_name);
         if (oi == null) {
           StringBuilder msg = new StringBuilder();
-          msg.append(String.format("unknown option name '%s' in arg '%s'; known options:",
+          msg.append(String.format("unknown option name '%s' in arg '%s'",
                                    arg_name, arg));
-          for (String option_name : UtilMDE.sortedKeySet(name_map)) {
-            msg.append(" ");
-            msg.append(option_name);
+          if (false) { // for debugging
+            msg.append("; known options:");
+            for (String option_name : UtilMDE.sortedKeySet(name_map)) {
+              msg.append(" ");
+              msg.append(option_name);
+            }
           }
           throw new ArgException (msg.toString());
         }
