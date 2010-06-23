@@ -6,8 +6,8 @@
 -include Makefile.user
 
 TOOLS_JAR := ${JAVA_HOME}/lib/tools.jar
-# On MACOSX there is no separate tools.jar
-ifeq (darwin,$(OSTYPE))
+# On MacOS, there is no separate tools.jar
+ifneq (,$(findstring darwin,$(OSTYPE)))
   TOOLS_JAR := /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar
 endif
 
