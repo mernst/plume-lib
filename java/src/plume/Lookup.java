@@ -295,19 +295,6 @@ public class Lookup {
   }
 
   /**
-   * Entry point for creating HTML documentation.
-   * <p>
-   * A "starting class for a doclet" must import com.sun.javadoc.* and implement the start(RootDoc) method.
-   * @see com.sun.javadoc.Doclet
-   */
-  public static boolean start (RootDoc doc) {
-
-    Options options = new Options (Lookup.class);
-    options.jdoc (doc);
-    return (true);
-  }
-
-  /**
    * Returns the next entry.  If no more entries are available, returns null.
    */
   public static /*@Nullable*/ Entry old_get_entry (EntryReader reader) throws IOException {

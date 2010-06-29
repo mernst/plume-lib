@@ -192,7 +192,7 @@ plume.jar: .class-files-timestamp .test-timestamp lib lookup.html lookup.txt
 # Lookup targets
 #
 lookup.html: src/plume/Lookup.java
-	${JAVADOC} -docletpath .. -J-ea -quiet -doclet plume.Lookup $< > $@
+	${JAVADOC} -docletpath .. -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
