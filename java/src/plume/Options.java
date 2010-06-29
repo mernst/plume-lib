@@ -1,8 +1,9 @@
-// The four files
+// The five files
 //   Option.java
 //   OptionGroup.java
 //   Options.java
 //   Unpublicized.java
+//   OptionsDoclet.java
 // together comprise the implementation of command-line processing.
 
 package plume;
@@ -12,12 +13,6 @@ import java.util.*;
 import java.util.regex.*;
 import java.lang.reflect.*;
 import java.lang.annotation.*;
-import com.sun.javadoc.Doc;
-import com.sun.javadoc.RootDoc;
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.FieldDoc;
-import com.sun.javadoc.Tag;
-import com.sun.javadoc.SeeTag;
 
 /**
  * The Options class parses command-line options and sets fields in your
@@ -119,6 +114,9 @@ import com.sun.javadoc.SeeTag;
  *     &#64;Option(value="-h Print the detailed help", aliases={"-help", "--help"})
  * </pre>
  *
+ * <b>Generating HTML documentation</b> <p>
+ * See the {@link plume.OptionsDoclet} class for instructions. <p>
+ * 
  * <b>Supported field types</b> <p>
  * The field may be of the following types:
  * <ul>
@@ -182,6 +180,7 @@ import com.sun.javadoc.SeeTag;
  * @see plume.Option
  * @see plume.OptionGroup
  * @see plume.Unpublicized
+ * @see plume.OptionsDoclet
  **/
 public class Options {
   
@@ -189,7 +188,7 @@ public class Options {
   private static String eol = System.getProperty("line.separator");
 
   /** Information about an option **/
-  private class OptionInfo {
+  class OptionInfo {
 
     /** Field containing the value of the option **/
     Field field;
@@ -368,7 +367,7 @@ public class Options {
   }
 
   /** Information about an option group **/
-  private class OptionGroupInfo {
+  class OptionGroupInfo {
 
     /** The name of this option group **/
     String name;
@@ -923,91 +922,6 @@ public class Options {
   }
 
   /**
-   * Entry point for creating HTML documentation.  HTML documentation includes
-   * unpublicized option groups but not <code>@Unpublicized</code> options.
-   */
-  public void jdoc (RootDoc doc) {
-    // Find the overall documentation (on the main class)
-    ClassDoc main = find_class_doc (doc, main_class);
-    if (main == null) {
-      throw new Error ("can't find main class " + main_class);
-    }
-
-    // Process each option and add in the javadoc info
-    for (OptionInfo oi : options) {
-      ClassDoc opt_doc = find_class_doc (doc, oi.get_declaring_class());
-      String nameWithUnderscores = oi.long_name.replace('-', '_');
-      if (opt_doc != null) {
-        for (FieldDoc fd : opt_doc.fields()) {
-          if (fd.name().equals (nameWithUnderscores)) {
-            oi.jdoc = format_comment(fd);
-            break;
-          }
-        }
-      }
-    }
-
-    // Write out the info as HTML
-    System.out.println (format_comment(main));
-    System.out.println ("<p>Command line options: </p>");
-    System.out.println ("<ul>");
-
-    if (!use_groups)
-      System.out.println(format_options_html(options, 2));
-    else {
-      for (OptionGroupInfo gi : group_map.values()) {
-        System.out.println("  <li>" + gi.name);
-        System.out.println("    <ul>");
-        System.out.println(format_options_html(gi.optionList, 6));
-        System.out.println("    </ul>");
-        System.out.println("  </li>");
-      }
-    }
-    System.out.println ("</ul>");
-  }
-
-  /*@Nullable*/ ClassDoc find_class_doc (RootDoc doc, Class<?> c) {
-
-    for (ClassDoc cd : doc.classes()) {
-      if (cd.qualifiedName().equals (c.getName())) {
-        return cd;
-      }
-    }
-    return (null);
-  }
-
-  /**
-   * Format a javadoc comment to HTML by wrapping the text of inline @link tags
-   * and block @see tags in HTML 'code' tags.  This keeps most of the
-   * information in the comment while still being presentable. <p>
-   * 
-   * This is only a temporary solution.  Ideally, a custom doclet (perhaps
-   * subclassing HtmlDoclet) would be created which integrates command-line
-   * option documentation with the rest of the javadoc documentation for a
-   * project.
-   */
-  private String format_comment(Doc doc) {
-    StringBuilder buf = new StringBuilder();
-    Tag[] tags = doc.inlineTags();
-    for (Tag tag : tags) {
-      if (tag instanceof SeeTag)
-        buf.append("<code>" + tag.text() + "</code>");
-      else
-        buf.append(tag.text());
-    }
-    SeeTag[] seetags = doc.seeTags();
-    if (seetags.length > 0) {
-      buf.append(" See: ");
-      StringBuilderDelimited seebuf = new StringBuilderDelimited(", ");
-      for (SeeTag tag : seetags)
-        seebuf.append("<code>" + tag.text() + "</code>");
-      buf.append(seebuf);
-      buf.append(".");
-    }
-    return buf.toString();
-  }
-
-  /**
    * Format a list of options for use in generating usage messages.
    */
   private String format_options(List<OptionInfo> opt_list, int max_len) {
@@ -1026,34 +940,9 @@ public class Options {
   }
 
   /**
-   * Format a list of options with HTML for use in generating the HTML
-   * documentation.
+   * Returns the length of the longest synopsis message in a list of options.
+   * Useful for aligning options in usage strings.
    */
-  private String format_options_html(List<OptionInfo> opt_list, int indent) {
-    StringBuilderDelimited buf = new StringBuilderDelimited(eol);
-    for (OptionInfo oi : opt_list) {
-      if (oi.unpublicized)
-        continue;
-      String default_str = "[no default]";
-      if (oi.default_str != null)
-        default_str = String.format ("[default %s]", oi.default_str);
-      String synopsis = oi.synopsis();
-      synopsis = synopsis.replaceAll ("<", "&lt;");
-      synopsis = synopsis.replaceAll (">", "&gt;");
-      String alias_str = "";
-      if (oi.aliases.length > 0) {
-        Iterator<String> it = Arrays.asList(oi.aliases).iterator();
-        StringBuilderDelimited b = new StringBuilderDelimited(", ");
-        while (it.hasNext())
-            b.append(String.format("<b>%s</b>", it.next()));
-        alias_str = "<i>Aliases</i>: " + b.toString() + ". ";
-      }
-      buf.append(String.format("%" + indent + "s<li> <b>%s</b>. %s %s%s</li>",
-                 "", synopsis, oi.jdoc, alias_str, default_str));
-    }
-    return buf.toString();
-  }
-
   private int max_opt_len(List<OptionInfo> opt_list) {
     int max_len = 0;
     for (OptionInfo oi : opt_list) {
@@ -1064,6 +953,22 @@ public class Options {
         max_len = len;
     }
     return max_len;
+  }
+
+  /**
+   * Package-private accessors/utility methods that are needed by the
+   * OptionsDoclet class to generate HTML documentation.
+   */
+  boolean isUsingGroups() {
+      return use_groups;
+  }
+
+  List<OptionInfo> getOptions() {
+      return options;
+  }
+
+  Collection<OptionGroupInfo> getOptionGroups() {
+      return group_map.values();
   }
 
   /**

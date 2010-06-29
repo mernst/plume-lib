@@ -1,8 +1,9 @@
-// The four files
+// The five files
 //   Option.java
 //   OptionGroup.java
 //   Options.java
 //   Unpublicized.java
+//   OptionsDoclet.java
 // together comprise the implementation of command-line processing.
 
 package plume;
@@ -18,6 +19,7 @@ import java.lang.annotation.*;
  * @see plume.Options
  * @see plume.Option
  * @see plume.Unpublicized
+ * @see plume.OptionsDoclet
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
