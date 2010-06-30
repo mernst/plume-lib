@@ -150,10 +150,6 @@ public class OptionsDoclet {
           reporter.printError("file not found: " + os[1]);
           return false;
         }
-        if (hasOutFile && outFile.equals(os[1])) {
-          reporter.printError("docfile must be different from outfile");
-          return false;
-        }
         docFile = os[1];
         hasDocFile = true;
       }
@@ -162,13 +158,13 @@ public class OptionsDoclet {
           reporter.printError("-outfile option specified twice");
           return false;
         }
-        if (hasDocFile && docFile.equals(os[1])) {
-          reporter.printError("outfile must be different from docfile");
-          return false;
-        }
         outFile = os[1];
         hasOutFile = true;
       }
+    }
+    if (docFile != null && outFile != null && outFile.equals(docFile)) {
+      reporter.printError("docfile must be different from outfile");
+      return false;
     }
     return true;
   }
