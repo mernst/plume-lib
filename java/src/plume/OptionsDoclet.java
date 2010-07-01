@@ -109,7 +109,7 @@ public class OptionsDoclet {
    * this doclet or 0 if the argument is unrecognized.  This method is
    * automatically invoked.
    *
-   * @see http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html
+   * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static int optionLength(String option) {
     if (option.equals("-help")) {
