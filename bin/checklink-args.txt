@@ -24,6 +24,10 @@
 --suppress-broken 404:http://groups.google.com/group/jsr-305/
 --suppress-broken 404:http://groups.google.com/group/jsr-305/web/proposed-annotations
 --suppress-broken 404:http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
+--suppress-broken 404:http://www.cs.washington.edu/education/courses/590g/CurrentQtr/	
+--suppress-broken 404:http://www.cs.washington.edu/education/courses/590n/CurrentQtr/	
+--suppress-broken 404:http://www.cs.washington.edu/education/courses/590p/CurrentQtr/	
+--suppress-broken 404:http://www.cs.washington.edu/education/courses/590s/CurrentQtr/	
 --suppress-broken 404:http://www.eclipse.org/legal/Eclipse%20EPL%202003_11_10%20Final_files/filelist.xml
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles	
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
