@@ -78,11 +78,11 @@ public class OptionsDoclet {
     o.setOptions(root.options());
 
     List<Class<?>> classes = new ArrayList<Class<?>>();
-    for (ClassDoc doc : root.classes()) {
+    for (ClassDoc doc : root.specifiedClasses()) {
       try {
-        classes.add(Class.forName(doc.qualifiedName()));
+        classes.add(Class.forName(doc.qualifiedName(), true, Thread.currentThread().getContextClassLoader()));
       } catch (ClassNotFoundException e) {
-        System.out.println("Error: class not found: " + doc.qualifiedName());
+        e.printStackTrace();
         return false;
       }
     }
