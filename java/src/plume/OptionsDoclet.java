@@ -79,6 +79,13 @@ public class OptionsDoclet {
 
     List<Class<?>> classes = new ArrayList<Class<?>>();
     for (ClassDoc doc : root.specifiedClasses()) {
+      // TODO: Class.forName() expects a binary name but doc.qualifiedName()
+      // returns a fully qualified name.  I do not know a good way to convert
+      // between these two name formats.  For now, we simply ignore inner
+      // classes.  This limitation can be removed when we figure out a better
+      // way to go from ClassDoc to Class<?>.
+      if (doc.containingClass() != null)
+        continue;
       try {
         classes.add(Class.forName(doc.qualifiedName(), true, Thread.currentThread().getContextClassLoader()));
       } catch (ClassNotFoundException e) {
