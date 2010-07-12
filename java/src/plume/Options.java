@@ -156,7 +156,9 @@ import java.lang.annotation.*;
  *</pre>
  *
  * For an example of this library being used in practice see {@link
- * plume.Lookup}. <p>
+ * plume.Lookup}. Another example can be found in the <code>Main</code> class of
+ * <a href="http://code.google.com/p/javarifier/">Javarifier</a>, which takes
+ * advantage of option groups and option aliases.  <p>
  *
  * <b>Limitations</b> <ul>
  *
