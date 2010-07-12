@@ -64,7 +64,7 @@ JAR ?= jar
 AUTO_GENERATED_FILES := \
 	src/plume/MathMDE.java
 # Call to sort is to remove duplicates, which would cause javac errors.
-# Uners may override to compile a subset of files.  E.g., src/plume/JWhich.java
+# Users may override to compile a subset of files.  E.g., src/plume/JWhich.java
 JAVA_FILES ?= $(sort $(shell find src \( -name CVS \) -prune -o -name '*.java' -print | grep -v '\.\#' | sort) ${AUTO_GENERATED_FILES})
 JAVA_CPP_FILES := $(shell find src \( -name CVS \) -prune -o -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
