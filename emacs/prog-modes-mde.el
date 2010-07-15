@@ -478,10 +478,16 @@ This is disabled on lines with a comment containing the string \"interned\"."
       ;; The "[^+]" is to avoid complaining about:   foo + " != " + bar
       (while
 	  ;; (re-search-forward "[^=][=!]= *\".[^+]\\|[^+].\" *[=!]=[^=]" nil t)
-	  (re-search-forward (concat "[^=\n][=!]= *\"\\(.?\"\\|.[^+\n].*\"\\)"
-				     "\\|"
-				     "\\(\".?\\|\".*[^+\n].\\)\" *[=!]=[^=\n].*\"")
-			     nil t)
+	  (condition-case err
+	      (re-search-forward (concat "[^=\n][=!]= *\"\\(.?\"\\|.[^+\n].*\"\\)"
+					 "\\|"
+					 "\\(\".?\\|\".*[^+\n].\\)\" *[=!]=[^=\n].*\"")
+				 nil t)
+	    (error
+	     (let ((error-message (second err)))
+	       (if (equal error-message "Stack overflow in regexp matcher")
+		   nil
+		 (throw 'error error-message)))))
 	(if (not (or (looking-at ".*//.*interned")
 		     ;; line ends with string ending with "=="
 		     (and (looking-back "=?= *\"") (looking-at ";\n"))
