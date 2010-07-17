@@ -443,7 +443,13 @@ public class Options {
    */
   private boolean use_single_dash = false;
 
-  @Option ("Split arguments to lists on blanks")
+  /**
+   * When true, an argument to a option of list type is split, on
+   * whitespace, into multiple arguments each of which is added to the
+   * list.  When false, each argument to an option of list type is treated
+   * as a single element, no matter what characters it contains.
+   */
+  @Option ("Treat arguments to lists as space-separated.")
   public static boolean split_lists = false;
 
   /**
@@ -880,9 +886,9 @@ public class Options {
   /**
    * Returns the String containing the usage message for command-line options.
    * @param group_names The list of option groups to include in the usage
-   * message.  If empty, will return usage for all option groups which are not
+   * message.  If empty, will return usage for all option groups that are not
    * unpublicized.  Or if option groups are not being used, will return usage
-   * for all options which are not unpublicized.
+   * for all options that are not unpublicized.
    */
   public String usage(String... group_names) {
     if (!use_groups) {
@@ -901,7 +907,7 @@ public class Options {
         else
           groups.add(group_map.get(group_name));
       }
-    } else { // return usage for all groups which are not unpublicized
+    } else { // return usage for all groups that are not unpublicized
       for (OptionGroupInfo gi : group_map.values()) {
         if (gi.unpublicized)
           continue;
