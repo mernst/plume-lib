@@ -605,14 +605,25 @@ public class MultiVersionControl {
     String dirName = dir.getName().toString();
     File parent = dir.getParentFile();
     if (parent != null) {
+      // The "return" statements below cause the code not to look for
+      // checkouts inside version control directories.  (But it does look
+      // for checkouts inside other checkouts.)  If someone checks in (say)
+      // a .svn file into a Mercurial repository, then removes it, the .svn
+      // file remains in the repository even if not in the working copy.
+      // That .svn file will cause an exception in dirToCheckoutSvn,
+      // because it is not associated with a working copy.
       if (dirName.equals(".bzr")) {
         checkouts.add(new Checkout(RepoType.BZR, parent, null, null));
+        return;
       } else if (dirName.equals("CVS")) {
         addCheckoutCvs(dir, parent, checkouts);
+        return;
       } else if (dirName.equals(".hg")) {
         checkouts.add(dirToCheckoutHg(dir, parent));
+        return;
       } else if (dirName.equals(".svn")) {
         checkouts.add(dirToCheckoutSvn(parent));
+        return;
       }
     }
 
