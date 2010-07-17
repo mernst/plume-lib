@@ -15,18 +15,16 @@ import com.sun.javadoc.*;
 import java.lang.Class;
 
 /**
- * The OptionsDoclet class provides a Javadoc doclet for generating HTML
- * documentation from classes which use the option handling mechanism of the
- * Options class.  This doclet is typically invoked with:
+ * Generates HTML documentation of command-line options.
+ * This doclet is typically invoked with:
  * <pre>javadoc -quiet -doclet plume.OptionsDoclet [doclet options] [java files]</pre>
  * <p>
  *
  * The following doclet options are supported:
  * <ul>
- * <li> <b>-outfile</b> <i>file</i> This option specifies the destination for the resulting
- * output of this doclet (the default is standard out).  The file passed to
- * this option must be different from the file passed to the
- * <code>-docfile</code> option.
+ * <li> <b>-outfile</b> <i>file</i> The destination for the HTML
+ * output (the default is standard out).  If both <code>-outfile</code> and
+ * <code>-docfile</code> are specified, they must be different.
  *
  * <li> <b>-docfile</b> <i>file</i> When specified, the output of this doclet
  * is the result of replacing everything between the two lines
@@ -34,8 +32,9 @@ import java.lang.Class;
  * and
  * <pre>&lt;!-- end options doc --&gt;</pre>
  * in <i>file</i> with the options documentation.  This can be used for
- * inserting option documentation into an existing manual.  This option
- * does not modify its parameter.
+ * inserting option documentation into an existing manual.  The existing
+ * docfile is not modified; output goes to the <code>-outfile</code>
+ * argument, or to standard out.
  *
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
  * class documentation of the first class specified on the command-line.
@@ -50,6 +49,9 @@ import java.lang.Class;
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  */
+// This doesn't itself use plume.Options for its command-line option
+// processing because a Doclet is required to implement the optionLength
+// and validOptions methods.
 public class OptionsDoclet {
 
   @SuppressWarnings("nullness") // line.separator property always exists
@@ -137,6 +139,8 @@ public class OptionsDoclet {
    * Tests the validity of command-line arguments passed to this doclet.
    * Returns true if the option usage is valid, and false otherwise.  This
    * method is automatically invoked.
+   *
+   * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static boolean validOptions(String options[][],
                                      DocErrorReporter reporter) {
