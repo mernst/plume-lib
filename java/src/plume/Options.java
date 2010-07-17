@@ -73,15 +73,16 @@ import java.lang.annotation.*;
  *
  * <b>Option groups</b> <p>
  * The @{@link OptionGroup} annotation can be used to assign a name to a set of
- * related options.  This is useful for providing organization when working with
- * many options.  Options in the same group are displayed under the same heading
- * in usage texts.  Option groups themselves can be unpublicized causing the
- * set of options belonging to the group to not be displayed in the default
- * usage message. <p>
+ * related options.  This is useful for organizing a list of
+ * options.  Options in the same group are displayed under the same heading
+ * in usage texts.  If an option group itself is unpublicized, the default
+ * usage message omits the group and all options belonging to it.  An
+ * unpublicized option group (that has any publicized options) is included
+ * in HTML documentation, however. <p> 
  *
  * The @{@link OptionGroup} annotation must be specified on a field in addition
  * to an @{@link Option} annotation.  The <code>@OptionGroup</code> annotation
- * acts like a delimiter&#151;all <code>@Option</code>-annotated fields up to
+ * acts like a delimiter &#151; all <code>@Option</code>-annotated fields up to
  * the next <code>@OptionGroup</code> annotation belong to the same group.
  * When using option groups, the first <code>@Option</code>-annotated field of
  * every class and object passed to the {@link #Options(String, Object...)}
@@ -127,6 +128,7 @@ import java.lang.annotation.*;
  *   <li>Reference types that have a constructor with a single string
  *       parameter.
  *   <li>java.util.regex.Pattern.
+ *   <li>enums.
  *   <li>Lists of any supported reference type.  Lists must be initialized
  *       to a valid list (e.g., the empty list) before using Options on
  *       that list.
