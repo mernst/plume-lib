@@ -311,7 +311,7 @@ public final class ArraysMDE {
   ///
 
   /**
-   * Searches for the first occurence of the given element in the array,
+   * Searches for the first occurrence of the given element in the array,
    *    testing for equality using the equals method.
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the array.
@@ -328,7 +328,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array,
+   * Searches for the first occurrence of the given element in the array,
    *    testing for equality using the equals method.
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
@@ -346,7 +346,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the list,
+   * Searches for the first occurrence of the given element in the list,
    *    testing for equality using the equals method.
    *    Identical to List.indexOf, but included for completeness.
    * @return the first index whose element is equal to the specified element,
@@ -358,7 +358,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the list,
+   * Searches for the first occurrence of the given element in the list,
    *    testing for equality using the equals method.
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
@@ -376,7 +376,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array,
+   * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
@@ -390,7 +390,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array,
+   * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
@@ -405,7 +405,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the list,
+   * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the list.
@@ -419,7 +419,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the list,
+   * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
@@ -434,7 +434,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -447,7 +447,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -460,7 +460,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
    *    or -1 if the element is not found in the array.
@@ -474,7 +474,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
    *    or -1 if the element is not found in the array.
@@ -488,7 +488,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -501,7 +501,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -514,7 +514,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurence of the given element in the array.
+   * Searches for the first occurrence of the given element in the array.
    * @return the first index i containing the specified element,
    *    such that minindex <= i < indexlimit,
    *    or -1 if the element is not found in the array.
@@ -1998,7 +1998,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * @return fresh array that is the identitity function of the given length
+   * @return fresh array that is the identity function of the given length
    **/
   public static int[] fn_identity(int length) {
     int[] result = new int[length];
@@ -2011,7 +2011,7 @@ public final class ArraysMDE {
   /**
    * Requires that fn_is_permutation(a) holds.
    * @param a the input permutation
-   * @return fresh array which is the inverse of the given perutation.
+   * @return fresh array which is the inverse of the given permutation.
    * @see #fn_is_permutation(int[])
    **/
   public static int[] fn_inverse_permutation(int[] a) {
@@ -2066,7 +2066,7 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Whether smaller is a subset of bigger.  The implmentation is to
+   * Whether smaller is a subset of bigger.  The implementation is to
    * use collections because we want to take advantage of HashSet's
    * constant time membership tests.
    **/
@@ -2090,7 +2090,7 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Whether smaller is a subset of bigger.  The implmentation is to
+   * Whether smaller is a subset of bigger.  The implementation is to
    * use collections because we want to take advantage of HashSet's
    * constant time membership tests.
    **/
@@ -2113,7 +2113,7 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Whether smaller is a subset of bigger.  The implmentation is to
+   * Whether smaller is a subset of bigger.  The implementation is to
    * use collections because we want to take advantage of HashSet's
    * constant time membership tests.
    **/
