@@ -42,7 +42,8 @@ import java.lang.Class;
  * <p>
  *
  * The generated HTML documentation includes unpublicized option groups but not
- * <code>@Unpublicized</code> options.
+ * <code>@Unpublicized</code> options.  Option groups which contain only
+ * <code>@Unpublicized</code> options are not included in the output at all.
  *
  * @see plume.Option
  * @see plume.Options
