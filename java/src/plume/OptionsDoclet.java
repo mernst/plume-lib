@@ -273,6 +273,10 @@ public class OptionsDoclet {
       b.append(formatOptions(options.getOptions(), 2));
     } else {
       for (Options.OptionGroupInfo gi : options.getOptionGroups()) {
+        // Do not include groups without publicized options in output
+        if (!gi.containsPublicizedOption())
+          continue;
+
         b.append("  <li>" + gi.name);
         b.append("    <ul>");
         b.append(formatOptions(gi.optionList, 6));
