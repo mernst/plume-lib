@@ -398,6 +398,12 @@ public class Options {
       this.unpublicized = optionGroup.unpublicized();
     }
 
+    public boolean containsPublicizedOption() {
+      for (OptionInfo oi : optionList)
+        if (!oi.unpublicized)
+          return true;
+      return false;
+    }
   }
 
 
