@@ -257,6 +257,12 @@ public class OptionsDoclet {
       if (opt_doc != null) {
         for (FieldDoc fd : opt_doc.fields()) {
           if (fd.name().equals (nameWithUnderscores)) {
+            // If Javadoc for field is unavailable, then use the @Option
+            // description in the documentation.
+            if (fd.getRawCommentText().length() == 0) {
+              oi.jdoc = oi.description;
+              break;
+            }
             oi.jdoc = formatComment(fd);
             break;
           }
