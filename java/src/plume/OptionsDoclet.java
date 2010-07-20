@@ -337,9 +337,7 @@ public class OptionsDoclet {
       String default_str = "[no default]";
       if (oi.default_str != null)
         default_str = String.format ("[default %s]", oi.default_str);
-      String synopsis = oi.synopsis();
-      synopsis = synopsis.replaceAll ("<", "&lt;");
-      synopsis = synopsis.replaceAll (">", "&gt;");
+      String synopsis = htmlSynopsis(oi);
       String alias_str = "";
       if (oi.aliases.length > 0) {
         Iterator<String> it = Arrays.asList(oi.aliases).iterator();
@@ -348,9 +346,20 @@ public class OptionsDoclet {
             b.append(String.format("<b>%s</b>", it.next()));
         alias_str = "<i>Aliases</i>: " + b.toString() + ". ";
       }
-      buf.append(String.format("%" + indent + "s<li> <b>%s</b>. %s %s%s</li>",
+      buf.append(String.format("%" + indent + "s<li> %s. %s %s%s</li>",
                  "", synopsis, oi.jdoc, alias_str, default_str));
     }
     return buf.toString();
+  }
+
+  private String htmlSynopsis(Options.OptionInfo oi) {
+    StringBuilder b = new StringBuilder();
+    b.append("<b>");
+    if (oi.short_name != null)
+        b.append("-").append(oi.short_name).append(" ");
+    String prefix = options.isUsingSingleDash() ? "-" : "--";
+    b.append(prefix).append(oi.long_name);
+    b.append(String.format("=</b><i>%s</i>", oi.type_name));
+    return b.toString();
   }
 }

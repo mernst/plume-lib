@@ -979,6 +979,10 @@ public class Options {
       return use_groups;
   }
 
+  boolean isUsingSingleDash() {
+      return use_single_dash;
+  }
+
   List<OptionInfo> getOptions() {
       return options;
   }
