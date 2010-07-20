@@ -976,19 +976,19 @@ public class Options {
    * OptionsDoclet class to generate HTML documentation.
    */
   boolean isUsingGroups() {
-      return use_groups;
+    return use_groups;
   }
 
   boolean isUsingSingleDash() {
-      return use_single_dash;
+    return use_single_dash;
   }
 
   List<OptionInfo> getOptions() {
-      return options;
+    return options;
   }
 
   Collection<OptionGroupInfo> getOptionGroups() {
-      return group_map.values();
+    return group_map.values();
   }
 
   /**
