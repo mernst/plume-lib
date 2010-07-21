@@ -334,32 +334,28 @@ public class OptionsDoclet {
     for (Options.OptionInfo oi : opt_list) {
       if (oi.unpublicized)
         continue;
-      String default_str = "[no default]";
-      if (oi.default_str != null)
-        default_str = String.format ("[default %s]", oi.default_str);
       String synopsis = htmlSynopsis(oi);
-      String alias_str = "";
-      if (oi.aliases.length > 0) {
-        Iterator<String> it = Arrays.asList(oi.aliases).iterator();
-        StringBuilderDelimited b = new StringBuilderDelimited(", ");
-        while (it.hasNext())
-            b.append(String.format("<b>%s</b>", it.next()));
-        alias_str = "<i>Aliases</i>: " + b.toString() + ". ";
-      }
-      buf.append(String.format("%" + indent + "s<li> %s. %s %s%s</li>",
-                 "", synopsis, oi.jdoc, alias_str, default_str));
+      buf.append(String.format("%" + indent + "s<li>%s</li>", "", synopsis));
     }
     return buf.toString();
   }
 
+  /**
+   * Construct the line of HTML describing an Option.
+   */
   private String htmlSynopsis(Options.OptionInfo oi) {
     StringBuilder b = new StringBuilder();
-    b.append("<b>");
+    Formatter f = new Formatter(b);
     if (oi.short_name != null)
-        b.append("-").append(oi.short_name).append(" ");
+      f.format("<b>-%s</b> ", oi.short_name);
+    for (String a : oi.aliases)
+      f.format("<b>%s</b> ", a);
     String prefix = options.isUsingSingleDash() ? "-" : "--";
-    b.append(prefix).append(oi.long_name);
-    b.append(String.format("=</b><i>%s</i>", oi.type_name));
+    f.format("<b>%s%s=</b><i>%s</i>. ", prefix, oi.long_name, oi.type_name);
+    String default_str = "no default";
+    if (oi.default_str != null)
+      default_str = String.format("default %s", oi.default_str);
+    f.format("%s [%s]", oi.jdoc, default_str);
     return b.toString();
   }
 }
