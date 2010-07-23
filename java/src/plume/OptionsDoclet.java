@@ -257,8 +257,8 @@ public class OptionsDoclet {
     // Process each option and add in the javadoc info
     for (Options.OptionInfo oi : options.getOptions()) {
       ClassDoc opt_doc = root.classNamed(oi.get_declaring_class().getName());
-      String nameWithUnderscores = oi.long_name.replace('-', '_');
       if (opt_doc != null) {
+        String nameWithUnderscores = oi.long_name.replace('-', '_');
         for (FieldDoc fd : opt_doc.fields()) {
           if (fd.name().equals (nameWithUnderscores)) {
             // If Javadoc for field is unavailable, then use the @Option
