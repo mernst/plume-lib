@@ -1,0 +1,16 @@
+#!/usr/bin/perl -wp
+
+# Print all lines before the first one that matches the pattern, inclusive
+# Does a case-insensitive match.
+
+# This should probably be implemented as an option to the "lines-before"
+# script, rather than being its own script.
+
+BEGIN {
+  $pattern = shift @ARGV;
+}
+
+if (/$pattern/io) {
+  print;
+  exit;
+}
