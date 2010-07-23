@@ -38,6 +38,9 @@ import java.lang.Class;
  *
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
  * class documentation of the first class specified on the command-line.
+ *
+ * <li> <b>-singledash</b> Use single dashes for long options.  See {@link
+ * plume.Options#use_single_dash(boolean)}.
  * </ul>
  * <p>
  *
