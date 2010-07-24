@@ -6,10 +6,11 @@ import nu.xom.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
-// To use:  java mde.HtmlPrettyPrint file.html > filepp.html
 
 /**
  * Pretty-prints an HTML file, after converting it to valid XML.
+ * <p>
+ * To use:  java plume.HtmlPrettyPrint file.html > filepp.html
  */
 public class HtmlPrettyPrint {
 
