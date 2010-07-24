@@ -125,7 +125,8 @@ doc: javadoc
 javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
-	$(MAKE) optionsdoc
+# $(MAKE) optionsdoc is TEMPORARILY commented out, due to compilation problems.
+# 	$(MAKE) optionsdoc
 	mkdir -p api
 	${JAVADOC} -d api ${JAVA_FILES}
 	# jdk-add-munged-anchor-names api/plume/*.html
