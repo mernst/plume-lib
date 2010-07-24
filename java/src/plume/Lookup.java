@@ -8,24 +8,29 @@ import java.util.regex.*;
 import com.sun.javadoc.*;
 
 /**
- * Lookup searches a set of files for information.  The user specifies
- * a set of keywords (or regular expressions), and Lookup outputs each
- * entry that matches the keywords.  In the simplest case, Lookup
- * prints each paragraph (in any of the files) that contains all the
- * keywords, so it can be though of as performing paragraph-wise grep. <p>
+ * Lookup searches a set of files, much like <tt>grep</tt> does.  Each
+ * search criterion is a keyword or regular expression.  Lookup
+ * outputs each <em>entry</em> that matches all the search criteria. <p>
  *
- * A file can contain one or more entries.  A short entry is a single
- * paragraph (delimited from the next entry by a blank line).  A long
- * entry is introduced by a line that begins with '&gt;entry'.  The
- * remainder of that line is a one line description of the entry.  A
- * long entry is terminated by '&lt;entry', by the start of a new long
- * entry, or by the start of a new file. <p>
+ * By default, search criteria are treated as keywords, and each paragraph
+ * is treated as an entry &mdash; in other words, Lookup prints each
+ * paragraph (in any of the files) that contains all the keywords,
+ * essentially performing paragraph-wise grep. <p> 
  *
- * Lookup searches for the keywords in the body of short entries and
- * in the one-line description of long entries.  An entry matches if
- * it contains all of the keywords.  If multiple entries match, the
- * first line of each is printed.  If only one entry matches, then
- * that entry is printed in its entirety. <p>
+ * A file can contain one or more entries, each of which is a short entry
+ * or a long entry.
+ * <ul>
+ *   <li>A short entry is a single paragraph (delimited from the next entry
+ *       by a blank line).  Lookup searches all of a short entry.</li> 
+ *   <li>A long entry is introduced by a line that begins with '&gt;entry'.  The
+ *       remainder of that line is a one-line description of the entry.  A
+ *       long entry is terminated by '&lt;entry', by the start of a new long
+ *       entry, or by the start of a new file.  Lookup searches only the first
+ *       line of a long entry.</li>
+ * </ul>
+ *
+ * If multiple entries match, the first line of each is printed.  If only
+ * one entry matches, then that entry is printed in its entirety. <p>
  *
  * By default, Lookup searches the file ~/lookup/root.  Files can
  * contain comments and can include other files.  Comments start with
@@ -33,6 +38,8 @@ import com.sun.javadoc.*;
  * not treated as a blank line for the purpose of separating entries).
  * A file can include another file via a line of the form
  * '\include{filename}'. <p>
+ *
+ * The default behavior can be customized by way of command-line options. <p>
  *
  * The command-line options are as follows:
 <!-- start options doc (DO NOT EDIT BY HAND) -->
