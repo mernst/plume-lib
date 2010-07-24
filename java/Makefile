@@ -125,11 +125,23 @@ doc: javadoc
 javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
+	$(MAKE) optionsdoc
 	mkdir -p api
 	${JAVADOC} -d api ${JAVA_FILES}
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
+
+optionsdoc: compile
+	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/Lookup.java-withdoc -docfile src/plume/Lookup.java src/plume/Lookup.java
+	mv -f src/plume/Lookup.java-withdoc src/plume/Lookup.java
+	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/ICalAvailable.java-withdoc -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	mv -f src/plume/ICalAvailable.java-withdoc src/plume/ICalAvailable.java
+#TODO: currently crashing
+#	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/MultiVersionControl.java-withdoc -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+#	mv -f src/plume/MultiVersionControl.java-withdoc src/plume/MultiVersionControl.java
+	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/TaskManager.java-withdoc -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	mv -f src/plume/TaskManager.java-withdoc src/plume/TaskManager.java
 
 showvars:
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
@@ -158,7 +170,7 @@ src/plume/MathMDE.java:
 jar: plume.jar
 # This should depend on all the included .jar files, too.
 # TODO: Why does this depend on lookup.html and lookup.txt but doesn't include them?
-plume.jar: .class-files-timestamp .test-timestamp lib lookup.html lookup.txt
+plume.jar: .class-files-timestamp .test-timestamp .javadoc-timestamp lib lookup.html lookup.txt
 # "make clean" avoids including stray .class files from your directory.
 # "make compile" runs unit tests; do that instead of "compile_without_testing".
 # If you use "compile_without_testing", the tests will look out of date
@@ -269,7 +281,7 @@ check-interning:
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc task-manager install-task-manager install-lookup
+.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc task-manager install-task-manager install-lookup optionsdoc
 
 
 # Existence of this rule means that a target is deleted if has just changed
