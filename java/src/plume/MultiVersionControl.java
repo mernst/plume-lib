@@ -125,6 +125,10 @@ import java.net.URL;
  * needed.<p>
  *
  * In the file, blank lines, and lines beginning with "#", are ignored.<p>
+ *
+ * The command-line options are as follows:
+<!-- start options doc (DO NOT EDIT BY HAND) -->
+<!-- end options doc -->
  */
 
 // TODO:

@@ -13,7 +13,7 @@ import java.nio.CharBuffer;
 //
 // Here are some useful features that EntryReader should have.
 //  * It should implement some unimplemented methods from LineNumberReader (see
-//    end of file).
+//    "not yet implemented" in this file).
 //  * It should have constructors that take an InputStream or Reader
 //    (in addition to the current BufferedReader, File, and String versions).
 //  * It should have a close method.
@@ -451,7 +451,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   public /*@Nullable*/ Entry get_entry() throws IOException {
 
-    // Skip any preceeding blank lines
+    // Skip any preceding blank lines
     String line = readLine();
     while ((line != null) && (line.trim().length() == 0))
       line = readLine();
