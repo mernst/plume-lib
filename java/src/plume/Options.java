@@ -42,8 +42,9 @@ import java.lang.annotation.*;
  * The @{@link Option} annotation on a field specifies user documentation
  * and, optionally, a one-character short name that users may supply on the
  * command line.  The long name is taken from the name of the variable;
- * when the name contains an underscore, the user may substitute a hyphen on
- * the command line instead. <p>
+ * when the name contains an underscore, the user may substitute a hyphen
+ * on the command line instead; for example, the --multi-word-variable
+ * command-line option would set the variable multi_word_variable. <p>
  *
  * On the command line, the values for options are specified in the form
  * '--longname=value', '-shortname=value', '--longname value', or '-shortname
@@ -60,7 +61,7 @@ import java.lang.annotation.*;
  * scanned for options. <p>
  *
  * A user may provide an option multiple times on the command line.  If the
- * field is a list, each entry is be added to the list.  If the field is
+ * field is a list, each entry is added to the list.  If the field is
  * not a list, then only the last occurrence is used (subsequent
  * occurrences overwrite the previous value). <p>
  *
@@ -116,7 +117,11 @@ import java.lang.annotation.*;
  * </pre>
  *
  * <b>Generating HTML documentation</b> <p>
- * See the {@link plume.OptionsDoclet} class for instructions. <p>
+ * The class Javadoc for a class that has a main method should generally
+ * contain a summary of all command-line options.  Such a summary can also
+ * be useful in other circumsances.
+ * See the {@link plume.OptionsDoclet} class for instructions about generating
+ * HTML documentation. <p>
  * 
  * <b>Supported field types</b> <p>
  * The field may be of the following types:
