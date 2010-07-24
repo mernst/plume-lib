@@ -38,6 +38,9 @@ import java.lang.Class;
  *
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
  * class documentation of the first class specified on the command-line.
+ *
+ * <li> <b>-singledash</b> Use single dashes for long options.  See {@link
+ * plume.Options#use_single_dash(boolean)}.
  * </ul>
  * <p>
  *
@@ -65,6 +68,7 @@ public class OptionsDoclet {
     "-docfile <file>        Specify file into which options documentation is inserted\n" +
     "-outfile <file>        Specify destination for resulting output\n" +
     "-classdoc              Include 'main' class documentation in output\n" +
+    "-singledash            Use single dashes for long options (see plume.Options)\n" +
     "See the OptionsDoclet documentation for more details.";
 
   private File docFile;
@@ -126,7 +130,8 @@ public class OptionsDoclet {
       System.out.println(usage);
       return 1;
     }
-    if (option.equals("-classdoc")) {
+    if (option.equals("-classdoc") ||
+        option.equals("-singledash")) {
       return 1;
     }
     if (option.equals("-docfile") ||
@@ -195,6 +200,8 @@ public class OptionsDoclet {
         this.outFile = new File(os[1]);
       } else if (opt.equals("-classdoc")) {
         this.includeClassDoc = true;
+      } else if (opt.equals("-singledash")) {
+        this.options.use_single_dash(true);
       }
     }
   }
