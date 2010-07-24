@@ -1,0 +1,38 @@
+#!/bin/sh -f
+
+# Suppose you scanned two-side paper in two passes (doing the second side
+# by just turning over the whole pile, so its pages are in reverse order).
+# This script reassembles the two PDFs into one.
+
+# Invoke as:
+# pdfinterleave infile1.pdf infile2.pdf outfile.pdf
+
+# From http://www.accesspdf.com/article.php/2005020408520076
+
+E_BADARGS=65
+
+if [ $# -eq 0 ]; then
+  FILE1="scan0001.pdf"
+  FILE2="scan0002.pdf"
+  FILE3="scan.pdf"
+else
+if [ $# -eq 3 ]; then
+  FILE1="$1"
+  FILE2="$2"
+  FILE3="$3"
+else
+  echo "Usage: `basename $0` infile1.pdf infile2.pdf outfile.pdf"
+  exit $E_BADARGS
+fi
+fi
+
+PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+if [ $PAGES1 != $PAGES2 ]; then
+  echo "Differing numbers of pages in input files: $PAGES1 $PAGES2"
+  exit 1
+fi
+eval pdftk A=$FILE1 B=$FILE2 cat `X=1;Y=$PAGES1;while [ $X -le $PAGES1 ];
+do echo A$X B$Y; X=$((X+1));
+Y=$((Y-1));
+done` output $FILE3
