@@ -365,9 +365,10 @@ public class OptionsDoclet {
     String default_str = "no default";
     if (oi.default_str != null)
       default_str = String.format("default %s", oi.default_str);
+    String jdoc = oi.jdoc == null ? "" : oi.jdoc; // FIXME: suppress nullness warnings
     // The default string must be HTML escaped since it comes from a string
     // rather than a Javadoc comment.
-    f.format("%s [%s]", oi.jdoc, StringEscapeUtils.escapeHtml(default_str));
+    f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml(default_str));
     return b.toString();
   }
 }
