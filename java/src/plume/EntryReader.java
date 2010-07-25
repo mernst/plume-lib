@@ -489,7 +489,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
         body.append (lineSep);
         line = readLine();
         if (line == null) {
-          throw new IOException("File terminated unexpectedly (didn't find entry terminator)");
+          break; // end of file serves as entry terminator
         }
         entry_match = entry_start_re.matcher(line);
         end_entry_match = entry_stop_re.matcher(line);
