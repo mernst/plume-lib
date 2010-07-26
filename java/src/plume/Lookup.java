@@ -82,8 +82,8 @@ import com.sun.javadoc.*;
   </li>
   <li>Customizing format of files to be searched
     <ul>
-      <li><b>--entry-start-re=</b><i>regex</i>. Regex that denotes the start of a long entry [default ^>entry *()]</li>
-      <li><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the end of a long entry [default ^<entry]</li>
+      <li><b>--entry-start-re=</b><i>regex</i>. Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
+      <li><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the end of a long entry [default ^&lt;entry]</li>
       <li><b>--description-re=</b><i>regex</i>. Regex that finds an entry's description (for long entries) [no default]</li>
       <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
       <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
