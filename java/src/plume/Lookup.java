@@ -191,7 +191,7 @@ public class Lookup {
 
   /** One line synopsis of usage **/
   private static String usage_string
-    = "lookup [options] <keyword> <keyword> ...";
+    = "lookup [options] <keyword> ...";
 
   /**
    * Look for the specified keywords in the file(s) and print
