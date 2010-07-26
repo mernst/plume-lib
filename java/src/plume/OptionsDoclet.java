@@ -13,6 +13,7 @@ import java.util.*;
 import com.sun.javadoc.*;
 
 import java.lang.Class;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Generates HTML documentation of command-line options.
@@ -267,7 +268,9 @@ public class OptionsDoclet {
             // If Javadoc for field is unavailable, then use the @Option
             // description in the documentation.
             if (fd.getRawCommentText().length() == 0) {
-              oi.jdoc = oi.description;
+              // Input is a string rather than a Javadoc (HTML) comment so we
+              // must escape it.
+              oi.jdoc = StringEscapeUtils.escapeHtml(oi.description);
               break;
             }
             oi.jdoc = formatComment(fd);
@@ -362,7 +365,10 @@ public class OptionsDoclet {
     String default_str = "no default";
     if (oi.default_str != null)
       default_str = String.format("default %s", oi.default_str);
-    f.format("%s [%s]", oi.jdoc, default_str);
+    String jdoc = oi.jdoc == null ? "" : oi.jdoc; // FIXME: suppress nullness warnings
+    // The default string must be HTML escaped since it comes from a string
+    // rather than a Javadoc comment.
+    f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml(default_str));
     return b.toString();
   }
 }
