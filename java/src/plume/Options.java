@@ -70,7 +70,9 @@ import java.lang.annotation.*;
  * in the usage message.  This can be useful for options that are
  * preliminary, experimental, or for internal purposes only.  The @{@link
  * Unpublicized} annotation must be specified in addition to the @{@link
- * Option} annotation. <p> 
+ * Option} annotation.  The usage() method takes an optional first argument
+ * {@link usage(boolean,String...)} that causes it to report about
+ * unpublicized options. <p> 
  *
  * <b>Option groups</b> <p>
  * The @{@link OptionGroup} annotation can be used to assign a name to a set of
