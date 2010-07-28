@@ -381,7 +381,8 @@ public class Options {
     /** The name of this option group **/
     String name;
 
-    /** If true, this group of options will not be printed in usage output by
+    /**
+     * If true, this group of options will not be printed in usage output by
      * default. However, the usage information for this option group can be
      * printed by specifying the group explicitly in the call to {@link
      * #usage}.
@@ -898,18 +899,36 @@ public class Options {
 
   /**
    * Returns the String containing the usage message for command-line options.
+   *
    * @param group_names The list of option groups to include in the usage
-   * message.  If empty, will return usage for all option groups that are not
-   * unpublicized.  Or if option groups are not being used, will return usage
-   * for all options that are not unpublicized.
+   * message.  If empty and option groups are being used, will return usage
+   * for all option groups that are not unpublicized.  If empty and option
+   * groups are not being used, will return usage for all options that are
+   * not unpublicized.
    */
   public String usage(String... group_names) {
+    return usage(false, group_names);
+  }
+
+  /**
+   * Returns the String containing the usage message for command-line options.
+   *
+   * @param include_unpublicized If true, treat all unpublicized options
+   * and option groups as publicized
+   * @param group_names The list of option groups to include in the usage
+   * message.  If empty and option groups are being used, will return usage
+   * for all option groups that are not unpublicized.  If empty and option
+   * groups are not being used, will return usage for all options that are
+   * not unpublicized.
+   */
+  public String usage(boolean include_unpublicized, String... group_names) {
     if (!use_groups) {
       if (group_names.length > 0) {
         throw new IllegalArgumentException(
           "This instance of Options does not have any option groups defined");
       }
-      return format_options(options, max_opt_len(options));
+      return format_options(options, max_opt_len(options, include_unpublicized),
+                            include_unpublicized);
     }
      
     List<OptionGroupInfo> groups = new ArrayList<OptionGroupInfo>();
@@ -922,7 +941,7 @@ public class Options {
       }
     } else { // return usage for all groups that are not unpublicized
       for (OptionGroupInfo gi : group_map.values()) {
-        if (gi.unpublicized)
+        if (gi.unpublicized && ! include_unpublicized)
           continue;
         groups.add(gi);
       }
@@ -930,13 +949,13 @@ public class Options {
 
     List<Integer> lengths = new ArrayList<Integer>();
     for (OptionGroupInfo gi : groups)
-      lengths.add(max_opt_len(gi.optionList));
+      lengths.add(max_opt_len(gi.optionList, include_unpublicized));
     int max_len = Collections.max(lengths);
 
     StringBuilderDelimited buf = new StringBuilderDelimited(eol);
     for (OptionGroupInfo gi : groups) {
       buf.append(String.format("%n%s:", gi.name));
-      buf.append(format_options(gi.optionList, max_len));
+      buf.append(format_options(gi.optionList, max_len, include_unpublicized));
     }
 
     return buf.toString();
@@ -945,10 +964,10 @@ public class Options {
   /**
    * Format a list of options for use in generating usage messages.
    */
-  private String format_options(List<OptionInfo> opt_list, int max_len) {
+  private String format_options(List<OptionInfo> opt_list, int max_len, boolean include_unpublicized) {
     StringBuilderDelimited buf = new StringBuilderDelimited(eol);
     for (OptionInfo oi : opt_list) {
-      if (oi.unpublicized)
+      if (oi.unpublicized && ! include_unpublicized)
         continue;
       String default_str = "[no default]";
       if (oi.default_str != null)
@@ -964,10 +983,10 @@ public class Options {
    * Returns the length of the longest synopsis message in a list of options.
    * Useful for aligning options in usage strings.
    */
-  private int max_opt_len(List<OptionInfo> opt_list) {
+  private int max_opt_len(List<OptionInfo> opt_list, boolean include_unpublicized) {
     int max_len = 0;
     for (OptionInfo oi : opt_list) {
-      if (oi.unpublicized)
+      if (oi.unpublicized && ! include_unpublicized)
         continue;
       int len = oi.synopsis().length();
       if (len > max_len)
@@ -1180,10 +1199,24 @@ public class Options {
    * if the option was not specified on the command line.
    */
   public String settings () {
+    return settings(false);
+  }
+
+  /**
+   * Returns a string containing the current setting for each option, in a
+   * format that can be parsed by Options.  This differs from
+   * get_options_str() in that it contains each known option exactly once:
+   * it never contains duplicates, and it contains every known option even
+   * if the option was not specified on the command line.
+   *
+   * @param include_unpublicized  If true, treat all unpublicized options
+   * and option groups as publicized
+   */
+  public String settings (boolean include_unpublicized) {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
     // Determine the length of the longest name
-    int max_len = max_opt_len(options);
+    int max_len = max_opt_len(options, include_unpublicized);
 
     // Create the settings string
     for (OptionInfo oi : options) {
