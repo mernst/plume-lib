@@ -123,5 +123,6 @@
 --suppress-redirect-prefix http://texi2html.cvshome.org/->https://texi2html.cvshome.org/
 --suppress-redirect-prefix http://types.cs.washington.edu/checker-framework/->http://types.cs.washington.edu/checker-framework/current/
 --suppress-redirect-prefix http://www.csail.mit.edu/~->http://people.csail.mit.edu/
+--suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/->http://www-2.dc.uba.ar/exclusivos/
 --suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/garbervetsky/->http://www-2.dc.uba.ar/exclusivos/garbervetsky/presentaciones/
 --suppress-redirect-prefix http://www.ibm.com/->http://www-01.ibm.com/
