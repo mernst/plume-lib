@@ -889,8 +889,10 @@ public class MultiVersionControl {
   public void process(Set<Checkout> checkouts) {
     ProcessBuilder pb = new ProcessBuilder("");
     ProcessBuilder pb2 = new ProcessBuilder(new ArrayList<String>());
+    ProcessBuilder pb3 = new ProcessBuilder(new ArrayList<String>());
     pb.redirectErrorStream(true);
     pb2.redirectErrorStream(true);
+    pb3.redirectErrorStream(true);
     // I really want to be able to redirect output to a Reader, but that
     // isn't possible.  I have to send it to a file.
     // I can't just use the InputStream directly, because if the process is
@@ -904,6 +906,7 @@ public class MultiVersionControl {
       File dir = c.directory;
 
       List<Replacer> replacers = new ArrayList<Replacer>();
+      List<Replacer> replacers3 = new ArrayList<Replacer>();
 
       switch (c.repoType) {
       case BZR:
@@ -938,6 +941,8 @@ public class MultiVersionControl {
       pb.directory(dir);
       pb2.command(new ArrayList<String>());
       pb2.directory(dir);
+      pb3.command(new ArrayList<String>());
+      pb3.directory(dir);
       boolean show_normal_output = false;
       // Set pb.command() to be the command to be executed.
       switch (action) {
@@ -1045,6 +1050,9 @@ public class MultiVersionControl {
           // The third line is either "no changes found" or "changeset".
           replacers.add(new Replacer("^comparing with .*\\nsearching for changes\\nchangeset[^\001]*", "unpushed changesets: " + pb.directory() + "\n"));
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
+          // TODO:  Shelve is an optional extension, and so this should make no report if it is not installed.
+          pb3.command("hg", "shelve", "-l");
+          replacers3.add(new Replacer("^(.*\\n)+", "shelved changes: " + pb.directory() + "\n"));
           break;
         case SVN:
           // Handle some changes.
@@ -1143,6 +1151,7 @@ public class MultiVersionControl {
 
       perform_command(pb, replacers, show_normal_output);
       if (pb2.command().size() > 0) perform_command(pb2, replacers, show_normal_output);
+      if (pb3.command().size() > 0) perform_command(pb3, replacers3, show_normal_output);
     }
   }
 
