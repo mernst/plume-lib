@@ -15,7 +15,8 @@ import java.lang.annotation.Target;
 
 /**
  * Used in conjunction with the @Option annotation to signal that
- * the option should not be included in the usage message.
+ * the option should not be included in the usage message, unless an optional
+ * include_unpublicized argument is supplied and is true.
  * @see plume.Option
  * @see plume.Options
  * @see plume.OptionGroup
