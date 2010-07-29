@@ -80,8 +80,7 @@ import java.lang.annotation.*;
  * Option} annotation. <p>
  *
  * There are forms of the usage-message methods that can include even
- * unpublicized options; for example, see {@link
- * #usage(boolean,String...)}.)
+ * unpublicized options; for example, see {@link #usage(boolean,String...)}.
  * <p>
  *
  * <b>Option groups</b> <p>
@@ -183,7 +182,8 @@ import java.lang.annotation.*;
  *
  *  <li> Not all primitive types are supported.
  *
- *  <li> Types without a string constructor are not supported.
+ *  <li> Types without a constructor that takes a single <tt>String</tt>
+ *  argument are not supported.
  *
  *  <li> The "--no-long" option to turn off a boolean option named "long"
  *  is not supported; use "--long=false" instead.
