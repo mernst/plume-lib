@@ -17,11 +17,12 @@ import java.lang.annotation.*;
  * <ul>
  *   <li>'-c' is an optional single-character short name for the option.
  *   <li>'&lt;type&gt;' is an optional description of the option type more
- *       specific than its Java type (eg, '&lt;filename&gt;' if the variable's
+ *       specific than its Java type (e.g., '&lt;filename&gt;' if the variable's
  *       type is String).  The less-than and greater-than symbols are required.
- *   <li>'description' is a short (typically one-line) description of the
+ *   <li>'description' is a short (one-line) description of the
  *       option suitable for a usage message.  The field's Javadoc comment
- *       can contain a longer description.
+ *       should contain a longer description appropriate for a manual or
+ *       manpage.
  * </ul>
  * <p>
  *

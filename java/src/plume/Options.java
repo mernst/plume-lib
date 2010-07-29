@@ -15,13 +15,20 @@ import java.lang.reflect.*;
 import java.lang.annotation.*;
 
 /**
- * The Options class parses command-line options and sets fields in your
- * program accordingly.  Each field that is annotated with @{@link
- * plume.Option} is set from a command-line argument of the same name.
- * The Options class can also create usage messages and HTML documentation.
- * The Options class interprets annotations and Javadoc comments, so that
- * you do not have to write duplicative, boilerplate code and
- * documentation that could get out of sync with the rest of your program.
+ * The Options class:
+ * <ul>
+ *   <li>parses command-line options and sets fields in your program accordingly,</li>
+ *   <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
+ *   <li>creates documentation suitable for a manual or manpage.</li>
+ * </ul>
+ * Thus, the programmer is freed from writing duplicative, boilerplate code
+ * and documentation that could get out of sync with the rest of the program.
+ * <p>
+ * 
+ * The programmer does not have to write any code, only declare and
+ * document variables.  Each field that is annotated with @{@link
+ * plume.Option} is automatically set from a command-line argument of the
+ * same name.
  * <p>
  *
  * The main entry point is {@link #parse_or_usage(String[])}.
@@ -39,7 +46,7 @@ import java.lang.annotation.*;
  *      ...
  * </pre>
  *
- * The @{@link Option} annotation on a field specifies user documentation
+ * The @{@link Option} annotation on a field specifies brief user documentation
  * and, optionally, a one-character short name that users may supply on the
  * command line.  The long name is taken from the name of the variable;
  * when the name contains an underscore, the user may substitute a hyphen
@@ -56,9 +63,9 @@ import java.lang.annotation.*;
  * All arguments that start with '-' are processed as options.  To
  * terminate option processing at the first non-option argument, see {@link
  * #parse_options_after_arg(boolean)}.  Also, the special option '--'
- * terminates option processing; all subsequent arguments are passed to the
- * program (along with any preceding non-option arguments) without being
- * scanned for options. <p>
+ * terminates option processing; method <tt>parse_or_usage</tt> returns
+ * all subsequent arguments (along with any preceding non-option arguments)
+ * without scanning them for options. <p>
  *
  * A user may provide an option multiple times on the command line.  If the
  * field is a list, each entry is added to the list.  If the field is
@@ -70,20 +77,22 @@ import java.lang.annotation.*;
  * in the usage message.  This can be useful for options that are
  * preliminary, experimental, or for internal purposes only.  The @{@link
  * Unpublicized} annotation must be specified in addition to the @{@link
- * Option} annotation. <p> 
+ * Option} annotation. <p>
+ *
+ * There are forms of the usage-message methods that include even
+ * unpublicized options; for example, see {@link
+ * #usage(boolean,String...)}.)
+ * <p>
  *
  * <b>Option groups</b> <p>
  * The @{@link OptionGroup} annotation can be used to assign a name to a set of
  * related options.  This is useful for organizing a list of
  * options.  Options in the same group are displayed under the same heading
- * in usage texts.  If an option group itself is unpublicized, the default
- * usage message omits the group and all options belonging to it.  An
- * unpublicized option group (that has any publicized options) is included
- * in HTML documentation, however. <p> 
+ * in usage texts. <p> 
  *
  * The @{@link OptionGroup} annotation must be specified on a field in addition
  * to an @{@link Option} annotation.  The <code>@OptionGroup</code> annotation
- * acts like a delimiter &#151; all <code>@Option</code>-annotated fields up to
+ * acts like a delimiter &mdash; all <code>@Option</code>-annotated fields up to
  * the next <code>@OptionGroup</code> annotation belong to the same group.
  * When using option groups, the first <code>@Option</code>-annotated field of
  * every class and object passed to the {@link #Options(String, Object...)}
@@ -92,49 +101,51 @@ import java.lang.annotation.*;
  * name) must be unique among all classes and objects passed to the {@link
  * #Options(String, Object...)} constructor. <p>
  *
- * When an @{@link Unpublicized} annotation is used on a field that is in an
- * unpublicized option group, that field is excluded in <b>all</b> usage
- * messages, even when passing the group's name explicitly as a parameter to
- * {@link #usage(String...)}. <p>
+ * If an option group itself is unpublicized:
+ * <ul>
+ *   <li>The default usage message omits the group and all options belonging
+ *       to it.
+ *   <li>An unpublicized option group (that has any publicized options) is
+ *       included in documentation for a manual.
+ *   <li>A field with an @{@link Unpublicized} annotation is excluded
+ *       even when passing the group's name
+ *       explicitly as a parameter to {@link #usage(String...)}.
+ * </ul>
  *
  * <b>Option aliases</b> <p>
- * The @{@link Option} annotation has an optional parameter <code>aliases</code>
+ * The @{@link Option} annotation has an optional parameter <code>aliases</code>,
  * which accepts an array of strings.  Each string in the array is an alias for
  * the option being defined and can be used in place of an option's long name
  * or short name.  Aliases should start with a single dash or double dash.  It
  * is the user's responsibility to ensure that aliases does not cause ambiguity
  * and do not collide with other options. <p>
  *
- * Note that parameters must be named when passing more than one parameter to
- * an annotation, as in the following examples. <p>
- * For option groups:
+ * For example:
  * <pre>
- *     &#64;OptionGroup(value="Debugging Options", unpublicized=true)
- * </pre>
- * For option aliases:
- * <pre>
- *     &#64;Option(value="-h Print the detailed help", aliases={"-help", "--help"})
+ *     // The user may supply --help, -h, or -help, all of which mean the same thing and set this variable
+ *     &#64;Option(value="-h Print a help message", aliases={"-help"})
+ *     private static boolean help;
  * </pre>
  *
- * <b>Generating HTML documentation</b> <p>
+ * <b>Generating documentation for a manual or manpage</b> <p>
  * The class Javadoc for a class that has a main method should generally
  * contain a summary of all command-line options.  Such a summary can also
- * be useful in other circumsances.
+ * be useful in other circumstances.
  * See the {@link plume.OptionsDoclet} class for instructions about generating
  * HTML documentation. <p>
  * 
  * <b>Supported field types</b> <p>
- * The field may be of the following types:
+ * A field with an @{@link Option} annotation may be of the following types:
  * <ul>
  *   <li>Primitive types:  boolean, int, long, float, double.
- *       (Primitives can also be represented as wrappers (Boolean,
- *       Integer, Long, Float, Double).  Use of a wrapper type allows the
+ *       (Primitives can also be represented as wrappers:  Boolean,
+ *       Integer, Long, Float, Double.  Use of a wrapper type allows the
  *       argument to have no default value.)
  *   <li>Reference types that have a constructor with a single string
  *       parameter.
  *   <li>java.util.regex.Pattern.
  *   <li>enums.
- *   <li>Lists of any supported reference type.  Lists must be initialized
+ *   <li>Lists of any of the above reference types.  A list must be initialized
  *       to a valid list (e.g., the empty list) before using Options on
  *       that list.
  * </ul> <p>
@@ -143,7 +154,6 @@ import java.lang.annotation.*;
  *
  * <!-- Example needs some more words of explanation and example command lines. -->
  * <!-- Given this code: --> <pre>
- *
  *  public static class Test {
  *
  *    &#64;Option ("-o &lt;filename&gt; the output file ")
@@ -162,10 +172,9 @@ import java.lang.annotation.*;
  *  }
  *</pre>
  *
- * For an example of this library being used in practice see {@link
- * plume.Lookup}. Another example can be found in the <code>Main</code> class of
- * <a href="http://code.google.com/p/javarifier/">Javarifier</a>, which takes
- * advantage of option groups and option aliases.  <p>
+ * Example clients of the Options library include {@link
+ * plume.Lookup} and the <code>Main</code> class of
+ * <a href="http://code.google.com/p/javarifier/">Javarifier</a>.  <p>
  *
  * <b>Limitations</b> <ul>
  *
@@ -726,11 +735,10 @@ public class Options {
 
   /**
    * Parses a command line and sets the options accordingly.  This method
-   * splits the argument string into command line arguments, respecting
-   * single and double quotes, then calls parse(String[]).
+   * splits the argument string into command-line arguments, respecting
+   * single and double quotes, then calls {@link #parse(String[])}.
    * @return all non-option arguments
-   * @throws ArgException if the command line contains unknown option or
-   * misused options.
+   * @throws ArgException if the command line contains misused options or an unknown option.
    * @see #parse(String[])
    */
   public String[] parse (String args) throws ArgException {
@@ -770,7 +778,7 @@ public class Options {
 
   /**
    * Parses a command line and sets the options accordingly.  If an error
-   * occurs, prints the usage and terminates the program.  The program is
+   * occurs, prints the usage message and terminates the program.  The program is
    * terminated rather than throwing an error to create cleaner output.
    * @return all non-option arguments
    * @see #parse(String[])
@@ -796,10 +804,12 @@ public class Options {
 
   /**
    * Parses a command line and sets the options accordingly.  If an error
-   * occurs, prints the usage and terminates the program.  The program is
+   * occurs, prints the usage message and terminates the program.  The program is
    * terminated rather than throwing an error to create cleaner output.
-   * This method splits the argument string into command line arguments,
-   * respecting single and double quotes, then calls parse_or_usage(String[]).
+   * <p>
+   * This method splits the argument string into command-line arguments,
+   * respecting single and double quotes, then calls
+   * {@link #parse_or_usage(String[])}.
    * @return all non-option arguments
    * @see #parse_or_usage(String[])
    */
