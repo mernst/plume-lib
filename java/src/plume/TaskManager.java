@@ -15,18 +15,18 @@ import com.sun.javadoc.*;
  * the amount of work required. <p>
  *
  * The command-line arguments are as follows:
-<!-- start options doc (DO NOT EDIT BY HAND) -->
-<ul>
-  <li><b>-r</b> <b>--responsible=</b><i>string</i>. Include only those tasks assigned to the specified person [no default]</li>
-  <li><b>-m</b> <b>--milestone=</b><i>string</i>. Include only those tasks required for the specified milestone [no default]</li>
-  <li><b>-c</b> <b>--completed=</b><i>boolean</i>. Include only completed tasks [default false]</li>
-  <li><b>-o</b> <b>--open=</b><i>boolean</i>. Include only open tasks [default false]</li>
-  <li><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
-  <li><b>-f</b> <b>--format=</b><i>enum</i>. Specify output format (short_ascii, short_html, milestone_html) [default short_ascii]</li>
-  <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
-  <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
-</ul>
-<!-- end options doc -->
+ * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ * <ul>
+ *   <li><b>-r</b> <b>--responsible=</b><i>string</i>. Include only those tasks assigned to the specified person [no default]</li>
+ *   <li><b>-m</b> <b>--milestone=</b><i>string</i>. Include only those tasks required for the specified milestone [no default]</li>
+ *   <li><b>-c</b> <b>--completed=</b><i>boolean</i>. Include only completed tasks [default false]</li>
+ *   <li><b>-o</b> <b>--open=</b><i>boolean</i>. Include only open tasks [default false]</li>
+ *   <li><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
+ *   <li><b>-f</b> <b>--format=</b><i>enum</i>. Specify output format (short_ascii, short_html, milestone_html) [default short_ascii]</li>
+ *   <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
+ *   <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
+ * </ul>
+ * <!-- end options doc -->
  */
 public class TaskManager {
 
