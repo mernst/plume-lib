@@ -30,22 +30,22 @@ import java.util.HashMap;
 /**
  * Given one or more calendars in iCal format, produces a textual summary
  * of available times.  The command-line options are as follows:
-<!-- start options doc (DO NOT EDIT BY HAND) -->
-<ul>
-  <li><b>--date=</b><i>string</i>. first date to summarize [default today]</li>
-  <li><b>--days=</b><i>int</i>. number of calendar days to summarize [default 8]</li>
-  <li><b>--iCal-URL=</b><i>url</i>. For a Google calendar:  go to settings, then click on the green "ICAL"
- icon for the "private address". [default []]</li>
-  <li><b>--business-hours=</b><i>string</i>. A list of time ranges, expressed as a String.
- Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
-  <li><b>--timezone1=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
- Available times are printed in this time zone.  It defaults to the
- system time zone. [default America/Los_Angeles]</li>
-  <li><b>--timezone2=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
- If set, then free times are printed in two time zones. [no default]</li>
-  <li><b>--debug=</b><i>boolean</i>. enable debugging output [default false]</li>
-</ul>
-<!-- end options doc -->
+ * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ * <ul>
+ *   <li><b>--date=</b><i>string</i>. first date to summarize [default today]</li>
+ *   <li><b>--days=</b><i>int</i>. number of calendar days to summarize [default 8]</li>
+ *   <li><b>--iCal-URL=</b><i>url</i>. For a Google calendar:  go to settings, then click on the green "ICAL"
+ *  icon for the "private address". [default []]</li>
+ *   <li><b>--business-hours=</b><i>string</i>. A list of time ranges, expressed as a String.
+ *  Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
+ *   <li><b>--timezone1=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
+ *  Available times are printed in this time zone.  It defaults to the
+ *  system time zone. [default America/Chicago]</li>
+ *   <li><b>--timezone2=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
+ *  If set, then free times are printed in two time zones. [no default]</li>
+ *   <li><b>--debug=</b><i>boolean</i>. enable debugging output [default false]</li>
+ * </ul>
+ * <!-- end options doc -->
  **/
 public class ICalAvailable {
 
