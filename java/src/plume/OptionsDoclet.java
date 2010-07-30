@@ -13,6 +13,7 @@ import java.util.*;
 import com.sun.javadoc.*;
 
 import java.lang.Class;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
@@ -23,10 +24,6 @@ import org.apache.commons.lang.StringEscapeUtils;
  *
  * The following doclet options are supported:
  * <ul>
- * <li> <b>-outfile</b> <i>file</i> The destination for the HTML
- * output (the default is standard out).  If both <code>-outfile</code> and
- * <code>-docfile</code> are specified, they must be different.
- *
  * <li> <b>-docfile</b> <i>file</i> When specified, the output of this doclet
  * is the result of replacing everything between the two lines
  * <pre>&lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
@@ -36,6 +33,31 @@ import org.apache.commons.lang.StringEscapeUtils;
  * inserting option documentation into an existing manual.  The existing
  * docfile is not modified; output goes to the <code>-outfile</code>
  * argument, or to standard out.
+ *
+ * <li> <b>-outfile</b> <i>file</i> The destination for the output (the default
+ * is standard out).  If both <code>-outfile</code> and <code>-docfile</code>
+ * are specified, they must be different.
+ *
+ * <li> <b>-i</b> Specifies that the docfile should be edited in-place.  This
+ * option can not be used at the same time as the <code>-outfile</code> option.
+ *
+ * <li> <b>-format</b> <i>format</i> This option sets the output format of this
+ * doclet.  Currently, the following value(s) for <i>format</i> are supported:
+ * <ul>
+ *   <li> <b>javadoc</b> When this format is specified, the output of this
+ *   doclet is formatted as a Javadoc comment.  This is useful for including
+ *   option documentation inside Java source code.  When this format is used
+ *   with the <code>-docfile</code> option, the generated documentation is
+ *   inserted between the lines
+ *   <pre>* &lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
+ *   and
+ *   <pre>* &lt;!-- end options doc --&gt;</pre>
+ *   using the same indentation.  For the most part, the output with this format
+ *   is the same as the default HTML output with the string "* " prepended to
+ *   every line.
+ * </ul>
+ * The default output format is HTML; this is the format used when
+ * <code>-format</code> is not specified.
  *
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
  * class documentation of the first class specified on the command-line.
@@ -54,6 +76,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  */
+
 // This doesn't itself use plume.Options for its command-line option
 // processing because a Doclet is required to implement the optionLength
 // and validOptions methods.
@@ -62,29 +85,39 @@ public class OptionsDoclet {
   @SuppressWarnings("nullness") // line.separator property always exists
   private static String eol = System.getProperty("line.separator");
 
-  private static String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
-  private static String endDelim = "<!-- end options doc -->"; 
-
   private static String usage = "Provided by Options doclet:\n" +
     "-docfile <file>        Specify file into which options documentation is inserted\n" +
     "-outfile <file>        Specify destination for resulting output\n" +
+    "-i                     Edit the docfile in-place\n" +
+    "-format javadoc        Format output as a Javadoc comment\n" +
     "-classdoc              Include 'main' class documentation in output\n" +
     "-singledash            Use single dashes for long options (see plume.Options)\n" +
     "See the OptionsDoclet documentation for more details.";
 
+
+  private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
+  private String endDelim = "<!-- end options doc -->"; 
+
   private File docFile;
   private File outFile;
+  private boolean inPlace = false;
+  private boolean formatJavadoc = false;
   private boolean includeClassDoc = false;
 
+  private RootDoc root;
   private Options options;
+
+  public OptionsDoclet(RootDoc root, Options options) {
+    this.root = root;
+    this.options = options;
+  }
+
+  // Doclet-specific methods
 
   /**
    * Entry point for the doclet.
    */
   public static boolean start(RootDoc root) {
-    OptionsDoclet o = new OptionsDoclet();
-    o.setOptions(root.options());
-
     List<Class<?>> classes = new ArrayList<Class<?>>();
     for (ClassDoc doc : root.specifiedClasses()) {
       // TODO: Class.forName() expects a binary name but doc.qualifiedName()
@@ -103,14 +136,17 @@ public class OptionsDoclet {
     }
 
     Object[] classarr = classes.toArray();
-    o.options = new Options(classarr);
-    if (o.options.getOptions().size() < 1) {
+    Options options = new Options(classarr);
+    if (options.getOptions().size() < 1) {
       System.out.println("Error: no @Option-annotated fields found");
       return false;
     }
 
+    OptionsDoclet o = new OptionsDoclet(root, options);
+    o.setOptions(root.options());
+    o.processJavadoc();
     try {
-      o.outputOptDoc(root);
+      o.write();
     } catch (Exception e) {
       e.printStackTrace();
       return false;
@@ -131,12 +167,14 @@ public class OptionsDoclet {
       System.out.println(usage);
       return 1;
     }
-    if (option.equals("-classdoc") ||
+    if (option.equals("-i") ||
+        option.equals("-classdoc") ||
         option.equals("-singledash")) {
       return 1;
     }
     if (option.equals("-docfile") ||
-        option.equals("-outfile")) {
+        option.equals("-outfile") ||
+        option.equals("-format")) {
       return 2;
     }
     return 0;
@@ -153,6 +191,8 @@ public class OptionsDoclet {
                                      DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
+    boolean hasFormat = false;
+    boolean inPlace = false;
     String docFile = null;
     String outFile = null;
     for (int oi = 0; oi < options.length; oi++) {
@@ -176,8 +216,30 @@ public class OptionsDoclet {
           reporter.printError("-outfile option specified twice");
           return false;
         }
+        if (inPlace) {
+          reporter.printError("-i and -outfile can not be used at the same time");
+          return false;
+        }
         outFile = os[1];
         hasOutFile = true;
+      }
+      if (opt.equals("-i")) {
+        if (hasOutFile) {
+          reporter.printError("-i and -outfile can not be used at the same time");
+          return false;
+        }
+        inPlace = true;
+      }
+      if (opt.equals("-format")) {
+        if (hasFormat) {
+          reporter.printError("-format option specified twice");
+          return false;
+        }
+        if (!os[1].equals("javadoc")) {
+          reporter.printError("unrecognized output format: " + os[1]);
+          return false;
+        }
+        hasFormat = true;
       }
     }
     if (docFile != null && outFile != null && outFile.equals(docFile)) {
@@ -188,10 +250,10 @@ public class OptionsDoclet {
   }
 
   /**
-   * Set the options for this class based on command-line arguements given by
+   * Set the options for this class based on command-line arguments given by
    * RootDoc.options().
    */
-  private void setOptions(String[][] options) {
+  public void setOptions(String[][] options) {
     for (int oi = 0; oi < options.length; oi++) {
       String[] os = options[oi];
       String opt = os[0].toLowerCase();
@@ -199,37 +261,65 @@ public class OptionsDoclet {
         this.docFile = new File(os[1]);
       } else if (opt.equals("-outfile")) {
         this.outFile = new File(os[1]);
+      } else if (opt.equals("-i")) {
+        this.inPlace = true;
+      } else if (opt.equals("-format")) {
+        if (os[1].equals("javadoc"))
+          setFormatJavadoc(true);
       } else if (opt.equals("-classdoc")) {
         this.includeClassDoc = true;
       } else if (opt.equals("-singledash")) {
-        this.options.use_single_dash(true);
+          setUseSingleDash(true);
       }
     }
   }
 
+  // File IO methods
+
   /**
-   * Outputs the result of this doclet.
+   * Write the output of this doclet to the correct file.
    */
-  private void outputOptDoc(RootDoc root) throws Exception {
-    String outHtml = generateHtml(root);
-
+  public void write() throws Exception {
     PrintWriter out;
-    if (outFile == null)
-      out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-    else
-      out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
+    String output = output();
 
+    if (outFile != null)
+      out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
+    else if (inPlace)
+      out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
+    else
+      out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+
+    out.println(output);
+    out.flush();
+    out.close();
+  }
+
+  /**
+   * Get the final output of this doclet.  The string returned by this method
+   * is the output seen by the user.
+   */
+  public String output() throws Exception {
     if (docFile == null) {
-      out.println(outHtml);
-      out.flush();
-      out.close();
-      return;
+      if (formatJavadoc)
+        return optionsToJavadoc(0);
+      else
+        return optionsToHtml();
     }
 
+    return newDocFileText();
+  }
+
+  /**
+   * Get the result of inserting the options documentation into the docfile.
+   */
+  private String newDocFileText() throws Exception {
+    StringBuilderDelimited b = new StringBuilderDelimited(eol);
     BufferedReader doc = new BufferedReader(new FileReader(docFile));
     String docline;
     boolean replacing = false;
     boolean replaced_once = false;
+
     while ((docline = doc.readLine()) != null) {
       if (replacing) {
         if (docline.trim().equals(endDelim))
@@ -238,27 +328,28 @@ public class OptionsDoclet {
           continue;
       }
 
-      out.println(docline);
+      b.append(docline);
 
       if (!replaced_once && docline.trim().equals(startDelim)) {
-        out.println(outHtml);
+        if (formatJavadoc)
+          b.append(optionsToJavadoc(docline.indexOf('*')));
+        else
+          b.append(optionsToHtml());
         replaced_once = true;
         replacing = true;
       }
     }
 
-    out.flush();
-    out.close();
     doc.close();
+    return b.toString();
   }
 
-  /**
-   * Generates the string containing the HTML output for this instance.
-   */
-  private String generateHtml(RootDoc root) {
-    StringBuilderDelimited b = new StringBuilderDelimited(eol);
+  // HTML and Javadoc processing methods
 
-    // Process each option and add in the javadoc info
+  /**
+   * Process each option and add in the Javadoc info.
+   */
+  public void processJavadoc() {
     for (Options.OptionInfo oi : options.getOptions()) {
       ClassDoc opt_doc = root.classNamed(oi.get_declaring_class().getName());
       if (opt_doc != null) {
@@ -271,23 +362,32 @@ public class OptionsDoclet {
               // Input is a string rather than a Javadoc (HTML) comment so we
               // must escape it.
               oi.jdoc = StringEscapeUtils.escapeHtml(oi.description);
-              break;
+            } else if (formatJavadoc) {
+              oi.jdoc = fd.commentText();
+            } else {
+              oi.jdoc = javadocToHtml(fd);
             }
-            oi.jdoc = formatComment(fd);
             break;
           }
         }
       }
     }
+  }
+
+  /**
+   * Get the HTML documentation for the underlying options instance.
+   */
+  public String optionsToHtml() {
+    StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
     if (includeClassDoc) {
-      b.append(formatComment(root.classes()[0]));
+      b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
       b.append("<p>Command line options: </p>");
     }
 
     b.append("<ul>");
     if (!options.isUsingGroups()) {
-      b.append(formatOptions(options.getOptions(), 2));
+      b.append(optionListToHtml(options.getOptions(), 2));
     } else {
       for (Options.OptionGroupInfo gi : options.getOptionGroups()) {
         // Do not include groups without publicized options in output
@@ -296,7 +396,7 @@ public class OptionsDoclet {
 
         b.append("  <li>" + gi.name);
         b.append("    <ul>");
-        b.append(formatOptions(gi.optionList, 6));
+        b.append(optionListToHtml(gi.optionList, 6));
         b.append("    </ul>");
         b.append("  </li>");
       }
@@ -307,68 +407,112 @@ public class OptionsDoclet {
   }
 
   /**
-   * Format a javadoc comment to HTML by wrapping the text of inline @link tags
-   * and block @see tags in HTML 'code' tags.  This keeps most of the
-   * information in the comment while still being presentable. <p>
-   * 
-   * This is only a temporary solution.  Ideally, @link/@see tags would be
-   * converted to HTML links which point to actual documentation.
+   * Get the HTML documentation for the underlying options instance, formatted
+   * as a Javadoc comment.
    */
-  private String formatComment(Doc doc) {
-    StringBuilder buf = new StringBuilder();
-    Tag[] tags = doc.inlineTags();
-    for (Tag tag : tags) {
-      if (tag instanceof SeeTag)
-        buf.append("<code>" + tag.text() + "</code>");
-      else
-        buf.append(tag.text());
+  public String optionsToJavadoc(int padding) {
+    StringBuilderDelimited b = new StringBuilderDelimited(eol);
+    Scanner s = new Scanner(optionsToHtml());
+
+    while (s.hasNextLine()) {
+      StringBuilder bb = new StringBuilder();
+      bb.append(StringUtils.repeat(" ", padding)).append("* ").append(s.nextLine());
+      b.append(bb);
     }
-    SeeTag[] seetags = doc.seeTags();
-    if (seetags.length > 0) {
-      buf.append(" See: ");
-      StringBuilderDelimited seebuf = new StringBuilderDelimited(", ");
-      for (SeeTag tag : seetags)
-        seebuf.append("<code>" + tag.text() + "</code>");
-      buf.append(seebuf);
-      buf.append(".");
-    }
-    return buf.toString();
+
+    return b.toString();
   }
 
   /**
-   * Format a list of options with HTML for use in generating the HTML
-   * documentation.
+   * Get the HTML describing many options, formatted as an HTML list.
    */
-  private String formatOptions(List<Options.OptionInfo> opt_list, int indent) {
-    StringBuilderDelimited buf = new StringBuilderDelimited(eol);
+  private String optionListToHtml(List<Options.OptionInfo> opt_list, int padding) {
+    StringBuilderDelimited b = new StringBuilderDelimited(eol);
     for (Options.OptionInfo oi : opt_list) {
       if (oi.unpublicized)
         continue;
-      String synopsis = htmlSynopsis(oi);
-      buf.append(String.format("%" + indent + "s<li>%s</li>", "", synopsis));
+      StringBuilder bb = new StringBuilder();
+      String optHtml = optionToHtml(oi);
+      bb.append(StringUtils.repeat(" ", padding));
+      bb.append("<li>").append(optHtml).append("</li>");
+      b.append(bb);
     }
-    return buf.toString();
+    return b.toString();
   }
 
   /**
-   * Construct the line of HTML describing an Option.
+   * Get the line of HTML describing an Option.
    */
-  private String htmlSynopsis(Options.OptionInfo oi) {
+  public String optionToHtml(Options.OptionInfo oi) {
     StringBuilder b = new StringBuilder();
     Formatter f = new Formatter(b);
     if (oi.short_name != null)
       f.format("<b>-%s</b> ", oi.short_name);
     for (String a : oi.aliases)
       f.format("<b>%s</b> ", a);
-    String prefix = options.isUsingSingleDash() ? "-" : "--";
+    String prefix = getUseSingleDash() ? "-" : "--";
     f.format("<b>%s%s=</b><i>%s</i>. ", prefix, oi.long_name, oi.type_name);
     String default_str = "no default";
     if (oi.default_str != null)
-      default_str = String.format("default %s", oi.default_str);
+      default_str = "default " + oi.default_str;
     String jdoc = oi.jdoc == null ? "" : oi.jdoc; // FIXME: suppress nullness warnings
     // The default string must be HTML escaped since it comes from a string
     // rather than a Javadoc comment.
     f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml(default_str));
     return b.toString();
+  }
+
+  /**
+   * Replace the @link tags and block @see tags in a Javadoc comment with
+   * sensible, non-hyperlinked HTML.  This keeps most of the information in the
+   * comment while still being presentable. <p>
+   * 
+   * This is only a temporary solution.  Ideally, @link/@see tags would be
+   * converted to HTML links which point to actual documentation.
+   */
+  public static String javadocToHtml(Doc doc) {
+    StringBuilder b = new StringBuilder();
+    Tag[] tags = doc.inlineTags();
+    for (Tag tag : tags) {
+      if (tag instanceof SeeTag)
+        b.append("<code>" + tag.text() + "</code>");
+      else
+        b.append(tag.text());
+    }
+    SeeTag[] seetags = doc.seeTags();
+    if (seetags.length > 0) {
+      b.append(" See: ");
+      StringBuilderDelimited bb = new StringBuilderDelimited(", ");
+      for (SeeTag tag : seetags)
+        bb.append("<code>" + tag.text() + "</code>");
+      b.append(bb);
+      b.append(".");
+    }
+    return b.toString();
+  }
+
+  // Getters and Setters
+
+  public boolean getFormatJavadoc() {
+    return formatJavadoc;
+  }
+
+  public void setFormatJavadoc(boolean val) {
+    if (val && !formatJavadoc) {
+      startDelim = "* " + startDelim;
+      endDelim = "* " + endDelim;
+    } else if (!val && formatJavadoc) {
+      startDelim = StringUtils.removeStart("* ", startDelim);
+      endDelim = StringUtils.removeStart("* ", endDelim);
+    }
+    this.formatJavadoc = val;
+  }
+
+  public boolean getUseSingleDash() {
+    return options.isUsingSingleDash();
+  }
+
+  public void setUseSingleDash(boolean val) {
+    options.use_single_dash(true);
   }
 }
