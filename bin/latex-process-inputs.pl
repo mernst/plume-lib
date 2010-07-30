@@ -27,7 +27,7 @@ my $list_mode = 0;              # boolean indicating list mode vs. inline mode
 my $ant_list_mode = 0;
 my $makefile_list_mode = 0;
 if ((@ARGV[0] eq "-help") || (@ARGV[0] eq "--help")) {
-  print "Optional arguments: -list -antlist\n";
+  print "Optional arguments: -list -antlist -makefilelist\n";
   exit(0);
 } elsif ((@ARGV[0] eq "-list") || (@ARGV[0] eq "--list")) {
   $list_mode = 1;
