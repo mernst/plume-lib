@@ -1149,6 +1149,9 @@ public class MultiVersionControl {
         }
       }
 
+      if (print_directory) {
+        System.out.println(dir + " :");
+      }
       perform_command(pb, replacers, show_normal_output);
       if (pb2.command().size() > 0) perform_command(pb2, replacers, show_normal_output);
       if (pb3.command().size() > 0) perform_command(pb3, replacers3, show_normal_output);
