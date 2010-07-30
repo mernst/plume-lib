@@ -42,55 +42,55 @@ import com.sun.javadoc.*;
  * The default behavior can be customized by way of command-line options. <p>
  *
  * The command-line options are as follows:
-<!-- start options doc (DO NOT EDIT BY HAND) -->
-<ul>
-  <li>Getting help
-    <ul>
-      <li><b>-h</b> <b>--help=</b><i>boolean</i>. Show detailed help information and exit. [default false]</li>
-      <li><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
-    </ul>
-  </li>
-  <li>Where to search
-    <ul>
-      <li><b>-f</b> <b>--entry-file=</b><i>string</i>. Specify the colon-separated search list for the file that contains
- information to be searched.  Only the first file found is used, though
- it may itself contain include directives. [default ~/lookup/root]</li>
-      <li><b>-b</b> <b>--search-body=</b><i>boolean</i>. Search the body of long entries in addition to the entry's
- description.  The bodies of short entries are always searched. [default false]</li>
-    </ul>
-  </li>
-  <li>What to search for
-    <ul>
-      <li><b>-e</b> <b>--regular-expressions=</b><i>boolean</i>. Specifies that keywords are regular expressions.  If false, keywords
- are text matches. [default false]</li>
-      <li><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>. If true, keywords matching is case sensistive.  By default both
- regular expressions and text keywords are case insensitive. [default false]</li>
-      <li><b>-w</b> <b>--word-match=</b><i>boolean</i>. If true, match a text keyword only as a separate word, not as a
- substring of a word.  This option is ignored if
- regular_expressions is true. [default false]</li>
-    </ul>
-  </li>
-  <li>How to print matches
-    <ul>
-      <li><b>-a</b> <b>--print-all=</b><i>boolean</i>. By default, if multiple entries are matched, only a synopsis
- of each entry is printed.  If 'print_all' is selected then
- the body of each matching entry is printed. [default false]</li>
-      <li><b>-i</b> <b>--item-num=</b><i>integer</i>. Specifies which item to print when there are multiple matches. [no default]</li>
-      <li><b>-l</b> <b>--show-location=</b><i>boolean</i>. If true, show the filename/line number of each matching entry
- in the output. [default false]</li>
-    </ul>
-  </li>
-  <li>Customizing format of files to be searched
-    <ul>
-      <li><b>--entry-start-re=</b><i>regex</i>. Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
-      <li><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the end of a long entry [default ^&lt;entry]</li>
-      <li><b>--description-re=</b><i>regex</i>. Regex that finds an entry's description (for long entries) [no default]</li>
-      <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
-      <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
-    </ul>
-  </li>
-</ul>
-<!-- end options doc -->
+ * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ * <ul>
+ *   <li>Getting help
+ *     <ul>
+ *       <li><b>-h</b> <b>--help=</b><i>boolean</i>. Show detailed help information and exit. [default false]</li>
+ *       <li><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
+ *     </ul>
+ *   </li>
+ *   <li>Where to search
+ *     <ul>
+ *       <li><b>-f</b> <b>--entry-file=</b><i>string</i>. Specify the colon-separated search list for the file that contains
+ *  information to be searched.  Only the first file found is used, though
+ *  it may itself contain include directives. [default ~/lookup/root]</li>
+ *       <li><b>-b</b> <b>--search-body=</b><i>boolean</i>. Search the body of long entries in addition to the entry's
+ *  description.  The bodies of short entries are always searched. [default false]</li>
+ *     </ul>
+ *   </li>
+ *   <li>What to search for
+ *     <ul>
+ *       <li><b>-e</b> <b>--regular-expressions=</b><i>boolean</i>. Specifies that keywords are regular expressions.  If false, keywords
+ *  are text matches. [default false]</li>
+ *       <li><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>. If true, keywords matching is case sensistive.  By default both
+ *  regular expressions and text keywords are case insensitive. [default false]</li>
+ *       <li><b>-w</b> <b>--word-match=</b><i>boolean</i>. If true, match a text keyword only as a separate word, not as a
+ *  substring of a word.  This option is ignored if
+ *  regular_expressions is true. [default false]</li>
+ *     </ul>
+ *   </li>
+ *   <li>How to print matches
+ *     <ul>
+ *       <li><b>-a</b> <b>--print-all=</b><i>boolean</i>. By default, if multiple entries are matched, only a synopsis
+ *  of each entry is printed.  If 'print_all' is selected then
+ *  the body of each matching entry is printed. [default false]</li>
+ *       <li><b>-i</b> <b>--item-num=</b><i>integer</i>. Specifies which item to print when there are multiple matches. [no default]</li>
+ *       <li><b>-l</b> <b>--show-location=</b><i>boolean</i>. If true, show the filename/line number of each matching entry
+ *  in the output. [default false]</li>
+ *     </ul>
+ *   </li>
+ *   <li>Customizing format of files to be searched
+ *     <ul>
+ *       <li><b>--entry-start-re=</b><i>regex</i>. Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
+ *       <li><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the end of a long entry [default ^&lt;entry]</li>
+ *       <li><b>--description-re=</b><i>regex</i>. Regex that finds an entry's description (for long entries) [no default]</li>
+ *       <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
+ *       <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
+ *     </ul>
+ *   </li>
+ * </ul>
+ * <!-- end options doc -->
  **/
 public class Lookup {
 

@@ -134,15 +134,11 @@ javadoc: .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
 
 optionsdoc: compile
-	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/Lookup.java-withdoc -docfile src/plume/Lookup.java src/plume/Lookup.java
-	mv -f src/plume/Lookup.java-withdoc src/plume/Lookup.java
-	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/ICalAvailable.java-withdoc -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
-	mv -f src/plume/ICalAvailable.java-withdoc src/plume/ICalAvailable.java
+	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 #TODO: currently crashing
-#	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/MultiVersionControl.java-withdoc -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-#	mv -f src/plume/MultiVersionControl.java-withdoc src/plume/MultiVersionControl.java
-	javadoc -quiet -doclet plume.OptionsDoclet -outfile src/plume/TaskManager.java-withdoc -docfile src/plume/TaskManager.java src/plume/TaskManager.java
-	mv -f src/plume/TaskManager.java-withdoc src/plume/TaskManager.java
+#	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 
 showvars:
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
