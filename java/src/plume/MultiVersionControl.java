@@ -327,9 +327,6 @@ public class MultiVersionControl {
       // Checkouts can be much slower than other operations.
       timeout = timeout * 10;
     }
-    if (action == UPDATE) {
-      print_directory = true;
-    }
 
     if (debug) {
       show = true;
