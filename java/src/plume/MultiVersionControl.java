@@ -29,18 +29,20 @@ import java.net.URL;
 /**
  * This program, mvc for Multiple Version Control, lets you run a version
  * control command, such as "status" or "update", on a <b>set</b> of
- * Bzr/CVS/SVN/Hg checkouts rather than just one.<p>
+ * CVS/SVN/Hg checkouts rather than just one.<p>
  *
- * This program simplifies managing your checkouts.  You might
+ * This program simplifies managing your checkouts/clones.  You might
  * want to know whether any of them have uncommitted changes, or you
  * might want to update all of them.  Or, when setting up a new account,
  * you might want to check them all out.  This program does any of those
  * tasks.  In particular, it accepts these arguments:
  * <pre>
- *   checkout  -- checks out all repositories
- *   update    -- update all checked out repositories
- *   status    -- show files that are changed but not committed
- *   list      -- list the checkouts that this program is aware of
+ *   checkout  -- Check out all repositories.
+ *   update    -- Update all checkouts.  For a distributed version control
+ *                system such as Mercurial, also does a pull.
+ *   status    -- Show files that are changed but not committed, or committed
+ *                but not pushed, or have shelved/stashed changes.
+ *   list      -- List the checkouts that this program is aware of.
  * </pre>
  *
  * You can specify the set of checkouts for the program to manage, or it
@@ -49,28 +51,47 @@ import java.net.URL;
  * changed files is:
  * <pre>java plume.MultiVersionControl status --search=true</pre>
  *
- * For complete usage information, run the program with no arguments.<p>
+ * <b>Command-line arguments</b><p>
+
+ * The command-line options are as follows:
+<!-- start options doc (DO NOT EDIT BY HAND) -->
+<pre>
+  --checkouts=<em>string</em>        - File with list of checkouts.  Set it to /dev/null to suppress reading. [default /home/mernst/.mvc-checkouts]
+  --dir=<em>string[]</em>            - Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]
+  --ignore-dir=<em>string[]</em>     - Directory under which to NOT search for checkouts; may be supplied multiple times [default []]
+  --search=<em>boolean</em>          - Search for all checkouts, not just those listed in a file [default false]
+  --show=<em>boolean</em>            - Display commands as they are executed [default false]
+  --print-directory=<em>boolean</em> - Print the directory before executing commands [default false]
+  --dry-run=<em>boolean</em>         - Do not execute commands; just print them.  Implies --show --redo-existing [default false]
+  --redo-existing=<em>boolean</em>   - Redo existing checkouts; relevant only to checkout command [default false]
+  --timeout=<em>int</em>             - Timeout for each command, in seconds [default 600]
+  -q --quiet=<em>boolean</em>        - Run quietly (e.g., no output about missing directories) [default true]
+  --debug=<em>boolean</em>           - Print debugging output [default false]
+  --debug-replacers=<em>boolean</em> - Debug 'replacers' that filter command output [default false]
+</pre>
+<!-- end options doc -->
  *
- * The remainter of this document describes the file format for the
- * ".mvc-checkouts" file.<p>
+ * <b>File format for <tt>.mvc-checkouts</tt> file</b><p>
  *
- * <b>File format for ".mvc-checkouts" file:</b><p>
+ * The remainder of this document describes the file format for the
+ * <tt>.mvc-checkouts</tt> file.<p>
  *
  * (Note:  because mvc can search for all checkouts in your directory, you
- * don't need a .mvc-checkouts file.  But using it makes the program faster
- * (it doesn't have to search your entire directory), or permits you to
- * exclude certain checkouts from processing.)<p>
+ * don't need a <tt>.mvc-checkouts</tt> file.  Using a
+ * <tt>.mvc-checkouts</tt> file makes the program faster because it does not
+ * have to search all of your directories.  It also permits you to
+ * process only a certain set of checkouts.)<p>
  *
- * The ".mvc-checkouts" file contains a list of sections.  Each section names
- * either a root from which a sub-part (e.g., a module or a subdirectory)
- * will be checked out, or a repository all of which will be checked out.
+ * The <tt>.mvc-checkouts</tt> file contains a list of <em>sections</em>.
+ * Each section names either a root from which a sub-part (e.g., a module
+ * or a subdirectory) will be checked out, or a repository all of which
+ * will be checked out.
  * Examples include:
  * <pre>
  * CVSROOT: :ext:login.csail.mit.edu:/afs/csail.mit.edu/u/m/mernst/.CVS/.CVS-mernst
  * SVNROOT: svn+ssh://tricycle.cs.washington.edu/cse/courses/cse403/09sp
- * REPOS: svn+ssh://login.csail.mit.edu/afs/csail/u/a/akiezun/.SVN/papers/parameterization-paper/trunk
- * HGREPOS: https://jsr308-langtools.googlecode.com/hg
- * </pre><p>
+ * SVNREPOS: svn+ssh://login.csail.mit.edu/afs/csail/u/a/akiezun/.SVN/papers/parameterization-paper/trunk
+ * HGREPOS: https://jsr308-langtools.googlecode.com/hg</pre>
  *
  * Within each section is a list of directories that contain a checkout
  * from that repository.  If the section names a root, then a module or
@@ -78,6 +99,11 @@ import java.net.URL;
  * This can be overridden by specifying the module/subdirectory on the same
  * line, after a space.  If the section names a repository, then no module
  * information is needed or used.<p>
+ *
+ * When performing a checkout, the parent directories are created if
+ * needed.<p>
+ *
+ * In the file, blank lines, and lines beginning with "#", are ignored.<p>
  *
  * Here are some example sections:
  * <pre>
@@ -98,17 +124,15 @@ import java.net.URL;
  *
  * SVNROOT: svn+ssh://login.csail.mit.edu/afs/csail/u/d/dannydig/REPOS/
  * ~/research/concurrency/concurrentPaper
- * ~/research/concurrency/mit.edu.concurrencyRefactorings concurrencyRefactorings/project/mit.edu.concurrencyRefactorings
- * </pre>
+ * ~/research/concurrency/mit.edu.concurrencyRefactorings concurrencyRefactorings/project/mit.edu.concurrencyRefactorings</pre>
  *
- * Furthermore, these sections have identical effects:
+ * Furthermore, these 2 sections have identical effects:
  * <pre>
  * SVNROOT: https://crashma.googlecode.com/svn/
  * ~/research/crashma trunk
  *
  * SVNREPOS: https://crashma.googlecode.com/svn/trunk
- * ~/research/crashma
- * </pre>
+ * ~/research/crashma</pre>
  * and, all 3 of these sections have identical effects:
  * <pre>
  * SVNROOT: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/
@@ -118,17 +142,7 @@ import java.net.URL;
  * ~/research/typequals/annotations annotations
  *
  * SVNREPOS: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/annotations
- * ~/research/typequals/annotations
- * </pre><p>
- *
- * When performing a checkout, the parent directories are created if
- * needed.<p>
- *
- * In the file, blank lines, and lines beginning with "#", are ignored.<p>
- *
- * The command-line options are as follows:
-<!-- start options doc (DO NOT EDIT BY HAND) -->
-<!-- end options doc -->
+ * ~/research/typequals/annotations</pre>
  */
 
 // TODO:
