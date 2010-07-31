@@ -10,6 +10,9 @@
 # This script takes as input a filename or URL for an ACM digital library
 # proceedings table of contents.  It produces, to standard output, a HTML
 # file that augments the table of contents with abstracts for each paper.
+# This makes it possible to read all the abstracts on one HTML page,
+# without clicking on any links.
+#
 # You can use it on:
 #  * a URL from the ACM digital library.  Example:
 #      acm-dl-abstracts.pl 'http://portal.acm.org/toc.cfm?id=964001' > popl2004-abstracts-orig.html

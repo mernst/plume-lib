@@ -14,7 +14,7 @@
 #     (This could perhaps be replaced by the "expand" module of the rubber program.)
 #  2. List mode: List all the files that are (transitively) "\input".
 #     This can be useful for getting a list of source files in a logical order,
-#     for example to be used in a Makefile or Ant buildfile (use -antlist).
+#     for example to be used in a Makefile or Ant buildfile.
 #       latex-process-inputs.pl --list main-file.tex
 #       latex-process-inputs.pl --makefilelist main-file.tex
 #       latex-process-inputs.pl --antlist main-file.tex
