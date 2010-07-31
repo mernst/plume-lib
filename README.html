@@ -13,7 +13,7 @@
 Plume-lib is a library of useful abstractions for programming. It includes:
 </p>
 <ul>
-<li>standalone programs
+<li>standalone programs</li>
 <li>libraries written for Java, Emacs Lisp, and Perl</li>
 </ul>
 
@@ -68,6 +68,7 @@ Images
 <dd>
   Lets you run a version control command, such as "status" or "update", on
   a set of CVS/SVN/Hg checkouts rather than just one.
+  <br/>
   <a href="http://types.cs.washington.edu/plume-lib/api/plume/MultiVersionControl.html">Complete documentation</a>
 </dd>
 
@@ -81,20 +82,14 @@ Images
 <h3>Quieter output from CVS</h3>
 
 <dl>
-<dt>cvslog</dt>
-<dd>
-Eliminates empty entries from <tt>cvs log</tt> output
-</dd>
-
-<dt>cvsupdate</dt>
-<dd>
-  Run <tt>cvs update</tt>, <em>very</em> quietly:  only inform of conflicts
-  (and some errors).
-</dd>
-
 <dt>cvsdiff</dt>
 <dd>
   Run <tt>cvs diff</tt>, but filter out empty diffs.
+</dd>
+
+<dt>cvslog</dt>
+<dd>
+Eliminates empty entries from <tt>cvs log</tt> output.
 </dd>
 
 <dt>cvs-log-summarize.pl</dt>
@@ -105,58 +100,266 @@ Eliminates empty entries from <tt>cvs log</tt> output
   identical checkin messages).  For each such sequence of CVS checkins, a
   list of files and checkin messages is presented.
 </dd>
+
+<dt>cvsupdate</dt>
+<dd>
+  Run <tt>cvs update</tt>, very quietly:  only inform of conflicts
+  (and some errors).
+</dd>
 </dl>
 
 
 <h2>Emacs helper programs</h2>
-./bin/emacs-byte-recompile-directory
-./bin/emacs-flatten-tags
-./bin/emacsclient-a
-./bin/vm-mail-to-mailto-url
+
+<dl>
+<dt>emacs-byte-recompile-directory</dt>
+<dd>
+  Byte-compiles each Emacs Lisp file in the given directory, whose compiled
+  <tt>.elc</tt> file is out of date.  Requires an argument:  the directory.
+</dd>
+
+<dt>emacs-flatten-tags</dt>
+<dd>
+  Given a TAGS file, outputs (to stdout) that file with all recursively
+  included TAGS files included.  While the result is larger and depends on
+  more files, the whole thing is searched for a best match rather than a
+  particular subfile being exhaustively searched (even returning poor
+  matches) before going to the next subfile.
+</dd>
+
+<dt>emacs-mailto-handler</dt>
+<dd>
+  Takes a mailto link as its argument and pass it to Emacs.
+  <br/>
+  For example, using the <a href="http://mozex.mozdev.org/">MozEX</a>
+  extension for Firefox, set the mailer to:
+    <pre>  emacs-mailto-handler %r</pre>
+  (you may need to specify the full pathname of emacs-mailto-handler)
+  and add to your <tt>~/.emacs</tt>:
+    <pre>  (autoload 'mailto-compose-mail "mailto-compose-mail")</pre>
+</dd>
+
+<dt>emacsclient-a</dt>
+<dd>
+  If the Emacsclient daemon doesn't exist already, start it and connect to
+  it.  (The name comes from the fact that the implementation is just
+  "emacsclient -a".)
+</dd>
+</dl>
 
 <h2>Text formatting:  LaTeX, PDF, PostScript, bibliographies</h2>
-./bin/hevea-retarget-crossrefs
-./bin/latex-process-inputs.pl
-./bin/pdfinterleave
-./bin/pspage
-./bin/repeated-words.pl
+
+<dl>
+<dt>latex-process-inputs.pl</dt>
+<dd>
+  Determines all files that are recursively \input by a given
+  LaTeX file.
+  The program has two modes:
+  <ol>
+    <li>
+      Inline mode (the default):  Create a single LaTeX file for the document,
+      by inlining <tt>\input</tt> commands and removing comments.
+      The result is appropriate to be sent to a publisher.
+    </li>
+    <li>
+      List mode: List all the files that are (transitively) <tt>\input</tt>.
+      This can be useful for getting a list of source files in a logical order,
+      for example to be used in a Makefile or Ant buildfile.
+    </li>
+  </ol>
+  <a href="http://plume-lib.googlecode.com/hg/bin/latex-process-inputs.pl">More documentation</a> at top of file.
+</dd>
+
+<dt>hevea-retarget-crossrefs</dt>
+<dd>
+  Replaces HTML cross-references of the form
+    <tt>&lt;a href="#htoc1"&gt;</tt>
+  by cross-references to named labels, such as
+    <tt>&lt;a href="#introduction"&gt;</tt>.
+  The former variety (which is generated, for example, by the Hevea
+  program) is brittle, as it may change from run to run of Hevea.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/hevea-retarget-crossrefs">More documentation</a> at top of file.
+</dd>
+
+<dt>pdfinterleave</dt>
+<dd>
+  Suppose you scanned two-side paper in two passes (doing the second side
+  by just turning over the whole pile, so its pages are in reverse order).
+  This script reassembles the two PDFs into one.
+  Invoke as:
+  <tt>pdfinterleave infile1.pdf infile2.pdf outfile.pdf</tt>
+</dd>
+
+<dt>pspage</dt>
+<dd>
+  Adds page numbers to a PostScript file.
+</dd>
+
+<dt>acm-dl-abstracts.pl</dt>
+<dd>
+  This program takes as input a filename or URL for an
+  <a href="http://portal.acm.org/dl.cfm?coll=portal">ACM digital library</a>
+  proceedings table of contents.  It produces, to standard output, a HTML
+  file that augments the table of contents with abstracts for each paper.
+  This makes it possible to read all the abstracts on one HTML page,
+  without clicking on any links.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/acm-dl-abstracts.pl">More documentation</a> at top of file.
+</dd>
+
+<dt>BibtexClean</dt>
+<dd>
+  Clean a BibTeX file by removing text outside BibTeX entries.
+</dd>
+
+<dt>plume-bib</dt>
+<dd>
+  Not a part of plume-lib, but a companion project.
+  <a href="http://code.google.com/p/plume-bib/">plume-bib</a> is a collection
+  of bibliographies in BibTeX format.
+  See its <a href="http://plume-bib.googlecode.com/hg/README">README</a>
+  file for an explanation of its benefits and features.
+</dd>
+
+<!--
+This contains no documentation, so don't include it in this README file.
 ./bin/slide2html
-./bin/acm-dl-abstracts.pl
-./java/src/plume/BibtexClean.java
+-->
+</dl>
 
 
 <h2>Searching and replacing</h2>
-./java/src/plume/Lookup.java
-./java/lookup.html
-./java/lookup.manifest
-./java/lookup.txt
-./bin/search
-./bin/search.manpage
-./bin/preplace
+
+<dl>
+<dt>search</dt>
+<dd>
+  Jeffrey Friedl's search program combines <tt>find</tt> and <tt>grep</tt>
+  -- more or less do a 'grep' on a whole directory tree, but is more
+  efficient, uses Perl regular expressions, and is much more powerful.
+  This version fixes a tiny bug or two.  For full documentation, see its
+  <a href="http://plume-lib.googlecode.com/hg/bin/search.manpage">manpage</a>.
+</dd>
+
+<dt>Lookup</dt>
+<dd>
+  Lookup searches a set of files, much like grep does.  However, Lookup
+  searches by entry (by default, paragraphs) rather than by line,
+  respects comments (ignores matches within them), respects
+  <tt>\include</tt> directives (searches the named file), and has other
+  options.
+  <br/>
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Lookup.html">Complete documentation</a>
+  <br/>
+  For an example application, see the
+  <a href="http://code.google.com/p/uwisdom/">uwisdom</a> project and its
+  <a href="http://code.google.com/p/uwisdom/wiki/README">README</a> file.
+</dd>
+
+<dt>preplace</dt>
+<dd>
+  Replace all matching regular expressions in the given files (or all files
+  under the current directory).  The timestamp on each file is updated only
+  if the replacement is performed.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/preplace">More documentation</a> at top of file.
+</dd>
+</dl>
 
 
-
-<h2>C programming</h2>
-./bin/striplines.pl
 
 <h2>Scheduling</h2>
-./java/src/plume/ICalAvailable.java
-./bin/schedule
+
+<dl>
+<dt>ICalAvailable</dt>
+<dd>
+  Given one or more calendars in
+  <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>,
+  produces a textual summary of available times.
+  This is useful for sending someone a list of acceptable times for a meeting.
+  Also see the <a href="http://plume-lib.googlecode.com/hg/emacs/startup-functions-mde.el"><tt>ical-available</tt></a> Emacs function, which inserts the
+  output of this program.
+  <br/>
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ICalAvailable.html">Complete documentation</a>
+</dd>
+
+<dt>schedule</dt>
+<dd>
+  Given a set of scheduling constraints (times that are impossible, and
+  times that are undesirable), this script outputs times that are possible,
+  and times that are desirable.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/schedule">More documentation</a> at top of file.
+</dd>
+
+<!-- TaskManager is not documented, so leave it out of the README.html file
 ./java/src/plume/TaskManager.java
+-->
+</dl>
+
 
 <h2>Extracting part of a file</h2>
-./bin/lines-after
-./bin/lines-before
-./bin/lines-between
-./bin/lines-from
-./bin/lines-notbetween
-./bin/lines-upto
 
-<h2>Shell utilities</h2>
+<dl>
+<dt>lines-after</dt>
+<dd>
+  Print all lines after the first one that matches the pattern.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-after">More documentation</a> at top of file.
+</dd>
+
+<dt>lines-before</dt>
+<dd>
+  Print all lines before the first one that matches the pattern.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-before">More documentation</a> at top of file.
+</dd>
+
+<dt>lines-between</dt>
+<dd>
+  Print all lines that occur between the two specified regexps (inclusive).
+  That is, print a line matching the first regexp; then print all lines
+  up to one matching the second regexp, but stop printing; then repeat.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-between">More documentation</a> at top of file.
+</dd>
+
+<dt>lines-from</dt>
+<dd>
+  Print all lines after the first one that matches the pattern, inclusive.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-from">More documentation</a> at top of file.
+</dd>
+
+<dt>lines-notbetween</dt>
+<dd>
+  Print all lines that do not occur between the two specified regexps
+  (inclusive).  That is, print until the first regexp is matched; then do
+  not print until the second regexp is matched; then repeat.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-notbetween">More documentation</a> at top of file.
+</dd>
+
+<dt>lines-upto</dt>
+<dd>
+  Print all lines before the first one that matches the pattern, inclusive.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-upto">More documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h2>Miscellaneous</h2>
+
+<dl>
+<dt>striplines.pl</dt>
+<dd>
+  Strips <tt>#line</tt> directives out of a file.  The file is modified in
+  place, but a backup is made to <tt><em>filename</em>.bak</tt>.
+</dd>
+</dl>
 
 ./bin/path-remove.pl
-./bin/sort-directory-order.pl
-./bin/sort-reversed
 ./bin/mail-e
 ./bin/touch-oldify
 ./bin/cronic
@@ -166,6 +369,9 @@ Eliminates empty entries from <tt>cvs log</tt> output
 ./bin/junk
 ./bin/junk.doc
 
+./bin/repeated-words.pl
+./bin/sort-directory-order.pl
+./bin/sort-reversed
 
 
 <h2>Emacs libraries</h2>
@@ -205,9 +411,11 @@ Eliminates empty entries from <tt>cvs log</tt> output
 ./emacs/vm-w3m.el
 ./emacs/whitespace-filenames.el
 
+
 <h2>Java libraries</h2>
 
 Command-line option argument processing
+
 ./java/src/plume/Option.java
 ./java/src/plume/OptionGroup.java
 ./java/src/plume/Options.java
@@ -215,77 +423,101 @@ Command-line option argument processing
 ./java/src/plume/Unpublicized.java
 
 
-./java
-./java/Makefile
-./java/Makefile.user
-./java/README
-./java/api
-./java/html2textrc
-./java/plume.jar
-./java/randoop-map-calls.txt
-./java/src
-./java/src/Makefile
-./java/src/plume
-./java/src/plume/ArraysMDE.java
-./java/src/plume/Assert.java
-./java/src/plume/BCELUtil.java
-./java/src/plume/CountingPrintWriter.java
-./java/src/plume/Digest.java
-./java/src/plume/EntryReader.java
-./java/src/plume/FileCompiler.java
-./java/src/plume/FileIOException.java
-./java/src/plume/Filter.java
-./java/src/plume/Fmt.java
-./java/src/plume/FuzzyFloat.java
-./java/src/plume/GraphMDE.java
-./java/src/plume/Hasher.java
-./java/src/plume/Intern.java
-./java/src/plume/IterableIterator.java
+Tuples
+
+./java/src/plume/Pair.java
+./java/src/plume/Triple.java
+
+
+Collections and iterators
+
 ./java/src/plume/LimitedSizeIntSet.java
 ./java/src/plume/LimitedSizeSet.java
-./java/src/plume/MathMDE.java
-./java/src/plume/MultiRandSelector.java
-./java/src/plume/MultiReader.java
 
-
+./java/src/plume/WeakHasherMap.java
+./java/src/plume/WeakIdentityHashMap.java
 
 ./java/src/plume/OrderedPairIterator.java
-./java/src/plume/Pair.java
-./java/src/plume/Partitioner.java
-./java/src/plume/RandomSelector.java
-./java/src/plume/RandoopMappedCalls.java
-./java/src/plume/SimpleLog.java
-./java/src/plume/Stopwatch.java
+./java/src/plume/IterableIterator.java
+
+Text processing
+
 ./java/src/plume/StrTok.java
 ./java/src/plume/StringBuilderDelimited.java
 ./java/src/plume/TextFile.java
+./java/src/plume/CountingPrintWriter.java
+./java/src/plume/EntryReader.java
+./java/src/plume/MultiReader.java
+
+./java/src/plume/FileIOException.java
+
+Math
+
+./java/src/plume/FuzzyFloat.java
+./java/src/plume/MathMDE.java
+
+Random selection
+
+./java/src/plume/RandomSelector.java
+./java/src/plume/MultiRandSelector.java
+./java/src/plume/Partitioner.java
+
+
+Processes
+
 ./java/src/plume/TimeLimitProcess.java
-./java/src/plume/Triple.java
+./java/src/plume/FileCompiler.java
+
+
+Miscellaneous
+
+./java/src/plume/ArraysMDE.java
+./java/src/plume/Assert.java
+./java/src/plume/BCELUtil.java
+./java/src/plume/Digest.java
+./java/src/plume/Filter.java
+./java/src/plume/Fmt.java
+./java/src/plume/GraphMDE.java
+./java/src/plume/Hasher.java
+./java/src/plume/Intern.java
+./java/src/plume/RandoopMappedCalls.java
+./java/src/plume/SimpleLog.java
+./java/src/plume/Stopwatch.java
 ./java/src/plume/UtilMDE.java
-./java/src/plume/WeakHasherMap.java
-./java/src/plume/WeakIdentityHashMap.java
-./java/src/plume/WeakIdentityHashMap.java-JDK6
-./java/src/plume/lookup.jar
-./java/src/plume/task_manager.jar
-./java/src/plume/utilMDE.jar
-./java/task_manager.manifest
 
 
 <h2>Perl libraries</h2>
-./bin/checkargs.pm
+
+<dl>
+<dt>checkargs.pm</dt>
+<dd>
+  checkargs.pm checks the number of arguments passed to a Perl function at run
+  time, catching some common errors that could otherwise go undetected until
+  later in the program.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/checkargs.pm">More documentation</a> at top of file.
+</dd>
+</dl>
 
 
 
-<p>
-A companion project is
-<a href="http://code.google.com/p/plume-bib/">plume-bib</a>, a collection
-of bibliographies in BibTeX format.
-See its <a href="http://plume-bib.googlecode.com/hg/README">README</a>
-file.
-[TODO: explain its benefits/features, at a high level]
-</p>
 
 
 
 </body>
 </html>
+
+<!--  LocalWords:  mvc MultiVersionControl cvschanges cvs cvsdiff diff diffs pl
+ -->
+<!--  LocalWords:  cvslog checkins checkin cvsupdate standalone stdout mailto
+ -->
+<!--  LocalWords:  Mozex MozEX autoload emacsclient Inline inlining buildfile
+ -->
+<!--  LocalWords:  hevea retarget crossrefs href htoc pdfinterleave infile pdf
+ -->
+<!--  LocalWords:  outfile pspage acm dl BibtexClean Friedl's grep manpage ical
+ -->
+<!--  LocalWords:  uwisdom preplace timestamp ICalAvailable iCalendar regexps
+ -->
+<!--  LocalWords:  regexp notbetween upto striplines checkargs
+ -->
