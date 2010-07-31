@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# To use Emacs as Mercurial's merge program, use this.
+# But, it is obsolete/unnecessary since Mercurial 1.0.
+
 # From http://mercurial.selenic.com/wiki/MergingWithEmacs
 
 set -e # bail out quickly on failure
