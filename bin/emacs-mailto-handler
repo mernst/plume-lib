@@ -1,0 +1,25 @@
+#!/bin/sh
+# emacs-mailto-handler
+# From http://www.emacswiki.org/emacs/MailtoHandler, 31 July 2010.
+
+# Takes a mailto link as its argument and pass it to Emacs.
+
+# For example, using the Mozex extension for Firefox, set the mailer to:
+#   emacs-mailto-handler %r
+# (you may need to specify the full pathname of emacs-mailto-handler)
+# and add to your ~/.emacs:
+#   (autoload 'mailto-compose-mail "mailto-compose-mail")
+
+
+mailto=$1
+mailto="mailto:${mailto#mailto:}"
+mailto=$(printf '%s\n' "$mailto" | sed -e 's/[\"]/\\&/g')
+elisp_expr="(mailto-compose-mail \"$mailto\")"
+
+## This version re-uses an existing window.
+emacsclient -a "" -c -n --eval "$elisp_expr"
+
+## This version creates a fresh window.
+# emacsclient -a "" -c -n --eval "$elisp_expr" \
+# 	'(set-window-dedicated-p (selected-window) t)'
+
