@@ -5,7 +5,7 @@ package plume;
 
 // Why not use Java's built-in assert statement instead?  In general, that
 // is better.  However, Java's built-in assert can be disabled (yet writing
-// "assert" statement can be clearer as to the intetion of the test)
+// "assert" statement can be clearer as to the intention of the test).
 
 // A problem with this is that even if Assert.enabled is false, the
 // condition may be evaluated anyway (because it might have side effects).
