@@ -9,8 +9,7 @@ import org.xml.sax.helpers.*;
 
 /**
  * Pretty-prints an HTML file, after converting it to valid XML.
- * <p>
- * To use:  java plume.HtmlPrettyPrint file.html > filepp.html
+ * To use:  <pre>java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
  */
 public class HtmlPrettyPrint {
 
