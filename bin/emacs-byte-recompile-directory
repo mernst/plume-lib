@@ -1,6 +1,6 @@
 #!/bin/sh
-# byte-recompile-directory:  Compile Emacs Lisp files in a directory if needed
-# Requires an argument
+# byte-recompile-directory:  Compile Emacs Lisp files in a directory if needed.
+# Requires an argument.
 
 echo "Byte-compiling $@..."
 emacs -batch --eval="(setq ad-redefinition-action 'accept)" -l $HOME/.emacs -f batch-byte-recompile-directory "$@" 2>&1 | grep -v '^Loading ' | grep -v '^Add to load-path: ' | grep -v '^Checking'

@@ -2,7 +2,7 @@
 
 # Run javac, but process its STDERR to give progress indications.
 
-# To use with daikon, put
+# Example usage:  To use with Daikon, put
 # JAVAC = javac-progress.pl --javac="javac-xlint -p '\./jtb/' javac"
 # JAVAC_XLINT =
 # in java/Makefile.user
@@ -55,8 +55,8 @@ sub abbrev {
     }
 }
 
-# XXX this quoting isn't quite right
-# better to fork and avoid the shell
+# XXX This quoting isn't quite right.
+# Better to fork and avoid the shell.
 my $javac_args = join(" ", map("'$_'", @ARGV));
 
 open(JAVAC, "$javac -verbose $javac_args 2>&1 |") or die "$!\n";

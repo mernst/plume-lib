@@ -1,9 +1,11 @@
 #!/usr/bin/env perl
 # html-toc
-# Generate (to standard out) table of contents for an HTML document.
 # Michael Ernst <mernst@cs.washington.edu>
 # Thanks to C. Scott Ananian <cscott@cscott.net>
-# Time-stamp: <2010-03-28 12:25:44 mernst>
+# Time-stamp: <2010-07-31 22:57:28 mernst>
+
+# Generate (to standard out) table of contents for an HTML document.
+# The table of contents is based on the header tags (<h1>, <h2>, etc.).
 
 # See html-update-toc for documentation.
 # (Typically, you will not run this program, but will use html-update-toc
@@ -18,13 +20,14 @@ my $num_named_1 = 0;		# number of named items in <h1>...</h1>
 my $num_unnamed_1 = 0;		# number of unnamed items in <h1>...</h1>
 my $output = "";
 my $errors = "";
+my $eol;                        # end-of-line character in input file
 my $debug = 0;
 # $debug = 1;
 
 
 sub enter_level {
   # called with cursor at start of line.
-  $output .= ((" " x ($level * 4)) . "<ul>\n");
+  $output .= ((" " x ($level * 4)) . "<ul>$eol");
   $level++;
   # returns with cursor at start of line.
 }
@@ -32,7 +35,7 @@ sub enter_level {
 sub exit_level {
   # always called with an open <li>
   $level--;
-  $output .= "</li>\n";
+  $output .= "</li>$eol";
   $output .= ((" " x ($level * 4)) . "</ul>");
   # returns with an open <li>
 }
@@ -62,10 +65,10 @@ sub found_header ( $$$$ ) {
   }
   # close this <li>, unless we're going deeper
   $output .= "</li>" if ($level == $thishlevel);
-  $output .= "\n" unless $level == 0;
+  $output .= "$eol" unless $level == 0;
   while ($level < $thishlevel) {
     enter_level();
-    $output .= (" " x ($level * 4 - 2)) . "<li>\n" if $level < $thishlevel;
+    $output .= (" " x ($level * 4 - 2)) . "<li>$eol" if $level < $thishlevel;
   }
   $output .= ((" " x ($level * 4 - 2)) . "<li><a href=\"#$anchorname\">$sectitle</a>");
   if ($level == 1) { $num_named_1++; }
@@ -77,6 +80,17 @@ sub found_header ( $$$$ ) {
 # Main loop
 
 while (<>) {
+  if (! defined($eol)) {
+    if (/\r\n$/) {
+      $eol = "\r\n";
+    } elsif (/\n$/) {
+      $eol = "\n";
+    } elsif (/\r$/) {
+      $eol = "\r";
+    } else {
+      die "Bad line ending: $_";
+    }
+  }
   if (/^<!--/) {
     next;
   } elsif (/<!-- omit from toc -->|<omit from toc>/) {
@@ -136,19 +150,19 @@ while (<>) {
 while ($level > 0) {
   exit_level();
 }
-$output .= "\n";
+$output .= "$eol";
 if ($num_named_1 + $num_unnamed_1 < 2) {
   # There is only one top-level (<h1>) item.
   # Assume <h1> is the page title, and the h2, h3, h4 etc are the ones
   # we should be making a toc for.
-  $output =~ s/^<ul>\n//;
-  $output =~ s/<\/ul>\n$//;
+  $output =~ s/^<ul>${eol}//;
+  $output =~ s/<\/ul>${eol}$//;
   # remove top-level item.
-  $output =~ s/^  <li>.*\n//;
-  $output =~ s/<\/li>\n$/\n/;
+  $output =~ s/^  <li>.*${eol}//;
+  $output =~ s/<\/li>${eol}$/${eol}/;
   if ($num_unnamed_1 == 1) {
     # Remove error from output
-    $errors =~ s/^.*: No <a name=\.\.\.> tag: <h1>[^\n]*\n//;
+    $errors =~ s/^.*: No <a name=\.\.\.> tag: <h1>[^${eol}]*${eol}//;
   }
 }
 print STDERR $errors;

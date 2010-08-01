@@ -3,6 +3,12 @@
 # Print all lines that do not occur between the two specified regexps
 # (inclusive).  That is, print until the first regexp is matched; then do
 # not print until the second regexp is matched; then repeat.
+# Does a case-insensitive match.
+
+# The patterns are the first two arguments.
+# All other arguments are treated as files to read; if none are supplied,
+# standard input is read.
+# Output goes to standard output.
 
 BEGIN {
   $outputting = 1;

@@ -2,7 +2,7 @@
 # html-update-toc
 # Update (in place) table of contents for an HTML document.
 # Michael Ernst <mernst@cs.washington.edu>
-# Time-stamp: <2010-03-28 12:25:44 mernst>
+# Time-stamp: <2010-07-31 20:44:14 mernst>
 
 # This script edits a HTML file in place to modify an existing table of
 # contents.  The contents start (and end, respectively) with "<!-- start
@@ -17,7 +17,8 @@
 #   <h3 id="key">Subheading</h3>
 #   <h3><a name="key">Subheading</a></h3>
 # Header lines without "id=..." or "<a name=...>" anchor tags are ignored
-# (and a warning is generated).
+# (and a warning is generated).  The header opening and closing tags should
+# appear on the same line.
 # Header lines are omitted if they contain
 #   <!-- omit from toc -->
 # For instance, this would not appear:
