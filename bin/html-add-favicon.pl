@@ -1,7 +1,9 @@
 #!/usr/bin/env perl
 
 # This program takes as arguments a .png file for a "favicon" and a set of
-# .html files.  It makes each HTML file use the given favicon.
+# .html files.  It makes each HTML file use the given favicon.  A favicon
+# is a favorites icon, which is intended to appear in the address bar of
+# your browser when you browse to the given page.
 #
 # Usage:
 #   html-add-favicon.pl atT.png `find . -iname '*.html'`
