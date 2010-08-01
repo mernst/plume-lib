@@ -2540,6 +2540,8 @@ public final class TestPlume extends TestCase {
       public /*@Nullable*/ Integer integer_reference;
     @Option ("list of doubles")
       public List<Double> ld = new ArrayList<Double>();
+    @Option ("list with no default")
+      public List<String> ls;
   }
 
   /**
@@ -2594,6 +2596,13 @@ public final class TestPlume extends TestCase {
     assert t.ld.get(1).doubleValue() == 9.3;
     assert t.ld.get(2).doubleValue() == 10.5;
     assert t.ld.get(3).doubleValue() == 2.7;
+
+    // Test list with no default
+    args = options.parse (new String[] {"--ls", "hello", "--ls", "world"});
+    assert args.length == 0;
+    assert t.ls.size() == 2;
+    assert t.ls.get(0).equals("hello");
+    assert t.ls.get(1).equals("world");
   }
 
   /**
