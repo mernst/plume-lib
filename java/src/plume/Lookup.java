@@ -8,8 +8,13 @@ import java.util.regex.*;
 import com.sun.javadoc.*;
 
 /**
- * Lookup searches a set of files, much like <tt>grep</tt> does.  Each
- * search criterion is a keyword or regular expression.  Lookup
+ * Lookup searches a set of files, much like <tt>grep</tt> does.  However,
+ * Lookup searches by entry (by default, paragraphs) rather than by line,
+ * respects comments (ignores matches within them), respects
+ * <tt>\include</tt> directives (searches the named file), and has other
+ * features. <p>
+ *
+ * Each search criterion is a keyword or regular expression.  Lookup
  * outputs each <em>entry</em> that matches all the search criteria. <p>
  *
  * By default, search criteria are treated as keywords, and each paragraph

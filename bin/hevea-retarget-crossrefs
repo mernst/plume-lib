@@ -1,12 +1,15 @@
 #!/usr/bin/perl -n
 # retarget-hevea-crossrefs
 # Michael Ernst
-# Last updated: November 17, 2009
+# Last updated: July 31, 2010
+
+# To use:
+#   hevea-retarget-crossrefs < orig.html > new.html
 
 # This script replaces HTML cross-references of the form
-#    <A HREF="#htoc1">
+#    <a href="#htoc1">
 # by cross-refenences to named labels, such as
-#    <A HREF="#introduction">
+#    <a href="#introduction">
 
 # In the table of contents, Hevea creates HTML cross-references that use
 # Hevea-generated labels of the form "htoc99", even when a \label already

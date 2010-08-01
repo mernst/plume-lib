@@ -28,8 +28,13 @@ import java.util.HashMap;
 
 
 /**
- * Given one or more calendars in iCal format, produces a textual summary
- * of available times.  The command-line options are as follows:
+ * Given one or more calendars in <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>, produces a textual summary
+ * of available times.
+ * This is useful for sending someone a list of acceptable times for a meeting.
+ * Also see the <tt>ical-available</tt> Emacs function, which inserts the
+ * output of this program.
+ *
+ * The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
  *   <li><b>--date=</b><i>string</i>. first date to summarize [default today]</li>
@@ -83,7 +88,7 @@ public class ICalAvailable {
    * system time zone.
    **/
   // don't need "e.g.: America/New_York" in message:  the default is an example
-  @Option("<timezone> time zone")
+  @Option("<timezone> time zone, e.g.: America/New_York")
   public static String timezone1 = TimeZone.getDefault().getID();
   static TimeZone tz1;
   // If I'm outputting in a different timezone, then my notion of a "day"
@@ -92,7 +97,7 @@ public class ICalAvailable {
   /**
    * Time zone as an Olson timezone ID, e.g.: America/New_York.
    * If set, then free times are printed in two time zones. */
-  @Option("<timezone> optional second time zone")
+  @Option("<timezone> optional second time zone, e.g.: America/New_York")
   public static /*@Nullable*/ String timezone2;
   static /*@Nullable*/ TimeZone tz2;
 
