@@ -1047,7 +1047,7 @@ public class Options {
       } else if (! arg_value.contains ("\"")) {
         options_str += "=\"" + arg_value + "\"";
       } else {
-        throw new ArgException("Can't quote for interal debugging: " + arg_value);
+        throw new ArgException("Can't quote for internal debugging: " + arg_value);
       }
     }
     // Argument values are required for everything but booleans
