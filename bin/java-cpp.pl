@@ -1,11 +1,13 @@
 #!/usr/bin/env perl
 # java-cpp -- C preprocessor specialized for Java
 # Michael Ernst
-# Time-stamp: <2005-07-04 11:40:12 mernst>
+# Time-stamp: <2010-07-31 21:19:10 mernst>
 
-# This acts like the C preprocessor, but
-#  * it does not remove comments
-#  * it cleans up spacing in the processed file
+# This acts like the C preprocessor (cpp), but
+#  * it does not remove comments, and
+#  * it cleans up spacing in the processed file.
+# Its name comes from the fact that it is useful for running on a source
+# file with cpp macros, to create Java source code.
 
 # If last argument is a file, it is used as input.  Otherwise, input comes
 # from standard in.  Output goes to standard out.
