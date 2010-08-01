@@ -1,6 +1,6 @@
 #! /bin/tcsh -f
 #
-#  build_all_list_file <sources> <main> <javac>
+#  java-dependencies <sources> <main> <javac>
 #
 # Builds a list of the java files used by a class or classes.  This is
 # determined by running the java compiler on that class and looking

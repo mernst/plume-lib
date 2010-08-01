@@ -1,13 +1,16 @@
 #!/usr/bin/env perl
 # html-toc
+
 # Generate (to standard out) table of contents for an HTML document.
-# Michael Ernst <mernst@cs.washington.edu>
-# Thanks to C. Scott Ananian <cscott@cscott.net>
-# Time-stamp: <2010-03-28 12:25:44 mernst>
+# The table of contents is based on the header tags (<h1>, <h2>, etc.).
 
 # See html-update-toc for documentation.
 # (Typically, you will not run this program, but will use html-update-toc
 # instead.)
+
+# Michael Ernst <mernst@cs.washington.edu>
+# Thanks to C. Scott Ananian <cscott@cscott.net>
+# Time-stamp: <2010-03-28 12:25:44 mernst>
 
 use strict;
 use English;

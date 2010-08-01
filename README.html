@@ -24,42 +24,249 @@ Here is an overview of plume-lib's programs and libraries.
 
 
 <h2>HTML and WWW</h2>
-./bin/checklink
-./bin/checklink-args.txt
-./bin/html-canonical-urls
-./bin/html-toc
-./bin/html-update-README
-./bin/html-update-dates
-./bin/html-update-link-dates
-./bin/html-update-link-dates.file1
-./bin/html-update-link-dates.file2
-./bin/html-update-link-dates.file3
-./bin/html-update-link-dates.file4
-./bin/html-update-link-dates.test
-./bin/html-update-toc
+
+<dl>
+<dt>html-update</dt>
+<dd>
+The "html-update" family of programs automatically updates text on a
+webpage that you maintain.
+<ul>
+  <li>
+    <tt>html-toc</tt> computes a webpage's table of contents, based on its
+    header tags (<tt>&lt;h1&gt;</tt>, <tt>&lt;h2&gt;</tt>, etc.).
+    <br/>
+    <a href="http://plume-lib.googlecode.com/hg/bin/html-toc">More documentation</a> at top of file.
+  </li>
+  <li>
+    <tt>html-update-toc</tt> updates a webpage's table of contents, in place.
+    <br/>
+    <a href="http://plume-lib.googlecode.com/hg/bin/html-update-toc">More documentation</a> at top of file.
+  </li>
+  <li>
+    <tt>html-update-link-dates</tt> updates webpage text that refers to the date
+    and/or size of a linked-to file.
+    <br/>
+    <a href="http://plume-lib.googlecode.com/hg/bin/html-update-link-dates">More documentation</a> at top of file.
+  </li>
+</ul>
+</dd>
+
+
+<dt>checklink</dt>
+<dd>
+  A slightly modified version of the
+  <a href="http://search.cpan.org/dist/W3C-LinkChecker/">W3C Link
+  Checker</a>.
+</dd>
+
+<dt>checklink-args.txt</dt>
+<dd>
+  A set of command-line arguments to the checklink program, that suppress
+  spurious warnings and thus make the output easier to scan for real problems.
+</dd>
+
+
+
+<dt>HtmlPrettyPrint</dt>
+<dd>
+  Pretty-prints an HTML file, after converting it to valid XML.
+  To use:  <pre>  java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
+  <!-- Don't link to more documentation, because that is all there is! -->
+</dd>
+
+
+<dt>html-canonical-urls</dt>
+<dd>
+  This file maps a textual string (such as the name of a person,
+  institution, er event) to the a canonical URL for that string.
+  It is used by the
+  <a href="http://www.cs.washington.edu/homes/mernst/software/bibtex2web.html">bibtex2web</a>
+  program.
+</dd>
+
+
+<!-- How is this used?
+<dt>
 ./bin/html-valid-urls
-./java/src/plume/HtmlPrettyPrint.java
+</dt>
+<dd>
+</dd>
+-->
+</dl>
 
-Images
-./bin/transgif
-./bin/html-add-favicon.pl
+
+<h3>Images</h3>
 
 
-<h2>Java programming</h2>
-./bin/classfile-orphans
-./bin/classfile_check_version
-./bin/find-java
-./bin/java-cpp.pl
-./bin/java-cygwin.sh
-./bin/java-dependencies
-./bin/javac-cygwin.sh
-./bin/javac-progress.pl
-./bin/javac-xlint
-./bin/javac-xlint-prune.pl
+<dl>
+<dt>transgif</dt>
+<dd>
+  Change a .gif file's background to transparent.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/transgif">More documentation</a> at top of file.
+</dd>
+
+<dt>html-add-favicon.pl</dt>
+<dd>
+  Takes as arguments a <tt>.png</tt> file for a "favicon", and a set of
+  <tt>.html</tt> files.  It makes each HTML file use the given favicon.  A
+  favicon is a favorites icon, which is intended to appear in the address
+  bar of your browser when you browse to the given page.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/html-add-favicon">More documentation</a> at top of file.
+</dd>
+</dl>
+
+
+
+<h2>Java programming helper programs</h2>
+
+
+<h3>Finding Java files</h3>
+
+<dl>
+<dt>JWhich
+</dt>
+<dd>
+  Given a Java class name, display the absolute pathname of the class file
+  that would be loaded first by the class loader.
+  <br/>
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/JWhich.html">Complete documentation</a>
+</dd>
+
+<dt>find-java</dt>
+<dd>
+  Find Java source code or class files (.java or .class) on CLASSPATH.
+  The output is in the order in which files are found on CLASSPATH.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/find-java">More documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3>Javadoc</h3>
+
+<dl>
+<dt>javadoc-index-to-alist</dt>
+<dd>
+  Construct a <tt>.javadoc-index.el</tt> file for use with
+  <a href="http://plume-lib.googlecode.com/hg/emacs/javadoc-lookup.el">javadoc-lookup</a>
+  for Emacs, which permits convenient lookup of Javadocs from Emacs.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/javadoc-index-to-alist">More documentation</a> at top of file.
+</dd>
+
+<!-- No longer necessary, it seems; so don't document it in README.html
+<dt>
 ./bin/javadoc-escape-anchors
-./bin/javadoc-index-to-alist
-./java/src/plume/ClassFileVersion.java
-./java/src/plume/JWhich.java
+</dt>
+<dd>
+</dd>
+-->
+</dl>
+
+
+<h3>Compilation</h3>
+
+<dl>
+<dt>javac-xlint</dt>
+<dd>
+  Wraps an invocation of javac, making 3 changes:
+  <ul>
+    <li>It supplies the -Xlint option.</li>
+    <li>It suppresses warning messages, based on a regexp or on code comments.</li>
+    <li>It returns non-zero status if any other warnings (or errors) exist.
+        Ordinarily, javac returns non-zero status only if errors exist.</li>
+  </ul>
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-xlint">More documentation</a> at top of file.
+</dd>
+
+<dt>javac-progress.pl</dt>
+<dd>
+  Wraps an invocation of javac, but processes its STDERR to give progress
+  indications.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-progress.pl">More documentation</a> at top of file.
+</dd>
+
+<dt>java-cpp.pl</dt>
+<dd>
+  This acts like the C preprocessor (cpp), but
+  <ul>
+    <li>it does not remove comments, and</li>
+    <li>it cleans up spacing in the processed file.</li>
+  </ul>
+  Its name comes from the fact that it is useful for running on a source
+  file with cpp macros, to create Java source code.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-cpp.pl">More documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3>Dependences</h3>
+
+<dl>
+<dt>java-dependencies</dt>
+<dd>
+  Creates a list of the .java files used by a class or classes.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-dependences">More documentation</a> at top of file.
+</dd>
+
+<dt>classfile-orphans</dt>
+<dd>
+  Print names of .class files with no corresponding <tt>.java</tt> file or file
+  containing the definition of the class.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/classfile-orphans">More documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3>.class file processing</h3>
+
+<dl>
+<dt>ClassFileVersion</dt>
+<dd>
+  Given a list of <tt>.class</tt> files, or a <tt>.jar</tt> file, print the
+  class file version and also the JDK/JRE version required to run each
+  <tt>.class</tt> file.
+  <br/>
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ClassFileVersion.html">Complete documentation</a>
+</dd>
+
+<dt>classfile_check_version</dt>
+<dd>
+  Check that the version of the classfile format is <= the specified version.
+  Used to ensure that classfiles are OK for a particular version of Java.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/classfile_check_version">More documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3>Cygwin</h3>
+
+<dl>
+<dt>java-cygwin.sh</dt>
+<dd>
+  A wrapper for calling Java from Cygwin, that tries to convert any
+  arguments that are Unix-style paths into Windows-style paths.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-cygwin.sh">More documentation</a> at top of file.
+</dd>
+
+<dt>javac-cygwin.sh</dt>
+<dd>
+  A wrapper for calling Java from Cygwin, that tries to convert any
+  arguments that are Unix-style paths into Windows-style paths.
+  <br/>
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-cygwin.sh">More documentation</a> at top of file.
+</dd>
+</dl>
+
 
 <h2>Version control</h2>
 

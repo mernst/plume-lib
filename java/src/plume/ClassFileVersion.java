@@ -9,13 +9,12 @@ import java.util.*;
  * JDK/JRE version required to run it.
  * A .jar file can also be supplied, in which case each .class file within
  * it is procesed.
- * Example use:  java ClassFileVersion MyClass.class
- * <p>
+ * Example use:  <pre>  java ClassFileVersion MyClass.class</pre>
  * Supplying the "-min JDKVER" argument suppresses output except for .class
  * files that require at least that JDK version.  For instance, to list all
  * the .class/.jar files that require JDK 6 or later, in this or any
  * subdirectory, run
- *   find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6
+ *   <pre>  find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6</pre>
  **/
 public class ClassFileVersion {
 
