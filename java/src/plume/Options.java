@@ -123,7 +123,7 @@ import java.lang.annotation.*;
  * <pre>
  *     // The user may supply --help, -h, or -help, all of which mean the same thing and set this variable
  *     &#64;Option(value="-h Print a help message", aliases={"-help"})
- *     private static boolean help;
+ *     public static boolean help;
  * </pre>
  *
  * <b>Generating documentation for a manual or manpage</b> <p>
@@ -144,9 +144,7 @@ import java.lang.annotation.*;
  *       parameter.
  *   <li>java.util.regex.Pattern.
  *   <li>enums.
- *   <li>Lists of any of the above reference types.  A list must be initialized
- *       to a valid list (e.g., the empty list) before using Options on
- *       that list.
+ *   <li>Lists of any of the above reference types.
  * </ul> <p>
  *
  * <b>Example:</b> <p>
@@ -301,8 +299,15 @@ public class Options {
         Type raw_type = pt.getRawType();
         if (!raw_type.equals (List.class))
           throw new Error ("@Option does not support type " + pt + " for field " + field);
-        if (default_obj == null)
-          throw new Error ("List option " + field + " must be initialized");
+        if (default_obj == null) {
+          List<Object> new_list = new ArrayList<Object>();
+          try {
+            field.set(obj, new_list);
+          } catch (Exception e) {
+            throw new Error ("Unexpected error setting default for " + field, e);
+          }
+          default_obj = new_list;
+        }
         @SuppressWarnings("unchecked")
         List<Object> default_obj_as_list = (List<Object>) default_obj;
         this.list = default_obj_as_list;
@@ -1047,7 +1052,7 @@ public class Options {
       } else if (! arg_value.contains ("\"")) {
         options_str += "=\"" + arg_value + "\"";
       } else {
-        throw new ArgException("Can't quote for interal debugging: " + arg_value);
+        throw new ArgException("Can't quote for internal debugging: " + arg_value);
       }
     }
     // Argument values are required for everything but booleans

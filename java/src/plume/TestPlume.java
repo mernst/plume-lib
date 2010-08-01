@@ -2540,6 +2540,8 @@ public final class TestPlume extends TestCase {
       public /*@Nullable*/ Integer integer_reference;
     @Option ("list of doubles")
       public List<Double> ld = new ArrayList<Double>();
+    @Option ("list with no default")
+      public List<String> ls;
   }
 
   /**
@@ -2581,6 +2583,26 @@ public final class TestPlume extends TestCase {
     assert args[1].equals ("two") : args[1];
     assert args[2].equals ("-b") : args[2];
     assert !t.bool;
+
+    // Test split_lists
+    t.ld.clear();
+    Options.split_lists = true;
+    // FIXME
+    //args = options.parse ("--ld \"42.1 9.3 10.5\" --ld 2.7");
+    args = options.parse (new String[] {"--ld", "42.1 9.3 10.5", "--ld", "2.7"});
+    assert args.length == 0;
+    assert t.ld.size() == 4;
+    assert t.ld.get(0).doubleValue() == 42.1;
+    assert t.ld.get(1).doubleValue() == 9.3;
+    assert t.ld.get(2).doubleValue() == 10.5;
+    assert t.ld.get(3).doubleValue() == 2.7;
+
+    // Test list with no default
+    args = options.parse (new String[] {"--ls", "hello", "--ls", "world"});
+    assert args.length == 0;
+    assert t.ls.size() == 2;
+    assert t.ls.get(0).equals("hello");
+    assert t.ls.get(1).equals("world");
   }
 
   /**
