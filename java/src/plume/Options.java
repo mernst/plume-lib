@@ -123,7 +123,7 @@ import java.lang.annotation.*;
  * <pre>
  *     // The user may supply --help, -h, or -help, all of which mean the same thing and set this variable
  *     &#64;Option(value="-h Print a help message", aliases={"-help"})
- *     private static boolean help;
+ *     public static boolean help;
  * </pre>
  *
  * <b>Generating documentation for a manual or manpage</b> <p>
