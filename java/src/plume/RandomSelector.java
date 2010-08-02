@@ -1,12 +1,10 @@
-// RandomSelector.java
 package plume;
+
 import java.util.*;
 
-
 /**
- *
  * <b>RandomSelector</b> selects k elements uniformly at random from
- * an iteration over n elements using only O(k) space instead of O(n)
+ * an arbitrary iterator, using O(k) space.  A naive algorithm would use O(n)
  * space.  For example, selecting 1 element from a FileStream
  * containing 1000 elements will take O(1) space. The class takes as
  * input the number k during initialization and then can accept() any
@@ -33,7 +31,7 @@ import java.util.*;
  *       {FIXED,PERCENT}  : either fixed amount of samples or fixed percent.
  *
  * <P>Example use:
- * <BR> // randomly selects 100 lines of text from a file
+ * <br> // randomly selects 100 lines of text from a file
  * <pre>
  *  List selectedLines = null;
  *  try {
@@ -47,7 +45,6 @@ import java.util.*;
  *   }
  *   catch (IOException e2) { e2.printStackTrace(); }
  * </pre>
- *
  **/
 
 public class RandomSelector<T> {

@@ -15,7 +15,6 @@ import java.io.PrintStream;
  *   <li>Can add newlines where appropriate, if variable line_oriented is set.
  * </ul>
  *
-
  **/
 
 public final class SimpleLog {

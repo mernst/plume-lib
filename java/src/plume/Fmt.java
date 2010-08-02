@@ -10,7 +10,9 @@ import java.util.*;
  *      - Add them to a string:  "" + i
  *      - create a wrapper object:  new Integer(i)
  *      - use a fmt routine to create a wrapper object: Fmt.i(i)
+ * @deprecated Use {@link String#format(String,Object...)}
  */
+@Deprecated
 public class Fmt {
 
   /**
