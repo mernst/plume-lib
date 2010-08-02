@@ -134,13 +134,16 @@ doc: javadoc
 javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
-# $(MAKE) optionsdoc is TEMPORARILY commented out, due to compilation problems.
-# 	$(MAKE) optionsdoc
+	$(MAKE) optionsdoc
 	mkdir -p api
 	${JAVADOC} -d api ${JAVA_FILES}
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
+
+# Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
+javadoc-publish: javadoc
+	cp -fpru api /cse/www2/types/plume-lib/
 
 optionsdoc: compile
 	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
