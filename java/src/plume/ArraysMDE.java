@@ -2135,9 +2135,14 @@ public final class ArraysMDE {
   ///
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical numbers).
+   * Compare two arrays lexically (element-by-element).
+   * If all shared elements are the same, but the lengths differ,
+   * then the shorter array is considered less.
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * numbers).
    **/
   public static final class IntArrayComparatorLexical implements Comparator<int[]> {
     public int compare(int[] a1, int[] a2) {
@@ -2153,9 +2158,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical numbers).
+   * Compare two arrays lexically (element-by-element).
+   * If all shared elements are the same, but the lengths differ,
+   * then the shorter array is considered less.
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * numbers).
    **/
   public static final class LongArrayComparatorLexical implements Comparator<long[]> {
     public int compare(long[] a1, long[] a2) {
@@ -2171,9 +2181,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical numbers).
+   * Compare two arrays lexically (element-by-element).
+   * If all shared elements are the same, but the lengths differ,
+   * then the shorter array is considered less.
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * numbers).
    **/
   public static final class DoubleArrayComparatorLexical implements Comparator<double[]> {
     public int compare(double[] a1, double[] a2) {
@@ -2190,9 +2205,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical Strings).
+   * Compare two arrays lexically (element-by-element).
+   * If all shared elements are the same, but the lengths differ,
+   * then the shorter array is considered less.
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * Strings).
    **/
   public static final class StringArrayComparatorLexical implements Comparator<String[]> {
     public int compare(String[] a1, String[] a2) {
@@ -2217,9 +2237,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical objects).
+   * Compare two arrays lexically (element-by-element).
+   * If all shared elements are the same, but the lengths differ,
+   * then the shorter array is considered less.
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * objects).
    **/
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>> implements Comparator<T[]> {
     public int compare(T[] a1, T[] a2) {
@@ -2247,9 +2272,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical objects).
+   * Compare two arrays lexically (element-by-element).
+   * If all shared elements are the same, but the lengths differ,
+   * then the shorter array is considered less.
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * objects).
    **/
   public static final class ObjectArrayComparatorLexical implements Comparator<Object[]> {
     public int compare(Object[] a1, Object[] a2) {
@@ -2278,9 +2308,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical numbers).
+   * Compare two arrays first by length (a shorter array is considered
+   * less), and if of equal length compare lexically (element-by-element).
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * numbers).
    **/
   public static final class IntArrayComparatorLengthFirst implements Comparator<int[]> {
     public int compare(int[] a1, int[] a2) {
@@ -2299,9 +2333,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical numbers).
+   * Compare two arrays first by length (a shorter array is considered
+   * less), and if of equal length compare lexically (element-by-element).
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * numbers).
    **/
   public static final class LongArrayComparatorLengthFirst implements Comparator<long[]> {
     public int compare(long[] a1, long[] a2) {
@@ -2320,9 +2358,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical objects).
+   * Compare two arrays first by length (a shorter array is considered
+   * less), and if of equal length compare lexically (element-by-element).
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * objects).
    **/
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>> implements Comparator<T[]> {
     public int compare(T[] a1, T[] a2) {
@@ -2353,9 +2395,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Note: this comparator imposes orderings that are inconsistent with equals.
-   * That is, it may return 0 if the arrays are not equal (but do contain
-   * identical objects).
+   * Compare two arrays first by length (a shorter array is considered
+   * less), and if of equal length compare lexically (element-by-element).
+   * <p>
+   * Note: this comparator imposes orderings that are inconsistent with
+   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
+   * equal according to <tt>equals()</tt> (but do contain identical
+   * objects).
    **/
   public static final class ObjectArrayComparatorLengthFirst implements Comparator<Object[]> {
     public int compare(Object[] a1, Object[] a2) {

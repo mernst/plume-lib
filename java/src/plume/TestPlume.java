@@ -1388,9 +1388,13 @@ public final class TestPlume extends TestCase {
   /// TimeLimitProcess
   ///
 
-  // example use from the command line:
-  // java plume.TestPlume\$PrintOneIntPerSecond 5
 
+  /**
+   * Print one integer periodically.
+   * <p>
+   * Example use from the command line, for one integer each half-second:
+   * <pre>  java plume.TestPlume\$PrintOneIntPerSecond 500</pre>
+   */
   public static class PrintOneIntPerTimePeriod {
     /** Arguments:  how many to print; how many milliseconds between each. */
     public static void main(String[] args) {

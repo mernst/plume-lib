@@ -30,6 +30,7 @@ import com.sun.javadoc.*;
  */
 public class TaskManager {
 
+  /** The format in which to output the TaskManager information. */
   public enum OutputFormat {short_ascii, short_html, milestone_html};
 
   // Command line options
