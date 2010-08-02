@@ -5,9 +5,10 @@ import java.util.*;
 import java.util.regex.*;
 
 /**
- * This class has a method compile_source which can be used to compile Java
- * source.  It invokes a user-specified external command, such as
- * <tt>javac</tt> or <tt>jikes</tt>.
+ * This class has methods {@link #compile_source(String)} and {@link
+ * #compile_source(List)} that compile Java source files.
+ * It invokes a user-specified external command, such as <tt>javac</tt> or
+ * <tt>jikes</tt>.
  **/
 public final class FileCompiler {
 

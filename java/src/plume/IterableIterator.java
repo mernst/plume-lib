@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * In Java, Iterators are not Iterable, so they cannot be used in new-style
  * for loops.  This wrapper works around that by making an Iterator that is
- * also Iterable -- that is, it implements the iterator() method.
+ * also Iterable &mdash; that is, it implements the iterator() method.
  * <p>
  *
  * <b>Note:</b> Some clients might expect that calling Iterable.iterator()
