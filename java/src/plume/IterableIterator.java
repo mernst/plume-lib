@@ -23,7 +23,7 @@ import java.util.*;
  * appropriate in such circumstances.
  */
 
-class IterableIterator<T> implements Iterable<T> {
+public class IterableIterator<T> implements Iterable<T> {
     private Iterator<T> iter;
 
     public IterableIterator(Iterator<T> iter) {
