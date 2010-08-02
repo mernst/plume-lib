@@ -1,7 +1,8 @@
 package plume;
 
 /**
- * Simple mutable triple class.
+ * Mutable triple class:
+ * type-safely holds three objects of possibly-different types.
  **/
 public class Triple<T1,T2,T3> {
   public T1 a;

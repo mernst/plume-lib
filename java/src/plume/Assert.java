@@ -15,7 +15,7 @@ package plume;
 
 /**
  * Assertions:  test boolean expressions at runtime.
- * @deprecated
+ * @deprecated use <tt>assert</tt> statement
  */
 @Deprecated
 public final class Assert {

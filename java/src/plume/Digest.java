@@ -5,7 +5,11 @@ package plume;
 import java.security.*;
 import java.io.*;
 
-/** The primary entry point into this class is {@link #getFileDigest(String,MessageDigest)}. */
+/**
+ * The primary entry point into this class is {@link
+ * #getFileDigest(String,MessageDigest)}, which computes a message digest
+ * for a file.
+ */
 public class Digest {
 
   /**

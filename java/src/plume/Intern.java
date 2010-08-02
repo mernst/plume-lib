@@ -4,7 +4,17 @@ import java.lang.ref.WeakReference;
 import java.util.*;
 
 /**
- * Utilities for interning objects.
+ * Utilities for interning objects.  Interning is also known as
+ * canonicalization or hash-consing:  it returns a single representative
+ * object that <tt>.equals()</tt> the object, and the client discards the
+ * argument and uses the result instead.  Since only one object exists for
+ * every set of equal objects, space usage is reduced.  Time may also be
+ * reduced, since it is possible to use <tt>==</tt> instead of
+ * <tt>.equals()</tt> for comparisons.
+ * <p>
+ *
+ * Java builds in interning for Strings, but not for other objects.  The
+ * methods in this class extend interning to all Java objects.
  **/
 public final class Intern {
   private Intern() { throw new Error("do not instantiate"); }

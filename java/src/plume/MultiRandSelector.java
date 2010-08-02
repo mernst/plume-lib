@@ -4,14 +4,15 @@ import java.util.*;
 
 /**
  * <b>MultiRandSelector</b>, like <b>RandomSelector</b>, performs a
- * uniform random selection over an iteration of objects. However, the
+ * uniform random selection over an iterator.  However, the
  * objects in the iteration may be partitioned so that the random
- * selection chooses the same number from each group. For example,
- * given data about incomes by state, it may be more useful to select
- * 1000 people from each state rather than 50,000 from the
- * nation. Also, for selecting invocations in a Daikon trace file, it
- * may be more useful to select an equal number of samples per program
- * point.
+ * selection chooses the same number from each group.
+ *
+ * <p>For example, given data about incomes by state, it may be more
+ * useful to select 1000 people from each state rather than 50,000 from the
+ * nation. As another example, for selecting invocations in a Daikon trace
+ * file, it may be more useful to select an equal number of samples per
+ * program point.
 
  * <p>The performance is the equal to running a set of RandomSelector
  * Objects, one for each bucket, as well as some overhead for
@@ -20,8 +21,6 @@ import java.util.*;
  * <p>To use this class, call this.accept() on every Object in the
  * iteration to be sampled. Then, call valuesIter() to receive an
  * iteration of all the values selected by the random selection.
- *
- *
  **/
 public class MultiRandSelector<T> {
 

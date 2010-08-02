@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>Plume-lib: a library of utilities for programming</h1>
+<h1 id="Plume-lib:_a_library_of_utilities_for_programming">Plume-lib: a library of utilities for programming</h1> <!-- omit from toc -->
 
 <p>
 Plume-lib is a library of useful abstractions for programming. It includes:
@@ -18,12 +18,71 @@ Plume-lib is a library of useful abstractions for programming. It includes:
 </ul>
 
 <p>
-Here is an overview of plume-lib's programs and libraries.
+The source code is available at
+<a href="http://code.google.com/p/plume-lib/">http://code.google.com/p/plume-lib/</a>.
 </p>
 
+<p>
+This file overviews plume-lib's programs and libraries.
+It also contains pointers to more detailed documentation of each program
+and library.
+</p>
+
+<p>Contents:</p>
+<!-- start toc.  do not edit; run html-update-toc instead -->
+<ul>
+  <li><a href="#Programs">Programs</a>
+    <ul>
+      <li><a href="#HTML_and_WWW">HTML and WWW</a>
+        <ul>
+          <li><a href="#Images">Images</a></li>
+        </ul></li>
+      <li><a href="#Version_control">Version control</a>
+        <ul>
+          <li><a href="#Quieter_output_from_CVS">Quieter output from CVS</a></li>
+        </ul></li>
+      <li><a href="#Searching_and_replacing">Searching and replacing</a></li>
+      <li><a href="#Text_formatting:__LaTeX,_PDF,_PostScript,_bibliographies">Text formatting:  LaTeX, PDF, PostScript, bibliographies</a></li>
+      <li><a href="#Extracting_part_of_a_file">Extracting part of a file</a></li>
+      <li><a href="#Emacs_helper_programs">Emacs helper programs</a></li>
+      <li><a href="#Java_helper_programs">Java helper programs</a>
+        <ul>
+          <li><a href="#Finding_Java_files">Finding Java files</a></li>
+          <li><a href="#Javadoc">Javadoc</a></li>
+          <li><a href="#Compilation">Compilation</a></li>
+          <li><a href="#Dependences">Dependences</a></li>
+          <li><a href="#.class_file_processing">.class file processing</a></li>
+        </ul></li>
+      <li><a href="#Scheduling">Scheduling</a></li>
+      <li><a href="#Miscellaneous">Miscellaneous</a>
+        <ul>
+          <li><a href="#Cygwin">Cygwin</a></li>
+        </ul></li>
+    </ul></li>
+  <li><a href="#Libraries">Libraries</a>
+    <ul>
+      <li><a href="#Emacs_libraries">Emacs libraries</a></li>
+      <li><a href="#Java_libraries">Java libraries</a>
+        <ul>
+          <li><a href="#Command-line_option_argument_processing">Command-line option argument processing</a></li>
+          <li><a href="#Collections_and_iterators">Collections and iterators</a></li>
+          <li><a href="#Text_processing">Text processing</a></li>
+          <li><a href="#Math">Math</a></li>
+          <li><a href="#Random_selection">Random selection</a></li>
+          <li><a href="#Processes">Processes</a></li>
+          <li><a href="#Tuples">Tuples</a></li>
+          <li><a href="#Miscellaneous">Miscellaneous</a></li>
+        </ul></li>
+      <li><a href="#Perl_libraries">Perl libraries</a></li>
+    </ul></li>
+</ul>
+<!-- end toc -->
 
 
-<h2>HTML and WWW</h2>
+<h1 id="Programs">Programs</h1>
+
+
+<h2 id="HTML_and_WWW">HTML and WWW</h2>
 
 <dl>
 <dt>html-update</dt>
@@ -34,19 +93,16 @@ webpage that you maintain.
   <li>
     <tt>html-toc</tt> computes a webpage's table of contents, based on its
     header tags (<tt>&lt;h1&gt;</tt>, <tt>&lt;h2&gt;</tt>, etc.).
-    <br/>
-    <a href="http://plume-lib.googlecode.com/hg/bin/html-toc">More documentation</a> at top of file.
+    <a href="http://plume-lib.googlecode.com/hg/bin/html-toc">Documentation</a> at top of file.
   </li>
   <li>
     <tt>html-update-toc</tt> updates a webpage's table of contents, in place.
-    <br/>
-    <a href="http://plume-lib.googlecode.com/hg/bin/html-update-toc">More documentation</a> at top of file.
+    <a href="http://plume-lib.googlecode.com/hg/bin/html-update-toc">Documentation</a> at top of file.
   </li>
   <li>
     <tt>html-update-link-dates</tt> updates webpage text that refers to the date
     and/or size of a linked-to file.
-    <br/>
-    <a href="http://plume-lib.googlecode.com/hg/bin/html-update-link-dates">More documentation</a> at top of file.
+    <a href="http://plume-lib.googlecode.com/hg/bin/html-update-link-dates">Documentation</a> at top of file.
   </li>
 </ul>
 </dd>
@@ -71,7 +127,7 @@ webpage that you maintain.
 <dd>
   Pretty-prints an HTML file, after converting it to valid XML.
   To use:  <pre>  java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
-  <!-- Don't link to more documentation, because that is all there is! -->
+  <!-- Don't link to more documentation, because the above is all there is! -->
 </dd>
 
 
@@ -95,15 +151,14 @@ webpage that you maintain.
 </dl>
 
 
-<h3>Images</h3>
+<h3 id="Images">Images</h3>
 
 
 <dl>
 <dt>transgif</dt>
 <dd>
   Change a .gif file's background to transparent.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/transgif">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/transgif">Documentation</a> at top of file.
 </dd>
 
 <dt>html-add-favicon.pl</dt>
@@ -112,171 +167,20 @@ webpage that you maintain.
   <tt>.html</tt> files.  It makes each HTML file use the given favicon.  A
   favicon is a favorites icon, which is intended to appear in the address
   bar of your browser when you browse to the given page.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/html-add-favicon">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/html-add-favicon">Documentation</a> at top of file.
 </dd>
 </dl>
 
 
 
-<h2>Java programming helper programs</h2>
-
-
-<h3>Finding Java files</h3>
-
-<dl>
-<dt>JWhich
-</dt>
-<dd>
-  Given a Java class name, display the absolute pathname of the class file
-  that would be loaded first by the class loader.
-  <br/>
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/JWhich.html">Complete documentation</a>
-</dd>
-
-<dt>find-java</dt>
-<dd>
-  Find Java source code or class files (.java or .class) on CLASSPATH.
-  The output is in the order in which files are found on CLASSPATH.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/find-java">More documentation</a> at top of file.
-</dd>
-</dl>
-
-
-<h3>Javadoc</h3>
-
-<dl>
-<dt>javadoc-index-to-alist</dt>
-<dd>
-  Construct a <tt>.javadoc-index.el</tt> file for use with
-  <a href="http://plume-lib.googlecode.com/hg/emacs/javadoc-lookup.el">javadoc-lookup</a>
-  for Emacs, which permits convenient lookup of Javadocs from Emacs.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/javadoc-index-to-alist">More documentation</a> at top of file.
-</dd>
-
-<!-- No longer necessary, it seems; so don't document it in README.html
-<dt>
-./bin/javadoc-escape-anchors
-</dt>
-<dd>
-</dd>
--->
-</dl>
-
-
-<h3>Compilation</h3>
-
-<dl>
-<dt>javac-xlint</dt>
-<dd>
-  Wraps an invocation of javac, making 3 changes:
-  <ul>
-    <li>It supplies the -Xlint option.</li>
-    <li>It suppresses warning messages, based on a regexp or on code comments.</li>
-    <li>It returns non-zero status if any other warnings (or errors) exist.
-        Ordinarily, javac returns non-zero status only if errors exist.</li>
-  </ul>
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/javac-xlint">More documentation</a> at top of file.
-</dd>
-
-<dt>javac-progress.pl</dt>
-<dd>
-  Wraps an invocation of javac, but processes its STDERR to give progress
-  indications.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/javac-progress.pl">More documentation</a> at top of file.
-</dd>
-
-<dt>java-cpp.pl</dt>
-<dd>
-  This acts like the C preprocessor (cpp), but
-  <ul>
-    <li>it does not remove comments, and</li>
-    <li>it cleans up spacing in the processed file.</li>
-  </ul>
-  Its name comes from the fact that it is useful for running on a source
-  file with cpp macros, to create Java source code.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/java-cpp.pl">More documentation</a> at top of file.
-</dd>
-</dl>
-
-
-<h3>Dependences</h3>
-
-<dl>
-<dt>java-dependencies</dt>
-<dd>
-  Creates a list of the .java files used by a class or classes.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/java-dependences">More documentation</a> at top of file.
-</dd>
-
-<dt>classfile-orphans</dt>
-<dd>
-  Print names of .class files with no corresponding <tt>.java</tt> file or file
-  containing the definition of the class.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/classfile-orphans">More documentation</a> at top of file.
-</dd>
-</dl>
-
-
-<h3>.class file processing</h3>
-
-<dl>
-<dt>ClassFileVersion</dt>
-<dd>
-  Given a list of <tt>.class</tt> files, or a <tt>.jar</tt> file, print the
-  class file version and also the JDK/JRE version required to run each
-  <tt>.class</tt> file.
-  <br/>
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ClassFileVersion.html">Complete documentation</a>
-</dd>
-
-<dt>classfile_check_version</dt>
-<dd>
-  Check that the version of the classfile format is <= the specified version.
-  Used to ensure that classfiles are OK for a particular version of Java.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/classfile_check_version">More documentation</a> at top of file.
-</dd>
-</dl>
-
-
-<h3>Cygwin</h3>
-
-<dl>
-<dt>java-cygwin.sh</dt>
-<dd>
-  A wrapper for calling Java from Cygwin, that tries to convert any
-  arguments that are Unix-style paths into Windows-style paths.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/java-cygwin.sh">More documentation</a> at top of file.
-</dd>
-
-<dt>javac-cygwin.sh</dt>
-<dd>
-  A wrapper for calling Java from Cygwin, that tries to convert any
-  arguments that are Unix-style paths into Windows-style paths.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/javac-cygwin.sh">More documentation</a> at top of file.
-</dd>
-</dl>
-
-
-<h2>Version control</h2>
+<h2 id="Version_control">Version control</h2>
 
 <dl>
 <dt>mvc or MultiVersionControl</dt>
 <dd>
   Lets you run a version control command, such as "status" or "update", on
   a set of CVS/SVN/Hg checkouts rather than just one.
-  <br/>
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MultiVersionControl.html">Complete documentation</a>
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MultiVersionControl.html">Documentation</a>.
 </dd>
 
 <dt>cvschanges</dt>
@@ -286,7 +190,7 @@ webpage that you maintain.
 </dd>
 </dl>
 
-<h3>Quieter output from CVS</h3>
+<h3 id="Quieter_output_from_CVS">Quieter output from CVS</h3>
 
 <dl>
 <dt>cvsdiff</dt>
@@ -316,45 +220,43 @@ Eliminates empty entries from <tt>cvs log</tt> output.
 </dl>
 
 
-<h2>Emacs helper programs</h2>
+<h2 id="Searching_and_replacing">Searching and replacing</h2>
 
 <dl>
-<dt>emacs-byte-recompile-directory</dt>
+<dt>search</dt>
 <dd>
-  Byte-compiles each Emacs Lisp file in the given directory, whose compiled
-  <tt>.elc</tt> file is out of date.  Requires an argument:  the directory.
+  Jeffrey Friedl's search program combines <tt>find</tt> and <tt>grep</tt>
+  -- more or less do a 'grep' on a whole directory tree, but is more
+  efficient, uses Perl regular expressions, and is much more powerful.
+  This version fixes a tiny bug or two.  For full documentation, see its
+  <a href="http://plume-lib.googlecode.com/hg/bin/search.manpage">manpage</a>.
 </dd>
 
-<dt>emacs-flatten-tags</dt>
+<dt>Lookup</dt>
 <dd>
-  Given a TAGS file, outputs (to stdout) that file with all recursively
-  included TAGS files included.  While the result is larger and depends on
-  more files, the whole thing is searched for a best match rather than a
-  particular subfile being exhaustively searched (even returning poor
-  matches) before going to the next subfile.
-</dd>
-
-<dt>emacs-mailto-handler</dt>
-<dd>
-  Takes a mailto link as its argument and pass it to Emacs.
+  Lookup searches a set of files, much like grep does.  However, Lookup
+  searches by entry (by default, paragraphs) rather than by line,
+  respects comments (ignores matches within them), respects
+  <tt>\include</tt> directives (searches the named file), and has other
+  options.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Lookup.html">Documentation</a>.
   <br/>
-  For example, using the <a href="http://mozex.mozdev.org/">MozEX</a>
-  extension for Firefox, set the mailer to:
-    <pre>  emacs-mailto-handler %r</pre>
-  (you may need to specify the full pathname of emacs-mailto-handler)
-  and add to your <tt>~/.emacs</tt>:
-    <pre>  (autoload 'mailto-compose-mail "mailto-compose-mail")</pre>
+  For an example application, see the
+  <a href="http://code.google.com/p/uwisdom/">uwisdom</a> project and its
+  <a href="http://code.google.com/p/uwisdom/wiki/README">README</a> file.
 </dd>
 
-<dt>emacsclient-a</dt>
+<dt>preplace</dt>
 <dd>
-  If the Emacsclient daemon doesn't exist already, start it and connect to
-  it.  (The name comes from the fact that the implementation is just
-  "emacsclient -a".)
+  Replace all matching regular expressions in the given files (or all files
+  under the current directory).  The timestamp on each file is updated only
+  if the replacement is performed.
+  <a href="http://plume-lib.googlecode.com/hg/bin/preplace">Documentation</a> at top of file.
 </dd>
 </dl>
 
-<h2>Text formatting:  LaTeX, PDF, PostScript, bibliographies</h2>
+
+<h2 id="Text_formatting:__LaTeX,_PDF,_PostScript,_bibliographies">Text formatting:  LaTeX, PDF, PostScript, bibliographies</h2>
 
 <dl>
 <dt>latex-process-inputs.pl</dt>
@@ -374,7 +276,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
       for example to be used in a Makefile or Ant buildfile.
     </li>
   </ol>
-  <a href="http://plume-lib.googlecode.com/hg/bin/latex-process-inputs.pl">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/latex-process-inputs.pl">Documentation</a> at top of file.
 </dd>
 
 <dt>hevea-retarget-crossrefs</dt>
@@ -385,8 +287,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
     <tt>&lt;a href="#introduction"&gt;</tt>.
   The former variety (which is generated, for example, by the Hevea
   program) is brittle, as it may change from run to run of Hevea.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/hevea-retarget-crossrefs">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/hevea-retarget-crossrefs">Documentation</a> at top of file.
 </dd>
 
 <dt>pdfinterleave</dt>
@@ -411,13 +312,13 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   file that augments the table of contents with abstracts for each paper.
   This makes it possible to read all the abstracts on one HTML page,
   without clicking on any links.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/acm-dl-abstracts.pl">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/acm-dl-abstracts.pl">Documentation</a> at top of file.
 </dd>
 
 <dt>BibtexClean</dt>
 <dd>
   Clean a BibTeX file by removing text outside BibTeX entries.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/BibtexClean.html">Documentation</a>.
 </dd>
 
 <dt>plume-bib</dt>
@@ -436,46 +337,211 @@ This contains no documentation, so don't include it in this README file.
 </dl>
 
 
-<h2>Searching and replacing</h2>
+<h2 id="Extracting_part_of_a_file">Extracting part of a file</h2>
 
 <dl>
-<dt>search</dt>
+<dt>lines-after</dt>
 <dd>
-  Jeffrey Friedl's search program combines <tt>find</tt> and <tt>grep</tt>
-  -- more or less do a 'grep' on a whole directory tree, but is more
-  efficient, uses Perl regular expressions, and is much more powerful.
-  This version fixes a tiny bug or two.  For full documentation, see its
-  <a href="http://plume-lib.googlecode.com/hg/bin/search.manpage">manpage</a>.
+  Print all lines after the first one that matches the pattern.
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-after">Documentation</a> at top of file.
 </dd>
 
-<dt>Lookup</dt>
+<dt>lines-before</dt>
 <dd>
-  Lookup searches a set of files, much like grep does.  However, Lookup
-  searches by entry (by default, paragraphs) rather than by line,
-  respects comments (ignores matches within them), respects
-  <tt>\include</tt> directives (searches the named file), and has other
-  options.
-  <br/>
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Lookup.html">Complete documentation</a>
-  <br/>
-  For an example application, see the
-  <a href="http://code.google.com/p/uwisdom/">uwisdom</a> project and its
-  <a href="http://code.google.com/p/uwisdom/wiki/README">README</a> file.
+  Print all lines before the first one that matches the pattern.
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-before">Documentation</a> at top of file.
 </dd>
 
-<dt>preplace</dt>
+<dt>lines-between</dt>
 <dd>
-  Replace all matching regular expressions in the given files (or all files
-  under the current directory).  The timestamp on each file is updated only
-  if the replacement is performed.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/preplace">More documentation</a> at top of file.
+  Print all lines that occur between the two specified regexps (inclusive).
+  That is, print a line matching the first regexp; then print all lines
+  up to one matching the second regexp, but stop printing; then repeat.
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-between">Documentation</a> at top of file.
+</dd>
+
+<dt>lines-from</dt>
+<dd>
+  Print all lines after the first one that matches the pattern, inclusive.
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-from">Documentation</a> at top of file.
+</dd>
+
+<dt>lines-notbetween</dt>
+<dd>
+  Print all lines that do not occur between the two specified regexps
+  (inclusive).  That is, print until the first regexp is matched; then do
+  not print until the second regexp is matched; then repeat.
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-notbetween">Documentation</a> at top of file.
+</dd>
+
+<dt>lines-upto</dt>
+<dd>
+  Print all lines before the first one that matches the pattern, inclusive.
+  <a href="http://plume-lib.googlecode.com/hg/bin/lines-upto">Documentation</a> at top of file.
 </dd>
 </dl>
 
 
+<h2 id="Emacs_helper_programs">Emacs helper programs</h2>
 
-<h2>Scheduling</h2>
+<dl>
+<dt>emacs-byte-recompile-directory</dt>
+<dd>
+  Byte-compiles each Emacs Lisp file in the given directory, whose compiled
+  <tt>.elc</tt> file is out of date.  Requires an argument:  the directory.
+  <!-- No additional documentation to link to. -->
+</dd>
+
+<dt>emacs-flatten-tags</dt>
+<dd>
+  Given a TAGS file, outputs (to stdout) that file with all recursively
+  included TAGS files included.  While the result is larger and depends on
+  more files, the whole thing is searched for a best match rather than a
+  particular subfile being exhaustively searched (even returning poor
+  matches) before going to the next subfile.
+  <!-- No additional documentation to link to. -->
+</dd>
+
+<dt>emacs-mailto-handler</dt>
+<dd>
+  Takes a mailto link as its argument and pass it to Emacs.
+  <br/>
+  For example, using the <a href="http://mozex.mozdev.org/">MozEX</a>
+  extension for Firefox, set the mailer to:
+    <pre>  emacs-mailto-handler %r</pre>
+  (you may need to specify the full pathname of emacs-mailto-handler)
+  and add to your <tt>~/.emacs</tt>:
+    <pre>  (autoload 'mailto-compose-mail "mailto-compose-mail")</pre>
+</dd>
+
+<dt>emacsclient-a</dt>
+<dd>
+  If the Emacsclient daemon doesn't exist already, start it and connect to
+  it.  (The name comes from the fact that the implementation is just
+  "emacsclient -a".)
+</dd>
+</dl>
+
+
+<h2 id="Java_helper_programs">Java helper programs</h2>
+
+
+<h3 id="Finding_Java_files">Finding Java files</h3>
+
+<dl>
+<dt>JWhich
+</dt>
+<dd>
+  Given a Java class name, display the absolute pathname of the class file
+  that would be loaded first by the class loader.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/JWhich.html">Documentation</a>.
+</dd>
+
+<dt>find-java</dt>
+<dd>
+  Find Java source code or class files (.java or .class) on CLASSPATH.
+  The output is in the order in which files are found on CLASSPATH.
+  <a href="http://plume-lib.googlecode.com/hg/bin/find-java">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3 id="Javadoc">Javadoc</h3>
+
+<dl>
+<dt>javadoc-index-to-alist</dt>
+<dd>
+  Construct a <tt>.javadoc-index.el</tt> file for use with
+  <a href="http://plume-lib.googlecode.com/hg/emacs/javadoc-lookup.el">javadoc-lookup</a>
+  for Emacs, which permits convenient lookup of Javadocs from Emacs.
+  <a href="http://plume-lib.googlecode.com/hg/bin/javadoc-index-to-alist">Documentation</a> at top of file.
+</dd>
+
+<!-- No longer necessary, it seems; so don't document it in README.html
+<dt>
+./bin/javadoc-escape-anchors
+</dt>
+<dd>
+</dd>
+-->
+</dl>
+
+
+<h3 id="Compilation">Compilation</h3>
+
+<dl>
+<dt>javac-xlint</dt>
+<dd>
+  Wraps an invocation of javac, making 3 changes:
+  <ul>
+    <li>It supplies the -Xlint option.</li>
+    <li>It suppresses warning messages, based on a regexp or on code comments.</li>
+    <li>It returns non-zero status if any other warnings (or errors) exist.
+        Ordinarily, javac returns non-zero status only if errors exist.</li>
+  </ul>
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-xlint">Documentation</a> at top of file.
+</dd>
+
+<dt>javac-progress.pl</dt>
+<dd>
+  Wraps an invocation of javac, but processes its STDERR to give progress
+  indications.
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-progress.pl">Documentation</a> at top of file.
+</dd>
+
+<dt>java-cpp.pl</dt>
+<dd>
+  This acts like the C preprocessor (cpp), but
+  <ul>
+    <li>it does not remove comments, and</li>
+    <li>it cleans up spacing in the processed file.</li>
+  </ul>
+  Its name comes from the fact that it is useful for running on a source
+  file with cpp macros, to create Java source code.
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-cpp.pl">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3 id="Dependences">Dependences</h3>
+
+<dl>
+<dt>java-dependencies</dt>
+<dd>
+  Creates a list of the .java files used by a class or classes.
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-dependencies">Documentation</a> at top of file.
+</dd>
+
+<dt>classfile-orphans</dt>
+<dd>
+  Print names of .class files with no corresponding <tt>.java</tt> file or file
+  containing the definition of the class.
+  <a href="http://plume-lib.googlecode.com/hg/bin/classfile-orphans">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h3 id=".class_file_processing">.class file processing</h3>
+
+<dl>
+<dt>ClassFileVersion</dt>
+<dd>
+  Given a list of <tt>.class</tt> files, or a <tt>.jar</tt> file, print the
+  class file version and also the JDK/JRE version required to run each
+  <tt>.class</tt> file.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ClassFileVersion.html">Documentation</a>.
+</dd>
+
+<dt>classfile_check_version</dt>
+<dd>
+  Check that the version of the classfile format is <= the specified version.
+  Used to ensure that classfiles are OK for a particular version of Java.
+  <a href="http://plume-lib.googlecode.com/hg/bin/classfile_check_version">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h2 id="Scheduling">Scheduling</h2>
 
 <dl>
 <dt>ICalAvailable</dt>
@@ -486,8 +552,7 @@ This contains no documentation, so don't include it in this README file.
   This is useful for sending someone a list of acceptable times for a meeting.
   Also see the <a href="http://plume-lib.googlecode.com/hg/emacs/startup-functions-mde.el"><tt>ical-available</tt></a> Emacs function, which inserts the
   output of this program.
-  <br/>
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ICalAvailable.html">Complete documentation</a>
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ICalAvailable.html">Documentation</a>.
 </dd>
 
 <dt>schedule</dt>
@@ -495,8 +560,7 @@ This contains no documentation, so don't include it in this README file.
   Given a set of scheduling constraints (times that are impossible, and
   times that are undesirable), this script outputs times that are possible,
   and times that are desirable.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/schedule">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/schedule">Documentation</a> at top of file.
 </dd>
 
 <!-- TaskManager is not documented, so leave it out of the README.html file
@@ -505,58 +569,7 @@ This contains no documentation, so don't include it in this README file.
 </dl>
 
 
-<h2>Extracting part of a file</h2>
-
-<dl>
-<dt>lines-after</dt>
-<dd>
-  Print all lines after the first one that matches the pattern.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/lines-after">More documentation</a> at top of file.
-</dd>
-
-<dt>lines-before</dt>
-<dd>
-  Print all lines before the first one that matches the pattern.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/lines-before">More documentation</a> at top of file.
-</dd>
-
-<dt>lines-between</dt>
-<dd>
-  Print all lines that occur between the two specified regexps (inclusive).
-  That is, print a line matching the first regexp; then print all lines
-  up to one matching the second regexp, but stop printing; then repeat.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/lines-between">More documentation</a> at top of file.
-</dd>
-
-<dt>lines-from</dt>
-<dd>
-  Print all lines after the first one that matches the pattern, inclusive.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/lines-from">More documentation</a> at top of file.
-</dd>
-
-<dt>lines-notbetween</dt>
-<dd>
-  Print all lines that do not occur between the two specified regexps
-  (inclusive).  That is, print until the first regexp is matched; then do
-  not print until the second regexp is matched; then repeat.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/lines-notbetween">More documentation</a> at top of file.
-</dd>
-
-<dt>lines-upto</dt>
-<dd>
-  Print all lines before the first one that matches the pattern, inclusive.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/lines-upto">More documentation</a> at top of file.
-</dd>
-</dl>
-
-
-<h2>Miscellaneous</h2>
+<h2 id="Miscellaneous">Miscellaneous</h2>
 
 <dl>
 <dt>striplines.pl</dt>
@@ -564,25 +577,115 @@ This contains no documentation, so don't include it in this README file.
   Strips <tt>#line</tt> directives out of a file.  The file is modified in
   place, but a backup is made to <tt><em>filename</em>.bak</tt>.
 </dd>
+
+<dt>
+./bin/path-remove.pl
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/mail-e
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/touch-oldify
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/cronic
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/diff-remove-empty
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/junk
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/junk.doc
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/repeated-words.pl
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/sort-directory-order.pl
+</dt>
+<dd>
+</dd>
+
+<dt>
+./bin/sort-reversed
+</dt>
+<dd>
+</dd>
+
+
 </dl>
 
-./bin/path-remove.pl
-./bin/mail-e
-./bin/touch-oldify
-./bin/cronic
-./bin/cronic-orig
-./bin/cygwin-runner.pl
-./bin/diff-remove-empty
-./bin/junk
-./bin/junk.doc
-
-./bin/repeated-words.pl
-./bin/sort-directory-order.pl
-./bin/sort-reversed
+# Clean up a path environment variable by removing duplicates and
+# non-existent directories.
+# With optional argument "-r REGEXP", removes any matching path element.
+# Works for either space- or colon- delimiated paths.
 
 
-<h2>Emacs libraries</h2>
+<h3 id="Cygwin">Cygwin</h3>
 
+<dl>
+<dt>cygwin-runner.pl</dt>
+<dd>
+  Takes a command with arguments and translates those arguments from
+  Cygwin-style filenames into Windows-style filenames.  Its real advantage
+  is the little bit of intelligence it has as far as which things are files
+  and which are not.
+  <a href="http://plume-lib.googlecode.com/hg/bin/cygwin-runner.pl">Documentation</a> at top of file.
+</dd>
+
+<dt>java-cygwin.sh</dt>
+<dd>
+  A wrapper for calling Java from Cygwin, that tries to convert any
+  arguments that are Unix-style paths into Windows-style paths.
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-cygwin.sh">Documentation</a> at top of file.
+</dd>
+
+<dt>javac-cygwin.sh</dt>
+<dd>
+  A wrapper for calling Java from Cygwin, that tries to convert any
+  arguments that are Unix-style paths into Windows-style paths.
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-cygwin.sh">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
+<h1 id="Libraries">Libraries</h1>
+
+
+<h2 id="Emacs_libraries">Emacs libraries</h2>
+
+<p>
+Documentation is forthcoming.  In the meanwhile, each individual library is
+generally well-documented, so feel free to browse.
+</p>
+
+<!--
 ./emacs/advice-check-shadowed.el
 ./emacs/bbdb-mew.el
 ./emacs/bdiff.el
@@ -617,83 +720,260 @@ This contains no documentation, so don't include it in this README file.
 ./emacs/util-mde.el
 ./emacs/vm-w3m.el
 ./emacs/whitespace-filenames.el
+-->
 
 
-<h2>Java libraries</h2>
+<h2 id="Java_libraries">Java libraries</h2>
 
-Command-line option argument processing
+<h3 id="Command-line_option_argument_processing">Command-line option argument processing</h3>
 
-./java/src/plume/Option.java
-./java/src/plume/OptionGroup.java
-./java/src/plume/Options.java
-./java/src/plume/OptionsDoclet.java
-./java/src/plume/Unpublicized.java
-
-
-Tuples
-
-./java/src/plume/Pair.java
-./java/src/plume/Triple.java
-
-
-Collections and iterators
-
-./java/src/plume/LimitedSizeIntSet.java
-./java/src/plume/LimitedSizeSet.java
-
-./java/src/plume/WeakHasherMap.java
-./java/src/plume/WeakIdentityHashMap.java
-
-./java/src/plume/OrderedPairIterator.java
-./java/src/plume/IterableIterator.java
-
-Text processing
-
-./java/src/plume/StrTok.java
-./java/src/plume/StringBuilderDelimited.java
-./java/src/plume/TextFile.java
-./java/src/plume/CountingPrintWriter.java
-./java/src/plume/EntryReader.java
-./java/src/plume/MultiReader.java
-
-./java/src/plume/FileIOException.java
-
-Math
-
-./java/src/plume/FuzzyFloat.java
-./java/src/plume/MathMDE.java
-
-Random selection
-
-./java/src/plume/RandomSelector.java
-./java/src/plume/MultiRandSelector.java
-./java/src/plume/Partitioner.java
+<dl>
+<dt>Options</dt>
+<dd>
+  The <a href="http://types.cs.washington.edu/plume-lib/api/plume/Options.html">Options</a> class:
+  <ul>
+    <li>parses command-line options and sets fields in your program accordingly,</li>
+    <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
+    <li>creates documentation suitable for a manual or manpage.</li>
+  </ul>
+  Thus, the programmer is freed from writing duplicative, boilerplate code
+  and documentation that could get out of sync with the rest of the program.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Options.html">Documentation</a>.
+</dd>
+</dl>
 
 
-Processes
+<h3 id="Collections_and_iterators">Collections and iterators</h3>
 
-./java/src/plume/TimeLimitProcess.java
-./java/src/plume/FileCompiler.java
+<dl>
+<dt>ArraysMDE</dt>
+<dd>
+  Utilities for manipulating arrays and collections.
+  This complements java.util.Arrays and java.util.Collections.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ArraysMDE.html">Documentation</a>.
+</dd>
+
+<dt>LimitedSizeIntSet
+</dt>
+<dd>
+  LimitedSizeSet stores up to some maximum number of unique
+  values, at which point its rep is nulled, in order to save space.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/LimitedSizeSet.html">Documentation</a>.
+  <br/>
+  There is also LimitedSizeIntSet, which takes less memory than LimitedSizeSet&lt;Integer&gt;.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/LimitedSizeIntSet.html">Documentation</a>.
+</dd>
+
+<dt>WeakHasherMap</dt>
+<dd>
+  WeakHashMap is a modified version of WeakHashMap from JDK 1.2.2, that
+  adds a constructor that takes a <a href="http://types.cs.washington.edu/plume-lib/api/plume/Hasher.html">Hasher</a> argument.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/WeakHasherMap.html">Documentation</a>.
+</dd>
+
+<dt>WeakIdentityHashMap</dt>
+<dd>
+  WeakIdentityHashMap is a modified version of WeakHashMap from JDK 1.5,
+  that uses System.identityHashCode() rather than the object's hash code.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/WeakIdentityHashMap.html">Documentation</a>.
+</dd>
+
+<dt>OrderedPairIterator</dt>
+<dd>
+  Given two sequences/iterators/whatever, OrderedPairIterator returns a new
+  sequence/iterator/whatever that pairs the matching elements of the
+  inputs, according to their respective sort orders.  (This opertation is
+  sometimes called "zipping".)
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/OrderedPairIterator.html">Documentation</a>.
+</dd>
+
+<dt>IterableIterator</dt>
+<dd>
+  In Java, Iterators are not Iterable, so they cannot be used in new-style
+  for loops.  The IterableIterator wrapper makes an Iterator that is
+  also Iterable &mdash; that is, it implements the <tt>iterator()</tt> method.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/IterableIterator.html">Documentation</a>.
+</dd>
+</dl>
 
 
-Miscellaneous
+<h3 id="Text_processing">Text processing</h3>
 
-./java/src/plume/ArraysMDE.java
-./java/src/plume/Assert.java
-./java/src/plume/BCELUtil.java
-./java/src/plume/Digest.java
-./java/src/plume/Filter.java
-./java/src/plume/Fmt.java
-./java/src/plume/GraphMDE.java
-./java/src/plume/Hasher.java
-./java/src/plume/Intern.java
-./java/src/plume/RandoopMappedCalls.java
-./java/src/plume/SimpleLog.java
-./java/src/plume/Stopwatch.java
-./java/src/plume/UtilMDE.java
+<dl>
+<dt>StrTok</dt>
+<dd>
+  Provides a somewhat simpler interface for tokenizing strings than
+  does StreamTokenizer.  All tokenizing is done by StreamTokenizer.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/StrTok.html">Documentation</a>.
+</dd>
+
+<dt>EntryReader</dt>
+<dd>
+  Class that reads "entries" from a file.  In the simplest case, entries
+  can be lines.  It supports:
+    include files,
+    comments, and
+    multi-line entries (paragraphs).
+  The syntax of each of these is customizable.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/EntryReader.html">Documentation</a>.
+</dd>
+
+<dt>FileIOException</dt>
+<dd>
+  Extends IOException by also reporting a file name and line
+  number at which the exception occurred.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/FileIOException.html">Documentation</a>.
+</dd>
+
+<dt>StringBuilderDelimited</dt>
+<dd>
+  Like StringBuilder, but adds a delimiter between each pair of strings
+  that are insered into the Stringbuilder.  This can simplify the logic of
+  programs and also avoid errors.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/StringBuilderDelimited.html">Documentation</a>.
+</dd>
+
+<dt>CountingPrintWriter</dt>
+<dd>
+  Prints formatted representations of objects to a text-output
+  stream counting the number of bytes and characters printed.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/CountingPrintWriter.html">Documentation</a>.
+</dd>
+
+<dt>Digest</dt>
+<dd>
+  Computes a message digest for a file.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Digest.html">Documentation</a>.
+</dd>
+
+</dl>
 
 
-<h2>Perl libraries</h2>
+<h3 id="Math">Math</h3>
+
+<dl>
+<dt>MathMDE</dt>
+<dd>
+  Mathematical utilities.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MathMDE.html">Documentation</a>.
+</dd>
+
+<dt>FuzzyFloat</dt>
+<dd>
+  Routines for doing approximate ('fuzzy') floating point comparisons.
+  Those are comparisons that only require the floating point numbers to be
+  relatively close to one another to be equal, rather than exactly
+  equal.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/FuzzyFloat.html">Documentation</a>.
+</dd>
+
+</dl>
+
+
+<h3 id="Random_selection">Random selection</h3>
+
+<dl>
+<dt>RandomSelector</dt>
+<dd>
+  Selects k elements uniformly at random from
+  an arbitrary iterator, using <em>O(k)</em> space.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/RandomSelector.html">Documentation</a>.
+</dd>
+
+<dt>MultiRandSelector</dt>
+<dd>
+  Like RandomSelector, performs a uniform random selection over an
+  iterator.  However, the objects in the iteration may be partitioned so
+  that the random selection chooses the same number from each group.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MultiRandSelector.html">Documentation</a>.
+</dd>
+</dl>
+
+
+
+<h3 id="Processes">Processes</h3>
+
+<dl>
+<dt>TimeLimitProcess</dt>
+<dd>
+  A subclass of Process such that the process is killed if it runs for more
+  than the specified amount of wall clock time.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/TimeLimitProcess.html">Documentation</a>.
+</dd>
+
+<dt>FileCompiler</dt>
+<dd>
+  Defines methods that compile Java source files.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/FileCompiler.html">Documentation</a>.
+</dd>
+</dl>
+
+
+
+<h3 id="Tuples">Tuples</h3>
+
+<dl>
+<dt>Pair</dt>
+<dd>
+  Mutable pair class:  type-safely holds two objects of possibly-different types.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Pair.html">Documentation</a>.
+</dd>
+
+<dt>Triple</dt>
+<dd>
+  Mutable triple class:  type-safely holds three objects of possibly-different types.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Triple.html">Documentation</a>.
+</dd>
+</dl>
+
+
+<h3 id="Miscellaneous">Miscellaneous</h3>
+
+<dl>
+<dt>BCELUtil</dt>
+<dd>
+  Static utility methods for working with BCEL.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/BCELUtil.html">Documentation</a>.
+</dd>
+
+<dt>GraphMDE</dt>
+<dd>
+  Graph utility methods.  This class does not model a graph:  all methods
+  are static.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/GraphMDE.html">Documentation</a>.
+</dd>
+
+<dt>Intern</dt>
+<dd>
+  Utilities for interning objects.  Interning is also known as
+  canonicalization or hash-consing:  it returns a single representative
+  object that <tt>.equals()</tt> the object, and the client discards the
+  argument and uses the result instead.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Intern.html">Documentation</a>.
+</dd>
+
+<dt>SimpleLog</dt>
+<dd>
+  A simple logging class with timers, subtasks, backtraces, output to
+  file or standard out, and the ability to be enabled or disabled.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/SimpleLog.html">Documentation</a>.
+</dd>
+
+<dt>Stopwatch</dt>
+<dd>
+  A simple class for recording computing elapsed time.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Stopwatch.html">Documentation</a>.
+</dd>
+
+<dt>UtilMDE</dt>
+<dd>
+  Utility functions that do not belong elsewhere in the plume package.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/UtilMDE.html">Documentation</a>.
+</dd>
+</dl>
+
+
+<h2 id="Perl_libraries">Perl libraries</h2>
 
 <dl>
 <dt>checkargs.pm</dt>
@@ -701,8 +981,7 @@ Miscellaneous
   checkargs.pm checks the number of arguments passed to a Perl function at run
   time, catching some common errors that could otherwise go undetected until
   later in the program.
-  <br/>
-  <a href="http://plume-lib.googlecode.com/hg/bin/checkargs.pm">More documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/checkargs.pm">Documentation</a> at top of file.
 </dd>
 </dl>
 
