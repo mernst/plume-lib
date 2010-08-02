@@ -5,10 +5,19 @@
 # Make will silently continue if file does not exist.
 -include Makefile.user
 
-TOOLS_JAR := ${JAVA_HOME}/lib/tools.jar
+ifndef JAVA_HOME
+  java_cmd := $(shell which java)
+  JAVA_HOME := $(subst /bin/java,,$(java_cmd))
+  # How does one do this?
+  # echo "WARNING: JAVA_HOME is not set, assuming $(JAVA_HOME)"
+endif
+
+
 # On MacOS, there is no separate tools.jar
 ifneq (,$(findstring darwin,$(OSTYPE)))
-  TOOLS_JAR := /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar
+  TOOLS_JAR ?= /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar
+else
+  TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 endif
 
 # This wildcard doesn't seem to work, so list the jar files individually.
@@ -88,7 +97,7 @@ compile_without_testing:  .class-files-timestamp
 
 # This rule creates ${ALL_CLASS_FILES}.
 # The timestamp file indicates when the files were last compiled.
-.class-files-timestamp: ${JAVA_AND_CPP_FILES}
+.class-files-timestamp: ${JAVA_AND_CPP_FILES} ${TOOLS_JAR}
 	${JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
 	touch .class-files-timestamp
 
@@ -140,10 +149,19 @@ optionsdoc: compile
 #	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
 	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 
+${TOOLS_JAR}:
+ifneq (,$(findstring darwin,$(OSTYPE)))
+	@echo "Cannot find classes.jar; please set TOOLS_JAR [sic] to its location"
+else
+	@echo "Cannot find tools.jar; please set JAVA_HOME and/or TOOLS_JAR"
+endif
+
+
 showvars:
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
+	@echo JAVA_HOME = "$(JAVA_HOME)"
 	@echo CLASSPATH = "$(CLASSPATH)"
 	@echo jsr308_imports = $(jsr308_imports)
 
@@ -169,7 +187,7 @@ src/plume/MathMDE.java: src/plume/MathMDE.java.jpp src/plume/MathMDE-gcd.java.jp
 jar: plume.jar
 # This should depend on all the included .jar files, too.
 # TODO: Why does this depend on lookup.html and lookup.txt but doesn't include them?
-plume.jar: .class-files-timestamp .test-timestamp .javadoc-timestamp lib lookup.html lookup.txt
+plume.jar: .class-files-timestamp .test-timestamp .javadoc-timestamp lib lookup.html lookup.txt ${TOOLS_JAR}
 # "make clean" avoids including stray .class files from your directory.
 # "make compile" runs unit tests; do that instead of "compile_without_testing".
 # If you use "compile_without_testing", the tests will look out of date
