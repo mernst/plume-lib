@@ -1,7 +1,8 @@
 package plume;
 
 /**
- * Simple pair class.
+ * Mutable pair class:
+ * type-safely holds two objects of possibly-different types.
  **/
 public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Object> {
   public T1 a;

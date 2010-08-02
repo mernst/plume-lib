@@ -1,16 +1,14 @@
 #!/usr/bin/env perl
 
-# Clean up a path environment variable.
+# Clean up a path environment variable by removing duplicates and
+# non-existent directories.
 # With optional argument "-r REGEXP", removes any matching path element.
-# Always remove duplicates and non-existent directories.
 # Works for either space- or colon- delimiated paths.
 # Usage:
 #   # csh
 #   setenv PATH `echo $PATH | $HOME/bin/share/path-remove.pl`
 #   # sh
 #   set path = (`echo $path | $HOME/bin/share/path-remove.pl`)
-
-# Testing:  Run command test-path-remove.pl
 
 my $debug = 0;
 # $debug = 1;

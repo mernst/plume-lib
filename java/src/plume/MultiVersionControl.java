@@ -269,10 +269,13 @@ public class MultiVersionControl {
       // Postprocess command-line arguments
       for (String adir : mvc.ignore_dir) {
         File afile = new File(adir.replaceFirst("^~", userHome));
-        if (! afile.isDirectory()) {
+        if (! afile.exists()) {
+            System.err.printf("Warning: Directory to ignore while searching for checkouts does not exist:%n  %s%n", adir);
+        } else if (! afile.isDirectory()) {
             System.err.printf("Warning: Directory to ignore while searching for checkouts is not a directory:%n  %s%n", adir);
+        } else {
+          mvc.ignoreDirs.add(afile);
         }
-        mvc.ignoreDirs.add(afile);
       }
 
       for (String adir : mvc.dir) {

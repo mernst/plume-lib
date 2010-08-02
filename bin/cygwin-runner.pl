@@ -1,7 +1,7 @@
 : # Use -*- Perl -*- without knowing its path
   eval 'exec perl -S -w $0 "$@"'
   if 0;
-# cygwin-runner.pl -- Run a windows command as if it were a unix (cygwin) command
+# cygwin-runner.pl -- Run a Windows command as if it were a Unix (Cygwin) command.
 # Jeremy Nimmer <jwnimmer@lcs.mit.edu>
 # Time-stamp: <2002-03-18 12:26:39 mistere>
 
