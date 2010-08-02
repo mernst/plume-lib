@@ -5,7 +5,7 @@ import java.util.*;
 
 
 /**
- * LimitedSizeIntSet stores up to some maximum number of unique
+ * LimitedSizeSet stores up to some maximum number of unique
  * values, at which point its rep is nulled, in order to save space.
  **/
 public class LimitedSizeSet<T>

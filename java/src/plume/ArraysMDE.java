@@ -7,9 +7,8 @@ import java.util.*;
 
 
 /**
- * Utilities for manipulating arrays.
- * This complements {@link java.util.Arrays}.
- * Also, some routines also handle Collections.
+ * Utilities for manipulating arrays and collections.
+ * This complements {@link java.util.Arrays} and {@link java.util.Collections}.
  **/
 @SuppressWarnings("interning")
 public final class ArraysMDE {

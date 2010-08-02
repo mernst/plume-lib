@@ -3,8 +3,8 @@ package plume;
 import java.util.*;
 
 /**
- * Routines for doing 'fuzzy' floating point comparisons.  Those are
- * comparisons that only require the floating point numbers to be
+ * Routines for doing approximate ('fuzzy') floating point comparisons.
+ * Those are comparisons that only require the floating point numbers to be
  * relatively close to one another to be equal, rather than exactly
  * equal. <p>
  *
