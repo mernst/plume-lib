@@ -24,7 +24,7 @@ import java.lang.ref.ReferenceQueue;
 
 
 /**
- * This is a modified version of {@link WeakHashMap} from JDK 1.5,
+ * This is a modified version of {@link java.util.WeakHashMap} from JDK 1.5,
  * that uses System.identityHashCode() rather than
  * the object's hash code.  All equality checks are identity checks
  * (==) rather than objet equality (.equals); @see{IdentityHashMap}
