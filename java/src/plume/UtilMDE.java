@@ -520,11 +520,12 @@ public final class UtilMDE {
   ///
 
   /**
-   * This class has no purpose but to define loadClassFromFile.
+   * This static nested class has no purpose but to define loadClassFromFile.
    * ClassLoader.defineClass is protected, so I subclass ClassLoader in
    * order to call defineClass.
    **/
   private static class PromiscuousLoader extends ClassLoader {
+    /** Load a class from a .class file, and return it. */
     public Class<?> loadClassFromFile(String className, String pathname) throws FileNotFoundException, IOException {
       FileInputStream fi = new FileInputStream(pathname);
       int numbytes = fi.available();
@@ -769,7 +770,10 @@ public final class UtilMDE {
 
   // Someone must have already written this.  Right?
 
-  // Deals with exactly one "*" in name.
+  /**
+   * A FilenameFilter that accepts files whose name matches the given wildcard.
+   * The wildcard may contain exactly one "*".
+   */
   public static final class WildcardFilter implements FilenameFilter {
     String prefix;
     String suffix;
@@ -948,11 +952,15 @@ public final class UtilMDE {
   // first issue, transforming a data structure into a single number.  This
   // is also known as fingerprinting.
 
-  // Note that this differs from the result of Double.hashCode (which see).
+  /**
+   * Return a hash of the arguments.
+   * Note that this differs from the result of {@link Double#hashCode()}.
+   */
   public static final int hash(double x) {
     return hash(Double.doubleToLongBits(x));
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(double a, double b) {
     double result = 17;
     result = result * 37 + a;
@@ -960,6 +968,7 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(double a, double b, double c) {
     double result = 17;
     result = result * 37 + a;
@@ -968,6 +977,7 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(double /*@Nullable*/ [] a) {
     double result = 17;
     if (a != null) {
@@ -979,15 +989,19 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(double /*@Nullable*/ [] a, double /*@Nullable*/ [] b) {
     return hash(hash(a), hash(b));
   }
 
 
-  // Don't define hash with int args; use the long versions instead.
+  /// Don't define hash with int args; use the long versions instead.
 
-  // Note that this differs from the result of Long.hashCode (which see)
-  // But it doesn't map -1 and 0 to the same value.
+  /**
+   * Return a hash of the arguments.
+   * Note that this differs from the result of {@link Long#hashCode()}.
+   * But it doesn't map -1 and 0 to the same value.
+   */
   public static final int hash(long l) {
     // If possible, use the value itself.
     if (l >= Integer.MIN_VALUE && l <= Integer.MAX_VALUE) {
@@ -1002,6 +1016,7 @@ public final class UtilMDE {
     return result;
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(long a, long b) {
     long result = 17;
     result = result * 37 + a;
@@ -1009,6 +1024,7 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(long a, long b, long c) {
     long result = 17;
     result = result * 37 + a;
@@ -1017,6 +1033,7 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(long /*@Nullable*/ [] a) {
     long result = 17;
     if (a != null) {
@@ -1028,14 +1045,17 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(long /*@Nullable*/ [] a, long /*@Nullable*/ [] b) {
     return hash(hash(a), hash(b));
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(/*@Nullable*/ String a) {
     return (a == null) ? 0 : a.hashCode();
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(/*@Nullable*/ String a, /*@Nullable*/ String b) {
     long result = 17;
     result = result * 37 + hash(a);
@@ -1043,6 +1063,7 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(/*@Nullable*/ String a, /*@Nullable*/ String b, /*@Nullable*/ String c) {
     long result = 17;
     result = result * 37 + hash(a);
@@ -1051,6 +1072,7 @@ public final class UtilMDE {
     return hash(result);
   }
 
+  /** Return a hash of the arguments. */
   public static final int hash(/*@Nullable*/ String /*@Nullable*/ [] a) {
     long result = 17;
     if (a != null) {
@@ -1144,6 +1166,7 @@ public final class UtilMDE {
     }
   }
 
+  /** An iterator that only returns elements that match the given Filter. */
   public static final class FilteredIterator<T> implements Iterator<T> {
     Iterator<T> itor;
     Filter<T> filter;
@@ -1316,6 +1339,7 @@ public final class UtilMDE {
     return m.put(key, new Integer(new_total));
   }
 
+  /** Returns a multi-line string representation of a map. */
   public static <K,V> String mapToString(Map<K,V> m) {
     StringBuilder sb = new StringBuilder();
     mapToString(sb, m, "");
@@ -1359,9 +1383,10 @@ public final class UtilMDE {
   /// Method
   ///
 
-  // maps from a string of arg names to an array of Class objects.
+  /** Maps from a string of arg names to an array of Class objects. */
   static HashMap<String,Class<?>[]> args_seen = new HashMap<String,Class<?>[]>();
 
+  /** Given a method name, return the method. */
   public static Method methodForName(String method)
     throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
@@ -1412,6 +1437,7 @@ public final class UtilMDE {
     return methodForName(classname, methodname, argclasses);
   }
 
+  /** Given a class name and a method name in that class, return the method. */
   public static Method methodForName(String classname, String methodname, Class<?>[] params)
     throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
@@ -1752,14 +1778,12 @@ public final class UtilMDE {
     return join(v, lineSep);
   }
 
-  // Inspired by the 'quote' function in Ajax (but independent code).
   /**
    * Escape \, ", newline, and carriage-return characters in the
-   * target as \\, \\", \n, and \r; return a new string if any
-   * modifications were necessary. The intent is that by surrounding
+   * target as \\, \", \n, and \r; return a new string if any
+   * modifications were necessary.  The intent is that by surrounding
    * the return value with double quote marks, the result will be a
-   * Java string literal denoting the original string. Previously
-   * known as quote().
+   * Java string literal denoting the original string.
    **/
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
@@ -1801,7 +1825,9 @@ public final class UtilMDE {
     return sb.toString();
   }
 
-  // The overhead of this is too high to call in escapeNonJava(String)
+  // The overhead of this is too high to call in escapeNonJava(String), so
+  // it is inlined there.
+  /** Like {@link #escapeNonJava(String)}, but for a single character. */
   public static String escapeNonJava(Character ch) {
     char c = ch.charValue();
     switch (c) {
@@ -2018,20 +2044,25 @@ public final class UtilMDE {
   }
 
 
-  // @return either "n noun" or "n nouns" depending on n
+  /**
+   * Returns either "n <em>noun</em>" or "n <em>noun</em>s" depending on n.
+   * Adds "es" to words ending with "ch", "s", "sh", or "x".
+   */
   public static String nplural(int n, String noun) {
     if (n == 1)
       return n + " " + noun;
-    else if (noun.endsWith("s") || noun.endsWith("x") ||
-             noun.endsWith("ch") || noun.endsWith("sh"))
+    else if (noun.endsWith("ch") || noun.endsWith("s") ||
+             noun.endsWith("sh") || noun.endsWith("x"))
       return n + " " + noun + "es";
     else
       return n + " " + noun + "s";
   }
 
 
-  // Returns a string of the specified length, truncated if necessary,
-  // and padded with spaces to the left if necessary.
+  /**
+   * Returns a string of the specified length, truncated if necessary,
+   * and padded with spaces to the left if necessary.
+   */
   public static String lpad(String s, int length) {
     if (s.length() < length) {
       StringBuffer buf = new StringBuffer();
@@ -2044,8 +2075,10 @@ public final class UtilMDE {
     }
   }
 
-  // Returns a string of the specified length, truncated if necessary,
-  // and padded with spaces to the right if necessary.
+  /**
+   * Returns a string of the specified length, truncated if necessary,
+   * and padded with spaces to the right if necessary.
+   */
   public static String rpad(String s, int length) {
     if (s.length() < length) {
       StringBuffer buf = new StringBuffer(s);
@@ -2058,18 +2091,20 @@ public final class UtilMDE {
     }
   }
 
-  // Converts the int to a String, then formats it using rpad
+  /** Converts the int to a String, then formats it using {@link #rpad(String,int)}. */
   public static String rpad(int num, int length) {
     return rpad(String.valueOf(num), length);
   }
 
-  // Converts the double to a String, then formats it using rpad
+  /** Converts the double to a String, then formats it using {@link #rpad(String,int)}. */
   public static String rpad(double num, int length) {
     return rpad(String.valueOf(num), length);
   }
 
-  // Same as built-in String comparison, but accept null arguments,
-  // and place them at the beginning.
+  /**
+   * Same as built-in String comparison, but accept null arguments,
+   * and place them at the beginning.
+   */
   public static class NullableStringComparator
     implements Comparator<String>
   {

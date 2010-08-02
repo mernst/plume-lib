@@ -152,8 +152,10 @@ showvars:
 ### Automatically generated files
 ###
 
-src/plume/MathMDE.java:
-	$(MAKE) -C src/plume MathMDE.java
+src/plume/MathMDE.java: src/plume/MathMDE.java.jpp src/plume/MathMDE-gcd.java.jpp src/plume/MathMDE-modulus.java.jpp src/plume/MathMDE-nonmodulus.java.jpp src/plume/MathMDE-help.java.jpp src/plume/MathMDE-helpend.java.jpp
+	@rm -f $@
+	(cd src/plume && ../../../bin/java-cpp.pl MathMDE.java.jpp 2>&1 > MathMDE.java)
+	@chmod -w $@
 
 
 ###########################################################################
