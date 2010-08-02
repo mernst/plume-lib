@@ -3,8 +3,8 @@ package plume;
 import java.text.DecimalFormat;
 
 /**
- * A simple class for recording computing elapsed time.
- **/
+ * A simple class for recording elapsed time.
+ */
 public final class Stopwatch {
 
   long elapsedMillis = 0;

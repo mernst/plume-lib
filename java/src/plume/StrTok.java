@@ -50,7 +50,7 @@ public class StrTok {
   }
 
   /**
-   * Default Class for error handling.  Throws a RuntimeException when an
+   * Default class for error handling.  Throws a RuntimeException when an
    * error occurs.
    *
    * @see #set_error_handler(Error)

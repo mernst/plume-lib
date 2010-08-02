@@ -8,7 +8,7 @@ import java.io.*;
 
 /**
  * Like StringBuilder, but adds a delimiter between each pair of strings
- * that are insered into the Stringbuilder.  This can simplify the logic of
+ * that are inserted into the Stringbuilder.  This can simplify the logic of
  * programs and also avoid errors. <p>
  *
  * Does not extend StringBuilder because that would probably break, due to
