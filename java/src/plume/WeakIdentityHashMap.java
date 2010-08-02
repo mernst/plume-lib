@@ -24,11 +24,13 @@ import java.lang.ref.ReferenceQueue;
 
 
 /**
- * This is a modified version of @see{WeakHashMap} from JDK 1.5.
- * This modification uses System.identityHashCode() rather than
+ * This is a modified version of {@link WeakHashMap} from JDK 1.5,
+ * that uses System.identityHashCode() rather than
  * the object's hash code.  All equality checks are identity checks
  * (==) rather than objet equality (.equals); @see{IdentityHashMap}
  * for more information on the changes made in an identity hash map.
+ *
+ * <hr>
  *
  * A hashtable-based <tt>Map</tt> implementation with <em>weak
  * keys</em>.  An entry in a <tt>WeakIdentityHashMap</tt> will

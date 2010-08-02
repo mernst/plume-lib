@@ -32,8 +32,8 @@ import plume.Hasher;
 // generic, among other advantages) because that implementation uses
 // various package-visible implementation details of java.util.
 /**
- * This is a modified version of @see{WeakHashMap} from JDK 1.2.2.
- * The modification adds a constructor that takes a Hasher argument.
+ * This is a modified version of {@link WeakHashMap} from JDK 1.2.2,
+ * that adds a constructor that takes a Hasher argument.
  * I also replaced uses of hashCode() and equals() by uses of Hasher,
  * where appropriate.
  * I've changed the name so that this version is not used accidentally.
