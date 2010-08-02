@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * LimitedSizeIntSet stores up to some maximum number of unique non-zero
+ * LimitedSizeIntSet stores up to some maximum number of unique
  * integer values, at which point its rep is nulled, in order to save space.
  * <p>
  * The advantage of this class over LimitedSizeSet&lt;Integer&gt; is that

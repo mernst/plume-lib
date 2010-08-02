@@ -6,9 +6,8 @@ import java.security.*;
 import java.io.*;
 
 /**
- * The primary entry point into this class is {@link
- * #getFileDigest(String,MessageDigest)}, which computes a message digest
- * for a file.
+ * Computes a message digest for a file.  The primary entry point into this
+ * class is {@link #getFileDigest(String,MessageDigest)}.
  */
 public class Digest {
 

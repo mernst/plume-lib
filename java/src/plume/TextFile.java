@@ -39,7 +39,7 @@ import java.util.NoSuchElementException;
  * concurrent modifications to the underlying file. If you want to do that
  * yourself, take a look at java.nio.channels.FileLock.
  *
- * @deprecated
+ * @deprecated Use {@link MultiReader}.
  * @see MultiReader
  **/
 @Deprecated

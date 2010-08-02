@@ -6,15 +6,13 @@ import java.io.PrintStream;
 /**
  * A logging class with the following features:
  * <ul>
- *   <li>Can be enabled and disabled.  When disabled, all operations are no-ops.
- *   <li>Write to a file or to standard output.
- *   <li>Can start and stop a timer, and nest timers.
- *   <li>Can enter and exit subtasks; their output is indented, and they are timed.
- *   <li>Can provide a backtrace; optionally provide a backtrace at every output
-
+ *   <li>Can be enabled and disabled (when disabled, all operations are no-ops),
+ *   <li>Write to a file or to standard output,
+ *   <li>Can start and stop a timer, and nest timers,
+ *   <li>Can enter and exit subtasks (their output is indented, and they are timed),
+ *   <li>Can provide a backtrace (optionally provide a backtrace at every output), and
  *   <li>Can add newlines where appropriate, if variable line_oriented is set.
  * </ul>
- *
  **/
 
 public final class SimpleLog {

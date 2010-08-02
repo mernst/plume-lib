@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.io.*;
 import java.sql.*;
 
-/** A helper class for running Randoop. */
+/** A helper class for running <a href="http://code.google.com/p/randoop/">Randoop</a>. */
 public class RandoopMappedCalls {
 
   // These methods replace a dialog box by a printed indication that the

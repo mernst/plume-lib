@@ -3,7 +3,7 @@ package plume;
 import java.util.*;
 
 /**
- * <b>RandomSelector</b> selects k elements uniformly at random from
+ * RandomSelector selects k elements uniformly at random from
  * an arbitrary iterator, using O(k) space.  A naive algorithm would use O(n)
  * space.  For example, selecting 1 element from a FileStream
  * containing 1000 elements will take O(1) space. The class takes as
