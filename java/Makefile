@@ -144,6 +144,7 @@ javadoc: .javadoc-timestamp
 # Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
 	cp -fpru api /cse/www2/types/plume-lib/
+	chgrp -R types_www /cse/www2/types/plume-lib/
 
 optionsdoc: compile
 	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
