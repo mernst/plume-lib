@@ -155,6 +155,8 @@ ifneq (,$(findstring darwin,$(OSTYPE)))
 else
 	@echo "Cannot find tools.jar; please set JAVA_HOME and/or TOOLS_JAR"
 endif
+# Cause the Make job to fail
+	@false
 
 
 showvars:
