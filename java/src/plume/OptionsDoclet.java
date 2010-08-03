@@ -18,10 +18,14 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Generates HTML documentation of command-line options.
+ * <p>
+ *
+ * <b>Usage</b> <p>
  * This doclet is typically invoked with:
  * <pre>javadoc -quiet -doclet plume.OptionsDoclet [doclet options] [java files]</pre>
  * <p>
  *
+ * <b>Doclet Options</b> <p>
  * The following doclet options are supported:
  * <ul>
  * <li> <b>-docfile</b> <i>file</i> When specified, the output of this doclet
@@ -67,6 +71,16 @@ import org.apache.commons.lang.StringEscapeUtils;
  * </ul>
  * <p>
  *
+ * <b>Examples</b> <p>
+ * To update the Javarifier HTML manual with option documentation run:
+ * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile javarifier.html src/javarifier/Main.java</pre>
+ * <p>
+ *
+ * To update the class Javadoc for plume.Lookup with option documentation run:
+ * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java</pre>
+ * <p>
+ *
+ * <b>Caveats</b> <p>
  * The generated HTML documentation includes unpublicized option groups but not
  * <code>@Unpublicized</code> options.  Option groups which contain only
  * <code>@Unpublicized</code> options are not included in the output at all.
