@@ -44,6 +44,8 @@ import java.net.URL;
  *                but not pushed, or have shelved/stashed changes.
  *   list      -- List the checkouts that this program is aware of.
  * </pre>
+ * (The <tt>commit</tt> action is not supported, because that is not
+ * something that should be done in an automated way.)<p>
  *
  * You can specify the set of checkouts for the program to manage, or it
  * can search your directory structure to find all of your checkouts, or
@@ -189,6 +191,9 @@ import java.net.URL;
 
 public class MultiVersionControl {
 
+  @SuppressWarnings("nullness") // user.home property always exists
+  static final /*@NonNull*/ String userHome = System.getProperty ("user.home");
+
   @Option("File with list of checkouts.  Set it to /dev/null to suppress reading.")
   public String checkouts = new File(userHome, ".mvc-checkouts").getPath();
 
@@ -218,23 +223,24 @@ public class MultiVersionControl {
   @Option("Redo existing checkouts; relevant only to checkout command")
   public boolean redo_existing;
 
-  // It would be good to be able to set this per-checkout.
   /**
    * Terminating the process can leave the repository in a bad state, so
    * set this rather high for safety.  Also, the timeout needs to account
    * for the time to run hooks (that might recompile or run tests).
    */
   @Option("Timeout for each command, in seconds")
-  public static int timeout = 600;
+  public int timeout = 600;
 
   @Option("-q Run quietly (e.g., no output about missing directories)")
-  public static boolean quiet = true;
+  public boolean quiet = true;
 
+  // It would be good to be able to set this per-checkout.
+  // This variable is static because it is used in static methods.
   @Option("Print debugging output")
-  public static boolean debug;
+  static public boolean debug;
 
   @Option("Debug 'replacers' that filter command output")
-  public static boolean debug_replacers;
+  public boolean debug_replacers;
 
   static enum Action {
     CHECKOUT,
@@ -249,9 +255,6 @@ public class MultiVersionControl {
   private static Action LIST = Action.LIST;
 
   private Action action;
-
-  @SuppressWarnings("nullness") // user.home property always exists
-  static final /*@NonNull*/ String userHome = System.getProperty ("user.home");
 
   public static void main (String[] args) {
     setupSVNKIT();
@@ -301,6 +304,10 @@ public class MultiVersionControl {
     DAVRepositoryFactory.setup();
     SVNRepositoryFactoryImpl.setup();
     FSRepositoryFactory.setup();
+  }
+
+  // OptionsDoclet requires a nullary constructor (but a private one is OK).
+  private MultiVersionControl() {
   }
 
   public MultiVersionControl(String[] args) {
@@ -471,6 +478,10 @@ public class MultiVersionControl {
   /// Read checkouts from a file
   ///
 
+  /**
+   * Read checkouts from the file (in .mvc-checkouts format), and add
+   * them to the set.
+   */
   static void readCheckouts(File file, Set<Checkout> checkouts) throws IOException {
     RepoType currentType = RepoType.BZR; // arbitrary choice
     String currentRoot = null;
@@ -675,10 +686,9 @@ public class MultiVersionControl {
 
 
   /**
-   * Given a directory named "CVS" , create a corresponding Checkout object
-   * for its parent.  Returns null if this directory is named "CVS" but is
-   * not a version control directory.  (Google Web Toolkit does that, for
-   * example.)
+   * Given a directory named "CVS", create a corresponding Checkout object
+   * for its parent, and add it to the given set.  (Google Web Toolkit does
+   * that, for example.)
    */
   static void addCheckoutCvs(File cvsDir, File dir, Set<Checkout> checkouts) {
     assert cvsDir.getName().toString().equals("CVS") : cvsDir.getName();
