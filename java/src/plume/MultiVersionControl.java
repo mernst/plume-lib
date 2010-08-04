@@ -56,22 +56,22 @@ import java.net.URL;
  * <b>Command-line arguments</b><p>
 
  * The command-line options are as follows:
-<!-- start options doc (DO NOT EDIT BY HAND) -->
-<pre>
-  --checkouts=<em>string</em>        - File with list of checkouts.  Set it to /dev/null to suppress reading. [default /home/mernst/.mvc-checkouts]
-  --dir=<em>string[]</em>            - Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]
-  --ignore-dir=<em>string[]</em>     - Directory under which to NOT search for checkouts; may be supplied multiple times [default []]
-  --search=<em>boolean</em>          - Search for all checkouts, not just those listed in a file [default false]
-  --show=<em>boolean</em>            - Display commands as they are executed [default false]
-  --print-directory=<em>boolean</em> - Print the directory before executing commands [default false]
-  --dry-run=<em>boolean</em>         - Do not execute commands; just print them.  Implies --show --redo-existing [default false]
-  --redo-existing=<em>boolean</em>   - Redo existing checkouts; relevant only to checkout command [default false]
-  --timeout=<em>int</em>             - Timeout for each command, in seconds [default 600]
-  -q --quiet=<em>boolean</em>        - Run quietly (e.g., no output about missing directories) [default true]
-  --debug=<em>boolean</em>           - Print debugging output [default false]
-  --debug-replacers=<em>boolean</em> - Debug 'replacers' that filter command output [default false]
-</pre>
-<!-- end options doc -->
+ * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ * <pre>
+ *   --checkouts=<em>string</em>        - File with list of checkouts.  Set it to /dev/null to suppress reading. [default /home/mernst/.mvc-checkouts]
+ *   --dir=<em>string[]</em>            - Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]
+ *   --ignore-dir=<em>string[]</em>     - Directory under which to NOT search for checkouts; may be supplied multiple times [default []]
+ *   --search=<em>boolean</em>          - Search for all checkouts, not just those listed in a file [default false]
+ *   --show=<em>boolean</em>            - Display commands as they are executed [default false]
+ *   --print-directory=<em>boolean</em> - Print the directory before executing commands [default false]
+ *   --dry-run=<em>boolean</em>         - Do not execute commands; just print them.  Implies --show --redo-existing [default false]
+ *   --redo-existing=<em>boolean</em>   - Redo existing checkouts; relevant only to checkout command [default false]
+ *   --timeout=<em>int</em>             - Timeout for each command, in seconds [default 600]
+ *   -q --quiet=<em>boolean</em>        - Run quietly (e.g., no output about missing directories) [default true]
+ *   --debug=<em>boolean</em>           - Print debugging output [default false]
+ *   --debug-replacers=<em>boolean</em> - Debug 'replacers' that filter command output [default false]
+ * </pre>
+ * <!-- end options doc -->
  *
  * <b>File format for <tt>.mvc-checkouts</tt> file</b><p>
  *
