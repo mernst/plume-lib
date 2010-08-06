@@ -110,6 +110,9 @@ import java.lang.annotation.*;
  *       even when passing the group's name
  *       explicitly as a parameter to {@link #usage(String...)}.
  * </ul>
+ * 
+ * If an option group is not unpublicized but contains only unpublicized
+ * options, it will not be included in the default usage message. <p>
  *
  * <b>Option aliases</b> <p>
  * The @{@link Option} annotation has an optional parameter <code>aliases</code>,
@@ -418,7 +421,11 @@ public class Options {
       this.unpublicized = optionGroup.unpublicized();
     }
 
-    public boolean containsPublicizedOption() {
+    /**
+     * If false, this group of options does not contain any publicized options,
+     * so it will not be included in the default usage message.
+     */
+    boolean any_publicized() {
       for (OptionInfo oi : optionList)
         if (!oi.unpublicized)
           return true;
@@ -866,12 +873,15 @@ public class Options {
       for (String group_name : group_names) {
         if (!group_map.containsKey(group_name))
           throw new IllegalArgumentException("invalid option group: " + group_name);
+        OptionGroupInfo gi = group_map.get(group_name);
+        if (!include_unpublicized && !gi.any_publicized())
+          throw new IllegalArgumentException("group does not contain any publicized options: " + group_name);
         else
           groups.add(group_map.get(group_name));
       }
     } else { // return usage for all groups that are not unpublicized
       for (OptionGroupInfo gi : group_map.values()) {
-        if (gi.unpublicized && ! include_unpublicized)
+        if ((gi.unpublicized || !gi.any_publicized()) && !include_unpublicized)
           continue;
         groups.add(gi);
       }

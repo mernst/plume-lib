@@ -2685,6 +2685,29 @@ public final class TestPlume extends TestCase {
   }
 
   /**
+   * Test class for testing option groups
+   */
+  public static class TestOptionGroups3 {
+    @OptionGroup ("General options")
+    @Option (value="-h Display help message", aliases={"-help"})
+    public static boolean help = false;
+
+    @OptionGroup("Internal options")
+    @Unpublicized
+    @Option ("Set mu")
+    public static double mu = 4902.7;
+
+    @Unpublicized
+    @Option("Set pi")
+    public static double pi = 3.14;
+
+    @OptionGroup("Display options")
+    @Option(value="Use colors", aliases={"--colour"})
+    public static boolean color = false;
+  }
+
+
+  /**
    * Test option groups (Options)
    */
   public static void testOptionGroups() throws ArgException {
@@ -2719,6 +2742,13 @@ public final class TestPlume extends TestCase {
     options.parse(new String[] {"--colour", "--pi", "3.15"});
     assert TestOptionGroups2.color;
     assert TestOptionGroups2.pi == 3.15;
+
+    // Test that an option group that contains only unpublicized options is not
+    // included in the usage message.
+    Options options2 = new Options("test", TestOptionGroups3.class);
+    assert options.usage().indexOf("Internal options") == -1;
+    // ...unless include_unpublicized is true.
+    assert options.usage(true).indexOf("Internal options") > -1;
   }
 
   public static void testSplitLines() {
