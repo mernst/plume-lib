@@ -740,49 +740,6 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly.  This method
-   * splits the argument string into command-line arguments, respecting
-   * single and double quotes, then calls {@link #parse(String[])}.
-   * @return all non-option arguments
-   * @throws ArgException if the command line contains misused options or an unknown option.
-   * @see #parse(String[])
-   */
-  public String[] parse (String args) throws ArgException {
-
-    // Split the args string on whitespace boundaries accounting for quoted
-    // strings.
-    args = args.trim();
-    List<String> arg_list = new ArrayList<String>();
-    String arg = "";
-    char active_quote = 0;
-    for (int ii = 0; ii < args.length(); ii++) {
-      char ch = args.charAt (ii);
-      if ((ch == '\'') || (ch == '"')) {
-        arg+= ch;
-        ii++;
-        while ((ii < args.length()) && (args.charAt(ii) != ch))
-          arg += args.charAt(ii++);
-        arg += ch;
-      } else if (Character.isWhitespace (ch)) {
-        // System.out.printf ("adding argument '%s'%n", arg);
-        arg_list.add (arg);
-        arg = "";
-        while ((ii < args.length()) && Character.isWhitespace(args.charAt(ii)))
-          ii++;
-        if (ii < args.length())
-          ii--;
-      } else { // must be part of current argument
-        arg += ch;
-      }
-    }
-    if (!arg.equals (""))
-      arg_list.add (arg);
-
-    String[] argsArray = arg_list.toArray (new String[arg_list.size()]);
-    return parse (argsArray);
-  }
-
-  /**
    * Parses a command line and sets the options accordingly.  If an error
    * occurs, prints the usage message and terminates the program.  The program is
    * terminated rather than throwing an error to create cleaner output.
@@ -806,48 +763,6 @@ public class Options {
       // throw new Error ("usage error: ", ae);
     }
     return (non_options);
-  }
-
-  /**
-   * Parses a command line and sets the options accordingly.  If an error
-   * occurs, prints the usage message and terminates the program.  The program is
-   * terminated rather than throwing an error to create cleaner output.
-   * <p>
-   * This method splits the argument string into command-line arguments,
-   * respecting single and double quotes, then calls
-   * {@link #parse_or_usage(String[])}.
-   * @return all non-option arguments
-   * @see #parse_or_usage(String[])
-   */
-  public String[] parse_or_usage (String args) {
-
-    String non_options[] = null;
-
-    try {
-      non_options = parse (args);
-    } catch (ArgException ae) {
-      String message = ae.getMessage();
-      if (message != null) {
-        print_usage (message);
-      } else {
-        print_usage ();
-      }
-      System.exit (-1);
-      // throw new Error ("usage error: ", ae);
-    }
-    return (non_options);
-  }
-
-  /** @deprecated Use {@link #parse_or_usage(String[])}. */
-  @Deprecated
-  public String[] parse_and_usage (String[] args) {
-    return parse_or_usage(args);
-  }
-
-  /** @deprecated Use {@link #parse_or_usage(String)}. */
-  @Deprecated
-  public String[] parse_and_usage (String args) {
-    return parse_or_usage(args);
   }
 
 
