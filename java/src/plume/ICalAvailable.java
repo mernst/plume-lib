@@ -45,7 +45,7 @@ import java.util.HashMap;
  *  Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
  *   <li><b>--timezone1=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
  *  Available times are printed in this time zone.  It defaults to the
- *  system time zone. [default America/Los_Angeles]</li>
+ *  system time zone. [default system depdendent]</li>
  *   <li><b>--timezone2=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
  *  If set, then free times are printed in two time zones. [no default]</li>
  *   <li><b>--debug=</b><i>boolean</i>. enable debugging output [default false]</li>
@@ -88,7 +88,7 @@ public class ICalAvailable {
    * system time zone.
    **/
   // don't need "e.g.: America/New_York" in message:  the default is an example
-  @Option("<timezone> time zone, e.g.: America/New_York")
+  @Option(value="<timezone> time zone, e.g.: America/New_York", docdefault="system depdendent")
   public static String timezone1 = TimeZone.getDefault().getID();
   static TimeZone tz1;
   // If I'm outputting in a different timezone, then my notion of a "day"
