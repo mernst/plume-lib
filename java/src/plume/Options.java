@@ -248,6 +248,9 @@ public class Options {
     /** Default value of the option as a string **/
     /*@Nullable*/ String default_str = null;
 
+    /** Default value string to use when generating documentation **/
+    /*@Nullable*/ String docdefault_str = null;
+
     /** If the option is a list, this references that list. **/
     /*@LazyNonNull*/ List<Object> list = null;
 
@@ -276,6 +279,9 @@ public class Options {
       this.base_type = field.getType();
       this.unpublicized = unpublicized;
       this.aliases = option.aliases();
+
+      if (!option.docdefault().isEmpty())
+        this.docdefault_str = option.docdefault();
 
       // The long name is the name of the field
       long_name = field.getName();
