@@ -54,24 +54,25 @@ import java.net.URL;
  * <pre>java plume.MultiVersionControl status --search=true</pre>
  *
  * <b>Command-line arguments</b><p>
-
  * The command-line options are as follows:
-<!-- start options doc (DO NOT EDIT BY HAND) -->
-<pre>
-  --checkouts=<em>string</em>        - File with list of checkouts.  Set it to /dev/null to suppress reading. [default /home/mernst/.mvc-checkouts]
-  --dir=<em>string[]</em>            - Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]
-  --ignore-dir=<em>string[]</em>     - Directory under which to NOT search for checkouts; may be supplied multiple times [default []]
-  --search=<em>boolean</em>          - Search for all checkouts, not just those listed in a file [default false]
-  --show=<em>boolean</em>            - Display commands as they are executed [default false]
-  --print-directory=<em>boolean</em> - Print the directory before executing commands [default false]
-  --dry-run=<em>boolean</em>         - Do not execute commands; just print them.  Implies --show --redo-existing [default false]
-  --redo-existing=<em>boolean</em>   - Redo existing checkouts; relevant only to checkout command [default false]
-  --timeout=<em>int</em>             - Timeout for each command, in seconds [default 600]
-  -q --quiet=<em>boolean</em>        - Run quietly (e.g., no output about missing directories) [default true]
-  --debug=<em>boolean</em>           - Print debugging output [default false]
-  --debug-replacers=<em>boolean</em> - Debug 'replacers' that filter command output [default false]
-</pre>
-<!-- end options doc -->
+ * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ * <ul>
+ *   <li><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading. [default /home/david/.mvc-checkouts]</li>
+ *   <li><b>--dir=</b><i>string[]</i>. Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]</li>
+ *   <li><b>--ignore-dir=</b><i>string[]</i>. Directory under which to NOT search for checkouts; may be supplied multiple times [default []]</li>
+ *   <li><b>--search=</b><i>boolean</i>. Search for all checkouts, not just those listed in a file [default false]</li>
+ *   <li><b>--show=</b><i>boolean</i>. Display commands as they are executed [default false]</li>
+ *   <li><b>--print-directory=</b><i>boolean</i>. Print the directory before executing commands [default false]</li>
+ *   <li><b>--dry-run=</b><i>boolean</i>. Do not execute commands; just print them.  Implies --show --redo-existing [default false]</li>
+ *   <li><b>--redo-existing=</b><i>boolean</i>. Default is for checkout command to skip existing directories. [default false]</li>
+ *   <li><b>--timeout=</b><i>int</i>. Terminating the process can leave the repository in a bad state, so
+ *  set this rather high for safety.  Also, the timeout needs to account
+ *  for the time to run hooks (that might recompile or run tests). [default 600]</li>
+ *   <li><b>-q</b> <b>--quiet=</b><i>boolean</i>. Run quietly (e.g., no output about missing directories) [default true]</li>
+ *   <li><b>--debug=</b><i>boolean</i>. Print debugging output [default false]</li>
+ *   <li><b>--debug-replacers=</b><i>boolean</i>. Debug 'replacers' that filter command output [default false]</li>
+ * </ul>
+ * <!-- end options doc -->
  *
  * <b>File format for <tt>.mvc-checkouts</tt> file</b><p>
  *
