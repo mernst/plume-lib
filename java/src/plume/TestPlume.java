@@ -2591,8 +2591,6 @@ public final class TestPlume extends TestCase {
     // Test split_lists
     t.ld.clear();
     Options.split_lists = true;
-    // FIXME
-    //args = options.parse ("--ld \"42.1 9.3 10.5\" --ld 2.7");
     args = options.parse (new String[] {"--ld", "42.1 9.3 10.5", "--ld", "2.7"});
     assert args.length == 0;
     assert t.ld.size() == 4;
@@ -2630,18 +2628,18 @@ public final class TestPlume extends TestCase {
     TestOptionsAliases t = new TestOptionsAliases();
     Options options = new Options("test", t);
 
-    options.parse("-d Monday -temp -12.3");
+    options.parse(new String[] {"-d", "Monday", "-temp", "-12.3"});
     assert t.day.equals("Monday");
     assert t.temperature == -12.3;
     assert !t.printVersion;
 
-    options.parse("-t 21.7 -version");
+    options.parse(new String[] {"-t", "21.7", "-version"});
     assert t.day.equals("Monday");
     assert t.temperature == 21.7;
     assert t.printVersion;
 
     t.printVersion = false;
-    options.parse("--version -temp=-60.1 --day Tuesday");
+    options.parse(new String[] {"--version", "-temp=-60.1", "--day", "Tuesday"});
     assert t.day.equals("Tuesday");
     assert t.temperature == -60.1;
     assert t.printVersion;
@@ -2687,6 +2685,29 @@ public final class TestPlume extends TestCase {
   }
 
   /**
+   * Test class for testing option groups
+   */
+  public static class TestOptionGroups3 {
+    @OptionGroup ("General options")
+    @Option (value="-h Display help message", aliases={"-help"})
+    public static boolean help = false;
+
+    @OptionGroup("Internal options")
+    @Unpublicized
+    @Option ("Set mu")
+    public static double mu = 4902.7;
+
+    @Unpublicized
+    @Option("Set pi")
+    public static double pi = 3.14;
+
+    @OptionGroup("Display options")
+    @Option(value="Use colors", aliases={"--colour"})
+    public static boolean color = false;
+  }
+
+
+  /**
    * Test option groups (Options)
    */
   public static void testOptionGroups() throws ArgException {
@@ -2718,9 +2739,16 @@ public final class TestPlume extends TestCase {
     // because it is marked with @Unpublicized.
     assert options.usage("Internal options").indexOf("Set pi") == -1;
 
-    options.parse("--colour --pi 3.15");
+    options.parse(new String[] {"--colour", "--pi", "3.15"});
     assert TestOptionGroups2.color;
     assert TestOptionGroups2.pi == 3.15;
+
+    // Test that an option group that contains only unpublicized options is not
+    // included in the usage message.
+    Options options2 = new Options("test", TestOptionGroups3.class);
+    assert options.usage().indexOf("Internal options") == -1;
+    // ...unless include_unpublicized is true.
+    assert options.usage(true).indexOf("Internal options") > -1;
   }
 
   public static void testSplitLines() {
