@@ -2632,8 +2632,18 @@ public final class TestPlume extends TestCase {
     assert t.day.equals("Monday");
     assert t.temperature == -12.3;
     assert !t.printVersion;
+ 
+    options.parse("-d Monday -temp -12.3");
+    assert t.day.equals("Monday");
+    assert t.temperature == -12.3;
+    assert !t.printVersion;
 
     options.parse(new String[] {"-t", "21.7", "-version"});
+    assert t.day.equals("Monday");
+    assert t.temperature == 21.7;
+    assert t.printVersion;
+ 
+    options.parse("-t 21.7 -version");
     assert t.day.equals("Monday");
     assert t.temperature == 21.7;
     assert t.printVersion;
@@ -2643,7 +2653,13 @@ public final class TestPlume extends TestCase {
     assert t.day.equals("Tuesday");
     assert t.temperature == -60.1;
     assert t.printVersion;
-  }
+
+    t.printVersion = false;
+    options.parse("--version -temp=-60.1 --day Tuesday");
+    assert t.day.equals("Tuesday");
+    assert t.temperature == -60.1;
+    assert t.printVersion;
+}
 
   /**
    * Test class for testing option groups
@@ -2740,6 +2756,10 @@ public final class TestPlume extends TestCase {
     assert options.usage("Internal options").indexOf("Set pi") == -1;
 
     options.parse(new String[] {"--colour", "--pi", "3.15"});
+    assert TestOptionGroups2.color;
+    assert TestOptionGroups2.pi == 3.15;
+
+    options.parse("--colour --pi 3.15");
     assert TestOptionGroups2.color;
     assert TestOptionGroups2.pi == 3.15;
 
