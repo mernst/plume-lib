@@ -405,7 +405,7 @@ public class OptionsDoclet {
     } else {
       for (Options.OptionGroupInfo gi : options.getOptionGroups()) {
         // Do not include groups without publicized options in output
-        if (!gi.containsPublicizedOption())
+        if (!gi.any_publicized())
           continue;
 
         b.append("  <li>" + gi.name);

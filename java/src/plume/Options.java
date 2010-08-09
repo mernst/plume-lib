@@ -110,6 +110,9 @@ import java.lang.annotation.*;
  *       even when passing the group's name
  *       explicitly as a parameter to {@link #usage(String...)}.
  * </ul>
+ * 
+ * If an option group is not unpublicized but contains only unpublicized
+ * options, it will not be included in the default usage message. <p>
  *
  * <b>Option aliases</b> <p>
  * The @{@link Option} annotation has an optional parameter <code>aliases</code>,
@@ -418,7 +421,11 @@ public class Options {
       this.unpublicized = optionGroup.unpublicized();
     }
 
-    public boolean containsPublicizedOption() {
+    /**
+     * If false, this group of options does not contain any publicized options,
+     * so it will not be included in the default usage message.
+     */
+    boolean any_publicized() {
       for (OptionInfo oi : optionList)
         if (!oi.unpublicized)
           return true;
@@ -740,49 +747,6 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly.  This method
-   * splits the argument string into command-line arguments, respecting
-   * single and double quotes, then calls {@link #parse(String[])}.
-   * @return all non-option arguments
-   * @throws ArgException if the command line contains misused options or an unknown option.
-   * @see #parse(String[])
-   */
-  public String[] parse (String args) throws ArgException {
-
-    // Split the args string on whitespace boundaries accounting for quoted
-    // strings.
-    args = args.trim();
-    List<String> arg_list = new ArrayList<String>();
-    String arg = "";
-    char active_quote = 0;
-    for (int ii = 0; ii < args.length(); ii++) {
-      char ch = args.charAt (ii);
-      if ((ch == '\'') || (ch == '"')) {
-        arg+= ch;
-        ii++;
-        while ((ii < args.length()) && (args.charAt(ii) != ch))
-          arg += args.charAt(ii++);
-        arg += ch;
-      } else if (Character.isWhitespace (ch)) {
-        // System.out.printf ("adding argument '%s'%n", arg);
-        arg_list.add (arg);
-        arg = "";
-        while ((ii < args.length()) && Character.isWhitespace(args.charAt(ii)))
-          ii++;
-        if (ii < args.length())
-          ii--;
-      } else { // must be part of current argument
-        arg += ch;
-      }
-    }
-    if (!arg.equals (""))
-      arg_list.add (arg);
-
-    String[] argsArray = arg_list.toArray (new String[arg_list.size()]);
-    return parse (argsArray);
-  }
-
-  /**
    * Parses a command line and sets the options accordingly.  If an error
    * occurs, prints the usage message and terminates the program.  The program is
    * terminated rather than throwing an error to create cleaner output.
@@ -806,48 +770,6 @@ public class Options {
       // throw new Error ("usage error: ", ae);
     }
     return (non_options);
-  }
-
-  /**
-   * Parses a command line and sets the options accordingly.  If an error
-   * occurs, prints the usage message and terminates the program.  The program is
-   * terminated rather than throwing an error to create cleaner output.
-   * <p>
-   * This method splits the argument string into command-line arguments,
-   * respecting single and double quotes, then calls
-   * {@link #parse_or_usage(String[])}.
-   * @return all non-option arguments
-   * @see #parse_or_usage(String[])
-   */
-  public String[] parse_or_usage (String args) {
-
-    String non_options[] = null;
-
-    try {
-      non_options = parse (args);
-    } catch (ArgException ae) {
-      String message = ae.getMessage();
-      if (message != null) {
-        print_usage (message);
-      } else {
-        print_usage ();
-      }
-      System.exit (-1);
-      // throw new Error ("usage error: ", ae);
-    }
-    return (non_options);
-  }
-
-  /** @deprecated Use {@link #parse_or_usage(String[])}. */
-  @Deprecated
-  public String[] parse_and_usage (String[] args) {
-    return parse_or_usage(args);
-  }
-
-  /** @deprecated Use {@link #parse_or_usage(String)}. */
-  @Deprecated
-  public String[] parse_and_usage (String args) {
-    return parse_or_usage(args);
   }
 
 
@@ -951,12 +873,15 @@ public class Options {
       for (String group_name : group_names) {
         if (!group_map.containsKey(group_name))
           throw new IllegalArgumentException("invalid option group: " + group_name);
+        OptionGroupInfo gi = group_map.get(group_name);
+        if (!include_unpublicized && !gi.any_publicized())
+          throw new IllegalArgumentException("group does not contain any publicized options: " + group_name);
         else
           groups.add(group_map.get(group_name));
       }
     } else { // return usage for all groups that are not unpublicized
       for (OptionGroupInfo gi : group_map.values()) {
-        if (gi.unpublicized && ! include_unpublicized)
+        if ((gi.unpublicized || !gi.any_publicized()) && !include_unpublicized)
           continue;
         groups.add(gi);
       }
