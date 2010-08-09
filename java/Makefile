@@ -85,9 +85,10 @@ jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
 export jsr308_imports
 
 default: jar
-compile: all
+all: compile javadoc jar
 
-all: compile_without_testing test
+# Must not depend on javadoc, since javadoc depends on it
+compile: compile_without_testing test
 
 compile_without_testing:  .class-files-timestamp
 
@@ -133,6 +134,7 @@ run-chicory-arrays:
 	set JAVA_COMPILER=NONE; ${JAVA} -ea daikon.Chicory --ppt-select-pattern=ArraysMDE --output-dir=/tmp plume.TestPlume --shortrun
 
 
+api: javadoc
 doc: javadoc
 javadoc: .javadoc-timestamp
 
@@ -310,7 +312,7 @@ check-interning:
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc task-manager install-task-manager install-lookup optionsdoc
+.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc
 
 
 # Existence of this rule means that a target is deleted if has just changed
