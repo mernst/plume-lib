@@ -104,6 +104,9 @@ compile_without_testing:  .class-files-timestamp
 clean:
 	rm -f src/plume/*.class
 	rm -f .class-files-timestamp
+	rm -rf api
+	rm -f .javadoc-timestamp
+	rm -f .test-timestamp
 
 very_clean: clean
 	rm -f ${AUTO_GENERATED_FILES}
@@ -134,10 +137,12 @@ doc: javadoc
 javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
+	touch ical4j.properties
 	$(MAKE) optionsdoc
 	mkdir -p api
 	${JAVADOC} -d api ${JAVA_FILES}
 	# jdk-add-munged-anchor-names api/plume/*.html
+	\rm ical4j.properties
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
 
