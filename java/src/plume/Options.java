@@ -756,6 +756,12 @@ public class Options {
    * Parses a command line and sets the options accordingly.  This method
    * splits the argument string into command-line arguments, respecting
    * single and double quotes, then calls {@link #parse(String[])}.
+   * <p>
+   * {@link #parse(String[])} is usually a better method to call.  This one
+   * is appropriate when the <tt>String[]</tt> version of the arguments is
+   * not available &mdash; for example, for the <tt>premain</tt> method of
+   * a Java agent.
+   *
    * @return all non-option arguments
    * @throws ArgException if the command line contains misused options or an unknown option.
    * @see #parse(String[])
@@ -829,6 +835,12 @@ public class Options {
    * This method splits the argument string into command-line arguments,
    * respecting single and double quotes, then calls
    * {@link #parse_or_usage(String[])}.
+   * <p>
+   * {@link #parse(String[])} is usually a better method to call.  This one
+   * is appropriate when the <tt>String[]</tt> version of the arguments is
+   * not available &mdash; for example, for the <tt>premain</tt> method of
+   * a Java agent.
+   *
    * @return all non-option arguments
    * @see #parse_or_usage(String[])
    */
