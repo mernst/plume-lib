@@ -2591,8 +2591,6 @@ public final class TestPlume extends TestCase {
     // Test split_lists
     t.ld.clear();
     Options.split_lists = true;
-    // FIXME
-    //args = options.parse ("--ld \"42.1 9.3 10.5\" --ld 2.7");
     args = options.parse (new String[] {"--ld", "42.1 9.3 10.5", "--ld", "2.7"});
     assert args.length == 0;
     assert t.ld.size() == 4;
@@ -2630,14 +2628,30 @@ public final class TestPlume extends TestCase {
     TestOptionsAliases t = new TestOptionsAliases();
     Options options = new Options("test", t);
 
+    options.parse(new String[] {"-d", "Monday", "-temp", "-12.3"});
+    assert t.day.equals("Monday");
+    assert t.temperature == -12.3;
+    assert !t.printVersion;
+ 
     options.parse("-d Monday -temp -12.3");
     assert t.day.equals("Monday");
     assert t.temperature == -12.3;
     assert !t.printVersion;
 
+    options.parse(new String[] {"-t", "21.7", "-version"});
+    assert t.day.equals("Monday");
+    assert t.temperature == 21.7;
+    assert t.printVersion;
+ 
     options.parse("-t 21.7 -version");
     assert t.day.equals("Monday");
     assert t.temperature == 21.7;
+    assert t.printVersion;
+
+    t.printVersion = false;
+    options.parse(new String[] {"--version", "-temp=-60.1", "--day", "Tuesday"});
+    assert t.day.equals("Tuesday");
+    assert t.temperature == -60.1;
     assert t.printVersion;
 
     t.printVersion = false;
@@ -2645,7 +2659,7 @@ public final class TestPlume extends TestCase {
     assert t.day.equals("Tuesday");
     assert t.temperature == -60.1;
     assert t.printVersion;
-  }
+}
 
   /**
    * Test class for testing option groups
@@ -2740,6 +2754,10 @@ public final class TestPlume extends TestCase {
     // "Set pi" should not appear in the usage message for "Internal options"
     // because it is marked with @Unpublicized.
     assert options.usage("Internal options").indexOf("Set pi") == -1;
+
+    options.parse(new String[] {"--colour", "--pi", "3.15"});
+    assert TestOptionGroups2.color;
+    assert TestOptionGroups2.pi == 3.15;
 
     options.parse("--colour --pi 3.15");
     assert TestOptionGroups2.color;
