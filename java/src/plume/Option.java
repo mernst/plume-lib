@@ -28,6 +28,12 @@ import java.lang.annotation.*;
  * </ul>
  * <p>
  *
+ * For information about the <code>aliases</code> parameter, see the section on
+ * Option aliases in {@link plume.Options}. <p>
+ *
+ * For information about the <code>docdefault</code> parameter, see the section
+ * on default values in {@link plume.OptionsDoclet}. <p>
+ *
  * The command-line options are processed by the {@link plume.Options} class.
  * For example usage, see the documentation for {@link plume.Options}.
  * @see plume.Options
@@ -40,4 +46,5 @@ import java.lang.annotation.*;
 public @interface Option {
   String value();
   String[] aliases() default {};
+  String docdefault() default "";
 }
