@@ -147,7 +147,9 @@ javadoc-publish: javadoc
 	chgrp -R types_www /cse/www2/types/plume-lib/
 
 optionsdoc: compile
-	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+#TODO: temporarily use -verbose for debugging
+#	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	javadoc -verbose -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 #TODO: currently crashing
 #	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
