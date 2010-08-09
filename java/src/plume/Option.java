@@ -19,10 +19,12 @@ import java.lang.annotation.*;
  *   <li>'&lt;type&gt;' is an optional description of the option type more
  *       specific than its Java type (e.g., '&lt;filename&gt;' if the variable's
  *       type is String).  The less-than and greater-than symbols are required.
- *   <li>'description' is a short (one-line) description of the
- *       option suitable for a usage message.  The field's Javadoc comment
- *       should contain a longer description appropriate for a manual or
- *       manpage.
+ *   <li>'description' is a short (one-line) description of the option
+ *       suitable for a usage message.  By convention. it does not end with
+ *       a period.  The field's Javadoc comment should contain a longer
+ *       description appropriate for a manual or manpage.  The Javadoc
+ *       comment often repeats something similar to the @Option
+ *       description.
  * </ul>
  * <p>
  *
