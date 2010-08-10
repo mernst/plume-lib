@@ -161,13 +161,13 @@ optionsdoc: compile
 ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
 	echo "Skipping optionsdoc target because of bugs in $(JAVADOC)"
 else
-	@echo "JAVADOC = $(JAVADOC)"
-	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
-	-$(JAVADOC) -version 2>&1
-#TODO: temporarily use -verbose for debugging
-#	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
-	$(JAVADOC) -verbose -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+#	@echo "JAVADOC = $(JAVADOC)"
+#	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
+#Can also use -verbose for debugging
+	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	@touch ical4j.properties
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	@\rm -f ical4j.properties
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 endif
