@@ -141,12 +141,12 @@ doc: javadoc
 javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
-	touch ical4j.properties
 	$(MAKE) optionsdoc
 	mkdir -p api
+	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
+	\rm -f ical4j.properties
 	# jdk-add-munged-anchor-names api/plume/*.html
-	\rm ical4j.properties
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
 
