@@ -107,8 +107,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * field:
  * <pre>
  * &#64;Option(value="&lt;timezone&gt; Set the time zone")
- * public static String timezone = TimeZone.getDefault().getID();
- * </pre>
+ * public static String timezone = TimeZone.getDefault().getID();</pre>
  * The default value for <code>timezone</code> depends on the system's timezone
  * setting.  HTML documentation of this option generated in Chicago would not
  * apply to a user in New York.  To work around this problem, the
@@ -119,8 +118,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  *  * &lt;other stuff...&gt;  This option defaults to the system timezone.
  *  *&#47;
  * &#64;Option(value="&lt;timezone&gt; Set the timezone", noDocDefault=true)
- * public static String timezone = TimeZone.getDefault().getID();
- * </pre>
+ * public static String timezone = TimeZone.getDefault().getID();</pre>
  * This keeps the documentation system-agnostic. <p>
  *
  * <b>Caveats</b> <p>

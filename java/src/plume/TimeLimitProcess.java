@@ -12,8 +12,7 @@ import org.apache.commons.io.IOUtils;
  * Typical use:
  * <pre>
  *   ProcessBuilder pb = ...;
- *   TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
- * </pre>
+ *   TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);</pre>
  *
  * <b>Note</b>: If a Java process is destroyed (e.g., because it times
  * out), then its output is unreadable:  Java code trying to read its
