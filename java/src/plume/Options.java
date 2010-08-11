@@ -378,6 +378,8 @@ public class Options {
       if (short_name != null)
         name = String.format ("-%s %s", short_name, name);
       name += String.format ("=<%s>", type_name);
+      if (list != null)
+        name += " [+]";
       return (name);
     }
 
@@ -486,6 +488,18 @@ public class Options {
   private boolean use_single_dash = false;
 
   /**
+   * String describing "[+]" (copied from Mercurial).
+   */
+  private static String list_help = "[+] marked option can be specified multiple times";
+
+  /**
+   * Whether printing the usage message should print list_help.  The default is
+   * to print list_help if the usage message contains an option that accepts a
+   * list as a parameter.
+   */
+  private boolean print_list_help = false;
+
+  /**
    * When true, an argument to a option of list type is split, on
    * whitespace, into multiple arguments each of which is added to the
    * list.  When false, each argument to an option of list type is treated
@@ -567,6 +581,11 @@ public class Options {
 
         OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
         options.add(oi);
+
+        // FIXME: should also check that the option does not belong to an
+        // unpublicized option group
+        if (oi.list != null && !oi.unpublicized)
+          print_list_help = true;
 
         OptionGroup optionGroup = safeGetAnnotation(f, OptionGroup.class);
 
@@ -889,6 +908,10 @@ public class Options {
       ps.printf ("Usage: %s%n", usage_synopsis);
     }
     ps.println(usage());
+    if (print_list_help) {
+      ps.println();
+      ps.println(list_help);
+    }
   }
 
   /**
