@@ -70,7 +70,7 @@
   (interactive "sSearch via Google: ")
   (setq searchtype (or searchtype "search"))
   (require 'browse-url)
-  (netscape-browse-url
+  (browse-url
    (concat "http://www.google.com/" searchtype "?q="
 	   (altavista-quote phrase)
 	   "&lr=lang_en&num=100"
