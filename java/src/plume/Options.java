@@ -333,8 +333,6 @@ public class Options {
         type_name = pr.type_name;
       } else {
         type_name = type_short_name (base_type);
-        if (list != null)
-          type_name += "[]";
       }
       description = pr.description;
 
