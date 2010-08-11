@@ -1,6 +1,10 @@
 This package, plume, is intended to supplement java.util.
 It provides general funcionality, not specific to any particular client.
 
+For documentation, please see
+  http://plume-lib.googlecode.com/hg/README.html#Java_libraries
+or file ../README.html .
+
 
 This package includes modified versions of code from the Java 2 SDK, such
 as those for hashing.  (I've renamed classes so they won't be used
