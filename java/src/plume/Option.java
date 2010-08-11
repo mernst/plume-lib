@@ -46,5 +46,5 @@ import java.lang.annotation.*;
 public @interface Option {
   String value();
   String[] aliases() default {};
-  String docdefault() default "";
+  boolean noDocDefault() default false;
 }
