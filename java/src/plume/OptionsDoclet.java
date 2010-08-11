@@ -47,7 +47,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * option can not be used at the same time as the <code>-outfile</code> option.
  *
  * <li> <b>-format</b> <i>format</i> This option sets the output format of this
- * doclet.  Currently, the following value(s) for <i>format</i> are supported:
+ * doclet.  Currently, the following values for <i>format</i> are supported:
  * <ul>
  *   <li> <b>javadoc</b> When this format is specified, the output of this
  *   doclet is formatted as a Javadoc comment.  This is useful for including
@@ -57,12 +57,14 @@ import org.apache.commons.lang.StringEscapeUtils;
  *   <pre>* &lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
  *   and
  *   <pre>* &lt;!-- end options doc --&gt;</pre>
- *   using the same indentation.  For the most part, the output with this format
- *   is the same as the default HTML output with the string "* " prepended to
- *   every line.
+ *   using the same indentation.  Inline <code>@link</code> and
+ *   <code>@see</code> tags in the Javadoc input are left untouched.
+ *
+ *   <li> <b>html</b> This format outputs HTML for general purpose use, meaning
+ *   inline <code>@link</code> and <code>@see</code> tags in the Javadoc input
+ *   are suitably replaced.  This is the default output format and does not
+ *   need to be specified explicitly.  
  * </ul>
- * The default output format is HTML; this is the format used when
- * <code>-format</code> is not specified.
  *
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
  * class documentation of the first class specified on the command-line.
@@ -312,7 +314,7 @@ public class OptionsDoclet {
           reporter.printError("-format option specified twice");
           return false;
         }
-        if (!os[1].equals("javadoc")) {
+        if (!os[1].equals("javadoc") && !os[1].equals("html")) {
           reporter.printError("unrecognized output format: " + os[1]);
           return false;
         }
