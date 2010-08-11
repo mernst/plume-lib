@@ -57,7 +57,7 @@ import java.net.URL;
  * The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
- *   <li><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading. [default /home/david/.mvc-checkouts]</li>
+ *   <li><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading. [default /homes/gws/mernst/.mvc-checkouts]</li>
  *   <li><b>--dir=</b><i>string[]</i>. Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]</li>
  *   <li><b>--ignore-dir=</b><i>string[]</i>. Directory under which to NOT search for checkouts; may be supplied multiple times [default []]</li>
  *   <li><b>--search=</b><i>boolean</i>. Search for all checkouts, not just those listed in a file [default false]</li>
