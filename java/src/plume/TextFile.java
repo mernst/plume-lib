@@ -33,8 +33,7 @@ import java.util.NoSuchElementException;
  *   TextFile textfile = new TextFile(filename, "UTF-8");
  *   int lineNumber = 0;
  *   for (String line : textfile)
- *       System.out.printf("%6d: %s%n", ++lineNumber, line);
- * </pre>
+ *       System.out.printf("%6d: %s%n", ++lineNumber, line);</pre>
  * The iterator makes no attempt to detect
  * concurrent modifications to the underlying file. If you want to do that
  * yourself, take a look at java.nio.channels.FileLock.
