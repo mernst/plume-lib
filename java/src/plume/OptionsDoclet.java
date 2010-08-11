@@ -126,7 +126,12 @@ import org.apache.commons.lang.StringEscapeUtils;
  * <b>Caveats</b> <p>
  * The generated HTML documentation includes unpublicized option groups but not
  * <code>@Unpublicized</code> options.  Option groups which contain only
- * <code>@Unpublicized</code> options are not included in the output at all.
+ * <code>@Unpublicized</code> options are not included in the output at all. <p>
+ *
+ * <b>Troubleshooting</b> <p>
+ * If you get an error such as <tt>ARGH! @Option</tt>, then you are using a
+ * buggy version of gjdoc, the GNU Classpath implementation of Javadoc.
+ * To avoid the problem, upgrade or use a different Javadoc implementation. <p>
  *
  * @see plume.Option
  * @see plume.Options
