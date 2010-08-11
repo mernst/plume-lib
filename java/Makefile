@@ -68,6 +68,8 @@ JAVADOC ?= javadoc
 
 JAR ?= jar
 
+JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
+
 # Leading "./" is for consistency with output of "find", so that names are
 # identical and "sort" can remove duplicates.
 AUTO_GENERATED_FILES := \
@@ -85,9 +87,10 @@ jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
 export jsr308_imports
 
 default: jar
-compile: all
+all: compile javadoc jar
 
-all: compile_without_testing test
+# Must not depend on javadoc, since javadoc depends on it
+compile: compile_without_testing test
 
 compile_without_testing:  .class-files-timestamp
 
@@ -133,16 +136,17 @@ run-chicory-arrays:
 	set JAVA_COMPILER=NONE; ${JAVA} -ea daikon.Chicory --ppt-select-pattern=ArraysMDE --output-dir=/tmp plume.TestPlume --shortrun
 
 
+api: javadoc
 doc: javadoc
 javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
-	touch ical4j.properties
 	$(MAKE) optionsdoc
 	mkdir -p api
+	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
+	\rm -f ical4j.properties
 	# jdk-add-munged-anchor-names api/plume/*.html
-	\rm ical4j.properties
 	touch .javadoc-timestamp
 	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
 
@@ -152,12 +156,21 @@ javadoc-publish: javadoc
 	chgrp -R types_www /cse/www2/types/plume-lib/
 
 optionsdoc: compile
-#TODO: temporarily use -verbose for debugging
-#	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
-	javadoc -verbose -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
-	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
-	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	javadoc -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+# This should presumably test for other buggy versions of gjdoc as well.
+# The symptom is output such as:  ARGH! @Option
+ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
+	echo "Skipping optionsdoc target because of bugs in $(JAVADOC)"
+else
+#	@echo "JAVADOC = $(JAVADOC)"
+#	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
+#Can also use -verbose for debugging
+	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	@touch ical4j.properties
+	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	@\rm -f ical4j.properties
+	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+endif
 
 ${TOOLS_JAR}:
 ifneq (,$(findstring darwin,$(OSTYPE)))
@@ -310,7 +323,7 @@ check-interning:
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc task-manager install-task-manager install-lookup optionsdoc
+.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc
 
 
 # Existence of this rule means that a target is deleted if has just changed
