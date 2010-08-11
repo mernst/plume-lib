@@ -320,6 +320,8 @@ public class MultiVersionControl {
     parseArgs(args);
   }
 
+  // Receiver is actually raw, because "action" field is not set.  Why
+  // doesn't the nullness checker complain about the lack of that annotation?
   public void parseArgs(String[] args) {
     Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse_or_usage (args);
