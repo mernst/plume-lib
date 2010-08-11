@@ -67,8 +67,9 @@ import org.apache.commons.lang.StringEscapeUtils;
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
  * class documentation of the first class specified on the command-line.
  *
- * <li> <b>-singledash</b> Use single dashes for long options.  See {@link
- * plume.Options#use_single_dash(boolean)}.
+ * <li> <b>-singledash</b> When specified, <code>use_single_dash(true)</code> is
+ * called on the underlying instance of Options used to generate documentation.
+ * See {@link plume.Options#use_single_dash(boolean)}.
  * </ul>
  * <p>
  *
