@@ -154,6 +154,8 @@ public class OptionsDoclet {
     "-singledash            Use single dashes for long options (see plume.Options)\n" +
     "See the OptionsDoclet documentation for more details.";
 
+  private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times"; 
+
 
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
   private String endDelim = "<!-- end options doc -->"; 
@@ -491,6 +493,13 @@ public class OptionsDoclet {
     }
     b.append("</ul>");
 
+    for (Options.OptionInfo oi : options.getOptions()) {
+      if (oi.list != null && !oi.unpublicized) {
+        b.append(list_help);
+        break;
+      }
+    }
+
     return b.toString();
   }
 
@@ -539,7 +548,10 @@ public class OptionsDoclet {
     for (String a : oi.aliases)
       f.format("<b>%s</b> ", a);
     String prefix = getUseSingleDash() ? "-" : "--";
-    f.format("<b>%s%s=</b><i>%s</i>. ", prefix, oi.long_name, oi.type_name);
+    f.format("<b>%s%s=</b><i>%s</i>", prefix, oi.long_name, oi.type_name);
+    if (oi.list != null)
+      b.append(" <tt>[+]</tt>");
+    b.append(". ");
     String jdoc = oi.jdoc == null ? "" : oi.jdoc; // FIXME: suppress nullness warnings
     if (oi.no_doc_default) {
       f.format("%s", jdoc);

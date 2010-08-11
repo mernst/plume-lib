@@ -39,7 +39,7 @@ import java.util.HashMap;
  * <ul>
  *   <li><b>--date=</b><i>string</i>. first date to summarize [default today]</li>
  *   <li><b>--days=</b><i>int</i>. number of calendar days to summarize [default 8]</li>
- *   <li><b>--iCal-URL=</b><i>url</i>. For a Google calendar:  go to settings, then click on the green "ICAL"
+ *   <li><b>--iCal-URL=</b><i>url</i> <tt>[+]</tt>. For a Google calendar:  go to settings, then click on the green "ICAL"
  *  icon for the "private address". [default []]</li>
  *   <li><b>--business-hours=</b><i>string</i>. A list of time ranges, expressed as a String.
  *  Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
@@ -50,6 +50,7 @@ import java.util.HashMap;
  *  If set, then free times are printed in two time zones. [no default]</li>
  *   <li><b>--debug=</b><i>boolean</i>. enable debugging output [default false]</li>
  * </ul>
+ * <tt>[+]</tt> marked option can be specified multiple times
  * <!-- end options doc -->
  **/
 public class ICalAvailable {
