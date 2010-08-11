@@ -43,8 +43,7 @@ import java.lang.annotation.*;
  *      // class MyUtilityClass.
  *      // Returns the original command line, with all options removed.
  *      String[] file_args = options.parse_or_usage (args);
- *      ...
- * </pre>
+ *      ...</pre>
  *
  * The @{@link Option} annotation on a field specifies brief user documentation
  * and, optionally, a one-character short name that users may supply on the
@@ -126,8 +125,7 @@ import java.lang.annotation.*;
  * <pre>
  *     // The user may supply --help, -h, or -help, all of which mean the same thing and set this variable
  *     &#64;Option(value="-h Print a help message", aliases={"-help"})
- *     public static boolean help;
- * </pre>
+ *     public static boolean help;</pre>
  *
  * <b>Generating documentation for a manual or manpage</b> <p>
  * The class Javadoc for a class that has a main method should generally
@@ -169,8 +167,7 @@ import java.lang.annotation.*;
  *      Options options = new Options ("Test [options] files", new Test());
  *      String[] file_args = options.parse_or_usage (args);
  *    }
- *  }
- *</pre>
+ *  }</pre>
  *
  * Example clients of the Options library include {@link
  * plume.Lookup} and the <code>Main</code> class of
