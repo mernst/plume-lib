@@ -205,10 +205,10 @@ public class MultiVersionControl {
   @Option(value="File with list of checkouts.  Set it to /dev/null to suppress reading.", noDocDefault=true)
   public String checkouts = new File(userHome, ".mvc-checkouts").getPath();
 
-  @Option("Directory under which to search for checkouts; may be supplied multiple times; default=home dir")
+  @Option("Directory under which to search for checkouts; default=home dir")
   public List<String> dir = new ArrayList<String>();
 
-  @Option("Directory under which to NOT search for checkouts; may be supplied multiple times")
+  @Option("Directory under which to NOT search for checkouts")
   public List<String> ignore_dir = new ArrayList<String>();
   private List<File> ignoreDirs = new ArrayList<File>();
 
