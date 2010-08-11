@@ -242,30 +242,49 @@ plume.jar: .class-files-timestamp .test-timestamp .javadoc-timestamp lib lookup.
 	cd jar-contents; jar cf ../plume.jar *
 	rm -rf jar-contents
 
-#
-# Lookup targets
-#
+###
+### Lookup targets
+###
+
 lookup.html: src/plume/Lookup.java
 	${JAVADOC} -docletpath .. -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
 
-lookup.jar : plume.jar lookup.manifest
+LOOKUP_JAR_CLASSES = \
+	src/plume/Lookup.class \
+	src/plume/UtilMDE*.class src/plume/EntryReader*.class \
+	src/plume/Option*.class src/plume/Unpublicized.class src/plume/SimpleLog.class
+
+# So that lookup.jar is self-contained for execution on JDK 6 (without JDK
+# 7 annotation support), the files should have been compiled with a Java 6
+# compiler.  Here are two ways to do it.
+# Example 1:
+#	\rm -f .class-files-timestamp
+#	make JAVA_HOME=/usr/lib/jvm/java-6-openjdk JAVAC=/usr/bin/javac compile
+#	make lookup.jar
+# Example 2:
+#	\rm -f .class-files-timestamp
+#	make TOOLS_JAR=/usr/lib/jvm/java-6-openjdk/lib/tools.jar compile
+#	make lookup.jar
+lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	rm -rf jar-contents
 	mkdir jar-contents
-	(cd jar-contents; jar xf ../plume.jar)
-	rm -rf jar-contents/meta-inf jar-contents/META-INF
-	(cd jar-contents; $(JAR) cfm ../lookup.jar ../lookup.manifest `find * -type f | sort`)
+	mkdir jar-contents/plume
+	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
+	cp -p lookup.txt lookup.html jar-contents/plume
+	cd jar-contents; jar cfm ../lookup.jar ../lookup.manifest *
 	rm -rf jar-contents
 
 install-lookup: $(pag)/software/pkg/lookup.jar
 $(pag)/software/pkg/lookup.jar: lookup.jar
 	cp -p $< $>
 
-#
-# TaskManager targets
-#
+###
+### TaskManager targets
+###
+
 TASKMANAGER_JAVA_FILES := $(shell find . -name '*.java')
 task-manager : task_manager.jar
 task_manager.jar: plume.jar task_manager.manifest
