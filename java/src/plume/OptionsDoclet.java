@@ -555,12 +555,10 @@ public class OptionsDoclet {
       b.append(" <tt>[+]</tt>");
     b.append(". ");
     String jdoc = oi.jdoc == null ? "" : oi.jdoc; // FIXME: suppress nullness warnings
-    if (oi.no_doc_default) {
+    if (oi.no_doc_default || oi.default_str == null) {
       f.format("%s", jdoc);
     } else {
-      String default_str = "no default";
-      if (oi.default_str != null)
-        default_str = "default " + oi.default_str;
+      String default_str = "default " + oi.default_str;
       // The default string must be HTML escaped since it comes from a string
       // rather than a Javadoc comment.
       f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml(default_str));

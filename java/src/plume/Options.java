@@ -315,6 +315,8 @@ public class Options {
           }
           default_obj = new_list;
         }
+        if (((List<?>) default_obj).isEmpty())
+          default_str = null;
         @SuppressWarnings("unchecked")
         List<Object> default_obj_as_list = (List<Object>) default_obj;
         this.list = default_obj_as_list;
@@ -1031,10 +1033,10 @@ public class Options {
     for (OptionInfo oi : opt_list) {
       if (oi.unpublicized && ! include_unpublicized)
         continue;
-      String default_str = "[no default]";
+      String default_str = "";
       if (oi.default_str != null)
-        default_str = String.format("[default %s]", oi.default_str);
-      String use = String.format("  %-" + max_len + "s - %s %s",
+        default_str = String.format(" [default %s]", oi.default_str);
+      String use = String.format("  %-" + max_len + "s - %s%s",
                                  oi.synopsis(), oi.description, default_str);
       buf.append(use);
     }
