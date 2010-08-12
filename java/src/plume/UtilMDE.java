@@ -1601,6 +1601,29 @@ public final class UtilMDE {
     throw new NoSuchFieldException (fieldName);
   }
 
+  /**
+   * Reads the given field, which may be private.
+   * Use with care!
+   */
+  public static Object getPrivateField(Object o, String fieldName)
+    throws NoSuchFieldException, IllegalAccessException {
+    Class<?> c = o.getClass();
+    while (c != Object.class) { // Class is interned
+      // System.out.printf ("Setting field %s in %s%n", fieldName, c);
+      try {
+        Field f = c.getDeclaredField(fieldName);
+        f.setAccessible(true);
+        return f.get(o);
+      } catch (NoSuchFieldException e) {
+        if (c.getSuperclass() == Object.class) // Class is interned
+          throw e;
+      }
+      c = c.getSuperclass();
+      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+    }
+    throw new NoSuchFieldException (fieldName);
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////
   /// Set
