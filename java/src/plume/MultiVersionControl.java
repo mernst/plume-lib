@@ -59,8 +59,8 @@ import java.net.URL;
  * <ul>
  *   <li><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading.
  *  Defaults to <tt>$HOME/.mvc-checkouts</tt>.</li>
- *   <li><b>--dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to search for checkouts; may be supplied multiple times; default=home dir [default []]</li>
- *   <li><b>--ignore-dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to NOT search for checkouts; may be supplied multiple times [default []]</li>
+ *   <li><b>--dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to search for checkouts; default=home dir [default []]</li>
+ *   <li><b>--ignore-dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to NOT search for checkouts [default []]</li>
  *   <li><b>--search=</b><i>boolean</i>. Search for all checkouts, not just those listed in a file [default false]</li>
  *   <li><b>--show=</b><i>boolean</i>. Display commands as they are executed [default false]</li>
  *   <li><b>--print-directory=</b><i>boolean</i>. Print the directory before executing commands [default false]</li>
