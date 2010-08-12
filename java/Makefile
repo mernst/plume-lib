@@ -259,15 +259,14 @@ LOOKUP_JAR_CLASSES = \
 
 # So that lookup.jar is self-contained for execution on JDK 6 (without JDK
 # 7 annotation support), the files should have been compiled with a Java 6
-# compiler.  Here are two ways to do it.
+# compiler.  Here are two ways to do it.  $JDK6 might be at
+# /usr/lib/jvm/java-6-openjdk or /usr/java/current/lib, for example.
 # Example 1:
 #	\rm -f .class-files-timestamp
-#	make JAVA_HOME=/usr/lib/jvm/java-6-openjdk JAVAC=/usr/bin/javac compile
-#	make lookup.jar
+#	make JAVA_HOME=$JDK6 JAVAC=/usr/bin/javac compile lookup.jar
 # Example 2:
 #	\rm -f .class-files-timestamp
-#	make TOOLS_JAR=/usr/lib/jvm/java-6-openjdk/lib/tools.jar compile
-#	make lookup.jar
+#	make TOOLS_JAR=$JDK6/lib/tools.jar compile lookup.jar
 lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	rm -rf jar-contents
 	mkdir jar-contents
