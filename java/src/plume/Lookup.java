@@ -80,7 +80,7 @@ import com.sun.javadoc.*;
  *       <li><b>-a</b> <b>--print-all=</b><i>boolean</i>. By default, if multiple entries are matched, only a synopsis
  *  of each entry is printed.  If 'print_all' is selected then
  *  the body of each matching entry is printed. [default false]</li>
- *       <li><b>-i</b> <b>--item-num=</b><i>integer</i>. Specifies which item to print when there are multiple matches. [no default]</li>
+ *       <li><b>-i</b> <b>--item-num=</b><i>integer</i>. Specifies which item to print when there are multiple matches.</li>
  *       <li><b>-l</b> <b>--show-location=</b><i>boolean</i>. If true, show the filename/line number of each matching entry
  *  in the output. [default false]</li>
  *     </ul>
@@ -89,7 +89,7 @@ import com.sun.javadoc.*;
  *     <ul>
  *       <li><b>--entry-start-re=</b><i>regex</i>. Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
  *       <li><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the end of a long entry [default ^&lt;entry]</li>
- *       <li><b>--description-re=</b><i>regex</i>. Regex that finds an entry's description (for long entries) [no default]</li>
+ *       <li><b>--description-re=</b><i>regex</i>. Regex that finds an entry's description (for long entries)</li>
  *       <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
  *       <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
  *     </ul>
