@@ -1,7 +1,7 @@
 #!/usr/bin/perl -n
 # retarget-hevea-crossrefs
 # Michael Ernst
-# Last updated: July 31, 2010
+# Last updated: August 11, 2010
 
 # To use:
 #   hevea-retarget-crossrefs < orig.html > new.html
@@ -11,10 +11,16 @@
 # by cross-refenences to named labels, such as
 #    <a href="#introduction">
 
+# It is required that the original .tex source file contained a \label
+# command at the end of each \chapter or \[sub]section command, like so:
+#   \chapter{Introduction\label{introduction}}
+# The given label that will replace the "htoc" one in the .html file.
+
+# Rationale:
 # In the table of contents, Hevea creates HTML cross-references that use
 # Hevea-generated labels of the form "htoc99", even when a \label already
 # exists.  This leads to users following a link from the table of contents,
-# then bookmarking or publicizing that link.  The "htoc99" link may point
+# then bookmarking or mentioning that link.  The "htoc99" link may point
 # to a completely different section if the manual is reordered or even if a
 # new section is added.  So, it is better for webpages not to contain the
 # easy-to-misuse "htoc99" cross-references.
@@ -39,8 +45,8 @@ push @lines, $_;
 END {
 
   for (my $i = 0; $i<scalar(@lines); $i++) {
-    if ($lines[$i] =~ s:<A NAME="(htoc[0-9]+)">(((Chapter&#XA0;)?([0-9]+|[A-Z]))(\.[0-9]+)*)</A>(.*<A NAME="(.*)"></A></H[0-9]+>):$2$7:) {
-      $mapping{$1} = $8;
+    if ($lines[$i] =~ s:<A NAME="(htoc[0-9]+)">(((Chapter&#XA0;)?([0-9]+|[A-Z]))(\.[0-9]+)*)(</A>.*)(<A NAME="(.*)">)</A>(</H[0-9]+>):$8$2$7$10:) {
+      $mapping{$1} = $9;
       if ($debug) { print STDERR "$1 => $mapping{$1}\n";
       }
     }
@@ -59,6 +65,7 @@ END {
         print STDERR "No symbolic name for section $htoc\n";
       }
     }
+    $line =~ s/(<IMG SRC="([^"]+\.[^".]+)")>/$1 ALT="$2">/g;
     print $line;
   }
 
