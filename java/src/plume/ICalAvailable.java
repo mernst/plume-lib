@@ -40,14 +40,14 @@ import java.util.HashMap;
  *   <li><b>--date=</b><i>string</i>. first date to summarize [default today]</li>
  *   <li><b>--days=</b><i>int</i>. number of calendar days to summarize [default 8]</li>
  *   <li><b>--iCal-URL=</b><i>url</i> <tt>[+]</tt>. For a Google calendar:  go to settings, then click on the green "ICAL"
- *  icon for the "private address". [default []]</li>
+ *  icon for the "private address".</li>
  *   <li><b>--business-hours=</b><i>string</i>. A list of time ranges, expressed as a String.
  *  Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
  *   <li><b>--timezone1=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
  *  Available times are printed in this time zone.  It defaults to the
  *  system time zone.</li>
  *   <li><b>--timezone2=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
- *  If set, then free times are printed in two time zones. [no default]</li>
+ *  If set, then free times are printed in two time zones.</li>
  *   <li><b>--debug=</b><i>boolean</i>. enable debugging output [default false]</li>
  * </ul>
  * <tt>[+]</tt> marked option can be specified multiple times

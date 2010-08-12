@@ -17,8 +17,8 @@ import com.sun.javadoc.*;
  * The command-line arguments are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
- *   <li><b>-r</b> <b>--responsible=</b><i>string</i>. Include only those tasks assigned to the specified person [no default]</li>
- *   <li><b>-m</b> <b>--milestone=</b><i>string</i>. Include only those tasks required for the specified milestone [no default]</li>
+ *   <li><b>-r</b> <b>--responsible=</b><i>string</i>. Include only those tasks assigned to the specified person</li>
+ *   <li><b>-m</b> <b>--milestone=</b><i>string</i>. Include only those tasks required for the specified milestone</li>
  *   <li><b>-c</b> <b>--completed=</b><i>boolean</i>. Include only completed tasks [default false]</li>
  *   <li><b>-o</b> <b>--open=</b><i>boolean</i>. Include only open tasks [default false]</li>
  *   <li><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
