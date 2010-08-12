@@ -1,6 +1,8 @@
-.PHONY: java
+.PHONY: java jar
 java:
 	${MAKE} -C java jar javadoc
+jar:
+	${MAKE} -C java jar
 
 .PHONY: emacs
 emacs:
