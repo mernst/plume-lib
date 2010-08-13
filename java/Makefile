@@ -174,9 +174,11 @@ endif
 
 ${TOOLS_JAR}:
 ifneq (,$(findstring darwin,$(OSTYPE)))
-	@echo "Cannot find classes.jar; please set TOOLS_JAR [sic] to its location"
+	@echo "Cannot find classes.jar at ${TOOLS_JAR}"
+	@echo "Please set TOOLS_JAR [sic] to its location"
 else
-	@echo "Cannot find tools.jar; please set JAVA_HOME and/or TOOLS_JAR"
+	@echo "Cannot find tools.jar at ${TOOLS_JAR}"
+	@echo "Please set JAVA_HOME and/or TOOLS_JAR"
 endif
 # Cause the Make job to fail
 	@false
@@ -260,13 +262,11 @@ LOOKUP_JAR_CLASSES = \
 # So that lookup.jar is self-contained for execution on JDK 6 (without JDK
 # 7 annotation support), the files should have been compiled with a Java 6
 # compiler.  Here are two ways to do it.  $JDK6 might be at
-# /usr/lib/jvm/java-6-openjdk or /usr/java/current/lib, for example.
+# /usr/lib/jvm/java-6-openjdk or /usr/java/current, for example.
 # Example 1:
-#	\rm -f .class-files-timestamp
-#	make JAVA_HOME=$JDK6 JAVAC=/usr/bin/javac compile lookup.jar
+#	make JAVA_HOME=$JDK6 JAVAC=$JDK6/bin/javac clean plume.jar lookup.jar
 # Example 2:
-#	\rm -f .class-files-timestamp
-#	make TOOLS_JAR=$JDK6/lib/tools.jar compile lookup.jar
+#	make TOOLS_JAR=$JDK6/lib/tools.jar clean plume.jar lookup.jar
 lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	rm -rf jar-contents
 	mkdir jar-contents
