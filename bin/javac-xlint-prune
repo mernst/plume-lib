@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# prune-xlint.pl
+# prune-xlint
 # For documentation, see javac-xlint, which is a wrapper around this script.
 
 # Removes certain warning messages from "javac -Xlint" output.
@@ -18,7 +18,7 @@ my $file_line_re = "^[^\n]+:[0-9]+:";
 
 my @ORIG_ARGV = (@ARGV);
 my $file_regexp;
-# print "prune-xlint.pl args: " . scalar(@ARGV) . "; #1=$ARGV[0]\n";
+# print "prune-xlint args: " . scalar(@ARGV) . "; #1=$ARGV[0]\n";
 if ((scalar(@ARGV) > 1) && ($ARGV[0] eq "-p")) {
   shift(@ARGV);                 # get rid of "-p"
   $file_regexp = shift (@ARGV);
@@ -27,7 +27,7 @@ if ((scalar(@ARGV) > 1) && ($ARGV[0] eq "-p")) {
 
 if (scalar(@ARGV) > 1) {
   # Could also
-  die "Too many arguments to prune-xlint.pl (or unrecognized option): prune-xlint.pl " . join(" ", @ORIG_ARGV) ;
+  die "Too many arguments to prune-xlint (or unrecognized option): prune-xlint " . join(" ", @ORIG_ARGV) ;
 }
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # Summarize the output of "cvs log".
-# Run like this:  cvs -q log -d ">1 month ago" -N | cvs-log-summarize.pl
+# Run like this:  cvs -q log -d ">1 month ago" -N | cvs-log-summarize
 
 # The input to this script is the output of "cvs log".
 # "cvs log" gives information about each file in turn.

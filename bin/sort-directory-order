@@ -40,7 +40,7 @@
 ## For example, when making a TAGS file, instead of
 ##   etags `find . -iname '*.java' -print`
 ## do
-##   etags `find . -iname '*.java' -print | sort-directory-order.pl`
+##   etags `find . -iname '*.java' -print | sort-directory-order`
 
 ## Mac OS X has a "-s" option to "find" that is similar (but not
 ## necessarily identical) to "find | sort".

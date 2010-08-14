@@ -3,7 +3,7 @@
 # Run javac, but process its STDERR to give progress indications.
 
 # Example usage:  To use with Daikon, put
-# JAVAC = javac-progress.pl --javac="javac-xlint -p '\./jtb/' javac"
+# JAVAC = javac-progress --javac="javac-xlint -p '\./jtb/' javac"
 # JAVAC_XLINT =
 # in java/Makefile.user
 

@@ -6,9 +6,9 @@
 # Works for either space- or colon- delimiated paths.
 # Usage:
 #   # csh
-#   setenv PATH `echo $PATH | $HOME/bin/share/path-remove.pl`
+#   setenv PATH `echo $PATH | $HOME/bin/share/path-remove`
 #   # sh
-#   set path = (`echo $path | $HOME/bin/share/path-remove.pl`)
+#   set path = (`echo $path | $HOME/bin/share/path-remove`)
 
 my $debug = 0;
 # $debug = 1;

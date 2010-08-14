@@ -15,9 +15,9 @@
 #
 # You can use it on:
 #  * a URL from the ACM digital library.  Example:
-#      acm-dl-abstracts.pl 'http://portal.acm.org/toc.cfm?id=964001' > popl2004-abstracts-orig.html
+#      acm-dl-abstracts 'http://portal.acm.org/toc.cfm?id=964001' > popl2004-abstracts-orig.html
 #  * email from the ACM TOC Service.  Example (after saving to local file):
-#      acm-dl-abstracts.pl acm.html
+#      acm-dl-abstracts acm.html
 # Then, browse it or print it.  If printing, run
 #   for i in `ls acm-abstracts-*.html`; do htmldoc --webpage -t ps --outfile $i.ps $i; done
 # because both html2ps and the Filefox print functionality tend to cut off
