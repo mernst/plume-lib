@@ -152,7 +152,7 @@ javadoc: .javadoc-timestamp
 
 # Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
-	cp -fpru api /cse/www2/types/plume-lib/
+	rsync -a api /cse/www2/types/plume-lib/
 	chgrp -R types_www /cse/www2/types/plume-lib/
 
 optionsdoc: compile
@@ -199,7 +199,7 @@ showvars:
 
 src/plume/MathMDE.java: src/plume/MathMDE.java.jpp src/plume/MathMDE-gcd.java.jpp src/plume/MathMDE-modulus.java.jpp src/plume/MathMDE-nonmodulus.java.jpp src/plume/MathMDE-help.java.jpp src/plume/MathMDE-helpend.java.jpp
 	@rm -f $@
-	(cd src/plume && ../../../bin/java-cpp.pl MathMDE.java.jpp 2>&1 > MathMDE.java)
+	(cd src/plume && ../../../bin/java-cpp MathMDE.java.jpp 2>&1 > MathMDE.java)
 	@chmod -w $@
 
 

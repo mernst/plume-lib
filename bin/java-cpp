@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # java-cpp -- C preprocessor specialized for Java
 # Michael Ernst
-# Time-stamp: <2010-07-31 21:19:10 mernst>
+# Time-stamp: <2010-08-13 19:33:46 mernst>
 
 # This acts like the C preprocessor (cpp), but
 #  * it does not remove comments, and
@@ -80,7 +80,7 @@ my $file_handle_nonce = 'fh00';
       unlink($tmpfile_out);
       # unlink($tmpfile_err);
     }
-    die "java-cpp.pl: cpp $argv $filename failed: $!\n  Actual command that failed: $cpp_command";
+    die "java-cpp: cpp $argv $filename failed: $!\n  Actual command that failed: $cpp_command";
   }
 
   unescape_comments($tmpfile_out);

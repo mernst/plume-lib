@@ -7,7 +7,7 @@
 #  1. Inline mode (the default):  Create a single LaTeX file for the document,
 #     by inlining "\input" commands.
 #     The result is appropriate to be sent to a publisher.
-#       latex-process-inputs.pl main-file.tex > onefile.tex
+#       latex-process-inputs main-file.tex > onefile.tex
 #     Additionally, the body of each comment is removed, to prevent revealing
 #     more information than we want.  (Actually, each comment is replaced by
 #     an empty comment, to prevent changes in paragraph breaks.)
@@ -15,9 +15,9 @@
 #  2. List mode: List all the files that are (transitively) "\input".
 #     This can be useful for getting a list of source files in a logical order,
 #     for example to be used in a Makefile or Ant buildfile.
-#       latex-process-inputs.pl --list main-file.tex
-#       latex-process-inputs.pl --makefilelist main-file.tex
-#       latex-process-inputs.pl --antlist main-file.tex
+#       latex-process-inputs --list main-file.tex
+#       latex-process-inputs --makefilelist main-file.tex
+#       latex-process-inputs --antlist main-file.tex
 
 my $debug = 0;
 # $debug = 1;
