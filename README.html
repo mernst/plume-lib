@@ -162,13 +162,13 @@ webpage that you maintain.
   <a href="http://plume-lib.googlecode.com/hg/bin/transgif">Documentation</a> at top of file.
 </dd>
 
-<dt>html-add-favicon.pl</dt>
+<dt>html-add-favicon</dt>
 <dd>
   Takes as arguments a <tt>.png</tt> file for a "favicon", and a set of
   <tt>.html</tt> files.  It makes each HTML file use the given favicon.  A
   favicon is a favorites icon, which is intended to appear in the address
   bar of your browser when you browse to the given page.
-  <a href="http://plume-lib.googlecode.com/hg/bin/html-add-favicon.pl">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/html-add-favicon">Documentation</a> at top of file.
 </dd>
 </dl>
 
@@ -204,7 +204,7 @@ webpage that you maintain.
 Eliminates empty entries from <tt>cvs log</tt> output.
 </dd>
 
-<dt>cvs-log-summarize.pl</dt>
+<dt>cvs-log-summarize</dt>
 <dd>
   Summarize the output of <tt>cvs log</tt>.
   This script groups any sequence of CVS checkins by the same author with
@@ -260,7 +260,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
 <h2 id="Text_formatting:__LaTeX,_PDF,_PostScript,_bibliographies">Text formatting:  LaTeX, PDF, PostScript, bibliographies</h2>
 
 <dl>
-<dt>latex-process-inputs.pl</dt>
+<dt>latex-process-inputs</dt>
 <dd>
   Determines all files that are recursively \input by a given
   LaTeX file.
@@ -277,7 +277,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
       for example to be used in a Makefile or Ant buildfile.
     </li>
   </ol>
-  <a href="http://plume-lib.googlecode.com/hg/bin/latex-process-inputs.pl">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/latex-process-inputs">Documentation</a> at top of file.
 </dd>
 
 <dt>hevea-retarget-crossrefs</dt>
@@ -305,7 +305,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   Adds page numbers to a PostScript file.
 </dd>
 
-<dt>acm-dl-abstracts.pl</dt>
+<dt>acm-dl-abstracts</dt>
 <dd>
   This program takes as input a filename or URL for an
   <a href="http://portal.acm.org/dl.cfm?coll=portal">ACM digital library</a>
@@ -313,7 +313,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   file that augments the table of contents with abstracts for each paper.
   This makes it possible to read all the abstracts on one HTML page,
   without clicking on any links.
-  <a href="http://plume-lib.googlecode.com/hg/bin/acm-dl-abstracts.pl">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/acm-dl-abstracts">Documentation</a> at top of file.
 </dd>
 
 <dt>BibtexClean</dt>
@@ -483,14 +483,14 @@ This contains no documentation, so don't include it in this README file.
   <a href="http://plume-lib.googlecode.com/hg/bin/javac-xlint">Documentation</a> at top of file.
 </dd>
 
-<dt>javac-progress.pl</dt>
+<dt>javac-progress</dt>
 <dd>
   Wraps an invocation of javac, but processes its STDERR to give progress
   indications.
-  <a href="http://plume-lib.googlecode.com/hg/bin/javac-progress.pl">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-progress">Documentation</a> at top of file.
 </dd>
 
-<dt>java-cpp.pl</dt>
+<dt>java-cpp</dt>
 <dd>
   This acts like the C preprocessor (cpp), but
   <ul>
@@ -499,7 +499,7 @@ This contains no documentation, so don't include it in this README file.
   </ul>
   Its name comes from the fact that it is useful for running on a source
   file with cpp macros, to create Java source code.
-  <a href="http://plume-lib.googlecode.com/hg/bin/java-cpp.pl">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-cpp">Documentation</a> at top of file.
 </dd>
 </dl>
 
@@ -573,14 +573,14 @@ This contains no documentation, so don't include it in this README file.
 <h2 id="Miscellaneous">Miscellaneous</h2>
 
 <dl>
-<dt>striplines.pl</dt>
+<dt>striplines</dt>
 <dd>
   Strips <tt>#line</tt> directives out of a file.  The file is modified in
   place, but a backup is made to <tt><em>filename</em>.bak</tt>.
 </dd>
 
 <dt>
-./bin/path-remove.pl
+./bin/path-remove
 </dt>
 <dd>
 </dd>
@@ -622,13 +622,13 @@ This contains no documentation, so don't include it in this README file.
 </dd>
 
 <dt>
-./bin/repeated-words.pl
+./bin/repeated-words
 </dt>
 <dd>
 </dd>
 
 <dt>
-./bin/sort-directory-order.pl
+./bin/sort-directory-order
 </dt>
 <dd>
 </dd>
@@ -651,27 +651,27 @@ This contains no documentation, so don't include it in this README file.
 <h3 id="Cygwin">Cygwin</h3>
 
 <dl>
-<dt>cygwin-runner.pl</dt>
+<dt>cygwin-runner</dt>
 <dd>
   Takes a command with arguments and translates those arguments from
   Cygwin-style filenames into Windows-style filenames.  Its real advantage
   is the little bit of intelligence it has as far as which things are files
   and which are not.
-  <a href="http://plume-lib.googlecode.com/hg/bin/cygwin-runner.pl">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/cygwin-runner">Documentation</a> at top of file.
 </dd>
 
-<dt>java-cygwin.sh</dt>
+<dt>java-cygwin</dt>
 <dd>
   A wrapper for calling Java from Cygwin, that tries to convert any
   arguments that are Unix-style paths into Windows-style paths.
-  <a href="http://plume-lib.googlecode.com/hg/bin/java-cygwin.sh">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/java-cygwin">Documentation</a> at top of file.
 </dd>
 
-<dt>javac-cygwin.sh</dt>
+<dt>javac-cygwin</dt>
 <dd>
   A wrapper for calling Java from Cygwin, that tries to convert any
   arguments that are Unix-style paths into Windows-style paths.
-  <a href="http://plume-lib.googlecode.com/hg/bin/javac-cygwin.sh">Documentation</a> at top of file.
+  <a href="http://plume-lib.googlecode.com/hg/bin/javac-cygwin">Documentation</a> at top of file.
 </dd>
 </dl>
 

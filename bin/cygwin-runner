@@ -1,21 +1,21 @@
 : # Use -*- Perl -*- without knowing its path
   eval 'exec perl -S -w $0 "$@"'
   if 0;
-# cygwin-runner.pl -- Run a Windows command as if it were a Unix (Cygwin) command.
+# cygwin-runner -- Run a Windows command as if it were a Unix (Cygwin) command.
 # Jeremy Nimmer <jwnimmer@lcs.mit.edu>
-# Time-stamp: <2002-03-18 12:26:39 mistere>
+# Time-stamp: <2010-08-13 19:33:46 mernst>
 
 # This script takes a command with arguments and translates those
 # arguments from cygwin-style filenames into windows-style filenames.
 # Its real advantage is the little bit of intelligence it has as far as
 # which things are files and which are not.
 
-# The first argument to cygwin-runner.pl is the directory that the
+# The first argument to cygwin-runner is the directory that the
 # target program lives in.  The second argument is the name of the
 # program to be invoked.  This can contain path information, which
 # will be stripped and ignored.  The rest of the arguments are passed
 # on to the target program after filename translation.  For instance,
-# "cywin-runner.pl /java/winbin /java/cygbin/javac -version" will run
+# "cywin-runner /java/winbin /java/cygbin/javac -version" will run
 # "/java/winbin/javac -version" in windows filespace.
 
 # Therefore, a useful way to run this program is as follows:
@@ -24,7 +24,7 @@
 #
 # * Add a file called .runner to cygwin, with contents like:
 #       #!/bin/bash
-#       [...path-to...]/cygwin-runner.pl /java/winbin $0 $*
+#       [...path-to...]/cygwin-runner /java/winbin $0 $*
 #   The first line is sh-bang notation to say that we want bash to
 #   run this.  The second line runs the cygwin-runner script, passing
 #   it the path to the winbin directory, the name of the program the

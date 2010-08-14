@@ -6,7 +6,7 @@
 # your browser when you browse to the given page.
 #
 # Usage:
-#   html-add-favicon.pl atT.png `find . -iname '*.html'`
+#   html-add-favicon atT.png `find . -iname '*.html'`
 #
 # Both the .png and the .html filenames should be relative (not absolute),
 # as in the given example.
