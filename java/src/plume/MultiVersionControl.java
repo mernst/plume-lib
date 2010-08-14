@@ -1073,10 +1073,14 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)(#\tmodified:   )", "$1" + dir + "/"));
           // This must come after the above, since it matches a prefix of the above
           replacers.add(new Replacer("(^|\\n)(#\t)", "$1untracked: " + dir + "/"));
+          replacers.add(new Replacer("(^|\\n)# Your branch is ahead of .*\\n", "$1unpushed changesets: " + pb.directory() + "\n"));
           // Could remove all other output, but this could suppress messages
           // replacers.add(new Replacer("(^|\\n)#.*\\n", "$1"));
+
+          // Unnecessary because "git status" reports:
+          //   # Your branch is ahead of 'origin/master' by 1 commit.
           // Or, see "git-outgoing" at http://github.com/ddollar/git-utils
-          pb2.command("git", "log", "origin..HEAD");
+          // pb2.command("git", "log", "origin..HEAD");
           break;
         case HG:
           pb.command("hg", "status");
