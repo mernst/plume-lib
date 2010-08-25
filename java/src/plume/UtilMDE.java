@@ -1578,11 +1578,12 @@ public final class UtilMDE {
   ///
 
   /**
-   * Sets the given field, which may be final.
+   * Sets the given field, which may be final and/or private.
+   * Leaves the field accessible.
    * Intended for use in readObject and nowhere else!
    */
   public static void setFinalField(Object o, String fieldName, /*@Nullable*/ Object value)
-    throws NoSuchFieldException, IllegalAccessException {
+    throws NoSuchFieldException {
     Class<?> c = o.getClass();
     while (c != Object.class) { // Class is interned
       // System.out.printf ("Setting field %s in %s%n", fieldName, c);
@@ -1594,6 +1595,8 @@ public final class UtilMDE {
       } catch (NoSuchFieldException e) {
         if (c.getSuperclass() == Object.class) // Class is interned
           throw e;
+      } catch (IllegalAccessException e) {
+        throw new Error("This can't happen: " + e);
       }
       c = c.getSuperclass();
       assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
@@ -1603,10 +1606,11 @@ public final class UtilMDE {
 
   /**
    * Reads the given field, which may be private.
+   * Leaves the field accessible.
    * Use with care!
    */
   public static /*@Nullable*/ Object getPrivateField(Object o, String fieldName)
-    throws NoSuchFieldException, IllegalAccessException {
+    throws NoSuchFieldException {
     Class<?> c = o.getClass();
     while (c != Object.class) { // Class is interned
       // System.out.printf ("Setting field %s in %s%n", fieldName, c);
@@ -1617,6 +1621,8 @@ public final class UtilMDE {
       } catch (NoSuchFieldException e) {
         if (c.getSuperclass() == Object.class) // Class is interned
           throw e;
+      } catch (IllegalAccessException e) {
+        throw new Error("This can't happen: " + e);
       }
       c = c.getSuperclass();
       assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
