@@ -1,3 +1,4 @@
+--exclude-docs /serialized-form.html
 --exclude-docs /~adonovan/
 --exclude-docs bugzilla/
 --exclude-docs daikon/download/jdoc
