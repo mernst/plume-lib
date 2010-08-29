@@ -390,8 +390,9 @@ public class ICalAvailable {
       // But VFreeBusy does not support this, so I may need to convert
       // daily events into a different format before inserting them.
       for (Calendar calendar : calendars) {
-        for (Iterator<Object> itor = calendar.getComponents().iterator(); itor.hasNext(); ) {
-          Component c = (Component) itor.next();
+        // getComponents() returns a raw ArrayList.  Expose its element type.
+        ArrayList</*@NonNull*/ Component> clist = calendar.getComponents();
+        for (Component c : clist) {
           if (c instanceof VEvent) {
             VEvent v = (VEvent) c;
             DtStart dts = v.getStartDate();
