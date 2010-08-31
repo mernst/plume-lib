@@ -2,7 +2,7 @@
 # checkargs -- check number of args in function calls
 # Michael D. Ernst <mernst@csail.mit.edu>
 # http://www.cs.washington.edu/homes/mernst/software/checkargs.pm
-# Time-stamp: <2010-03-28 12:33:02 mernst>
+# Time-stamp: <2010-08-31 11:57:39 mernst>
 
 package checkargs;
 require 5.004;			# uses "for my $var"
@@ -25,6 +25,12 @@ Then
   check_args_range(cArgsMin, cArgsMax, @_)
   check_args_at_least(cArgsMin, @_)
 where "@_" should be supplied literally.
+
+If checkargs.pm appears in the same directory as its client, you can use:
+
+  use FindBin ();
+  use lib "$FindBin::Bin";
+  use checkargs;
 
 =head1 DESCRIPTION
 
