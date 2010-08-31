@@ -1,7 +1,7 @@
 #!/usr/bin/perl -wpi.bak
 # html-update-link-dates
 # Michael Ernst <mernst@alum.mit.edu>
-# Time-stamp: <2010-03-28 12:33:01 mernst>
+# Time-stamp: <2010-08-31 11:57:39 mernst>
 
 # usage:
 #   html-update-link-dates file [...]
@@ -21,6 +21,8 @@
 # To do:
 #   Need to operate by paragraphs, not by lines.
 
+use FindBin ();
+use lib "$FindBin::Bin";
 use checkargs;
 
 require POSIX;
