@@ -1090,7 +1090,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
           // TODO:  Shelve is an optional extension, and so this should make no report if it is not installed.
           pb3.command("hg", "shelve", "-l");
-          replacers3.add(new Replacer("^hg: unknown command 'shelve'\\n(.*\\n)+", "shelved changes: " + pb.directory() + "\n"));
+          replacers3.add(new Replacer("^hg: unknown command 'shelve'\\n(.*\\n)+", ""));
           replacers3.add(new Replacer("^(.*\\n)+", "shelved changes: " + pb.directory() + "\n"));
           break;
         case SVN:
