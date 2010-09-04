@@ -1210,7 +1210,7 @@ public class Options {
         val = oi.constructor.newInstance (arg_value);
       } else if (oi.base_type.isEnum()) {
         @SuppressWarnings({"unchecked","rawtypes"})
-        Object tmpVal = Enum.valueOf ((Class<? extends Enum>)oi.base_type,
+        Object tmpVal = getEnumValue ((Class<? extends Enum>)oi.base_type,
                                        arg_value);
         val = tmpVal;
       } else {
@@ -1226,6 +1226,22 @@ public class Options {
 
     assert val != null : "@SuppressWarnings(nullness)";
     return val;
+  }
+
+  /**
+   * Behaves like {@link java.lang.Enum#valueOf}, except that <code>name</code>
+   * is case insensitive and hyphen insensitive (hyphens can be used in place of
+   * underscores).  This allows for greater flexibility when specifying enum
+   * types as command-line arguments.
+   */
+  private <T extends Enum<T>> T getEnumValue(Class<T> enumType, String name) {
+    T[] constants = enumType.getEnumConstants();
+    for (T constant : constants)
+      if (((Enum<?>) constant).name().equalsIgnoreCase(name.replace('-', '_')))
+        return constant;
+    // same error that's thrown by Enum.valueOf()
+    throw new IllegalArgumentException(
+      "No enum constant " + enumType.getCanonicalName() + "." + name);
   }
 
   /**
