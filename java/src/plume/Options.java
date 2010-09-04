@@ -1236,6 +1236,8 @@ public class Options {
    */
   private <T extends Enum<T>> T getEnumValue(Class<T> enumType, String name) {
     T[] constants = enumType.getEnumConstants();
+    if (constants == null)
+      throw new IllegalArgumentException(enumType.getName() + " is not an enum type");
     for (T constant : constants)
       if (((Enum<?>) constant).name().equalsIgnoreCase(name.replace('-', '_')))
         return constant;
