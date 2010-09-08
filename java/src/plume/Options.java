@@ -32,19 +32,38 @@ import java.lang.annotation.*;
  * <p>
  *
  * The main entry point is {@link #parse_or_usage(String[])}.
- * Typical use in your program is:
- * <!-- Maybe expand this example a bit. -->
- * <pre>
+ * Typical use is:
+ *
+ * <!-- Example needs some more words of explanation and example command lines. -->
+ * <!-- Given this code: --> <pre>
+ *  public static class MyProgram {
+ * 
+ *    &#64;Option("-o &lt;filename&gt; the output file ")
+ *    public static File outfile = new File("/tmp/foobar");
+ * 
+ *    &#64;Option("-i ignore case")
+ *    public static boolean ignore_case;
+ * 
+ *    &#64;Option("set the initial temperature")
+ *    public static double temperature = 75.0;
+ * 
  *    public static void main(String[] args) {
  *      MyProgram myInstance = new MyProgram();
  *      Options options = new Options("MyProgram [options] infile outfile",
  *                                    myInstance, MyUtilityClass.class);
- *      // Sets fields in object myInstance, and sets static fields in
- *      // class MyUtilityClass.
- *      // Returns the original command line, with all options removed.
- *      String[] file_args = options.parse_or_usage (args);
- *      ...</pre>
+ *      String[] remaining_args = options.parse_or_usage(args);
+ *      ...
+ *    }
+ *  }</pre>
+ * A user may invoke the program using the command-line arguments
+ * <tt>-o</tt>, <tt>--outfile</tt>, <tt>-i</tt>, <tt>--ignore-case</tt>,
+ * and, <tt>--temperature</tt>. <p>
  *
+ * The call to {@link #parse_or_usage} sets fields in object myInstance,
+ * and sets static fields in class MyUtilityClass.  It returns the original
+ * command line, with all options removed. <p>
+ *
+ * <b>@Option indicates a command-line option</b> <p>
  * The @{@link Option} annotation on a field specifies brief user documentation
  * and, optionally, a one-character short name that users may supply on the
  * command line.  The long name is taken from the name of the variable;
@@ -148,26 +167,7 @@ import java.lang.annotation.*;
  *   <li>Lists of any of the above reference types.
  * </ul> <p>
  *
- * <b>Example:</b> <p>
- *
- * <!-- Example needs some more words of explanation and example command lines. -->
- * <!-- Given this code: --> <pre>
- *  public static class Test {
- *
- *    &#64;Option ("-o &lt;filename&gt; the output file ")
- *    public static File outfile = new File("/tmp/foobar");
- *
- *    &#64;Option ("-i ignore case")
- *    public static boolean ignore_case;
- *
- *    &#64;Option ("-t set the initial temperature")
- *    public static double temperature = 75.0;
- *
- *    public static void main (String[] args) {
- *      Options options = new Options ("Test [options] files", new Test());
- *      String[] file_args = options.parse_or_usage (args);
- *    }
- *  }</pre>
+ * <b>More examples</b> <p>
  *
  * Example clients of the Options library include {@link
  * plume.Lookup} and the <code>Main</code> class of
