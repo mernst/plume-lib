@@ -108,14 +108,18 @@ import java.lang.annotation.*;
  * in usage texts. <p> 
  *
  * The @{@link OptionGroup} annotation must be specified on a field in addition
- * to an @{@link Option} annotation.  The <code>@OptionGroup</code> annotation
- * acts like a delimiter &mdash; all <code>@Option</code>-annotated fields up to
- * the next <code>@OptionGroup</code> annotation belong to the same group.
- * When using option groups, the first <code>@Option</code>-annotated field of
- * every class and object passed to the {@link #Options(String, Object...)}
- * constructor must have an <code>@OptionGroup</code> annotation.  Furthermore,
- * the first parameter of an <code>@OptionGroup</code> annotation (the group
- * name) must be unique among all classes and objects passed to the {@link
+ * to an @{@link Option} annotation.  Note that, due to a deficiency in
+ * Javadoc, an <code>@OptionGroup</code> annotation must appear underneath any
+ * Javadoc comment for the field it applies to. <p>
+ *
+ * The <code>@OptionGroup</code> annotation acts like a delimiter &mdash; all
+ * <code>@Option</code>-annotated fields up to the next
+ * <code>@OptionGroup</code> annotation belong to the same group.  When using
+ * option groups, the first <code>@Option</code>-annotated field of every class
+ * and object passed to the {@link #Options(String, Object...)} constructor
+ * must have an <code>@OptionGroup</code> annotation.  Furthermore, the first
+ * parameter of an <code>@OptionGroup</code> annotation (the group name) must
+ * be unique among all classes and objects passed to the {@link
  * #Options(String, Object...)} constructor. <p>
  *
  * If an option group itself is unpublicized:
