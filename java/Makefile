@@ -222,7 +222,7 @@ plume.jar: .class-files-timestamp .test-timestamp .javadoc-timestamp lib lookup.
 # But, don't make "clean compile" the prerequisites for plume.jar or the
 # .jar file will always be remade even if it is up-to-date.
 	$(MAKE) clean compile
-	rm -rf jar-contents
+	-rm -rf jar-contents
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p src/plume/*.class jar-contents/plume
@@ -268,7 +268,7 @@ LOOKUP_JAR_CLASSES = \
 # Example 2:
 #	make TOOLS_JAR=$JDK6/lib/tools.jar clean plume.jar lookup.jar
 lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
-	rm -rf jar-contents
+	-rm -rf jar-contents
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
@@ -287,7 +287,7 @@ $(pag)/software/pkg/lookup.jar: lookup.jar
 TASKMANAGER_JAVA_FILES := $(shell find . -name '*.java')
 task-manager : task_manager.jar
 task_manager.jar: plume.jar task_manager.manifest
-	rm -rf jar-contents
+	-rm -rf jar-contents
 	mkdir jar-contents
 	(cd jar-contents; jar xf ../plume.jar)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
