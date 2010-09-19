@@ -154,7 +154,7 @@ javadoc: .javadoc-timestamp
 javadoc-publish: javadoc
 	rsync -a api /cse/www2/types/plume-lib/
 	chgrp -R types_www /cse/www2/types/plume-lib/
-	chmod -R g+w types_www /cse/www2/types/plume-lib/
+	chmod -R g+w /cse/www2/types/plume-lib/
 
 optionsdoc: compile
 # This should presumably test for other buggy versions of gjdoc as well.
