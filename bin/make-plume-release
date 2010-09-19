@@ -1,0 +1,102 @@
+#!/bin/bash
+# Script for creating a plume-lib release and uploading artifacts to Google
+# Code.  This script can easily be generalized to work with other projects.
+
+script=$(basename $0)
+
+#pkg=$(basename $PWD)
+pkg="plume-lib"
+new=$1
+
+if [[ -z $new ]]; then
+    echo "Usage: $script new-version-number"
+    echo "For example: $script 1.2"
+    exit 1
+fi
+
+if ! hg status &> /dev/null; then
+    echo "$PWD is not a mercurial repository."
+fi
+
+if [[ -n $(hg status -q) ]]; then
+    echo "Uncommitted changes; commit and push changes before making a release."
+    exit 1
+fi
+
+if hg outgoing &> /dev/null; then
+    echo "Unpushed changes; push changes before making a release."
+    exit 1
+fi
+
+if [[ ! -e java/plume.jar ]]; then
+    echo "Could not find java/plume.jar"
+    echo "Please run 'make jar' in plume-lib's top level directory."
+    exit 1
+fi
+
+echo "Going to create release $new of $pkg"
+echo -n "Is this correct? [y/n]: "
+read answer
+
+ans=${answer:0:1}
+if [[ ! ($ans = "y" || $ans = "Y") ]]; then
+    exit 1
+fi
+
+if ! hg tag v$new &> /dev/null; then
+    echo "Failed to create Mercurial tag 'v$new'."
+    echo "Run 'hg tags' to check if the tag already exists."
+    exit 1
+else
+    echo "Created Mercurial tag 'v$new'."
+fi
+
+source_release="$pkg-$new.tar.gz"
+
+if ! hg archive -r v$new "$source_release"; then
+    echo "Error running 'hg archive'."
+    exit 1
+else
+    echo "Created $source_release."
+fi
+
+binary_release="$pkg-$new.jar"
+cp java/plume.jar "$binary_release"
+echo "Created $binary_release."
+
+if ! which googlecode_upload.py &> /dev/null; then
+    echo "Release complete."
+    echo "Please run 'hg push' to push the new tag."
+    echo "Please upload artifacts to Google code."
+    exit 0
+fi
+
+echo -n "Enter your Google Code username: "
+read username
+echo -n "Enter your Google Code password: "
+read password
+
+googlecode_upload.py \
+    --summary "Plume-lib v$new source release" \
+    --project "plume-lib" \
+    --user "$username" \
+    --password "$password" \
+    --labels "Type-Source" \
+    "$source_release" &&
+
+googlecode_upload.py \
+    --summary "Plume-lib v$new binary release (Java components)" \
+    --project "plume-lib" \
+    --user "$username" \
+    --password "$password" \
+    "$binary_release"
+
+if [[ $? -ne 0 ]] ; then
+    echo ""
+    echo "Uploading to Google Code failed"
+    echo "Please upload artifacts manually."
+fi
+
+echo ""
+echo "Release complete."
+echo "Please run 'hg push' to push the new tag."
