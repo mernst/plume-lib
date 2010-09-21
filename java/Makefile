@@ -332,17 +332,19 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
 CHECKERS_ARGS = -source 7 -Awarns
 
-# A user may set JAVAC_USER_NULLNESS_ARGS, for example to: -Awarns
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
+# A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
 check-nullness:
-	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${JAVAC_COMMAND} ${JAVAC_NULLNESS_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
 
-# A user may set JAVAC_USER_INTERNING_ARGS, for example to: -Awarns
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
+# A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
 
+# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
+# fine without it...
 check-interning:
-	${JAVAC_COMMAND} ${JAVAC_USER_INTERNING_ARGS} ${JAVAC_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
 
