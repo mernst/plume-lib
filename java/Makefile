@@ -83,9 +83,10 @@ JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 ifdef JSR308
   CHECKERS ?= ${JSR308}/checker-framework/checkers
 endif
+ifdef CHECKERS
+  CLASSPATH = ${CHECKERS}/checkers.jar:${CLASSPATH}
+endif
 jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
-
-
 export jsr308_imports
 
 default: jar
@@ -327,7 +328,7 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 # A user may set JAVAC_USER_NULLNESS_ARGS, for example to: -Awarns
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar -J-Xbootclasspath/a:${JSR308}/checker-framework/checkers/checkers.jar
+CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
 
 check-nullness:
 	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${JAVA_FILES}
