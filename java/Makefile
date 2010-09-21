@@ -22,7 +22,7 @@ endif
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
-CLASSPATH := ${PLUME_CLASSPATH_PREFIX}:.:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # On cygwin, translate the classpath and sourcepath to windows format.
 # Only do so if this has not already been done, which is determined by
@@ -54,8 +54,8 @@ endif
 export CLASSPATH
 
 JAVAC ?= javac
-JAVAC_TARGET ?= -target 5 -source 5
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET}
+JAVAC_TARGET_FLAGS ?= -target 5 -source 5
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # When using the JSR 308 compiler, this expects checkers-quals.jar on the classpath.
 # The "-classpath" argument is only necessary when using the JSR 308 javac,
 # since it's a shell command for "javac -jar ..." which ignores the
@@ -327,7 +327,7 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 # A user may set JAVAC_USER_NULLNESS_ARGS, for example to: -Awarns
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
+CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar -J-Xbootclasspath/a:${JSR308}/checker-framework/checkers/checkers.jar
 
 check-nullness:
 	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${JAVA_FILES}
