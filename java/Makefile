@@ -51,10 +51,11 @@ else
 endif
 endif
 
-export CLASSPATH
-
 JAVAC ?= javac
-JAVAC_TARGET_FLAGS ?= -target 5 -source 5
+# "-source 5" prevents accidental use of (uncommented) type annotations.
+# In the pluggable type-checking targets, it is overridden by a later flag.
+# "-target 5" makes the resulting .jar and .class usable on many JVMs.
+JAVAC_TARGET_FLAGS ?= -source 5 -target 5
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # When using the JSR 308 compiler, this expects checkers-quals.jar on the classpath.
 # The "-classpath" argument is only necessary when using the JSR 308 javac,
@@ -87,7 +88,9 @@ ifdef CHECKERS
   CLASSPATH := ${CHECKERS}/checkers.jar:${CLASSPATH}
 endif
 jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
+
 export jsr308_imports
+export CLASSPATH
 
 default: jar
 all: compile javadoc jar
@@ -193,6 +196,7 @@ showvars:
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
 	@echo JAVA_HOME = "$(JAVA_HOME)"
+	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
 	@echo CLASSPATH = "$(CLASSPATH)"
 	@echo jsr308_imports = $(jsr308_imports)
 
@@ -323,21 +327,22 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Pluggable type-checking
 ###
 
-## These require checkers.jar on the classpath, not just checkers-quals.jar.
-## Can do that via PLUME_CLASSPATH_PREFIX (though other ways may be cleaner).
+## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
+
+CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
+CHECKERS_ARGS = -source 7 -Awarns
 
 # A user may set JAVAC_USER_NULLNESS_ARGS, for example to: -Awarns
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
 
 check-nullness:
-	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${JAVA_FILES}
+	${JAVAC_COMMAND} ${JAVAC_USER_NULLNESS_ARGS} ${JAVAC_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 # A user may set JAVAC_USER_INTERNING_ARGS, for example to: -Awarns
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
 
 check-interning:
-	${JAVAC_COMMAND} ${JAVAC_USER_INTERNING_ARGS} ${JAVAC_INTERNING_ARGS} ${JAVA_FILES}
+	${JAVAC_COMMAND} ${JAVAC_USER_INTERNING_ARGS} ${JAVAC_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
 
