@@ -84,7 +84,7 @@ ifdef JSR308
   CHECKERS ?= ${JSR308}/checker-framework/checkers
 endif
 ifdef CHECKERS
-  CLASSPATH = ${CHECKERS}/checkers.jar:${CLASSPATH}
+  CLASSPATH := ${CHECKERS}/checkers.jar:${CLASSPATH}
 endif
 jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
 export jsr308_imports
