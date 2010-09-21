@@ -80,7 +80,9 @@ JAVA_FILES ?= $(sort $(shell find src \( -name CVS \) -prune -o -name '*.java' -
 JAVA_CPP_FILES := $(shell find src \( -name CVS \) -prune -o -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
-CHECKERS ?= ${HOME}/research/types/checker-framework/checkers
+ifdef JSR308
+  CHECKERS ?= ${JSR308}/checker-framework/checkers
+endif
 jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
 
 
