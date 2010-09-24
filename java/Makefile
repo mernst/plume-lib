@@ -52,13 +52,7 @@ endif
 endif
 
 JAVAC ?= javac
-# "-source 5" prevents accidental use of Java 7 features.
-# If you use the Type Annotations (JSR 308) compiler, then add
-#   JAVAC_TARGET_FLAGS ?= -target 5
-# to Makefile.user.  "-source 5" omits type annotations from generated
-# .class files.  But a JDK 6 or 7 compiler forbits just plain "-target 5"
-# because it conflicts with the default -source flag.
-JAVAC_TARGET_FLAGS ?= -source 5 -target 5
+# Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # When using the JSR 308 compiler, this expects checkers-quals.jar on the classpath.
 # The "-classpath" argument is only necessary when using the JSR 308 javac,
@@ -89,6 +83,9 @@ ifdef JSR308
 endif
 ifdef CHECKERS
   CLASSPATH := ${CHECKERS}/checkers.jar:${CLASSPATH}
+  ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
+    CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
+  endif
 endif
 jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
 
