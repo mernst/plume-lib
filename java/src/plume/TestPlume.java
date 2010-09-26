@@ -2771,6 +2771,49 @@ public final class TestPlume extends TestCase {
     assert options.usage(true).indexOf("Internal options") > -1;
   }
 
+  public static class TestOptionsEnums {
+    enum Compressor { RLE, SMART_RLE, HUFFMAN }
+
+    @Option("Set the first compression pass")
+    public static Compressor firstPass;
+
+    @Option("Set the second compression pass")
+    public static Compressor secondPass;
+  }
+
+  public static void testOptionsEnums() throws ArgException {
+    Options options = new Options("test", TestOptionsEnums.class);
+
+    options.parse(new String[] {"--firstPass", "SMART_RLE"});
+    assert TestOptionsEnums.firstPass == TestOptionsEnums.Compressor.SMART_RLE;
+    TestOptionsEnums.firstPass = TestOptionsEnums.Compressor.HUFFMAN;
+
+    options.parse(new String[] {"--firstPass", "smart_rle"});
+    assert TestOptionsEnums.firstPass == TestOptionsEnums.Compressor.SMART_RLE;
+    TestOptionsEnums.firstPass = TestOptionsEnums.Compressor.HUFFMAN;
+
+    options.parse(new String[] {"--firstPass", "smart-rle"});
+    assert TestOptionsEnums.firstPass == TestOptionsEnums.Compressor.SMART_RLE;
+
+    options.parse(new String[] {"--firstPass", "rle", "--secondPass", "SMART-RLE"});
+    assert TestOptionsEnums.firstPass == TestOptionsEnums.Compressor.RLE;
+    assert TestOptionsEnums.secondPass == TestOptionsEnums.Compressor.SMART_RLE;
+
+    options.parse(new String[] {"--secondPass", "Huffman"});
+    assert TestOptionsEnums.firstPass == TestOptionsEnums.Compressor.RLE;
+    assert TestOptionsEnums.secondPass == TestOptionsEnums.Compressor.HUFFMAN;
+  }
+
+  public static void testOptionsEnumsFail() throws ArgException {
+    Options options = new Options("test", TestOptionsEnums.class);
+    try {
+      // should fail: can not leave out _ or -
+      options.parse(new String[] {"--firstPass", "smartrle"});
+      assert false;
+    } catch (Exception e) {
+    }
+  }
+
   public static void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
