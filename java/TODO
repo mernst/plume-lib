@@ -1,6 +1,5 @@
 Options:
 * Replace split_lists with a better mechanism that uses (), {}, or [].
-* Add test cases for specifying enums as command-line arguments.
 
 OptionsDoclet:
 * Automatically detect whether to use javadoc output or html output.
