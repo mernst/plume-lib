@@ -1243,7 +1243,7 @@ public class Options {
     if (constants == null)
       throw new IllegalArgumentException(enumType.getName() + " is not an enum type");
     for (T constant : constants)
-      if (((Enum<?>) constant).name().equalsIgnoreCase(name.replace('-', '_')))
+      if (constant.name().equalsIgnoreCase(name.replace('-', '_')))
         return constant;
     // same error that's thrown by Enum.valueOf()
     throw new IllegalArgumentException(
