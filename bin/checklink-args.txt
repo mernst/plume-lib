@@ -54,6 +54,7 @@
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
+--suppress-broken http://download.oracle.com/javase/7/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#toString()
 --suppress-fragment http://java.sun.com/javase/6/docs/api/javax/lang/model/SourceVersion.html?is-external=true#RELEASE_7
 --suppress-fragment http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
 --suppress-fragment http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
@@ -118,6 +119,7 @@
 --suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www.computer.org/portal/web/csdl/doi/
 --suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www2.computer.org/portal/web/csdl/doi/	
 --suppress-redirect-prefix http://java.sun.com/->http://download.oracle.com/
+--suppress-redirect-prefix http://java.sun.com/j2se/->http://download.oracle.com/javase/
 --suppress-redirect-prefix http://maps.google.com/maps?->http://maps.google.com/m/directions?
 --suppress-redirect-prefix http://pag.csail.mit.edu/->http://groups.csail.mit.edu/pag/
 --suppress-redirect-prefix http://pag.csail.mit.edu/->http://www.pag.csail.mit.edu/
