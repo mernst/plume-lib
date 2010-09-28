@@ -165,6 +165,7 @@ javadoc-publish: javadoc
 
 optionsdoc: .optionsdoc-timestamp
 
+# This target does not create any new files -- it just updates existing ones.
 .optionsdoc-timestamp: $(JAVA_FILES)
 # This should presumably test for other buggy versions of gjdoc as well.
 # The symptom is output such as:  ARGH! @Option
