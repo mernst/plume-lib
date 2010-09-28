@@ -93,7 +93,7 @@ export jsr308_imports
 export CLASSPATH
 
 default: jar
-all: compile javadoc jar
+all: jar javadoc
 
 # Must not depend on javadoc, since javadoc depends on it
 compile: compile_without_testing test
@@ -115,6 +115,7 @@ clean:
 	rm -f .class-files-timestamp
 	rm -rf api
 	rm -f .javadoc-timestamp
+	rm -f .optionsdoc-timestamp
 	rm -f .test-timestamp
 
 very_clean: clean
@@ -162,7 +163,9 @@ javadoc-publish: javadoc
 	chgrp -R types_www /cse/www2/types/plume-lib/
 	chmod -R g+w /cse/www2/types/plume-lib/
 
-optionsdoc: compile
+optionsdoc: .optionsdoc-timestamp
+
+.optionsdoc-timestamp: $(JAVA_FILES)
 # This should presumably test for other buggy versions of gjdoc as well.
 # The symptom is output such as:  ARGH! @Option
 ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
@@ -171,12 +174,15 @@ else
 #	@echo "JAVADOC = $(JAVADOC)"
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
+	$(MAKE) compile
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 	@\rm -f ical4j.properties
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	touch .optionsdoc-timestamp
 endif
 
 ${TOOLS_JAR}:
@@ -221,14 +227,14 @@ src/plume/MathMDE.java: src/plume/MathMDE.java.jpp src/plume/MathMDE-gcd.java.jp
 
 jar: plume.jar
 # This should depend on all the included .jar files, too.
-# TODO: Why does this depend on lookup.html and lookup.txt but doesn't include them?
-plume.jar: .class-files-timestamp .test-timestamp .javadoc-timestamp lib lookup.html lookup.txt ${TOOLS_JAR}
+plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 # "make clean" avoids including stray .class files from your directory.
 # "make compile" runs unit tests; do that instead of "compile_without_testing".
 # If you use "compile_without_testing", the tests will look out of date
 # with respect to the newly-generated .class files.
 # But, don't make "clean compile" the prerequisites for plume.jar or the
 # .jar file will always be remade even if it is up-to-date.
+	$(MAKE) optionsdoc
 	$(MAKE) clean compile
 	-rm -rf jar-contents
 	mkdir jar-contents
