@@ -8,6 +8,7 @@
 --exclude-docs http://www.cs.washington.edu/homes/mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs mernst/(public_html/)?(ir95|advice/conference/)
 --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go 
+--suppress-broken 200:http://download.oracle.com/javase/7/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#toString()
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
 --suppress-broken 302:http://ieeexplore.ieee.org/
 --suppress-broken 302:http://www.hotelatmit.com/
@@ -54,7 +55,6 @@
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
---suppress-broken http://download.oracle.com/javase/7/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#toString()
 --suppress-fragment http://java.sun.com/javase/6/docs/api/javax/lang/model/SourceVersion.html?is-external=true#RELEASE_7
 --suppress-fragment http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
 --suppress-fragment http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
