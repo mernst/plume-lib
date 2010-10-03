@@ -1,0 +1,120 @@
+#!/bin/bash
+# Script for creating a plume-lib release and uploading artifacts to Google
+# Code.  This script can easily be generalized to work with other projects.
+
+script=$(basename $0)
+
+pkg="plume-lib"
+new=$1
+
+if [[ -z $new ]]; then
+    echo "Usage: $script new-version-number"
+    echo "For example: $script 1.2"
+    exit 1
+fi
+
+if ! hg status &> /dev/null; then
+    echo "$PWD is not a mercurial repository."
+fi
+
+if [[ -n $(hg status -q) ]]; then
+    echo "Uncommitted changes; commit and push changes before making a release."
+    exit 1
+fi
+
+if hg outgoing &> /dev/null; then
+    echo "Unpushed changes; push changes before making a release."
+    exit 1
+fi
+
+if [[ ! $(${JAVAC-"javac"} -version 2>&1) =~ "javac 1.7.0-jsr308" ]]; then
+    echo "Please use the JSR308 compiler to make a release."
+    exit 1
+fi
+
+echo "Going to release version $new of $pkg."
+echo -n "Is this correct? [y/n]: "
+read answer
+
+ans=${answer:0:1}
+if [[ ! ($ans = "y" || $ans = "Y") ]]; then
+    exit 1
+fi
+
+release="$pkg-$new"
+release_tar="$release.tar.gz"
+
+echo "[1/6] Creating Mercurial tag 'v$new'."
+if ! hg tag v$new &> /dev/null; then
+    echo "Failed to create Mercurial tag 'v$new'."
+    echo "Run 'hg tags' to check if the tag already exists."
+    exit 1
+fi
+
+echo "[2/6] Running 'hg archive'."
+if ! hg archive -t files -r v$new "$release"; then
+    echo "Error running 'hg archive'."
+    exit 1
+fi
+
+echo "[3/6] Building plume-lib."
+export JAVAC_TARGET_FLAGS="-target 5"
+make -C "$release/java" all
+if [[ $? -ne 0 ]]; then
+    echo "Error building plume-lib."
+    exit 1;
+fi
+
+echo "[4/6] Performing post-build clean up."
+make -C "$release/java" release_clean
+if [[ $? -ne 0 ]]; then
+    echo "Error running 'make release_clean'."
+    exit 1;
+fi
+
+echo "[5/6] Creating release archive: $release_tar"
+tar czf "$release_tar" --owner=0 --group=0 "$release"
+
+echo "[6/6] Cleaning up."
+rm -rf "$release"
+
+done_release() {
+    echo ""
+    echo "Script complete."
+    echo "To finalize the release, perform the following steps manually:"
+    if ! $uploaded; then
+        echo "* Upload $release_tar to Google Code."
+    fi
+    echo "* Run 'hg push' to push the newly created tag."
+    exit 0
+}
+
+uploaded=false
+echo ""
+echo -n "Attempt to upload release to Google Code? [y/n]: "
+read answer
+
+ans=${answer:0:1}
+if [[ ! ($ans = "y" || $ans = "Y") ]]; then
+    done_release
+fi
+
+if ! which googlecode_upload.py &> /dev/null; then
+    echo "Could not find googlecode_upload.py in PATH."
+    done_release
+fi
+
+googlecode_upload.py \
+    --summary "Plume-lib v$new release" \
+    --project "plume-lib" \
+    --labels "Type-Source" \
+    "$release_tar"
+
+if [[ $? -ne 0 ]] ; then
+    echo "Uploading to Google Code failed."
+    done_release
+fi
+
+uploaded=true
+echo "Uploaded $release_tar to Google Code successfully."
+done_release
