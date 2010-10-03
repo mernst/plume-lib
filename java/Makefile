@@ -121,6 +121,17 @@ clean:
 very_clean: clean
 	rm -f ${AUTO_GENERATED_FILES}
 
+# Clean in preparation for making a plume-lib release.
+release_clean:
+	rm -f src/plume/*.class
+	rm -f .class-files-timestamp
+	rm -f .javadoc-timestamp
+	rm -f .optionsdoc-timestamp
+	rm -f .test-timestamp
+	rm -f lookup.html
+	rm -f lookup.txt
+	rm -f ${AUTO_GENERATED_FILES}
+
 tags: TAGS
 TAGS: ${JAVA_AND_CPP_FILES}
 	etags ${JAVA_AND_CPP_FILES}
@@ -359,7 +370,7 @@ check-interning:
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc
+.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc
 
 
 # Existence of this rule means that a target is deleted if has just changed
