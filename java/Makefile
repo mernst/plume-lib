@@ -235,8 +235,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 # with respect to the newly-generated .class files.
 # But, don't make "clean compile" the prerequisites for plume.jar or the
 # .jar file will always be remade even if it is up-to-date.
-	$(MAKE) optionsdoc
-	$(MAKE) clean compile
+	$(MAKE) clean optionsdoc
+	$(MAKE) compile
 	-rm -rf jar-contents
 	mkdir jar-contents
 	mkdir jar-contents/plume
