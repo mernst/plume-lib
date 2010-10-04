@@ -137,7 +137,6 @@ very_clean: clean
 release_clean: clean-except-jar
 	rm -f lookup.html
 	rm -f lookup.txt
-	rm -f ${AUTO_GENERATED_FILES}
 
 tags: TAGS
 TAGS: ${JAVA_AND_CPP_FILES}
