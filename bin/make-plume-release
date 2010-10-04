@@ -66,9 +66,9 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "[4/6] Performing post-build clean up."
-make -C "$release/java" release_clean
+make -C "$release" release-clean
 if [[ $? -ne 0 ]]; then
-    echo "Error running 'make release_clean'."
+    echo "Error running 'make release-clean'."
     exit 1;
 fi
 
