@@ -35,11 +35,12 @@
 use strict;
 use English;
 $WARNING = 1;
-# time between get requests, to avoid being locked out by ACM web server
-my $sleep_seconds = 5;
 
 use LWP::Simple;
 use File::Temp qw/ :mktemp  /;
+
+# time between get requests, to avoid being locked out by ACM web server
+my $sleep_seconds = 5;
 
 if (scalar(@ARGV) != 1) {
   die "Expected exactly 1 argument, got " . scalar(@ARGV);
@@ -58,7 +59,7 @@ my ($fh, $file) = mkstemps( "acm-abstracts-XXXX", ".html");
 # Parens around regexp put them in the list, too.
 my @toc_sections = split(/(<\/div>)/, $toc_html);
 for my $toc_section (@toc_sections) {
-  if ($toc_section !~ /<A HREF="([^<]*?)#abstract" target="_self">abstract<\/A>/) {
+  if ($toc_section !~ /<A HREF="([^<]*?)#abstract" target="_self"> *abstract<\/A>/) {
     print $fh "$toc_section\n";
     next;
   }
@@ -78,9 +79,10 @@ for my $toc_section (@toc_sections) {
   my @paper_sections = split(/(<\/div>)/, $paper_html);
   my $appended = 0;
   for my $paper_section (@paper_sections) {
-    # print $fh "<!-- PAPER_SECTION: $paper_section -->\n";
+    # print $fh "<!-- PAPER_SECTION: $paper_section END_PAPER_SECTION -->\n";
     if ($paper_section =~ /<A NAME="abstract">ABSTRACT<\/A>/) {
       $appended = 1;
+      # print "ABSTRACT: $paper_section END ABSTRACT\n";
       $toc_section .= $paper_section . "</div>";
       last;
     }
