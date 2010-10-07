@@ -14,6 +14,7 @@
 --suppress-broken 302:http://www.hotelatmit.com/
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html	
+--suppress-broken 403:http://portal.acm.org/dl.cfm
 --suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
 --suppress-broken 403:http://validator.w3.org/check?uri=referer
 --suppress-broken 403:http://www.acm.org/
