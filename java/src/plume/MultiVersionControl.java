@@ -252,10 +252,10 @@ public class MultiVersionControl {
 
   static enum Action {
     CHECKOUT,
-      STATUS,
-      UPDATE,
-      LIST
-      };
+    STATUS,
+    UPDATE,
+    LIST
+    };
   // Shorter variants
   private static Action CHECKOUT = Action.CHECKOUT;
   private static Action STATUS = Action.STATUS;
