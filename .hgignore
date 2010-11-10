@@ -5,6 +5,7 @@ syntax: glob
 TAGS
 java/.class-files-timestamp
 java/.javadoc-timestamp
+java/.optionsdoc-timestamp
 java/.test-timestamp
 java/Makefile.user
 java/api
