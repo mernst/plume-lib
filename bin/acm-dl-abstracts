@@ -15,16 +15,21 @@
 #
 # You can use it on:
 #  * a URL from the ACM digital library.  Example:
-#      acm-dl-abstracts 'http://portal.acm.org/toc.cfm?id=964001' > popl2004-abstracts-orig.html
-#  * email from the ACM TOC Service.  Example (after saving to local file):
+#      acm-dl-abstracts 'http://portal.acm.org/toc.cfm?id=964001'
+#  * email from the ACM TOC Service.  Example (after saving email to to local
+#    file 'acm.html'):
 #      acm-dl-abstracts acm.html
+# (If you do not redirect output to a file, the program will choose a
+# filename of the form acm-abstracts-XXXX.html.)
 # Then, browse it or print it.  If printing, run
 #   for i in `ls acm-abstracts-*.html`; do htmldoc --webpage -t ps --outfile $i.ps $i; done
 # because both html2ps and the Filefox print functionality tend to cut off
 # content.  (Maybe the ACM HTML is malformed, or maybe this script should be
 # enhanced.)
 
-# This script takes a long time to run (a minute is not unusual); be patient!
+# This script takes a long time to run (multiple minutes per table of
+# contents, because of built-in delay to avoid being locked out by ACM web
+# server); be patient!
 
 
 use strict;
@@ -33,6 +38,9 @@ $WARNING = 1;
 
 use LWP::Simple;
 use File::Temp qw/ :mktemp  /;
+
+# time between get requests, to avoid being locked out by ACM web server
+my $sleep_seconds = 5;
 
 if (scalar(@ARGV) != 1) {
   die "Expected exactly 1 argument, got " . scalar(@ARGV);
@@ -43,7 +51,7 @@ if (-e $toc_url) {
   $toc_url = "file:" . $toc_url;
 }
 my $toc_html = get($toc_url);
-if (! defined $toc_html) { die "Couldn't get $toc_url" }
+if (! defined $toc_html) { die "Couldn't get TOC: $toc_url" }
 
 my ($fh, $file) = mkstemps( "acm-abstracts-XXXX", ".html");
 
@@ -51,10 +59,11 @@ my ($fh, $file) = mkstemps( "acm-abstracts-XXXX", ".html");
 # Parens around regexp put them in the list, too.
 my @toc_sections = split(/(<\/div>)/, $toc_html);
 for my $toc_section (@toc_sections) {
-  if ($toc_section !~ /<A HREF="([^<]*?)#abstract" target="_self">abstract<\/A>/) {
+  if ($toc_section !~ /<A HREF="([^<]*?)#abstract" target="_self"> *abstract<\/A>/) {
     print $fh "$toc_section\n";
     next;
   }
+  sleep($sleep_seconds);
   my $paper_url = $1;
   # print "PAPER_URL: $paper_url\n";
   my $full_paper_url = $paper_url;
@@ -64,15 +73,16 @@ for my $toc_section (@toc_sections) {
   }
   # print "FULL_PAPER_URL: $full_paper_url\n";
   my $paper_html = get($full_paper_url);
-  if (! defined $paper_html) { die "Couldn't get $full_paper_url"; }
+  if (! defined $paper_html) { die "Couldn't get paper: $full_paper_url"; }
 
   # Parens around regexp put them in the list, too.
   my @paper_sections = split(/(<\/div>)/, $paper_html);
   my $appended = 0;
   for my $paper_section (@paper_sections) {
-    # print $fh "<!-- PAPER_SECTION: $paper_section -->\n";
+    # print $fh "<!-- PAPER_SECTION: $paper_section END_PAPER_SECTION -->\n";
     if ($paper_section =~ /<A NAME="abstract">ABSTRACT<\/A>/) {
       $appended = 1;
+      # print "ABSTRACT: $paper_section END ABSTRACT\n";
       $toc_section .= $paper_section . "</div>";
       last;
     }
