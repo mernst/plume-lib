@@ -110,27 +110,33 @@ compile_without_testing:  .class-files-timestamp
 	${JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
 	touch .class-files-timestamp
 
-clean:
+# Remove most generated files, but not jar files which are desired in the release.
+clean-except-jar:
 	rm -f src/plume/*.class
 	rm -f .class-files-timestamp
-	rm -rf api
 	rm -f .javadoc-timestamp
 	rm -f .optionsdoc-timestamp
 	rm -f .test-timestamp
 
+# Remove most generated files.
+# The goal is to cause all code to be remade and and tests to be run.
+clean: clean-except-jar
+	rm -f plume.jar lookup.jar task_manager.jar
+
+# Remove every generated file.
+# The goal is to restore the directory to its original state when checked out.
 very_clean: clean
 	rm -f ${AUTO_GENERATED_FILES}
-
-# Clean in preparation for making a plume-lib release.
-release_clean:
-	rm -f src/plume/*.class
-	rm -f .class-files-timestamp
-	rm -f .javadoc-timestamp
-	rm -f .optionsdoc-timestamp
-	rm -f .test-timestamp
 	rm -f lookup.html
 	rm -f lookup.txt
-	rm -f ${AUTO_GENERATED_FILES}
+	rm -f TAGS
+	rm -rf api
+
+# Clean in preparation for making a plume-lib release.
+# Some generated files are retained for users' convenience.
+release_clean: clean-except-jar
+	rm -f lookup.html
+	rm -f lookup.txt
 
 tags: TAGS
 TAGS: ${JAVA_AND_CPP_FILES}
@@ -237,7 +243,8 @@ src/plume/MathMDE.java: src/plume/MathMDE.java.jpp src/plume/MathMDE-gcd.java.jp
 ## extraneous components removed.
 
 
-jar: plume.jar
+jar: plume.jar lookup.jar task_manager.jar
+
 # This should depend on all the included .jar files, too.
 plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 # "make clean" avoids including stray .class files from your directory.
