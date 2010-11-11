@@ -463,6 +463,42 @@ public class OptionsDoclet {
           }
         }
       }
+      if (oi.base_type.isEnum()) {
+        processEnumJavadoc(oi);
+      }
+    }
+  }
+
+  /**
+   * Initializes {@link Options.OptionInfo.enum_jdoc} for the given
+   * <code>OptionInfo</code>.
+   */
+  private void processEnumJavadoc(Options.OptionInfo oi) {
+    Enum<?>[] constants = (Enum<?>[]) oi.base_type.getEnumConstants();
+    if (constants == null)
+      return;
+
+    oi.enum_jdoc = new LinkedHashMap<String, String>();
+
+    for (Enum<?> constant : constants) {
+      oi.enum_jdoc.put(constant.name(), "");
+    }
+
+    ClassDoc enum_doc = root.classNamed(oi.base_type.getName());
+    if (enum_doc == null)
+      return;
+
+    for (String name : oi.enum_jdoc.keySet()) {
+      for (FieldDoc fd : enum_doc.fields()) {
+        if (fd.name().equals(name)) {
+          if (formatJavadoc) {
+            oi.enum_jdoc.put(name, fd.commentText());
+          } else {
+            oi.enum_jdoc.put(name, javadocToHtml(fd));
+          }
+          break;
+        }
+      }
     }
   }
 
@@ -562,6 +598,16 @@ public class OptionsDoclet {
       // The default string must be HTML escaped since it comes from a string
       // rather than a Javadoc comment.
       f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml(default_str));
+    }
+    if (oi.base_type.isEnum()) {
+      b.append("<ul>");
+      for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
+        b.append("<li><b>").append(entry.getKey()).append("</b>");
+        if (!entry.getValue().isEmpty())
+          b.append(" ").append(entry.getValue());
+        b.append("</li>");
+      }
+      b.append("</ul>");
     }
     return b.toString();
   }
