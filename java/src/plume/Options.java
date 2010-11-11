@@ -235,6 +235,13 @@ public class Options {
     /*@Nullable*/ String jdoc;
 
     /**
+     * Maps names of enum constants to their corresponding Javadoc.  This is
+     * used by OptionsDoclet to generate documentation for enum-type options.
+     * Null if the base_type is not an Enum.
+     */
+    Map<String, String> enum_jdoc;
+
+    /**
      * Name of the argument type.  Defaults to the type of the field, but
      * user can override this in the option string.
      */
