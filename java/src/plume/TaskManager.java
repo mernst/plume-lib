@@ -22,7 +22,7 @@ import com.sun.javadoc.*;
  *   <li><b>-c</b> <b>--completed=</b><i>boolean</i>. Include only completed tasks [default false]</li>
  *   <li><b>-o</b> <b>--open=</b><i>boolean</i>. Include only open tasks [default false]</li>
  *   <li><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
- *   <li><b>-f</b> <b>--format=</b><i>enum</i>. Specify output format (short_ascii, short_html, milestone_html) [default short_ascii]</li>
+ *   <li><b>-f</b> <b>--format=</b><i>enum</i>. Specify output format [default short_ascii]<ul><li><b>short_ascii</b></li><li><b>short_html</b></li><li><b>milestone_html</b></li></ul></li>
  *   <li><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
  *   <li><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
  * </ul>
@@ -49,7 +49,7 @@ public class TaskManager {
   @Option ("-v Print progress information")
   public static boolean verbose = false;
 
-  @Option ("-f Specify output format (short_ascii, short_html, milestone_html)")
+  @Option ("-f Specify output format")
   public static OutputFormat format = OutputFormat.short_ascii;
 
   @Option ("Regex that matches an entire comment (not just a comment start)")
