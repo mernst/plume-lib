@@ -2,11 +2,14 @@ Unless otherwise noted, plume-lib is distributed under the MIT license,
 which appears below.  Some files in plume-lib are distributed under a
 different license, which is indicated at the top of that particular file.
 These exceptions are:
-  bin/checklink
-  bin/pspage
-  numerous files in the emacs/ subdirectory
-  java/src/plume/WeakHasherMap.java
-  java/src/plume/WeakIdentityHashMap.java
+  bin/checklink (W3C Software License)
+  bin/cronic (no license stated)
+  bin/pspage (GPL)
+  bin/search (public domain)
+  multiple files in the emacs/ subdirectory (GPL)
+  java/src/plume/JWhich.java (license in file)
+  java/src/plume/WeakHasherMap.java (license in the file)
+  java/src/plume/WeakIdentityHashMap.java (license in the file)
 
 
 Copyright (c) 1998-2010 Michael Ernst
