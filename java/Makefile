@@ -42,12 +42,14 @@ ifndef HTML_TO_TEXT
 ifneq (,$(shell which lynx 2>/dev/null))
   # Note no trailing space!
   HTML_TO_TEXT = lynx -dump file://$(shell pwd)/
-else ifneq (,$(shell which html2text 2>/dev/null))
+else
+ifneq (,$(shell which html2text 2>/dev/null))
   # Note trailing space!
   HTML_TO_TEXT = html2text -rcfile html2textrc$(space)
 else
   # Note trailing space!
   HTML_TO_TEXT = cat$(space)
+endif
 endif
 endif
 
