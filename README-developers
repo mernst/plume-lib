@@ -1,10 +1,11 @@
 This readme is intended for plume-lib developers.
+The main plume-lib documentation is in file README.html .
 
 
 --Making a release--
 
-To make a plume-lib release, run the make-plume-release script located in
-plume-lib/bin:
+To make a plume-lib release and upload it to Google Code, run the
+make-plume-release script located in plume-lib/bin:
 
     make-plume-release x.y.z
 
