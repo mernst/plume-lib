@@ -20,6 +20,9 @@ else
   TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 endif
 
+# tools.jar file from JDK 5, so plume.jar is fully compatible with Java version 5.
+TOOLS_JAR_5 ?= TOOLS_JAR
+
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
@@ -272,7 +275,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 	(cd jar-contents; jar xf ../lib/svnkit.jar)
 	(cd jar-contents; jar xf ../lib/tagsoup-1.2.jar)
 	(cd jar-contents; jar xf ../lib/xom-1.2.1.jar)
-	(cd jar-contents; jar xf $(TOOLS_JAR) com/sun/javadoc)
+	(cd jar-contents; jar xf $(TOOLS_JAR_5) com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order. (not for now, overflows command line)
 #	(cd jar-contents; jar cf ../plume.jar `find * -type f | sort`)
