@@ -1,6 +1,10 @@
 #!/bin/bash
-# Script for creating a plume-lib release and uploading artifacts to Google
-# Code.  This script can easily be generalized to work with other projects.
+
+# Script that creates a plume-lib release and uploads artifacts to Google Code.
+# If you just want to make plume.jar for your own use, then instead use:
+#   make jar
+# You can also find a pre-built plume.jar in the plume-lib release, in a
+# file such as plume-lib-1.0.0/java/plume.jar .
 
 script=$(basename $0)
 
