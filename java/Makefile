@@ -21,7 +21,7 @@ else
 endif
 
 # tools.jar file from JDK 5, so plume.jar is fully compatible with Java version 5.
-TOOLS_JAR_5 ?= TOOLS_JAR
+TOOLS_JAR_5 ?= ${TOOLS_JAR}
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
