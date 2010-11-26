@@ -5,6 +5,7 @@ package plume;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.zip.*;
 import java.lang.reflect.*;
 // import Assert;
@@ -1529,6 +1530,20 @@ public final class UtilMDE {
       p.setProperty(key, value);
     }
     return currentValue;
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////
+  /// Regexp (regular expression)
+  ///
+
+  /**
+   * @deprecated Use Pattern.quote instead
+   * @see Pattern.quote(String)
+   */
+  @Deprecated
+  public static String patternQuote(String s) {
+    return Pattern.quote(s);
   }
 
 
