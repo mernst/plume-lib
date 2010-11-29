@@ -603,7 +603,7 @@ public class OptionsDoclet {
       b.append("<ul>");
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
         b.append("<li><b>").append(entry.getKey()).append("</b>");
-        if (!entry.getValue().isEmpty())
+        if (entry.getValue().length() != 0)
           b.append(" ").append(entry.getValue());
         b.append("</li>");
       }
