@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(add-hook 'before-save-hooks 'time-stamp)
+(add-hook 'before-save-hook 'time-stamp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; defined functions
