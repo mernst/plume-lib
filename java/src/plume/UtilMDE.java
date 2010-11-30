@@ -1539,7 +1539,7 @@ public final class UtilMDE {
 
   /**
    * @deprecated Use Pattern.quote instead
-   * @see Pattern.quote(String)
+   * @see Pattern#quote(String)
    */
   @Deprecated
   public static String patternQuote(String s) {
