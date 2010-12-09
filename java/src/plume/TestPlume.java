@@ -26,7 +26,6 @@ import java.util.regex.*;
 // MathMDE.java
 // Options.java
 // OrderedPairIterator.java
-// UtilMDE.java
 // StringBuilderDelimited.java
 // UtilMDE.java
 // WeakHasherMap.java
@@ -1527,6 +1526,26 @@ public final class TestPlume extends TestCase {
     // public static LineNumberReader lineNumberFileReader(String filename)
     // public static BufferedWriter bufferedFileWriter(String filename) throws IOException
     // public static Class classForName(String className)
+
+    // private boolean isSubtype(Class<?> sub, Class<?> sup) {
+    assert UtilMDE.isSubtype(Integer.class, Integer.class);
+    assert UtilMDE.isSubtype(Cloneable.class, Cloneable.class);
+    assert UtilMDE.isSubtype(Object.class, Object.class);
+    assert UtilMDE.isSubtype(Integer.class, Number.class);
+    assert ! UtilMDE.isSubtype(Number.class, Integer.class);
+    assert UtilMDE.isSubtype(Integer.class, Comparable.class);
+    assert ! UtilMDE.isSubtype(Comparable.class, Integer.class);
+    assert UtilMDE.isSubtype(Integer.class, Object.class);
+    assert ! UtilMDE.isSubtype(Object.class, Integer.class);
+    assert ! UtilMDE.isSubtype(Integer.class, Float.class);
+    assert UtilMDE.isSubtype(Collection.class, Iterable.class);
+    assert ! UtilMDE.isSubtype(Iterable.class, Collection.class);
+    assert UtilMDE.isSubtype(ArrayList.class, Iterable.class);
+    assert ! UtilMDE.isSubtype(Iterable.class, ArrayList.class);
+    assert UtilMDE.isSubtype(ArrayList.class, Cloneable.class);
+    assert ! UtilMDE.isSubtype(Cloneable.class, ArrayList.class);
+    assert UtilMDE.isSubtype(ArrayList.class, List.class);
+    assert ! UtilMDE.isSubtype(List.class, ArrayList.class);
 
     // public static String classnameToJvm(String classname)
     assert UtilMDE.classnameToJvm("boolean").equals("Z");
