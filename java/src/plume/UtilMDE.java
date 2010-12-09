@@ -335,6 +335,35 @@ public final class UtilMDE {
   /// Class
   ///
 
+  /**
+   * Returns true iff sub is a subtype of sup.
+   * If sub == sup, then sub is considered a subtype of sub and this method
+   * returns true.
+   */
+  public static boolean isSubtype(Class<?> sub, Class<?> sup) {
+    if (sub == sup) {
+      return true;
+    }
+
+    // Handle superclasses
+    Class<?> parent = sub.getSuperclass();
+    // If parent == null, sub == Object
+    if ((parent != null)
+        && (parent == sup || isSubtype(parent, sup))) {
+      return true;
+    }
+       
+    // Handle interfaces
+    for (Class<?> ifc : sub.getInterfaces()) {
+      if (ifc == sup || isSubtype(ifc, sup)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
   private static HashMap<String,Class<?>> primitiveClasses = new HashMap<String,Class<?>>(8);
   static {
     primitiveClasses.put("boolean", Boolean.TYPE);
