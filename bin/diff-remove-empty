@@ -3,7 +3,9 @@
   if 0;
 # (Can't use "#!/usr/bin/env perl" because I want the "-p" switch.)
 
-# diff-remave-empty -- filter out empty parts of a diff file
+# diff-remove-empty -- filter out empty parts of a diff file
+# This is useful after running some other program that removes some lines
+# from a diff file.
 # Michael Ernst <mernst@cs.washington.edu>
 
 use strict;
