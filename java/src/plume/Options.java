@@ -340,7 +340,12 @@ public class Options {
       }
 
       // Get the short name, type name, and description from the annotation
-      ParseResult pr = parse_option (option.value());
+      ParseResult pr;
+      try {
+        pr = parse_option (option.value());
+      } catch (Throwable e) {
+        throw new Error ("Error while processing @Option(\"" + option.value() + "\") on '" + field + "'", e);
+      }
       short_name = pr.short_name;
       if (pr.type_name != null) {
         type_name = pr.type_name;
@@ -1377,7 +1382,9 @@ public class Options {
 
     // Get the short name (if any)
     if (val.startsWith("-")) {
-      assert val.substring(2,3).equals(" ");
+      if (val.length() < 4 || ! val.substring(2,3).equals(" ")) {
+        throw new Error("Malformed @Option argument \"" + val + "\".  An argument that starts with '-' should contain a short name, a space, and a description.");
+      }
       short_name = val.substring (1, 2);
       description = val.substring (3);
     } else {
