@@ -42,6 +42,10 @@
 ## do
 ##   etags `find . -iname '*.java' -print | sort-directory-order`
 
+## Note a directory name will appear immediatel before its contents if it
+## ends with a slash (/), but a directory name that lacks a slash will
+## appear with the contents of the parent directory.
+
 ## Mac OS X has a "-s" option to "find" that is similar (but not
 ## necessarily identical) to "find | sort".
 
