@@ -592,7 +592,7 @@ public class WeakIdentityHashMap<K,V>
         if (!(o instanceof Map.Entry))
             return null;
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
-        Map.Entry entry = (/*@NonNull*/ Map.Entry)o;
+        Map.Entry entry = (Map.Entry)o;
         Object k = maskNull(entry.getKey());
         int h = hasher (k);
         int i = indexFor(h, tab.length);
@@ -709,7 +709,7 @@ public class WeakIdentityHashMap<K,V>
         public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
-            Map.Entry e = (/*@NonNull*/ Map.Entry)o;   // This annotation shouldn't be necessary??
+            Map.Entry e = (Map.Entry)o;
             Object k1 = getKey();
             Object k2 = e.getKey();
             if (eq (k1, k2)) {
@@ -960,7 +960,7 @@ public class WeakIdentityHashMap<K,V>
         public boolean contains(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
-            Map.Entry e = (/*@NonNull*/ Map.Entry)o;
+            Map.Entry e = (Map.Entry)o;
             Object k = e.getKey();
             Entry candidate = getEntry(e.getKey());
             return candidate != null && candidate.equals(e);
