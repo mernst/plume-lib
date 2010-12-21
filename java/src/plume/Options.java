@@ -309,6 +309,10 @@ public class Options {
         throw new Error ("Unexpected error getting default for " + field, e);
       }
 
+      if (field.getType().isArray()) {
+        throw new Error("@Option may not annotate a variable of array type: " + field);
+      }
+
       // Handle lists.  When a list argument is specified multiple times,
       // each argument value is appended to the list.
       Type gen_type = field.getGenericType();
@@ -316,7 +320,7 @@ public class Options {
         ParameterizedType pt = (ParameterizedType) gen_type;
         Type raw_type = pt.getRawType();
         if (!raw_type.equals (List.class))
-          throw new Error ("@Option does not support type " + pt + " for field " + field);
+          throw new Error ("@Option supports List<...> but no other parameterized type; it does not support type " + pt + " for field " + field);
         if (default_obj == null) {
           List<Object> new_list = new ArrayList<Object>();
           try {
@@ -364,8 +368,8 @@ public class Options {
             constructor = base_type.getConstructor (String.class);
           }
         } catch (Exception e) {
-          throw new Error ("Option " + field
-                           + " does not have a string constructor", e);
+          throw new Error ("@Option does not support type " + base_type + " for field " + field
+                           + " because it does not have a string constructor", e);
         }
       }
     }
