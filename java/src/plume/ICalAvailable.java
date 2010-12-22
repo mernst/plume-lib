@@ -336,9 +336,11 @@ public class ICalAvailable {
   static String periodListString(PeriodList pl, TimeZone tz) {
     tf.setTimeZone(tz);
     StringBuilder result = new StringBuilder();
+    // "Object" because PeriodList extends TreeSet, but it really ought to
+    // extend TreeSet</*@NonNull*/ Period>
     for (Object p : pl) {
       assert p != null : "@SuppressWarnings(nullness): non-generic container class; elements are non-null";
-      result.append(rangeString((/*@NonNull*/ Period)p, tz) + "\n");
+      result.append(rangeString((Period)p, tz) + "\n");
     }
     return result.toString();
   }
