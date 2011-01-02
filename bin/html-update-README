@@ -11,3 +11,8 @@ html-update-link-dates updates webpage text that refers to the date
 For an example of use of both html-update-toc and html-update-link-dates, see
 http://www.cs.washington.edu/homes/mernst/software/.  For an example of the size
 feature of html-update-link-dates, see http://pag.csail.mit.edu/daikon/download/.
+
+You can make Emacs automatically run html-update-toc to update HTML tables
+of contents, whenever a file is saved.  To do so, add
+  (load-library "html-update")
+to your .emacs file.
