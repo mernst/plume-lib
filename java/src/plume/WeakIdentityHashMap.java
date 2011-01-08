@@ -119,7 +119,7 @@ import java.lang.ref.ReferenceQueue;
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
  */
-@SuppressWarnings({"unchecked", "rawtypes", "nullness", "interning"}) // old, non-typesafe Sun code, not worth annotating or checking
+@SuppressWarnings({"unchecked", "rawtypes", "nullness", "keyfor", "interning"}) // old, non-typesafe Sun code, not worth annotating or checking
 public class WeakIdentityHashMap<K,V>
     extends AbstractMap<K,V>
     implements Map<K,V> {
