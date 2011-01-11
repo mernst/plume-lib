@@ -35,8 +35,10 @@ import java.lang.annotation.*;
  * Typical use is:
  *
  * <!-- Example needs some more words of explanation and example command lines. -->
- * <!-- Given this code: --> <pre>
- *  public static class MyProgram {
+ * <pre>
+ *  import plume.*;
+ * 
+ *  public class MyProgram {
  * 
  *    &#64;Option("-o &lt;filename&gt; the output file ")
  *    public static File outfile = new File("/tmp/foobar");
