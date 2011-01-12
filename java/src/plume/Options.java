@@ -587,8 +587,17 @@ public class Options {
       }
 
       for (Field f : fields) {
-        debug_options.log ("Considering field %s of object %s with annotations %s%n",
-                           f, obj, Arrays.toString(f.getDeclaredAnnotations()));
+        debug_options.log ("Considering field %s of object %s%n", f, obj);
+        try {
+          debug_options.log ("  with annotations %s%n",
+                             Arrays.toString(f.getDeclaredAnnotations()));
+        } catch (java.lang.ArrayStoreException e) {
+          if (e.getMessage().equals("sun.reflect.annotation.TypeNotPresentExceptionProxy")) {
+            debug_options.log ("  with TypeNotPresentExceptionProxy while getting annotations%n");
+          } else {
+            throw e;
+          }
+        }
         Option option = safeGetAnnotation(f, Option.class);
         if (option == null)
           continue;
