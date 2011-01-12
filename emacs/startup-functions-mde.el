@@ -1001,7 +1001,7 @@ starting on the same paragraph at which another match ended is ignored."
   (interactive
    (progn
      (barf-if-buffer-read-only)
-     (keep-lines-read-args "Flush paragraphs (containing match for regexp): ")))
+     (keep-lines-read-args "Flush paragraphs containing match for regexp")))
   (if rstart
       (progn
 	(goto-char (min rstart rend))
