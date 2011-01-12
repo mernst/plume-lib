@@ -4,7 +4,7 @@
 
 (defun update-html-mode-hook ()
   (add-hook 'after-save-hook 'run-html-update-toc nil 'local))
-(add-hook 'html-mode-hook 'mde-html-mode-hook)
+(add-hook 'html-mode-hook 'update-html-mode-hook)
 
 (defun run-html-update-toc ()
   "Run external program html-update-toc on the file."
