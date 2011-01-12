@@ -592,7 +592,8 @@ public class Options {
           debug_options.log ("  with annotations %s%n",
                              Arrays.toString(f.getDeclaredAnnotations()));
         } catch (java.lang.ArrayStoreException e) {
-          if (e.getMessage().equals("sun.reflect.annotation.TypeNotPresentExceptionProxy")) {
+          if (e.getMessage() != null
+              && e.getMessage().equals("sun.reflect.annotation.TypeNotPresentExceptionProxy")) {
             debug_options.log ("  with TypeNotPresentExceptionProxy while getting annotations%n");
           } else {
             throw e;
