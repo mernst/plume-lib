@@ -16,8 +16,8 @@
 # You can use it on:
 #  * a URL from the ACM digital library.  Example:
 #      acm-dl-abstracts 'http://portal.acm.org/toc.cfm?id=964001'
-#  * email from the ACM TOC Service.  Example (after saving email to to local
-#    file 'acm.html'):
+#  * email from the ACM TOC Service.  Example (after saving the contents,
+#    not the whole email with headers, to to local file 'acm.html'):
 #      acm-dl-abstracts acm.html
 # (If you do not redirect output to a file, the program will choose a
 # filename of the form acm-abstracts-XXXX.html.)
