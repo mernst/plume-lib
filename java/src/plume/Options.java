@@ -241,7 +241,7 @@ public class Options {
      * used by OptionsDoclet to generate documentation for enum-type options.
      * Null if the base_type is not an Enum.
      */
-    Map<String, String> enum_jdoc;
+    /*@LazyNonNull*/ Map<String, String> enum_jdoc;
 
     /**
      * Name of the argument type.  Defaults to the type of the field, but

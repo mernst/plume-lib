@@ -12,6 +12,7 @@ import java.util.*;
  **/
 @SuppressWarnings("interning")
 public final class ArraysMDE {
+  @SuppressWarnings("nullness") // initialization: unused constructor
   private ArraysMDE() { throw new Error("do not instantiate"); }
 
   ///////////////////////////////////////////////////////////////////////////

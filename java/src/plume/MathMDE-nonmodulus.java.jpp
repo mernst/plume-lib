@@ -57,10 +57,12 @@ The correct way to build the system is to run 'make'.
    * maximum of the original values.
    **/
   static final class MissingNumbersIteratorINT implements Iterator<INTEGER> {
-    INT[] nums;
-    Iterator<INTEGER> nums_itor;
+    // Exactly one of nums and nums_itor is non-null.
+    /*@LazyNonNull*/ INT [] nums;
+    /*@LazyNonNull*/ Iterator<INTEGER> nums_itor;
     INT current_nonmissing;
     INT current_missing;
+    // Used only if nums != null.
     int current_index;
     boolean add_ends;
 
@@ -94,6 +96,7 @@ The correct way to build the system is to run 'make'.
         current_missing = current_nonmissing;
       }
       this.nums_itor = nums_itor;
+      current_index = Integer.MIN_VALUE;
     }
 
     public boolean hasNext() {

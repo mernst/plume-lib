@@ -44,7 +44,8 @@ import org.apache.commons.lang.StringEscapeUtils;
  * are specified, they must be different.
  *
  * <li> <b>-i</b> Specifies that the docfile should be edited in-place.  This
- * option can not be used at the same time as the <code>-outfile</code> option.
+ * option can only be used if the <code>-docfile</code> option is used, and
+ * may not be used at the same time as the <code>-outfile</code> option.
  *
  * <li> <b>-format</b> <i>format</i> This option sets the output format of this
  * doclet.  Currently, the following values for <i>format</i> are supported:
@@ -162,8 +163,9 @@ public class OptionsDoclet {
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
   private String endDelim = "<!-- end options doc -->"; 
 
-  private File docFile;
-  private File outFile;
+  private /*@Nullable*/ File docFile = null;
+  private /*@Nullable*/ File outFile = null;;
+  // If true, then docFile is non-null
   private boolean inPlace = false;
   private boolean formatJavadoc = false;
   private boolean includeClassDoc = false;
@@ -325,6 +327,10 @@ public class OptionsDoclet {
       reporter.printError("docfile must be different from outfile");
       return false;
     }
+    if (inPlace && docFile == null) {
+      reporter.printError("-i supplied but -docfile was not");
+      return false;
+    }
     return true;
   }
 
@@ -375,12 +381,14 @@ public class OptionsDoclet {
     PrintWriter out;
     String output = output();
 
-    if (outFile != null)
+    if (outFile != null) {
       out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
-    else if (inPlace)
+    } else if (inPlace) {
+      assert docFile != null : "@SuppressWarnings(nullness): dependent: docFile is non-null if inPlace is true";
       out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
-    else
+    } else {
       out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+    }
 
     out.println(output);
     out.flush();
@@ -405,6 +413,7 @@ public class OptionsDoclet {
   /**
    * Get the result of inserting the options documentation into the docfile.
    */
+  /*@NonNullOnEntry("docFile")*/
   private String newDocFileText() throws Exception {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
     BufferedReader doc = new BufferedReader(new FileReader(docFile));
@@ -481,6 +490,7 @@ public class OptionsDoclet {
     oi.enum_jdoc = new LinkedHashMap<String, String>();
 
     for (Enum<?> constant : constants) {
+      assert oi.enum_jdoc != null : "@SuppressWarnings(nullness): bug in flow?";
       oi.enum_jdoc.put(constant.name(), "");
     }
 
@@ -601,6 +611,7 @@ public class OptionsDoclet {
     }
     if (oi.base_type.isEnum()) {
       b.append("<ul>");
+      assert oi.enum_jdoc != null : "@SuppressWarnings(nullness): dependent: non-null if oi.base_type is an enum";
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
         b.append("<li><b>").append(entry.getKey()).append("</b>");
         if (entry.getValue().length() != 0)
