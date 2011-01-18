@@ -40,7 +40,9 @@ public class CountingPrintWriter extends PrintWriter {
    */
   public CountingPrintWriter(OutputStream out) {
     super(out);
+    writtenBytes = 0;
     printedBytes = 0;
+    printedChars = 0;
     writtenChars = 0;
   }
 
@@ -55,7 +57,9 @@ public class CountingPrintWriter extends PrintWriter {
    */
   public CountingPrintWriter(OutputStream out, boolean autoFlush)  {
     super(out, autoFlush);
+    writtenBytes = 0;
     printedBytes = 0;
+    printedChars = 0;
     writtenChars = 0;
   }
 
@@ -65,7 +69,9 @@ public class CountingPrintWriter extends PrintWriter {
    */
   public CountingPrintWriter(Writer out) {
     super(out);
+    writtenBytes = 0;
     printedBytes = 0;
+    printedChars = 0;
     writtenChars = 0;
   }
 
@@ -76,7 +82,9 @@ public class CountingPrintWriter extends PrintWriter {
    */
   public CountingPrintWriter(Writer out, boolean autoFlush) {
     super(out,autoFlush);
+    writtenBytes = 0;
     printedBytes = 0;
+    printedChars = 0;
     writtenChars = 0;
   }
 
