@@ -219,17 +219,17 @@ public class MultiVersionControl {
   // TODO: use consistent names: both "show" or both "print"
 
   @Option("Display commands as they are executed")
-  public boolean show;
+  public boolean show = false;
 
   @Option("Print the directory before executing commands")
-  public boolean print_directory;
+  public boolean print_directory = false;
 
   @Option("Do not execute commands; just print them.  Implies --show --redo-existing")
-  public boolean dry_run;
+  public boolean dry_run = false;
 
   /**  Default is for checkout command to skip existing directories. */
   @Option("Redo existing checkouts; relevant only to checkout command")
-  public boolean redo_existing;
+  public boolean redo_existing = false;
 
   /**
    * Terminating the process can leave the repository in a bad state, so
@@ -325,6 +325,7 @@ public class MultiVersionControl {
 
   // Receiver is actually raw, because "action" field is not set.  Why
   // doesn't the nullness checker complain about the lack of that annotation?
+  /*@AssertNonNullAfter("action")*/
   public void parseArgs(String[] args) {
     Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse_or_usage (args);
