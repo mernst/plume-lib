@@ -48,7 +48,7 @@ public class MultiRandSelector<T> {
 
     public MultiRandSelector (int num_elts, Random r,
                               Partitioner<T,T> eq) {
-
+        coin_toss_mode = false;
         this.num_elts = num_elts;
         seed = r;
         this.eq = eq;
