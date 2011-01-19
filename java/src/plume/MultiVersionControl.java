@@ -245,10 +245,10 @@ public class MultiVersionControl {
   // It would be good to be able to set this per-checkout.
   // This variable is static because it is used in static methods.
   @Option("Print debugging output")
-  static public boolean debug;
+  static public boolean debug = false;
 
   @Option("Debug 'replacers' that filter command output")
-  public boolean debug_replacers;
+  public boolean debug_replacers = false;
 
   static enum Action {
     CHECKOUT,
