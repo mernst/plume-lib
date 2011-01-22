@@ -959,6 +959,8 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)(abort: .*)", "$1$2: " + dir));
         replacers.add(new Replacer("(^|\\n)([MARC!?I]) ", "$1$2 " + dir + "/"));
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", "$1"));
+        // Hack, should be replaced when googlecode certificate problems are fixed.
+        replacers.add(new Replacer("(^|\\n)warning: .* certificate not verified \\(check web.cacerts config setting\\)\\n", "$1"));
         // Does this mask too many errors?
         replacers.add(new Replacer("(^|\\n)(abort: repository default(-push)? not found!: .*\\n)", ""));
         break;
