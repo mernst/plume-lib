@@ -961,6 +961,8 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)(\\*\\*\\* failed to import extension .*: No module named demandload\\n)", "$1"));
         // Hack, should be replaced when googlecode certificate problems are fixed.
         replacers.add(new Replacer("(^|\\n)warning: .* certificate not verified \\(check web.cacerts config setting\\)\\n", "$1"));
+        // May appear twice in output with overlapping matches, so repeat the replacer
+        replacers.add(new Replacer("(^|\\n)warning: .* certificate not verified \\(check web.cacerts config setting\\)\\n", "$1"));
         // Does this mask too many errors?
         replacers.add(new Replacer("(^|\\n)(abort: repository default(-push)? not found!: .*\\n)", "$1"));
         break;
@@ -1254,12 +1256,8 @@ public class MultiVersionControl {
         String output = UtilMDE.streamString(p.getInputStream());
         if (debug_replacers) { System.out.println("preoutput=<<<" + output + ">>>"); }
         for (Replacer r : replacers) {
-          String old_output = "";
-          // Loop because the regexp may match in overlapping locations
-          while (! output.equals(old_output)) {
-            old_output = output;
-            output = r.replaceAll(output);
-          }
+          // Don't loop, because some regexps will continue to match repeatedly
+          output = r.replaceAll(output);
           if (debug_replacers) { System.out.println("midoutput[" + r.regexp + "]=<<<" + output + ">>>"); }
         }
         if (debug_replacers) {
