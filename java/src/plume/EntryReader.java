@@ -31,6 +31,7 @@ import java.nio.CharBuffer;
  *
  * Example use:
  * <pre>
+ *  EntryReader er;
  *  try {
  *    // args are filename, comment regexp, include regexp
  *    er = new EntryReader(filename, "^#.*", null);
