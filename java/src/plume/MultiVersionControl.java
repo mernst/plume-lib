@@ -10,6 +10,7 @@ import org.ini4j.Ini;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.*;
 import java.net.URL;
 
 // Also see the "mr" program (http://kitenet.net/~joey/code/mr/).
@@ -1093,7 +1094,14 @@ public class MultiVersionControl {
           break;
         case HG:
           pb.command("hg", "status");
-          pb2.command("hg", "outgoing", "-l", "1");
+          if (debug) {
+            System.out.printf("invalidCertificate(%s) => %s%n", c.directory, invalidCertificate(c.directory));
+          }
+          if (invalidCertificate(c.directory)) {
+            pb2.command("hg", "outgoing", "-l", "1", "--config", "web.cacerts=");
+          } else {
+            pb2.command("hg", "outgoing", "-l", "1");
+          }
           // The third line is either "no changes found" or "changeset".
           replacers.add(new Replacer("^comparing with .*\\nsearching for changes\\nchangeset[^\001]*", "unpushed changesets: " + pb.directory() + "\n"));
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
@@ -1205,6 +1213,47 @@ public class MultiVersionControl {
       if (pb3.command().size() > 0) perform_command(pb3, replacers3, show_normal_output);
     }
   }
+
+  private Pattern defaultPattern = Pattern.compile("^default[ \t]*=[ \t]*(.*)");
+
+  /**
+   * Given a directory containing a Mercurial checkout, return its default
+   * path.  Return null otherwise.
+   */
+  // This implementation is not quite right because we didn't look for the
+  // [path] section.  We could fix this by using a real ini reader or
+  // calling "hg showconfig".  This hack is good enough for now.
+  private String defaultPath(File dir) {
+    File hgrc = new File(new File(dir, ".hg"), "hgrc");
+    EntryReader er;
+    try {
+      // args are filename, comment regexp, include regexp
+      er = new EntryReader(hgrc, "^#.*", null);
+    } catch (IOException e) {
+      // System.out.printf("IOException: " + e);
+      return null;
+    }
+    for (String line : er) {
+      Matcher m = defaultPattern.matcher(line);
+      if (m.matches()) {
+        return m.group(1);
+      }
+    }
+    return null;
+  }
+  
+  private Pattern invalidCertificatePattern = Pattern.compile("^https://[^.]*[.][^.]*[.]googlecode[.]com/hg$");
+  
+  private boolean invalidCertificate(File dir) {
+    String defaultPath = defaultPath(dir);
+    if (debug) { System.out.printf("defaultPath=%s for %s%n", defaultPath, dir); }
+    if (defaultPath == null) {
+      return false;
+    }
+    return (defaultPath.startsWith("https://hg.codespot.com/")
+            || invalidCertificatePattern.matcher(defaultPath).matches());
+  }
+
 
   // If show_normal_output is true, then display the output even if the process
   // completed normally.  Ordinarily, output is displayed only if the
