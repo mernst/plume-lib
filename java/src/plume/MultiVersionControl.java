@@ -1223,7 +1223,7 @@ public class MultiVersionControl {
   // This implementation is not quite right because we didn't look for the
   // [path] section.  We could fix this by using a real ini reader or
   // calling "hg showconfig".  This hack is good enough for now.
-  private String defaultPath(File dir) {
+  private /*@Nullable*/ String defaultPath(File dir) {
     File hgrc = new File(new File(dir, ".hg"), "hgrc");
     EntryReader er;
     try {
