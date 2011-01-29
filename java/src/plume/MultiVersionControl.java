@@ -1145,7 +1145,11 @@ public class MultiVersionControl {
         case HG:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
           pb.command("hg", "-q", "update");
-          pb2.command("hg", "-q", "fetch");
+          if (invalidCertificate(c.directory)) {
+            pb2.command("hg", "-q", "fetch", "--config", "web.cacerts=");
+          } else {
+            pb2.command("hg", "-q", "fetch");
+          }
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
