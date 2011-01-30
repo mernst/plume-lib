@@ -1144,6 +1144,7 @@ public class MultiVersionControl {
           break;
         case HG:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
+          replacers.add(new Replacer("(^|\\n)abort: ", "$1"));
           pb.command("hg", "-q", "update");
           if (invalidCertificate(c.directory)) {
             pb2.command("hg", "-q", "fetch", "--config", "web.cacerts=");
