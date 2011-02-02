@@ -65,7 +65,7 @@ for my $file (@ARGV) {
     # Get rid of type parameters.
     # This cannot just use the "g" modifier (global replace), because
     # type parameters may be nested:  Enum<E extends Enum<E>>.
-    while (s%&lt;(<A HREF="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</A>( extends (\@[^ ]+ )*(<A [^>]*>[^ <]*</A>|[^ ]+))?,?)+&gt;%%) {
+    while (s%&lt;(<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>( extends (\@[^ ]+ )*(<a [^>]*>[^ <]*</a>|[^ ]+))?,?)+&gt;%%i) {
       # empty body
     }
     if (m/\"type parameter in/) { die "Substitution failed, still has \"type parameter in\":\n$_"; }
@@ -73,15 +73,15 @@ for my $file (@ARGV) {
     # This regexp is intentionally not anchored at its beginning or end,
     # because sometimes line breaks are missing.
     # (Problem: Distributed XOM Javadocs do not use <B>...</B> tags.
-    while (m%<DT>[ \t]*<A HREF="(.*?)"(?: title=".*?")?><(?:B|STRONG)>(.*?)(\(.*?\))?</(?:B|STRONG)></A>(\(.*?\))?(\.| - )%ig) {
+    while (m%<DT>[ \t]*<A HREF="([^"]*)"(?: title="[^"]*")?><(?:B|STRONG)>([^<]*)(\([^<]*\))?</(?:B|STRONG)></A>(\(.*?\))?(\.| - )%ig) {
       # Either $3 or $4 could be set (but not both).
       # my ($this_ref,$this_item,$this_args1,$this_args2) = ($1,$2,$3,$4);
       my ($this_ref,$this_item) = ($1,$2);
       if ($this_ref =~ /\"/) {
-        die "In $file, bad this_ref: $this_ref\nin $_";
+        die "In $file, bad this_ref:\n  this_ref=$this_ref\n  this_item=$this_item\n  in $_";
       }
       if ($this_item =~ /\"/) {
-        die "In $file, bad this_item: $this_item\nin $_";
+        die "In $file, bad this_item:\n  this_ref=$this_ref\n  this_item=$this_item\n  in $_";
       }
       $this_ref = $this_dir . $this_ref;
       $this_ref =~ s%/[^/]+/\.\./%/%g;
