@@ -25,7 +25,7 @@ TOOLS_JAR_5 ?= ${TOOLS_JAR}
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
-CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # On cygwin, translate the classpath and sourcepath to windows format.
 # Only do so if this has not already been done, which is determined by
@@ -271,7 +271,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 	(cd jar-contents; jar xf ../lib/checkers-quals.jar)
 	(cd jar-contents; jar xf ../lib/ical4j.jar)
 	(cd jar-contents; jar xf ../lib/ini4j-0.5.1.jar)
-	(cd jar-contents; jar xf ../lib/junit.jar)
+	(cd jar-contents; jar xf ../lib/junit-4.8.2.jar)
 	(cd jar-contents; jar xf ../lib/svnkit.jar)
 	(cd jar-contents; jar xf ../lib/tagsoup-1.2.jar)
 	(cd jar-contents; jar xf ../lib/xom-1.2.1.jar)
