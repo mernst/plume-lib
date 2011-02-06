@@ -21,7 +21,7 @@
 
 # Here are some example executions:
 #   javadoc-escape-anchors ${HOME}/java/OROMatcher-1.1/doc/api/*.html
-#   javadoc-escape-anchors ${HOME}/research/invariants/java/doc/utilMDE/*.html
+#   javadoc-escape-anchors ${HOME}/research/invariants/daikon/java/doc/utilMDE/*.html
 #   javadoc-escape-anchors `find ${HOME}/java/bobbyandjax/bobbydoc -name '*.html' -print`
 #   javadoc-escape-anchors ${HOME}/java/bobbyandjax/com/ibm/bobby/doc/*.html
 #   javadoc-escape-anchors `find ${HOME}/java/JavaClass/docs -name '*.html' -print`
