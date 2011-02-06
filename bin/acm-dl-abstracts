@@ -1,0 +1,95 @@
+#!/usr/bin/env perl
+
+# Reading the table of contents of a conference or journal is a useful way
+# to keep up-to-date with the latest research.  ACM even provides a "TOC
+# service" that emails the table of contents of conferences and journals
+# that you specify.  A problem is that the tables of contents contain the
+# title of each article, but not its abstract, so you have to click on
+# every abstract link.
+#
+# This script takes as input a filename or URL for an ACM digital library
+# proceedings table of contents.  It produces, to standard output, a HTML
+# file that augments the table of contents with abstracts for each paper.
+# This makes it possible to read all the abstracts on one HTML page,
+# without clicking on any links.
+#
+# You can use it on:
+#  * a URL from the ACM digital library.  Example:
+#      acm-dl-abstracts 'http://portal.acm.org/toc.cfm?id=964001'
+#  * email from the ACM TOC Service.  Example (after saving the contents,
+#    not the whole email with headers, to to local file 'acm.html'):
+#      acm-dl-abstracts acm.html
+# (If you do not redirect output to a file, the program will choose a
+# filename of the form acm-abstracts-XXXX.html.)
+# Then, browse it or print it.  If printing, run
+#   for i in `ls acm-abstracts-*.html`; do htmldoc --webpage -t ps --outfile $i.ps $i; done
+# because both html2ps and the Filefox print functionality tend to cut off
+# content.  (Maybe the ACM HTML is malformed, or maybe this script should be
+# enhanced.)
+
+# This script takes a long time to run (multiple minutes per table of
+# contents, because of built-in delay to avoid being locked out by ACM web
+# server); be patient!
+
+
+use strict;
+use English;
+$WARNING = 1;
+
+use LWP::Simple;
+use File::Temp qw/ :mktemp  /;
+
+# time between get requests, to avoid being locked out by ACM web server
+my $sleep_seconds = 5;
+
+if (scalar(@ARGV) != 1) {
+  die "Expected exactly 1 argument, got " . scalar(@ARGV);
+}
+my $toc_url = $ARGV[0];
+
+if (-e $toc_url) {
+  $toc_url = "file:" . $toc_url;
+}
+my $toc_html = get($toc_url);
+if (! defined $toc_html) { die "Couldn't get TOC: $toc_url" }
+
+my ($fh, $file) = mkstemps( "acm-abstracts-XXXX", ".html");
+
+
+# Parens around regexp put them in the list, too.
+my @toc_sections = split(/(<\/div>)/, $toc_html);
+for my $toc_section (@toc_sections) {
+  if ($toc_section !~ /<A HREF="([^<]*?)#abstract" target="_self"> *abstract<\/A>/) {
+    print $fh "$toc_section\n";
+    next;
+  }
+  sleep($sleep_seconds);
+  my $paper_url = $1;
+  # print "PAPER_URL: $paper_url\n";
+  my $full_paper_url = $paper_url;
+  # print "FULL_PAPER_URL: $full_paper_url\n";
+  if ($full_paper_url !~ /^http:\/\/portal[0-9]*.acm.org(:80)?\//) {
+    $full_paper_url = " http://portal.acm.org/$full_paper_url";
+  }
+  # print "FULL_PAPER_URL: $full_paper_url\n";
+  my $paper_html = get($full_paper_url);
+  if (! defined $paper_html) { die "Couldn't get paper: $full_paper_url"; }
+
+  # Parens around regexp put them in the list, too.
+  my @paper_sections = split(/(<\/div>)/, $paper_html);
+  my $appended = 0;
+  for my $paper_section (@paper_sections) {
+    # print $fh "<!-- PAPER_SECTION: $paper_section END_PAPER_SECTION -->\n";
+    if ($paper_section =~ /<A NAME="abstract">ABSTRACT<\/A>/) {
+      $appended = 1;
+      # print "ABSTRACT: $paper_section END ABSTRACT\n";
+      $toc_section .= $paper_section . "</div>";
+      last;
+    }
+  }
+  if (! $appended) {
+    print $fh "<b>DID NOT FIND ABSTRACT!</b>\n";
+  }
+  print $fh "<!-- toc_section -->\n";
+  print $fh "$toc_section\n";
+}
