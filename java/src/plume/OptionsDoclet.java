@@ -164,7 +164,7 @@ public class OptionsDoclet {
   private String endDelim = "<!-- end options doc -->"; 
 
   private /*@Nullable*/ File docFile = null;
-  private /*@Nullable*/ File outFile = null;;
+  private /*@Nullable*/ File outFile = null;
   // If true, then docFile is non-null
   private boolean inPlace = false;
   private boolean formatJavadoc = false;
