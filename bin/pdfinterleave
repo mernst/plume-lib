@@ -1,13 +1,17 @@
 #!/bin/sh -f
 
 # Suppose you scanned two-side paper in two passes (doing the second side
-# by just turning over the whole pile, so its pages are in reverse order).
+# by just turning over the whole pile).  In other words, you have the odd
+# pages in forward order and the even pages in reverse order.
 # This script reassembles the two PDFs into one.
 
 # Invoke as:
 # pdfinterleave infile1.pdf infile2.pdf outfile.pdf
 
 # From http://www.accesspdf.com/article.php/2005020408520076
+
+# (A for-pay version is advertised at
+# http://try67.blogspot.com/2008/12/acrobat-combine-even-odd-pages.html .)
 
 E_BADARGS=65
 
@@ -26,12 +30,30 @@ else
 fi
 fi
 
-PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
-PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+# # Debugging
+# echo FILE1=$FILE1
+# echo FILE2=$FILE2
+# echo FILE3=$FILE3
+
+# Problem: PDF output of "Simple Scan" Ubuntu application is not recognized
+# by pdftk 1.41 as a PDF file, giving the error:
+#   Unexpected command-line data: 
+#      infile.pdf
+#   where we were expecting an input PDF filename
+# The dump_data command is just to get the page count, and the cat command
+# still works, though.  For now, replace teh use of pdftk dump_data by a
+# separate script (that requires korn shell).
+# PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+# PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+
+PAGES1=`pdfcount $FILE1`
+PAGES2=`pdfcount $FILE2`
+
 if [ $PAGES1 != $PAGES2 ]; then
   echo "Differing numbers of pages in input files: $PAGES1 $PAGES2"
   exit 1
 fi
+# The backticks make output like (if $PAGES1=4): A1 B4 A2 B3 A3 B2 A4 B1
 eval pdftk A=$FILE1 B=$FILE2 cat `X=1;Y=$PAGES1;while [ $X -le $PAGES1 ];
 do echo A$X B$Y; X=$((X+1));
 Y=$((Y-1));
