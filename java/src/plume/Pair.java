@@ -14,14 +14,16 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   }
 
   /** Factory method with short name and no need to name type parameters. */
-  public static <A, B> Pair<A, B> of(A a, B b) {
+  public static <A extends /*@Nullable*/ Object, B extends /*@Nullable*/ Object> Pair<A, B> of(A a, B b) {
     return new Pair<A, B>(a, b);
   }
 
+  @Override
   public String toString() {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 
+  @Override
   @SuppressWarnings("interning")
   public boolean equals(/*@Nullable*/ Object obj) {
     if (obj instanceof Pair<?, ?>) { // generics are not checked at run time!
@@ -40,6 +42,7 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   // If fields a and b were made final, then the hashcode could be cached.
   // (And if they aren't final, it's a bit odd to be calling hashCode.)
   // But then the class would not be useful for mutable pairs.
+  @Override
   public int hashCode() {
     return (((a == null) ? 0 : a.hashCode()) +
             ((b == null) ? 0 : b.hashCode()));
