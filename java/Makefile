@@ -295,7 +295,8 @@ lookup.txt: lookup.html
 LOOKUP_JAR_CLASSES = \
 	src/plume/Lookup.class \
 	src/plume/UtilMDE*.class src/plume/EntryReader*.class \
-	src/plume/Option*.class src/plume/Unpublicized.class src/plume/SimpleLog.class
+	src/plume/Option*.class src/plume/StringBuilderDelimited.class \
+	src/plume/Unpublicized.class src/plume/SimpleLog.class
 
 # So that lookup.jar is self-contained for execution on JDK 6 (without JDK
 # 7 annotation support), the files should have been compiled with a Java 6
