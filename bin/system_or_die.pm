@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# system_or_die.pm -- Perl utilities calling external programs
+# system_or_die.pm -- Perl utilities for calling external programs
 # The externally-visible procedures are listed in the @EXPORT statement.
 
 package system_or_die;
