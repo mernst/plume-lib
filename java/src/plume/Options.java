@@ -386,10 +386,10 @@ public class Options {
 
     /**
      * Returns a short synopsis of the option in the form
-     * -s --long=<type>
-     * <strong>or</strong>
-     * -s -long=<type>
-     * if use_single_dash is true.
+     * <pre>-s --long=&lt;type&gt;</pre>
+     * <strong>or</strong> (if use_single_dash is true)
+     * <pre>-s -long=&lt;type&gt;</pre>
+     * 
      **/
     public String synopsis() {
       String prefix = use_single_dash ? "-" : "--";

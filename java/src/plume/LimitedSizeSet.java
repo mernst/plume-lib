@@ -135,7 +135,7 @@ public class LimitedSizeSet<T>
 
 
   /**
-   * Merges a list of LimitedSizeSet<T> objects into a single object that
+   * Merges a list of LimitedSizeSet&lt;T&gt; objects into a single object that
    * represents the values seen by the entire list.  Returns the new
    * object, whose max_values is the given integer.
    **/
