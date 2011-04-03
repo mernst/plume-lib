@@ -67,10 +67,10 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
       return false;
     }
 
-    T1 a = getA();
-    T2 b = getB();
-    T1 oa = other.getA();
-    T2 ob = other.getB();
+    /*@Nullable*/ T1 a = getA();
+    /*@Nullable*/ T2 b = getB();
+    /*@Nullable*/ T1 oa = other.getA();
+    /*@Nullable*/ T2 ob = other.getB();
     if (a == null || b == null || oa == null || ob == null) {
       // false if any of the components has been garbage-collected
       return false;
