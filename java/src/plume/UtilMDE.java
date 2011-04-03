@@ -2285,7 +2285,9 @@ public final class UtilMDE {
    * </ul>
    */
   public static boolean deepEquals(Object o1, Object o2) {
-    if (o1 == o2)
+    @SuppressWarnings("interning")
+    boolean sameObject = (o1 == o2);
+    if (sameObject)
       return true;
     if (o1 == null || o2 == null)
       return false;
