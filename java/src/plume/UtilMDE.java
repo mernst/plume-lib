@@ -2269,6 +2269,89 @@ public final class UtilMDE {
   }
 
 
+  /**
+   * All calls to deepEquals that are currently underway.
+   */
+  private static HashSet<WeakIdentityPair<Object, Object>> deepEqualsUnderway
+    = new HashSet<WeakIdentityPair<Object, Object>>();
+
+  /**
+   * Determines deep equality for the elements.
+   * <ul>
+   * <li>If both are primitive arrays, uses java.util.Arrays.equals.
+   * <li>If both are Object[], uses java.util.Arrays.deepEquals and does not recursively call this method.
+   * <li>If both are lists, uses deepEquals recursively on each element.
+   * <li>For other types, just uses equals() and does not recursively call this method.
+   * </ul>
+   */
+  public static boolean deepEquals(Object o1, Object o2) {
+    if (o1 == o2)
+      return true;
+    if (o1 == null || o2 == null)
+      return false;
+
+    if (o1 instanceof boolean[] && o2 instanceof boolean[]) {
+      return Arrays.equals((boolean[]) o1, (boolean[]) o2);
+    }
+    if (o1 instanceof byte[] && o2 instanceof byte[]) {
+      return Arrays.equals((byte[]) o1, (byte[]) o2);
+    }
+    if (o1 instanceof char[] && o2 instanceof char[]) {
+      return Arrays.equals((char[]) o1, (char[]) o2);
+    }
+    if (o1 instanceof double[] && o2 instanceof double[]) {
+      return Arrays.equals((double[]) o1, (double[]) o2);
+    }
+    if (o1 instanceof float[] && o2 instanceof float[]) {
+      return Arrays.equals((float[]) o1, (float[]) o2);
+    }
+    if (o1 instanceof int[] && o2 instanceof int[]) {
+      return Arrays.equals((int[]) o1, (int[]) o2);
+    }
+    if (o1 instanceof long[] && o2 instanceof long[]) {
+      return Arrays.equals((long[]) o1, (long[]) o2);
+    }
+    if (o1 instanceof short[] && o2 instanceof short[]) {
+      return Arrays.equals((short[]) o1, (short[]) o2);
+    }
+
+    WeakIdentityPair<Object, Object> mypair
+      = new WeakIdentityPair<Object, Object>(o1, o2);
+    if (deepEqualsUnderway.contains(mypair)) {
+      return true;
+    }
+
+    if (o1 instanceof Object[] && o2 instanceof Object[]) {
+      return Arrays.deepEquals((Object[]) o1, (Object[]) o2);
+    }
+
+    if (o1 instanceof List<?> && o2 instanceof List<?>) {
+      List<?> l1 = (List<?>) o1;
+      List<?> l2 = (List<?>) o2;
+      if (l1.size() != l2.size()) {
+        return false;
+      }
+      try {
+        deepEqualsUnderway.add(mypair);
+        for (int i=0; i<l1.size(); i++) {
+          Object e1 = l1.get(i);
+          Object e2 = l2.get(i);
+          if (! deepEquals(e1, e2)) {
+            return false;
+          }
+        }
+      } finally {
+        deepEqualsUnderway.remove(mypair);
+      }
+
+      return true;
+    }
+
+    return o1.equals(o2);
+  }
+
+
+
   ///////////////////////////////////////////////////////////////////////////
   /// Vector
   ///
