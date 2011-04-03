@@ -2179,8 +2179,8 @@ public final class UtilMDE {
    * Return a Vector of the Strings returned by
    * {@link java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
    * <p>
-   * The static type is Vector<Object> because StringTokenizer extends
-   * Enumeration<Object> instead of Enumeration<String> as it should
+   * The static type is Vector&lt;Object&gt; because StringTokenizer extends
+   * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should
    * (probably due to backward-compatibility).
    **/
   public static Vector<Object> tokens(String str, String delim, boolean returnTokens) {
@@ -2243,7 +2243,7 @@ public final class UtilMDE {
 
   /**
    * Returns the sorted version of the list.  Does not alter the list.
-   * Simply calls Collections.sort(List<T>, Comparator<? super T>).
+   * Simply calls Collections.sort(List&lt;T&gt;, Comparator&lt;? super T&gt;).
    **/
   public static <T> List<T> sortList (List<T> l, Comparator<? super T> c) {
     List<T> result = new ArrayList<T>(l);
