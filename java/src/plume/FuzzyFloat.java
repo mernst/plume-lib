@@ -116,7 +116,7 @@ public class FuzzyFloat {
   }
 
   /**
-   * Test d1 and d2 for d1 < d2.  If d1 is equal to d2 using the current ratio
+   * Test d1 and d2 for d1 &lt; d2.  If d1 is equal to d2 using the current ratio
    * this returns false.
    *
    * @see #eq
@@ -126,7 +126,7 @@ public class FuzzyFloat {
   }
 
   /**
-   * test d1 and  d2 for d1 <= d2.  If d1 is equal to d2 using the current
+   * test d1 and  d2 for d1 &le; d2.  If d1 is equal to d2 using the current
    * ratio, this returns true.
    *
    * @see #eq
@@ -136,7 +136,7 @@ public class FuzzyFloat {
   }
 
   /**
-   * test d1 and d2  for d1 > d2.  IF d1 is equal to d2 using the current
+   * test d1 and d2  for d1 &gt; d2.  IF d1 is equal to d2 using the current
    * ratio, this returns false.
    *
    * @see #eq
@@ -146,7 +146,7 @@ public class FuzzyFloat {
   }
 
   /**
-   * test d1 and  d2 for d1 >= d2.  If d1 is equal to d2 using the current
+   * test d1 and  d2 for d1 &gt; d2.  If d1 is equal to d2 using the current
    * ratio, this returns true.
    *
    * @see #eq
@@ -292,7 +292,7 @@ public class FuzzyFloat {
     /**
      * Lexically compares o1 and o2 as double arrays.
      *
-     * @return positive if o1 > 02, 0 if 01 == 02, negative if 01 < 02
+     * @return positive if o1 &gt; 02, 0 if o1 == o2, negative if o1 &lt; o2
      */
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2)
