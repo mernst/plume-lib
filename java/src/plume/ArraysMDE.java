@@ -331,7 +331,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using the equals method.
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the array.
    * @see java.util.List#indexOf(java.lang.Object)
    **/
@@ -361,7 +361,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using the equals method.
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the list.
    * @see java.util.List#indexOf(java.lang.Object)
    **/
@@ -393,7 +393,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
@@ -422,7 +422,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
@@ -462,7 +462,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
@@ -476,7 +476,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
@@ -516,7 +516,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @return the first index i containing the specified element,
-   *    such that minindex <= i < indexlimit,
+   *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/

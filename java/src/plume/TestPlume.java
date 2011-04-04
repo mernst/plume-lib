@@ -2028,6 +2028,36 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.removeDuplicates(l1123).equals(l123);
     assert UtilMDE.removeDuplicates(l1233).equals(l123);
 
+
+    // public boolean deepEquals(Object o1, Object o2)
+
+    boolean[] zatft1 = new boolean[] { true, false, true };
+    boolean[] zatft2 = new boolean[] { true, false, true };
+    boolean[] zatff = new boolean[] { true, false, false };
+    assert ! zatft1.equals(zatft2);
+    assert UtilMDE.deepEquals(zatft1, zatft2);
+    assert ! zatft1.equals(zatff);
+    assert ! UtilMDE.deepEquals(zatft1, zatff);
+
+    List<Object> l1 = new ArrayList<Object>();
+    List<Object> l2 = new ArrayList<Object>();
+    List<Object> l3 = new ArrayList<Object>();
+    l1.add(l1);
+    l2.add(l2);
+    l3.add(l3);
+    l1.add(zatft1);
+    l2.add(zatft2);
+    l3.add(zatff);
+    // Don't test .equals because it suffers infinite recursion.
+    // assert ! l1.equals(l2); 
+    // assert ! l1.equals(l3); 
+    // assert ! l2.equals(l3); 
+    assert UtilMDE.deepEquals(l1, l2); 
+    assert ! UtilMDE.deepEquals(l1, l3); 
+    assert ! UtilMDE.deepEquals(l2, l3); 
+
+
+
     // This is tested by the tokens methods.
     // public static Vector makeVector(Enumeration e)
 
