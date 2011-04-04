@@ -1,8 +1,11 @@
 #!/bin/bash
 
 # Script that creates a plume-lib release and uploads artifacts to Google Code.
+
 # If you just want to make plume.jar for your own use, then instead use:
 #   make jar
+# or alternately
+#   make JAVAC_TARGET_FLAGS="-target 5" jar
 # You can also find a pre-built plume.jar in the plume-lib release, in a
 # file such as plume-lib-1.0.0/java/plume.jar .
 
