@@ -1621,11 +1621,13 @@ public final class UtilMDE {
         Field f = c.getDeclaredField(fieldName);
         f.setAccessible(true);
         return f.get(o);
+      } catch (IllegalAccessException e) {
+        System.out.println("in getPrivateField, IllegalAccessException: " + e);
+        throw new Error("This can't happen: " + e);
       } catch (NoSuchFieldException e) {
         if (c.getSuperclass() == Object.class) // Class is interned
           throw e;
-      } catch (IllegalAccessException e) {
-        throw new Error("This can't happen: " + e);
+        // nothing to do; will now examine superclass
       }
       c = c.getSuperclass();
       assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
