@@ -78,6 +78,13 @@
 	       "&btnI=Lucky"
 	     ""))))
 
+(defun wayback-machine (url)
+  "Look up a URL in the Internet Archive Wayback Machine."
+  (interactive "sWayback Machine: ")
+  (require 'browse-url)
+  (browse-url (concat "http://waybackmachine.org/*/"
+		      (altavista-quote url))))
+
 (defun scholar-google (phrase)
   "Search using Google Scholar."
   (interactive "sSearch via Google Scholar: ")
