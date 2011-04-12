@@ -9,6 +9,7 @@
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go 
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
+--suppress-broken 302:http://dx.doi.org/10.1109/2.59
 --suppress-broken 302:http://ieeexplore.ieee.org/
 --suppress-broken 302:http://www.hotelatmit.com/
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
@@ -72,6 +73,7 @@
 --suppress-redirect http://cascade.org/->http://cascade.org/Home/	
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html	
 --suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://www.springerlink.com/link.asp?id=A5U0J7H002247138
+--suppress-redirect http://dx.doi.org/10.1109/2.59->http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=59&tag=1&tag=1&tag=1&tag=1&tag=1
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page	
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
 --suppress-redirect http://ieeexplore.ieee.org/->http://ieeexplore.ieee.org/Xplore/home.jsp
