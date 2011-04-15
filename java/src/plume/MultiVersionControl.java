@@ -965,7 +965,7 @@ public class MultiVersionControl {
         // May appear twice in output with overlapping matches, so repeat the replacer
         replacers.add(new Replacer("(^|\\n)warning: .* certificate not verified \\(check web.cacerts config setting\\)\\n", "$1"));
         // Does this mask too many errors?
-        replacers.add(new Replacer("(^|\\n)(abort: repository default(-push)? not found!: .*\\n)", "$1"));
+        replacers.add(new Replacer("(^|\\n)((comparing with default-push\\n)?abort: repository default(-push)? not found!: .*\\n)", "$1"));
         break;
       case SVN:
         replacers.add(new Replacer("(svn: Network connection closed unexpectedly)", "$1 for " + dir));
