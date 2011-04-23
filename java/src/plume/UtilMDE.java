@@ -293,6 +293,7 @@ public final class UtilMDE {
    * @param append if true, the resulting BufferedWriter appends to the end
    * of the file instead of the beginning.
    **/
+  // Question:  should this be rewritten as a wrapper around bufferedFileOutputStream?
   public static BufferedWriter bufferedFileWriter(String filename, boolean append) throws IOException {
     Writer file_writer;
     if (filename.endsWith(".gz")) {
@@ -301,6 +302,26 @@ public final class UtilMDE {
       file_writer = new FileWriter(filename, append);
     }
     return new BufferedWriter(file_writer);
+  }
+
+  /**
+   * Returns a BufferedOutputStream for the file, accounting for the possibility
+   * that the file is compressed.
+   * (A file whose name ends with ".gz" is treated as compressed.)
+   * <p>
+   * Warning: The "gzip" program writes and reads files containing
+   * concatenated gzip files.  As of Java 1.4, Java reads
+   * just the first one:  it silently discards all characters (including
+   * gzipped files) after the first gzipped file.
+   * @param append if true, the resulting BufferedOutputStream appends to the end
+   * of the file instead of the beginning.
+   **/
+  public static BufferedOutputStream bufferedFileOutputStream(String filename, boolean append) throws IOException {
+    OutputStream os = new FileOutputStream(filename, append);
+    if (filename.endsWith(".gz")) {
+      os = new GZIPOutputStream(os);
+    }
+    return new BufferedOutputStream(os);
   }
 
 
