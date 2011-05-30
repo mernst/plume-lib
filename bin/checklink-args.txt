@@ -46,6 +46,7 @@
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://www.orbitz.com/
 --suppress-broken 500:http://www.w3.org/TR/html4/loose.dtd
+--suppress-broken 500:http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
 --suppress-broken 500:http://www.washington.edu/home/maps/southcentral.html?80,70,792,660
 --suppress-broken 500:https://ca.mit.edu:444/moira/showresult.jhtml?list=parg&operation=displaylistinfo
 --suppress-broken 500:https://eecsfacweb.mit.edu/
