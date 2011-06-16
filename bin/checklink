@@ -2697,6 +2697,7 @@ on how to solve this</a>.';
         }
         else {
             my $redirmsg = $redirect_loop ? ' redirect loop detected' : '';
+            # wrap(...) can err if $whattodo is not set properly, which can happen.
             printf(
                 "\n%s\t%s\n  Code: %s %s\n%s\n",
 
