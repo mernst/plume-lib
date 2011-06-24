@@ -12,6 +12,9 @@ use strict;
 use English;
 $WARNING = 1;
 
+my $debug = 0;
+# $debug = 1;
+
 use File::Find;
 
 use FindBin qw($Bin);
@@ -57,7 +60,7 @@ for my $file (@ARGV) {
   $javadoc_ignored_prefixes{$prefix} = 1;
   while (<INDEX>) {
     if (m%^  <dt> public interface <(?:b|strong)>%) {
-      # print STDERR "Considering: $_";
+      if ($debug) { print STDERR "Considering: $_"; }
     }
     if (m%^  <dt> public interface <(?:b|strong|span class="strong")>(\w+)</(?:b|strong|span)>%) {
       $refs{$1} .= " \"" . $this_dir . $1 . ".html\"";
@@ -86,8 +89,8 @@ for my $file (@ARGV) {
       $this_ref = $this_dir . $this_ref;
       $this_ref =~ s%/[^/]+/\.\./%/%g;
       $this_ref =~ s%/(\./)+%/%g;
-      # print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>>\n";
-      # print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>><<<$this_args>>>\n";
+      if ($debug) { print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>>\n"; }
+      # if ($debug) { print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>><<<$this_args>>>\n"; }
       $refs{$this_item} .= " \"$this_ref\"";
     }
   }
@@ -128,7 +131,7 @@ sub read_and_glob_files ( $ ) {
   my @result = ();
   open(FILES, $files_filename) || die("Could not open $files_filename");
   for my $index_filename (<FILES>) {
-    # print STDERR "globbing: $index_filename\n";
+    if ($debug) { print STDERR "globbing: $index_filename\n"; }
     $index_filename =~ s/^\s+//;
     $index_filename =~ s/\s+$//;
     if (($index_filename eq "") || ($index_filename =~ /^#/)) {
@@ -136,13 +139,13 @@ sub read_and_glob_files ( $ ) {
     }
     # Use of "sort" makes the results more deterministic, easier to compare.
     my @globbed_files = sort(glob($index_filename));
-    # print STDERR "Result: " . scalar(@globbed_files) . " files\n";
+    if ($debug) { print STDERR "Result: " . scalar(@globbed_files) . " files\n"; }
     if (scalar(@globbed_files) == 0) {
       print STDERR "Glob not found: $index_filename\n";
       next;
     }
     push @result, @globbed_files;
-    # print STDERR "result now has " . scalar(@result) . " elements\n";
+    if ($debug) { print STDERR "result now has " . scalar(@result) . " elements\n"; }
   }
   close(FILES);
   return @result;
