@@ -509,6 +509,9 @@ public final class UtilMDE {
    * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]".
    **/
   public static String classnameFromJvm(String classname) {
+    if (classname.equals("")) {
+      throw new Error("Empty string passed to classnameFromJvm");
+    }
     int dims = 0;
     while (classname.startsWith("[")) {
       dims++;
