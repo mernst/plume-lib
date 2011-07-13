@@ -89,6 +89,8 @@ for my $file (@ARGV) {
       $this_ref = $this_dir . $this_ref;
       $this_ref =~ s%/[^/]+/\.\./%/%g;
       $this_ref =~ s%/(\./)+%/%g;
+      $this_item =~ s%&lt;%<%g;
+      $this_item =~ s%&gt;%>%g;
       if ($debug) { print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>>\n"; }
       # if ($debug) { print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>><<<$this_args>>>\n"; }
       $refs{$this_item} .= " \"$this_ref\"";
