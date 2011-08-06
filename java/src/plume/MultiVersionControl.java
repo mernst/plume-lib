@@ -1059,6 +1059,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)Index: ", "$1" + dir + "/"));
           replacers.add(new Replacer("(^|\\n)(cvs \\[diff aborted)(\\]:)", "$1$2 in " + dir + "$3"));
           replacers.add(new Replacer("(^|\\n)(Permission denied)", "$1$2 in " + dir));
+          replacers.add(new Replacer("(^|\\n)(cvs diff: )(cannot find revision control)", "$1$2 in " + dir + ": $3"));
           replacers.add(new Replacer("(^|\\n)(cvs diff: cannot find )", "$1$2" + dir));
           replacers.add(new Replacer("(^|\\n)(cvs diff: in directory )", "$1$2" + dir + "/"));
           replacers.add(new Replacer("(^|\\n)(cvs diff: ignoring )", "$1$2" + dir + "/"));
