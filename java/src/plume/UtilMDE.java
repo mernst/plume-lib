@@ -1604,6 +1604,12 @@ public final class UtilMDE {
   /// Reflection
   ///
 
+  // TODO: make these leave the access the same as it was before?
+
+  // TODO: add method invokeMethod; see
+  // java/Translation/src/graph/tests/Reflect.java (but handle returning a
+  // value).
+
   /**
    * Sets the given field, which may be final and/or private.
    * Leaves the field accessible.
