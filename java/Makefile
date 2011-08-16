@@ -7,9 +7,9 @@
 
 ifndef JAVA_HOME
   java_cmd := $(shell which java)
-  JAVA_HOME := $(subst /bin/java,,$(java_cmd))
-  # How does one do this?
-  # echo "WARNING: JAVA_HOME is not set, assuming $(JAVA_HOME)"
+  # /bin//java happens when the PATH element ended in a /
+  JAVA_HOME := $(subst /bin//java,,$(subst /bin/java,,$(java_cmd)))
+  I_set_JAVA_HOME := true
 endif
 
 
@@ -247,8 +247,13 @@ src/plume/MathMDE.java: src/plume/MathMDE.java.jpp src/plume/MathMDE-gcd.java.jp
 ## TODO:  the .jar files other than plume.jar should be trimmed, with
 ## extraneous components removed.
 
+# TODO: add the checkenv target as dependency for more targets?
+checkenv:
+ifeq "$(I_set_JAVA_HOME)" "true"
+	@echo "WARNING: JAVA_HOME is not set, assuming $(JAVA_HOME)"
+endif
 
-jar: plume.jar lookup.jar task_manager.jar
+jar: checkenv plume.jar lookup.jar task_manager.jar
 
 # This should depend on all the included .jar files, too.
 plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
@@ -361,12 +366,12 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
 CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
-CHECKERS_ARGS = -source 7 -Awarns
+CHECKERS_ARGS = -source 8 -Awarns
 
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
-check-nullness:
+check-nullness: checkenv
 	${JAVAC_COMMAND} ${JAVAC_NULLNESS_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
@@ -374,7 +379,7 @@ JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:
 
 # Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
 # fine without it...
-check-interning:
+check-interning: checkenv
 	${JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
@@ -383,7 +388,7 @@ check-interning:
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc
+.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv
 
 
 # Existence of this rule means that a target is deleted if has just changed
