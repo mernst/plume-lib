@@ -34,7 +34,7 @@ import java.util.*;
  * reason for not using the new-style for loop.
  * <p>
  *
- * It's often beter to use a real Iterable (e.g., a collections class)
+ * It's often better to use a real Iterable (e.g., a collections class)
  * rather than an Iterator.  But in some cases the overhead is undesirable,
  * or there are multiple ways to iterate so it doesn't make sense to
  * reserve the iterator() method for just one of them, or it is desirable
