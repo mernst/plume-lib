@@ -19,6 +19,7 @@
 --suppress-broken 403:http://validator.w3.org/check?uri=referer
 --suppress-broken 403:http://www.acm.org/
 --suppress-broken 403:http://www.acm.org/publications/copyright_form/	
+--suppress-broken 403:http://www.acm.org/sigs/publications/proceedings-templates
 --suppress-broken 403:http://www.acm.org/sigs/volunteer_resources/conference_manual/
 --suppress-broken 403:http://www.cs.washington.edu/lab/www/MediaWiki.shtml
 --suppress-broken 403:http://www.cs.washington.edu/orgs/student-affairs/gsc/jobs/
