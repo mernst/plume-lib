@@ -185,10 +185,10 @@ public class Lookup {
 
   // If "", gets set to null immediately after option processing.
   @Option ("Regex that matches an entire comment (not just a comment start)")
-  public static /*@Nullable*/ String comment_re = "^%.*";
+  public static /*@Nullable*/ /*@Regex*/ String comment_re = "^%.*";
 
   @Option ("Regex that matches an include directive; group 1 is the file name")
-  public static String include_re = "\\\\include\\{(.*)\\}";
+  public static /*@Regex*/ String include_re = "\\\\include\\{(.*)\\}";
 
   /** Platform-specific line separator **/
   @SuppressWarnings("nullness") // line.separator property always exists
@@ -290,14 +290,23 @@ public class Lookup {
             int flags = Pattern.CASE_INSENSITIVE;
             if (case_sensitive)
               flags = 0;
-            if (Pattern.compile (keyword, flags).matcher(search).find())
+            
+            if (! UtilMDE.isRegex(keyword)) {
+              System.out.println ("Error: not a regex: " + keyword);
+              System.exit (254);
+            }
+            @SuppressWarnings("regex") // temporary until isRegex is properly annotated for flow sensitivity
+            /*@Regex*/ String keyword_re = keyword;
+
+            if (Pattern.compile (keyword_re, flags).matcher(search).find())
               matchcount++;
           } else {
             if (!case_sensitive)
               keyword = keyword.toLowerCase();
             if (word_match) {
-              keyword = "\\b" + keyword + "\\b";
-              if (Pattern.compile (keyword).matcher(search).find())
+              @SuppressWarnings("regex") // temporary until Pattern.quote is annotated
+              /*@Regex*/ String keyword_re = "\\b" + Pattern.quote(keyword) + "\\b";
+              if (Pattern.compile (keyword_re).matcher(search).find())
                 matchcount++;
             } else if (search.contains(keyword))
               matchcount++;

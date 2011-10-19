@@ -25,9 +25,10 @@ public final class FileCompiler {
 
   static {
     try {
-      java_filename_pattern
-        = Pattern.compile("([^" + UtilMDE.escapeNonJava(File.separator)
-                          + "]+)\\.java");
+      @SuppressWarnings("regex") // output of escapeNonJava can appear in a character class in a regex
+      /*@Regex*/ String java_filename_re
+        = "([^" + UtilMDE.escapeNonJava(File.separator) + "]+)\\.java";
+      java_filename_pattern = Pattern.compile(java_filename_re);
     } catch (PatternSyntaxException me) {
       me.printStackTrace();
       throw new Error("Error in regexp", me);

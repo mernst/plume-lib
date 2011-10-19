@@ -6,6 +6,7 @@ package plume;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.zip.*;
 import java.lang.reflect.*;
 // import Assert;
@@ -1595,8 +1596,20 @@ public final class UtilMDE {
    * @see Pattern#quote(String)
    */
   @Deprecated
-  public static String patternQuote(String s) {
+  @SuppressWarnings("regex")  // temporary until JDK is annotated
+  public static /*@Regex*/ String patternQuote(String s) {
     return Pattern.quote(s);
+  }
+
+  /** Returns true if the argument is a syntactically valid regular expression. */
+  @SuppressWarnings("regex")    // tests whether s is a regex
+  public static boolean isRegex(String s) {
+    try {
+      Pattern.compile(s);
+    } catch (PatternSyntaxException e) {
+      return false;
+    }
+    return true;
   }
 
 

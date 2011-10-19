@@ -92,7 +92,7 @@ ifdef CHECKERS
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
 endif
-jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*
+jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*
 
 export jsr308_imports
 export CLASSPATH
@@ -381,6 +381,14 @@ JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:
 # fine without it...
 check-interning: checkenv
 	${JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+
+JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint:-processing
+# A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
+
+# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
+# fine without it...
+check-regex: checkenv
+	${JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
 

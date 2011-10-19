@@ -911,9 +911,9 @@ public class MultiVersionControl {
   ///
 
   private class Replacer {
-    String regexp;
+    /*@Regex*/ String regexp;
     String replacement;
-    public Replacer(String regexp, String replacement) {
+    public Replacer(/*@Regex*/ String regexp, String replacement) {
       this.regexp = regexp;
       this.replacement = replacement;
     }
