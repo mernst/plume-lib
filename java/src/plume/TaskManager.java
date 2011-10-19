@@ -53,16 +53,16 @@ public class TaskManager {
   public static OutputFormat format = OutputFormat.short_ascii;
 
   @Option ("Regex that matches an entire comment (not just a comment start)")
-  public static String comment_re = "^%.*";
+  public static /*@Regex*/ String comment_re = "^%.*";
 
   @Option ("Regex that matches an include directive; group 1 is the file name")
-  public static String include_re = "\\\\include\\{(.*)\\}";
+  public static /*@Regex*/ String include_re = "\\\\include\\{(.*)\\}";
 
   private static String usage_string
     = "TaskManger [options] <task-file> <task_file> ...";
 
-  @SuppressWarnings("nullness") // line.separator property always exists
-  public static final String lineSep = System.getProperty("line.separator");
+  @SuppressWarnings({"nullness", "regex"}) // line.separator property always exists, and is a legal regex
+  public static final /*@Regex*/ String lineSep = System.getProperty("line.separator");
 
   /** Information about a single task **/
   public static class Task {
