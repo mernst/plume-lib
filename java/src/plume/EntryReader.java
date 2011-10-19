@@ -168,8 +168,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   public EntryReader (InputStream in,
                       String charsetName,
                       String filename,
-                      /*@Nullable*/ String comment_re_string,
-                      /*@Nullable*/ String include_re_string) throws UnsupportedEncodingException {
+                      /*@Nullable*/ /*@Regex*/ String comment_re_string,
+                      /*@Nullable*/ /*@Regex*/ String include_re_string) throws UnsupportedEncodingException {
     this(new InputStreamReader(in, charsetName),
          filename, comment_re_string, include_re_string);
   }
@@ -195,8 +195,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *                      the include file name
    */
   public EntryReader (InputStream in, String filename,
-                      /*@Nullable*/ String comment_re_string,
-                      /*@Nullable*/ String include_re_string) {
+                      /*@Nullable*/ /*@Regex*/ String comment_re_string,
+                      /*@Nullable*/ /*@Regex*/ String include_re_string) {
     this(new InputStreamReader(in),
          filename, comment_re_string, include_re_string);
   }
@@ -242,8 +242,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *                      The expression should define one group that contains
    *                      the include file name
    */
-  public EntryReader (Reader reader, String filename, /*@Nullable*/ String comment_re_string,
-                      /*@Nullable*/ String include_re_string) {
+  public EntryReader (Reader reader, String filename,
+                      /*@Nullable*/ /*@Regex*/ String comment_re_string,
+                      /*@Nullable*/ /*@Regex*/ String include_re_string) {
     // we won't use superclass methods, but passing null as an argument
     // leads to a NullPointerException.
     super(new DummyReader());
@@ -277,8 +278,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *                      The expression should define one group that contains
    *                      the include file name.
    */
-  public EntryReader (File file, /*@Nullable*/ String comment_re,
-                      /*@Nullable*/ String include_re) throws IOException {
+  public EntryReader (File file, /*@Nullable*/ /*@Regex*/ String comment_re,
+                      /*@Nullable*/ /*@Regex*/ String include_re) throws IOException {
     this (UtilMDE.fileReader (file),
           file.toString(), comment_re, include_re);
   }
@@ -302,8 +303,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Create a new EntryReader starting with the specified file.
    * @see #EntryReader(File,String,String)
    */
-  public EntryReader (String filename, /*@Nullable*/ String comment_re,
-                      /*@Nullable*/ String include_re) throws IOException {
+  public EntryReader (String filename, /*@Nullable*/ /*@Regex*/ String comment_re,
+                      /*@Nullable*/ /*@Regex*/ String include_re) throws IOException {
     this (new File(filename), comment_re, include_re);
   }
 
@@ -603,8 +604,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Set the regular expressions for the start and stop of long
    * entries (multiple lines that are read as a group by get_entry()).
    */
-  public void set_entry_start_stop (String entry_start_re,
-                                    String entry_stop_re) {
+  public void set_entry_start_stop (/*@Regex*/ String entry_start_re,
+                                    /*@Regex*/ String entry_stop_re) {
     this.entry_start_re = Pattern.compile (entry_start_re);
     this.entry_stop_re = Pattern.compile (entry_stop_re);
   }
@@ -661,6 +662,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /** Simple example **/
   public static void main (String[] args) throws IOException {
 
+    @SuppressWarnings("regex")
     EntryReader reader = new EntryReader (args[0], args[1], args[2]);
 
     String line = reader.readLine();

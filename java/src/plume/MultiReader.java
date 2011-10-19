@@ -34,8 +34,9 @@ public class MultiReader extends EntryReader {
    *                      The expression should define one group that contains
    *                      the include file name
    */
-  public MultiReader (BufferedReader reader, String filename, /*@Nullable*/ String comment_re_string,
-                      /*@Nullable*/ String include_re_string) {
+  public MultiReader (BufferedReader reader, String filename,
+                      /*@Nullable*/ /*@Regex*/ String comment_re_string,
+                      /*@Nullable*/ /*@Regex*/ String include_re_string) {
     super(reader, filename, comment_re_string, include_re_string);
   }
 
@@ -56,8 +57,8 @@ public class MultiReader extends EntryReader {
    *                      The expression should define one group that contains
    *                      the include file name.
    */
-  public MultiReader (File file, /*@Nullable*/ String comment_re,
-                      /*@Nullable*/ String include_re) throws IOException {
+  public MultiReader (File file, /*@Nullable*/ /*@Regex*/ String comment_re,
+                      /*@Nullable*/ /*@Regex*/ String include_re) throws IOException {
     super(file, comment_re, include_re);
   }
 
@@ -71,8 +72,8 @@ public class MultiReader extends EntryReader {
    * Create a new MultiReader starting with the specified file.
    * @see #MultiReader(File,String,String)
    */
-  public MultiReader (String filename, /*@Nullable*/ String comment_re,
-                      /*@Nullable*/ String include_re) throws IOException {
+  public MultiReader (String filename, /*@Nullable*/ /*@Regex*/ String comment_re,
+                      /*@Nullable*/ /*@Regex*/ String include_re) throws IOException {
     super(filename, comment_re, include_re);
   }
 
