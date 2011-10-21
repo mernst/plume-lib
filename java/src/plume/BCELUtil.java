@@ -443,8 +443,7 @@ public class BCELUtil {
   }
 
   /** Returns the class that corresponds to type **/
-  @SuppressWarnings("rawtypes")
-  public static Class type_to_class (Type type) {
+  public static Class<?> type_to_class (Type type) {
 
     String classname = type_to_classname (type);
     try {

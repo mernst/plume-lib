@@ -1,7 +1,7 @@
 package plume;
 
+import java.io.PrintStream;
 import java.util.*;
-import java.io.*;
 
 /**
  * Graph utility methods.  This class does not model a graph:  all methods
@@ -58,7 +58,8 @@ public class GraphMDE {
         // This is a root
         roots.add(node);
         // Its only dominator is itself.
-        dom.put(node, new ArrayList<T>(Collections.singleton(node)));
+        Set<T> set = Collections.singleton(node);
+        dom.put(node, new ArrayList<T>(set));
       } else {
         non_roots.add(node);
         dom.put(node, new ArrayList<T>(nodes));
