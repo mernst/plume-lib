@@ -68,10 +68,13 @@ for my $file (@ARGV) {
     # Get rid of type parameters.
     # This cannot just use the "g" modifier (global replace), because
     # type parameters may be nested:  Enum<E extends Enum<E>>.
-    while (s%&lt;(<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>( extends (\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(<a [^>]*>[^ <]*</a>|[^ ]+))?,?)+&gt;%%i) {
+    if (m/type parameter in/) {
+      if ($debug) { print STDERR "Considering: $_"; }
+    }      
+    while (s%&lt;((\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>( extends (\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(<a [^>]*>[^ <]*</a>|[^ ]+))?,?)+&gt;%%i) {
       # empty body
     }
-    if (m/\"type parameter in/) { die "Substitution failed, still has \"type parameter in\":\n$_"; }
+    if (m/\"type parameter in/) { die "Substitution failed in $file, still has \"type parameter in\":\n$_"; }
 
     # This regexp is intentionally not anchored at its beginning or end,
     # because sometimes line breaks are missing.
