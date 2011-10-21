@@ -8,11 +8,12 @@
 
 package plume;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.PrintStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
-import java.lang.annotation.*;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * The Options class:
@@ -405,6 +406,7 @@ public class Options {
     /**
      * Returns a one-line description of the option.
      */
+    @Override
     public String toString() {
       String prefix = use_single_dash ? "-" : "--";
       String short_name_str = "";
@@ -475,14 +477,14 @@ public class Options {
   private Class<?> main_class = Void.TYPE;
 
   /** List of all of the defined options **/
-  private List<OptionInfo> options = new ArrayList<OptionInfo>();
+  private final List<OptionInfo> options = new ArrayList<OptionInfo>();
 
   /** Map from short or long option names (with leading dashes) to option information **/
-  private Map<String,OptionInfo> name_map
+  private final Map<String,OptionInfo> name_map
     = new LinkedHashMap<String,OptionInfo>();
 
   /** Map from option group name to option group information **/
-  private Map<String, OptionGroupInfo> group_map
+  private final Map<String, OptionGroupInfo> group_map
     = new LinkedHashMap<String, OptionGroupInfo>();
 
   /**
@@ -498,7 +500,7 @@ public class Options {
    * Convert underscores to dashes in long options in usage messages.  Users
    * may specify either the underscore or dashed name on the command line.
    */
-  private boolean use_dashes = true;
+  private final boolean use_dashes = true;
 
   /**
    * When true, long options take the form -longOption with a single dash,
@@ -536,7 +538,7 @@ public class Options {
   public /*@Nullable*/ String usage_synopsis = null;
 
   // Debug loggers
-  private SimpleLog debug_options = new SimpleLog (false);
+  private final SimpleLog debug_options = new SimpleLog (false);
 
   /**
    * Prepare for option processing.  Creates an object that will set fields
@@ -697,7 +699,7 @@ public class Options {
   safeGetAnnotation(Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
     try {
-      annotation = f.getAnnotation(annotationClass);
+      annotation = f.getAnnotation((Class</*@NonNull*/ /*@NonRaw*/ T>) annotationClass);
     } catch (Exception e) {
       // Can get
       //   java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
@@ -1242,7 +1244,7 @@ public class Options {
         val = oi.constructor.newInstance (arg_value);
       } else if (oi.base_type.isEnum()) {
         @SuppressWarnings({"unchecked","rawtypes"})
-        Object tmpVal = getEnumValue ((Class<? extends Enum>)oi.base_type,
+        Object tmpVal = getEnumValue ((Class<Enum>)oi.base_type,
                                        arg_value);
         val = tmpVal;
       } else {
@@ -1350,6 +1352,7 @@ public class Options {
    * Returns a description of all of the known options.
    * Each option is described on its own line in the output.
    */
+  @Override
   public String toString() {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
