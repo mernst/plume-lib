@@ -699,7 +699,9 @@ public class Options {
   safeGetAnnotation(Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
     try {
-      annotation = f.getAnnotation((Class</*@NonNull*/ /*@NonRaw*/ T>) annotationClass);
+      @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
+      /*@Nullable*/ T cast = f.getAnnotation((Class</*@NonNull*/ T>) annotationClass);
+      annotation = cast;
     } catch (Exception e) {
       // Can get
       //   java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
