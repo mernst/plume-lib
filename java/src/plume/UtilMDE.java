@@ -1612,6 +1612,22 @@ public final class UtilMDE {
     return true;
   }
 
+  /**
+   * Returns the argument if it is a regex, otherwise throwns an error.
+   * The purpose of this method is to suppress Regex Checker warnings.
+   * Once the the Regex Checker supports flow-sensitivity, it should be
+   * very rarely needed.
+   */
+  @SuppressWarnings("regex")    // suppresses warnings
+  public static /*@Regex*/ String asRegex(String s) {
+    try {
+      Pattern.compile(s);
+      return s;
+    } catch (PatternSyntaxException e) {
+      throw new Error(e);
+    }
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////
   /// Reflection
