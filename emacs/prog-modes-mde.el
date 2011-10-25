@@ -242,9 +242,9 @@ if point is not in a function."
 ;;;
 
 (setq auto-mode-alist
-      (cons '("\\.javax\\'" . java-mode) ; ConstJava uses ".javax" extension
-	    auto-mode-alist))
-
+      (append '(("\\.javax\\'" . java-mode) ; ConstJava uses ".javax" extension
+		("\\.jpp\\'" . java-mode)) ; for preprocessed files; can't specify ".java.jpp"
+	      auto-mode-alist))
 (defun java-beginning-of-defun (&optional arg)
   "See `c-beginning-of-defun'.
 With prefix arg, goes to beginning of class; otherwise to beginning of method."
