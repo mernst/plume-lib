@@ -1243,7 +1243,7 @@ public class Options {
     Object val = null;
     try {
       if (oi.constructor != null) {
-        val = oi.constructor.newInstance (arg_value);
+        val = oi.constructor.newInstance (new Object[] { arg_value });
       } else if (oi.base_type.isEnum()) {
         @SuppressWarnings({"unchecked","rawtypes"})
         Object tmpVal = getEnumValue ((Class<Enum>)oi.base_type,

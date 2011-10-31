@@ -206,7 +206,7 @@ public class OptionsDoclet {
         try {
           Constructor<?> c = clazz.getDeclaredConstructor();
           c.setAccessible(true);
-          objs.add(c.newInstance());
+          objs.add(c.newInstance(new Object[0]));
         } catch (Exception e) {
           e.printStackTrace();
           return false;
