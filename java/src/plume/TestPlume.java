@@ -2159,8 +2159,7 @@ public final class TestPlume extends TestCase {
     assert c1.getNumberOfWrittenBytes() == 22;
     assert c1.getNumberOfPrintedChars() == 9;
     c1.println("foo");
-    @SuppressWarnings("nullness") // line.separator property always exists
-    /*@NonNull*/ String lineSep = System.getProperty("line.separator");
+    String lineSep = System.getProperty("line.separator");
     int ls_len = lineSep.length();
     assert c1.getNumberOfPrintedBytes() == (12 + ls_len);
     assert c1.getNumberOfWrittenBytes() == (28);

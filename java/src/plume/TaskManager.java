@@ -61,7 +61,7 @@ public class TaskManager {
   private static String usage_string
     = "TaskManger [options] <task-file> <task_file> ...";
 
-  @SuppressWarnings({"nullness", "regex"}) // line.separator property always exists, and is a legal regex
+  @SuppressWarnings("regex") // line.separator property is a legal regex
   public static final /*@Regex*/ String lineSep = System.getProperty("line.separator");
 
   /** Information about a single task **/

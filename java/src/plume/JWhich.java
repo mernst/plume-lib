@@ -162,8 +162,7 @@ public class JWhich {
 
   protected static String getClasspath() {
     if (CLASSPATH == null) {
-      @SuppressWarnings("nullness") // java.class.path property always exists
-      /*@NonNull*/ String classpath = System.getProperty("java.class.path");
+      String classpath = System.getProperty("java.class.path");
       setClasspath(classpath);
     }
 
