@@ -207,7 +207,6 @@ import java.util.regex.Pattern;
  **/
 public class Options {
   
-  @SuppressWarnings("nullness") // line.separator property always exists
   private static String eol = System.getProperty("line.separator");
 
   /** Information about an option **/

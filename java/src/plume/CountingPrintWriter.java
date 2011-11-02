@@ -304,7 +304,6 @@ public class CountingPrintWriter extends PrintWriter {
     super.print(obj);
   }
 
-  @SuppressWarnings("nullness") // line.separator property always exists
   private static final String lineSep = System.getProperty("line.separator");
 
   /**

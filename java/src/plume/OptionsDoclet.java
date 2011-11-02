@@ -145,7 +145,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 // and validOptions methods.
 public class OptionsDoclet {
 
-  @SuppressWarnings("nullness") // line.separator property always exists
   private static String eol = System.getProperty("line.separator");
 
   private static String usage = "Provided by Options doclet:\n" +
