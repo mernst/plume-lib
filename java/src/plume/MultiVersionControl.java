@@ -196,8 +196,7 @@ import java.net.URL;
 
 public class MultiVersionControl {
 
-  @SuppressWarnings("nullness") // user.home property always exists
-  static final /*@NonNull*/ String userHome = System.getProperty ("user.home");
+  static final String userHome = System.getProperty ("user.home");
 
   /**
    * File with list of checkouts.  Set it to /dev/null to suppress reading.

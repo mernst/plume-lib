@@ -89,7 +89,6 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /*@Nullable*/ String pushback_line = null;
 
   /** Platform-specific line separator **/
-  @SuppressWarnings("nullness") // line.separator property always exists
   private static final String lineSep = System.getProperty("line.separator");
 
   ///
