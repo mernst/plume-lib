@@ -1611,6 +1611,21 @@ public final class UtilMDE {
   }
 
   /**
+   * Returns null if the argument is a syntactically valid regular
+   * expression.  Otherwise returns a string describing why the string is
+   * not a regex.
+   */
+  @SuppressWarnings("regex")    // tests whether s is a regex
+  public static /*@Nullable*/ String regexError(String s) {
+    try {
+      Pattern.compile(s);
+    } catch (PatternSyntaxException e) {
+      return e.getMessage();
+    }
+    return null;
+  }
+
+  /**
    * Returns the argument if it is a regex, otherwise throwns an error.
    * The purpose of this method is to suppress Regex Checker warnings.
    * Once the the Regex Checker supports flow-sensitivity, it should be
