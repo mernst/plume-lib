@@ -313,6 +313,7 @@ public class BCELUtil {
     String out = "";
     // not generic because BCEL is not generic
     for (Iterator i = il.iterator(); i.hasNext();) {
+      @SuppressWarnings("nullness") // BCEL's InstructionList is raw but contains only non-null elements
       InstructionHandle handle = (InstructionHandle) i.next();
       out += handle.getInstruction().toString(pool.getConstantPool()) + "\n";
     }
