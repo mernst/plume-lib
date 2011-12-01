@@ -114,7 +114,11 @@ public final class UtilMDE {
   public static InputStream fileInputStream(File file) throws IOException {
     InputStream in;
     if (file.getName().endsWith(".gz")) {
-      in = new GZIPInputStream(new FileInputStream(file));
+      try {
+        in = new GZIPInputStream(new FileInputStream(file));
+      } catch (IOException e) {
+        throw new IOException("Problem while reading " + file, e);
+      }
     } else {
       in = new FileInputStream(file);
     }
@@ -258,8 +262,12 @@ public final class UtilMDE {
   public static LineNumberReader lineNumberFileReader(File file) throws FileNotFoundException, IOException {
     Reader file_reader;
     if (file.getName().endsWith(".gz")) {
-      file_reader = new InputStreamReader(new GZIPInputStream(new FileInputStream(file)),
-                                          "ISO-8859-1");
+      try {
+        file_reader = new InputStreamReader(new GZIPInputStream(new FileInputStream(file)),
+                                            "ISO-8859-1");
+      } catch (IOException e) {
+        throw new IOException("Problem while reading " + file, e);
+      }
     } else {
       file_reader = new InputStreamReader(new FileInputStream(file),
                                           "ISO-8859-1");
@@ -916,7 +924,11 @@ public final class UtilMDE {
     InputStream istream =
       new BufferedInputStream(new FileInputStream(file), 8192);
     if (file.getName().endsWith(".gz")) {
-      istream = new GZIPInputStream(istream);
+      try {
+        istream = new GZIPInputStream(istream);
+      } catch (IOException e) {
+        throw new IOException("Problem while reading " + file, e);
+      }
     }
     ObjectInputStream objs = new ObjectInputStream(istream);
     return objs.readObject();
