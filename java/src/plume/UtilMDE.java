@@ -679,14 +679,15 @@ public final class UtilMDE {
     }
     if ((mac > dos && mac > unix)
         || (lineSep.equals("\r") && mac >= dos && mac >= unix)) {
-      return "\n";
+      return "\r";
     }
     if ((unix > dos && unix > mac)
         || (lineSep.equals("\n") && unix >= dos && unix >= mac)) {
       return "\n";
     }
     // The two non-preferred line endings are tied and have more votes than
-    // the preferred line ending.  Give up.
+    // the preferred line ending.  Give up and return the line separator
+    // for the system on which Java is currently running.
     return lineSep;
   }
 
