@@ -5,6 +5,6 @@ for details, see http://plume-lib.googlecode.com/hg/README.html .
 plume-lib 1.0.1, released December 10, 2011
 Over 100 changes with many bug fixes, code and documentation improvements,
 new features, and updates due to changes in tools that plume-lib uses.
-File LICENCE.txt is also new.
+Files LICENCE.txt and changelog.txt are also new.
 
 plume-lib 1.0.0, released October 3, 2010
