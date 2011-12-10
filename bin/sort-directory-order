@@ -42,7 +42,7 @@
 ## do
 ##   etags `find . -iname '*.java' -print | sort-directory-order`
 
-## Note a directory name will appear immediatel before its contents if it
+## Note a directory name will appear immediately before its contents if it
 ## ends with a slash (/), but a directory name that lacks a slash will
 ## appear with the contents of the parent directory.
 
