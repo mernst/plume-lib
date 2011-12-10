@@ -3,6 +3,8 @@ use strict;
 use English;
 $WARNING = 1;
 
+# Reports any word that appears twice in a row.  Such a word is often a typo.
+
 # It would be nicer for this to give file names and line numbers, like grep
 # and similar tools do.
 

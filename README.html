@@ -187,7 +187,7 @@ webpage that you maintain.
 <dl>
 <dt>transgif</dt>
 <dd>
-  Change a .gif file's background to transparent.
+  Change a <tt>.gif</tt> file's background to transparent.
   <a href="http://plume-lib.googlecode.com/hg/bin/transgif">Documentation</a> at top of file.
 </dd>
 
@@ -609,72 +609,94 @@ This contains no documentation, so don't include it in this README file.
 </dd>
 
 <dt>
-./bin/path-remove
+path-remove
 </dt>
 <dd>
+Cleans up a path environment variable by removing duplicates and
+non-existent directories.
+Can optionally remove certain path elements.
+Works for either space- or colon- delimiated paths.
+<a href="http://plume-lib.googlecode.com/hg/bin/path-remove">Documentation</a> at top of file.
 </dd>
 
 <dt>
-./bin/mail-e
+mail-e
 </dt>
 <dd>
+Reads standard output, and if not empty calls the <tt>mail</tt> program.
+This feature is useful in scripts and cron jobs, but is not supported
+in all versions of <tt>mail</tt>.
+<a href="http://plume-lib.googlecode.com/hg/bin/mail-e">Documentation</a>
+at top of file.
 </dd>
 
 <dt>
-./bin/touch-oldify
+touch-oldify
 </dt>
 <dd>
+Give the argument files the oldest possible timestamp.
+This can be useful to cause "make" to re-build the file.
 </dd>
 
 <dt>
-./bin/cronic
+cronic
 </dt>
 <dd>
+A small shim shell script for wrapping cron jobs so that cron only sends
+email when an error has occurred.  Documentation
+<a href="http://plume-lib.googlecode.com/hg/bin/cronic">at top of file</a> and at
+<a href="http://habilis.net/cronic/">http://habilis.net/cronic/</a>.
 </dd>
 
 <dt>
-./bin/diff-remove-empty
+diff-remove-empty
 </dt>
 <dd>
+Filter out empty parts (hunks and file sections) of a diff file
+This is useful after running some other program that removes some lines
+from a diff file.
 </dd>
 
 <dt>
-./bin/junk
+junk
 </dt>
 <dd>
+View and manipulate junk files, such as backup files and intermediate
+Without argument, shows junk files subordinate to current directory.
+<a href="http://plume-lib.googlecode.com/hg/bin/junk.doc">Documentation</a> in
+file junk.doc.
 </dd>
 
 <dt>
-./bin/junk.doc
+repeated-words
 </dt>
 <dd>
+Reports any word that appears twice in a row.  Such a word is often a typo.
 </dd>
 
 <dt>
-./bin/repeated-words
+sort-directory-order
 </dt>
 <dd>
+Sorts the input lines by directory order:  first, every file in a given
+directory, in sorted order; then, process subdirectories recursively, in
+sorted order This is useful for users (e.g., when printing) and for making
+output deterministic.
+<a href="http://plume-lib.googlecode.com/hg/bin/sort-directory-order">Documentation</a>
+at top of file.
 </dd>
 
 <dt>
-./bin/sort-directory-order
+sort-reversed
 </dt>
 <dd>
+Like <tt>sort</tt>, but the key is the reverse of each line.
+Some <tt>sort</tt> implementations have a flag <tt>-r</tt> that has this
+same effect.
 </dd>
-
-<dt>
-./bin/sort-reversed
-</dt>
-<dd>
-</dd>
-
 
 </dl>
 
-# Clean up a path environment variable by removing duplicates and
-# non-existent directories.
-# With optional argument "-r REGEXP", removes any matching path element.
-# Works for either space- or colon- delimiated paths.
 
 
 <h3 id="Cygwin">Cygwin</h3>
@@ -1035,5 +1057,9 @@ generally well-documented, so feel free to browse.
  -->
 <!--  LocalWords:  uwisdom preplace timestamp ICalAvailable iCalendar regexps
  -->
-<!--  LocalWords:  regexp notbetween upto striplines checkargs
+<!--  LocalWords:  regexp notbetween upto striplines checkargs hg cd emacs
+ -->
+<!--  LocalWords:  gz txt html webpage's checklink args HtmlPrettyPrint
+ -->
+<!--  LocalWords:  filepp urls bibtex transgif
  -->
