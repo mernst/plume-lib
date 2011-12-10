@@ -24,13 +24,28 @@ and library.
 </p>
 
 <p><b>Installation instructions:</b></p>
-<p>
-The source code is available at
-<a href="http://code.google.com/p/plume-lib/">http://code.google.com/p/plume-lib/</a>.
-To build plume-lib, run <tt>make</tt>.  To install plume-lib, add
+
+<ol>
+<li>
+Obtain the <a href="http://code.google.com/p/plume-lib/">source code</a>:
+<pre>hg clone https://code.google.com/p/plume-lib/</pre>
+</li>
+<li>
+Build plume-lib:
+<pre>cd plume-lib
+make</pre>
+</li>
+<li>
+Add
 <tt>java/plume.jar</tt> to
 <tt>$CLASSPATH</tt>, add the <tt>bin</tt> subdirectory to <tt>$PATH</tt>, and
 add the <tt>emacs</tt> subdirectory to Emacs' <tt>load-path</tt>.
+</li>
+</ol>
+<p>
+(As an alternative to steps 1 and 2 above, you can download 
+<a href="http://code.google.com/p/plume-lib/downloads/list">plume-lib-<em>X.Y.Z</em>.tar.gz
+file from Google Code</a>.)
 </p>
 
 <p><b>Bug reports:</b>  Please use the
@@ -39,7 +54,7 @@ add the <tt>emacs</tt> subdirectory to Emacs' <tt>load-path</tt>.
 
 <p><b>License:</b>
 Plume-lib is distributed under the MIT License, except for a few files that
-are governed by a different license.  See file LICENSE.txt for details.
+are governed by a different license.  See file <a href="http://plume-lib.googlecode.com/hg/LICENSE.txt">LICENSE.txt</a> for details.
 </p>
 
 
