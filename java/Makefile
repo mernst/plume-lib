@@ -171,6 +171,9 @@ javadoc: .javadoc-timestamp
 
 .javadoc-timestamp: $(JAVA_FILES)
 	$(MAKE) optionsdoc
+# The "rm -rf" is necessary or else any old version of stylesheet.css is
+# retained rather than overwritten
+	rm -rf api
 	mkdir -p api
 	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
@@ -192,7 +195,7 @@ optionsdoc: .optionsdoc-timestamp
 # This should presumably test for other buggy versions of gjdoc as well.
 # The symptom is output such as:  ARGH! @Option
 ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
-	echo "Skipping optionsdoc target because of bugs in $(JAVADOC)"
+	echo "Skipping optionsdoc target because of bugs in $(JAVADOC) version $(JAVADOC_VERSION)"
 else
 #	@echo "JAVADOC = $(JAVADOC)"
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
