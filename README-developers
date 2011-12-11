@@ -35,6 +35,7 @@ new downloads.
 5. Remove the old directory /cse/www2/types/plume-lib/api , and replace it
 by the current plume-lib/java/api directory:
 
+    cd $pl/java && hg fetch
     make -C $pl/java javadoc
     rm -rf /cse/www2/types/plume-lib/api
     cp -pr $pl/java/api /cse/www2/types/plume-lib
