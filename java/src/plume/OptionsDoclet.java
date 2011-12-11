@@ -18,7 +18,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
- * Generates HTML documentation of command-line options.
+ * Generates HTML documentation of command-line options.  Works with the
+ * {@link plume.Options} class.
  * <p>
  *
  * <b>Usage</b> <p>
