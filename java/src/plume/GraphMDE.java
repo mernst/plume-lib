@@ -83,6 +83,7 @@ public class GraphMDE {
             new_doms.retainAll(dom_of_pred);
           }
         }
+        assert new_doms != null : "@SuppressWarnings(nullness): not sure why; investigate later, and what to do if it is null";
         new_doms.add(node);
         assert dom.containsKey(node);
         if (! dom.get(node).equals(new_doms)) {
