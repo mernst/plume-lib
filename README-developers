@@ -32,12 +32,10 @@ them manually if not using googlecode_upload.py.  Remove the Featured label
 from the previous release downloads in Google Code and reapply the label to the
 new downloads.
 
-5. Remove the old directory /cse/www2/types/plume-lib/api , and replace it
-by the current plume-lib/java/api directory:
+5. Update the web version of the Javadoc:
 
-    cd $pl/java && hg fetch
-    make -C $pl/java javadoc
-    rm -rf /cse/www2/types/plume-lib/api
-    cp -pr $pl/java/api /cse/www2/types/plume-lib
+    cd $pl/java
+    hg fetch
+    make javadoc-publish
 
 6. Push the new Mercurial tag created by the script to the repository.
