@@ -498,6 +498,7 @@ public class OptionsDoclet {
     if (enum_doc == null)
       return;
 
+    assert oi.enum_jdoc != null : "@SuppressWarnings(nullness): bug in flow?";
     for (String name : oi.enum_jdoc.keySet()) {
       for (FieldDoc fd : enum_doc.fields()) {
         if (fd.name().equals(name)) {
