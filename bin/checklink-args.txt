@@ -65,11 +65,15 @@
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
+--suppress-fragment http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_PARAMETER
+--suppress-fragment http://download.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_USE
 --suppress-fragment http://download.oracle.com/javase/7/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#toString()
 --suppress-fragment http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/AbstractTypeProcessor.html?is-external=true#process(java.util.Set,%20javax.annotation.processing.RoundEnvironment)
 --suppress-fragment http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/AbstractTypeProcessor.html?is-external=true#typeProcessingOver()
 --suppress-fragment http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
 --suppress-fragment http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/TreeScanner.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
+--suppress-fragment http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/TreeScanner.html?is-external=true#visitLambdaExpression(com.sun.source.tree.LambdaExpressionTree,%20P)
+--suppress-fragment http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/TreeScanner.html?is-external=true#visitMemberReference(com.sun.source.tree.MemberReferenceTree,%20P)
 --suppress-fragment http://java.sun.com/javase/6/docs/api/javax/lang/model/SourceVersion.html?is-external=true#RELEASE_7
 --suppress-fragment http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
 --suppress-fragment http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true#visitAnnotatedType(com.sun.source.tree.AnnotatedTypeTree,%20P)
