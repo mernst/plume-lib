@@ -113,6 +113,7 @@
 --suppress-redirect http://www.elsevier.com/locate/disc/->http://www.elsevier.com/wps/find/journaldescription.cws_home/505610/description#description	
 --suppress-redirect http://www.fair.org/->http://www.fair.org/index.php	
 --suppress-redirect http://www.google.com/products/->http://www.google.com/m/products?source=desktop	
+--suppress-redirect http://www.google.com/support/calendar/bin/answer.py?answer=37100->http://support.google.com/calendar/bin/answer.py?hl=en&answer=37100	
 --suppress-redirect http://www.hotelatmit.com/->http://www.hotelatmit.com/
 --suppress-redirect http://www.ibm.com/developerworks/oss/jikes/->http://www-124.ibm.com/developerworks/oss/jikes/
 --suppress-redirect http://www.ibm.com/developerworks/oss/jikes/->http://www-124.ibm.com/developerworks/oss/jikes/
