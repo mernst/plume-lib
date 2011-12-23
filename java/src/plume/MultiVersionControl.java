@@ -71,6 +71,10 @@ import java.net.URL;
  *  set this rather high for safety.  Also, the timeout needs to account
  *  for the time to run hooks (that might recompile or run tests). [default 600]</li>
  *   <li><b>-q</b> <b>--quiet=</b><i>boolean</i>. Run quietly (e.g., no output about missing directories) [default true]</li>
+ *   <li><b>--cvs-executable=</b><i>string</i>. Path to the cvs program [default cvs]</li>
+ *   <li><b>--git-executable=</b><i>string</i>. Path to the git program [default git]</li>
+ *   <li><b>--hg-executable=</b><i>string</i>. Path to the hg program [default hg]</li>
+ *   <li><b>--svn-executable=</b><i>string</i>. Path to the svn program [default svn]</li>
  *   <li><b>--debug=</b><i>boolean</i>. Print debugging output [default false]</li>
  *   <li><b>--debug-replacers=</b><i>boolean</i>. Debug 'replacers' that filter command output [default false]</li>
  * </ul>
@@ -241,6 +245,24 @@ public class MultiVersionControl {
 
   @Option("-q Run quietly (e.g., no output about missing directories)")
   public boolean quiet = true;
+
+  // These *-executable command-line options are handy:
+  //  * if you want to use a specific version of the program
+  //  * if the program is not on your path
+  //  * if there is a directory of the same name as the program, and . is on
+  //    your path; in that case, the command would try to execute the directory.
+
+  @Option("Path to the cvs program")
+  public String cvs_executable = "cvs";
+
+  @Option("Path to the git program")
+  public String git_executable = "git";
+
+  @Option("Path to the hg program")
+  public String hg_executable = "hg";
+
+  @Option("Path to the svn program")
+  public String svn_executable = "svn";
 
   // It would be good to be able to set this per-checkout.
   // This variable is static because it is used in static methods.
@@ -1003,22 +1025,22 @@ public class MultiVersionControl {
           // break;
         case CVS:
           assert c.module != null : "@SuppressWarnings(nullness): dependent type CVS";
-          pb.command("cvs", "-d", c.repository, "checkout",
+          pb.command(cvs_executable, "-d", c.repository, "checkout",
                      "-P", // prune empty directories
                      "-ko", // no keyword substitution
                      c.module);
           break;
         case GIT:
-          pb.command("git", "clone", c.repository, dirbase);
+          pb.command(git_executable, "clone", c.repository, dirbase);
           break;
         case HG:
-          pb.command("hg", "clone", c.repository, dirbase);
+          pb.command(hg_executable, "clone", c.repository, dirbase);
           break;
         case SVN:
           if (c.module != null) {
-            pb.command("svn", "checkout", c.repository, c.module);
+            pb.command(svn_executable, "checkout", c.repository, c.module);
           } else {
-            pb.command("svn", "checkout", c.repository);
+            pb.command(svn_executable, "checkout", c.repository);
           }
           break;
         default:
@@ -1035,7 +1057,7 @@ public class MultiVersionControl {
           // break;
         case CVS:
           assert c.repository != null;
-          pb.command("cvs", "-q",
+          pb.command(cvs_executable, "-q",
                      // Including "-d REPOS" seems to give errors when a
                      // subdirectory is in a different CVS repository.
                      // "-d", c.repository,
@@ -1064,7 +1086,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)(cvs diff: ignoring )", "$1$2" + dir + "/"));
           break;
         case GIT:
-          pb.command("git", "status");
+          pb.command(git_executable, "status");
           replacers.add(new Replacer("(^|\\n)nothing to commit \\(working directory clean\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)no changes added to commit \\(use \"git add\" and/or \"git commit -a\"\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing added to commit but untracked files present \\(use \"git add\" to track\\)\\n", "$1"));
@@ -1090,23 +1112,23 @@ public class MultiVersionControl {
           // Unnecessary because "git status" reports:
           //   # Your branch is ahead of 'origin/master' by 1 commit.
           // Or, see "git-outgoing" at http://github.com/ddollar/git-utils
-          // pb2.command("git", "log", "origin..HEAD");
+          // pb2.command(git_executable, "log", "origin..HEAD");
           break;
         case HG:
-          pb.command("hg", "status");
+          pb.command(hg_executable, "status");
           if (debug) {
             System.out.printf("invalidCertificate(%s) => %s%n", c.directory, invalidCertificate(c.directory));
           }
           if (invalidCertificate(c.directory)) {
-            pb2.command("hg", "outgoing", "-l", "1", "--config", "web.cacerts=");
+            pb2.command(hg_executable, "outgoing", "-l", "1", "--config", "web.cacerts=");
           } else {
-            pb2.command("hg", "outgoing", "-l", "1");
+            pb2.command(hg_executable, "outgoing", "-l", "1");
           }
           // The third line is either "no changes found" or "changeset".
           replacers.add(new Replacer("^comparing with .*\\nsearching for changes\\nchangeset[^\001]*", "unpushed changesets: " + pb.directory() + "\n"));
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
           // TODO:  Shelve is an optional extension, and so this should make no report if it is not installed.
-          pb3.command("hg", "shelve", "-l");
+          pb3.command(hg_executable, "shelve", "-l");
           replacers3.add(new Replacer("^hg: unknown command 'shelve'\\n(.*\\n)+", ""));
           replacers3.add(new Replacer("^(.*\\n)+", "shelved changes: " + pb.directory() + "\n"));
           break;
@@ -1114,7 +1136,7 @@ public class MultiVersionControl {
           // Handle some changes.
           // "svn status" also outputs an eighth column, only if you pass the --show-updates switch: [* ]
           replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~ ][CM ][L ][+ ][$ ]) *", "$1$2 " + dir + "/"));
-          pb.command("svn", "status");
+          pb.command(svn_executable, "status");
           break;
         default:
           assert false;
@@ -1129,7 +1151,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)(cvs update: ((in|skipping) directory|conflicts found in )) +", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)(Merging differences between 1.16 and 1.17 into )", "$1$2 " + dir + "/"));
           assert c.repository != null;
-          pb.command("cvs",
+          pb.command(cvs_executable,
                      // Including -d causes problems with CVS repositories
                      // that are embedded inside other repositories.
                      // "-d", c.repository,
@@ -1140,23 +1162,23 @@ public class MultiVersionControl {
           break;
         case GIT:
           replacers.add(new Replacer("(^|\\n)Already up-to-date\\.\\n", "$1"));
-          pb.command("git", "pull", "-q");
+          pb.command(git_executable, "pull", "-q");
           break;
         case HG:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)abort: ", "$1"));
-          pb.command("hg", "-q", "update");
+          pb.command(hg_executable, "-q", "update");
           if (invalidCertificate(c.directory)) {
-            pb2.command("hg", "-q", "fetch", "--config", "web.cacerts=");
+            pb2.command(hg_executable, "-q", "fetch", "--config", "web.cacerts=");
           } else {
-            pb2.command("hg", "-q", "fetch");
+            pb2.command(hg_executable, "-q", "fetch");
           }
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(svn: Failed to add file ')(.*')", "$1" + dir + "/" + "$2"));
           assert c.repository != null;
-          pb.command("svn", "-q", "update");
+          pb.command(svn_executable, "-q", "update");
         //         $filter = "grep -v \"Killed by signal 15.\"";
           break;
         default:
