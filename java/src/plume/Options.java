@@ -27,9 +27,11 @@ import java.util.regex.Pattern;
  * <p>
  * 
  * The programmer does not have to write any code, only declare and
- * document variables.  Each field that is annotated with @{@link
- * plume.Option} is automatically set from a command-line argument of the
- * same name.
+ * document variables.  For each field that you want to set from a
+ * command-line argument, you write Javadoc and an @{@link plume.Option}
+ * annotation.  Then, field is is automatically set from a command-line
+ * option of the same name, and usage messages and printed documentation
+ * are generated automatically.
  * <p>
  *
  * The main entry point is {@link #parse_or_usage(String[])}.
@@ -176,9 +178,8 @@ import java.util.regex.Pattern;
  *
  * <b>More examples</b> <p>
  *
- * Example clients of the Options library include {@link
- * plume.Lookup} and the <code>Main</code> class of
- * <a href="http://code.google.com/p/javarifier/">Javarifier</a>.  <p>
+ * Example clients of the Options library include {@link plume.Lookup} and 
+ * <a href="http://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among many others.  <p>
  *
  * <b>Limitations</b> <ul>
  *
