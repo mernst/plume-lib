@@ -294,17 +294,15 @@ public class Lookup {
               System.out.println ("Error: not a regex: " + keyword);
               System.exit (254);
             }
-            @SuppressWarnings("regex") // temporary until isRegex is properly annotated for flow sensitivity
-            /*@Regex*/ String keyword_re = keyword;
+            keyword = UtilMDE.asRegex(keyword); // temporary until isRegex is properly annotated for flow sensitivity
 
-            if (Pattern.compile (keyword_re, flags).matcher(search).find())
+            if (Pattern.compile (keyword, flags).matcher(search).find())
               matchcount++;
           } else {
             if (!case_sensitive)
               keyword = keyword.toLowerCase();
             if (word_match) {
-              @SuppressWarnings("regex") // temporary until Pattern.quote is annotated
-              /*@Regex*/ String keyword_re = "\\b" + Pattern.quote(keyword) + "\\b";
+              String keyword_re = "\\b" + Pattern.quote(keyword) + "\\b";
               if (Pattern.compile (keyword_re).matcher(search).find())
                 matchcount++;
             } else if (search.contains(keyword))
