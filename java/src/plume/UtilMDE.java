@@ -1607,7 +1607,6 @@ public final class UtilMDE {
    * @see Pattern#quote(String)
    */
   @Deprecated
-  @SuppressWarnings("regex")  // temporary until JDK is annotated
   public static /*@Regex*/ String patternQuote(String s) {
     return Pattern.quote(s);
   }
