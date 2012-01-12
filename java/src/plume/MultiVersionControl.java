@@ -1021,8 +1021,8 @@ public class MultiVersionControl {
         }
         switch (c.repoType) {
         case BZR:
-          throw new Error("not yet implemented");
-          // break;
+          System.out.println("bzr handling not yet implemented: skipping " + c.directory);
+          break;
         case CVS:
           assert c.module != null : "@SuppressWarnings(nullness): dependent type CVS";
           pb.command(cvs_executable, "-d", c.repository, "checkout",
@@ -1053,8 +1053,8 @@ public class MultiVersionControl {
         show_normal_output = true;
         switch (c.repoType) {
         case BZR:
-          throw new Error("not yet implemented");
-          // break;
+          System.out.println("bzr handling not yet implemented: skipping " + c.directory);
+          break;
         case CVS:
           assert c.repository != null;
           pb.command(cvs_executable, "-q",
@@ -1145,8 +1145,8 @@ public class MultiVersionControl {
       case UPDATE:
         switch (c.repoType) {
         case BZR:
-          throw new Error("not yet implemented");
-          // break;
+          System.out.println("bzr handling not yet implemented: skipping " + c.directory);
+          break;
         case CVS:
           replacers.add(new Replacer("(^|\\n)(cvs update: ((in|skipping) directory|conflicts found in )) +", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)(Merging differences between 1.16 and 1.17 into )", "$1$2 " + dir + "/"));
