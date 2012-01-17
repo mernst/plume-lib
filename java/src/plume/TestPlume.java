@@ -1547,18 +1547,18 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.isSubtype(ArrayList.class, List.class);
     assert ! UtilMDE.isSubtype(List.class, ArrayList.class);
 
-    // public static String classnameToJvm(String classname)
-    assert UtilMDE.classnameToJvm("boolean").equals("Z");
-    assert UtilMDE.classnameToJvm("byte").equals("B");
-    assert UtilMDE.classnameToJvm("char").equals("C");
-    assert UtilMDE.classnameToJvm("double").equals("D");
-    assert UtilMDE.classnameToJvm("float").equals("F");
-    assert UtilMDE.classnameToJvm("int").equals("I");
-    assert UtilMDE.classnameToJvm("long").equals("J");
-    assert UtilMDE.classnameToJvm("short").equals("S");
-    assert UtilMDE.classnameToJvm("Integer").equals("LInteger;");
-    assert UtilMDE.classnameToJvm("Java.lang.Integer").equals("LJava/lang/Integer;");
-    assert UtilMDE.classnameToJvm("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
+    // public static String fullyQualifiedNameToFieldDescriptor(String classname)
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("boolean").equals("Z");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("byte").equals("B");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("char").equals("C");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("double").equals("D");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("float").equals("F");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("int").equals("I");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("long").equals("J");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("short").equals("S");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("Integer").equals("LInteger;");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("Java.lang.Integer").equals("LJava/lang/Integer;");
+    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
 
     // public static String arglistToJvm(String arglist)
     assert UtilMDE.arglistToJvm("()").equals("()");
@@ -1571,18 +1571,18 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.arglistToJvm("(int, int[][], int)").equals("(I[[II)");
     assert UtilMDE.arglistToJvm("(java.lang.Integer[], int, java.lang.Integer[][])").equals("([Ljava/lang/Integer;I[[Ljava/lang/Integer;)");
 
-    // public static String classnameFromJvm(String classname)
-    assert UtilMDE.classnameFromJvm("Z").equals("boolean");
-    assert UtilMDE.classnameFromJvm("B").equals("byte");
-    assert UtilMDE.classnameFromJvm("C").equals("char");
-    assert UtilMDE.classnameFromJvm("D").equals("double");
-    assert UtilMDE.classnameFromJvm("F").equals("float");
-    assert UtilMDE.classnameFromJvm("I").equals("int");
-    assert UtilMDE.classnameFromJvm("J").equals("long");
-    assert UtilMDE.classnameFromJvm("S").equals("short");
-    assert UtilMDE.classnameFromJvm("LInteger;").equals("Integer");
-    assert UtilMDE.classnameFromJvm("LJava/lang/Integer;").equals("Java.lang.Integer");
-    assert UtilMDE.classnameFromJvm("[[LJava/lang/Integer;").equals("Java.lang.Integer[][]");
+    // public static String fieldDescriptorToBinaryName(String classname)
+    assert UtilMDE.fieldDescriptorToBinaryName("Z").equals("boolean");
+    assert UtilMDE.fieldDescriptorToBinaryName("B").equals("byte");
+    assert UtilMDE.fieldDescriptorToBinaryName("C").equals("char");
+    assert UtilMDE.fieldDescriptorToBinaryName("D").equals("double");
+    assert UtilMDE.fieldDescriptorToBinaryName("F").equals("float");
+    assert UtilMDE.fieldDescriptorToBinaryName("I").equals("int");
+    assert UtilMDE.fieldDescriptorToBinaryName("J").equals("long");
+    assert UtilMDE.fieldDescriptorToBinaryName("S").equals("short");
+    assert UtilMDE.fieldDescriptorToBinaryName("LInteger;").equals("Integer");
+    assert UtilMDE.fieldDescriptorToBinaryName("LJava/lang/Integer;").equals("Java.lang.Integer");
+    assert UtilMDE.fieldDescriptorToBinaryName("[[LJava/lang/Integer;").equals("Java.lang.Integer[][]");
 
     // public static String arglistFromJvm(String arglist)
     assert UtilMDE.arglistFromJvm("()").equals("()");
