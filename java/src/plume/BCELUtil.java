@@ -437,10 +437,10 @@ public class BCELUtil {
             && (arg_types.length == 1) && arg_types[0].equals(string_array));
   }
 
-  /** Returns the java classname that corresponds to type **/
-  public static String type_to_classname (Type type) {
+  /** Returns the Java classname that corresponds to type **/
+  public static /*@BinaryName*/ String type_to_classname (Type type) {
     String signature = type.getSignature();
-    return UtilMDE.classnameFromJvm (signature);
+    return UtilMDE.fieldDescriptorToBinaryName (signature);
   }
 
   /** Returns the class that corresponds to type **/

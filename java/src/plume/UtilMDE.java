@@ -406,22 +406,31 @@ public final class UtilMDE {
   }
 
   /**
-   * Like @link{Class.forName(String)}, but works when the string
-   * represents a primitive type, too.  If the original name can't
-   * be found, it also tries looking for the name with the last '.'
-   * changed to a dollar sign ($).  This accounts for inner classes
-   * which are sometimes separated with '.'.
+   * Like {@link Class.forName(String)}, but also works when the string
+   * represents a primitive type or a fully-qualified name (as opposed to a binary name).
+   * <p>
+   * If the given name can't be found, this method changes the last '.'  to
+   * a dollar sign ($) and tries again.  This accounts for inner classes
+   * that are incorrectly passed in in fully-qualified format instead of
+   * binary format.
+   * <p>
+   * Recall the rather odd specification for {@link Class.forName(String)}:
+   * the argument is a binary name for non-arrays, but a field descriptor
+   * for arrays.  This method uses the same rules, but additionally handles
+   * primitive types and, for non-arrays, fully-qualified names.
    **/
-  public static Class<?> classForName(String className) throws ClassNotFoundException {
+  // Argument may be either a @BinaryName or a @FullyQualifiedName.
+  public static Class<?> classForName(/*@BinaryName*/ String className) throws ClassNotFoundException {
     Class<?> result = primitiveClasses.get(className);
-    if (result != null)
+    if (result != null) {
       return result;
-    else {
+    } else {
       try {
         return Class.forName(className);
       } catch (ClassNotFoundException e) {
         int pos = className.lastIndexOf('.');
-        String inner_name = className.substring (0, pos) + "$"
+        @SuppressWarnings("signature")
+        /*@BinaryName*/ String inner_name = className.substring (0, pos) + "$"
           + className.substring (pos+1);
         try {
           return Class.forName (inner_name);
@@ -445,10 +454,21 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a fully-qualified classname from Java format to JVML format.
+   * Convert a fully-qualified class to a field descriptor.
    * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;".
+   * @deprecated use fullyQualifiedNameToFieldDescriptor
    **/
+  @Deprecated
   public static String classnameToJvm(String classname) {
+    return fullyQualifiedNameToFieldDescriptor(classname);
+  }
+
+  /**
+   * Convert a fully-qualified class name to a field descriptor.
+   * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;"
+   * or "int" to "I".
+   **/
+  public static String fullyQualifiedNameToFieldDescriptor(String classname) {
     int dims = 0;
     while (classname.endsWith("[]")) {
       dims++;
@@ -466,10 +486,21 @@ public final class UtilMDE {
 
   /**
    * Convert a primitive java type name (e.g., "int", "double", etc.) to
-   * the single character JVM name (e.g., "I", "D", etc.).
-   * Throws IllegalArgumentException if primitive_name is not a valid name.
+   * a field descriptor (e.g., "I", "D", etc.).
+   * @deprecated use primitiveTypeNameToFieldDescriptor
+   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
    */
+  @Deprecated
   public static String primitive_name_to_jvm (String primitive_name) {
+    return primitiveTypeNameToFieldDescriptor(primitive_name);
+  }
+
+  /**
+   * Convert a primitive java type name (e.g., "int", "double", etc.) to
+   * a field descriptor (e.g., "I", "D", etc.).
+   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
+   */
+  public static String primitiveTypeNameToFieldDescriptor (String primitive_name) {
     String result = primitiveClassesJvm.get (primitive_name);
     if (result == null) {
       throw new IllegalArgumentException("Not the name of a primitive type: " + primitive_name);
@@ -492,7 +523,7 @@ public final class UtilMDE {
       = new StringTokenizer(comma_sep_args, ",", false);
     for ( ; args_tokenizer.hasMoreTokens(); ) {
       String arg = args_tokenizer.nextToken().trim();
-      result += classnameToJvm(arg);
+      result += fullyQualifiedNameToFieldDescriptor(arg);
     }
     result += ")";
     // System.out.println("arglistToJvm: " + arglist + " => " + result);
@@ -511,14 +542,27 @@ public final class UtilMDE {
     primitiveClassesFromJvm.put("S", "short");
   }
 
-  // does not convert "V" to "void".  Should it?
   /**
    * Convert a classname from JVML format to Java format.
-   * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]".
+   * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]"
+   * or "I" to "int".
+   * @deprecated use fieldDescriptorToBinaryName
    **/
-  public static String classnameFromJvm(String classname) {
+  @Deprecated
+  public static /*@BinaryName*/ String classnameFromJvm(String classname) {
+    return fieldDescriptorToBinaryName(classname);
+  }
+
+  // does not convert "V" to "void".  Should it?
+  /**
+   * Convert a field descriptor to a binary name.
+   * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]"
+   * or "I" to "int".
+   **/
+  @SuppressWarnings("signature") // conversion routine
+  public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
-      throw new Error("Empty string passed to classnameFromJvm");
+      throw new Error("Empty string passed to fieldDescriptorToBinaryName");
     }
     int dims = 0;
     while (classname.startsWith("[")) {
@@ -561,10 +605,10 @@ public final class UtilMDE {
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
         int semi_pos = arglist.indexOf(";", nonarray_pos);
-        result += classnameFromJvm(arglist.substring(pos, semi_pos+1));
+        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos+1));
         pos = semi_pos + 1;
       } else {
-        String maybe = classnameFromJvm(arglist.substring(pos, nonarray_pos+1));
+        String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos+1));
         if (maybe == null) {
           // return null;
           throw new Error("Malformed arglist: " + arglist);
@@ -588,7 +632,7 @@ public final class UtilMDE {
    **/
   private static class PromiscuousLoader extends ClassLoader {
     /** Load a class from a .class file, and return it. */
-    public Class<?> loadClassFromFile(String className, String pathname) throws FileNotFoundException, IOException {
+    public Class<?> loadClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
       FileInputStream fi = new FileInputStream(pathname);
       int numbytes = fi.available();
       byte[] classBytes = new byte[numbytes];
@@ -606,7 +650,7 @@ public final class UtilMDE {
    * @param pathname the pathname of a .class file
    * @return a Java Object corresponding to the Class defined in the .class file
    **/
-  public static Class<?> loadClassFromFile(String className, String pathname) throws FileNotFoundException, IOException {
+  public static Class<?> loadClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
     return thePromiscuousLoader.loadClassFromFile(className, pathname);
   }
 
@@ -1452,7 +1496,15 @@ public final class UtilMDE {
   /** Maps from a string of arg names to an array of Class objects. */
   static HashMap<String,Class<?>[]> args_seen = new HashMap<String,Class<?>[]>();
 
-  /** Given a method name, return the method. */
+  /**
+   * Given a method signature, return the method.
+   * Example calls are:
+   * <pre>
+   * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String, java.lang.String, java.lang.Class[])")
+   * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String,java.lang.String,java.lang.Class[])")
+   * UtilMDE.methodForName("java.lang.Math.min(int,int)")
+   * </pre>
+   */
   public static Method methodForName(String method)
     throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
@@ -1468,7 +1520,8 @@ public final class UtilMDE {
       }
     }
 
-    String classname = method.substring(0,dotpos);
+    @SuppressWarnings("signature") // throws exception if class does not exist
+    /*@BinaryName*/ String classname = method.substring(0,dotpos);
     String methodname = method.substring(dotpos+1, oparenpos);
     String all_argnames = method.substring(oparenpos+1, cparenpos).trim();
     Class<?>[] argclasses = args_seen.get(all_argnames);
@@ -1483,20 +1536,26 @@ public final class UtilMDE {
       argclasses = new Class<?>[argnames.length];
       for (int i=0; i<argnames.length; i++) {
         String argname = argnames[i].trim();
-        int numbrackets = 0;
-        while (argname.endsWith("[]")) {
-          argname = argname.substring(0, argname.length()-2);
-          numbrackets++;
-        }
-        if (numbrackets > 0) {
-          argname = "L" + argname + ";";
-          while (numbrackets>0) {
-            argname = "[" + argname;
-            numbrackets--;
+        // If an array, then convert from binary name to field descriptor,
+        // due to bizarre specification of Class.forName.
+        if (argname.endsWith("[]")) {
+          int numbrackets = 0;
+          while (argname.endsWith("[]")) {
+            argname = argname.substring(0, argname.length()-2);
+            numbrackets++;
+          }
+          if (numbrackets > 0) {
+            argname = "L" + argname + ";";
+            while (numbrackets>0) {
+              argname = "[" + argname;
+              numbrackets--;
+            }
           }
         }
-        // System.out.println("argname " + i + " = " + argname + " for method " + method);
-        argclasses[i] = classForName(argname);
+        System.out.println("argname " + i + " = " + argname + " for method " + method);
+        @SuppressWarnings("signature") // handle odd Class.forName semantics
+        /*@BinaryName*/ String bnArgname = argname;
+        argclasses[i] = classForName(bnArgname);
       }
       args_seen.put(all_argnames, argclasses);
     }
@@ -1504,7 +1563,7 @@ public final class UtilMDE {
   }
 
   /** Given a class name and a method name in that class, return the method. */
-  public static Method methodForName(String classname, String methodname, Class<?>[] params)
+  public static Method methodForName(/*@BinaryName*/ String classname, String methodname, Class<?>[] params)
     throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
     Class<?> c = Class.forName(classname);
