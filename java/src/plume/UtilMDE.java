@@ -406,7 +406,7 @@ public final class UtilMDE {
   }
 
   /**
-   * Like {@link Class.forName(String)}, but also works when the string
+   * Like {@link Class#forName(String)}, but also works when the string
    * represents a primitive type or a fully-qualified name (as opposed to a binary name).
    * <p>
    * If the given name can't be found, this method changes the last '.'  to
@@ -414,7 +414,7 @@ public final class UtilMDE {
    * that are incorrectly passed in in fully-qualified format instead of
    * binary format.
    * <p>
-   * Recall the rather odd specification for {@link Class.forName(String)}:
+   * Recall the rather odd specification for {@link Class#forName(String)}:
    * the argument is a binary name for non-arrays, but a field descriptor
    * for arrays.  This method uses the same rules, but additionally handles
    * primitive types and, for non-arrays, fully-qualified names.
