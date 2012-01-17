@@ -454,7 +454,7 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a fully-qualified class to a field descriptor.
+   * Convert a fully-qualified class name to a field descriptor.
    * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;".
    * @deprecated use fullyQualifiedNameToFieldDescriptor
    **/
