@@ -196,7 +196,9 @@ public class OptionsDoclet {
 
       Class<?> clazz;
       try {
-        clazz = Class.forName(doc.qualifiedName(), true, Thread.currentThread().getContextClassLoader());
+        @SuppressWarnings("signature") // Javadoc source code is not yet annotated
+        /*@BinaryName*/ String className = doc.qualifiedName();
+        clazz = Class.forName(className, true, Thread.currentThread().getContextClassLoader());
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
         return false;

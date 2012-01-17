@@ -92,7 +92,7 @@ ifdef CHECKERS
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
 endif
-jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*
+jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
 
 export jsr308_imports
 export CLASSPATH
@@ -392,6 +392,14 @@ JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint
 # fine without it...
 check-regex: checkenv
 	${JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+
+JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:class -Xlint:-processing
+# A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
+
+# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
+# fine without it...
+check-signature: checkenv
+	${JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
 
