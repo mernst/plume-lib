@@ -420,7 +420,7 @@ public final class UtilMDE {
    * primitive types and, for non-arrays, fully-qualified names.
    **/
   // Argument may be either a @BinaryName or a @FullyQualifiedName.
-  public static Class<?> classForName(/*@BinaryName*/ String className) throws ClassNotFoundException {
+  public static Class<?> classForName(/*@ClassGetName*/ String className) throws ClassNotFoundException {
     Class<?> result = primitiveClasses.get(className);
     if (result != null) {
       return result;
@@ -441,7 +441,7 @@ public final class UtilMDE {
     }
   }
 
-  private static HashMap<String,String> primitiveClassesJvm = new HashMap<String,String>(8);
+  private static HashMap</*@SourceNameForNonArray*/ String,/*@FieldDescriptor*/ String> primitiveClassesJvm = new HashMap</*@SourceNameForNonArray*/ String,/*@FieldDescriptor*/ String>(8);
   static {
     primitiveClassesJvm.put("boolean", "Z");
     primitiveClassesJvm.put("byte", "B");
@@ -454,27 +454,29 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a fully-qualified class name to a field descriptor.
+   * Convert a binary class name to a field descriptor.
    * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;".
-   * @deprecated use fullyQualifiedNameToFieldDescriptor
+   * @deprecated use binaryNameToFieldDescriptor
    **/
   @Deprecated
-  public static String classnameToJvm(String classname) {
-    return fullyQualifiedNameToFieldDescriptor(classname);
+  public static String classnameToJvm(/*@BinaryName*/ String classname) {
+    return binaryNameToFieldDescriptor(classname);
   }
 
   /**
-   * Convert a fully-qualified class name to a field descriptor.
+   * Convert a binary name to a field descriptor.
    * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;"
    * or "int" to "I".
    **/
-  public static String fullyQualifiedNameToFieldDescriptor(String classname) {
+  @SuppressWarnings("signature") // conversion routine
+  public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(/*@BinaryName*/ String classname) {
     int dims = 0;
-    while (classname.endsWith("[]")) {
+    String sans_array = classname;
+    while (sans_array.endsWith("[]")) {
       dims++;
-      classname = classname.substring(0, classname.length()-2);
+      sans_array = sans_array.substring(0, classname.length()-2);
     }
-    String result = primitiveClassesJvm.get(classname);
+    String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
       result = "L" + classname + ";";
     }
@@ -500,13 +502,34 @@ public final class UtilMDE {
    * a field descriptor (e.g., "I", "D", etc.).
    * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
    */
-  public static String primitiveTypeNameToFieldDescriptor (String primitive_name) {
+  public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor (String primitive_name) {
     String result = primitiveClassesJvm.get (primitive_name);
     if (result == null) {
       throw new IllegalArgumentException("Not the name of a primitive type: " + primitive_name);
     }
     return result;
   }
+
+  /** Convert from a BinaryName to the format of {@link Class#getName()}. */
+  @SuppressWarnings("signature") // conversion routine
+  public static /*@ClassGetName*/ String binaryNameToClassGetName(/*BinaryName*/ String bn) {
+    if (bn.endsWith("[]")) {
+      return binaryNameToFieldDescriptor(bn);
+    } else {
+      return bn;
+    }
+  }
+
+  /** Convert from a FieldDescriptor to the format of {@link Class#getName()}. */
+  @SuppressWarnings("signature") // conversion routine
+  public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(/*FieldDescriptor*/ String fd) {
+    if (fd.startsWith("[")) {
+      return fieldDescriptorToBinaryName(fd);
+    } else {
+      return fd;
+    }
+  }
+
 
   /**
    * Convert a fully-qualified argument list from Java format to JVML format.
@@ -522,8 +545,9 @@ public final class UtilMDE {
     StringTokenizer args_tokenizer
       = new StringTokenizer(comma_sep_args, ",", false);
     for ( ; args_tokenizer.hasMoreTokens(); ) {
-      String arg = args_tokenizer.nextToken().trim();
-      result += fullyQualifiedNameToFieldDescriptor(arg);
+      @SuppressWarnings("signature") // substring 
+      /*@BinaryName*/ String arg = args_tokenizer.nextToken().trim();
+      result += binaryNameToFieldDescriptor(arg);
     }
     result += ")";
     // System.out.println("arglistToJvm: " + arglist + " => " + result);
@@ -1535,27 +1559,9 @@ public final class UtilMDE {
 
       argclasses = new Class<?>[argnames.length];
       for (int i=0; i<argnames.length; i++) {
-        String argname = argnames[i].trim();
-        // If an array, then convert from binary name to field descriptor,
-        // due to bizarre specification of Class.forName.
-        if (argname.endsWith("[]")) {
-          int numbrackets = 0;
-          while (argname.endsWith("[]")) {
-            argname = argname.substring(0, argname.length()-2);
-            numbrackets++;
-          }
-          if (numbrackets > 0) {
-            argname = "L" + argname + ";";
-            while (numbrackets>0) {
-              argname = "[" + argname;
-              numbrackets--;
-            }
-          }
-        }
-        System.out.println("argname " + i + " = " + argname + " for method " + method);
-        @SuppressWarnings("signature") // handle odd Class.forName semantics
-        /*@BinaryName*/ String bnArgname = argname;
-        argclasses[i] = classForName(bnArgname);
+        String bnArgname = argnames[i].trim();
+        /*@ClassGetName*/ String cgnArgname = binaryNameToClassGetName(bnArgname);
+        argclasses[i] = classForName(cgnArgname);
       }
       args_seen.put(all_argnames, argclasses);
     }
