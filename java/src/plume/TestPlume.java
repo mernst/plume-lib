@@ -1547,18 +1547,18 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.isSubtype(ArrayList.class, List.class);
     assert ! UtilMDE.isSubtype(List.class, ArrayList.class);
 
-    // public static String fullyQualifiedNameToFieldDescriptor(String classname)
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("boolean").equals("Z");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("byte").equals("B");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("char").equals("C");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("double").equals("D");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("float").equals("F");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("int").equals("I");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("long").equals("J");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("short").equals("S");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("Integer").equals("LInteger;");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("Java.lang.Integer").equals("LJava/lang/Integer;");
-    assert UtilMDE.fullyQualifiedNameToFieldDescriptor("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
+    // public static String binaryNameToFieldDescriptor(String classname)
+    assert UtilMDE.binaryNameToFieldDescriptor("boolean").equals("Z");
+    assert UtilMDE.binaryNameToFieldDescriptor("byte").equals("B");
+    assert UtilMDE.binaryNameToFieldDescriptor("char").equals("C");
+    assert UtilMDE.binaryNameToFieldDescriptor("double").equals("D");
+    assert UtilMDE.binaryNameToFieldDescriptor("float").equals("F");
+    assert UtilMDE.binaryNameToFieldDescriptor("int").equals("I");
+    assert UtilMDE.binaryNameToFieldDescriptor("long").equals("J");
+    assert UtilMDE.binaryNameToFieldDescriptor("short").equals("S");
+    assert UtilMDE.binaryNameToFieldDescriptor("Integer").equals("LInteger;");
+    assert UtilMDE.binaryNameToFieldDescriptor("Java.lang.Integer").equals("LJava/lang/Integer;");
+    assert UtilMDE.binaryNameToFieldDescriptor("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
 
     // public static String arglistToJvm(String arglist)
     assert UtilMDE.arglistToJvm("()").equals("()");
