@@ -429,6 +429,9 @@ public final class UtilMDE {
         return Class.forName(className);
       } catch (ClassNotFoundException e) {
         int pos = className.lastIndexOf('.');
+        if (pos < 0) {
+          throw e;
+        }
         @SuppressWarnings("signature")
         /*@BinaryName*/ String inner_name = className.substring (0, pos) + "$"
           + className.substring (pos+1);
@@ -474,11 +477,11 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, classname.length()-2);
+      sans_array = sans_array.substring(0, sans_array.length()-2);
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
-      result = "L" + classname + ";";
+      result = "L" + sans_array + ";";
     }
     for (int i=0; i<dims; i++) {
       result = "[" + result;
