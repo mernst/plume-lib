@@ -180,7 +180,7 @@ javadoc: .javadoc-timestamp
 	\rm -f ical4j.properties
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
-	@echo "Optionally run jdk-index-to-alist (for Emacs support)"
+	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
 
 # Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
