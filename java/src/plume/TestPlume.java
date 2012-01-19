@@ -1558,7 +1558,22 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.binaryNameToFieldDescriptor("short").equals("S");
     assert UtilMDE.binaryNameToFieldDescriptor("Integer").equals("LInteger;");
     assert UtilMDE.binaryNameToFieldDescriptor("Java.lang.Integer").equals("LJava/lang/Integer;");
+    assert UtilMDE.binaryNameToFieldDescriptor("int[][]").equals("[[I");
     assert UtilMDE.binaryNameToFieldDescriptor("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
+
+    // public static /*@ClassGetName*/ String binaryNameToClassGetName(/*BinaryName*/ String bn)
+    assert UtilMDE.binaryNameToClassGetName("boolean").equals("boolean");
+    assert UtilMDE.binaryNameToClassGetName("byte").equals("byte");
+    assert UtilMDE.binaryNameToClassGetName("char").equals("char");
+    assert UtilMDE.binaryNameToClassGetName("double").equals("double");
+    assert UtilMDE.binaryNameToClassGetName("float").equals("float");
+    assert UtilMDE.binaryNameToClassGetName("int").equals("int");
+    assert UtilMDE.binaryNameToClassGetName("long").equals("long");
+    assert UtilMDE.binaryNameToClassGetName("short").equals("short");
+    assert UtilMDE.binaryNameToClassGetName("Integer").equals("Integer");
+    assert UtilMDE.binaryNameToClassGetName("Java.lang.Integer").equals("Java.lang.Integer");
+    assert UtilMDE.binaryNameToClassGetName("int[][]").equals("[[I");
+    assert UtilMDE.binaryNameToClassGetName("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
 
     // public static String arglistToJvm(String arglist)
     assert UtilMDE.arglistToJvm("()").equals("()");
@@ -1582,7 +1597,22 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.fieldDescriptorToBinaryName("S").equals("short");
     assert UtilMDE.fieldDescriptorToBinaryName("LInteger;").equals("Integer");
     assert UtilMDE.fieldDescriptorToBinaryName("LJava/lang/Integer;").equals("Java.lang.Integer");
+    assert UtilMDE.fieldDescriptorToBinaryName("[[I").equals("int[][]");
     assert UtilMDE.fieldDescriptorToBinaryName("[[LJava/lang/Integer;").equals("Java.lang.Integer[][]");
+
+    // public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(/*FieldDescriptor*/ String fd)
+    assert UtilMDE.fieldDescriptorToClassGetName("Z").equals("boolean");
+    assert UtilMDE.fieldDescriptorToClassGetName("B").equals("byte");
+    assert UtilMDE.fieldDescriptorToClassGetName("C").equals("char");
+    assert UtilMDE.fieldDescriptorToClassGetName("D").equals("double");
+    assert UtilMDE.fieldDescriptorToClassGetName("F").equals("float");
+    assert UtilMDE.fieldDescriptorToClassGetName("I").equals("int");
+    assert UtilMDE.fieldDescriptorToClassGetName("J").equals("long");
+    assert UtilMDE.fieldDescriptorToClassGetName("S").equals("short");
+    assert UtilMDE.fieldDescriptorToClassGetName("LInteger;").equals("Integer");
+    assert UtilMDE.fieldDescriptorToClassGetName("LJava/lang/Integer;").equals("Java.lang.Integer");
+    assert UtilMDE.fieldDescriptorToClassGetName("[[I").equals("[[I");
+    assert UtilMDE.fieldDescriptorToClassGetName("[[LJava/lang/Integer;").equals("[[LJava/lang/Integer;");
 
     // public static String arglistFromJvm(String arglist)
     assert UtilMDE.arglistFromJvm("()").equals("()");
