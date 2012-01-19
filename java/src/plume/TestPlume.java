@@ -1591,7 +1591,7 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.binaryNameToClassGetName("Integer").equals("Integer");
     assert UtilMDE.binaryNameToClassGetName("Java.lang.Integer").equals("Java.lang.Integer");
     assert UtilMDE.binaryNameToClassGetName("int[][]").equals("[[I");
-    assert UtilMDE.binaryNameToClassGetName("Java.lang.Integer[][][]").equals("[[[LJava/lang/Integer;");
+    assert UtilMDE.binaryNameToClassGetName("Java.lang.Integer[][][]").equals("[[[LJava.lang.Integer;");
 
     // public static String arglistToJvm(String arglist)
     assert UtilMDE.arglistToJvm("()").equals("()");
@@ -1630,7 +1630,7 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.fieldDescriptorToClassGetName("LInteger;").equals("Integer");
     assert UtilMDE.fieldDescriptorToClassGetName("LJava/lang/Integer;").equals("Java.lang.Integer");
     assert UtilMDE.fieldDescriptorToClassGetName("[[I").equals("[[I");
-    assert UtilMDE.fieldDescriptorToClassGetName("[[LJava/lang/Integer;").equals("[[LJava/lang/Integer;");
+    assert UtilMDE.fieldDescriptorToClassGetName("[[LJava/lang/Integer;").equals("[[LJava.lang.Integer;");
 
     // public static String arglistFromJvm(String arglist)
     assert UtilMDE.arglistFromJvm("()").equals("()");
