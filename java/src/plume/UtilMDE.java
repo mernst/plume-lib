@@ -419,6 +419,8 @@ public final class UtilMDE {
    * for arrays.  This method uses the same rules, but additionally handles
    * primitive types and, for non-arrays, fully-qualified names.
    **/
+  // The annotation encourages proper use, even though this can take a
+  // fully-qualified name (only for a non-array).
   public static Class<?> classForName(/*@ClassGetName*/ String className) throws ClassNotFoundException {
     Class<?> result = primitiveClasses.get(className);
     if (result != null) {
@@ -431,8 +433,8 @@ public final class UtilMDE {
         if (pos < 0) {
           throw e;
         }
-        @SuppressWarnings("signature")
-        /*@BinaryName*/ String inner_name = className.substring (0, pos) + "$"
+        @SuppressWarnings("signature") // checked below & exception is handled
+        /*@ClassGetName*/ String inner_name = className.substring (0, pos) + "$"
           + className.substring (pos+1);
         try {
           return Class.forName (inner_name);
@@ -1547,7 +1549,7 @@ public final class UtilMDE {
     }
 
     @SuppressWarnings("signature") // throws exception if class does not exist
-    /*@BinaryName*/ String classname = method.substring(0,dotpos);
+    /*@BinaryNameForNonArray*/ String classname = method.substring(0,dotpos);
     String methodname = method.substring(dotpos+1, oparenpos);
     String all_argnames = method.substring(oparenpos+1, cparenpos).trim();
     Class<?>[] argclasses = args_seen.get(all_argnames);
@@ -1571,7 +1573,7 @@ public final class UtilMDE {
   }
 
   /** Given a class name and a method name in that class, return the method. */
-  public static Method methodForName(/*@BinaryName*/ String classname, String methodname, Class<?>[] params)
+  public static Method methodForName(/*@BinaryNameForNonArray*/ String classname, String methodname, Class<?>[] params)
     throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
     Class<?> c = Class.forName(classname);
