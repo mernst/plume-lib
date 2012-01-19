@@ -419,7 +419,6 @@ public final class UtilMDE {
    * for arrays.  This method uses the same rules, but additionally handles
    * primitive types and, for non-arrays, fully-qualified names.
    **/
-  // Argument may be either a @BinaryName or a @FullyQualifiedName.
   public static Class<?> classForName(/*@ClassGetName*/ String className) throws ClassNotFoundException {
     Class<?> result = primitiveClasses.get(className);
     if (result != null) {
@@ -517,7 +516,7 @@ public final class UtilMDE {
   @SuppressWarnings("signature") // conversion routine
   public static /*@ClassGetName*/ String binaryNameToClassGetName(/*BinaryName*/ String bn) {
     if (bn.endsWith("[]")) {
-      return binaryNameToFieldDescriptor(bn);
+      return binaryNameToFieldDescriptor(bn).replace('/', '.');
     } else {
       return bn;
     }
@@ -527,9 +526,9 @@ public final class UtilMDE {
   @SuppressWarnings("signature") // conversion routine
   public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(/*FieldDescriptor*/ String fd) {
     if (fd.startsWith("[")) {
-      return fieldDescriptorToBinaryName(fd);
+      return fd.replace('/', '.');
     } else {
-      return fd;
+      return fieldDescriptorToBinaryName(fd);
     }
   }
 

@@ -1497,6 +1497,24 @@ public final class TestPlume extends TestCase {
     assert sbd.toString().equals(UtilMDE.join(strings, ","));
   }
 
+  private static void testTypeStrings(/*@FullyQualifiedName*/ String fqn, /*@BinaryName*/ String bn, /*@ClassGetName*/ String cgn, /*@FieldDescriptor*/ String fd) {
+    testTypeStrings(fqn, bn, cgn, fd, false);
+  }
+
+  private static void testTypeStrings(/*@FullyQualifiedName*/ String fqn, /*@BinaryName*/ String bn, /*@ClassGetName*/ String cgn, /*@FieldDescriptor*/ String fd, boolean skipClassForName) {
+    if (! skipClassForName) {
+      try {
+        UtilMDE.classForName(cgn);          // ensure this does not crash
+      } catch (ClassNotFoundException e) {
+        throw new Error(e);
+      }
+    }
+    assert fd.equals(UtilMDE.binaryNameToFieldDescriptor(bn));
+    assert cgn.equals(UtilMDE.binaryNameToClassGetName(bn)) : bn + " => " + UtilMDE.binaryNameToClassGetName(bn) + ", should be " + cgn;
+    assert cgn.equals(UtilMDE.fieldDescriptorToClassGetName(fd)) : fd + " => " + cgn;
+    assert bn.equals(UtilMDE.fieldDescriptorToBinaryName(fd));
+  }
+
 
   // This cannot be static because it instantiates an inner class.
   public void testUtilMDE() {
@@ -1594,6 +1612,17 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.arglistFromJvm("([III)").equals("(int[], int, int)");
     assert UtilMDE.arglistFromJvm("(I[[II)").equals("(int, int[][], int)");
     assert UtilMDE.arglistFromJvm("([Ljava/lang/Integer;I[[Ljava/lang/Integer;)").equals("(java.lang.Integer[], int, java.lang.Integer[][])");
+
+    // More tests for type representation conversions.
+    // Table from Signature Checker.
+    testTypeStrings("int", "int", "int", "I");
+    testTypeStrings("int[][]", "int[][]", "[[I", "[[I");
+    testTypeStrings("MyClass", "MyClass", "MyClass", "LMyClass;", true);
+    testTypeStrings("MyClass[]", "MyClass[]", "[LMyClass;", "[LMyClass;", true);
+    testTypeStrings("java.lang.Integer", "java.lang.Integer", "java.lang.Integer", "Ljava/lang/Integer;");
+    testTypeStrings("java.lang.Integer[]", "java.lang.Integer[]", "[Ljava.lang.Integer;", "[Ljava/lang/Integer;");
+    testTypeStrings("java.lang.Byte.ByteCache", "java.lang.Byte$ByteCache", "java.lang.Byte$ByteCache", "Ljava/lang/Byte$ByteCache;");
+    testTypeStrings("java.lang.Byte.ByteCache[]", "java.lang.Byte$ByteCache[]", "[Ljava.lang.Byte$ByteCache;", "[Ljava/lang/Byte$ByteCache;");
 
 
     // public static void addToClasspath(String dir)
