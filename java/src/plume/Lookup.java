@@ -294,7 +294,7 @@ public class Lookup {
               System.out.println ("Error: not a regex: " + keyword);
               System.exit (254);
             }
-            keyword = RegexUtil.asRegex(keyword); // temporary until isRegex is properly annotated for flow sensitivity
+            keyword = RegexUtil.asRegex(keyword);   // @SuppressWarnings("regex") // flow-sensitivity
 
             if (Pattern.compile (keyword, flags).matcher(search).find())
               matchcount++;
