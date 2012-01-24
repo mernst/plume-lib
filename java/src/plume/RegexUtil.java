@@ -14,13 +14,6 @@ import java.util.regex.PatternSyntaxException;
  * whether a string is a regular expression</a> in the Checker Framework
  * manual.
  * <p>
- *
- * <b>Runtime Dependency</b>:
- * Using this class introduces a runtime dependency.
- * This means that you need to distribute (or link to) the Checker
- * Framework, along with your binaries.
- * To eliminate this dependency, you can simply copy this class into your
- * own project.
  */
 public class RegexUtil {
 
