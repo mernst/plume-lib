@@ -1680,46 +1680,37 @@ public final class UtilMDE {
     return Pattern.quote(s);
   }
 
-  /** Returns true if the argument is a syntactically valid regular expression. */
+  /**
+   * @deprecated Use RegexUtil.isRegex instead
+   * @see RegexUtil#isRegex(String)
+   */
+  @Deprecated
   @SuppressWarnings("regex")    // tests whether s is a regex
+  @Pure
   public static boolean isRegex(String s) {
-    try {
-      Pattern.compile(s);
-    } catch (PatternSyntaxException e) {
-      return false;
-    }
-    return true;
+    return RegexUtil.isRegex(s);
   }
 
   /**
-   * Returns null if the argument is a syntactically valid regular
-   * expression.  Otherwise returns a string describing why the string is
-   * not a regex.
+   * @deprecated Use RegexUtil.regexError instead
+   * @see RegexUtil#regexError(String)
    */
+  @Deprecated
   @SuppressWarnings("regex")    // tests whether s is a regex
+  @Pure
   public static /*@Nullable*/ String regexError(String s) {
-    try {
-      Pattern.compile(s);
-    } catch (PatternSyntaxException e) {
-      return e.getMessage();
-    }
-    return null;
+    return RegexUtil.regexError(s);
   }
 
   /**
-   * Returns the argument if it is a regex, otherwise throwns an error.
-   * The purpose of this method is to suppress Regex Checker warnings.
-   * Once the the Regex Checker supports flow-sensitivity, it should be
-   * very rarely needed.
+   * @deprecated Use RegexUtil.asRegex instead
+   * @see RegexUtil#asRegex(String)
    */
+  @Deprecated
   @SuppressWarnings("regex")    // suppresses warnings
+  @Pure
   public static /*@Regex*/ String asRegex(String s) {
-    try {
-      Pattern.compile(s);
-      return s;
-    } catch (PatternSyntaxException e) {
-      throw new Error(e);
-    }
+    return RegexUtil.asRegex(s);
   }
 
 

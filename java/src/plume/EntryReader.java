@@ -661,8 +661,30 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /** Simple example **/
   public static void main (String[] args) throws IOException {
 
-    @SuppressWarnings("regex")
-    EntryReader reader = new EntryReader (args[0], args[1], args[2]);
+    if (args.length < 1 || args.length > 3) {
+      System.err.println("EntryReader sample program requires 1-3 args: filename [comment_re [include_re]]");
+      System.exit(1);
+    }
+    String filename = args[0];
+    String comment_re = null;
+    String include_re = null;
+    if (args.length >= 2) {
+      comment_re = args[1];
+      if (! RegexUtil.isRegex(comment_re)) {
+        System.err.println("Error parsing comment regex \"" + comment_re + "\": " + RegexUtil.regexError(comment_re));
+        System.exit(1);
+      }
+      comment_re = RegexUtil.asRegex(comment_re); // @SuppressWarnings("regex") // flow-sensitivity
+    }
+    if (args.length >= 3) {
+      include_re = args[2];
+      if (! RegexUtil.isRegex(include_re)) {
+        System.err.println("Error parsing include regex \"" + include_re + "\": " + RegexUtil.regexError(include_re));
+        System.exit(1);
+      }
+      include_re = RegexUtil.asRegex(include_re); // @SuppressWarnings("regex") // flow-sensitivity
+    }
+    EntryReader reader = new EntryReader (filename, comment_re, include_re);
 
     String line = reader.readLine();
     while (line != null) {

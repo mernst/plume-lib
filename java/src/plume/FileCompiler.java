@@ -25,7 +25,7 @@ public final class FileCompiler {
 
   static {
     try {
-      @SuppressWarnings("regex") // output of escapeNonJava can appear in a character class in a regex
+      @SuppressWarnings("regex") // output of escapeNonJava() can appear in a character class in a regex
       /*@Regex*/ String java_filename_re
         = "([^" + UtilMDE.escapeNonJava(File.separator) + "]+)\\.java";
       java_filename_pattern = Pattern.compile(java_filename_re);

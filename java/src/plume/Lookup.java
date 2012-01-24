@@ -290,11 +290,11 @@ public class Lookup {
             if (case_sensitive)
               flags = 0;
             
-            if (! UtilMDE.isRegex(keyword)) {
+            if (! RegexUtil.isRegex(keyword)) {
               System.out.println ("Error: not a regex: " + keyword);
               System.exit (254);
             }
-            keyword = UtilMDE.asRegex(keyword); // temporary until isRegex is properly annotated for flow sensitivity
+            keyword = RegexUtil.asRegex(keyword); // temporary until isRegex is properly annotated for flow sensitivity
 
             if (Pattern.compile (keyword, flags).matcher(search).find())
               matchcount++;
