@@ -1676,6 +1676,7 @@ public final class UtilMDE {
    * @see Pattern#quote(String)
    */
   @Deprecated
+  /*@Pure*/
   public static /*@Regex*/ String patternQuote(String s) {
     return Pattern.quote(s);
   }
@@ -1686,7 +1687,7 @@ public final class UtilMDE {
    */
   @Deprecated
   @SuppressWarnings("regex")    // tests whether s is a regex
-  @Pure
+  /*@Pure*/
   public static boolean isRegex(String s) {
     return RegexUtil.isRegex(s);
   }
@@ -1697,7 +1698,7 @@ public final class UtilMDE {
    */
   @Deprecated
   @SuppressWarnings("regex")    // tests whether s is a regex
-  @Pure
+  /*@Pure*/
   public static /*@Nullable*/ String regexError(String s) {
     return RegexUtil.regexError(s);
   }
@@ -1708,7 +1709,7 @@ public final class UtilMDE {
    */
   @Deprecated
   @SuppressWarnings("regex")    // suppresses warnings
-  @Pure
+  /*@Pure*/
   public static /*@Regex*/ String asRegex(String s) {
     return RegexUtil.asRegex(s);
   }
