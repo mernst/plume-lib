@@ -201,13 +201,13 @@ else
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
-	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
-	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 	@\rm -f ical4j.properties
-	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	$(JAVADOC) -quiet -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
 
@@ -295,7 +295,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 ###
 
 lookup.html: src/plume/Lookup.java
-	${JAVADOC} -docletpath .. -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
+	${JAVADOC} -docletpath ${CLASSPATH} -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
