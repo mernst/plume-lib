@@ -56,7 +56,7 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns true if the cardinality of the intersection of the two
+   * Returns true if the cardinality of the intersection of the three
    * BitSets is at least the given value.
    **/
   public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
