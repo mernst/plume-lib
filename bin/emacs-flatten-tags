@@ -1,0 +1,42 @@
+#!/usr/bin/perl -w
+# flatten-tags
+
+# Given a TAGS file, outputs (to stdout) that file with all recursively
+# included TAGS files included.  While the result is larger and depends on
+# more files, the whole thing is searched for a best match rather than a
+# particular subfile being exhaustively searched (even returning poor
+# matches) before going to the next subfile.
+
+use strict;
+
+# print STDERR "ARGS: ", @ARGV, "\n";
+
+while (scalar(@ARGV) > 0)
+{ my $file = shift(@ARGV);
+  output_tags_table("", $file); }
+
+sub output_tags_table ( $$ )
+{
+  my ($dir, $filename) = @_;
+  # print STDERR "calling output_tags_table: `$dir', `$filename'\n";
+  local *F;
+  open(F, $filename) or die "Couldn't open $filename";
+  my $line;
+  while (defined($line = <F>))
+    { # print STDERR "line: $line";
+      if ($line eq "\f\n")
+	{ my $next = <F>;
+	  if (!defined($next))
+	    { die "No input found after form feed\n"; }
+	  if ($next =~ /^(.*\/)?([^\/]+),include$/)
+	    { output_tags_table($dir . $1, $dir . $1 . $2); }
+	  elsif ($next =~ /^(.*\/)?([^\/]+),[0-9]+$/)
+	    { print $line;
+	      print $dir . $next; }
+	  else
+	    { die "Unrecognized line following form feed: $next"; } }
+      else
+	{ print $line; } }
+  close(F);
+}
+

@@ -1,0 +1,77 @@
+#!/usr/bin/env perl
+# find-java
+# Michael Ernst <mernst@cs.washington.edu>
+
+# Find Java source code or class files (.java or .class) on CLASSPATH.
+# The output is in the order in which files are found on CLASSPATH.
+# The argument classes may be qualified with package names, delimited by
+# either "/" or ".".  Trailing ".java" or ".class" are stripped.
+# Flags:
+#   -i means check in all the packages imported by the specified file.
+#      This gives the possible interpretations of a class name used that file.
+# Examples:
+#   find-java IntList DataStructures.IntList daikon/Ppt.java
+#   find-java -i Sample12.java IntList
+
+# Also see the JWhich program; this should perhaps be merged into it.
+
+use strict;
+use English;
+$WARNING = 1;
+
+if (scalar(@ARGV) == 0) {
+  print "Usage:  find-java [-i javafile] class ...\n";
+  exit;
+}
+
+my @dirs = split(/:/, $ENV{"CLASSPATH"});
+# This was necessary when I joined against dirs, not classes.
+# push @dirs, "";
+
+if ($ARGV[0] eq "-i") {
+  shift @ARGV;
+  $ifile = shift @ARGV;
+  open (IFILE, $ifile) or die "Can't open $ifile";
+  my @pkgs = ();
+  my $line;
+  while (defined($line = <IFILE>)) {
+    if ($line =~ /import[ \t]+([^ \t]+)\.[^. ;]+;/) {
+      push @pkgs, $1;
+    }
+  }
+  my @newargv = (@ARGV);
+  for my $class (@ARGV) {
+    for my $pkg (@pkgs) {
+      push @newargv, "$pkg.$class";
+    }
+  }
+  @ARGV = @newargv;
+}
+
+
+# print "ARGV=", join(";", @ARGV), "\n";
+my @classes = ("");		# empty initial arg to make "join" work.
+for my $class (@ARGV) {
+  $class =~ s/\.java$//;
+  $class =~ s/\.class$//;
+  $class =~ s/\./\//;
+  push @classes, "/$class.java ";
+  push @classes, "/$class.class ";
+}
+
+my $ls_arg = "";
+for my $dir (@dirs) {
+  $ls_arg .= join($dir, @classes);
+}
+
+# I can't depend on "ls" because it sorts its output.
+# # I used sort when I used to supply "ls" arguments in the wrong order.
+# # print "ls $ls_arg 2>&1 | grep -v 'No such file or directory' | grep -v 'Not a directory'\n";
+# exec "ls $ls_arg 2>&1 | grep -v 'No such file or directory' | grep -v 'Not a directory'";
+
+my @files = split(/ /, $ls_arg);
+for my $file (@files) {
+  if (-e $file) {
+    print $file, "\n";
+  }
+}
