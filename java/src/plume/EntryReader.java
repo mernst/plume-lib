@@ -164,6 +164,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /// Inputstream and charset constructors
 
+  /** Create a EntryReader that uses the given character set.
+   * @see #EntryReader(InputStream,String,String,String) **/
   public EntryReader (InputStream in,
                       String charsetName,
                       String filename,
