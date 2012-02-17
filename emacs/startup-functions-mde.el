@@ -760,7 +760,8 @@ Also consider `normal-erase-is-backspace' variable (Emacs 21)."
 
 
 (defun infer-tab-width (&optional include-first-column)
-  "Set tab-width so that columns line up."
+  "Set tab-width so that columns line up.
+The first column is omitted unless the optional argument is specified."
   (interactive "P")
   (let ((max-width -1)
 	(max-width-text "")
