@@ -1106,17 +1106,32 @@ otherwise, raise an error after the first problem is encountered."
 ;;; Python
 ;;;
 
+;; There are two modes for editing Python code in Emacs:
+;;  * python-mode.el is from the Python community
+;;    Its varables/routines start with "py-".
+;;  * python.el is from the Emacs community
+;;    Its varables/routines start with "python-".
+;; As of Emacs 23, python.el is generally recommended:  it comes with
+;; Emacs, has a few extra features, and works out of the box.
+;; (Maybe python-mode.el supports ipython better??)
+;;
+;; The below was originally for python-mode.el, but I'm now switching to
+;; python.el and some of the below might be out of date?
+
+
+(require 'ipython)
+
 ;; Avoid errors if "python-mode" is not available.
 (eval-when-compile (if (locate-library "python-mode") (require 'python-mode)))
 
-(autoload 'py-shell "python-mode" "Start an interactive Python interpreter" t)
+(autoload 'python-shell "python" "Start an interactive Python interpreter" t)
 (defalias 'run-python 'py-shell)
 
 (defun mde-python-mode-hook ()
   "Michael Ernst's Python mode hook."
   (swap-return-and-linefeed)
   (setq inleft-string "# ")
-  (setq comment-indent-function 'py-comment-indent)
+  (setq comment-indent-function 'python-comment-indent)
   (make-local-variable 'page-delimiter)
   (setq page-delimiter (mde-page-delimiter ?#))
   ;; Not needed if my patch is accepted.
@@ -1124,13 +1139,14 @@ otherwise, raise an error after the first problem is encountered."
   ;; This variable only ever honors comments starting with exactly one #,
   ;; never those starting with "##".  I hate that behavior, so I hacked
   ;; my version of python-mode.el.
-  (setq py-honor-comment-indentation t)
-  (define-key py-mode-map "\C-c\C-c"  'py-execute-import-or-reload) ; was py-exeucte-buffer
-  (define-key py-mode-map "\C-cb" 'py-execute-buffer) ; was unbound
-  (define-key py-mode-map "\C-hf" 'py-describe-function)
-  (define-key py-mode-map "\C-x-" 'py-override-my-kill-buffer-and-window) ; too easy to hit when I intend "C-c -"
+  (setq python-honour-comment-indentation t)
+  (define-key python-mode-map "\C-c\C-c"  'py-execute-import-or-reload) ; was py-execute-buffer
+  (define-key python-mode-map "\C-cb" 'py-execute-buffer) ; was unbound
+  (define-key python-mode-map "\C-hf" 'python-describe-function)
+  (define-key python-mode-map "\C-x-" 'python-override-my-kill-buffer-and-window) ; too easy to hit when I intend "C-c -"
   (make-local-variable 'write-contents-hooks)
   ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
+  (add-hook 'write-contents-hooks 'pyflakes-this-file)
   ;; It isn't enough to rebind M-f and M-b, because I want completion to
   ;; consider _ to split words, too.
   (modify-syntax-entry ?\_ "_"  py-mode-syntax-table)
@@ -1158,7 +1174,7 @@ otherwise, raise an error after the first problem is encountered."
 
 ;; I could do this my-kill-buffer-and-window hacking with advice instead.
 
-(defun py-override-my-kill-buffer-and-window ()
+(defun python-override-my-kill-buffer-and-window ()
   "Avoid accidental killing of Python shell buffers."
   (interactive)
   (if (string-match "python" (buffer-name))
@@ -1168,7 +1184,7 @@ otherwise, raise an error after the first problem is encountered."
 ;; Problem:  this sets the shell-mode-map, not just the map for python shells.
 (defadvice py-shell (after set-keys activate)
   "Unset \"\C-x-\", which is easy to type accidentally in Python mode."
-  (local-set-key "\C-x-" 'py-override-my-kill-buffer-and-window))
+  (local-set-key "\C-x-" 'python-override-my-kill-buffer-and-window))
 
 (defun shell-override-my-kill-buffer-and-window ()
   "Avoid accidental killing of shell buffers."
@@ -1207,7 +1223,7 @@ otherwise, raise an error after the first problem is encountered."
 ;;   (py-postprocess-process-filter))
 
 
-(defun py-symbol-around-point ()
+(defun python-symbol-around-point ()
   "Return a string consisting of the symbol that point is within (or near)."
   (or (symbol-at-point)			; defined in "thingatpt.el"
       (save-excursion
@@ -1221,7 +1237,7 @@ otherwise, raise an error after the first problem is encountered."
 	    (forward-char -1))
 	(symbol-at-point))))
 
-(defun py-comment-indent ()
+(defun python-comment-indent ()
   "Choose comment column for Python comments.  Lifted from `lisp-comment-indent'."
   (if (looking-at "\\s<\\s<\\s<")
       (current-column)
@@ -1240,11 +1256,11 @@ otherwise, raise an error after the first problem is encountered."
 
 ;; Lifted from scheme-describe-function; they should be re-merged (better,
 ;; use the Emacs 20 functionality for this).
-(defun py-describe-function (function)
+(defun python-describe-function (function)
   "Display manual entry regarding a FUNCTION (a string or symbol).
 When called interactively, prompts for the symbol (defaults to the function
 point is currently near)."
-  (interactive (list (let* ((default (py-symbol-around-point))
+  (interactive (list (let* ((default (python-symbol-around-point))
 			    (fn (read-string (format "Describe Python function (default %s): " default))))
 		       (if (string= fn "") default fn))))
   (if (symbolp function) (setq function (symbol-name function)))
@@ -1319,6 +1335,11 @@ point is currently near)."
 	  (comint-send-input)))
     ))
 
+(defun pyflakes-thisfile () (interactive)
+  (compile (format "pyflakes %s" (buffer-file-name)))
+  )
+
+(add-hook 'python-mode-hook (lambda () (pyflakes-mode t)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
