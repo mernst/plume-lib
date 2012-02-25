@@ -57,9 +57,11 @@ public final class FileCompiler {
 
   /**
    * Compiles the files given by fileNames.
-   * @param fileNames pathes to the files to be compiled as Strings.
+   * @param fileNames paths to the files to be compiled as Strings.
    */
   public void compileFiles(List<String> fileNames) throws IOException {
+
+    // System.out.printf ("compileFiles: %s%n", fileNames);
 
     // Start a process to compile all of the files (in one command)
     TimeLimitProcess p = compile_source (fileNames);
@@ -67,13 +69,12 @@ public final class FileCompiler {
     String compile_errors = "";
     String compile_output = "";
 
-    // Read stderr and stdout (if any) while waiting for the process to
-    // complete.  Print both if there is an unexpected exception (timeout)
     try {
-      compile_errors = UtilMDE.streamString (p.getErrorStream());
-      compile_output = UtilMDE.streamString (p.getInputStream());
       int result = p.waitFor();
     } catch (Throwable e) {
+      // Print stderr and stdout if there is an unexpected exception (timeout).
+      compile_errors = UtilMDE.streamString (p.getErrorStream());
+      compile_output = UtilMDE.streamString (p.getInputStream());
       System.out.println ("Unexpected exception while compiling " + e);
       if (p.timed_out())
         System.out.println ("Compile timed out after " + p.timeout_msecs()
@@ -83,6 +84,11 @@ public final class FileCompiler {
       e.printStackTrace();
       runtime.exit (1);
     }
+
+    compile_errors = UtilMDE.streamString (p.getErrorStream());
+    compile_output = UtilMDE.streamString (p.getInputStream());
+    // System.out.println ("Compile errors: " + compile_errors);
+    // System.out.println ("Compile output: " + compile_output);
 
     // javac tends to stop without completing the compilation if there
     // is an error in one of the files.  Remove all the erring files
