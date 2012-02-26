@@ -1119,9 +1119,9 @@ otherwise, raise an error after the first problem is encountered."
 ;; python.el and some of the below might be out of date?
 
 
-(require 'ipython)
+(require 'ipython nil 'noerror)
 
-;; Avoid errors if "python-mode" is not available.
+;; Avoid errors if various Python support is not available.
 (eval-when-compile (if (locate-library "python-mode") (require 'python-mode)))
 
 (autoload 'python-shell "python" "Start an interactive Python interpreter" t)
