@@ -54,11 +54,15 @@
 ;; http://www.altavista.com/cgi-bin/query?pg=q&text=yes&kl=XX&q=foo+bar+%22baz+b%2Bum%22&act=search
 (defun altavista-quote (phrase)
   (require 'dired)			; for dired-replace-in-string
-  (setq phrase (dired-replace-in-string "\n" " " phrase))
-  (setq phrase (dired-replace-in-string "\\+" "%2B" phrase))
-  (setq phrase (dired-replace-in-string " " "+" phrase))
-  (setq phrase (dired-replace-in-string "#" "%23" phrase))
   (setq phrase (dired-replace-in-string "\"" "%22" phrase))
+  (setq phrase (dired-replace-in-string "#" "%23" phrase))
+  (setq phrase (dired-replace-in-string "&" "%26" phrase))
+  (setq phrase (dired-replace-in-string "\\+" "%2B" phrase))
+
+  ;; The ordering of the below needs to avoid double-substitution.
+  ;; Not required for Google, though it was required for Altavista
+  ;; (setq phrase (dired-replace-in-string " " "+" phrase))
+  (setq phrase (dired-replace-in-string "\n" " " phrase))
   phrase)
 
 ;; "foo bar \"baz bum\"" turns into:
