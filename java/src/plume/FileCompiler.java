@@ -15,7 +15,7 @@ public final class FileCompiler {
   public static Runtime runtime = java.lang.Runtime.getRuntime();
   /**
    * Matches the names of Java source files, without directory name.
-   * Match group 1 is the class name:  the basse filename without the
+   * Match group 1 is the class name:  the base filename without the
    * ".java" extension..
    **/
   static Pattern java_filename_pattern;
@@ -57,9 +57,10 @@ public final class FileCompiler {
 
   /**
    * Compiles the files given by fileNames.
+   * Returns the error output.
    * @param fileNames paths to the files to be compiled as Strings.
    */
-  public void compileFiles(List<String> fileNames) throws IOException {
+  public String compileFiles(List<String> fileNames) throws IOException {
 
     // System.out.printf ("compileFiles: %s%n", fileNames);
 
@@ -79,8 +80,8 @@ public final class FileCompiler {
       if (p.timed_out())
         System.out.println ("Compile timed out after " + p.timeout_msecs()
                             + " msecs");
-      System.out.println ("Compile errors: " + compile_errors);
-      System.out.println ("Compile output: " + compile_output);
+      // System.out.println ("Compile errors: " + compile_errors);
+      // System.out.println ("Compile output: " + compile_output);
       e.printStackTrace();
       runtime.exit (1);
     }
@@ -97,6 +98,7 @@ public final class FileCompiler {
       recompile_without_errors (fileNames, compile_errors);
     }
 
+    return compile_errors;
   }
 
   /**
