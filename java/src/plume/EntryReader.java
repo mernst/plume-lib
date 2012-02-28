@@ -54,7 +54,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   ///
 
   /** Regular expression that specifies an include file. **/
-  private final /*@Nullable*/ Pattern include_re;
+  private final /*@Nullable*/ /*@Regex(1)*/ Pattern include_re;
 
   /** Regular expression that matches a comment **/
   private final /*@Nullable*/ Pattern comment_re;
@@ -71,7 +71,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * the regexp is null), in which case the entry is terminated by a blank
    * line or the end of the current file.
    */
-  public /*@LazyNonNull*/ Pattern entry_start_re = null;
+  public /*@LazyNonNull*/ /*@Regex(1)*/ Pattern entry_start_re = null;
 
   /**
    * @see #entry_start_re
@@ -170,7 +170,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
                       String charsetName,
                       String filename,
                       /*@Nullable*/ /*@Regex*/ String comment_re_string,
-                      /*@Nullable*/ /*@Regex*/ String include_re_string) throws UnsupportedEncodingException {
+                      /*@Nullable*/ /*@Regex(1)*/ String include_re_string) throws UnsupportedEncodingException {
     this(new InputStreamReader(in, charsetName),
          filename, comment_re_string, include_re_string);
   }
@@ -197,7 +197,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   public EntryReader (InputStream in, String filename,
                       /*@Nullable*/ /*@Regex*/ String comment_re_string,
-                      /*@Nullable*/ /*@Regex*/ String include_re_string) {
+                      /*@Nullable*/ /*@Regex(1)*/ String include_re_string) {
     this(new InputStreamReader(in),
          filename, comment_re_string, include_re_string);
   }
@@ -245,7 +245,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   public EntryReader (Reader reader, String filename,
                       /*@Nullable*/ /*@Regex*/ String comment_re_string,
-                      /*@Nullable*/ /*@Regex*/ String include_re_string) {
+                      /*@Nullable*/ /*@Regex(1)*/ String include_re_string) {
     // we won't use superclass methods, but passing null as an argument
     // leads to a NullPointerException.
     super(new DummyReader());
@@ -280,7 +280,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *                      the include file name.
    */
   public EntryReader (File file, /*@Nullable*/ /*@Regex*/ String comment_re,
-                      /*@Nullable*/ /*@Regex*/ String include_re) throws IOException {
+                      /*@Nullable*/ /*@Regex(1)*/ String include_re) throws IOException {
     this (UtilMDE.fileReader (file),
           file.toString(), comment_re, include_re);
   }
@@ -305,7 +305,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @see #EntryReader(File,String,String)
    */
   public EntryReader (String filename, /*@Nullable*/ /*@Regex*/ String comment_re,
-                      /*@Nullable*/ /*@Regex*/ String include_re) throws IOException {
+                      /*@Nullable*/ /*@Regex(1)*/ String include_re) throws IOException {
     this (new File(filename), comment_re, include_re);
   }
 
@@ -467,7 +467,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     long line_number = get_line_number();
 
     // If first line matches entry_start_re, this is a long entry.
-    Matcher entry_match = null;
+    /*@Regex(1)*/ Matcher entry_match = null;
     if (entry_start_re != null)
       entry_match = entry_start_re.matcher (line);
     if ((entry_match != null) && entry_match.find()) {
@@ -605,7 +605,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Set the regular expressions for the start and stop of long
    * entries (multiple lines that are read as a group by get_entry()).
    */
-  public void set_entry_start_stop (/*@Regex*/ String entry_start_re,
+  public void set_entry_start_stop (/*@Regex(1)*/ String entry_start_re,
                                     /*@Regex*/ String entry_stop_re) {
     this.entry_start_re = Pattern.compile (entry_start_re);
     this.entry_stop_re = Pattern.compile (entry_stop_re);
@@ -615,7 +615,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Set the regular expressions for the start and stop of long
    * entries (multiple lines that are read as a group by get_entry()).
    */
-  public void set_entry_start_stop (Pattern entry_start_re,
+  public void set_entry_start_stop (/*@Regex(1)*/ Pattern entry_start_re,
                                     Pattern entry_stop_re) {
     this.entry_start_re = entry_start_re;
     this.entry_stop_re = entry_stop_re;
@@ -680,11 +680,11 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
     if (args.length >= 3) {
       include_re = args[2];
-      if (! RegexUtil.isRegex(include_re)) {
+      if (! RegexUtil.isRegex(include_re, 1)) {
         System.err.println("Error parsing include regex \"" + include_re + "\": " + RegexUtil.regexError(include_re));
         System.exit(1);
       }
-      include_re = RegexUtil.asRegex(include_re); // @SuppressWarnings("regex") // flow-sensitivity
+      include_re = RegexUtil.asRegex(include_re, 1); // @SuppressWarnings("regex") // flow-sensitivity
     }
     EntryReader reader = new EntryReader (filename, comment_re, include_re);
 

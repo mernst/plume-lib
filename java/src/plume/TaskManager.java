@@ -56,7 +56,7 @@ public class TaskManager {
   public static /*@Regex*/ String comment_re = "^%.*";
 
   @Option ("Regex that matches an include directive; group 1 is the file name")
-  public static /*@Regex*/ String include_re = "\\\\include\\{(.*)\\}";
+  public static /*@Regex(1)*/ String include_re = "\\\\include\\{(.*)\\}";
 
   private static String usage_string
     = "TaskManger [options] <task-file> <task_file> ...";
