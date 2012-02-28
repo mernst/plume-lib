@@ -175,7 +175,7 @@ public class Lookup {
 
   @OptionGroup("Customizing format of files to be searched")
   @Option ("Regex that denotes the start of a long entry")
-  public static Pattern entry_start_re = Pattern.compile ("^>entry *()");
+  public static /*@Regex(1)*/ Pattern entry_start_re = Pattern.compile ("^>entry *()");
 
   @Option ("Regex that denotes the end of a long entry")
   public static Pattern entry_stop_re = Pattern.compile ("^<entry");
@@ -188,7 +188,7 @@ public class Lookup {
   public static /*@Nullable*/ /*@Regex*/ String comment_re = "^%.*";
 
   @Option ("Regex that matches an include directive; group 1 is the file name")
-  public static /*@Regex*/ String include_re = "\\\\include\\{(.*)\\}";
+  public static /*@Regex(1)*/ String include_re = "\\\\include\\{(.*)\\}";
 
   /** Platform-specific line separator **/
   private static final String lineSep = System.getProperty("line.separator");

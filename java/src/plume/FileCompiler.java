@@ -18,7 +18,7 @@ public final class FileCompiler {
    * Match group 1 is the class name:  the base filename without the
    * ".java" extension..
    **/
-  static Pattern java_filename_pattern;
+  static /*@Regex(1)*/ Pattern java_filename_pattern;
   /** External command used to compile Java files. **/
   private String compiler;
   private long timeLimit;
@@ -26,7 +26,7 @@ public final class FileCompiler {
   static {
     try {
       @SuppressWarnings("regex") // output of escapeNonJava() can appear in a character class in a regex
-      /*@Regex*/ String java_filename_re
+      /*@Regex(1)*/ String java_filename_re
         = "([^" + UtilMDE.escapeNonJava(File.separator) + "]+)\\.java";
       java_filename_pattern = Pattern.compile(java_filename_re);
     } catch (PatternSyntaxException me) {
