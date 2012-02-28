@@ -56,7 +56,18 @@ endif
 endif
 endif
 
-JAVAC ?= javac
+ifeq (cygwin, $(OSTYPE))
+  JAVA ?= ../bin/java-cygwin -ea
+  JAVAC ?= ../bin/javac-cygwin
+else
+  JAVA ?= java -ea
+  # JAVAC ?= javac -g -Xlint:unchecked
+  # JAVAC ?= jikes -g +E +F
+  JAVAC ?= javac
+endif
+JAVADOC ?= javadoc
+JAR ?= jar
+
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # When using the JSR 308 compiler, this expects checkers-quals.jar on the classpath.
@@ -64,12 +75,6 @@ JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # since it's a shell command for "javac -jar ..." which ignores the
 # CLASSPATH environment variable and thus must be supplied explicitly.
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
-# JAVAC ?= javac -g -Xlint:unchecked
-# JAVAC ?= jikes -g +E +F
-JAVA ?= java -ea
-JAVADOC ?= javadoc
-
-JAR ?= jar
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
