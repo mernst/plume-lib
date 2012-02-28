@@ -1241,7 +1241,7 @@ public class MultiVersionControl {
     }
   }
 
-  private Pattern defaultPattern = Pattern.compile("^default[ \t]*=[ \t]*(.*)");
+  private /*@Regex(1)*/ Pattern defaultPattern = Pattern.compile("^default[ \t]*=[ \t]*(.*)");
 
   /**
    * Given a directory containing a Mercurial checkout, return its default
