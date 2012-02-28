@@ -1119,7 +1119,8 @@ otherwise, raise an error after the first problem is encountered."
 ;; python.el and some of the below might be out of date?
 
 
-(require 'ipython nil 'noerror)
+;; Does this only work with python-mode.el, not python.el?
+;; (require 'ipython nil 'noerror)
 
 ;; Avoid errors if various Python support is not available.
 (eval-when-compile (if (locate-library "python-mode") (require 'python-mode)))
