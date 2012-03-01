@@ -20,22 +20,26 @@ else
   TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 endif
 
+# Cygwin doesn't export OSTYPE.
+ifeq (cygwin,$(OSTYPE))
+else
+  UNAME := $(shell uname)
+  ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
+    # OSTYPE is a bash variable, not an environment variable.  Set it if necessary
+    OSTYPE := cygwin
+  endif
+endif
+
 # tools.jar file from JDK 5, so plume.jar is fully compatible with Java version 5.
 TOOLS_JAR_5 ?= ${TOOLS_JAR}
+ifeq (cygwin,$(OSTYPE))
+  TOOLS_JAR_5 := '$(shell cygpath -w $(TOOLS_JAR_5))'
+endif
+
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
-
-# On cygwin, translate the classpath and sourcepath to windows format.
-# Only do so if this has not already been done, which is determined by
-# looking for semicolons (;) in the classpath.
-ifeq (cygwin,$(OSTYPE))
-  ifneq (;,$(findstring ;,$(CLASSPATH)))
-    CLASSPATH := $(shell cygpath -pw "$(CLASSPATH)")
-  endif
-  TOOLS_JAR := '$(shell cygpath -w $(TOOLS_JAR))'
-endif
 
 # hack to add a space
 nullstring :=
@@ -57,15 +61,17 @@ endif
 endif
 
 ifeq (cygwin, $(OSTYPE))
-  JAVA ?= ../bin/java-cygwin -ea
-  JAVAC ?= ../bin/javac-cygwin
+  ## Make the classpath explicit on the command line so it can be processed by *-cygwin
+  JAVA ?= ../bin/java-cygwin -ea -classpath "${CLASSPATH}"
+  JAVAC ?= ../bin/javac-cygwin -classpath "${CLASSPATH}"
+  JAVADOC ?= ../bin/javadoc-cygwin -classpath "${CLASSPATH}"
 else
   JAVA ?= java -ea
   # JAVAC ?= javac -g -Xlint:unchecked
   # JAVAC ?= jikes -g +E +F
   JAVAC ?= javac
+  JAVADOC ?= javadoc
 endif
-JAVADOC ?= javadoc
 JAR ?= jar
 
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
@@ -98,6 +104,18 @@ ifdef CHECKERS
   endif
 endif
 jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
+
+## This is not necessary; the scripts java-cygwin, javac-cygwin, and
+## javadoc-cygwin do the path translation.
+# # On cygwin, translate the classpath and sourcepath to windows format.
+# # Only do so if this has not already been done, which is determined by
+# # looking for semicolons (;) in the classpath.
+# ifeq (cygwin,$(OSTYPE))
+#   ifneq (;,$(findstring ;,$(CLASSPATH)))
+#     CLASSPATH := $(shell cygpath -pw "$(CLASSPATH)")
+#   endif
+#   TOOLS_JAR := '$(shell cygpath -w $(TOOLS_JAR))'
+# endif
 
 export jsr308_imports
 export CLASSPATH
@@ -206,7 +224,7 @@ else
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
-	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
@@ -219,7 +237,7 @@ endif
 ${TOOLS_JAR}:
 ifneq (,$(findstring darwin,$(OSTYPE)))
 	@echo "Cannot find classes.jar at ${TOOLS_JAR}"
-	@echo "Please set TOOLS_JAR [sic] to its location"
+	@echo "Please set TOOLS_JAR to the location of classes.jar"
 else
 	@echo "Cannot find tools.jar at ${TOOLS_JAR}"
 	@echo "Please set JAVA_HOME and/or TOOLS_JAR"
@@ -235,6 +253,7 @@ showvars:
 	@echo JAVA_HOME = "$(JAVA_HOME)"
 	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
 	@echo CLASSPATH = "$(CLASSPATH)"
+	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo jsr308_imports = $(jsr308_imports)
 
 
@@ -300,7 +319,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 ###
 
 lookup.html: src/plume/Lookup.java
-	${JAVADOC} -docletpath ${CLASSPATH} -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
+	${JAVADOC} -docletpath "${CLASSPATH}" -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
@@ -343,7 +362,8 @@ task_manager.jar: plume.jar task_manager.manifest
 	mkdir jar-contents
 	(cd jar-contents; jar xf ../plume.jar)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
-	(cd jar-contents; $(JAR) cfm ../task_manager.jar ../task_manager.manifest `find * -type f | sort`)
+	(cd jar-contents; find * -type f | sort > jar-contents-list.txt)
+	(cd jar-contents; $(JAR) cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
 	rm -rf jar-contents
 
 install-task-manager: $(pag)/software/pkg/task_manager.jar
