@@ -65,14 +65,15 @@ ifeq (cygwin, $(OSTYPE))
   JAVA ?= ../bin/java-cygwin -ea -classpath "${CLASSPATH}"
   JAVAC ?= ../bin/javac-cygwin -classpath "${CLASSPATH}"
   JAVADOC ?= ../bin/javadoc-cygwin -classpath "${CLASSPATH}"
+  JAR ?= ${JAVA_HOME}/bin/jar
 else
   JAVA ?= java -ea
   # JAVAC ?= javac -g -Xlint:unchecked
   # JAVAC ?= jikes -g +E +F
   JAVAC ?= javac
   JAVADOC ?= javadoc
+  JAR ?= jar
 endif
-JAR ?= jar
 
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
