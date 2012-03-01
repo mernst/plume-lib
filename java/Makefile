@@ -1,9 +1,13 @@
 ### User customizations
 
+PLUME_DIR_DEFAULT := $(realpath $(dir $(lastword $(MAKEFILE_LIST)))..)
+
 # Put user-specific changes in your own Makefile.user
 #  (such as changes to PLUME_DIR or JAVAC or JAVAC_EXTRA_ARGS).
 # Make will silently continue if file does not exist.
 -include Makefile.user
+
+PLUME_DIR ?= ${PLUME_DIR_DEFAULT}
 
 ifndef JAVA_HOME
   java_cmd := $(shell which java)
@@ -62,9 +66,9 @@ endif
 
 ifeq (cygwin, $(OSTYPE))
   ## Make the classpath explicit on the command line so it can be processed by *-cygwin
-  JAVA ?= ../bin/java-cygwin -ea -classpath "${CLASSPATH}"
-  JAVAC ?= ../bin/javac-cygwin -classpath "${CLASSPATH}"
-  JAVADOC ?= ../bin/javadoc-cygwin -classpath "${CLASSPATH}"
+  JAVA ?= ${PLUME_DIR}/bin/java-cygwin -ea -classpath "${CLASSPATH}"
+  JAVAC ?= ${PLUME_DIR}/bin/javac-cygwin -classpath "${CLASSPATH}"
+  JAVADOC ?= ${PLUME_DIR}/bin/javadoc-cygwin -classpath "${CLASSPATH}"
   JAR ?= ${JAVA_HOME}/bin/jar
 else
   JAVA ?= java -ea
@@ -297,22 +301,22 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p src/plume/*.class jar-contents/plume
-	(cd jar-contents; jar xf ../lib/bcel.jar)
-	(cd jar-contents; jar xf ../lib/commons-logging-1.1.1.jar)
-	(cd jar-contents; jar xf ../lib/commons-io-1.4.jar)
-	(cd jar-contents; jar xf ../lib/commons-lang-2.4.jar)
-	(cd jar-contents; jar xf ../lib/checkers-quals.jar)
-	(cd jar-contents; jar xf ../lib/ical4j.jar)
-	(cd jar-contents; jar xf ../lib/ini4j-0.5.1.jar)
-	(cd jar-contents; jar xf ../lib/junit-4.8.2.jar)
-	(cd jar-contents; jar xf ../lib/svnkit.jar)
-	(cd jar-contents; jar xf ../lib/tagsoup-1.2.jar)
-	(cd jar-contents; jar xf ../lib/xom-1.2.1.jar)
-	(cd jar-contents; jar xf $(TOOLS_JAR_5) com/sun/javadoc)
+	(cd jar-contents; ${JAR} xf ../lib/bcel.jar)
+	(cd jar-contents; ${JAR} xf ../lib/commons-logging-1.1.1.jar)
+	(cd jar-contents; ${JAR} xf ../lib/commons-io-1.4.jar)
+	(cd jar-contents; ${JAR} xf ../lib/commons-lang-2.4.jar)
+	(cd jar-contents; ${JAR} xf ../lib/checkers-quals.jar)
+	(cd jar-contents; ${JAR} xf ../lib/ical4j.jar)
+	(cd jar-contents; ${JAR} xf ../lib/ini4j-0.5.1.jar)
+	(cd jar-contents; ${JAR} xf ../lib/junit-4.8.2.jar)
+	(cd jar-contents; ${JAR} xf ../lib/svnkit.jar)
+	(cd jar-contents; ${JAR} xf ../lib/tagsoup-1.2.jar)
+	(cd jar-contents; ${JAR} xf ../lib/xom-1.2.1.jar)
+	(cd jar-contents; ${JAR} xf $(TOOLS_JAR_5) com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
-# Put contents in alphabetical order. (not for now, overflows command line)
-#	(cd jar-contents; jar cf ../plume.jar `find * -type f | sort`)
-	cd jar-contents; jar cf ../plume.jar *
+# Put contents in alphabetical order.
+	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
+	(cd jar-contents; ${JAR} cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
 ###
@@ -345,7 +349,8 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	mkdir jar-contents/plume
 	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
 	cp -p lookup.txt lookup.html jar-contents/plume
-	cd jar-contents; jar cfm ../lookup.jar ../lookup.manifest *
+	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
+	(cd jar-contents; ${JAR} cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
 	rm -rf jar-contents
 
 install-lookup: $(pag)/software/pkg/lookup.jar
@@ -361,10 +366,10 @@ task-manager : task_manager.jar
 task_manager.jar: plume.jar task_manager.manifest
 	-rm -rf jar-contents
 	mkdir jar-contents
-	(cd jar-contents; jar xf ../plume.jar)
+	(cd jar-contents; ${JAR} xf ../plume.jar)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
-	(cd jar-contents; find * -type f | sort > jar-contents-list.txt)
-	(cd jar-contents; $(JAR) cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
+	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents-list.txt)
+	(cd jar-contents; ${JAR} cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
 	rm -rf jar-contents
 
 install-task-manager: $(pag)/software/pkg/task_manager.jar
