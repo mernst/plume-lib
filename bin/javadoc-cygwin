@@ -18,6 +18,10 @@ while [ -n "$1" ]; do
          arg="$arg' '`cygpath -p -w "$1"`"
          shift
          ;;
+      -docletpath)
+         arg="$arg' '`cygpath -p -w "$1"`"
+         shift
+         ;;
       -sourcepath)
          arg="$arg' '`cygpath -p -w "$1"`"
          shift
