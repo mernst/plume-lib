@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Given two sequences/iterators/whatever, this class returns a new
  * sequence/iterator/whatever that pairs the matching elements of the
- * inputs, according to their respective sort orders.  (This opertation is
+ * inputs, according to their respective sort orders.  (This operation is
  * sometimes called "zipping".)  If the inputs have different lengths, then
  * the extra elements at the end of the longer one are paired with null.
  *
@@ -44,27 +44,29 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
   // public OrderedPairIterator(Set s1, Set s2) {
   //   this((new TreeSet(s1)).iterator(), (new TreeSet(s2)).iterator());
   // }
+  @Override
   public boolean hasNext() { return ((next1 != null) || (next2 != null)); }
   /** Return an element of the first iterator, paired with null. */
   private Pair</*@Nullable*/ T,/*@Nullable*/ T> return1() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.of(next1, (T)null);
+    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, (T)null);
     setnext1();
     return result;
   }
   /** Return a pair of null and an element of the second iterator. */
   private Pair</*@Nullable*/ T,/*@Nullable*/ T> return2() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.of((T)null, next2);
+    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of((/*@Nullable*/ T)null, next2);
     setnext2();
     return result;
   }
   /** Return a pair containing an element from each iterator. */
   private Pair</*@Nullable*/ T,/*@Nullable*/ T> returnboth() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.of(next1, next2);
+    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, next2);
     setnext1();
     setnext2();
     return result;
   }
 
+  @Override
   public Pair</*@Nullable*/ T,/*@Nullable*/ T> next() {
     if (next1 == null) {
       if (next2 == null) {
@@ -94,5 +96,6 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
       }
     }
   }
+  @Override
   public void remove() { throw new UnsupportedOperationException(); }
 }
