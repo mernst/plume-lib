@@ -94,7 +94,7 @@ public final class FileCompiler {
     // javac tends to stop without completing the compilation if there
     // is an error in one of the files.  Remove all the erring files
     // and recompile only the good ones.
-    if (compiler.equals("javac")) {
+    if (compiler.indexOf("javac") != -1) {
       recompile_without_errors (fileNames, compile_errors);
     }
 
