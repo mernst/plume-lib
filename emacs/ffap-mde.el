@@ -77,6 +77,17 @@ Sets `ffap-string-at-point' and `ffap-string-at-point-region'."
     (set-text-properties 0 (length str) nil str)
     (setq ffap-string-at-point str)))
 
+;; This is a bit gross, because it should also adjust the variables that
+;; ffap-string-at-point sets.
+(defadvice ffap-string-at-point (after remove-html-markup activate)
+  "Remove HTML markup."
+  (if ad-return-value
+      (progn
+	(if (string-match "^tt>" ad-return-value)
+	    (setq ad-return-value (substring ad-return-value 3)))
+	(if (string-match "</tt$" ad-return-value)
+	    (setq ad-return-value (substring ad-return-value 0 -4))))))
+
 (setq ffap-string-at-point-mode-alist
       (cons
        ;; default:  (file "--:$+<>@-Z_a-z~" "<@" "@>;.,!?:")  I have
