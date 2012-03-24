@@ -178,7 +178,8 @@ import java.util.regex.Pattern;
  *
  * <b>More examples</b> <p>
  *
- * Example clients of the Options library include {@link plume.Lookup} and 
+ * Example clients of the Options library include {@link plume.Lookup},
+ * <a href="http://randoop.googlecode.com/hg/doc/index.html#command-line-options">Randoop</a>, and
  * <a href="http://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among many others.  <p>
  *
  * <b>Limitations</b> <ul>
