@@ -212,8 +212,10 @@ javadoc: .javadoc-timestamp
 
 # Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
+	chgrp -R types_www api
+# This rsync has stopped working, so do the chgrp before the rsync.
 	rsync -a api /cse/www2/types/plume-lib/
-	chgrp -R types_www /cse/www2/types/plume-lib/
+#	chgrp -R types_www /cse/www2/types/plume-lib/
 	chmod -R g+w /cse/www2/types/plume-lib/
 
 optionsdoc: .optionsdoc-timestamp
