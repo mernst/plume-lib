@@ -47,6 +47,7 @@
 --suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
 --suppress-broken 500:http://conferences.iee.org/icse2004/
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
+--suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/	
 --suppress-broken 500:http://www.orbitz.com/
 --suppress-broken 500:http://www.w3.org/TR/html4/loose.dtd
 --suppress-broken 500:http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
