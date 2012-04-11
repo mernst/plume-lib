@@ -1403,11 +1403,13 @@ one in the source code."
   (let ((dired-omit-mode nil))
     ad-do-it))
 
-(defadvice sort-lines (before not-addresses activate)
-  "Don't sort addresses.tex file."
-  (if (string-equal buffer-file-name
-		    (expand-file-name "~/random/addresses.tex"))
-      (error "Sort addresses.tex by paragraphs, not by lines")))
+(defadvice sort-lines (before not-certain-files activate)
+  "Don't sort lines in certain files."
+  (if (member buffer-file-name
+	      (list 
+	       (expand-file-name "~/random/addresses.tex")
+	       (expand-file-name "~/private/to-do")))
+      (error "Sort this file by paragraphs, not by lines")))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
