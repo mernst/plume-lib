@@ -1408,7 +1408,9 @@ one in the source code."
   (if (member buffer-file-name
 	      (list 
 	       (expand-file-name "~/random/addresses.tex")
-	       (expand-file-name "~/private/to-do")))
+	       (expand-file-name "~/private/to-do")
+	       (expand-file-name "~/to-do")
+	       ))
       (error "Sort this file by paragraphs, not by lines")))
 
 
