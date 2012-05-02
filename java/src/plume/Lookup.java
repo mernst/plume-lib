@@ -20,13 +20,13 @@ import com.sun.javadoc.*;
  * By default, search criteria are treated as keywords, and each paragraph
  * is treated as an entry &mdash; in other words, Lookup prints each
  * paragraph (in any of the files) that contains all the keywords,
- * essentially performing paragraph-wise grep. <p> 
+ * essentially performing paragraph-wise grep. <p>
  *
  * A file can contain one or more entries, each of which is a short entry
  * or a long entry.
  * <ul>
  *   <li>A short entry is a single paragraph (delimited from the next entry
- *       by a blank line).  Lookup searches all of a short entry.</li> 
+ *       by a blank line).  Lookup searches all of a short entry.</li>
  *   <li>A long entry is introduced by a line that begins with '&gt;entry'.  The
  *       remainder of that line is a one-line description of the entry.  A
  *       long entry is terminated by '&lt;entry', by the start of a new long
@@ -289,12 +289,11 @@ public class Lookup {
             int flags = Pattern.CASE_INSENSITIVE;
             if (case_sensitive)
               flags = 0;
-            
+
             if (! RegexUtil.isRegex(keyword)) {
               System.out.println ("Error: not a regex: " + keyword);
               System.exit (254);
             }
-            keyword = RegexUtil.asRegex(keyword);   // @SuppressWarnings("regex") // flow-sensitivity
 
             if (Pattern.compile (keyword, flags).matcher(search).find())
               matchcount++;
