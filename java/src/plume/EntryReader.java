@@ -44,7 +44,7 @@ import java.nio.CharBuffer;
  *    ...
  *  }
  * </pre>
- * 
+ *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
  */
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
@@ -83,7 +83,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   ///
 
   /** Stack of readers.  Used to support include files */
-  private Stack<FlnReader> readers = new Stack<FlnReader>();
+  private final Stack<FlnReader> readers = new Stack<FlnReader>();
 
   /** Line that is pushed back to be reread **/
   /*@Nullable*/ String pushback_line = null;
@@ -218,15 +218,25 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
 
   private static class DummyReader extends Reader {
+    @Override
     public void close() { throw new Error("DummyReader"); }
+    @Override
     public void mark(int readAheadLimit) { throw new Error("DummyReader"); }
+    @Override
     public boolean markSupported() { throw new Error("DummyReader"); }
+    @Override
     public int read() { throw new Error("DummyReader"); }
+    @Override
     public int read(char[] cbuf) { throw new Error("DummyReader"); }
+    @Override
     public int read(char[] cbuf, int off, int len) { throw new Error("DummyReader"); }
+    @Override
     public int read(CharBuffer target) { throw new Error("DummyReader"); }
+    @Override
     public boolean ready() { throw new Error("DummyReader"); }
+    @Override
     public void reset() { throw new Error("DummyReader"); }
+    @Override
     public long skip(long n) { throw new Error("DummyReader"); }
   }
 
@@ -330,6 +340,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * a line that is completely a comment is completely ignored (and
    * not returned as a blank line).  Returns null at end of file.
    */
+  @Override
   public /*@Nullable*/ String readLine() throws IOException {
 
     // System.out.printf ("Entering size = %d%n", readers.size());
@@ -397,6 +408,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * iterator is a singleton, the same one is returned each time, and a new
    * one can never be created after it is exhausted.
    **/
+  @Override
   public Iterator<String> iterator() {
     return this;
   }
@@ -406,6 +418,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * are turned into errors (because the definition of hasNext() in Iterator
    * doesn't throw any exceptions).
    **/
+  @Override
   public boolean hasNext() {
     if (pushback_line != null)
       return true;
@@ -428,6 +441,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Returns the next line in the multi-file.
    * Throws NoSuchElementException at end of file.
    **/
+  @Override
   public String next() {
     try {
       String result = readLine();
@@ -442,6 +456,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /** remove() is not supported **/
+  @Override
   public void remove() {
     throw new UnsupportedOperationException ("can't remove lines from file");
   }
@@ -676,7 +691,6 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
         System.err.println("Error parsing comment regex \"" + comment_re + "\": " + RegexUtil.regexError(comment_re));
         System.exit(1);
       }
-      comment_re = RegexUtil.asRegex(comment_re); // @SuppressWarnings("regex") // flow-sensitivity
     }
     if (args.length >= 3) {
       include_re = args[2];
@@ -684,7 +698,6 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
         System.err.println("Error parsing include regex \"" + include_re + "\": " + RegexUtil.regexError(include_re));
         System.exit(1);
       }
-      include_re = RegexUtil.asRegex(include_re, 1); // @SuppressWarnings("regex") // flow-sensitivity
     }
     EntryReader reader = new EntryReader (filename, comment_re, include_re);
 

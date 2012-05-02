@@ -1262,6 +1262,7 @@ By default, `scroll-down' raises an error in that circumstance."
 ;; I need to advise write-region as well, because it may be called directly
 ;; rather than through basic-save-buffer.
 
+;; To disable: (ad-disable-advice 'basic-save-buffer-2 'around 'preserve-group-id)
 (defadvice basic-save-buffer-2 (around preserve-group-id activate)
   "Try to set the group of the file to what it used to be on disk."
   (let ((old-group (and (file-exists-p buffer-file-name)
@@ -1408,7 +1409,9 @@ one in the source code."
   (if (member buffer-file-name
 	      (list 
 	       (expand-file-name "~/random/addresses.tex")
-	       (expand-file-name "~/private/to-do")))
+	       (expand-file-name "~/private/to-do")
+	       (expand-file-name "~/to-do")
+	       ))
       (error "Sort this file by paragraphs, not by lines")))
 
 
