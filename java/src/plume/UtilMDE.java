@@ -1686,7 +1686,6 @@ public final class UtilMDE {
    * @see RegexUtil#isRegex(String)
    */
   @Deprecated
-  @SuppressWarnings("regex")    // RegexUtil
   /*@Pure*/
   public static boolean isRegex(String s) {
     return RegexUtil.isRegex(s);
@@ -1697,7 +1696,6 @@ public final class UtilMDE {
    * @see RegexUtil#regexError(String)
    */
   @Deprecated
-  @SuppressWarnings("regex")    // RegexUtil
   /*@Pure*/
   public static /*@Nullable*/ String regexError(String s) {
     return RegexUtil.regexError(s);
@@ -1708,7 +1706,6 @@ public final class UtilMDE {
    * @see RegexUtil#asRegex(String)
    */
   @Deprecated
-  @SuppressWarnings("regex")    // RegexUtil
   /*@Pure*/
   public static /*@Regex*/ String asRegex(String s) {
     return RegexUtil.asRegex(s);
