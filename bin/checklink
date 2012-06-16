@@ -1323,6 +1323,8 @@ EOF
 
             # List the broken fragments
             while (my ($fragment, $lines) = each(%{$ulinks->{fragments}})) {
+                # my $is_suppressed_fragment = grep { $_ eq "$u#$fragment" } @{$Opts{Suppress_Fragment}};
+
                 if ($Opts{Verbose}) {
                     my @line_nums = sort { $a <=> $b } keys(%$lines);
                     &hprintf(
@@ -1333,6 +1335,7 @@ EOF
                         (scalar(@line_nums) > 1) ? 's' : '',
                         join(', ', @line_nums)
                     );
+                    # print "is_suppressed_fragment for $u#$fragment: $grep_result\n";
                 }
 
                 # A broken fragment?
