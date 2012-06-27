@@ -18,6 +18,7 @@
 --suppress-broken 403:http://portal.acm.org/dl.cfm
 --suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
 --suppress-broken 403:http://validator.w3.org/check?uri=referer
+--suppress-broken 403:http://wiki.python.org/moin/BeginnersGuide
 --suppress-broken 403:http://www.acm.org/
 --suppress-broken 403:http://www.acm.org/publications/copyright_form/	
 --suppress-broken 403:http://www.acm.org/sigs/publications/proceedings-templates
