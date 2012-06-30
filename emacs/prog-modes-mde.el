@@ -1147,7 +1147,7 @@ otherwise, raise an error after the first problem is encountered."
   (define-key python-mode-map "\C-x-" 'python-override-my-kill-buffer-and-window) ; too easy to hit when I intend "C-c -"
   (make-local-variable 'write-contents-hooks)
   ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
-  (add-hook 'write-contents-hooks 'pyflakes-this-file)
+  ;; (add-hook 'write-contents-hooks 'pyflakes-this-file)
   ;; It isn't enough to rebind M-f and M-b, because I want completion to
   ;; consider _ to split words, too.
   (modify-syntax-entry ?\_ "_"  py-mode-syntax-table)
@@ -1336,11 +1336,11 @@ point is currently near)."
 	  (comint-send-input)))
     ))
 
-(defun pyflakes-thisfile () (interactive)
+(defun pyflakes-this-file () (interactive)
   (compile (format "pyflakes %s" (buffer-file-name)))
   )
 
-(add-hook 'python-mode-hook (lambda () (pyflakes-mode t)))
+;; (add-hook 'python-mode-hook (lambda () (pyflakes-mode t)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
