@@ -781,7 +781,7 @@ public final class ArraysMDE {
    *        index or the first non-included index)
    **/
   public static /*@PolyNull*/ /*@PolyInterned*/ String[] subarray(/*@PolyNull*/ /*@PolyInterned*/ String[] a, int startindex, int length) {
-    /*@PolyNull*/ /*@PolyInterned*/ String[] result = new String[length];
+    /*@PolyNull*/ /*@PolyInterned*/ String[] result = new /*@PolyNull*/ /*@PolyInterned*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
   }
