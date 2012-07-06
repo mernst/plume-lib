@@ -399,6 +399,8 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Pluggable type-checking
 ###
 
+check-all: check-nullness check-interning check-regex check-signature
+
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
 CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
