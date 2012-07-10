@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.HashMap;
 
+import checkers.quals.Pure;
 
 // If you are perplexed because of odd results, maybe it is because of the
 // transparency of your iCal items (this shows up as "available/busy" in
