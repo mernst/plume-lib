@@ -5,6 +5,9 @@ package plume;
 
 import java.util.*;
 
+/*>>>
+import checkers.quals.PolyAll;
+*/
 
 /**
  * Utilities for manipulating arrays and collections.
