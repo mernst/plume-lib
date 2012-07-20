@@ -1797,7 +1797,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (boolean /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (boolean [] a) {
     HashSet<Boolean> hs = new HashSet<Boolean> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
@@ -1813,7 +1813,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (byte /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (byte[] a) {
     HashSet<Byte> hs = new HashSet<Byte> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
@@ -1829,7 +1829,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (char /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (char[] a) {
     HashSet<Character> hs = new HashSet<Character> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
@@ -1845,7 +1845,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (float /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (float[] a) {
     HashSet<Float> hs = new HashSet<Float> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
@@ -1861,7 +1861,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (short /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (short[] a) {
     HashSet<Short> hs = new HashSet<Short> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
@@ -1877,7 +1877,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (int /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (int[] a) {
     HashSet<Integer> hs = new HashSet<Integer> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
@@ -1895,7 +1895,7 @@ public final class ArraysMDE {
    * using O(n) time and O(n) space. Equality checking
    * uses the .equals() method for java.lang.Double.
    */
-  public static boolean noDuplicates (double /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (double[] a) {
     HashSet<Double> hs = new HashSet<Double> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
@@ -1912,7 +1912,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (long /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (long[] a) {
     HashSet<Long> hs = new HashSet<Long> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
@@ -1929,7 +1929,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (/*@PolyAll*/ String /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (String[] a) {
     HashSet<String> hs = new HashSet<String> ();
     for (int i = 0; i < a.length; i++) {
       if (hs.contains(a[i])) { return false; }
@@ -1944,7 +1944,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (/*@PolyAll*/ Object /*@PolyAll*/ [] a) {
+  public static boolean noDuplicates (Object[] a) {
     HashSet<Object> hs = new HashSet<Object> ();
     for (int i = 0; i < a.length; i++) {
       if (hs.contains(a[i])) { return false; }
