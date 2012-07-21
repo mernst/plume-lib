@@ -510,7 +510,8 @@ public final class Intern {
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
    **/
-  @SuppressWarnings("interning") // interns its argument
+  @SuppressWarnings({"interning", // interns its argument
+      "cast"}) // cast is redundant (except in JSR 308)
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
@@ -537,7 +538,8 @@ public final class Intern {
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
    **/
-  @SuppressWarnings("interning") // interns its argument
+  @SuppressWarnings({"interning", // interns its argument
+      "cast"}) // cast is redundant (except in JSR 308)
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectArrays.get(a);
