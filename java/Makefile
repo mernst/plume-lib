@@ -399,10 +399,12 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Pluggable type-checking
 ###
 
+check-all: check-nullness check-interning check-regex check-signature
+
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
 CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
-CHECKERS_ARGS = -source 8 -Awarns
+CHECKERS_ARGS ?= -source 8 -Awarns
 
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.

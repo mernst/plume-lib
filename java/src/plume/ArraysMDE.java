@@ -5,6 +5,9 @@ package plume;
 
 import java.util.*;
 
+/*> > >
+import checkers.quals.PolyAll;
+*/
 
 /**
  * Utilities for manipulating arrays and collections.
@@ -382,7 +385,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
-  public static int indexOfEq(/*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt) {
+  public static int indexOfEq(/*PolyAll*/ Object[] a, /*@Nullable*/ Object elt) {
     for (int i=0; i<a.length; i++)
       if (elt == a[i])
         return i;
@@ -781,7 +784,7 @@ public final class ArraysMDE {
    *        index or the first non-included index)
    **/
   public static /*@PolyNull*/ /*@PolyInterned*/ String[] subarray(/*@PolyNull*/ /*@PolyInterned*/ String[] a, int startindex, int length) {
-    /*@PolyNull*/ /*@PolyInterned*/ String[] result = new String[length];
+    /*@PolyNull*/ /*@PolyInterned*/ String[] result = new /*@PolyNull*/ /*@PolyInterned*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
   }
@@ -1509,7 +1512,7 @@ public final class ArraysMDE {
    * The representation is patterned after that of java.util.Vector.
    * @see java.util.Vector#toString
    **/
-  public static String toString(Object /*@Nullable*/ [] a) {
+  public static String toString(/*PolyAll*/ Object /*@Nullable*/ [] a) {
     return toString(a, false);
   }
 
@@ -1797,7 +1800,7 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    * using O(n) time and O(n) space.
    */
-  public static boolean noDuplicates (boolean[] a) {
+  public static boolean noDuplicates (boolean [] a) {
     HashSet<Boolean> hs = new HashSet<Boolean> ();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
