@@ -3,7 +3,9 @@ package plume;
 import java.io.Serializable;
 import java.util.*;
 
+/*>>>
 import checkers.quals.Pure;
+*/
 
 /**
  * LimitedSizeSet stores up to some maximum number of unique
