@@ -510,23 +510,25 @@ public final class Intern {
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
    **/
-  @SuppressWarnings("interning")
+  @SuppressWarnings({"interning", // interns its argument
+      "cast"}) // cast is redundant (except in JSR 308)
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
     for (int k = 0; k < a.length; k++)
       assert a[k] == Intern.intern (a[k]);
 
-    @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
-    WeakReference</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> lookup = internedStringArrays.get(a);
+    WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []> lookup = internedStringArrays.get(a);
+    /*@Nullable*/ /*@Interned*/ String /*@Interned*/ [] result;
     if (lookup != null) {
-      return lookup.get();
+      result = lookup.get();
     } else {
-      @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] result = (/*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []) a;
+      result = (/*@Nullable*/ /*@Interned*/ String /*@Interned*/ []) a;
       internedStringArrays.put(result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
-      return result;
     }
+    @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+    /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] polyresult = result;
+    return polyresult;
   }
 
   /**
@@ -536,18 +538,21 @@ public final class Intern {
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
    **/
-  @SuppressWarnings({"interning"})
+  @SuppressWarnings({"interning", // interns its argument
+      "cast"}) // cast is redundant (except in JSR 308)
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
-    WeakReference</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectArrays.get(a);
+    WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectArrays.get(a);
+    /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [] result;
     if (lookup != null) {
-      return lookup.get();
+      result = lookup.get();
     } else {
-      @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] result = (/*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []) a;
+      result = (/*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []) a;
       internedObjectArrays.put(result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
-      return result;
     }
+    @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+    /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] polyresult = result;
+    return polyresult;
   }
 
 
