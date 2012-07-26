@@ -35,11 +35,12 @@
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 --suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
---suppress-broken 404:http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
---suppress-broken 404:http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/AbstractTypeProcessor.html?is-external=true
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/AbstractTypeProcessor.html?is-external=true
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true
+--suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true
+--suppress-broken 404:http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
+--suppress-broken 404:http://download.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/AbstractTypeProcessor.html?is-external=true
 --suppress-broken 404:http://groups.google.com/group/jsr-305/
 --suppress-broken 404:http://groups.google.com/group/jsr-305/web/proposed-annotations
 --suppress-broken 404:http://java.sun.com/javase/6/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
