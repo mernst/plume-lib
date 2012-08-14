@@ -8,22 +8,17 @@
 
 (provide 'config-and-add-path)
 
-(defvar running-emacs-21 (= 21 emacs-major-version))
 (defvar running-emacs-22 (= 22 emacs-major-version))
 (defvar running-emacs-23 (= 23 emacs-major-version))
 (defvar running-xemacs (featurep 'xemacs))
 (defvar running-emacs-fsf (not (featurep 'xemacs)))
 
-(defmacro emacs-21 (&rest body)
-  "Execute BODY if running Emacs 21."
-  `(if running-emacs-21
-	 (progn ,@body)))
 (defmacro emacs-22 (&rest body)
   "Execute BODY if running Emacs 22."
   `(if running-emacs-22
 	 (progn ,@body)))
 (defmacro emacs-23 (&rest body)
-  "Execute BODY if running Emacs 22."
+  "Execute BODY if running Emacs 23."
   `(if running-emacs-23
 	 (progn ,@body)))
 (defmacro emacs-fsf (&rest body)
@@ -310,11 +305,6 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
     (setq load-path (remove-matching-strings "/xemacs\\($\\|/\\)" load-path)))
   (xemacs
     (setq load-path (remove-matching-strings "/emacs-fsf\\($\\|/\\)" load-path)))
-  (emacs-21
-    (setq load-path (remove-matching-strings "/emacs-\\(20\\|22\\)\\($\\|/\\)" load-path)))
-  ;; Temporary hack: retain Emacs-21 for Emacs-22
-  ;; (emacs-22
-  ;;   (setq load-path (remove-matching-strings "/emacs-\\(20\\|21\\)\\($\\|/\\)" load-path)))
   (emacs-22
     (setq load-path (remove-matching-strings "/emacs-\\(20\\|NOT21\\)\\($\\|/\\)" load-path)))
 
@@ -335,8 +325,6 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
   ;; Make sure more specific subdirectories precede their parents.
   (xemacs
     (setq load-path (move-subdirs-before-parents "xemacs" load-path)))
-  (emacs-21
-    (setq load-path (move-subdirs-before-parents "emacs-21" load-path)))
   (emacs-22
     (setq load-path (move-subdirs-before-parents "emacs-22" load-path)))
   (emacs-23

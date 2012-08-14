@@ -1934,14 +1934,6 @@ Use as a hook, like so:
 	       compilation-error-regexp-alist)))
 
 
-;; "Exception occurred: java.lang.NullPointerException (uncaught) thread="main", daikon.PptTopLevel.add(), line=450, bci=14"
-(emacs-21			       ; no FILE-FORMAT element in Emacs 22
-  (eval-after-load "compile"
-    '(setq compilation-error-regexp-alist
-	   (cons '("^Exception occurred: .*\\b\\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+(), line=\\([0-9]+\\)" 1 2 nil "%s.java")
-		 compilation-error-regexp-alist)))
-  )
-
 ;; JJTree (?): "In file daikon/PrintInvariants.javax: Encountered "const vi =" at line 399, column 13."
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
