@@ -232,27 +232,16 @@ The regular expressions are implicitly anchored at the front.")
     (save-excursion
       (goto-char (point-min))
       ;; First, fix the header line (which is part of the text in Emacs 21).
-      (emacs-21
-	(assert (looking-at " MR"))
-	(forward-char 2)
-	(delete-char 1)
-	(forward-line 1)
-	(forward-char 2)
-	(delete-char 1)
-	(forward-line 1))
-      (emacs-22+
-	(assert (= ?C (aref header-line-format 1)))
-	(assert (= ?R (aref header-line-format 2)))
-	(setq header-line-format
-	      (concat (substring header-line-format 0 1)
-		      "  "		; 2 spaces instead of "CR"
-		      (substring header-line-format 3))))
+      (assert (= ?C (aref header-line-format 1)))
+      (assert (= ?R (aref header-line-format 2)))
+      (setq header-line-format
+	    (concat (substring header-line-format 0 1)
+		    "  "		; 2 spaces instead of "CR"
+		    (substring header-line-format 3)))
       (while (not (eobp))
 	(assert (looking-at "[C .]"))
 	(delete-char 1)
 	(insert " ")
-	(emacs-21
-	  (forward-char 1))
 	(assert (looking-at "[R %]"))
 	(delete-char 1)
 	(insert " ")
