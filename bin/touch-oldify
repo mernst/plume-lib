@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Give the argument files the oldest possible timestamp.
+# This can be useful to cause "make" to re-build the file.
+
+touch --date=01/01/70 "$@"

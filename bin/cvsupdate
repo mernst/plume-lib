@@ -1,0 +1,3 @@
+#!/bin/sh -f
+# Run "cvs update", *very* quietly:  only inform of conflicts (and some errors)
+cvs -q update -d "$@" 2>&1 | egrep -e '^C |update aborted|non-existent repository|Permission denied|cannot open|^cvs update: [^U]'

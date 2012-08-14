@@ -1,0 +1,83 @@
+#!/usr/bin/env perl
+
+# Print names of .class files with no corresponding .java file or file
+# containing the definition of the class.
+# All the calls to external grep are very slow; perhaps figure out a way of
+# optimizing this.
+
+use strict;
+use English;
+$WARNING = 1;
+
+my $debug = 0;
+
+# Directories known to contain .class files without source; don't report these.
+my @no_source = (
+		 'com/oroinc/',
+		 'gnu/regexp/',
+		 'Metamata1_1dx.class',
+		 'Metamata1_1ax.class',
+		 'dec/trek/',
+		 'jtrek/',
+		 'jasmine/',
+		 'mocha/'
+		 );
+
+my $class_files = `find . -name '*.class' -print`;
+foreach my $class_file (split(/[ \t\n\r]+/, $class_files)) {
+  my $has_no_source = 0;
+  foreach my $nosource (@no_source) {
+    if ($class_file =~ /$nosource/) {
+      $has_no_source = 1;
+      last;
+    }
+  }
+  if ($has_no_source) {
+    next;
+  }
+
+  my $class = $class_file;
+  if ($debug) { print "$class_file\n"; }
+  $class =~ s/.class$//;
+  $class =~ s/\$[0-9]+$//;
+  $class =~ s/.*\///;
+  my $dir = $class_file;
+  if (!($dir =~ s/\/[^\/]*$//)) {
+    die "no slash??";
+    $dir = ".";
+  }
+  my $java_file = "$class.java";
+  if (-e $java_file) {
+    if ($debug) { print "$java_file exists\n"; }
+    next;
+  }
+
+  # Inner classes have names like "Outer$Inner", except that inner classes
+  # defined within a method have names like "Outer$[N]Inner", where N is
+  # composed of decimal digits.  An "Inner" identifier cannot start with
+  # decimal digits.
+  if ($class =~ /\$[0-9]*/) {
+    my $inner = $POSTMATCH;
+    my $outer = $PREMATCH;
+    # Consider only the most deeply nested inner class.
+    $inner =~ s/^.*\$[0-9]*([^\$]+)$/$1/;
+    if ($debug) { print "Trying outer/inner: $outer $inner; file will be $dir/$outer.java\n"; }
+    if ((-e "$dir/$outer.java")
+	&& (system("grep -q -s '\\(class\\|interface\\) $inner\\b' $dir/$outer.java") == 0)) {
+      if ($debug) { print "$dir/$outer.java contains '(class|interface) $inner'\n"; }
+      next;
+    }
+    $class = $inner;
+  }
+
+  # If we didn't find the definition in a specific file, then try all files
+  # in the directory.  This is not done from the start because it is more
+  # expensive than checking a single file.
+  if (system("grep -q -s '\\(class\\|interface\\) $class\\b' $dir/*.java") == 0) {
+    if ($debug) { print "$dir/*.java contains '(class|interface) $class'\n"; }
+    next;
+  }
+
+  if ($debug) { print "FAILURE: $class_file\n"; }
+  print "$class_file\n";
+}
