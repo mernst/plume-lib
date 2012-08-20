@@ -37,12 +37,13 @@ endif
 # tools.jar file from JDK 5, so plume.jar is fully compatible with Java version 5.
 TOOLS_JAR_5 ?= ${TOOLS_JAR}
 ifeq (cygwin,$(OSTYPE))
-  TOOLS_JAR_5 := '$(shell cygpath -w $(TOOLS_JAR_5))'
+  TOOLS_JAR_5 := $(shell cygpath -w $(TOOLS_JAR_5))
 endif
 
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
+# Don't quote TOOLS_JAR; it will be quoted when it is used
 CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # hack to add a space
@@ -139,7 +140,7 @@ compile_without_testing:  .class-files-timestamp
 
 # This rule creates ${ALL_CLASS_FILES}.
 # The timestamp file indicates when the files were last compiled.
-.class-files-timestamp: ${JAVA_AND_CPP_FILES} ${TOOLS_JAR}
+.class-files-timestamp: ${JAVA_AND_CPP_FILES} tools_jar_exists
 	${JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
 	touch .class-files-timestamp
 
@@ -234,13 +235,23 @@ else
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
-	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 	@\rm -f ical4j.properties
-	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	$(JAVADOC) -quiet -docletpath ${CLASSPATH} -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
 
+tools_jar_exists:
+ifeq (cygwin,$(OSTYPE))
+# Give up on verifying existence of tools.jar (which contains a space in the file name) on Cygwin
+	@true
+else
+	$(MAKE) ${TOOLS_JAR}
+endif
+
+# This target only fires if TOOLS_JAR does not exist
+# The make program has serious problems with filenames containing spaces, unfortunately.
 ${TOOLS_JAR}:
 ifneq (,$(findstring darwin,$(OSTYPE)))
 	@echo "Cannot find classes.jar at ${TOOLS_JAR}"
@@ -290,7 +301,7 @@ endif
 jar: checkenv plume.jar lookup.jar task_manager.jar
 
 # This should depend on all the included .jar files, too.
-plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
+plume.jar: ${JAVA_AND_CPP_FILES} lib tools_jar_exists
 # "make clean" avoids including stray .class files from your directory.
 # "make compile" runs unit tests; do that instead of "compile_without_testing".
 # If you use "compile_without_testing", the tests will look out of date
@@ -303,22 +314,22 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib ${TOOLS_JAR}
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p src/plume/*.class jar-contents/plume
-	(cd jar-contents; ${JAR} xf ../lib/bcel.jar)
-	(cd jar-contents; ${JAR} xf ../lib/commons-logging-1.1.1.jar)
-	(cd jar-contents; ${JAR} xf ../lib/commons-io-1.4.jar)
-	(cd jar-contents; ${JAR} xf ../lib/commons-lang-2.4.jar)
-	(cd jar-contents; ${JAR} xf ../lib/checkers-quals.jar)
-	(cd jar-contents; ${JAR} xf ../lib/ical4j.jar)
-	(cd jar-contents; ${JAR} xf ../lib/ini4j-0.5.1.jar)
-	(cd jar-contents; ${JAR} xf ../lib/junit-4.8.2.jar)
-	(cd jar-contents; ${JAR} xf ../lib/svnkit.jar)
-	(cd jar-contents; ${JAR} xf ../lib/tagsoup-1.2.jar)
-	(cd jar-contents; ${JAR} xf ../lib/xom-1.2.1.jar)
-	(cd jar-contents; ${JAR} xf $(TOOLS_JAR_5) com/sun/javadoc)
+	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.1.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-1.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/checkers-quals.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/ical4j.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/junit-4.8.2.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/svnkit.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.1.jar)
+	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_5)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
-	(cd jar-contents; ${JAR} cf ../plume.jar @jar-contents.txt)
+	(cd jar-contents; "${JAR}" cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
 ###
@@ -352,7 +363,7 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
 	cp -p lookup.txt lookup.html jar-contents/plume
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
-	(cd jar-contents; ${JAR} cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
+	(cd jar-contents; "${JAR}" cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
 	rm -rf jar-contents
 
 install-lookup: $(pag)/software/pkg/lookup.jar
@@ -368,10 +379,10 @@ task-manager : task_manager.jar
 task_manager.jar: plume.jar task_manager.manifest
 	-rm -rf jar-contents
 	mkdir jar-contents
-	(cd jar-contents; ${JAR} xf ../plume.jar)
+	(cd jar-contents; "${JAR}" xf ../plume.jar)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents-list.txt)
-	(cd jar-contents; ${JAR} cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
+	(cd jar-contents; "${JAR}" cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
 	rm -rf jar-contents
 
 install-task-manager: $(pag)/software/pkg/task_manager.jar
