@@ -930,7 +930,7 @@ a previously found match."
   (interactive
    (progn
      (barf-if-buffer-read-only)
-     (keep-lines-read-args "Keep paragraphs (containing match for regexp): ")))
+     (keep-lines-read-args "Keep paragraphs (containing match for regexp)")))
   (if rstart
       (progn
 	(goto-char (min rstart rend))
