@@ -13,9 +13,23 @@
 
 ;; Generally useful routine
 (defun average (&rest args)
-  "Give the average of the arguments."
+  "Return the average of the arguments."
   ;; multiplication by 1.0 ensures floating-point division
   (/ (apply '+ args) (* 1.0 (length args))))
+
+(defun median (&rest args)
+  "Return the median of the arguments."
+  (let* ((len (length args))
+	 (sorted (sort args #'<))
+    	 (firstmedian (nth (/ (- len 1) 2) sorted))
+	 (secondmedian (nth (/ len 2) sorted)))
+    ;; division by 2.0 ensures floating-point division
+    (/ (+ firstmedian secondmedian) 2.0)))
+;; (assert (equal 4.5 (median 1 2 3 4 5 6 7 8)))
+;; (assert (equal 5.0 (median 1 2 3 4 5 6 7 8 9)))
+;; (assert (equal 4.5 (median 4 6 7 1 5 3 8 2)))
+;; (assert (equal 5.0 (median 4 6 7 2 8 1 9 5 3)))
+
 
 (defun mde-split-window-vertically (arg)
   ;; checkdoc-params: (arg)
