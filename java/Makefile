@@ -140,7 +140,8 @@ compile_without_testing:  .class-files-timestamp
 
 # This rule creates ${ALL_CLASS_FILES}.
 # The timestamp file indicates when the files were last compiled.
-.class-files-timestamp: ${JAVA_AND_CPP_FILES} tools_jar_exists
+.class-files-timestamp: ${JAVA_AND_CPP_FILES}
+	${MAKE} tools_jar_exists
 	${JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
 	touch .class-files-timestamp
 
@@ -453,7 +454,7 @@ check-signature: checkenv
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv
+.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists
 
 
 # Existence of this rule means that a target is deleted if has just changed
