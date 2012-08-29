@@ -35,6 +35,7 @@ public class ClassFileVersion {
         minversion = 6;
       else if (minversion == 1.7)
         minversion = 7;
+      // Remove first two elements from args
       String[] newargs = new String[args.length - 2];
       System.arraycopy(args, 2, newargs, 0, args.length - 2);
       args = newargs;
