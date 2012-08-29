@@ -5,7 +5,7 @@ package plume;
 
 import java.util.*;
 
-/*> > >
+/*>>>
 import checkers.quals.PolyAll;
 */
 
@@ -757,8 +757,8 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    **/
-  public static /*@PolyNull*/ /*@PolyInterned*/ Object[] subarray(/*@PolyNull*/ /*@PolyInterned*/ Object[] a, int startindex, int length) {
-    /*@PolyNull*/ /*@PolyInterned*/ Object[] result = new /*@PolyNull*/ /*@PolyInterned*/ Object[length];
+  public static /*@PolyAll*/ Object[] subarray(/*@PolyAll*/ Object[] a, int startindex, int length) {
+    /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
   }
@@ -783,8 +783,8 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    **/
-  public static /*@PolyNull*/ /*@PolyInterned*/ String[] subarray(/*@PolyNull*/ /*@PolyInterned*/ String[] a, int startindex, int length) {
-    /*@PolyNull*/ /*@PolyInterned*/ String[] result = new /*@PolyNull*/ /*@PolyInterned*/ String[length];
+  public static /*@PolyAll*/ String[] subarray(/*@PolyAll*/ String[] a, int startindex, int length) {
+    /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
   }
