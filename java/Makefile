@@ -302,13 +302,15 @@ endif
 jar: checkenv plume.jar lookup.jar task_manager.jar
 
 # This should depend on all the included .jar files, too.
-plume.jar: ${JAVA_AND_CPP_FILES} lib tools_jar_exists
+plume.jar: ${JAVA_AND_CPP_FILES} lib
 # "make clean" avoids including stray .class files from your directory.
+# It does cause some extra work, but so be it.
 # "make compile" runs unit tests; do that instead of "compile_without_testing".
 # If you use "compile_without_testing", the tests will look out of date
 # with respect to the newly-generated .class files.
 # But, don't make "clean compile" the prerequisites for plume.jar or the
 # .jar file will always be remade even if it is up-to-date.
+	$(MAKE) tools_jar_exists
 	$(MAKE) clean optionsdoc
 	$(MAKE) compile
 	-rm -rf jar-contents
