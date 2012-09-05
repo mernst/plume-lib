@@ -28,7 +28,7 @@ public class LimitedSizeSet<T>
     assert max_values > 0;
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
-    T[] new_values_array = (T[]) new Object[max_values];
+    T[] new_values_array = (T[]) new /*@Nullable*/ Object[max_values];
     values = new_values_array;
     num_values = 0;
   }
