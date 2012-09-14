@@ -5,7 +5,7 @@
 --exclude-docs http://groups.csail.mit.edu/pag/reading-group/
 --exclude-docs http://pag.csail.mit.edu/jsr308/dist/doc/javac_lifecycle
 --exclude-docs http://types.cs.washington.edu/list-archives/
---exclude-docs http://www.cs.washington.edu/homes/mernst/advice/agre-networking-on-the-network-20050814.html
+--exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go 
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
