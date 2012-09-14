@@ -1521,7 +1521,12 @@ public final class UtilMDE {
   /// Method
   ///
 
-  /** Maps from a string of arg names to an array of Class objects. */
+  /**
+   * Maps from a comma-delimited string of arg types, such as appears in a
+   * method signature, to an array of Class objects, one for each arg
+   * type. Example keys include: "java.lang.String, java.lang.String,
+   * java.lang.Class[]" and "int,int".
+   */
   static HashMap<String,Class<?>[]> args_seen = new HashMap<String,Class<?>[]>();
 
   /**
@@ -1561,13 +1566,16 @@ public final class UtilMDE {
         argnames = split(all_argnames, ',');
       }
 
-      argclasses = new Class<?>[argnames.length];
+      /*@LazyNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
       for (int i=0; i<argnames.length; i++) {
         String bnArgname = argnames[i].trim();
         /*@ClassGetName*/ String cgnArgname = binaryNameToClassGetName(bnArgname);
-        argclasses[i] = classForName(cgnArgname);
+        argclasses_tmp[i] = classForName(cgnArgname);
       }
-      args_seen.put(all_argnames, argclasses);
+      @SuppressWarnings("cast")
+      Class<?>[] argclasses_res = (/*@NonNull*/ Class<?>[]) argclasses_tmp;
+      argclasses = argclasses_res;
+      args_seen.put(all_argnames, argclasses_res);
     }
     return methodForName(classname, methodname, argclasses);
   }
@@ -1861,15 +1869,15 @@ public final class UtilMDE {
    * @see #split(String s, String delim)
    **/
   public static String[] split(String s, char delim) {
-    Vector<String> result = new Vector<String>();
+    ArrayList<String> result_list = new ArrayList<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
-      result.add(s.substring(0, delimpos));
+      result_list.add(s.substring(0, delimpos));
       s = s.substring(delimpos+1);
     }
-    result.add(s);
-    String[] result_array = new String[result.size()];
-    result.copyInto(result_array);
-    return result_array;
+    result_list.add(s);
+    @SuppressWarnings("nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
+    String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
+    return result;
   }
 
   /**
@@ -1884,15 +1892,15 @@ public final class UtilMDE {
     if (delimlen == 0) {
       throw new Error("Second argument to split was empty.");
     }
-    Vector<String> result = new Vector<String>();
+    Vector<String> result_list = new Vector<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
-      result.add(s.substring(0, delimpos));
+      result_list.add(s.substring(0, delimpos));
       s = s.substring(delimpos+delimlen);
     }
-    result.add(s);
-    String[] result_array = new String[result.size()];
-    result.copyInto(result_array);
-    return result_array;
+    result_list.add(s);
+    @SuppressWarnings("nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
+    String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
+    return result;
   }
 
   /**
@@ -1938,7 +1946,7 @@ public final class UtilMDE {
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) return "";
     if (v.size() == 1) return v.get(0).toString();
-    // This should perhaps use an iterator rather than get().
+    // This should perhaps use an iterator rather than get(), for efficiency.
     StringBuffer sb = new StringBuffer(v.get(0).toString());
     for (int i=1; i<v.size(); i++)
       sb.append(delim).append(v.get(i));

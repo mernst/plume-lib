@@ -5,7 +5,7 @@ package plume;
 
 import java.util.*;
 
-/*> > >
+/*>>>
 import checkers.quals.PolyAll;
 */
 
@@ -757,8 +757,8 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    **/
-  public static /*@PolyNull*/ /*@PolyInterned*/ Object[] subarray(/*@PolyNull*/ /*@PolyInterned*/ Object[] a, int startindex, int length) {
-    /*@PolyNull*/ /*@PolyInterned*/ Object[] result = new /*@PolyNull*/ /*@PolyInterned*/ Object[length];
+  public static /*@PolyAll*/ Object[] subarray(/*@PolyAll*/ Object[] a, int startindex, int length) {
+    /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
   }
@@ -783,8 +783,8 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    **/
-  public static /*@PolyNull*/ /*@PolyInterned*/ String[] subarray(/*@PolyNull*/ /*@PolyInterned*/ String[] a, int startindex, int length) {
-    /*@PolyNull*/ /*@PolyInterned*/ String[] result = new /*@PolyNull*/ /*@PolyInterned*/ String[length];
+  public static /*@PolyAll*/ String[] subarray(/*@PolyAll*/ String[] a, int startindex, int length) {
+    /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
   }
@@ -1153,7 +1153,7 @@ public final class ArraysMDE {
         return a;
       } else {
         @SuppressWarnings("unchecked")
-          T[] result = (T[]) new Object[a.length + b.length];
+          T[] result = (T[]) new /*@LazyNonNull*/ Object[a.length + b.length];
 
         System.arraycopy(a, 0, result, 0, a.length);
         System.arraycopy(b, 0, result, a.length, b.length);
@@ -1182,7 +1182,7 @@ public final class ArraysMDE {
         return a;
       } else {
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[a.length + b.size()];
+        T[] result = (T[]) new /*@LazyNonNull*/ Object[a.length + b.size()];
 
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
@@ -1214,7 +1214,7 @@ public final class ArraysMDE {
         return toTArray(a);
       } else {
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[a.size() + b.length];
+        T[] result = (T[]) new /*@LazyNonNull*/ Object[a.size() + b.length];
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i=0; i<a.size(); i++) {
@@ -1246,7 +1246,7 @@ public final class ArraysMDE {
         return toTArray(a);
       } else {
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new Object[a.size() + b.size()];
+        T[] result = (T[]) new /*@LazyNonNull*/ Object[a.size() + b.size()];
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i=0; i<a.size(); i++) {
