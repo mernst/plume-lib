@@ -8,7 +8,7 @@ import java.util.*;
  * Given a list of .class files, print the class file version and also the
  * JDK/JRE version required to run it.
  * A .jar file can also be supplied, in which case each .class file within
- * it is procesed.
+ * it is processed.
  * Example use:  <pre>  java ClassFileVersion MyClass.class</pre>
  * Supplying the "-min JDKVER" argument suppresses output except for .class
  * files that require at least that JDK version.  For instance, to list all
@@ -28,6 +28,7 @@ public class ClassFileVersion {
       System.exit(1);
     }
 
+    // Process and remove "-min JDKVER" command-line argument, if present.
     if ((args.length >= 2)
         && (args[0].equals("-min"))) {
       minversion = Double.parseDouble(args[1]);
@@ -35,9 +36,7 @@ public class ClassFileVersion {
         minversion = 6;
       else if (minversion == 1.7)
         minversion = 7;
-      String[] newargs = new String[args.length - 2];
-      System.arraycopy(args, 2, newargs, 0, args.length - 2);
-      args = newargs;
+      args = ArraysMDE.subarray(args, 2, args.length - 2);
     }
 
     // System.out.println("newargs: " + java.util.Arrays.toString(args));

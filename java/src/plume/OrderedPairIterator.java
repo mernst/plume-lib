@@ -3,13 +3,23 @@ package plume;
 import java.util.*;
 
 /**
- * Given two sequences/iterators/whatever, this class returns a new
- * sequence/iterator/whatever that pairs the matching elements of the
- * inputs, according to their respective sort orders.  (This operation is
- * sometimes called "zipping".)  If the inputs have different lengths, then
- * the extra elements at the end of the longer one are paired with null.
- *
+ * Given two sorted iterators, this class returns a new iterator that pairs
+ * equal elements of the inputs, according to the sort order or the given
+ * comparator.  If an element has no equal element in the other iterator,
+ * then the element is paired with null.
  * <p>
+ * 
+ * For example, suppose that the inputs are
+ *   [1, 2, 3, 5] and
+ *   [1, 3, 5, 7, 9].
+ * Then the output is
+ *   [(1,1), (2,null), (3,3), (5,5), (null,7), (null, 9)].
+ * <p>
+ * 
+ * (This operation is similar to, but not the same as, the operation called
+ * "zipping".)
+ * <p>
+ *
  * In some cases this is just the right abstraction.  But in some cases
  * it's appropriate to use set intersection/difference instead.
  */
@@ -48,7 +58,7 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
   public boolean hasNext() { return ((next1 != null) || (next2 != null)); }
   /** Return an element of the first iterator, paired with null. */
   private Pair</*@Nullable*/ T,/*@Nullable*/ T> return1() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, (T)null);
+    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, (/*@Nullable*/ T)null);
     setnext1();
     return result;
   }

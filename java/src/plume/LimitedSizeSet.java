@@ -23,7 +23,7 @@ public class LimitedSizeSet<T>
 
   // If null, then at least num_values distinct values have been seen.
   // The size is not separately stored, because that would take extra space.
-  protected T /*@Nullable*/ [] values;
+  protected /*@Nullable*/ T /*@Nullable*/ [] values;
   // The number of active elements (equivalently, the first unused index).
   int num_values;
 
@@ -31,7 +31,7 @@ public class LimitedSizeSet<T>
     assert max_values > 0;
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
-    T[] new_values_array = (T[]) new Object[max_values];
+    /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
     values = new_values_array;
     num_values = 0;
   }
@@ -40,10 +40,8 @@ public class LimitedSizeSet<T>
     if (values == null)
       return;
 
-    for (int i=0; i < num_values; i++) {
-      if (values[i].equals(elt)) {
-        return;
-      }
+    if (contains(elt)) {
+      return;
     }
     if (num_values == values.length) {
       values = null;
@@ -79,12 +77,15 @@ public class LimitedSizeSet<T>
     }
   }
 
+  /*@Pure*/
   public boolean contains(T elt) {
     if (values == null) {
       throw new UnsupportedOperationException();
     }
     for (int i=0; i < num_values; i++) {
-      if (values[i].equals(elt)) {
+      @SuppressWarnings("nullness") // object invariant: used portion of array
+      T value = values[i];
+      if (value.equals(elt)) {
         return true;
       }
     }
@@ -150,6 +151,7 @@ public class LimitedSizeSet<T>
     return result;
   }
 
+  @SuppressWarnings("nullness") // bug in flow; to fix later
   public String toString() {
     return ("[size=" + size() + "; " +
             ((values == null) ? "null" : ArraysMDE.toString(values))
