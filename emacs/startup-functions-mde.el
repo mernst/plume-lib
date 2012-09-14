@@ -583,7 +583,7 @@ With just C-u prefix argument, prompt for starting date and days."
 					ical-business-hours))))))
     (let ((old-point (point)))
       ;; (message "java %s" (cons "plume.ICalAvailable" ical-args))
-      (insert (apply #'call-process "java" nil t nil (append '("-Dical4j.parsing.relaxed=true" "plume.ICalAvailable") ical-args)))
+      (insert (apply #'call-process "java" nil t nil (append (list "-cp" (substitute-in-file-name "$HOME/bin/src/plume-lib/java/plume.jar") "-Dical4j.parsing.relaxed=true" "-Dical4j.parsing.relaxed=true" "plume.ICalAvailable") ical-args)))
       (if (or (= (char-before) 0) (= (char-before) 1) (= (char-before) 255))
 	  (delete-backward-char 1))
       ;; Clean up an irritating warning message.
