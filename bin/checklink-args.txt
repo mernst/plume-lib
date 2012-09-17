@@ -15,6 +15,8 @@
 --suppress-broken 302:http://www.hotelatmit.com/
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
+--suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
+--suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html	
 --suppress-broken 403:http://portal.acm.org/dl.cfm
