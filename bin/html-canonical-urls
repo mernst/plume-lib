@@ -2,7 +2,7 @@
 # This file maps a textual string (such as the name of a person,
 # institution, or event) to the a canonical URL for that string.
 # It is used by the bibtex2web program
-# (http://www.cs.washington.edu/homes/mernst/software/bibtex2web.html).
+# (http://homes.cs.washington.edu/~mernst/software/bibtex2web.html).
 # The textual string contains bibtex2web markup, not HTML markup,
 # for special characters.
 #
@@ -36,12 +36,12 @@ Brian Demsky http://demsky.eecs.uci.edu/
 Brown University http://www.brown.edu/
 Carlos Pacheco http://people.csail.mit.edu/cpacheco/
 Christoph Csallner http://ranger.uta.edu/~csallner/
-Craig Chambers http://www.cs.washington.edu/homes/chambers/
+Craig Chambers http://homes.cs.washington.edu/~chambers/
 Craig Kaplan http://www.cgl.uwaterloo.ca/~csk/
 Craig S. Kaplan http://www.cgl.uwaterloo.ca/~csk/
-Daniel S. Weld http://www.cs.washington.edu/homes/weld/
+Daniel S. Weld http://homes.cs.washington.edu/~weld/
 # Daniel Weise http://research.microsoft.com/~dweise/
-Daniel Weise http://www.cs.washington.edu/homes/weise/
+Daniel Weise http://homes.cs.washington.edu/~weise/
 Darko Marinov http://mir.cs.illinois.edu/~marinov/
 David Glasser http://davidglasser.net/
 David Notkin http://www.cs.washington.edu/people/faculty/notkin/
@@ -96,7 +96,7 @@ ISSTA 2004 http://www.cse.unl.edu/~grother/issta2004/
 ISSTA 2006 http://www.cis.udel.edu/~gibson/issta/
 ISSTA 2008 http://research.cs.vt.edu/issta08/
 Iuliu Vasilescu http://web.mit.edu/iuliuv/www/
-# Jake Cockrell http://www.cs.washington.edu/homes/jake/
+# Jake Cockrell http://homes.cs.washington.edu/~jake/
 # Jeff Mellen http://jeffm.mit.edu/
 # Redirects to empty page as of 2/6/2008 Jeremy W. Nimmer http://alum.mit.edu/www/jwnimmer/
 Joe Kiniry http://www.itu.dk/~josr/
@@ -126,8 +126,8 @@ MIT Department of Electrical Engineering and Computer Science http://www.eecs.mi
 MIT Laboratory for Computer Science http://www.csail.mit.edu/
 Michael Bayne http://samskivert.com/
 Michael Carbin http://people.csail.mit.edu/mcarbin/
-Michael D. Ernst http://www.cs.washington.edu/homes/mernst/
-Michael Ernst http://www.cs.washington.edu/homes/mernst/
+Michael D. Ernst http://homes.cs.washington.edu/~mernst/
+Michael Ernst http://homes.cs.washington.edu/~mernst/
 # Michael Harder http://web.mit.edu/mharder/www/
 Microsoft Research http://research.microsoft.com/en-us/
 MSR 2007 http://msr.uwaterloo.ca/msr2007/
@@ -141,7 +141,7 @@ OOPSLA 2008 http://www.oopsla.org/oopsla2008/
 Ophelia Chesley http://www.research.rutgers.edu/~ochesley/
 Orna Raz http://www-2.cs.cmu.edu/~ornar/
 PASTE'04 http://www.st.cs.uni-saarland.de/paste/
-PASTE 2005 http://www.cs.washington.edu/homes/mernst/meetings/paste2005/
+PASTE 2005 http://homes.cs.washington.edu/~mernst/meetings/paste2005/
 Philip J. Guo http://www.pgbovine.net/
 Philip Jia Guo http://www.pgbovine.net/
 Philip Koopman http://www.ece.cmu.edu/~koopman/
@@ -169,8 +169,8 @@ Thomas Ball http://research.microsoft.com/en-us/people/tball/
 Thomas Jensen http://www.irisa.fr/lande/jensen/
 Thomas Zimmermann http://thomas-zimmermann.com/
 Todd D. Millstein http://www.cs.ucla.edu/~todd/
-Todd W. Schiller http://www.cs.washington.edu/homes/tws/
-Todd Schiller http://www.cs.washington.edu/homes/tws/
+Todd W. Schiller http://homes.cs.washington.edu/~tws/
+Todd Schiller http://homes.cs.washington.edu/~tws/
 # These two lines have a different space (ASCII 40, 4240) between "Ne" and "Win"
 # Toh Ne Win http://web.mit.edu/tohn/www/
 # Toh NeÂ Win http://web.mit.edu/tohn/www/
@@ -181,8 +181,8 @@ VLDB 2010 http://vldb2010.org/
 # Broken as of 11/4/2006, 2/8/2008, 8/19/2008: VMCAI'03 http://www.cs.nyu.edu/vmcai03/
 VSTTE http://vstte.ethz.ch/
 Weng-Fai Wong http://www.comp.nus.edu.sg/~wongwf/
-Werner Dietl http://www.cs.washington.edu/homes/wmdietl/
-Werner M. Dietl http://www.cs.washington.edu/homes/wmdietl/
+Werner Dietl http://homes.cs.washington.edu/~wmdietl/
+Werner M. Dietl http://homes.cs.washington.edu/~wmdietl/
 Willem Visser http://www.visserhome.com/willem/
 William G. Griswold http://cseweb.ucsd.edu/~wgg/
 William Thies http://research.microsoft.com/en-us/um/people/thies/
