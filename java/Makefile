@@ -347,6 +347,7 @@ lookup.txt: lookup.html
 
 LOOKUP_JAR_CLASSES = \
 	src/plume/Lookup.class \
+	src/plume/RegexUtil.class \
 	src/plume/UtilMDE*.class src/plume/EntryReader*.class \
 	src/plume/Option*.class src/plume/StringBuilderDelimited.class \
 	src/plume/Unpublicized.class src/plume/SimpleLog.class
