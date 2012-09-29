@@ -773,15 +773,15 @@ Also consider `normal-erase-is-backspace' variable (Emacs 21)."
   (set-text-properties begin end nil (current-buffer)))
 
 
-(defun infer-tab-width (&optional include-first-column)
+(defun infer-tab-width (&optional omit-first-column)
   "Set tab-width so that columns line up.
-The first column is omitted unless the optional argument is specified."
+The first column is omitted if the optional argument is specified."
   (interactive "P")
   (let ((max-width -1)
 	(max-width-text "")
-	(column-regexp (concat (if include-first-column
-				   "[\t\n]"
-				 "\t")
+	(column-regexp (concat (if omit-first-column
+				   "\t"
+				 "[\t\n]")
 			       "\\(.*?\\)\t")))
     (save-excursion
       (goto-char (point-min))
