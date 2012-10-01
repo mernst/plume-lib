@@ -3,9 +3,9 @@
 --exclude-docs bugzilla/
 --exclude-docs daikon/download/jdoc
 --exclude-docs http://groups.csail.mit.edu/pag/reading-group/
+--exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://pag.csail.mit.edu/jsr308/dist/doc/javac_lifecycle
 --exclude-docs http://types.cs.washington.edu/list-archives/
---exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go 
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
@@ -18,6 +18,7 @@
 --suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
+--suppress-broken 403:http://mercurial.selenic.com/wiki/MergeProgram
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html	
 --suppress-broken 403:http://portal.acm.org/dl.cfm
 --suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
