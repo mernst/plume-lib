@@ -6,7 +6,15 @@ The main plume-lib documentation is in file README.html .
 
 To make a plume-lib release and upload it to Google Code:
 
-1. Update changelog.txt.
+1. Update changelog.txt.  To help writing the text, run a command such as:
+
+  hg log
+
+to view the changes since the last release, or 
+
+  hg diff -r v1.0.1
+
+to see the changes (search for "--- /dev/null" to find new files).
 
 2. Commit and push any changes in your copy of the plume-lib repository.
 
