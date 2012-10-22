@@ -36,9 +36,9 @@ Code username and password.  This step requires that googlecode_upload.py
 be in your $PATH.
 
 4. Check that the artifacts were successfully uploaded to Google Code, or upload
-them manually if not using googlecode_upload.py.  Remove the Featured label
-from the previous release downloads in Google Code and reapply the label to the
-new downloads.
+them manually if not using googlecode_upload.py (use labels "Type-Source",
+"OpSys-All", and "Featured").  For the previous release downloads, change
+the "Featured" label to "Deprecated".
 
 5. Update the web version of the Javadoc:
 
