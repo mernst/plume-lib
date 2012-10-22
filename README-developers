@@ -8,13 +8,14 @@ To make a plume-lib release and upload it to Google Code:
 
 1. Update changelog.txt.  To help writing the text, run a command such as:
 
-  hg log
+    hg log
 
 to view the changes since the last release, or 
 
-  hg diff -r v1.0.1
+    hg diff -r v1.0.1
 
-to see the changes (search for "--- /dev/null" to find new files).
+to see the changes.  You can search for "--- /dev/null" to find new files;
+Ensure that the main documentation at README.html documents any new files.
 
 2. Commit and push any changes in your copy of the plume-lib repository.
 
@@ -47,4 +48,8 @@ CSE file system:
     hg fetch
     make javadoc-publish
 
-6. Push the new Mercurial tag created by the script to the repository.
+This step can be done even without making a new release.
+
+6. Push the new Mercurial tag created by the script to the repository:
+
+    hg push
