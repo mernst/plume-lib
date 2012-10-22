@@ -40,7 +40,8 @@ them manually if not using googlecode_upload.py (use labels "Type-Source",
 "OpSys-All", and "Featured").  For the previous release downloads, change
 the "Featured" label to "Deprecated".
 
-5. Update the web version of the Javadoc:
+5. Update the web version of the Javadoc.  On a machine connected to the UW
+CSE file system:
 
     cd $pl/java
     hg fetch
