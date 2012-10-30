@@ -3,7 +3,7 @@
   if 0;
 # (Can't use "#!/usr/bin/env perl" because I want the "-n" switch.)
 
-# cleanup-cvsdiff -- filter out empty diffs in output of "cvs diff"
+# cvsdiff-cleanup -- filter out empty diffs in output of "cvs diff"
 # Michael Ernst <mernst@cs.washington.edu>
 
 
