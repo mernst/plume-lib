@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 /*>>>
-import checkers.quals.Pure;
+import dataflow.quals.Pure;
 */
 
 // If you are perplexed because of odd results, maybe it is because of the
