@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /*>>>
-import checkers.quals.Pure;
+import dataflow.quals.Pure;
 */
 
 /**
