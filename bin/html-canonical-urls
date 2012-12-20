@@ -1,4 +1,7 @@
 #
+# This file can be found at
+# http://plume-lib.googlecode.com/hg/bin/html-canonical-urls
+#
 # This file maps a textual string (such as the name of a person,
 # institution, or event) to the a canonical URL for that string.
 # It is used by the bibtex2web program
