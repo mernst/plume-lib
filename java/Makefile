@@ -88,6 +88,8 @@ JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # CLASSPATH environment variable and thus must be supplied explicitly.
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
+CHECKER_JAVAC_COMMAND = ${CHECKERS}/binary/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
 # Leading "./" is for consistency with output of "find", so that names are
@@ -418,14 +420,14 @@ check-all: check-nullness check-interning check-regex check-signature
 
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
+CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk7.jar
 CHECKERS_ARGS ?= -source 8 -Awarns
 
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
 check-nullness: checkenv
-	${JAVAC_COMMAND} ${JAVAC_NULLNESS_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
@@ -433,7 +435,7 @@ JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:
 # Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
 # fine without it...
 check-interning: checkenv
-	${JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
@@ -441,7 +443,7 @@ JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint
 # Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
 # fine without it...
 check-regex: checkenv
-	${JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
@@ -449,7 +451,7 @@ JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:
 # Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
 # fine without it...
 check-signature: checkenv
-	${JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
 
