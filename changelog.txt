@@ -2,6 +2,10 @@ This file contains a list of plume-lib releases.
 However, the recommended way to use plume-lib is by cloning its repository;
 for details, see http://plume-lib.googlecode.com/hg/README.html .
 
+plume-lib 1.0.3, released January 1, 2013
+New imap-move script moves all IMAP messages from one folder to another.
+Other small fixes and improvements.
+
 plume-lib 1.0.2, released October 21, 2012
 Over 100 changes with many bug fixes, code and documentation improvements,
 new features, and updates due to changes in tools that plume-lib uses.

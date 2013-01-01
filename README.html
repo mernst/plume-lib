@@ -84,6 +84,7 @@ are governed by a different license.  See file <a href="http://plume-lib.googlec
           <li><a href="#.class_file_processing">.class file processing</a></li>
         </ul></li>
       <li><a href="#Scheduling">Scheduling</a></li>
+      <li><a href="#Email">Email</a></li>
       <li><a href="#Miscellaneous">Miscellaneous</a>
         <ul>
           <li><a href="#Cygwin">Cygwin</a></li>
@@ -599,6 +600,28 @@ This contains no documentation, so don't include it in this README file.
 </dl>
 
 
+<h2 id="Email">Email</h2>
+
+<dl>
+<dt>
+mail-e
+</dt>
+<dd>
+Reads standard output, and if not empty calls the <tt>mail</tt> program.
+This feature is useful in scripts and cron jobs, but is not supported
+in all versions of <tt>mail</tt>.
+<a href="http://plume-lib.googlecode.com/hg/bin/mail-e">Documentation</a>
+at top of file.
+</dd>
+
+<dt>imap-move</dt>
+<dd>
+  This script moves all IMAP messages from one folder to another.
+  <a href="http://plume-lib.googlecode.com/hg/bin/imap-move">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
 <h2 id="Miscellaneous">Miscellaneous</h2>
 
 <dl>
@@ -617,17 +640,6 @@ non-existent directories.
 Can optionally remove certain path elements.
 Works for either space- or colon- delimiated paths.
 <a href="http://plume-lib.googlecode.com/hg/bin/path-remove">Documentation</a> at top of file.
-</dd>
-
-<dt>
-mail-e
-</dt>
-<dd>
-Reads standard output, and if not empty calls the <tt>mail</tt> program.
-This feature is useful in scripts and cron jobs, but is not supported
-in all versions of <tt>mail</tt>.
-<a href="http://plume-lib.googlecode.com/hg/bin/mail-e">Documentation</a>
-at top of file.
 </dd>
 
 <dt>
