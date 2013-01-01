@@ -84,6 +84,7 @@
 --suppress-broken 501:http://www.bizrate.com/
 --suppress-broken 501:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
+--suppress-broken 503:http://www.census.gov/popest/data/cities/totals/2009/files/SUB-EST2009_ALL.csv
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_PARAMETER
