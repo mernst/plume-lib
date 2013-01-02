@@ -106,7 +106,7 @@ ifdef JSR308
   CHECKERS ?= ${JSR308}/checker-framework/checkers
 endif
 ifdef CHECKERS
-  CLASSPATH := ${CHECKERS}/checkers.jar:${CLASSPATH}
+  CLASSPATH := ${CHECKERS}/binary/checkers.jar:${CLASSPATH}
   ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
@@ -420,7 +420,7 @@ check-all: check-nullness check-interning check-regex check-signature
 
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk7.jar
+CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/binary/jdk7.jar
 CHECKERS_ARGS ?= -source 8 -Awarns
 
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
