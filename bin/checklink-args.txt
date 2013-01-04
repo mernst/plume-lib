@@ -124,6 +124,7 @@
 --suppress-redirect http://sites.google.com/site/scatherinehowell/Home/CV2008.pdf->http://sites.google.com/site/scatherinehowell/Home/CV2008.pdf?attredirects=0	
 --suppress-redirect http://student.mit.edu/catalog/index.cgi->http://student.mit.edu/@8178100.17571/catalog/index.cgi	
 --suppress-redirect http://texi2html.cvshome.org/->http://ximbiot.com/cvs/
+--suppress-redirect http://tinyurl.com/dataprogramming->http://homes.cs.washington.edu/~mernst/teaching/data-programming/
 --suppress-redirect http://www.a1trails.com/xc_ski/xc_ma.html->http://www.a1trails.com/home/nospiders.html
 --suppress-redirect http://www.a1trails.com/xc_ski/xc_nh.html->http://www.a1trails.com/home/nospiders.html
 --suppress-redirect http://www.amtrak.com/->http://www.amtrak.com/servlet/ContentServer?pagename=Amtrak/HomePage
@@ -176,3 +177,4 @@
 --suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/->http://www-2.dc.uba.ar/exclusivos/
 --suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/garbervetsky/->http://www-2.dc.uba.ar/exclusivos/garbervetsky/presentaciones/
 --suppress-redirect-prefix http://www.ibm.com/->http://www-01.ibm.com/
+
