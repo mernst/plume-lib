@@ -420,7 +420,6 @@ check-all: check-nullness check-interning check-regex check-signature
 
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/binary/jdk7.jar
 CHECKERS_ARGS ?= -source 8 -Awarns
 
 JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
@@ -432,24 +431,18 @@ check-nullness: checkenv
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
 
-# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
-# fine without it...
 check-interning: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
 
-# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
-# fine without it...
 check-regex: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
 
-# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
-# fine without it...
 check-signature: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
