@@ -1,0 +1,15 @@
+#!/usr/bin/perl -w
+# sort-reversed:  like "sort", but the key is the reverse of each line
+# Some "sort" implementations have a flag "-r" that has this same effect.
+
+my @lines = <>;
+my @rev = ();
+for my $line (@lines) {
+  my $rev = reverse $line;
+  push @rev, $rev;
+}
+@sorted = sort @rev;
+for my $rev (@sorted) {
+  my $line = reverse $rev;
+  print $line;
+}
