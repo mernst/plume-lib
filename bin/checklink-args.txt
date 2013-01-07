@@ -72,6 +72,9 @@
 --suppress-broken 500:http://conferences.iee.org/icse2004/
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/	
+--suppress-broken 500:http://www.icse-conferences.org/2001/	
+--suppress-broken 500:http://www.icse-conferences.org/2003/	
+--suppress-broken 500:http://www.icse-conferences.org/2004/	
 --suppress-broken 500:http://www.icse-conferences.org/2004/Home/
 --suppress-broken 500:http://www.icse-conferences.org/2005/Home/
 --suppress-broken 500:http://www.orbitz.com/
@@ -84,6 +87,7 @@
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/toc.htm
 --suppress-broken 500:https://web.mit.edu/6.033/www/staff/
+--suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/staging/www/
 --suppress-broken 500:https://www.cvshome.org/docs/manual/cvs-1.11.18/cvs_5.html
