@@ -83,6 +83,7 @@
 --suppress-broken 500:http://www.washington.edu/home/maps/southcentral.html?80,70,792,660
 --suppress-broken 500:https://ca.mit.edu:444/moira/showresult.jhtml?list=parg&operation=displaylistinfo
 --suppress-broken 500:https://eecsfacweb.mit.edu/
+--suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a1.html
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/toc.htm
@@ -91,6 +92,7 @@
 --suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/staging/www/
 --suppress-broken 500:https://www.cvshome.org/docs/manual/cvs-1.11.18/cvs_5.html
+--suppress-broken 500:https://www2.enthought.com/accounts/register/?next=/licenses/academic
 --suppress-broken 501:http://www.bizrate.com/
 --suppress-broken 501:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
