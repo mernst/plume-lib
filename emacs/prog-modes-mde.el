@@ -1787,7 +1787,10 @@ in this directory or some superdirectory."
 		    ;; hack to account for mysterious directory named build.xml
 		    (not (file-directory-p buildfile))))
 	     (make-local-variable 'compile-command)
-	     (setq compile-command "ant -e -find build.xml ")))))
+	     (setq compile-command "ant -e -find build.xml "))
+	    ((file-readable-p "build.gradle")
+	     (make-local-variable 'compile-command)
+	     (setq compile-command "gradle ")))))
 (add-hook 'find-file-hooks 'ant-set-compile-command)
 (add-hook 'dired-mode-hook 'ant-set-compile-command)
 (add-hook 'compilation-mode-hook 'ant-set-compile-command)

@@ -583,7 +583,7 @@ With just C-u prefix argument, prompt for starting date and days."
 					ical-business-hours))))))
     (let ((old-point (point)))
       ;; (message "java %s" (cons "plume.ICalAvailable" ical-args))
-      (insert (apply #'call-process "java" nil t nil (append '("-Dical4j.parsing.relaxed=true" "plume.ICalAvailable") ical-args)))
+      (insert (apply #'call-process "java" nil t nil (append (list "-cp" (substitute-in-file-name "$HOME/bin/src/plume-lib/java/plume.jar") "-Dical4j.parsing.relaxed=true" "-Dical4j.parsing.relaxed=true" "plume.ICalAvailable") ical-args)))
       (if (or (= (char-before) 0) (= (char-before) 1) (= (char-before) 255))
 	  (delete-backward-char 1))
       ;; Clean up an irritating warning message.
@@ -773,15 +773,15 @@ Also consider `normal-erase-is-backspace' variable (Emacs 21)."
   (set-text-properties begin end nil (current-buffer)))
 
 
-(defun infer-tab-width (&optional include-first-column)
+(defun infer-tab-width (&optional omit-first-column)
   "Set tab-width so that columns line up.
-The first column is omitted unless the optional argument is specified."
+The first column is omitted if the optional argument is specified."
   (interactive "P")
   (let ((max-width -1)
 	(max-width-text "")
-	(column-regexp (concat (if include-first-column
-				   "[\t\n]"
-				 "\t")
+	(column-regexp (concat (if omit-first-column
+				   "\t"
+				 "[\t\n]")
 			       "\\(.*?\\)\t")))
     (save-excursion
       (goto-char (point-min))
