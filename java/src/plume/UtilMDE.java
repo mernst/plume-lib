@@ -1503,15 +1503,15 @@ public final class UtilMDE {
   }
 
   /** Returns a sorted version of m.keySet(). */
-  public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#0")*/ K> sortedKeySet(Map<K,V> m) {
-    ArrayList</*@KeyFor("#0")*/ K> theKeys = new ArrayList</*@KeyFor("#0")*/ K> (m.keySet());
+  public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m) {
+    ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K> (m.keySet());
     Collections.sort (theKeys);
     return theKeys;
   }
 
   /** Returns a sorted version of m.keySet(). */
-  public static <K,V> Collection</*@KeyFor("#0")*/ K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
-    ArrayList</*@KeyFor("#0")*/ K> theKeys = new ArrayList</*@KeyFor("#0")*/ K> (m.keySet());
+  public static <K,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
+    ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K> (m.keySet());
     Collections.sort (theKeys, comparator);
     return theKeys;
   }

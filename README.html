@@ -84,6 +84,7 @@ are governed by a different license.  See file <a href="http://plume-lib.googlec
           <li><a href="#.class_file_processing">.class file processing</a></li>
         </ul></li>
       <li><a href="#Scheduling">Scheduling</a></li>
+      <li><a href="#Email">Email</a></li>
       <li><a href="#Miscellaneous">Miscellaneous</a>
         <ul>
           <li><a href="#Cygwin">Cygwin</a></li>
@@ -599,6 +600,28 @@ This contains no documentation, so don't include it in this README file.
 </dl>
 
 
+<h2 id="Email">Email</h2>
+
+<dl>
+<dt>
+mail-e
+</dt>
+<dd>
+Reads standard output, and if not empty calls the <tt>mail</tt> program.
+This feature is useful in scripts and cron jobs, but is not supported
+in all versions of <tt>mail</tt>.
+<a href="http://plume-lib.googlecode.com/hg/bin/mail-e">Documentation</a>
+at top of file.
+</dd>
+
+<dt>imap-move</dt>
+<dd>
+  This script moves all IMAP messages from one folder to another.
+  <a href="http://plume-lib.googlecode.com/hg/bin/imap-move">Documentation</a> at top of file.
+</dd>
+</dl>
+
+
 <h2 id="Miscellaneous">Miscellaneous</h2>
 
 <dl>
@@ -617,17 +640,6 @@ non-existent directories.
 Can optionally remove certain path elements.
 Works for either space- or colon- delimiated paths.
 <a href="http://plume-lib.googlecode.com/hg/bin/path-remove">Documentation</a> at top of file.
-</dd>
-
-<dt>
-mail-e
-</dt>
-<dd>
-Reads standard output, and if not empty calls the <tt>mail</tt> program.
-This feature is useful in scripts and cron jobs, but is not supported
-in all versions of <tt>mail</tt>.
-<a href="http://plume-lib.googlecode.com/hg/bin/mail-e">Documentation</a>
-at top of file.
 </dd>
 
 <dt>
@@ -720,9 +732,16 @@ same effect.
 
 <dt>javac-cygwin</dt>
 <dd>
-  A wrapper for calling Java from Cygwin, that tries to convert any
+  A wrapper for calling the Java compiler from Cygwin, that tries to convert any
   arguments that are Unix-style paths into Windows-style paths.
   <a href="http://plume-lib.googlecode.com/hg/bin/javac-cygwin">Documentation</a> at top of file.
+</dd>
+
+<dt>javadoc-cygwin</dt>
+<dd>
+  A wrapper for calling Javadoc from Cygwin, that tries to convert any
+  arguments that are Unix-style paths into Windows-style paths.
+  <a href="http://plume-lib.googlecode.com/hg/bin/javadoc-cygwin">Documentation</a> at top of file.
 </dd>
 </dl>
 
@@ -868,6 +887,13 @@ generally well-documented, so feel free to browse.
     multi-line entries (paragraphs).
   The syntax of each of these is customizable.
   <a href="http://types.cs.washington.edu/plume-lib/api/plume/EntryReader.html">Documentation</a>.
+</dd>
+
+<dt>RegexUtil</dt>
+<dd>
+  Utility methods for regular expressions, most notably for testing whether
+  a string is a regular expression.
+  <a href="http://types.cs.washington.edu/plume-lib/api/plume/RegexUtil.html">Documentation</a>.
 </dd>
 
 <dt>FileIOException</dt>

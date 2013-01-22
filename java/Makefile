@@ -88,6 +88,8 @@ JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 # CLASSPATH environment variable and thus must be supplied explicitly.
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
+CHECKER_JAVAC_COMMAND = ${CHECKERS}/binary/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
 # Leading "./" is for consistency with output of "find", so that names are
@@ -104,7 +106,7 @@ ifdef JSR308
   CHECKERS ?= ${JSR308}/checker-framework/checkers
 endif
 ifdef CHECKERS
-  CLASSPATH := ${CHECKERS}/checkers.jar:${CLASSPATH}
+  CLASSPATH := ${CHECKERS}/binary/checkers.jar:${CLASSPATH}
   ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
@@ -234,12 +236,16 @@ else
 #Can also use -verbose for debugging
 	$(MAKE) compile
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	dos2unix src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	dos2unix src/plume/ICalAvailable.java
 	@\rm -f ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	dos2unix src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	dos2unix src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
 
@@ -347,6 +353,7 @@ lookup.txt: lookup.html
 
 LOOKUP_JAR_CLASSES = \
 	src/plume/Lookup.class \
+	src/plume/RegexUtil.class \
 	src/plume/UtilMDE*.class src/plume/EntryReader*.class \
 	src/plume/Option*.class src/plume/StringBuilderDelimited.class \
 	src/plume/Unpublicized.class src/plume/SimpleLog.class
@@ -417,7 +424,6 @@ check-all: check-nullness check-interning check-regex check-signature
 
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
-CHECKERS_BOOTCLASSPATH = -Xbootclasspath/p:${CHECKERS}/jdk/jdk.jar
 CHECKERS_ARGS ?= -source 8 -Awarns
 
 JAVAC_NULLNESS_RAW_ARGS = -processor checkers.nonnull.NonNullRawnessChecker -implicit:class -Xlint:-processing
@@ -427,34 +433,28 @@ JAVAC_NULLNESS_FBC_ARGS = -processor checkers.nonnull.NonNullFbcChecker -implici
 check-nullness: check-nullness-raw check-nullness-fbc
 
 check-nullness-raw: checkenv
-	${JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 check-nullness-fbc: checkenv
-	${JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_BOOTCLASSPATH} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
 
-# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
-# fine without it...
 check-interning: checkenv
-	${JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
 
-# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
-# fine without it...
 check-regex: checkenv
-	${JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
 
-# Why doesn't this need the CHECKERS_BOOTCLASSPATH argument?  It seems
-# fine without it...
 check-signature: checkenv
-	${JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 
 
