@@ -1705,12 +1705,16 @@ How does this differ from whatever is built in?"
 ;;; Compilation
 ;;;
 
-(defadvice compile (before save-before-compile activate)
-  "Save current buffer before performing compilation.
-This avoids a question, the answer to which would surely be \"Yes\"."
+(defun save-if-modified ()
+  "Save current buffer if it is modified."
   ;; test of buffer-modified-p prevents "(No changes need to be saved)" message
   (if (and buffer-file-name (buffer-modified-p))
       (save-buffer)))
+
+(defadvice compile (before save-before-compile activate)
+  "Save current buffer before performing compilation.
+This avoids a question, the answer to which would surely be \"Yes\"."
+  (save-if-modified))
 
 (defadvice compile (before check-for-bad-regexps activate)
   "Check that elements of compilation-error-regexp-alist do not start with \".*\".
