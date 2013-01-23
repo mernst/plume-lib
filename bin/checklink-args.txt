@@ -85,6 +85,7 @@
 --suppress-broken 500:https://eecsfacweb.mit.edu/
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a1.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a2.html
+--suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a3.html
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/toc.htm
