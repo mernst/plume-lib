@@ -1,0 +1,20 @@
+#!/usr/bin/perl -wn
+
+# Print all lines after the first one that matches the pattern.
+# Does a case-insensitive match.
+
+# The pattern is the first argument.
+# All other arguments are treated as files to read; if none are supplied,
+# standard input is read.
+# Output goes to standard output.
+
+BEGIN {
+  $outputting = 0;
+  $pattern = shift @ARGV;
+}
+
+if ($outputting) {
+  print;
+} elsif (/$pattern/io) {
+  $outputting = 1;
+}
