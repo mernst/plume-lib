@@ -91,6 +91,7 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a4.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a6.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
+--suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/toc.htm
