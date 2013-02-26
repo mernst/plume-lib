@@ -15,15 +15,14 @@ package plume;
  * </pre>
  **/
 public interface Hasher {
+
   /** hashCode function for objects under consideration (not for Hasher objects). */
   int hashCode(Object o);
-  /** The equality function over the objects being hashed. */
-  boolean equals(Object o, Object o2);
-
 
   /**
-   * Equality testing over Hashers.  Has nothing to do with testing
-   * the objects being hashed for equality.
+   * The equality function over the objects being hashed.
+   * <p>
+   * Has nothing to do with testing Hashers themselves for equality.
    **/
-  boolean equals(/*@Nullable*/ Object other_hasher);
+  boolean equals(Object o, Object o2);
 }
