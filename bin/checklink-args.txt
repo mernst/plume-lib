@@ -107,6 +107,9 @@
 --suppress-broken 503:http://www.census.gov/popest/data/cities/totals/2009/files/SUB-EST2009_ALL.csv
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
+--suppress-broken 503:https://blogs.oracle.com/darcy/entry/project_coin_final_five	
+--suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac	
+--suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for	
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_PARAMETER
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_USE
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#toString()
