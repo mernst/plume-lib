@@ -30,6 +30,10 @@
 ;; (assert (equal 4.5 (median 4 6 7 1 5 3 8 2)))
 ;; (assert (equal 5.0 (median 4 6 7 2 8 1 9 5 3)))
 
+(defun geometric-mean (&rest args)
+  "Return the geometric mean of the arguments."
+  (expt (apply '* args) (/ 1.0 (funcall 'length args))))
+;; (assert (equal 2.0 (geometric-mean 1 2 4))
 
 (defun mde-split-window-vertically (arg)
   ;; checkdoc-params: (arg)

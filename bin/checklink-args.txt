@@ -40,6 +40,7 @@
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 --suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
+--suppress-broken 404:http://docs.oracle.com/javase/7/docs/api/javax/lang/model/type/IntersectionType.html?is-external=true
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/tree/AnnotatedTypeTree.html?is-external=true
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/AbstractTypeProcessor.html?is-external=true
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/jdk/api/javac/tree/com/sun/source/util/SimpleTreeVisitor.html?is-external=true
@@ -62,6 +63,7 @@
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86.msi	
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86_64.msi	
 --suppress-broken 405:http://aws.amazon.com/datasets
+--suppress-broken 405:http://onlinelibrary.wiley.com/doi/10.1111/j.1468-0475.2011.00542.x/pdf
 --suppress-broken 405:http://thinkcspy.appspot.com/
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
@@ -87,6 +89,9 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a2.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a3.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a4.html
+--suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a6.html
+--suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
+--suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/toc.htm
@@ -102,6 +107,9 @@
 --suppress-broken 503:http://www.census.gov/popest/data/cities/totals/2009/files/SUB-EST2009_ALL.csv
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
+--suppress-broken 503:https://blogs.oracle.com/darcy/entry/project_coin_final_five	
+--suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac	
+--suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for	
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_PARAMETER
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/java/lang/annotation/ElementType.html?is-external=true#TYPE_USE
 --suppress-fragment http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/AbstractProcessor.html?is-external=true#toString()
