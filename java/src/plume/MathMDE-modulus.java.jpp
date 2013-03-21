@@ -20,6 +20,7 @@ The correct way to build the system is to run 'make'.
    * The largest possible modulus is used, and the trivial constraint that all
    * integers are equal to 0 mod 1 is not returned (null is returned instead).
    * Also, return null if the array is less than 3 elements long.
+   * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m)
    **/
   public static INT /*@Nullable*/ [] modulus(INT[] nums) {
     if (nums.length < 3)
@@ -85,6 +86,8 @@ The correct way to build the system is to run 'make'.
    * The endpoints can be treated in two different ways:  Either exactly
    * like other numbers in the input, or they can merely be checked for the
    * condition without the strict density requirement.
+   *
+   * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m)
    **/
   public static INT /*@Nullable*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
     int first_index = 0;

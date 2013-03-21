@@ -57,7 +57,8 @@ public final class FileCompiler {
 
   /**
    * Compiles the files given by fileNames.
-   * Returns the error output.
+   * Return the error output.
+   * @return the error output from compiling the files
    * @param fileNames paths to the files to be compiled as Strings.
    */
   public String compileFiles(List<String> fileNames) throws IOException {

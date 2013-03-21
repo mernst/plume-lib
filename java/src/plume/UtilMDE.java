@@ -365,9 +365,10 @@ public final class UtilMDE {
   ///
 
   /**
-   * Returns true iff sub is a subtype of sup.
+   * Return true iff sub is a subtype of sup.
    * If sub == sup, then sub is considered a subtype of sub and this method
    * returns true.
+   * @return true iff sub is a subtype of sup
    */
   public static boolean isSubtype(Class<?> sub, Class<?> sup) {
     if (sub == sup) {
@@ -766,14 +767,16 @@ public final class UtilMDE {
 
 
   /**
-   * Returns true iff files have the same contents.
+   * Return true iff files have the same contents.
+   * @return true iff the files have the same contents
    */
   public static boolean equalFiles(String file1, String file2) {
     return equalFiles(file1, file2, false);
   }
 
   /**
-   * Returns true iff files have the same contents.
+   * Return true iff the files have the same contents.
+   * @return true iff the files have the same contents
    * @param trimLines if true, call String.trim on each line before comparing
    */
   public static boolean equalFiles(String file1, String file2, boolean trimLines) {
@@ -954,14 +957,16 @@ public final class UtilMDE {
 
 
   /**
-   * Returns a string version of the name that can be used in Java source.
+   * Return a string version of the name that can be used in Java source.
    * On Windows, the file will return a backslash separated string.  Since
    * backslash is an escape character, it must be quoted itself inside
    * the string.
-   *
+   * <p>
    * The current implementation presumes that backslashes don't appear
    * in filenames except as windows path separators.  That seems like a
    * reasonable assumption.
+   *
+   * @return a string version of the name that can be used in Java source
    */
   public static String java_source (File name) {
 
@@ -1093,6 +1098,7 @@ public final class UtilMDE {
   /**
    * Return a hash of the arguments.
    * Note that this differs from the result of {@link Double#hashCode()}.
+   * @return a hash of the arguments
    */
   public static final int hash(double x) {
     return hash(Double.doubleToLongBits(x));
@@ -1139,6 +1145,7 @@ public final class UtilMDE {
    * Return a hash of the arguments.
    * Note that this differs from the result of {@link Long#hashCode()}.
    * But it doesn't map -1 and 0 to the same value.
+   * @return a hash of the arguments
    */
   public static final int hash(long l) {
     // If possible, use the value itself.
@@ -1638,7 +1645,8 @@ public final class UtilMDE {
 
   /**
    * Set the property to its previous value concatenated to the given value.
-   * Returns the previous value.
+   * Return the previous value.
+   * @return the previous value
    * @see Properties#getProperty
    * @see Properties#setProperty
    **/
@@ -1791,9 +1799,10 @@ public final class UtilMDE {
   ///
 
   /**
-   * Returns the object in this set that is equal to key.
+   * Return the object in this set that is equal to key.
    * The Set abstraction doesn't provide this; it only provides "contains".
    * Returns null if the argument is null, or if it isn't in the set.
+   * @return the object in this set that is equal to key, or null
    **/
   public static /*@Nullable*/ Object getFromSet(Set<?> set, Object key) {
     if (key == null) {
@@ -1909,6 +1918,7 @@ public final class UtilMDE {
    * empty string).  All common line separators (cr, lf, cr-lf, or lf-cr)
    * are supported.  Note that a string that ends with a line separator
    * will return an empty string as the last element of the array.
+   * @return an array of Strings, one for each line in the argument
    * @see #split(String s, char delim)
    **/
   public static String[] splitLines(String s) {
@@ -2229,8 +2239,9 @@ public final class UtilMDE {
 
 
   /**
-   * Returns either "n <em>noun</em>" or "n <em>noun</em>s" depending on n.
+   * Return either "n <em>noun</em>" or "n <em>noun</em>s" depending on n.
    * Adds "es" to words ending with "ch", "s", "sh", or "x".
+   * @return pluralization of noun, if n differs from 1
    */
   public static String nplural(int n, String noun) {
     if (n == 1)
@@ -2394,8 +2405,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Returns the sorted version of the list.  Does not alter the list.
+   * Return the sorted version of the list.  Does not alter the list.
    * Simply calls Collections.sort(List&lt;T&gt;, Comparator&lt;? super T&gt;).
+   * @return a sorted version of the list
    **/
   public static <T> List<T> sortList (List<T> l, Comparator<? super T> c) {
     List<T> result = new ArrayList<T>(l);
@@ -2405,8 +2417,9 @@ public final class UtilMDE {
 
 
   /**
-   * Returns a copy of the list with duplicates removed.
+   * Return a copy of the list with duplicates removed.
    * Retains the original order.
+   * @return a copy of the list with duplicates removed
    **/
   public static <T> List<T> removeDuplicates(List<T> l) {
     // There are shorter solutions that do not maintain order.

@@ -93,6 +93,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Returns the number of bytes contained in a string.
    * If s is null, returns -1
+   * @return bytes in the string, or null
    * @param s A String
    */
   public int countBytes (String s) {

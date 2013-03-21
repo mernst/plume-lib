@@ -368,6 +368,7 @@ public class Lookup {
 
   /**
    * Returns the next entry.  If no more entries are available, returns null.
+   * @return the next entry, or null
    */
   public static /*@Nullable*/ Entry old_get_entry (EntryReader reader) throws IOException {
 
