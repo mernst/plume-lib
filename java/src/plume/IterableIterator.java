@@ -11,13 +11,13 @@ import java.util.*;
  * <p>
  *
  * As an example, suppose that you have a class with a method:
- * <pre>  public Iterator<String> backwardIterator() { ... }</pre>
+ * <pre>  public Iterator&lt;String&gt; backwardIterator() { ... }</pre>
  * Because this method is not named {@code iterator()}, which probably
  * has a different meaning than {@code backwardIterator()}, it is not
  * possible to use Java's new-style for loop (also known as the foreach
  * loop).  Instead, a client must do:
  * <pre>
- *  for (Iterator<String> itor = myObject.backwardIterator(); itor.hasNext(); ) {
+ *  for (Iterator&lt;String&gt; itor = myObject.backwardIterator(); itor.hasNext(); ) {
  *    String element = itor.next();
  *    ...
  *  }
