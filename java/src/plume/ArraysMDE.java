@@ -26,6 +26,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int min(int[] a) {
@@ -39,6 +40,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long min(long[] a) {
@@ -52,6 +54,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static double min(double[] a) {
@@ -65,6 +68,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Integer min(Integer[] a) {
@@ -83,6 +87,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Long min(Long[] a) {
@@ -101,6 +106,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Double min(Double[] a) {
@@ -119,6 +125,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int max(int[] a) {
@@ -132,6 +139,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long max(long[] a) {
@@ -145,6 +153,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static double max(double[] a) {
@@ -158,6 +167,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Integer max(Integer[] a) {
@@ -176,6 +186,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Long max(Long[] a) {
@@ -194,6 +205,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Double max(Double[] a) {
@@ -212,6 +224,7 @@ public final class ArraysMDE {
 
   /**
    * Return a two-element array containing the smallest and largest values in the array.
+   * @return a two-element array containing the smallest and largest values in the array
    * Throw ArrayIndexOutOfBoundsException if the array has length 0.
    **/
   public static int [] min_max(int[] a) {
@@ -230,6 +243,7 @@ public final class ArraysMDE {
 
   /**
    * Return a two-element array containing the smallest and largest values in the array.
+   * @return a two-element array containing the smallest and largest values in the array
    * Throw ArrayIndexOutOfBoundsException if the array has length 0.
    **/
   public static long [] min_max(long[] a) {
@@ -248,6 +262,7 @@ public final class ArraysMDE {
 
   /**
    * Return the difference between the smallest and largest array elements.
+   * @return the difference between the smallest and largest array elements
    **/
   public static int element_range(int[] a) {
     if (a.length == 0)
@@ -258,6 +273,7 @@ public final class ArraysMDE {
 
   /**
    * Return the difference between the smallest and largest array elements.
+   * @return the difference between the smallest and largest array elements
    **/
   public static long element_range(long[] a) {
     if (a.length == 0)
@@ -751,6 +767,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -765,6 +782,7 @@ public final class ArraysMDE {
 
   /**
    * Return a sublist of the given list.
+   * @return a sublist of the given list
    * @param a the original list
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -777,6 +795,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -791,6 +810,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -805,6 +825,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -819,6 +840,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -833,6 +855,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -847,6 +870,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -861,6 +885,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -875,6 +900,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
@@ -889,6 +915,7 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,

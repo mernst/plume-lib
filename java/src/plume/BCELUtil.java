@@ -83,7 +83,8 @@ public class BCELUtil {
   }
 
   /**
-   * Returns the attribute name for the specified attribute.
+   * Return the attribute name for the specified attribute.
+   * @return the attribute name for the specified attribute
    */
   public static String get_attribute_name(Attribute a) {
 
@@ -322,6 +323,7 @@ public class BCELUtil {
 
   /**
    * Return a description of the local variables (one per line).
+   * @return a description of the local variables (one per line)
    */
   public static String local_var_descr(MethodGen mg) {
 
@@ -417,7 +419,8 @@ public class BCELUtil {
   }
 
   /**
-   * Returns the attribute name for the specified attribute.
+   * Return the attribute name for the specified attribute.
+   * @return the attribute name for the specified attribute
    */
   public static String get_attribute_name (Attribute a, ConstantPoolGen pool) {
 
@@ -438,7 +441,8 @@ public class BCELUtil {
   }
 
   /**
-   * Returns the Java classname that corresponds to type.
+   * Return the Java classname that corresponds to type.
+   * @return the Java classname that corresponds to type
    * @deprecated use {@link #type_to_classgetname(Type)}
    */
   @java.lang.Deprecated

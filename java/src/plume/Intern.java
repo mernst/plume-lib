@@ -330,7 +330,8 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) an Integer.
-   * Returns a canonical representation for the Integer.
+   * Return a canonical representation for the Integer.
+   * @return a canonical representation for the Integer
    **/
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Intern.valueOf is intended to promise
@@ -363,7 +364,8 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) a Long.
-   * Returns a canonical representation for the Long.
+   * Return a canonical representation for the Long.
+   * @return a canonical representation for the Long
    **/
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Long.valueOf is intended to promise
@@ -401,7 +403,8 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) an int[].
-   * Returns a canonical representation for the int[] array.
+   * Return a canonical representation for the int[] array.
+   * @return a canonical representation for the int[] array
    * Arrays are compared according to their elements.
    **/
   @SuppressWarnings("interning")
@@ -423,7 +426,8 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) a long[].
-   * Returns a canonical representation for the long[] array.
+   * Return a canonical representation for the long[] array.
+   * @return a canonical representation for the long[] array
    * Arrays are compared according to their elements.
    **/
   @SuppressWarnings("interning")
@@ -443,7 +447,8 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) a Double.
-   * Returns a canonical representation for the Double.
+   * Return a canonical representation for the Double.
+   * @return a canonical representation for the Double
    **/
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Double.valueOf is intended to promise
@@ -487,8 +492,9 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) a double[].
-   * Returns a canonical representation for the double[] array.
+   * Return a canonical representation for the double[] array.
    * Arrays are compared according to their elements.
+   * @return a canonical representation for the double[] array
    **/
   @SuppressWarnings("interning")
   public static double /*@Interned*/ [] intern(double[] a) {
@@ -505,10 +511,11 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) an String[].
-   * Returns a canonical representation for the String[] array.
+   * Return a canonical representation for the String[] array.
    * Arrays are compared according to their elements.
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
+   * @return a canonical representation for the String[] array
    **/
   @SuppressWarnings({"interning", // interns its argument
       "cast"}) // cast is redundant (except in JSR 308)
@@ -533,10 +540,11 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) an Object[].
-   * Returns a canonical representation for the Object[] array.
+   * Return a canonical representation for the Object[] array.
    * Arrays are compared according to their elements.
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
+   * @return a canonical representation for the Object[] array
    **/
   @SuppressWarnings({"interning", // interns its argument
       "cast"}) // cast is redundant (except in JSR 308)
