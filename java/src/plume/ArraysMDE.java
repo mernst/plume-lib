@@ -26,6 +26,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -40,6 +41,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -54,6 +56,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -68,6 +71,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -87,6 +91,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -106,6 +111,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -125,6 +131,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -139,6 +146,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -153,6 +161,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -167,6 +176,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -186,6 +196,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -205,6 +216,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
@@ -224,8 +236,9 @@ public final class ArraysMDE {
 
   /**
    * Return a two-element array containing the smallest and largest values in the array.
+   * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
-   * Throw ArrayIndexOutOfBoundsException if the array has length 0.
+   * @throws ArrayIndexOutOfBoundsException if the array has length 0.
    **/
   public static int [] min_max(int[] a) {
     if (a.length == 0) {
@@ -243,8 +256,9 @@ public final class ArraysMDE {
 
   /**
    * Return a two-element array containing the smallest and largest values in the array.
+   * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
-   * Throw ArrayIndexOutOfBoundsException if the array has length 0.
+   * @throws ArrayIndexOutOfBoundsException if the array has length 0.
    **/
   public static long [] min_max(long[] a) {
     if (a.length == 0) {
@@ -262,6 +276,7 @@ public final class ArraysMDE {
 
   /**
    * Return the difference between the smallest and largest array elements.
+   * @param a an array
    * @return the difference between the smallest and largest array elements
    **/
   public static int element_range(int[] a) {
@@ -273,6 +288,7 @@ public final class ArraysMDE {
 
   /**
    * Return the difference between the smallest and largest array elements.
+   * @param a an array
    * @return the difference between the smallest and largest array elements
    **/
   public static long element_range(long[] a) {
@@ -283,7 +299,11 @@ public final class ArraysMDE {
   }
 
 
-  // Returns the sum of an array of integers
+  /**
+   * Returns the sum of an array of integers.
+   * @param a an array
+   * @return the sum of an array of integers
+   */
   public static int sum(int[] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -292,7 +312,11 @@ public final class ArraysMDE {
     return sum;
   }
 
-  // Returns the sum of all the elements of a 2d array of integers
+  /**
+   * Returns the sum of all the elements of a 2d array of integers
+   * @param a a 2d array
+   * @return the sum of all the elements of a 2d array of integers
+   */
   public static int sum(int[][] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -303,7 +327,11 @@ public final class ArraysMDE {
     return sum;
   }
 
-  // Returns the sum of an array of integers
+  /**
+   * Returns the sum of an array of doubles.
+   * @param a an array
+   * @return the sum of an array of doubles
+   */
   public static double sum(double[] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -312,7 +340,11 @@ public final class ArraysMDE {
     return sum;
   }
 
-  // Returns the sum of all the elements of a 2d array of integers
+  /**
+   * Returns the sum of all the elements of a 2d array of doubles.
+   * @param a a 2d array
+   * @return the sum of all the elements of a 2d array of doubles
+   */
   public static double sum(double[][] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -332,6 +364,9 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using the equals method.
+   * @param <T> type of the elements of the array
+   * @param a an array
+   * @param elt element to search for
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the array.
    * @see java.util.List#indexOf(java.lang.Object)
@@ -349,6 +384,9 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using the equals method.
+   * @param <T> type of the elements of the array
+   * @param a an array
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the array.
@@ -368,6 +406,8 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using the equals method.
    *    Identical to List.indexOf, but included for completeness.
+   * @param a a list
+   * @param elt element to search for
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the list.
    * @see java.util.List#indexOf(java.lang.Object)
@@ -379,6 +419,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using the equals method.
+   * @param a a list
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the list.
@@ -397,6 +439,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
+   * @param a an array
+   * @param elt element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -411,6 +455,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
+   * @param a an array
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the array.
@@ -426,6 +472,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
+   * @param a a list
+   * @param elt element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -440,6 +488,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
+   * @param a a list
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the list.
@@ -454,6 +504,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -467,6 +519,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -480,6 +534,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
@@ -494,6 +550,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
@@ -508,6 +566,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -521,6 +581,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -534,6 +596,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   * @param a an array
+   * @param elt element to search for
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
@@ -560,6 +624,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise,
    *    testing for equality using the equals method.
+   * @param a an array
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -576,6 +642,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise,
    *    testing for equality using == (not the equals method).
+   * @param a an array
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -592,6 +660,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the list that matches the given array elementwise,
    *    testing for equality using the equals method.
+   * @param a a list
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first list,
    *    or -1 if no such element is found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -608,6 +678,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the list that matches the given array elementwise,
    *    testing for equality using == (not the equals method).
+   * @param a a list
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first list,
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -624,6 +696,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the array that matches the given list elementwise,
    *    testing for equality using the equals method.
+   * @param a a list
+   * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first array,
    *    or -1 if no such element is found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -640,6 +714,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the array that matches the given list elementwise,
    *    testing for equality using == (not the equals method).
+   * @param a a list
+   * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first array,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -656,6 +732,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the list that matches the given list elementwise,
    *    testing for equality using the equals method.
+   * @param a a list
+   * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first list,
    *    or -1 if no such element is found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -672,6 +750,8 @@ public final class ArraysMDE {
   /**
    * Searches for the first subsequence of the list that matches the given list elementwise,
    *    testing for equality using == (not the equals method).
+   * @param a a list
+   * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first list,
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -687,6 +767,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   * @param a an array
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -702,6 +784,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   * @param a an array
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -718,6 +802,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   * @param a an array
+   * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -733,6 +819,8 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   * @param a an array
+   * @param sub subsequence to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
