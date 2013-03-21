@@ -104,6 +104,7 @@ public class LimitedSizeSet<T>
    * An upper bound how many distinct elements can be individually
    * represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
+   * @return maximim capacity of the set representation
    **/
   public int max_size() {
     if (values == null) {

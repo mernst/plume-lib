@@ -93,7 +93,8 @@ public class TimeLimitProcess extends Process {
   }
 
   /**
-   * Returns the timeout time in msecs.
+   * Return the timeout time in msecs.
+   * @return the timeout time in msecs
    */
   public long timeout_msecs() {
     return (timeLimit);
@@ -121,7 +122,8 @@ public class TimeLimitProcess extends Process {
   }
 
   /**
-   * Returns the exit value for the subprocess.
+   * Return the exit value for the subprocess.
+   * @return the exit value for the subprocess
    * @see Process#getErrorStream()
    */
   public int exitValue() {
