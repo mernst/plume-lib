@@ -25,10 +25,13 @@ import org.apache.commons.io.IOUtils;
  * terminates.  This is easy to do in Java 7, for example via
  * ProcessBuilder.redirectOutput(tempFile).  There does not appear to be an
  * easy way to do it in Java 6.
+ * </li>
  * <li>
  * This class provides a workaround, in which it busy-waits reading the
  * standard and error outputs and stores them away.  Use
  * ...
+ * </li>
+ * </ul>
  **/
 
 public class TimeLimitProcess extends Process {
