@@ -6,7 +6,7 @@ The correct way to build the system is to run 'make'.
 
 #include "MathMDE-help.java.jpp"
 
-  /** Return z such that (z == x mod y) and (0 <= z < abs(y)). */
+  /** Return z such that (z == x mod y) and (0 &le; z &lt; abs(y)). */
   public static final INT mod_positive(INT x, INT y) {
     INT result = x % y;
     if (result < 0)

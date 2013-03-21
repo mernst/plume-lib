@@ -86,7 +86,13 @@ public class ClassFileVersion {
   }
 
 
-  /** Returns null if there is an error or the input isn't a class file. */
+  /**
+   * Return an array of the major vernios, minor version, and JDK version
+   * of the class read from the input stream.
+   * Return null if there is an error or the input isn't a class file.
+   * @param is input stream from which to read a class
+   * @return array of three version numbers
+   */
   public static double /*@Nullable*/ [] versionNumbers(InputStream is) {
     try {
       DataInputStream dis = new DataInputStream(is);
