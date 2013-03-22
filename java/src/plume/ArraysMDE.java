@@ -238,7 +238,7 @@ public final class ArraysMDE {
    * Return a two-element array containing the smallest and largest values in the array.
    * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
-   * @throws ArrayIndexOutOfBoundsException if the array has length 0.
+   * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int [] min_max(int[] a) {
     if (a.length == 0) {
@@ -258,7 +258,7 @@ public final class ArraysMDE {
    * Return a two-element array containing the smallest and largest values in the array.
    * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
-   * @throws ArrayIndexOutOfBoundsException if the array has length 0.
+   * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long [] min_max(long[] a) {
     if (a.length == 0) {
@@ -278,6 +278,7 @@ public final class ArraysMDE {
    * Return the difference between the smallest and largest array elements.
    * @param a an array
    * @return the difference between the smallest and largest array elements
+   * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int element_range(int[] a) {
     if (a.length == 0)
@@ -290,6 +291,7 @@ public final class ArraysMDE {
    * Return the difference between the smallest and largest array elements.
    * @param a an array
    * @return the difference between the smallest and largest array elements
+   * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long element_range(long[] a) {
     if (a.length == 0)
@@ -297,7 +299,6 @@ public final class ArraysMDE {
     long [] min_max = min_max(a);
     return min_max[1] - min_max[0];
   }
-
 
   /**
    * Returns the sum of an array of integers.
@@ -366,7 +367,7 @@ public final class ArraysMDE {
    *    testing for equality using the equals method.
    * @param <T> type of the elements of the array
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the array.
    * @see java.util.List#indexOf(java.lang.Object)
@@ -384,9 +385,9 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using the equals method.
-   * @param <T> type of the elements of the array
+   * @param <T> the type of the elements
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -409,7 +410,7 @@ public final class ArraysMDE {
    *    testing for equality using the equals method.
    *    Identical to List.indexOf, but included for completeness.
    * @param a a list
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the list.
    * @see java.util.List#indexOf(java.lang.Object)
@@ -422,7 +423,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using the equals method.
    * @param a a list
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -444,7 +445,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -460,7 +461,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the array,
    *    testing for equality using == (not the equals method).
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -479,7 +480,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
    * @param a a list
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -495,7 +496,7 @@ public final class ArraysMDE {
    * Searches for the first occurrence of the given element in the list,
    *    testing for equality using == (not the equals method).
    * @param a a list
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -513,7 +514,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -528,7 +529,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -543,7 +544,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -561,7 +562,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -579,7 +580,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -594,7 +595,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -609,7 +610,7 @@ public final class ArraysMDE {
   /**
    * Searches for the first occurrence of the given element in the array.
    * @param a an array
-   * @param elt element to search for
+   * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
@@ -884,13 +885,13 @@ public final class ArraysMDE {
 
   /**
    * Return a sublist of the given list.
-   * @return a sublist of the given list
    * @param <T> type of the elements
    * @param a the original list
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a sublist of the given list
    **/
   public static <T> List<T> subarray(List<T> a, int startindex, int length) {
     return a.subList(startindex, startindex+length);
@@ -898,12 +899,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static /*@PolyAll*/ String[] subarray(/*@PolyAll*/ String[] a, int startindex, int length) {
     /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
@@ -913,12 +914,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static byte[] subarray(byte[] a, int startindex, int length) {
     byte[] result = new byte[length];
@@ -928,12 +929,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static boolean[] subarray(boolean[] a, int startindex, int length) {
     boolean[] result = new boolean[length];
@@ -943,12 +944,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static char[] subarray(char[] a, int startindex, int length) {
     char[] result = new char[length];
@@ -958,12 +959,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static double[] subarray(double[] a, int startindex, int length) {
     double[] result = new double[length];
@@ -973,12 +974,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static float[] subarray(float[] a, int startindex, int length) {
     float[] result = new float[length];
@@ -988,12 +989,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static int[] subarray(int[] a, int startindex, int length) {
     int[] result = new int[length];
@@ -1003,12 +1004,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static long[] subarray(long[] a, int startindex, int length) {
     long[] result = new long[length];
@@ -1018,12 +1019,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
-   * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
+   * @return a subarray of the given array
    **/
   public static short[] subarray(short[] a, int startindex, int length) {
     short[] result = new short[length];
@@ -2161,7 +2162,8 @@ public final class ArraysMDE {
 
   /**
    * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * using O(n) time and O(n) space. Equality checking
+   * uses the .equals() method for java.lang.Double.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2283,8 +2285,8 @@ public final class ArraysMDE {
 
   /**
    * Return an array [0..lenth).
-   * @return fresh array that is the identity function of the given length
    * @param length the length of the result
+   * @return fresh array that is the identity function of the given length
    **/
   public static int[] fn_identity(int length) {
     int[] result = new int[length];
