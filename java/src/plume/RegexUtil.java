@@ -284,7 +284,8 @@ public class RegexUtil {
   }
 
   /**
-   * Returns the count of groups in the argument.
+   * Return the count of groups in the argument.
+   * @return the count of groups in the argument
    */
   private static int getGroupCount(Pattern p) {
     return p.matcher("").groupCount();

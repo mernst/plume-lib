@@ -93,6 +93,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Returns the number of bytes contained in a string.
    * If s is null, returns -1
+   * @return bytes in the string, or null
    * @param s A String
    */
   public int countBytes (String s) {
@@ -108,9 +109,9 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Returns the number of bytes used to represent
-   * a character.
-   * @param c A character.
+   * Returns the number of bytes used to represent a character.
+   * @param c a character
+   * @return number of bytes used to represent c
    */
   public int countBytes (char c) {
       if ((c >= 0x0001) && (c <= 0x007F)) return 1;
@@ -121,8 +122,9 @@ public class CountingPrintWriter extends PrintWriter {
   // Accessor Methods
 
   /**
-   *  Returns the total number of bytes printed using any of the
-   *  'print' or 'println' methods of this CountingPrintBuffer.
+   * Returns the total number of bytes printed using any of the
+   * 'print' or 'println' methods of this CountingPrintBuffer.
+   * @return number of bytes printed so far
    */
   public int getNumberOfPrintedBytes() {
     return printedBytes;
@@ -131,6 +133,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Returns the total number of bytes printed using any of the
    * 'write' methods of this CountingPrintBuffer.
+   * @return number of bytes written so far
    */
   public int getNumberOfWrittenBytes() {
     return writtenBytes;
@@ -139,6 +142,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Returns the total number of characters printed using any
    * of the 'print' or 'println' methods of this CountingPrintBuffer.
+   * @return number of characters printed so far
    */
   public int getNumberOfPrintedChars() {
     return printedChars;

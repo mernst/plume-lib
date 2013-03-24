@@ -26,6 +26,9 @@ public final class Assert {
    * Throw AssertionException with the argument string
    * if the condition does not hold.  Named "assertTrue" instead of
    * "assert" because "assert" is a Java 1.4 keyword.
+   * @param b condition to be checked
+   * @param s message string for assertion
+   * @throws AssertionException if b is not true
    **/
   public static final void assertTrue(boolean b, /*@Nullable*/ String s) {
     if (enabled && !b)
@@ -34,6 +37,8 @@ public final class Assert {
   /**
    * Throw AssertionException if the condition does not hold.  Named
    * "assertTrue" instead of "assert" because "assert" is a Java 1.4 keyword.
+   * @param b condition to be checked
+   * @throws AssertionException if b is not true
    **/
   public static final void assertTrue(boolean b) {
     assertTrue(b, null);

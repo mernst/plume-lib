@@ -92,7 +92,8 @@ public class StrTok {
   }
 
   /**
-   * Returns the current token.
+   * Return the current token.
+   * @return the current token
    * @see #nextToken()
    */
   public /*@Nullable*/ /*@Interned*/ String token() {
@@ -144,7 +145,8 @@ public class StrTok {
   }
 
   /**
-   * Returns the type of the current token.
+   * Return the type of the current token.
+   * @return the type of the current token
    * @see StreamTokenizer#ttype
    */
   public int ttype() {

@@ -379,7 +379,8 @@ public class Options {
     }
 
     /**
-     * Returns whether or not this option has a required argument.
+     * Return whether or not this option has a required argument.
+     * @return whether or not this option has a required argument
      */
     public boolean argument_required() {
       Class<?> type = field.getType();
@@ -405,7 +406,8 @@ public class Options {
     }
 
     /**
-     * Returns a one-line description of the option.
+     * Return a one-line description of the option.
+     * @return a one-line description of the option
      */
     @Override
     public String toString() {
@@ -996,8 +998,9 @@ public class Options {
   }
 
   /**
-   * Returns the String containing the usage message for command-line options.
+   * Return the String containing the usage message for command-line options.
    *
+   * @return the command-line usage message
    * @param group_names The list of option groups to include in the usage
    * message.  If empty and option groups are being used, will return usage
    * for all option groups that are not unpublicized.  If empty and option
@@ -1011,6 +1014,7 @@ public class Options {
   /**
    * Returns the String containing the usage message for command-line options.
    *
+   * @return the command-line usage message
    * @param include_unpublicized If true, treat all unpublicized options
    * and option groups as publicized
    * @param group_names The list of option groups to include in the usage
@@ -1081,8 +1085,9 @@ public class Options {
   }
 
   /**
-   * Returns the length of the longest synopsis message in a list of options.
+   * Return the length of the longest synopsis message in a list of options.
    * Useful for aligning options in usage strings.
+   * @return the length of the longest synopsis message in a list of options
    */
   private int max_opt_len(List<OptionInfo> opt_list, boolean include_unpublicized) {
     int max_len = 0;
@@ -1284,7 +1289,8 @@ public class Options {
   }
 
   /**
-   * Returns a short name for the specified type for use in messages.
+   * Return a short name for the specified type for use in messages.
+   * @return a short name for the specified type for use in messages
    */
   private static String type_short_name (Class<?> type) {
 
@@ -1352,8 +1358,9 @@ public class Options {
   }
 
   /**
-   * Returns a description of all of the known options.
+   * Return a description of all of the known options.
    * Each option is described on its own line in the output.
+   * @return a description of all of the known options
    */
   @Override
   public String toString() {

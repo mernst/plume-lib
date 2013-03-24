@@ -25,10 +25,13 @@ import org.apache.commons.io.IOUtils;
  * terminates.  This is easy to do in Java 7, for example via
  * ProcessBuilder.redirectOutput(tempFile).  There does not appear to be an
  * easy way to do it in Java 6.
+ * </li>
  * <li>
  * This class provides a workaround, in which it busy-waits reading the
  * standard and error outputs and stores them away.  Use
  * ...
+ * </li>
+ * </ul>
  **/
 
 public class TimeLimitProcess extends Process {
@@ -93,7 +96,8 @@ public class TimeLimitProcess extends Process {
   }
 
   /**
-   * Returns the timeout time in msecs.
+   * Return the timeout time in msecs.
+   * @return the timeout time in msecs
    */
   public long timeout_msecs() {
     return (timeLimit);
@@ -121,7 +125,8 @@ public class TimeLimitProcess extends Process {
   }
 
   /**
-   * Returns the exit value for the subprocess.
+   * Return the exit value for the subprocess.
+   * @return the exit value for the subprocess
    * @see Process#getErrorStream()
    */
   public int exitValue() {

@@ -48,6 +48,8 @@ public class BCELUtil {
    * Returns a string describing a method declaration. It contains the access
    * flags (public, private, static, etc), the return type, the method name, and
    * the types of each of its arguments.
+   * @param m the method
+   * @return a string describing the method declaration
    */
   public static String get_method_declaration(Method m) {
 
@@ -83,7 +85,9 @@ public class BCELUtil {
   }
 
   /**
-   * Returns the attribute name for the specified attribute.
+   * Return the attribute name for the specified attribute.
+   * @param a the attribute
+   * @return the attribute name for the specified attribute
    */
   public static String get_attribute_name(Attribute a) {
 
@@ -94,7 +98,12 @@ public class BCELUtil {
     return (att_name);
   }
 
-  /** Returns the constant string at the specified offset */
+  /**
+   * Returns the constant string at the specified offset.
+   * @param pool the constant pool
+   * @param index the index in the constant pool
+   * @return the constant string at the specified offset in the constant pool
+   */
   public static String get_constant_str(ConstantPool pool, int index) {
 
     Constant c = pool.getConstant(index);
@@ -109,32 +118,50 @@ public class BCELUtil {
     }
   }
 
-  /** returns whether or not the specified method is a constructor * */
+  /** Returns whether or not the method is a constructor.
+   * @param mg the method to test
+   * @return true iff the method is a constructor
+   */
   public static boolean is_constructor(MethodGen mg) {
     return (mg.getName().equals("<init>") || mg.getName().equals(""));
   }
 
-  /** returns whether or not the specified method is a constructor * */
+  /** Returns whether or not the method is a constructor.
+   * @param m the method to test
+   * @return true iff the method is a constructor
+   */
   public static boolean is_constructor(Method m) {
     return (m.getName().equals("<init>") || m.getName().equals(""));
   }
 
-  /** returns whether or not the specified method is a class initializer */
+  /** Returns whether or not the method is a class initializer.
+   * @param mg the method to test
+   * @return true iff the method is a class initializer
+   */
   public static boolean is_clinit (MethodGen mg) {
     return (mg.getName().equals("<clinit>"));
   }
 
-  /** returns whether or not the specified method is a class initializer */
+  /** Returns whether or not the method is a class initializer.
+   * @param m the method to test
+   * @return true iff the method is a class initializer
+   */
   public static boolean is_clinit (Method m) {
     return (m.getName().equals("<clinit>"));
   }
 
-  /** returns whether or not the class is part of the JDK (rt.jar) * */
+  /** Returns whether or not the class is part of the JDK (rt.jar)
+   * @param gen the class to test
+   * @return true iff the class is part of the JDK (rt.jar)
+   */
   public static boolean in_jdk(ClassGen gen) {
     return (in_jdk(gen.getClassName()));
   }
 
-  /** returns whether or not the classname is part of the JDK (rt.jar) * */
+  /** Returns whether or not the class is part of the JDK (rt.jar)
+   * @param classname the class to test
+   * @return true iff the class is part of the JDK (rt.jar)
+   */
   public static boolean in_jdk(String classname) {
     return classname.startsWith("java.") || classname.startsWith("com.sun.")
       || classname.startsWith("javax.") || classname.startsWith("org.ietf.")
@@ -144,6 +171,10 @@ public class BCELUtil {
       || classname.startsWith("sunw.");
   }
 
+  /**
+   * Print the methods in the class, to standard output.
+   * @class gen the class whose methods to print
+   */   
   static void dump_methods(ClassGen gen) {
 
     System.out.printf("Class %s methods:\n", gen.getClassName());
@@ -153,6 +184,7 @@ public class BCELUtil {
 
   /**
    * Checks the specific method for consistency.
+   * @param mgen the class to check
    */
   public static void checkMgen(MethodGen mgen) {
 
@@ -186,6 +218,7 @@ public class BCELUtil {
 
   /**
    * Checks all of the methods in gen for consistency.
+   * @param gen the class to check
    */
   public static void checkMgens(final ClassGen gen) {
 
@@ -215,7 +248,10 @@ public class BCELUtil {
     }
   }
 
-  /** Adds code in nl to start of method mg * */
+  /** Adds code in nl to start of method mg
+   * @param mg method to be augmented
+   * @param nl instructions to prepend to the method
+   */
   public static void add_to_start(MethodGen mg, InstructionList nl) {
 
     // Add the code before the first instruction
@@ -238,7 +274,14 @@ public class BCELUtil {
     mg.setMaxLocals();
   }
 
-  /** @see #dump(JavaClass, File) **/
+  /**
+   * Dumps the contents of the specified class to the specified directory.
+   * The file is named dump_dir/[class].bcel.  It contains a synopsis
+   * of the fields and methods followed by the jvm code for each method.
+   * @param jc javaclass to dump
+   * @param dump_dir directory in which to write the file
+   * @see #dump(JavaClass, File)
+   */
   public static void dump (JavaClass jc, String dump_dir) {
 
     dump (jc, new File (dump_dir));
@@ -322,6 +365,8 @@ public class BCELUtil {
 
   /**
    * Return a description of the local variables (one per line).
+   * @param mg the method whose local variables to describe
+   * @return a description of the local variables (one per line)
    */
   public static String local_var_descr(MethodGen mg) {
 
@@ -338,6 +383,8 @@ public class BCELUtil {
   /**
    * Builds an array of line numbers for the specified instruction list. Each
    * opcode is assigned the next source line number starting at 1000.
+   * @param mg the method whose line numbers to extract
+   * @param il the instruction list to augment with line numbers
    */
   public static void add_line_numbers(MethodGen mg, InstructionList il) {
 
@@ -350,6 +397,7 @@ public class BCELUtil {
   /**
    * Sets the locals to 'this' and each of the arguments. Any other locals are
    * removed. An instruction list with at least one instruction must exist.
+   * @param mg the method whose locals to set
    */
   @SuppressWarnings("nullness")
   public static void setup_init_locals(MethodGen mg) {
@@ -382,6 +430,7 @@ public class BCELUtil {
   /**
    * Empties the method of all code (except for a return).  This
    * includes line numbers, exceptions, local variables, etc.
+   * @param mg the method to clear out
    */
   public static void empty_method (MethodGen mg) {
 
@@ -397,6 +446,7 @@ public class BCELUtil {
    * Evidently some changes require this to be updated, but without
    * BCEL support that would be hard to do.  It should be safe to just delete
    * it since it is optional and really only of use to a debugger.
+   * @param mg the method to clear out
    */
   public static void remove_local_variable_type_tables (MethodGen mg) {
 
@@ -410,6 +460,9 @@ public class BCELUtil {
   /**
    * Returns whether or not the specified attribute is a local variable type
    * table.
+   * @param a the attribute
+   * @param pool the constant pool
+   * @return true iff the attribute is a local variable type table
    */
   public static boolean is_local_variable_type_table (Attribute a,
                                                       ConstantPoolGen pool) {
@@ -417,7 +470,10 @@ public class BCELUtil {
   }
 
   /**
-   * Returns the attribute name for the specified attribute.
+   * Return the attribute name for the specified attribute.
+   * @param a the attribute
+   * @param pool the constant pool
+   * @return the attribute name for the specified attribute
    */
   public static String get_attribute_name (Attribute a, ConstantPoolGen pool) {
 
@@ -429,7 +485,9 @@ public class BCELUtil {
 
   /**
    * Returns whether or not this is a standard main method (static,
-   * name is 'main', and one argument of string array.
+   * name is 'main', and one argument of string array).
+   * @param mg the method to check
+   * @return true iff the method is a main method
    */
   public static boolean is_main (MethodGen mg) {
     Type[] arg_types = mg.getArgumentTypes();
@@ -438,7 +496,9 @@ public class BCELUtil {
   }
 
   /**
-   * Returns the Java classname that corresponds to type.
+   * Return the Java classname that corresponds to type.
+   * @param type the type
+   * @return the Java classname that corresponds to type
    * @deprecated use {@link #type_to_classgetname(Type)}
    */
   @java.lang.Deprecated
@@ -449,13 +509,19 @@ public class BCELUtil {
   /**
    * Returns the Java class name, in the format of {@link Class#getName()},
    * that corresponds to type.
+   * @param type the type
+   * @return the Java classname that corresponds to type
    */
   public static /*@ClassGetName*/ String type_to_classgetname (Type type) {
     String signature = type.getSignature();
     return UtilMDE.fieldDescriptorToClassGetName (signature);
   }
 
-  /** Returns the class that corresponds to type **/
+  /**
+   * Returns the class that corresponds to type
+   * @param type the type
+   * @return the Java class that corresponds to type
+   */
   public static Class<?> type_to_class (Type type) {
 
     String classname = type_to_classname (type);
@@ -469,6 +535,9 @@ public class BCELUtil {
 
   /**
    * Returns a type array with new_type added to the end of types
+   * @param types the array to extend
+   * @param new_type the element to add to the end of the types array
+   * @return the array (or a new one), with new_type at the end
    */
   public static Type[] add_type (Type[] types, Type new_type) {
       /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
@@ -482,6 +551,9 @@ public class BCELUtil {
 
   /**
    * Returns a type array with new_type inserted at the beginning
+   * @param types the array to extend
+   * @param new_type the element to add to the beginning of the types array
+   * @return the array (or a new one), with new_type at the beginning
    */
   public static Type[] insert_type (Type new_type, Type[] types) {
       /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
@@ -492,6 +564,11 @@ public class BCELUtil {
       return (new_types_cast);
   }
 
+  /**
+   * Return the type corresponding to a given class name
+   * @param classname the class to convert to a type
+   * @return the type corresponding to the given class name
+   */
   public static Type classname_to_type (String classname) {
 
     // Get the array depth (if any)

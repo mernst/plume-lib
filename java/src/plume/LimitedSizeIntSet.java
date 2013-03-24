@@ -108,9 +108,10 @@ public class LimitedSizeIntSet
   }
 
   /**
-   * An upper bound how many distinct elements can be individually
+   * An upper bound on how many distinct elements can be individually
    * represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
+   * @return maximum capacity of the set representation
    **/
   public int max_size() {
     if (values == null) {
