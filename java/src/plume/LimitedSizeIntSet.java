@@ -120,7 +120,7 @@ public class LimitedSizeIntSet
     }
   }
 
-  /*@AssertNonNullIfFalse("values")*/
+  /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
   public boolean repNulled() {
     return values == null;
