@@ -32,6 +32,7 @@ public class StrTok {
 
   /**
    * Creates a tokenizer for the specified string.
+   * @param s string to tokenize
    */
   public StrTok (String s) {
 
@@ -43,6 +44,8 @@ public class StrTok {
   /**
    * Creates a tokenizer for the specified string with the specified
    * error handler
+   * @param s string to tokenize
+   * @param e error handler
    */
   public StrTok (String s, Error e) {
     this(s);
@@ -59,6 +62,7 @@ public class StrTok {
 
     /**
      * Called when an unexpected token is found (see {@link #need(String)}).
+     * @param s unexpected token that has been found
      */
     public void tok_error (String s) {
       throw new RuntimeException ("StrTok error: " + s);
@@ -69,6 +73,7 @@ public class StrTok {
    * Returns the next token as a string.  EOF returns a null, EOL
    * returns an empty string.  Delimiters are returned as one character
    * strings.  Quoted strings and words are returned as strings.
+   * @return the next token
    */
   public /*@Nullable*/ /*@Interned*/ String nextToken() {
 
@@ -130,6 +135,7 @@ public class StrTok {
 
   /**
    * Specifies the single line comment character.
+   * @param ch the comment character
    * @see StreamTokenizer#commentChar(int)
    */
   public void commentChar (int ch) {
@@ -138,6 +144,7 @@ public class StrTok {
 
   /**
    * Specifies that matching pairs of this character delimit string constants.
+   * @param ch the quoting character
    * @see StreamTokenizer#quoteChar(int)
    */
   public void quoteChar (int ch) {
@@ -153,12 +160,16 @@ public class StrTok {
     return stok.ttype;
   }
 
-  /** Returns true if the current token is a word (identifier) */
+  /** Returns true if the current token is a word (identifier)
+   * @return true iff the current token is a word (identifier)
+   */
   public boolean isWord() {
     return (stok.ttype == StreamTokenizer.TT_WORD);
   }
 
-  /** Returns true if the current token is a quoted string */
+  /** Returns true if the current token is a quoted string
+   * @return true iff the current token is a quoted string
+   */
   public boolean isQString() {
     return ((stok.sval != null) && (stok.ttype > 0));
   }
@@ -166,6 +177,7 @@ public class StrTok {
   /**
    * Sets the error handler.  The default error handler will throw a
    * runtime exception on errors.
+   * @param err the new error handler
    * @see Error
    */
   public void set_error_handler (Error err) {
@@ -174,9 +186,10 @@ public class StrTok {
 
   /**
    * Reads the next token and checks that it matches tok.  If it does
-   * not match, calls the current error handling routine (see {@link
-   * #set_error_handler(StrTok.Error) set_error_handler()}).
+   * not match, calls the current error handling routine (see
+   * {@link #set_error_handler(StrTok.Error) set_error_handler()}).
    * If it does match, just returns.
+   * @param tok String to check next token against
    */
   public void need (String tok) {
 
@@ -191,6 +204,7 @@ public class StrTok {
    * Reads the next token and checks to make sure that it is a word (id).
    * If it is not a word, calls the error handling routine.  If it is,
    * returns the string of the word.
+   * @return next token, if if it a word; otherwise calls the error handling routine
    */
   public String need_word() {
     String t = nextToken();

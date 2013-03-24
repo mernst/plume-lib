@@ -15,7 +15,15 @@ public class Triple<T1,T2,T3> {
     this.c = c;
   }
 
-  /** Factory method with short name and no need to name type parameters. */
+  /** Factory method with short name and no need to name type parameters.
+   * @param <A> type of first argument
+   * @param <B> type of second argument
+   * @param <C> type of third argument
+   * @param a first argument
+   * @param b second argument
+   * @param c third argument
+   * @return a triple of the values (a, b, c)
+   **/
   public static <A, B, C> Triple<A, B, C> of(A a, B b, C c) {
     return new Triple<A, B, C>(a, b, c);
   }
