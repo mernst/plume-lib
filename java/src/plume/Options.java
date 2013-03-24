@@ -549,6 +549,7 @@ public class Options {
    * Class, in which case its static fields are set.  The names of all the
    * options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
+   * @param args the classes whose options to process
    */
   public Options (Object... args) {
     this ("", args);
@@ -561,6 +562,7 @@ public class Options {
    * options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
    * @param usage_synopsis A synopsis of how to call your program
+   * @param args the classes whose options to process
    */
   public Options (String usage_synopsis, Object... args) {
 
@@ -725,12 +727,15 @@ public class Options {
    * to write options at the end of a command line.  Setting this to false
    * is useful to avoid processing arguments that are actually
    * options/arguments for another program that this one will invoke.
+   * @param val whether to parse arguments after a non-option command-line argument
    */
   public void parse_options_after_arg (boolean val) {
     parse_options_after_arg = val;
   }
 
-  /** @deprecated Use {@link #parse_options_after_arg(boolean)}. */
+  /** @deprecated Use {@link #parse_options_after_arg(boolean)}.
+   * @param val whether to ignore arguments after a non-option command-line argument
+   */
   @Deprecated
   public void ignore_options_after_arg (boolean val) {
     parse_options_after_arg = !val;
@@ -740,6 +745,7 @@ public class Options {
    * If true, long options (those derived from field names) will be parsed with
    * a single dash prefix as in -longOption.  The default is false and long
    * options will be parsed with a double dash prefix as in --longOption.
+   * @param val whether to parse long options with a single dash, as in -longOption
    */
   public void use_single_dash (boolean val) {
     use_single_dash = val;
@@ -747,6 +753,7 @@ public class Options {
 
   /**
    * Parses a command line and sets the options accordingly.
+   * @param args the commandline to be parsed
    * @return all non-option arguments
    * @throws ArgException if the command line contains unknown option or
    * misused options.
@@ -818,6 +825,7 @@ public class Options {
    * not available &mdash; for example, for the <tt>premain</tt> method of
    * a Java agent.
    *
+   * @param args the command line to parse
    * @return all non-option arguments
    * @throws ArgException if the command line contains misused options or an unknown option.
    * @see #parse(String[])
@@ -861,6 +869,7 @@ public class Options {
    * Parses a command line and sets the options accordingly.  If an error
    * occurs, prints the usage message and terminates the program.  The program is
    * terminated rather than throwing an error to create cleaner output.
+   * @param args the command line to parse
    * @return all non-option arguments
    * @see #parse(String[])
    */
@@ -897,6 +906,7 @@ public class Options {
    * not available &mdash; for example, for the <tt>premain</tt> method of
    * a Java agent.
    *
+   * @param args the command line to parse
    * @return all non-option arguments
    * @see #parse_or_usage(String[])
    */
@@ -919,13 +929,19 @@ public class Options {
     return (non_options);
   }
 
-  /** @deprecated Use {@link #parse_or_usage(String[])}. */
+  /** @deprecated Use {@link #parse_or_usage(String[])}.
+   * @param args the command line to parse
+   * @return all non-option arguments
+   */
   @Deprecated
   public String[] parse_and_usage (String[] args) {
     return parse_or_usage(args);
   }
 
-  /** @deprecated Use {@link #parse_or_usage(String)}. */
+  /** @deprecated Use {@link #parse_or_usage(String)}.
+   * @param args the command line to parse
+   * @return all non-option arguments
+   */
   @Deprecated
   public String[] parse_and_usage (String args) {
     return parse_or_usage(args);
@@ -938,6 +954,7 @@ public class Options {
   /**
    * Prints usage information.  Uses the usage synopsis passed into the
    * constructor, if any.
+   * @param ps where to print usage information
    */
   public void print_usage (PrintStream ps) {
     if (usage_synopsis != null) {
@@ -963,6 +980,8 @@ public class Options {
   /**
    * Prints a message followed by indented usage information.
    * The message is printed in addition to (not replacing) the usage synopsis.
+   * @param ps where to print usage information
+   * @param msg message to print before usage information
    **/
   public void print_usage (PrintStream ps, String msg) {
     ps.println (msg);
@@ -972,6 +991,7 @@ public class Options {
   /**
    * Prints, to standard output, a message followed by usage information.
    * The message is printed in addition to (not replacing) the usage synopsis.
+   * @param msg messag. to print before usage information
    **/
   public void print_usage (String msg) {
     print_usage (System.out, msg);
@@ -980,6 +1000,9 @@ public class Options {
   /**
    * Prints a message followed by usage information.
    * The message is printed in addition to (not replacing) the usage synopsis.
+   * @param ps where to print usage information
+   * @param format message to print before usage information
+   * @param args objects to put in formatted message
    */
   public void print_usage (PrintStream ps, String format, /*@Nullable*/ Object... args) {
     ps.printf (format, args);
@@ -992,6 +1015,8 @@ public class Options {
   /**
    * Prints, to standard output, a message followed by usage information.
    * The message is printed in addition to (not replacing) the usage synopsis.
+   * @param format message to print before usage information
+   * @param args objects to put in formatted message
    */
   public void print_usage (String format, /*@Nullable*/ Object... args) {
     print_usage(System.out, format, args);
@@ -1310,6 +1335,7 @@ public class Options {
    * Returns a string containing all of the options that were set and their
    * arguments.  This is essentially the contents of args[] with all
    * non-options removed.
+   * @return options, similarly to supplied on the command line
    * @see #settings()
    */
   public String get_options_str() {
@@ -1322,6 +1348,7 @@ public class Options {
    * get_options_str() in that it contains each known option exactly once:
    * it never contains duplicates, and it contains every known option even
    * if the option was not specified on the command line.
+   * @return options, similarly to supplied on the command line
    */
   public String settings () {
     return settings(false);
@@ -1336,6 +1363,7 @@ public class Options {
    *
    * @param include_unpublicized  If true, treat all unpublicized options
    * and option groups as publicized
+   * @return options, similarly to supplied on the command line
    */
   public String settings (boolean include_unpublicized) {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);

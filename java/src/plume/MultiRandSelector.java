@@ -12,9 +12,9 @@ import java.util.*;
  * nation. As another example, for selecting invocations in a Daikon trace
  * file, it may be more useful to select an equal number of samples per
  * program point.
-
- * <p>The performance is the equal to running a set of RandomSelector
- * Objects, one for each bucket, as well as some overhead for
+ *
+ * <p>The performance is the same as running a set of RandomSelector
+ * Objects, one for each bucket, plus some overhead for
  * determining which bucket to assign to each Object in the iteration.
  *
  * <p>To use this class, call this.accept() on every Object in the
@@ -33,11 +33,10 @@ public class MultiRandSelector<T> {
 
     private HashMap<T,RandomSelector<T>> map;
 
-  /** @param num_elts the number of elements to select from each
-   *  bucket
-   *  @param eq partioner that determines how to partition the objects from
-   *  the iteration.
-   */
+    /** @param num_elts the number of elements to select from each bucket
+     *  @param eq partioner that determines how to partition the objects from
+     *  the iteration.
+     */
     public MultiRandSelector (int num_elts, Partitioner<T,T> eq) {
         this (num_elts, new Random(), eq);
     }
@@ -71,8 +70,6 @@ public class MultiRandSelector<T> {
     }
 
 
-    /**
-     */
     public void accept (T next) {
         T equivClass = eq.assignToBucket (next);
         if (equivClass == null)
@@ -88,12 +85,13 @@ public class MultiRandSelector<T> {
     }
 
     // TODO: is there any reason not to simply return a copy?
-    /** NOT safe from concurrent modification. */
+    // NOT safe from concurrent modification.
     public Map<T,RandomSelector<T>> values () {
         return map;
     }
 
-    /** Returns an iterator of all objects selected. */
+    /** Returns an iterator of all objects selected.
+     * @return an iterator of all objects selected. */
     public Iterator<T> valuesIter() {
         ArrayList<T> ret = new ArrayList<T>();
         for (RandomSelector<T> rs : map.values()) {

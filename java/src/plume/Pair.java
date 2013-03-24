@@ -13,7 +13,13 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
     this.b = b;
   }
 
-  /** Factory method with short name and no need to name type parameters. */
+  /** Factory method with short name and no need to name type parameters.
+   * @param <A> type of first argument
+   * @param <B> type of second argument
+   * @param a first argument
+   * @param b second argument
+   * @return a pair of the values (a, b)
+   **/
   public static <A extends /*@Nullable*/ Object, B extends /*@Nullable*/ Object> Pair<A, B> of(A a, B b) {
     return new Pair<A, B>(a, b);
   }

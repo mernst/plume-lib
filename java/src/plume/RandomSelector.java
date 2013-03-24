@@ -116,6 +116,7 @@ public class RandomSelector<T> {
      * <P>When in probability mode, adds next to 'current_values' with
      * probability equal to 'keep_probability'.
      *
+     * @param next value to be added to this selector
      **/
     public void accept (T next) {
 
@@ -146,7 +147,9 @@ public class RandomSelector<T> {
         // do nothing if the probability condition is not met
     }
 
-    /** Returns current_values, modifies none.  **/
+    /** Returns current_values, modifies none.
+     * @return current_values
+     **/
     public List<T> getValues() {
         // avoid concurrent mod errors and rep exposure
         ArrayList<T> ret = new ArrayList<T>();

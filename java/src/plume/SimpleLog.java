@@ -74,6 +74,8 @@ public final class SimpleLog {
   /**
    * Log a message.  Provide a backtrace (traceback) if variable
    * always_traceback is set.
+   * @param format format string for message
+   * @param args values to be substituted into format
    */
   public final void log (String format, /*@Nullable*/ Object... args) {
 
@@ -87,7 +89,10 @@ public final class SimpleLog {
 
   }
 
-  /** Log a message, and provide a backtrace (traceback, or tb). */
+  /** Log a message, and provide a backtrace (traceback, or tb).
+   * @param format format string for message
+   * @param args values to be substituted into format
+   */
   public final void log_tb (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log (format, args);
@@ -153,6 +158,8 @@ public final class SimpleLog {
 
   /**
    * Calls clear() and then logs the specified message
+   * @param format format string for message
+   * @param args values to be substituted into format
    */
   public final void clear (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
@@ -172,6 +179,8 @@ public final class SimpleLog {
    * Extents and <b>then</b> prints.  This is confusing.
    * @deprecated Use separate calls to {@link #exdent()} and
    * {@link #log(String, Object...)}.
+   * @param format format string for message
+   * @param args values to be substituted into format
    */
   @Deprecated
   public final void exdent (String format, /*@Nullable*/ Object... args) {
@@ -181,7 +190,10 @@ public final class SimpleLog {
     }
   }
 
-  /** Prints the time and then exdents. */
+  /** Prints the time and then exdents.
+   * @param format format string for message
+   * @param args values to be substituted into format
+   */
   public final void exdent_time (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       // This puts the time inside, not outside, the indentation.
@@ -226,6 +238,8 @@ public final class SimpleLog {
    * Writes the specified message and the elapsed time since
    * the last call to start_time().
    * Does not pop nor reset the current start time.
+   * @param format format string for message
+   * @param args values to be substituted into format
    */
   public final void log_time (String format, /*@Nullable*/ Object... args) {
 
