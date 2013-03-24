@@ -71,12 +71,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * the regexp is null), in which case the entry is terminated by a blank
    * line or the end of the current file.
    */
-  public /*@LazyNonNull*/ /*@Regex(1)*/ Pattern entry_start_re = null;
+  public /*@MonotonicNonNull*/ /*@Regex(1)*/ Pattern entry_start_re = null;
 
   /**
    * @see #entry_start_re
    */
-  public /*@LazyNonNull*/ Pattern entry_stop_re = null;
+  public /*@MonotonicNonNull*/ Pattern entry_stop_re = null;
 
   ///
   /// Internal implementation variables

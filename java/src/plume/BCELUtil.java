@@ -471,7 +471,7 @@ public class BCELUtil {
    * Returns a type array with new_type added to the end of types
    */
   public static Type[] add_type (Type[] types, Type new_type) {
-      /*@LazyNonNull*/ Type[] new_types = new Type[types.length + 1];
+      /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
       System.arraycopy(types, 0, new_types, 0, types.length);
       new_types[types.length] = new_type;
       @SuppressWarnings("cast")
@@ -484,7 +484,7 @@ public class BCELUtil {
    * Returns a type array with new_type inserted at the beginning
    */
   public static Type[] insert_type (Type new_type, Type[] types) {
-      /*@LazyNonNull*/ Type[] new_types = new Type[types.length + 1];
+      /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
       System.arraycopy(types, 0, new_types, 1, types.length);
       new_types[0] = new_type;
       @SuppressWarnings("cast")

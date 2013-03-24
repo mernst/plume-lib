@@ -1566,7 +1566,7 @@ public final class UtilMDE {
         argnames = split(all_argnames, ',');
       }
 
-      /*@LazyNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
+      /*@MonotonicNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
       for (int i=0; i<argnames.length; i++) {
         String bnArgname = argnames[i].trim();
         /*@ClassGetName*/ String cgnArgname = binaryNameToClassGetName(bnArgname);

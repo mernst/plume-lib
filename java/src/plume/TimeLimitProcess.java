@@ -37,8 +37,8 @@ public class TimeLimitProcess extends Process {
   private long timeLimit;
   private boolean timed_out = false;
   // can make public for testing
-  private /*@LazyNonNull*/ StringWriter cached_stdout;
-  private /*@LazyNonNull*/ StringWriter cached_stderr;
+  private /*@MonotonicNonNull*/ StringWriter cached_stdout;
+  private /*@MonotonicNonNull*/ StringWriter cached_stderr;
 
   private Timer timer;
 
