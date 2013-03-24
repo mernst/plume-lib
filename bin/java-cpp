@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # java-cpp -- C preprocessor specialized for Java
 # Michael Ernst
-# Time-stamp: <2010-08-13 19:33:46 mernst>
+# Time-stamp: <2013-03-24 13:44:18 mernst>
 
 # This acts like the C preprocessor (cpp), but
 #  * it does not remove comments, and
@@ -29,7 +29,7 @@ use filetest 'access';  # needed for afs!
 $WARNING = 1;			# "-w" command-line switch
 
 my $debug = 0;
-#my $debug = 1;
+# $debug = 1;
 my $cleanup_tmpfiles = 1;
 # $cleanup_tmpfiles = 0;
 
@@ -186,8 +186,12 @@ sub unescape_comments ( $ ) {
 
     # Perform string contatenation required by use of -traditional cpp flag.
     s/(\w) \#\# (\w)/$1$2/g;
-    # Perform stringization, too.  (But not just before "@see".)
-    s/(?!\@see)(.... )\#(\w+)/$1"$2"/g;
+    # Perform stringization, but not just after "@link" or "@see".
+    s/(?!\@link)(.(?!\@see).... )\#(\w+)/$1"$2"/g;
+    # Undocumented workaround to enable a literal pound sign to be placed
+    # in the output, in case the stringizaton goes poorly.
+    s/JAVACPP_POUNDSIGN_NOSPACE */\#/g;
+    s/JAVACPP_POUNDSIGN/\#/g;
 
     # Convert string concatenation ("a" + "b") into single string ("ab").
     while (s/(".*)"  ?\+ "(.*")/$1$2/g) { }
