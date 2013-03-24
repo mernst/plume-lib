@@ -246,7 +246,7 @@ public class TimeLimitProcess extends Process {
 
   private class StdoutStreamReaderThread extends Thread {
     @SuppressWarnings("nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
-    /*@NonNullOnEntry("cached_stdout")*/
+    /*@RequiresNonNull("cached_stdout")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
@@ -260,7 +260,7 @@ public class TimeLimitProcess extends Process {
 
   private class StderrStreamReaderThread extends Thread {
     @SuppressWarnings("nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
-    /*@NonNullOnEntry("cached_stderr")*/
+    /*@RequiresNonNull("cached_stderr")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
