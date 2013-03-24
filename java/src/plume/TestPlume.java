@@ -1395,7 +1395,9 @@ public final class TestPlume extends TestCase {
    * <pre>  java plume.TestPlume\$PrintOneIntPerSecond 500</pre>
    */
   public static class PrintOneIntPerTimePeriod {
-    /** Arguments:  how many to print; how many milliseconds between each. */
+    /**
+     * @param args  how many to print; how many milliseconds between each.
+     */
     public static void main(String[] args) {
       assert args.length == 2;
       int limit = Integer.parseInt(args[0]);
@@ -2657,6 +2659,7 @@ public final class TestPlume extends TestCase {
 
   /**
    * Test command line option parsing (Options).
+   * @throws ArgException if there is an illegal argument
    */
   public static void testOptions() throws ArgException {
 
@@ -2730,6 +2733,7 @@ public final class TestPlume extends TestCase {
 
   /**
    * Test option aliases (Options)
+   * @throws ArgException if there is an illegal argument
    */
   public static void testOptionsAliases() throws ArgException {
     TestOptionsAliases t = new TestOptionsAliases();
@@ -2832,6 +2836,7 @@ public final class TestPlume extends TestCase {
 
   /**
    * Test option groups (Options)
+   * @throws ArgException if there is an illegal argument
    */
   public static void testOptionGroups() throws ArgException {
     // TODO: The following two exception tests are not adequate.  There must be

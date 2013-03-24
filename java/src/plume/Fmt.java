@@ -16,9 +16,11 @@ import java.util.*;
 public class Fmt {
 
   /**
-   * Replaces each instance of %s in format with the corresponding
-   * object in args and writes the result to System.out.  Each
-   * argument is converted to a string with toString().
+   * Writes, to System.out, te result of replacing each instance of %s in
+   * format with the corresponding object in args.
+   * Each argument is converted to a string with toString().
+   * @param format the format string
+   * @param args the values to be formatted
    */
   public static void pf (String format, Object[] args) {
     System.out.println (spf (format, args));
@@ -28,6 +30,9 @@ public class Fmt {
    * Replaces each instance of %s in format with the corresponding
    * object in args and returns the result.  Each argument is
    * converted to a string with toString().
+   * @param format the format string
+   * @param args the values to be formatted
+   * @return the formatted String
    */
   public static String spf (String format, Object[] args) {
 
@@ -71,7 +76,11 @@ public class Fmt {
     return (result.toString());
   }
 
-  /** Convenience routine for new Integer(val). **/
+  /**
+   * Convenience routine for new Integer(val).
+   * @param val int to convert to an Integer
+   * @return the Integer equivalent of the input value
+   **/
   public static Integer i (int val) {
     return new Integer (val);
   }

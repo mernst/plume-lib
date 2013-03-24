@@ -200,6 +200,8 @@ public class Lookup {
   /**
    * Look for the specified keywords in the file(s) and print
    * the corresponding entries.
+   * @param args command-line arguments; see documentation
+   * @throws IOException if there is a problem reading a file
    */
   public static void main (String args[]) throws IOException {
 
@@ -368,7 +370,9 @@ public class Lookup {
 
   /**
    * Returns the next entry.  If no more entries are available, returns null.
+   * @param reader where to read the entry from
    * @return the next entry, or null
+   * @throws IOException if there is a problem reading a file
    */
   public static /*@Nullable*/ Entry old_get_entry (EntryReader reader) throws IOException {
 
@@ -436,7 +440,10 @@ public class Lookup {
     }
   }
 
-  /** Returns the first line of entry. **/
+  /** Returns the first line of entry.
+   * @param entry the entry whose first line to return
+   * @return the first line of entry
+   **/
   public static String first_line (String entry) {
 
     int ii = entry.indexOf (lineSep);

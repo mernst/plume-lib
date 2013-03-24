@@ -6,7 +6,11 @@ The correct way to build the system is to run 'make'.
 
 
 
-  /** Return the greatest common divisor of the two arguments. */
+  /** Return the greatest common divisor of the two arguments.
+   * @param a first operand
+   * @param b second operand
+   * @return greatest common divisor of a and b
+   */
   public static INT gcd(INT a, INT b) {
   #ifdef GCD_DOUBLE
     if (a == Double.POSITIVE_INFINITY
@@ -31,7 +35,10 @@ The correct way to build the system is to run 'make'.
     return a;
   }
 
-  /** Return the greatest common divisor of the elements of INT array a. */
+  /** Return the greatest common divisor of the elements of INT array a.
+   * @param a array of operands
+   * @return greatest common divisor of the elements of a
+   */
   public static INT gcd(INT[] a) {
     // Euclid's method
     if (a.length == 0) {
@@ -49,7 +56,9 @@ The correct way to build the system is to run 'make'.
   /**
    * Return the gcd (greatest common divisor) of the differences
    * between the elements of INT array a.
-   **/
+   * @param a array of operands
+   * @return greatest common divisor of the differentes between the elements of a
+   */
   public static INT gcd_differences(INT[] a) {
     // Euclid's method
     if (a.length < 2) {

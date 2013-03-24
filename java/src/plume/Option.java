@@ -43,12 +43,14 @@ public @interface Option {
   /**
    * For information about the this parameter, see the section on Option
    * aliases in {@link plume.Options}.
+   * @return aliases for this option
    */
   String[] aliases() default {};
 
   /**
    * For information about this parameter, see the section on hiding default
    * values strings in {@link plume.OptionsDoclet}.
+   * @return whether not to hide default values
    */
   boolean noDocDefault() default false;
 }
