@@ -40,8 +40,8 @@ public class TimeLimitProcess extends Process {
   private long timeLimit;
   private boolean timed_out = false;
   // can make public for testing
-  private /*@LazyNonNull*/ StringWriter cached_stdout;
-  private /*@LazyNonNull*/ StringWriter cached_stderr;
+  private /*@MonotonicNonNull*/ StringWriter cached_stdout;
+  private /*@MonotonicNonNull*/ StringWriter cached_stderr;
 
   private Timer timer;
 
@@ -252,7 +252,7 @@ public class TimeLimitProcess extends Process {
 
   private class StdoutStreamReaderThread extends Thread {
     @SuppressWarnings("nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
-    /*@NonNullOnEntry("cached_stdout")*/
+    /*@RequiresNonNull("cached_stdout")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
@@ -266,7 +266,7 @@ public class TimeLimitProcess extends Process {
 
   private class StderrStreamReaderThread extends Thread {
     @SuppressWarnings("nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
-    /*@NonNullOnEntry("cached_stderr")*/
+    /*@RequiresNonNull("cached_stderr")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
