@@ -101,6 +101,7 @@ public class LimitedSizeIntSet
    * A lower bound on the number of elements in the set.  Returns either
    * the number of elements that have been inserted in the set, or
    * max_size(), whichever is less.
+   * @return a number that is a lower bound on the number of elements added to the set
    **/
   /*@Pure*/
   public int size() {
@@ -144,6 +145,9 @@ public class LimitedSizeIntSet
    * Merges a list of LimitedSizeIntSet objects into a single object that
    * represents the values seen by the entire list.  Returns the new
    * object, whose max_values is the given integer.
+   * @param max_values the maximum size for the returned LimitedSizeIntSet
+   * @param slist a list of LimitedSizeIntSet, whose elements will be merged
+   * @return a LimitedSizeIntSet that merges the elements of slist
    **/
   public static LimitedSizeIntSet merge (int max_values, List<LimitedSizeIntSet> slist) {
     LimitedSizeIntSet result = new LimitedSizeIntSet(max_values);

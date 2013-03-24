@@ -40,6 +40,9 @@ public class GraphMDE {
   /**
    * Computes, for each node in the graph, its set of (pre-)dominators.
    * Supply a successor graph if you want post-dominators.
+   * @param <T> type of the graph nodes
+   * @param preds a graph, represented as a predecessor map
+   * @return a map from each node to a list of its pre-dominotors
    **/
   public static
   <T> Map<T,List<T>> dominators(Map<T,List<T>> preds) {

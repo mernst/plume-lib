@@ -182,6 +182,8 @@ public class OptionsDoclet {
 
   /**
    * Entry point for the doclet.
+   * @param root the root document
+   * @return true if processing completed without an error
    */
   public static boolean start(RootDoc root) {
     List<Object> objs = new ArrayList<Object>();
@@ -243,6 +245,8 @@ public class OptionsDoclet {
    * this doclet or 0 if the argument is unrecognized.  This method is
    * automatically invoked.
    *
+   * @param option the command-line argument
+   * @return the number of tokens corresponding to option
    * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static int optionLength(String option) {
@@ -268,6 +272,9 @@ public class OptionsDoclet {
    * Returns true if the option usage is valid, and false otherwise.  This
    * method is automatically invoked.
    *
+   * @param options the command-line options to be checked
+   * @param reporter where to report errors
+   * @return true iff the command-line options are valid
    * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static boolean validOptions(String options[][],
@@ -339,6 +346,7 @@ public class OptionsDoclet {
   /**
    * Set the options for this class based on command-line arguments given by
    * RootDoc.options().
+   * @param options the command-line options to parse
    */
   public void setOptions(String[][] options) {
     for (int oi = 0; oi < options.length; oi++) {
@@ -378,6 +386,7 @@ public class OptionsDoclet {
 
   /**
    * Write the output of this doclet to the correct file.
+   * @throws Exception if there is trouble
    */
   public void write() throws Exception {
     PrintWriter out;
@@ -400,6 +409,8 @@ public class OptionsDoclet {
   /**
    * Get the final output of this doclet.  The string returned by this method
    * is the output seen by the user.
+   * @return the user-visible doclet output
+   * @throws Exception if there is trouble
    */
   public String output() throws Exception {
     if (docFile == null) {
@@ -517,6 +528,7 @@ public class OptionsDoclet {
 
   /**
    * Get the HTML documentation for the underlying options instance.
+   * @return the HTML documentation for the underlying options instance
    */
   public String optionsToHtml() {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
@@ -557,6 +569,8 @@ public class OptionsDoclet {
   /**
    * Get the HTML documentation for the underlying options instance, formatted
    * as a Javadoc comment.
+   * @param padding the padding to add in the Javadoc output
+   * @return the HTML documentation for the underlying options instance
    */
   public String optionsToJavadoc(int padding) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
@@ -590,6 +604,8 @@ public class OptionsDoclet {
 
   /**
    * Get the line of HTML describing an Option.
+   * @param oi the option to describe
+   * @return HTML describing oi
    */
   public String optionToHtml(Options.OptionInfo oi) {
     StringBuilder b = new StringBuilder();
@@ -632,7 +648,10 @@ public class OptionsDoclet {
    * comment while still being presentable. <p>
    * 
    * This is only a temporary solution.  Ideally, @link/@see tags would be
-   * converted to HTML links which point to actual documentation.
+   * converted to HTML links that point to actual documentation.
+   *
+   * @param doc Javadoc comment to convert to HTML
+   * @return HTML version of doc
    */
   public static String javadocToHtml(Doc doc) {
     StringBuilder b = new StringBuilder();

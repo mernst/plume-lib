@@ -38,6 +38,7 @@ public class FuzzyFloat {
    * Specify the specific relative difference allowed between two
    * floats in order for them to be equal.  The default is 0.0001
    * a relative diff of zero, disables it (i.e., only exact matches work).
+   * @param rel_diff the relative diff to use
    */
   public FuzzyFloat (double rel_diff) {
     set_rel_diff (rel_diff);
@@ -45,7 +46,7 @@ public class FuzzyFloat {
 
   /**
    * Set the relative diff.
-   *
+   * @param rel_diff the new relative diff to use
    * @see #FuzzyFloat
    */
   public void set_rel_diff (double rel_diff) {
@@ -65,6 +66,8 @@ public class FuzzyFloat {
    * be less than the square of the fuzzy ratio.  This policy accomodates
    * round off errors in floating point values.
    *
+   * @param d1 the first value to compare
+   * @param d2 the first value to compare
    * @return true if d1 and d2 are considered equal, false otherwise
    */
 
@@ -108,7 +111,9 @@ public class FuzzyFloat {
 
   /**
    * Test d1 and d2 for non-equality using the current ratio.
-   *
+   * @param d1 the first value to compare
+   * @param d2 the first value to compare
+   * @return whether d1 and d2 are non-equal
    * @see #eq
    */
   /* @ pure */ public boolean ne (double d1, double d2) {
@@ -118,7 +123,9 @@ public class FuzzyFloat {
   /**
    * Test d1 and d2 for d1 &lt; d2.  If d1 is equal to d2 using the current ratio
    * this returns false.
-   *
+   * @param d1 the first value to compare
+   * @param d2 the first value to compare
+   * @return whether d1 &lt; d2
    * @see #eq
    */
   /* @ pure */ public boolean lt (double d1, double d2) {
@@ -128,7 +135,9 @@ public class FuzzyFloat {
   /**
    * test d1 and  d2 for d1 &le; d2.  If d1 is equal to d2 using the current
    * ratio, this returns true.
-   *
+   * @param d1 the first value to compare
+   * @param d2 the first value to compare
+   * @return whether d1 &le; d2
    * @see #eq
    */
   /* @ pure */ public boolean lte (double d1, double d2) {
@@ -138,7 +147,9 @@ public class FuzzyFloat {
   /**
    * test d1 and d2  for d1 &gt; d2.  IF d1 is equal to d2 using the current
    * ratio, this returns false.
-   *
+   * @param d1 the first value to compare
+   * @param d2 the first value to compare
+   * @return whether d1 &gt; d2
    * @see #eq
    */
   /* @ pure */ public boolean gt (double d1, double d2) {
@@ -148,7 +159,9 @@ public class FuzzyFloat {
   /**
    * test d1 and  d2 for d1 &gt; d2.  If d1 is equal to d2 using the current
    * ratio, this returns true.
-   *
+   * @param d1 the first value to compare
+   * @param d2 the first value to compare
+   * @return whether d1 &gt; d2
    * @see #eq
    */
   /* @ pure */ public boolean gte (double d1, double d2) {
@@ -159,6 +172,8 @@ public class FuzzyFloat {
    * Searches for the first occurrence of elt in a.  elt is considered
    * equal to a[i] if it passes the {@link #eq} test.
    *
+   * @param a the array to search
+   * @param elt the element to search for
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -175,6 +190,8 @@ public class FuzzyFloat {
    * Elements of sub are considered to match elements of a if they pass
    * the {@link #eq} test.
    *
+   * @param a the sequence to search in
+   * @param sub the sequence to search for
    * @return the first index whose subarray is equal to the specified array
    *    or -1 if no such subarray is found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
@@ -203,6 +220,8 @@ public class FuzzyFloat {
    * elements are actually the same, since it does a sort of both arrays
    * before starting the comparisons.
    *
+   * @param a1 the first value to compare
+   * @param a2 the first value to compare
    * @return true if a1 and a2 are set equivalent, false otherwise
    */
   /* @ pure */ public boolean isElemMatch (double[] a1, double[] a2) {
@@ -315,6 +334,8 @@ public class FuzzyFloat {
    * elements are actually the same, since it does a sort of both
    * arrays before starting the comparisons.
    *
+   * @param smaller the possibly-smaller subset
+   * @param bigger the possibly-larger set
    * @return true if smaller is a subset (each element of smaller is
    * also a element of bigger) of bigger, false otherwise
    */

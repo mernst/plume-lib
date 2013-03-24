@@ -26,7 +26,8 @@ public class MultiReader extends EntryReader {
   /**
    * Create a MultiReader
    *
-   *    @param reader Initial source
+   *    @param reader source from which to read entries
+   *    @param filename file name corresponding to reader, for use in error messages
    *    @param comment_re_string Regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored
@@ -41,6 +42,7 @@ public class MultiReader extends EntryReader {
   }
 
   /** Create a MultiReader that does not support comments or include directives.
+   * @param reader source from which to read entries
    * @see #MultiReader(BufferedReader,String,String,String) **/
   public MultiReader (BufferedReader reader) {
     super(reader);
@@ -56,6 +58,7 @@ public class MultiReader extends EntryReader {
    *    @param include_re Regular expression that matches include directives.
    *                      The expression should define one group that contains
    *                      the include file name.
+   * @throws IOException if there is a problem reading the file
    */
   public MultiReader (File file, /*@Nullable*/ /*@Regex*/ String comment_re,
                       /*@Nullable*/ /*@Regex(1)*/ String include_re) throws IOException {
@@ -63,6 +66,8 @@ public class MultiReader extends EntryReader {
   }
 
   /** Create a MultiReader that does not support comments or include directives.
+   * @param file source from which to read entries
+   * @throws IOException if there is a problem reading the file
    * @see #MultiReader(File,String,String) **/
   public MultiReader (File file) throws IOException {
     super (file);
@@ -70,6 +75,14 @@ public class MultiReader extends EntryReader {
 
   /**
    * Create a new MultiReader starting with the specified file.
+   *    @param filename the source from which to read entries
+   *    @param comment_re Regular expression that matches comments.
+   *                      Any text that matches comment_re is removed.
+   *                      A line that is entirely a comment is ignored.
+   *    @param include_re Regular expression that matches include directives.
+   *                      The expression should define one group that contains
+   *                      the include file name.
+   * @throws IOException if there is a problem reading the file
    * @see #MultiReader(File,String,String)
    */
   public MultiReader (String filename, /*@Nullable*/ /*@Regex*/ String comment_re,
@@ -78,6 +91,8 @@ public class MultiReader extends EntryReader {
   }
 
   /** Create a MultiReader that does not support comments or include directives.
+   * @param filename the source from which to read entries
+   * @throws IOException if there is a problem reading the file
    * @see #MultiReader(String,String,String) **/
   public MultiReader (String filename) throws IOException {
     super(filename);

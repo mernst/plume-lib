@@ -8,10 +8,12 @@ The correct way to build the system is to run 'make'.
 
 
   /**
-   * Return an array containing all the numbers *not* in its argument array
+   * Return an array containing all the numbers <b>not</b> in its argument array
    * but in the argument's range; that is, bigger than its argument's
    * minimum value and smaller than its argument's maximum value.
    * The result contains no duplicates and is in order.
+   * @param nums numbers to be excluded
+   * @return the set: [min(nums)..max(nums)] - nums
    **/
   public static INT[] missing_numbers(INT[] nums) {
     { // avoid modifying parameter
@@ -160,6 +162,8 @@ The correct way to build the system is to run 'make'.
    * Return a tuple of (r,m) where no number in NUMS is equal to r (mod
    * m) but all missing numbers in their range are.  Returns null if the
    * input array has 0 length.
+   * @param nums the list of operands
+   * @return a (remainder, modulus) pair that fails to match elements of nums
    **/
   public static INT /*@Nullable*/ [] nonmodulus_strict(INT[] nums) {
     // This implementation is particularly inefficient; find a better way to
@@ -200,6 +204,8 @@ The correct way to build the system is to run 'make'.
   /**
    * Return a tuple of (r,m) where no number in NUMS is equal to r (mod
    * m) but all missing numbers in their range are.
+   * @param nums the list of operands
+   * @return a (remainder, modulus) pair that fails to match elements of nums
    **/
   public static INT /*@Nullable*/ [] nonmodulus_strict_INT(Iterator<INTEGER> nums) {
     return nonmodulus_strict_INT_internal(new MissingNumbersIteratorINT(nums, true));
@@ -229,6 +235,8 @@ The correct way to build the system is to run 'make'.
    * but for every number in NUMS, at least one is equal to every non-r remainder.
    * The modulus is chosen as small as possible, but no greater than half the
    * range of the input numbers (else null is returned).
+   * @param nums the list of operands
+   * @return a (remainder, modulus) pair that fails to match elements of nums
    **/
   // This seems to give too many false positives (or maybe my probability
   // model was wrong); use nonmodulus_strict instead.

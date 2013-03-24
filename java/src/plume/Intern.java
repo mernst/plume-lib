@@ -26,6 +26,8 @@ public final class Intern {
   /**
    * Replace each element of the array by its interned version.
    * Side-effects the array, but also returns it.
+   * @param a the array whose elements to intern in place
+   * @return an interned version of a
    * @see String#intern
    **/
   @SuppressWarnings("interning")
@@ -44,6 +46,8 @@ public final class Intern {
   /**
    * Return true if the argument is interned (is canonical among all
    * objects equal to itself).
+   * @param value the value to test for interning
+   * @return true iff value is interned
    **/
   @SuppressWarnings("interning")
   public static boolean isInterned(/*@Nullable*/ Object value) {
@@ -331,6 +335,7 @@ public final class Intern {
   /**
    * Intern (canonicalize) an Integer.
    * Return a canonical representation for the Integer.
+   * @param a an Integer to canonicalize
    * @return a canonical representation for the Integer
    **/
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
@@ -350,13 +355,19 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Integer with value i. */
+  /** Returns an interned Integer with value i.
+   * @param i the value to intern
+   * @return an interned Integer with value i
+   */
   public static /*@Interned*/ Integer internedInteger(int i) {
     return intern(Integer.valueOf(i));
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Integer with value parsed from the string. */
+  /** Returns an interned Integer with value parsed from the string.
+   * @param s the string to parse
+   * @return an interned Integer parsed from s
+   */
   public static /*@Interned*/ Integer internedInteger(String s) {
     return intern(Integer.decode(s));
   }
@@ -365,6 +376,7 @@ public final class Intern {
   /**
    * Intern (canonicalize) a Long.
    * Return a canonical representation for the Long.
+   * @param a the value to intern
    * @return a canonical representation for the Long
    **/
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
@@ -384,13 +396,19 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Long with value i. */
+  /** Returns an interned Long with value i.
+   * @param i the value to intern
+   * @return an interned Integer with value i
+   */
   public static /*@Interned*/ Long internedLong(long i) {
     return intern(Long.valueOf(i));
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Long with value parsed from the string. */
+  /** Returns an interned Long with value parsed from the string.
+   * @param s the string to parse
+   * @return an interned Long parsed from s
+   */
   public static /*@Interned*/ Long internedLong(String s) {
     return intern(Long.decode(s));
   }
@@ -404,8 +422,9 @@ public final class Intern {
   /**
    * Intern (canonicalize) an int[].
    * Return a canonical representation for the int[] array.
-   * @return a canonical representation for the int[] array
    * Arrays are compared according to their elements.
+   * @param a the array to canonicalize
+   * @return a canonical representation for the int[] array
    **/
   @SuppressWarnings("interning")
   public static int /*@Interned*/ [] intern(int[] a) {
@@ -427,8 +446,9 @@ public final class Intern {
   /**
    * Intern (canonicalize) a long[].
    * Return a canonical representation for the long[] array.
-   * @return a canonical representation for the long[] array
    * Arrays are compared according to their elements.
+   * @param a the array to canonicalize
+   * @return a canonical representation for the long[] array
    **/
   @SuppressWarnings("interning")
   public static long /*@Interned*/ [] intern(long[] a) {
@@ -448,6 +468,7 @@ public final class Intern {
   /**
    * Intern (canonicalize) a Double.
    * Return a canonical representation for the Double.
+   * @param a the Double to canonicalize
    * @return a canonical representation for the Double
    **/
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
@@ -473,13 +494,19 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Double with value i. */
+  /** Returns an interned Double with value i.
+   * @param d the value to intern
+   * @return an interned Double with value d
+   */
   public static /*@Interned*/ Double internedDouble(double d) {
     return intern(Double.valueOf(d));
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Double with value parsed from the string. */
+  /** Returns an interned Double with value parsed from the string.
+   * @param s the string to parse
+   * @return an interned Double parsed from s
+   */
   public static /*@Interned*/ Double internedDouble(String s) {
     return internedDouble(Double.parseDouble(s));
   }
@@ -494,6 +521,7 @@ public final class Intern {
    * Intern (canonicalize) a double[].
    * Return a canonical representation for the double[] array.
    * Arrays are compared according to their elements.
+   * @param a the array to canonicalize
    * @return a canonical representation for the double[] array
    **/
   @SuppressWarnings("interning")
@@ -515,6 +543,7 @@ public final class Intern {
    * Arrays are compared according to their elements.
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
+   * @param a the array to canonicalize
    * @return a canonical representation for the String[] array
    **/
   @SuppressWarnings({"interning", // interns its argument
@@ -544,6 +573,7 @@ public final class Intern {
    * Arrays are compared according to their elements.
    * The elements should themselves already be interned;
    * they are compared using their equals() methods.
+   * @param a the array to canonicalize
    * @return a canonical representation for the Object[] array
    **/
   @SuppressWarnings({"interning", // interns its argument
@@ -570,6 +600,8 @@ public final class Intern {
    * which we have an intern() method, else an exception is thrown.
    * If the argument is an array, its elements should themselves be
    * interned.
+   * @param a an Object to canonicalize
+   * @return a canonical version of a
    **/
   public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
     if (a == null) {
@@ -614,6 +646,9 @@ public final class Intern {
    * since they are guaranteed to be ==.
    * <p>
    * Requires that seq is already interned.
+   * @param seq the sequence whose subsequence should be interned
+   * @param start the index of the start of the subsequence to be interned
+   * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
    **/
   public static int /*@Interned*/ [] internSubsequence (int /*@Interned*/ [] seq, int start, int end) {
@@ -631,6 +666,10 @@ public final class Intern {
   }
 
   /**
+   * @param seq the sequence whose subsequence should be interned
+   * @param start the index of the start of the subsequence to be interned
+   * @param end the index of the end of the subsequence to be interned
+   * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
   public static long /*@Interned*/ [] internSubsequence (long /*@Interned*/ [] seq, int start, int end) {

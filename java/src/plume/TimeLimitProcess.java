@@ -50,7 +50,7 @@ public class TimeLimitProcess extends Process {
   /**
    * Creates a TimeLimitProcess with the given time limit, in wall clock
    * milliseconds.
-   * Requires: p != null
+   * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
    **/
   public TimeLimitProcess (Process p, long timeLimit) {
@@ -60,7 +60,7 @@ public class TimeLimitProcess extends Process {
   /**
    * Creates a TimeLimitProcess with the given time limit, in wall clock
    * milliseconds.
-   * Requires: p != null
+   * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
    * @param cacheStdout
    * If true, causes the TimeLimitProcess to consume the standard output of the
@@ -90,6 +90,7 @@ public class TimeLimitProcess extends Process {
   /**
    * Returns true if the process has timed out (has run for more than the
    * timeLimit msecs specified in the constructor).
+   * @return true iff the process has timed out
    */
   public boolean timed_out() {
     return (timed_out);

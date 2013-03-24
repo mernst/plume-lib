@@ -15,6 +15,10 @@ public class Digest {
    * This convenience method is used by both create() and verify().  It
    * reads the contents of a named file and computes a message digest
    * for it, using the specified MessageDigest object.
+   * @param filename the file to read
+   * @param md the MessageDigest
+   * @return the message digest
+   * @throws IOException if there is a problem reading the file
    **/
   public static byte[] getFileDigest(String filename, MessageDigest md)
        throws IOException {
@@ -47,6 +51,8 @@ public class Digest {
    * A convenience method to convert an array of bytes to a String.  We do
    * this simply by converting each byte to two hexadecimal digits.  Something
    * like Base 64 encoding is more compact, but harder to encode.
+   * @param bytes the bytes to convert to a String
+   * @return a String representation of the input bytes
    **/
   public static String hexEncode(byte[] bytes) {
     StringBuffer s = new StringBuffer(bytes.length * 2);
@@ -59,8 +65,11 @@ public class Digest {
   }
 
   /**
-   * A convenience method to convert in the other direction, from a string
+   * A convenience method to convert from a string
    * of hexadecimal digits to an array of bytes.
+   * This method is the reverse of {@link #hexEncode(byte[])}.
+   * @param s the String to convert to an array of bytes
+   * @return the bytes equivalent to the input String
    **/
   public static byte[] hexDecode(String s) throws IllegalArgumentException {
     try {

@@ -105,6 +105,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     /**
      * Filename must be non-null.
      * If there isn't a name, clients should provide a dummy value.
+     * @param reader source from which to read entries
+     * @param filename file name corresponding to reader, for use in error messages
      */
     public FlnReader (Reader reader, String filename) {
       super(reader);
@@ -166,6 +168,15 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /** Create a EntryReader that uses the given character set.
    * @throws UnsupportedEncodingException if the charset encoding is not supported
+   * @param in source from which to read entries
+   * @param charsetName the character set to use
+   * @param filename Non-null file name for stream being read
+   * @param comment_re_string Regular expression that matches comments.
+   *                      Any text that matches comment_re is removed.
+   *                      A line that is entirely a comment is ignored.
+   * @param include_re_string Regular expression that matches include directives.
+   *                      The expression should define one group that contains
+   *                      the include file name.
    * @see #EntryReader(InputStream,String,String,String) **/
   public EntryReader (InputStream in,
                       String charsetName,
@@ -177,6 +188,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /** Create a EntryReader that does not support comments or include directives.
+   * @param in the InputStream
+   * @param charsetName the character set to use
+   * @param filename the file name
    * @throws UnsupportedEncodingException if the charset encoding is not supported
    * @see #EntryReader(InputStream,String,String,String)
    **/
@@ -189,14 +203,14 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a EntryReader
    *
-   *    @param in Initial source
+   *    @param in source from which to read entries
    *    @param filename Non-null file name for stream being read
    *    @param comment_re_string Regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
-   *                      A line that is entirely a comment is ignored
+   *                      A line that is entirely a comment is ignored.
    *    @param include_re_string Regular expression that matches include directives.
    *                      The expression should define one group that contains
-   *                      the include file name
+   *                      the include file name.
    */
   public EntryReader (InputStream in, String filename,
                       /*@Nullable*/ /*@Regex*/ String comment_re_string,
@@ -208,12 +222,15 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a EntryReader that uses the default character set and does not
    * support comments or include directives.
+   * @param in the InputStream
+   * @param filename the file name
    * @see #EntryReader(InputStream,String,String,String,String) **/
   public EntryReader (InputStream in, String filename) {
     this (in, filename, null, null);
   }
 
   /** Create a EntryReader that does not support comments or include directives.
+   * @param in the InputStream
    * @see #EntryReader(InputStream,String,String,String) **/
   public EntryReader (InputStream in) {
     this (in, "(InputStream)", null, null);
@@ -248,7 +265,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a EntryReader
    *
-   *    @param reader Initial source
+   *    @param reader source from which to read entries
+   *    @param filename file name corresponding to reader, for use in error messages
    *    @param comment_re_string Regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored
@@ -274,6 +292,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /** Create a EntryReader that does not support comments or include directives.
+   * @param reader source from which to read entries
    * @see #EntryReader(Reader,String,String,String) **/
   public EntryReader (Reader reader) {
     this (reader, reader.toString(), null, null);
@@ -342,6 +361,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /** Create a EntryReader that does not support comments or include directives.
+   * @param filename source from which to read entries
    * @throws IOException if there is a problem reading the file
    * @see #EntryReader(String,String,String) **/
   public EntryReader (String filename) throws IOException {
@@ -349,6 +369,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /** Create a EntryReader that does not support comments or include directives.
+   * @param filename source from which to read entries
+   * @param charsetName the character set to use
    * @throws IOException if there is a problem reading the file
    * @see #EntryReader(String,String,String) **/
   public EntryReader (String filename, String charsetName) throws IOException {
@@ -680,7 +702,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Puts the specified line back in the input.  Only one line can be
    * put back.
-   * @paaram line the line to be put back in the input
+   * @param line the line to be put back in the input
    */
   // TODO:  This would probably be better implemented with the "mark"
   // mechanism of BufferedReader (which is also in LineNumberReader and FlnReader).
