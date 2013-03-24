@@ -3,6 +3,10 @@ package plume;
 import java.io.Serializable;
 import java.util.*;
 
+/*>>>
+import dataflow.quals.Pure;
+*/
+
 /**
  * LimitedSizeIntSet stores up to some maximum number of unique
  * integer values, at which point its rep is nulled, in order to save space.
@@ -117,7 +121,7 @@ public class LimitedSizeIntSet
     }
   }
 
-  /*@AssertNonNullIfFalse("values")*/
+  /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
   public boolean repNulled() {
     return values == null;

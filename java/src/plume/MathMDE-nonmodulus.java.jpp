@@ -58,8 +58,8 @@ The correct way to build the system is to run 'make'.
    **/
   static final class MissingNumbersIteratorINT implements Iterator<INTEGER> {
     // Exactly one of nums and nums_itor is non-null.
-    INT /*@LazyNonNull*/ [] nums;
-    /*@LazyNonNull*/ Iterator<INTEGER> nums_itor;
+    INT /*@MonotonicNonNull*/ [] nums;
+    /*@MonotonicNonNull*/ Iterator<INTEGER> nums_itor;
     INT current_nonmissing;
     INT current_missing;
     // Used only if nums != null.
