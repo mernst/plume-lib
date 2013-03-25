@@ -261,6 +261,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * capacity and the default load factor, which is <code>0.75</code>.
      * The <code>WeakHashMap</code> uses the specified hasher for hashing
      * keys and comparing them for equality.
+     * @param h the Hasher to use when hashing values for this map
      */
     public WeakHasherMap(Hasher h) {
 	hash = new HashMap<WeakKey,V>();
