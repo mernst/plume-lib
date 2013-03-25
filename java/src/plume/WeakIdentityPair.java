@@ -33,17 +33,27 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
     hashCode = localHashCode;
   }
 
-  /** Factory method with short name and no need to name type parameters. */
+  /** Factory method with short name and no need to name type parameters.
+   * @param <A> type of first argument
+   * @param <B> type of second argument
+   * @param a first argument
+   * @param b second argument
+   * @return a WeakIdentityPair of (a, b)
+   */
   public static <A extends Object, B extends Object> WeakIdentityPair<A, B> of(A a, B b) {
     return new WeakIdentityPair<A, B>(a, b);
   }
 
-  /** Return the first element of the pair, or null if it has been garbage-collected. */
+  /** Return the first element of the pair, or null if it has been garbage-collected.
+   * @return the first element of the pail, or null if it has been garbage-collected
+   */
   public /*@Nullable*/ T1 getA() {
     return a.get();
   }
 
-  /** Return the second element of the pair, or null if it has been garbage-collected. */
+  /** Return the second element of the pair, or null if it has been garbage-collected.
+   * @return the second element of the pair, or null if it has been garbage-collected
+   */
   public /*@Nullable*/ T2 getB() {
     return b.get();
   }
