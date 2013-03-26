@@ -2164,10 +2164,10 @@ public final class UtilMDE {
   /**
    * Return a new string which is the text of target with all instances of
    * oldStr replaced by newStr.
-   * @param target TODO
-   * @param oldStr TODO
-   * @param newStr TODO
-   * @return TODO
+   * @param target the string to do replacement in
+   * @param oldStr the substring to replace
+   * @param newStr the replacement
+   * @return target with all instances of oldStr replaced by newStr
    **/
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) throw new IllegalArgumentException();
@@ -2190,9 +2190,9 @@ public final class UtilMDE {
    * Always returns an array of length at least 1 (it might contain only the
    * empty string).
    * @see #split(String s, String delim)
-   * @param s TODO
-   * @param delim TODO
-   * @return TODO
+   * @param s the string to split
+   * @param delim delimiter to split the string on
+   * @return array of length at least 1, containing s split on delimiter
    **/
   public static String[] split(String s, char delim) {
     ArrayList<String> result_list = new ArrayList<String>();
@@ -2212,9 +2212,9 @@ public final class UtilMDE {
    * Always returns an array of length at least 1 (it might contain only the
    * empty string).
    * @see #split(String s, char delim)
-   * @param s TODO
-   * @param delim TODO
-   * @return TODO
+   * @param s the string to split
+   * @param delim delimiter to split the string on
+   * @return array of length at least 1, containing s split on delimiter
    **/
   public static String[] split(String s, String delim) {
     int delimlen = delim.length();
@@ -2238,21 +2238,21 @@ public final class UtilMDE {
    * empty string).  All common line separators (cr, lf, cr-lf, or lf-cr)
    * are supported.  Note that a string that ends with a line separator
    * will return an empty string as the last element of the array.
-   * @return an array of Strings, one for each line in the argument
    * @see #split(String s, char delim)
-   * @param s TODO
+   * @param s the string to split
+   * @return an array of Strings, one for each line in the argument
    **/
   public static String[] splitLines(String s) {
     return s.split ("\r\n?|\n\r?", -1);
   }
 
   /**
-   * Concatenate the string representations of the objects, placing the
+   * Concatenate the string representations of the array elements, placing the
    * delimiter between them.
    * @see plume.ArraysMDE#toString(int[])
-   * @param a TODO
-   * @param delim TODO
-   * @return TODO
+   * @param a array of values to concatenate
+   * @param delim delimiter to place between printed representations
+   * @return the concatenation of the string representations of the values, with the delimiter between
    **/
   public static String join(Object[] a, String delim) {
     if (a.length == 0) return "";
@@ -2267,8 +2267,8 @@ public final class UtilMDE {
    * Concatenate the string representations of the objects, placing the
    * system-specific line separator between them.
    * @see plume.ArraysMDE#toString(int[])
-   * @param a TODO
-   * @return TODO
+   * @param a array of values to concatenate
+   * @return the concatenation of the string representations of the values, each on its own line
    **/
   public static String joinLines(Object... a) {
     return join(a, lineSep);
@@ -2278,9 +2278,9 @@ public final class UtilMDE {
    * Concatenate the string representations of the objects, placing the
    * delimiter between them.
    * @see java.util.AbstractCollection#toString()
-   * @param v TODO
-   * @param delim TODO
-   * @return TODO
+   * @param v list of values to concatenate
+   * @param delim delimiter to place between printed representations
+   * @return the concatenation of the string representations of the values, with the delimiter between
    **/
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) return "";
@@ -2295,12 +2295,25 @@ public final class UtilMDE {
   /**
    * Concatenate the string representations of the objects, placing the
    * system-specific line separator between them.
+   * @deprecated use single-argument version
    * @see java.util.AbstractCollection#toString()
-   * @param v TODO
-   * @param delim TODO
-   * @return TODO
+   * @param v list of values to concatenate
+   * @param delim ignore
+   * @return the concatenation of the string representations of the values each on its own line
    **/
+  @Deprecated
   public static String joinLines(List<String> v, String delim) {
+    return join(v, lineSep);
+  }
+
+  /**
+   * Concatenate the string representations of the objects, placing the
+   * system-specific line separator between them.
+   * @see java.util.AbstractCollection#toString()
+   * @param v list of values to concatenate
+   * @return the concatenation of the string representations of the values, each on its own line
+   **/
+  public static String joinLines(List<String> v) {
     return join(v, lineSep);
   }
 
@@ -2310,8 +2323,8 @@ public final class UtilMDE {
    * modifications were necessary.  The intent is that by surrounding
    * the return value with double quote marks, the result will be a
    * Java string literal denoting the original string.
-   * @param orig TODO
-   * @return TODO
+   * @param orig string to quote
+   * @return quoted version of orig
    **/
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
@@ -2356,8 +2369,8 @@ public final class UtilMDE {
   // The overhead of this is too high to call in escapeNonJava(String), so
   // it is inlined there.
   /** Like {@link #escapeNonJava(String)}, but for a single character.
-   * @param ch TODO
-   * @return TODO
+   * @param ch character to quote
+   * @return quoted version och ch
    */
   public static String escapeNonJava(Character ch) {
     char c = ch.charValue();
@@ -2379,8 +2392,8 @@ public final class UtilMDE {
    * Escape unprintable characters in the target, following the usual
    * Java backslash conventions, so that the result is sure to be
    * printable ASCII.  Returns a new string.
-   * @param orig TODO
-   * @return TODO
+   * @param orig string to quote
+   * @return quoted version of orig
    **/
   public static String escapeNonASCII(String orig) {
     StringBuffer sb = new StringBuffer();
@@ -2395,6 +2408,8 @@ public final class UtilMDE {
   /**
    * Like escapeNonJava(), but quote more characters so that the
    * result is sure to be printable ASCII. Not particularly optimized.
+   * @param c character to quote
+   * @return quoted version of c
    **/
   private static String escapeNonASCII(char c) {
     if (c == '"') {
@@ -2428,8 +2443,8 @@ public final class UtilMDE {
    * (for instance, octal/hex escape sequences are not turned into
    * their respective characters). This is the inverse operation of
    * escapeNonJava(). Previously known as unquote().
-   * @param orig TODO
-   * @return TODO
+   * @param orig string to quoto
+   * @return quoted version of orig
    **/
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
@@ -2523,10 +2538,9 @@ public final class UtilMDE {
 
 
   /** Remove all whitespace before or after instances of delimiter.
-   * @param arg TODO
-   * @param delimiter TODO
-   * @param arg TODO
-   * @return TODO
+   * @param arg string to remove whitespace in
+   * @param delimiter string to remove whitespace abutting
+   * @return version of arg, with whitespace abutting delimiter removed
    **/
   public static String removeWhitespaceAround(String arg, String delimiter) {
     arg = removeWhitespaceBefore(arg, delimiter);
@@ -2535,10 +2549,9 @@ public final class UtilMDE {
   }
 
   /** Remove all whitespace after instances of delimiter.
-   * @param arg TODO
-   * @param delimiter TODO
-   * @param arg TODO
-   * @return TODO
+   * @param arg string to remove whitespace in
+   * @param delimiter string to remove whitespace after
+   * @return version of arg, with whitespace after delimiter removed
    **/
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
@@ -2564,10 +2577,9 @@ public final class UtilMDE {
   }
 
   /** Remove all whitespace before instances of delimiter.
-   * @param arg TODO
-   * @param delimiter TODO
-   * @param arg TODO
-   * @return TODO
+   * @param arg string to remove whitespace in
+   * @param delimiter string to remove whitespace before
+   * @return version of arg, with whitespace before delimiter removed
    **/
   public static String removeWhitespaceBefore(String arg, String delimiter) {
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
@@ -2597,9 +2609,9 @@ public final class UtilMDE {
   /**
    * Return either "n <em>noun</em>" or "n <em>noun</em>s" depending on n.
    * Adds "es" to words ending with "ch", "s", "sh", or "x".
-   * @return pluralization of noun, if n differs from 1
-   * @param n TODO
-   * @param noun TODO
+   * @param n count of nouns
+   * @param noun word being counted
+   * @return noun, if n==1; otherwise, pluralization of noun
    */
   public static String nplural(int n, String noun) {
     if (n == 1)
@@ -2615,9 +2627,9 @@ public final class UtilMDE {
   /**
    * Returns a string of the specified length, truncated if necessary,
    * and padded with spaces to the left if necessary.
-   * @param s TODO
-   * @param length TODO
-   * @return TODO
+   * @param s string to truncate or pad
+   * @param length goal length
+   * @return s truncated or padded to length characters
    */
   public static String lpad(String s, int length) {
     if (s.length() < length) {
@@ -2634,9 +2646,9 @@ public final class UtilMDE {
   /**
    * Returns a string of the specified length, truncated if necessary,
    * and padded with spaces to the right if necessary.
-   * @param s TODO
-   * @param length TODO
-   * @return TODO
+   * @param s string to truncate or pad
+   * @param length goal length
+   * @return s truncated or padded to length characters
    */
   public static String rpad(String s, int length) {
     if (s.length() < length) {
@@ -2651,18 +2663,18 @@ public final class UtilMDE {
   }
 
   /** Converts the int to a String, then formats it using {@link #rpad(String,int)}.
-   * @param num TODO
-   * @param length TODO
-   * @return TODO
+   * @param num int whose string representation to truncate or pad
+   * @param length goal length
+   * @return a string representation of num truncated or padded to length characters
    */
   public static String rpad(int num, int length) {
     return rpad(String.valueOf(num), length);
   }
 
   /** Converts the double to a String, then formats it using {@link #rpad(String,int)}.
-   * @param num TODO
-   * @param length TODO
-   * @return TODO
+   * @param num double whose string representation to truncate or pad
+   * @param length goal length
+   * @return a string representation of num truncated or padded to length characters
    */
   public static String rpad(double num, int length) {
     return rpad(String.valueOf(num), length);
@@ -2684,10 +2696,9 @@ public final class UtilMDE {
   }
 
   /** Return the number of times the character appears in the string.
-   * @param s TODO
-   * @param ch TODO
-   * @param s TODO
-   * @return TODO
+   * @param s string to search in
+   * @param ch character to search for
+   * @return number of times the character appears in the string
    **/
   public static int count(String s, int ch) {
     int result = 0;
@@ -2700,10 +2711,9 @@ public final class UtilMDE {
   }
 
   /** Return the number of times the second string appears in the first.
-   * @param s TODO
-   * @param sub TODO
-   * @param s TODO
-   * @return TODO
+   * @param s string to search in
+   * @param sub string to search for
+   * @return number of times the substring appears in the string
    **/
   public static int count(String s, String sub) {
     int result = 0;
@@ -2727,21 +2737,21 @@ public final class UtilMDE {
    * The static type is Vector&lt;Object&gt; because StringTokenizer extends
    * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should
    * (probably due to backward-compatibility).
-   * @param str TODO
-   * @param delim TODO
-   * @param returnTokens TODO
-   * @return TODO
+   * @param str a string to be parsed
+   * @param delim the delimiters
+   * @param returnDelims flag indicating whether to return the delimiters as tokens.
+   * @return vector of strings resulting from tokenization
    **/
-  public static Vector<Object> tokens(String str, String delim, boolean returnTokens) {
-    return makeVector(new StringTokenizer(str, delim, returnTokens));
+  public static Vector<Object> tokens(String str, String delim, boolean returnDelims) {
+    return makeVector(new StringTokenizer(str, delim, returnDelims));
   }
 
   /**
    * Return a Vector of the Strings returned by
    * {@link java.util.StringTokenizer#StringTokenizer(String,String)} with the given arguments.
-   * @param str TODO
-   * @param delim TODO
-   * @return TODO
+   * @param str a string to be parsed
+   * @param delim the delimiters
+   * @return vector of strings resulting from tokenization
    **/
   public static Vector<Object> tokens(String str, String delim) {
     return makeVector(new StringTokenizer(str, delim));
@@ -2750,8 +2760,8 @@ public final class UtilMDE {
   /**
    * Return a Vector of the Strings returned by
    * {@link java.util.StringTokenizer#StringTokenizer(String)} with the given arguments.
-   * @param str TODO
-   * @return TODO
+   * @param str a string to be parsed
+   * @return vector of strings resulting from tokenization
    **/
   public static Vector<Object> tokens(String str) {
     return makeVector(new StringTokenizer(str));
