@@ -426,7 +426,7 @@ public class OptionsDoclet {
   /**
    * Get the result of inserting the options documentation into the docfile.
    */
-  /*@NonNullOnEntry("docFile")*/
+  /*@RequiresNonNull("docFile")*/
   private String newDocFileText() throws Exception {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
     BufferedReader doc = new BufferedReader(new FileReader(docFile));
