@@ -188,14 +188,13 @@ public final class UtilMDE {
    * Returns a Reader for the file, accounting for the possibility
    * that the file is compressed.
    * (A file whose name ends with ".gz" is treated as compressed.)
-   * @param charsetName may be null, or the name of a Charset
    * <p>
    * Warning: The "gzip" program writes and reads files containing
    * concatenated gzip files.  As of Java 1.4, Java reads
    * just the first one:  it silently discards all characters (including
    * gzipped files) after the first gzipped file.
    * @param file the possibly-compressed file to read
-   * @param charsetName the character set to use when reading the file
+   * @param charsetName null, or the name of a Charset to use when reading the file
    * @return an InputStreamReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
@@ -2743,8 +2742,8 @@ public final class UtilMDE {
    * @param returnDelims flag indicating whether to return the delimiters as tokens.
    * @return vector of strings resulting from tokenization
    **/
-  public static Vector<Object> tokens(String str, String delim, boolean returnTokens) {
-    return makeVector(new StringTokenizer(str, delim, returnTokens));
+  public static Vector<Object> tokens(String str, String delim, boolean returnDelims) {
+    return makeVector(new StringTokenizer(str, delim, returnDelims));
   }
 
   /**
