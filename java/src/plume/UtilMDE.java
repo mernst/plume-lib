@@ -2314,7 +2314,7 @@ public final class UtilMDE {
    * @param v list of values to concatenate
    * @return the concatenation of the string representations of the values, each on its own line
    **/
-  public static String joinLines(List<String> v, String delim) {
+  public static String joinLines(List<String> v) {
     return join(v, lineSep);
   }
 
