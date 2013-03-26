@@ -1324,7 +1324,7 @@ public final class ArraysMDE {
         return a;
       } else {
         @SuppressWarnings("unchecked")
-          T[] result = (T[]) new /*@LazyNonNull*/ Object[a.length + b.length];
+          T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.length + b.length];
 
         System.arraycopy(a, 0, result, 0, a.length);
         System.arraycopy(b, 0, result, a.length, b.length);
@@ -1357,7 +1357,7 @@ public final class ArraysMDE {
         return a;
       } else {
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new /*@LazyNonNull*/ Object[a.length + b.size()];
+        T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.length + b.size()];
 
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
@@ -1393,7 +1393,7 @@ public final class ArraysMDE {
         return toTArray(a);
       } else {
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new /*@LazyNonNull*/ Object[a.size() + b.length];
+        T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.size() + b.length];
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i=0; i<a.size(); i++) {
@@ -1429,7 +1429,7 @@ public final class ArraysMDE {
         return toTArray(a);
       } else {
         @SuppressWarnings("unchecked")
-        T[] result = (T[]) new /*@LazyNonNull*/ Object[a.size() + b.size()];
+        T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.size() + b.size()];
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i=0; i<a.size(); i++) {
