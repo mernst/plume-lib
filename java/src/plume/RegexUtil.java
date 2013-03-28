@@ -6,6 +6,8 @@ import java.util.regex.PatternSyntaxException;
 /*>>>
 import checkers.nullness.quals.*;
 import checkers.regex.quals.*;
+import checkers.quals.EnsuresAnnotationIf;
+import dataflow.quals.Pure;
 */
 
 // This class should be kept in sync with checkers.regex.RegexUtil .
@@ -133,7 +135,9 @@ public class RegexUtil {
    * @param s string to check for being a regular expression
    * @return true iff s is a regular expression
    */
-  public static boolean isRegex(String s) {
+  /*@Pure*/
+  /*@EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)*/
+  public static boolean isRegex(final String s) {
     return isRegex(s, 0);
   }
 
@@ -146,8 +150,9 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
+  @Pure
+  @EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)
   */
-  /*@Pure*/
   public static boolean isRegex(String s, int groups) {
     Pattern p;
     try {
@@ -166,8 +171,9 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
+  @Pure
+  @EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)
   */
-  /*@Pure*/
   public static boolean isRegex(char c) {
     return isRegex(Character.toString(c));
   }
@@ -181,8 +187,8 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
+  @Pure
   */
-  /*@Pure*/
   public static /*@Nullable*/ String regexError(String s) {
     return regexError(s, 0);
   }
@@ -221,8 +227,8 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
+  @Pure
   */
-  /*@Pure*/
   public static /*@Nullable*/ PatternSyntaxException regexException(String s) {
     return regexException(s, 0);
   }
@@ -237,8 +243,8 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
+  @Pure
   */
-  /*@Pure*/
   public static /*@Nullable*/ PatternSyntaxException regexException(String s, int groups) {
     try {
       Pattern p = Pattern.compile(s);
@@ -261,6 +267,7 @@ public class RegexUtil {
    * @return its argument
    * @throws Error if argument is not a regex
    */
+  /*@Pure*/
   public static /*@Regex*/ String asRegex(String s) {
     return asRegex(s, 0);
   }
@@ -277,8 +284,8 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
+  @Pure
   */
-  /*@Pure*/
   public static /*@Regex*/ String asRegex(String s, int groups) {
     try {
       Pattern p = Pattern.compile(s);
