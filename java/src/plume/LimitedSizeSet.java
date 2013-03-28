@@ -3,6 +3,9 @@ package plume;
 import java.io.Serializable;
 import java.util.*;
 
+/*>>>
+import dataflow.quals.Pure;
+*/
 
 /**
  * LimitedSizeSet stores up to some maximum number of unique
@@ -115,7 +118,7 @@ public class LimitedSizeSet<T>
     }
   }
 
-  /*@AssertNonNullIfFalse("values")*/
+  /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
   public boolean repNulled() {
     return values == null;
