@@ -2058,7 +2058,7 @@ public final class UtilMDE {
         throw new Error("This can't happen: " + e);
       }
       c = c.getSuperclass();
-      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+      assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }
@@ -2090,7 +2090,7 @@ public final class UtilMDE {
         // nothing to do; will now examine superclass
       }
       c = c.getSuperclass();
-      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+      assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }

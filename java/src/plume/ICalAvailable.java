@@ -342,7 +342,7 @@ public class ICalAvailable {
     // "Object" because PeriodList extends TreeSet, but it really ought to
     // extend TreeSet</*@NonNull*/ Period>
     for (Object p : pl) {
-      assert p != null : "@SuppressWarnings(nullness): non-generic container class; elements are non-null";
+      assert p != null : "@AssumeAssertion(nullness): non-generic container class; elements are non-null";
       result.append(rangeString((Period)p, tz) + "\n");
     }
     return result.toString();

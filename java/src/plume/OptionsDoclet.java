@@ -395,7 +395,7 @@ public class OptionsDoclet {
     if (outFile != null) {
       out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
     } else if (inPlace) {
-      assert docFile != null : "@SuppressWarnings(nullness): dependent: docFile is non-null if inPlace is true";
+      assert docFile != null : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
       out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
     } else {
       out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -503,7 +503,7 @@ public class OptionsDoclet {
     oi.enum_jdoc = new LinkedHashMap<String, String>();
 
     for (Enum<?> constant : constants) {
-      assert oi.enum_jdoc != null : "@SuppressWarnings(nullness): bug in flow?";
+      assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): bug in flow?";
       oi.enum_jdoc.put(constant.name(), "");
     }
 
@@ -511,7 +511,7 @@ public class OptionsDoclet {
     if (enum_doc == null)
       return;
 
-    assert oi.enum_jdoc != null : "@SuppressWarnings(nullness): bug in flow?";
+    assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): bug in flow?";
     for (String name : oi.enum_jdoc.keySet()) {
       for (FieldDoc fd : enum_doc.fields()) {
         if (fd.name().equals(name)) {
@@ -630,7 +630,7 @@ public class OptionsDoclet {
     }
     if (oi.base_type.isEnum()) {
       b.append("<ul>");
-      assert oi.enum_jdoc != null : "@SuppressWarnings(nullness): dependent: non-null if oi.base_type is an enum";
+      assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
         b.append("<li><b>").append(entry.getKey()).append("</b>");
         if (entry.getValue().length() != 0)
