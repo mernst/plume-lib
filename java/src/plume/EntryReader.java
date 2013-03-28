@@ -537,8 +537,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     if (entry_start_re != null)
       entry_match = entry_start_re.matcher (line);
     if ((entry_match != null) && entry_match.find()) {
-      assert entry_start_re != null : "@SuppressWarnings(nullness): dependent: entry_match != null";
-      assert entry_stop_re != null : "@SuppressWarnings(nullness): dependent: entry_start_re != null";
+      assert entry_start_re != null : "@AssumeAssertion(nullness): dependent: entry_match != null";
+      assert entry_stop_re != null : "@AssumeAssertion(nullness): dependent: entry_start_re != null";
 
       // Remove entry match from the line
       if (entry_match.groupCount() > 0) {

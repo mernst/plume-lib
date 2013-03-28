@@ -1291,7 +1291,7 @@ public class Options {
                               arg_value, arg_name);
     }
 
-    assert val != null : "@SuppressWarnings(nullness)";
+    assert val != null : "@AssumeAssertion(nullness)";
     return val;
   }
 

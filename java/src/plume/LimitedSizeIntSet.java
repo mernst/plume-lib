@@ -77,7 +77,7 @@ public class LimitedSizeIntSet
       }
     }
     for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@SuppressWarnings(nullness): no relevant side effect:  add's side effects do not affect s.values, whether or not this == s";
+      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values, whether or not this == s";
       add(s.values[i]);
       if (repNulled()) {
         return;                 // optimization, not necessary for correctness
