@@ -80,7 +80,7 @@ public class TaskManager {
     /*@Nullable*/ String notes;
 
     /*@EnsuresNonNull({"filename", "task", "responsible", "duration", "completed"})*/
-    private void checkRep(/*Raw(Object.class)*/ Task this) {
+    private void checkRep(/*>>> @Raw(Object.class) Task this*/) {
       assert filename != null : "No filename at line " + line_number;
       assert task != null : "No task at line " + line_number;
       assert responsible != null : "No responsible at line " + line_number;
