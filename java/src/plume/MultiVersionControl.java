@@ -1024,7 +1024,7 @@ public class MultiVersionControl {
           System.out.println("bzr handling not yet implemented: skipping " + c.directory);
           break;
         case CVS:
-          assert c.module != null : "@SuppressWarnings(nullness): dependent type CVS";
+          assert c.module != null : "@AssumeAssertion(nullness): dependent type CVS";
           pb.command(cvs_executable, "-d", c.repository, "checkout",
                      "-P", // prune empty directories
                      "-ko", // no keyword substitution
