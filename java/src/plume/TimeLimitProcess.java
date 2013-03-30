@@ -77,7 +77,9 @@ public class TimeLimitProcess extends Process {
       System.out.printf("new timelimit process, timeLimit=%s, cacheStdout=%s%n",
                         timeLimit, cacheStdout);
     }
-    timer.schedule(new TPTimerTask(this, timeLimit), timeLimit);
+    @SuppressWarnings("rawness") // tptt won't do anything with this until this is fully initialized
+    TPTimerTask tptt = new TPTimerTask(this, timeLimit);
+    timer.schedule(tptt, timeLimit);
     if (cacheStdout) {
       cached_stdout = new StringWriter();
       cached_stderr = new StringWriter();

@@ -45,11 +45,11 @@ public class FuzzyFloat {
   }
 
   /**
-   * Set the relative diff.
+   * Set all the fields of this class.
    * @param rel_diff the new relative diff to use
    * @see #FuzzyFloat
    */
-  public void set_rel_diff (double rel_diff) {
+  public void set_rel_diff (/*>>> @Raw FuzzyFloat this,*/ double rel_diff) {
     min_ratio = 1 - rel_diff;
     max_ratio = 1 + rel_diff;
     off = (rel_diff == 0.0);
