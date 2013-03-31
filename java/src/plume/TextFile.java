@@ -142,6 +142,8 @@ public class TextFile implements Iterable<String> {
             throw new UnsupportedOperationException();
         }
 
+        /*@Pure*/
+        /*@RequiresNonNull("in")*/
         void getNextLine() {
             if (!closed) {
                 try { nextline = in.readLine(); }

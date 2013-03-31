@@ -28,17 +28,14 @@ public class StrTok {
 
   Reader reader;
   public StreamTokenizer stok;
-  Error err = new Error();
+  Error err;
 
   /**
    * Creates a tokenizer for the specified string.
    * @param s string to tokenize
    */
   public StrTok (String s) {
-
-    reader = new StringReader (s);
-    stok = new StreamTokenizer (reader);
-    stok.wordChars ('_', '_');
+    this(s, new Error());
   }
 
   /**
@@ -48,7 +45,9 @@ public class StrTok {
    * @param e error handler
    */
   public StrTok (String s, Error e) {
-    this(s);
+    reader = new StringReader (s);
+    stok = new StreamTokenizer (reader);
+    stok.wordChars ('_', '_');
     set_error_handler (e);
   }
 
@@ -180,6 +179,7 @@ public class StrTok {
    * @param err the new error handler
    * @see Error
    */
+  /*@EnsuresNonNull("this.err")*/
   public void set_error_handler (Error err) {
     this.err = err;
   }
@@ -211,7 +211,7 @@ public class StrTok {
     if (!isWord()) {
       err.tok_error (String.format ("'%s' found where identifier expected", t));
     }
-    assert t != null : "@SuppressWarnings(nullness): dependent: because of isWord check";
+    assert t != null : "@AssumeAssertion(nullness): dependent: because of isWord check";
     return t;
   }
 
