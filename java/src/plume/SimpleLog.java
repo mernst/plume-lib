@@ -225,7 +225,8 @@ public final class SimpleLog {
   }
 
   /** Push a new start time onto the stack. */
-  public final void push_start_time() {
+  /*@RequiresNonNull("start_times")*/
+  public final void push_start_time(/*>>> @Raw SimpleLog this*/) {
     if (enabled)
       start_times.push (System.currentTimeMillis());
   }

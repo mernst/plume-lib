@@ -700,7 +700,7 @@ public class Options {
    * Like getAnnotation, but returns null (and prints a warning) rather
    * than throwing an exception.
    */
-  private <T extends Annotation> /*@Nullable*/ T
+  private static <T extends Annotation> /*@Nullable*/ T
   safeGetAnnotation(Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
     try {

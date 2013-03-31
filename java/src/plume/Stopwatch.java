@@ -33,7 +33,7 @@ public final class Stopwatch {
     elapsedMillis = 0;
   }
 
-  public void start() {
+  public void start(/*>>> @Raw Stopwatch this*/) {
     if (startTime != 0) {
       throw new Error("Stopwatch is not stopped");
     }
