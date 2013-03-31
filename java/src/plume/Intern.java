@@ -315,7 +315,11 @@ public final class Intern {
   // Delegates to the builtin String.intern() method.  Provided for
   // completeness, so we can intern() any type used in OneOf.java.jpp.
   public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
-    return (a == null) ? null : a.intern();
+    // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
+    if (a == null) {
+      return null;
+    }
+    return a.intern();
   }
 
   // Interns a long.

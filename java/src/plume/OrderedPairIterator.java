@@ -44,12 +44,12 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
   }
   /** Set the next1 variable. */
   /*@RequiresNonNull("itor1")*/
-  private void setnext1(/*>>> @Raw OrderedPairIterator this*/) {
+  private void setnext1(/*>>> @Raw OrderedPairIterator<T> this*/) {
     next1 = itor1.hasNext() ? itor1.next() : null;
   }
   /** Set the next2 variable. */
   /*@RequiresNonNull("itor2")*/
-  private void setnext2(/*>>> @Raw OrderedPairIterator this*/) {
+  private void setnext2(/*>>> @Raw OrderedPairIterator<T> this*/) {
     next2 = itor2.hasNext() ? itor2.next() : null;
   }
   // Have the caller do this directly, probably.
