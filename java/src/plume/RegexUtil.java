@@ -149,7 +149,7 @@ public class RegexUtil {
    * @return true iff s is a regular expression with groups groups
    */
   /*>>>
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings({"regex","pure"})    // RegexUtil; for purity, catches an exception
   @Pure
   @EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)
   */
@@ -316,6 +316,7 @@ public class RegexUtil {
    * @param p pattern whose groups to count
    * @return the count of groups in the argument
    */
+  /*@Pure*/  // pure wrt equals() but not ==
   private static int getGroupCount(Pattern p) {
     return p.matcher("").groupCount();
   }

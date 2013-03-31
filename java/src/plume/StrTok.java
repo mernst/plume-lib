@@ -28,17 +28,14 @@ public class StrTok {
 
   Reader reader;
   public StreamTokenizer stok;
-  Error err = new Error();
+  Error err;
 
   /**
    * Creates a tokenizer for the specified string.
    * @param s string to tokenize
    */
   public StrTok (String s) {
-
-    reader = new StringReader (s);
-    stok = new StreamTokenizer (reader);
-    stok.wordChars ('_', '_');
+    this(s, new Error());
   }
 
   /**
@@ -48,7 +45,9 @@ public class StrTok {
    * @param e error handler
    */
   public StrTok (String s, Error e) {
-    this(s);
+    reader = new StringReader (s);
+    stok = new StreamTokenizer (reader);
+    stok.wordChars ('_', '_');
     set_error_handler (e);
   }
 
@@ -180,6 +179,7 @@ public class StrTok {
    * @param err the new error handler
    * @see Error
    */
+  /*@EnsuresNonNull("this.err")*/
   public void set_error_handler (Error err) {
     this.err = err;
   }
