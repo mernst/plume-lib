@@ -345,6 +345,7 @@ public class MultiVersionControl {
     parseArgs(args);
   }
 
+  /*@RequiresNonNull("dir")*/
   /*@EnsuresNonNull("action")*/
   public void parseArgs(/*>>> @Raw MultiVersionControl this,*/ String[] args) {
     Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
