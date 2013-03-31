@@ -82,7 +82,7 @@ public class LimitedSizeSet<T>
     for (int i=0; i < num_values; i++) {
       @SuppressWarnings("nullness") // object invariant: used portion of array
       T value = values[i];
-      if (value.equals(elt)) {
+      if (value == elt || (value != null && value.equals(elt))) {
         return true;
       }
     }
