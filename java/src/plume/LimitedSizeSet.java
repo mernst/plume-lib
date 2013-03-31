@@ -77,6 +77,7 @@ public class LimitedSizeSet<T>
     }
   }
 
+  @SuppressWarnings("pure") // pure wrt equals() but not ==: throws a new exception
   /*@Pure*/
   public boolean contains(T elt) {
     if (values == null) {

@@ -345,10 +345,8 @@ public class MultiVersionControl {
     parseArgs(args);
   }
 
-  // Receiver is actually raw, because "action" field is not set.  Why
-  // doesn't the nullness checker complain about the lack of that annotation?
   /*@EnsuresNonNull("action")*/
-  public void parseArgs(String[] args) {
+  public void parseArgs(/*>>> @Raw MultiVersionControl this,*/ String[] args) {
     Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse_or_usage (args);
     if (remaining_args.length != 1) {
@@ -463,7 +461,7 @@ public class MultiVersionControl {
     }
 
     /** If the directory exists, then the subdirectory must exist too. */
-    private void assertSubdirExists(File directory, String subdirName) {
+    private static void assertSubdirExists(File directory, String subdirName) {
       if (directory.exists()
           && ! new File(directory, subdirName).isDirectory()) {
         System.err.printf("Directory %s exists but %s subdirectory does not exist%n",
