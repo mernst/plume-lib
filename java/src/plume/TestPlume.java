@@ -1086,6 +1086,7 @@ public final class TestPlume extends TestCase {
     }
   }
 
+  // Create a LimitedSizeSet of the given size, and add elements to it.
   private static void lsis_test(int max_size) {
     LimitedSizeSet<Integer> s = new LimitedSizeSet<Integer>(max_size);
     for (int i=1; i<2*max_size; i++) {
@@ -1096,10 +1097,27 @@ public final class TestPlume extends TestCase {
     }
   }
 
+  private static void lss_with_null_test() {
+    LimitedSizeSet</*@Nullable*/ Integer> s = new LimitedSizeSet</*@Nullable*/ Integer>(10);
+    s.add(1);
+    s.add(2);
+    s.add(null);
+    assert s.size() == 3;
+    assert s.contains(1);
+    assert s.contains(null);
+    s.add(3);
+    assert s.size() == 4;
+    assert s.contains(1);
+    assert s.contains(null);
+    assert s.contains(3);
+  }
+
+
   public static void testLimitedSizeSet() {
     for (int i=1; i<10; i++) {
       lsis_test(i);
     }
+    lss_with_null_test();
   }
 
   // This cannot be static because it instantiates an inner class.
@@ -2122,20 +2140,21 @@ public final class TestPlume extends TestCase {
     // This is tested by the tokens methods.
     // public static Vector makeVector(Enumeration e)
 
-    assert UtilMDE.human_readable(5).equals("5.00");
-    assert UtilMDE.human_readable(5000).equals("5.00K");
-    assert UtilMDE.human_readable(5000000).equals("5.00M");
-    assert UtilMDE.human_readable(1000000000).equals("1.00G");
-    assert UtilMDE.human_readable(1).equals("1.00");
-    assert UtilMDE.human_readable(12).equals("12.0");
-    assert UtilMDE.human_readable(123).equals("123");
-    assert UtilMDE.human_readable(1234).equals("1.23K");
-    assert UtilMDE.human_readable(12345).equals("12.3K");
-    assert UtilMDE.human_readable(123456).equals("123K");
-    assert UtilMDE.human_readable(1234567).equals("1.23M");
-    assert UtilMDE.human_readable(12345678).equals("12.3M");
-    assert UtilMDE.human_readable(123456789).equals("123M");
-    assert UtilMDE.human_readable(1234567890).equals("1.23G");
+
+    assert UtilMDE.abbreviateNumber(5).equals("5.00");
+    assert UtilMDE.abbreviateNumber(5000).equals("5.00K");
+    assert UtilMDE.abbreviateNumber(5000000).equals("5.00M");
+    assert UtilMDE.abbreviateNumber(1000000000).equals("1.00G");
+    assert UtilMDE.abbreviateNumber(1).equals("1.00");
+    assert UtilMDE.abbreviateNumber(12).equals("12.0");
+    assert UtilMDE.abbreviateNumber(123).equals("123");
+    assert UtilMDE.abbreviateNumber(1234).equals("1.23K");
+    assert UtilMDE.abbreviateNumber(12345).equals("12.3K");
+    assert UtilMDE.abbreviateNumber(123456).equals("123K");
+    assert UtilMDE.abbreviateNumber(1234567).equals("1.23M");
+    assert UtilMDE.abbreviateNumber(12345678).equals("12.3M");
+    assert UtilMDE.abbreviateNumber(123456789).equals("123M");
+    assert UtilMDE.abbreviateNumber(1234567890).equals("1.23G");
 
   }
 
