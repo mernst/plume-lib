@@ -3079,10 +3079,25 @@ public final class UtilMDE {
    * "65.0M" for 65000000.  K stands for 1000, not 1024; M stands for
    * 1000000, not 1048576, etc.  There are always exactly 3 decimal digits
    * of precision in the result (counting both sides of the decimal point).
+   * @deprecated Use {@link abbreviateNumber}
    * @param val a numeric value
    * @return an abbreviated string representation of the value
    */
+  @Deprecated
   public static String human_readable (long val) {
+    return abbreviateNumber(val);
+  }
+
+
+  /**
+   * Convert a number into an abbreviation such as "5.00K" for 5000 or
+   * "65.0M" for 65000000.  K stands for 1000, not 1024; M stands for
+   * 1000000, not 1048576, etc.  There are always exactly 3 decimal digits
+   * of precision in the result (counting both sides of the decimal point).
+   * @param val a numeric value
+   * @return an abbreviated string representation of the value
+   */
+  public static String abbreviateNumber (long val) {
 
     double dval = (double) val;
     String mag = "";
