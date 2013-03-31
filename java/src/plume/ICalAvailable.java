@@ -101,7 +101,7 @@ public class ICalAvailable {
   // don't need "e.g.: America/New_York" in message:  the default is an example
   @Option(value="<timezone> time zone, e.g.: America/New_York", noDocDefault=true)
   public static String timezone1 = TimeZone.getDefault().getID();
-  static TimeZone tz1 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone1));
+  static TimeZone tz1; // attempting to initialize tz here causes an exception
   // If I'm outputting in a different timezone, then my notion of a "day"
   // may be different than the other timezone's notion of a "day".  This
   // doesn't seem important enough to fix right now.
@@ -140,7 +140,7 @@ public class ICalAvailable {
     }
 
     // Convert Strings to TimeZones
-    //done elsewhere: tz1 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone1));
+    tz1 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone1));
     assert tz1 != null;
     if (tz1 == null) {
       throw new Error("didn't find timezone " + timezone1);
