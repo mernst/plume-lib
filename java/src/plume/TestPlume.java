@@ -1086,6 +1086,7 @@ public final class TestPlume extends TestCase {
     }
   }
 
+  // Create a LimitedSizeSet of the given size, and add elements to it.
   private static void lsis_test(int max_size) {
     LimitedSizeSet<Integer> s = new LimitedSizeSet<Integer>(max_size);
     for (int i=1; i<2*max_size; i++) {
@@ -1096,10 +1097,27 @@ public final class TestPlume extends TestCase {
     }
   }
 
+  private static void lss_with_null_test() {
+    LimitedSizeSet</*@Nullable*/ Integer> s = new LimitedSizeSet</*@Nullable*/ Integer>(10);
+    s.add(1);
+    s.add(2);
+    s.add(null);
+    assert s.size() == 3;
+    assert s.contains(1);
+    assert s.contains(null);
+    s.add(3);
+    assert s.size() == 4;
+    assert s.contains(1);
+    assert s.contains(null);
+    assert s.contains(3);
+  }
+
+
   public static void testLimitedSizeSet() {
     for (int i=1; i<10; i++) {
       lsis_test(i);
     }
+    lss_with_null_test();
   }
 
   // This cannot be static because it instantiates an inner class.
