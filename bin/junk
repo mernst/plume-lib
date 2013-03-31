@@ -83,7 +83,8 @@ if (! $?JUNK_NAMES) then
       endif
 
       if (" $LATEX_JUNK_TYPES " =~ *\ IO\ *) then
-        if (! $?LATEX_IO_JUNK) set LATEX_IO_JUNK = "*.aux .*.aux *.toc .*.toc *.lof .*.lof *.lot .*.lot *.idx .*.idx *.glo .*.glo"
+        # not *.idx because git uses that for some internal files
+        if (! $?LATEX_IO_JUNK) set LATEX_IO_JUNK = "*.aux .*.aux *.toc .*.toc *.lof .*.lof *.lot .*.lot .*.idx *.glo .*.glo"
         set LATEX_JUNK = "$LATEX_JUNK $LATEX_IO_JUNK"
       endif
 
