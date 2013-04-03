@@ -164,6 +164,7 @@
 --suppress-redirect http://www.cs.ucl.ac.uk/icse07/->http://web4.cs.ucl.ac.uk/icse07/	
 --suppress-redirect http://www.cs.utexas.edu/->http://www.cs.utexas.edu/home/department/welcome.html
 --suppress-redirect http://www.cs.washington.edu/education/courses/cse331/12sp/forum.html->https://catalyst.uw.edu/gopost/board/mernst/27075/	
+--suppress-redirect http://www.cs.washington.edu/education/courses/cse331/13sp/forum.html->https://catalyst.uw.edu/gopost/board/mernst/32323/	
 --suppress-redirect http://www.csail.mit.edu/->http://www.csail.mit.edu/index.php
 --suppress-redirect http://www.dexonline.com/->http://www.dexonline.com/displayhome.ds
 --suppress-redirect http://www.elsevier.com/locate/disc/->http://www.elsevier.com/wps/find/journaldescription.cws_home/505610/description#description	
