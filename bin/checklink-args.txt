@@ -37,7 +37,9 @@
 --suppress-broken 403:http://www.elsevier.nl/locate/disc/
 --suppress-broken 403:http://www.javaworld.com/javaworld/javatips/jw-javatip122.html
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
+--suppress-broken 403:https://www.cs.washington.edu/internal/
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
+--suppress-broken 403:https://www.cs.washington.edu/login/pc
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 --suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/api/javax/lang/model/type/IntersectionType.html?is-external=true
