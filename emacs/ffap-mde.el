@@ -144,7 +144,7 @@ Sets `ffap-string-at-point' and `ffap-string-at-point-region'."
   (let ((sevs ffap-semi-env-vars))
     (while sevs
       (let ((sev (car sevs)))
-	(if (string-match (concat "^" (car sev) "\\($\\|/.*\\)") name)
+	(if (string-match (concat "^\\(?:\./\\)?" (car sev) "\\($\\|/.*\\)") name)
 	    (setq name (substitute-in-file-name (concat (cdr sev) (match-string 1 name)))
 		  sevs nil)))
       (setq sevs (cdr sevs))))
