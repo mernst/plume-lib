@@ -101,7 +101,7 @@ public class ICalAvailable {
   // don't need "e.g.: America/New_York" in message:  the default is an example
   @Option(value="<timezone> time zone, e.g.: America/New_York", noDocDefault=true)
   public static String timezone1 = TimeZone.getDefault().getID();
-  static TimeZone tz1; // attempting to initialize tz here causes an exception
+  static TimeZone tz1 = TimeZone.getDefault(); // unnecessary; but quiets the Initialization Checker
   // If I'm outputting in a different timezone, then my notion of a "day"
   // may be different than the other timezone's notion of a "day".  This
   // doesn't seem important enough to fix right now.
