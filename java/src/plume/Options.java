@@ -551,7 +551,7 @@ public class Options {
    * unique across all the arguments.
    * @param args the classes whose options to process
    */
-  public Options (Object... args) {
+  public Options (/*@Raw*/ Object... args) {
     this ("", args);
   }
 
@@ -564,7 +564,7 @@ public class Options {
    * @param usage_synopsis A synopsis of how to call your program
    * @param args the classes whose options to process
    */
-  public Options (String usage_synopsis, Object... args) {
+  public Options (String usage_synopsis, /*@Raw*/ Object... args) {
 
     if (args.length == 0) {
       throw new Error("Must pass at least one object to Options constructor");
@@ -585,7 +585,7 @@ public class Options {
       Field[] fields;
       if (is_class) {
         if (main_class == Void.TYPE)
-          main_class = (Class<?>) obj;
+          main_class = (/*@NonRaw*/ Class<?>) obj;
         fields = ((Class<?>) obj).getDeclaredFields();
       } else {
         if (main_class == Void.TYPE)
@@ -705,7 +705,7 @@ public class Options {
     /*@Nullable*/ T annotation;
     try {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Nullable*/ T cast = f.getAnnotation((Class</*@NonNull*/ T>) annotationClass);
+      /*@Nullable*/ T cast = f.getAnnotation((Class</*@NonNull*/ /*@NonRaw*/ T>) annotationClass);
       annotation = cast;
     } catch (Exception e) {
       // Can get
