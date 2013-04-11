@@ -595,7 +595,7 @@ public class Options {
         try {
           // Possible exception because "obj" is not yet initialized; catch it and proceed
           @SuppressWarnings("cast")
-          Object obj_nonraw = (@NonRaw Object) obj;
+          Object obj_nonraw = (/*@NonRaw*/ Object) obj;
           debug_options.log ("Considering field %s of object %s%n", f, obj_nonraw);
         } catch (Throwable t) {
           debug_options.log ("Considering field %s of object of type %s%n", f, obj.getClass());
