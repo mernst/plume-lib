@@ -153,7 +153,7 @@ public class ICalAvailable {
     if (timezone2 != null) {
       tz2 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone2));
       if (tz2 == null) {
-        System.err.println("Unrecognized time zone (see http://www.php.net/manual/en/timezones.php): " + timezone2);
+        System.err.println("Unrecognized time zone (see http://php.net/manual/en/timezones.php ): " + timezone2);
         System.exit(1);
       }
     }
@@ -237,6 +237,8 @@ public class ICalAvailable {
     canonicalTimezones.put("boston", "America/New_York");
     canonicalTimezones.put("america/boston", "America/New_York");
     canonicalTimezones.put("central", "America/Chicago");
+    canonicalTimezones.put("mountain", "America/Denver");
+    canonicalTimezones.put("arizona", "America/Phoenix");
     canonicalTimezones.put("pacific", "America/Los_Angeles");
     canonicalTimezones.put("pst", "America/Los_Angeles");
     canonicalTimezones.put("pacific standard time", "America/Los_Angeles");
@@ -248,6 +250,8 @@ public class ICalAvailable {
 
     printedTimezones.put("Eastern Standard Time", "Eastern");
     printedTimezones.put("Central Standard Time", "Central");
+    // Don't do this due to Arizona wierdness; we want to know MST vs. MDT
+    // printedTimezones.put("Mountain Standard Time", "Mountain");
     printedTimezones.put("Pacific Standard Time", "Pacific");
   }
 
