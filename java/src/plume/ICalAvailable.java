@@ -101,7 +101,11 @@ public class ICalAvailable {
   // don't need "e.g.: America/New_York" in message:  the default is an example
   @Option(value="<timezone> time zone, e.g.: America/New_York", noDocDefault=true)
   public static String timezone1 = TimeZone.getDefault().getID();
-  static TimeZone tz1;
+  // Either of these initializations causes a NullPointerException
+  // at net.fortuna.ical4j.model.TimeZone.<init>(TimeZone.java:67)
+  // static TimeZone tz1 = new TimeZone(new VTimeZone());
+  // static TimeZone tz1 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone1));
+  static /*@MonotonicNonNull*/ TimeZone tz1;
   // If I'm outputting in a different timezone, then my notion of a "day"
   // may be different than the other timezone's notion of a "day".  This
   // doesn't seem important enough to fix right now.
@@ -126,7 +130,8 @@ public class ICalAvailable {
 
   /// Procedures
 
-  @SuppressWarnings("deprecation") // for iCal4j
+  @SuppressWarnings("deprecation") // for iCal4j's use of Date.{get,set}Minutes
+  /*@EnsuresNonNull("tz1")*/
   static void processOptions(String[] args) {
     Options options = new Options ("ICalAvailable [options]", ICalAvailable.class);
     String[] remaining_args = options.parse_or_usage (args);
@@ -184,7 +189,7 @@ public class ICalAvailable {
         try {
           c = builder.build(url.openStream());
         } catch (ParserException pe) {
-          if (pe.getMessage().equals("Error at line 1: Expected [BEGIN], read [<HTML>]")) {
+          if ("Error at line 1: Expected [BEGIN], read [<HTML>]".equals(pe.getMessage())) {
             System.out.println();
             System.out.println("It is possible that the calendar has moved.");
             // Debugging: write the URL contents to standard output
@@ -263,6 +268,7 @@ public class ICalAvailable {
 
   // Parse a time like "9:30pm"
   @SuppressWarnings("deprecation") // for iCal4j
+  /*@RequiresNonNull("tz1")*/
   static DateTime parseTime(String time) {
 
     Matcher m = timeRegexp.matcher(time);
@@ -389,6 +395,7 @@ public class ICalAvailable {
 
   // Process day-by-day because otherwise weekends and evenings are included.
   @SuppressWarnings("unchecked") // for iCal4j
+  /*@RequiresNonNull("tz1")*/
   static List<Period> oneDayAvailable(DateTime day, List<Calendar> calendars) {
     if (debug) {
       System.err.printf("oneDayAvailable(%s, ...)%n", day);
