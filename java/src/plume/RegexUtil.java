@@ -202,7 +202,7 @@ public class RegexUtil {
    * @return null, or a string describing why the argument is not a regex.
    */
   /*>>>
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings({"regex","not.sef"})    // RegexUtil; 
   */
   /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s, int groups) {
@@ -316,7 +316,8 @@ public class RegexUtil {
    * @param p pattern whose groups to count
    * @return the count of groups in the argument
    */
-  /*@Pure*/  // pure wrt equals() but not ==
+  /*@SuppressWarnings("pure")*/     // Calls impure method, but only to create a temporary value
+  /*@Pure*/
   private static int getGroupCount(Pattern p) {
     return p.matcher("").groupCount();
   }
