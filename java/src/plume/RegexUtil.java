@@ -187,7 +187,7 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
-  @Pure
+  @SideEffectFree
   */
   public static /*@Nullable*/ String regexError(String s) {
     return regexError(s, 0);
@@ -204,7 +204,7 @@ public class RegexUtil {
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
   */
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s, int groups) {
     try {
       Pattern p = Pattern.compile(s);
@@ -227,7 +227,7 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
-  @Pure
+  @SideEffectFree
   */
   public static /*@Nullable*/ PatternSyntaxException regexException(String s) {
     return regexException(s, 0);
@@ -243,7 +243,7 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
-  @Pure
+  @SideEffectFree
   */
   public static /*@Nullable*/ PatternSyntaxException regexException(String s, int groups) {
     try {
@@ -261,13 +261,12 @@ public class RegexUtil {
   /**
    * Returns the argument as a {@code @Regex String} if it is a regex,
    * otherwise throws an error. The purpose of this method is to suppress Regex
-   * Checker warnings. Once the the Regex Checker supports flow-sensitivity, it
-   * should be very rarely needed.
+   * Checker warnings. It should be very rarely needed.
    * @param s string to check for being a regular expression
    * @return its argument
    * @throws Error if argument is not a regex
    */
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Regex*/ String asRegex(String s) {
     return asRegex(s, 0);
   }
@@ -275,8 +274,8 @@ public class RegexUtil {
   /**
    * Returns the argument as a {@code @Regex(groups) String} if it is a regex
    * with at least the given number of groups, otherwise throws an error. The
-   * purpose of this method is to suppress Regex Checker warnings. Once the
-   * Regex Checker supports flow-sensitivity, it should be very rarely needed.
+   * purpose of this method is to suppress Regex Checker warnings. It should
+   * be very rarely needed.
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
    * @return its argument
@@ -284,7 +283,7 @@ public class RegexUtil {
    */
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
-  @Pure
+  @SideEffectFree
   */
   public static /*@Regex*/ String asRegex(String s, int groups) {
     try {
@@ -306,6 +305,7 @@ public class RegexUtil {
    * @return an error message for s when expectedGroups groups are needed, but s
    * only has actualGroups groups
    */
+  /*@SideEffectFree*/
   private static String regexErrorMessage(String s, int expectedGroups, int actualGroups) {
     return "regex \"" + s + "\" has " + actualGroups + " groups, but " +
         expectedGroups + " groups are needed.";
