@@ -2003,7 +2003,7 @@ public final class UtilMDE {
    * @return an error message explaining why s is not a regular expression, or null
    */
   @Deprecated
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s) {
     return RegexUtil.regexError(s);
   }
@@ -2016,7 +2016,7 @@ public final class UtilMDE {
    * @throws Error if s is not a regular expression
    */
   @Deprecated
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Regex*/ String asRegex(String s) {
     return RegexUtil.asRegex(s);
   }

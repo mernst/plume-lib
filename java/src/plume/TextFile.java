@@ -142,17 +142,18 @@ public class TextFile implements Iterable<String> {
             throw new UnsupportedOperationException();
         }
 
-        /*@Pure*/
+        /*@SuppressWarnings("not.sef") // no externally visible side effects
+        /*@SideEffectFree*/          // no externally visible side effects
         /*@RequiresNonNull("in")*/
-        void getNextLine() {
+        void getNextLine(/*>>>@Raw(TextFileIterator.class) TextFileIterator this*/) {
             if (!closed) {
                 try { nextline = in.readLine(); }
-                catch(IOException e) {
+                catch (IOException e) {
                     throw new IllegalArgumentException(e);
                 }
                 if (nextline == null) {
                     try { in.close(); }
-                    catch(IOException ignored) {}
+                    catch (IOException ignored) {}
                     closed = true;
                 }
             }
