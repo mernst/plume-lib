@@ -75,6 +75,11 @@ import java.net.URL;
  *   <li><b>--git-executable=</b><i>string</i>. Path to the git program [default git]</li>
  *   <li><b>--hg-executable=</b><i>string</i>. Path to the hg program [default hg]</li>
  *   <li><b>--svn-executable=</b><i>string</i>. Path to the svn program [default svn]</li>
+ *   <li><b>--insecure=</b><i>boolean</i>. Pass --insecure argument to hg (and likewise for other programs) [default false]</li>
+ *   <li><b>--cvs-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass to the cvs program</li>
+ *   <li><b>--git-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the git program</li>
+ *   <li><b>--hg-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the hg program</li>
+ *   <li><b>--svn-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the svn program</li>
  *   <li><b>--debug=</b><i>boolean</i>. Print debugging output [default false]</li>
  *   <li><b>--debug-replacers=</b><i>boolean</i>. Debug 'replacers' that filter command output [default false]</li>
  * </ul>
@@ -263,6 +268,25 @@ public class MultiVersionControl {
 
   @Option("Path to the svn program")
   public String svn_executable = "svn";
+
+  @Option("Pass --insecure argument to hg (and likewise for other programs)")
+  public boolean insecure = false;
+
+  // The {cvs,git,hg,svn}_arg options probably aren't very useful, because
+  // there are few arguments that are applicable to every command; for
+  // example, --insecure isn't applicable to "hg status".
+
+  @Option("Extra argument to pass to the cvs program")
+  public List<String> cvs_arg = new ArrayList<String>();
+
+  @Option("Extra argument to pass  to the git program")
+  public List<String> git_arg = new ArrayList<String>();
+
+  @Option("Extra argument to pass  to the hg program")
+  public List<String> hg_arg = new ArrayList<String>();
+
+  @Option("Extra argument to pass  to the svn program")
+  public List<String> svn_arg = new ArrayList<String>();
 
   // It would be good to be able to set this per-checkout.
   // This variable is static because it is used in static methods.
@@ -930,6 +954,20 @@ public class MultiVersionControl {
   /// Process checkouts
   ///
 
+  /** Change pb's command by adding the given argument at the end. */
+  private void addArg(ProcessBuilder pb, String arg) {
+    List<String> command = pb.command();
+    command.add(arg);
+    pb.command(command);
+  }
+
+  /** Change pb's command by adding the given arguments at the end. */
+  private void addArgs(ProcessBuilder pb, List<String> args) {
+    List<String> command = pb.command();
+    command.addAll(args);
+    pb.command(command);
+  }
+
   private class Replacer {
     /*@Regex*/ String regexp;
     String replacement;
@@ -942,8 +980,8 @@ public class MultiVersionControl {
     }
   }
 
-
   public void process(Set<Checkout> checkouts) {
+    // Always run at least one command, but sometimes up to three.
     ProcessBuilder pb = new ProcessBuilder("");
     ProcessBuilder pb2 = new ProcessBuilder(new ArrayList<String>());
     ProcessBuilder pb3 = new ProcessBuilder(new ArrayList<String>());
@@ -1028,12 +1066,16 @@ public class MultiVersionControl {
                      "-P", // prune empty directories
                      "-ko", // no keyword substitution
                      c.module);
+          addArgs(pb, cvs_arg);
           break;
         case GIT:
           pb.command(git_executable, "clone", c.repository, dirbase);
+          addArgs(pb, git_arg);
           break;
         case HG:
           pb.command(hg_executable, "clone", c.repository, dirbase);
+          addArgs(pb, hg_arg);
+          if (insecure) addArg(pb, "--insecure");
           break;
         case SVN:
           if (c.module != null) {
@@ -1041,6 +1083,7 @@ public class MultiVersionControl {
           } else {
             pb.command(svn_executable, "checkout", c.repository);
           }
+          addArgs(pb, svn_arg);
           break;
         default:
           assert false;
@@ -1064,6 +1107,7 @@ public class MultiVersionControl {
                      "-b",      // compress whitespace
                      "--brief", // report only whether files differ, not details
                      "-N");     // report new files
+          addArgs(pb, cvs_arg);
           //         # For the last perl command, this also works:
           //         #   perl -p -e 'chomp(\$cwd = `pwd`); s/^Index: /\$cwd\\//'";
           //         # but the one we use is briefer and uses the abbreviated directory name.
@@ -1086,6 +1130,7 @@ public class MultiVersionControl {
           break;
         case GIT:
           pb.command(git_executable, "status");
+          addArgs(pb, git_arg);
           replacers.add(new Replacer("(^|\\n)nothing to commit \\(working directory clean\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)no changes added to commit \\(use \"git add\" and/or \"git commit -a\"\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing added to commit but untracked files present \\(use \"git add\" to track\\)\\n", "$1"));
@@ -1112,9 +1157,11 @@ public class MultiVersionControl {
           //   # Your branch is ahead of 'origin/master' by 1 commit.
           // Or, see "git-outgoing" at http://github.com/ddollar/git-utils
           // pb2.command(git_executable, "log", "origin..HEAD");
+          // addArgs(pb2, git_arg);
           break;
         case HG:
           pb.command(hg_executable, "status");
+          addArgs(pb, hg_arg);
           if (debug) {
             System.out.printf("invalidCertificate(%s) => %s%n", c.directory, invalidCertificate(c.directory));
           }
@@ -1123,11 +1170,14 @@ public class MultiVersionControl {
           } else {
             pb2.command(hg_executable, "outgoing", "-l", "1");
           }
+          addArgs(pb2, hg_arg);
+          if (insecure) addArg(pb2, "--insecure");
           // The third line is either "no changes found" or "changeset".
           replacers.add(new Replacer("^comparing with .*\\nsearching for changes\\nchangeset[^\001]*", "unpushed changesets: " + pb.directory() + "\n"));
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
           // TODO:  Shelve is an optional extension, and so this should make no report if it is not installed.
           pb3.command(hg_executable, "shelve", "-l");
+          addArgs(pb3, hg_arg);
           replacers3.add(new Replacer("^hg: unknown command 'shelve'\\n(.*\\n)+", ""));
           replacers3.add(new Replacer("^(.*\\n)+", "shelved changes: " + pb.directory() + "\n"));
           break;
@@ -1136,6 +1186,7 @@ public class MultiVersionControl {
           // "svn status" also outputs an eighth column, only if you pass the --show-updates switch: [* ]
           replacers.add(new Replacer("(^|\\n)([ACDIMRX?!~ ][CM ][L ][+ ][$ ]) *", "$1$2 " + dir + "/"));
           pb.command(svn_executable, "status");
+          addArgs(pb, svn_arg);
           break;
         default:
           assert false;
@@ -1155,6 +1206,7 @@ public class MultiVersionControl {
                      // that are embedded inside other repositories.
                      // "-d", c.repository,
                      "-Q", "update", "-d");
+          addArgs(pb, cvs_arg);
           //         $filter = "grep -v \"config: unrecognized keyword 'UseNewInfoFmtStrings'\"";
           replacers.add(new Replacer("(cvs update: move away )", "$1" + dir + "/"));
           replacers.add(new Replacer("(cvs \\[update aborted)(\\])", "$1 in " + dir + "$2"));
@@ -1162,22 +1214,27 @@ public class MultiVersionControl {
         case GIT:
           replacers.add(new Replacer("(^|\\n)Already up-to-date\\.\\n", "$1"));
           pb.command(git_executable, "pull", "-q");
+          addArgs(pb, git_arg);
           break;
         case HG:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)abort: ", "$1"));
           pb.command(hg_executable, "-q", "update");
+          addArgs(pb, hg_arg);
           if (invalidCertificate(c.directory)) {
             pb2.command(hg_executable, "-q", "fetch", "--config", "web.cacerts=");
           } else {
             pb2.command(hg_executable, "-q", "fetch");
           }
+          addArgs(pb2, hg_arg);
+          if (insecure) addArg(pb2, "--insecure");
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(svn: Failed to add file ')(.*')", "$1" + dir + "/" + "$2"));
           assert c.repository != null;
           pb.command(svn_executable, "-q", "update");
+          addArgs(pb, svn_arg);
         //         $filter = "grep -v \"Killed by signal 15.\"";
           break;
         default:
