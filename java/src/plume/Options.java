@@ -221,7 +221,7 @@ public class Options {
     Option option;
 
     /** Object containing the field.  Null if the field is static. **/
-    /*@Nullable*/ Object obj;
+    /*@Raw*/ /*@Nullable*/ Object obj;
 
     /** Short (one character) argument name **/
     /*@Nullable*/ String short_name;
@@ -243,7 +243,7 @@ public class Options {
      * used by OptionsDoclet to generate documentation for enum-type options.
      * Null if the base_type is not an Enum.
      */
-    /*@LazyNonNull*/ Map<String, String> enum_jdoc;
+    /*@MonotonicNonNull*/ Map<String, String> enum_jdoc;
 
     /**
      * Name of the argument type.  Defaults to the type of the field, but
@@ -267,7 +267,7 @@ public class Options {
     boolean no_doc_default = false;
 
     /** If the option is a list, this references that list. **/
-    /*@LazyNonNull*/ List<Object> list = null;
+    /*@MonotonicNonNull*/ List<Object> list = null;
 
     /** Constructor that takes one String for the type **/
     /*@Nullable*/ Constructor<?> constructor = null;
@@ -282,12 +282,13 @@ public class Options {
     boolean unpublicized;
 
     /**
-     * Create the specified option.  If obj is null, the field must be
+     * Create the specified option.  obj is the object whose field
+     * will be set; if obj is null, the field must be
      * static.  The short name, type name, and description are taken
      * from the option annotation.  The long name is the name of the
      * field.  The default value is the current value of the field.
      */
-    OptionInfo (Field field, Option option, /*@Nullable*/ Object obj, boolean unpublicized) {
+    OptionInfo (Field field, Option option, /*@Raw*/ /*@Nullable*/ Object obj, boolean unpublicized) {
       this.field = field;
       this.option = option;
       this.obj = obj;
@@ -551,20 +552,21 @@ public class Options {
    * unique across all the arguments.
    * @param args the classes whose options to process
    */
-  public Options (Object... args) {
+  public Options (/*@Raw*/ Object... args) {
     this ("", args);
   }
 
   /**
    * Prepare for option processing.  Creates an object that will set fields
    * in all the given arguments.  An argument to this method may be a
-   * Class, in which case its static fields are set.  The names of all the
+   * Class, in which case it must be fully initalized and its static fields are set.
+   * The names of all the
    * options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
    * @param usage_synopsis A synopsis of how to call your program
    * @param args the classes whose options to process
    */
-  public Options (String usage_synopsis, Object... args) {
+  public Options (String usage_synopsis, /*@Raw*/ Object... args) {
 
     if (args.length == 0) {
       throw new Error("Must pass at least one object to Options constructor");
@@ -582,19 +584,22 @@ public class Options {
       boolean is_class = obj instanceof Class<?>;
       String current_group = null;
 
-      Field[] fields;
-      if (is_class) {
-        if (main_class == Void.TYPE)
-          main_class = (Class<?>) obj;
-        fields = ((Class<?>) obj).getDeclaredFields();
-      } else {
-        if (main_class == Void.TYPE)
-          main_class = obj.getClass();
-        fields = obj.getClass().getDeclaredFields();
+      @SuppressWarnings("rawness") // if is_class is true, obj is not null
+      @NonRaw @NonNull Class<?> clazz = (is_class ? (/*@NonRaw*/ /*@NonNull*/ Class<?>) obj : obj.getClass());
+      if (main_class == Void.TYPE) {
+        main_class = clazz;
       }
+      Field[] fields = clazz.getDeclaredFields();
 
       for (Field f : fields) {
-        debug_options.log ("Considering field %s of object %s%n", f, obj);
+        try {
+          // Possible exception because "obj" is not yet initialized; catch it and proceed
+          @SuppressWarnings("cast")
+          Object obj_nonraw = (/*@NonRaw*/ Object) obj;
+          debug_options.log ("Considering field %s of object %s%n", f, obj_nonraw);
+        } catch (Throwable t) {
+          debug_options.log ("Considering field %s of object of type %s%n", f, obj.getClass());
+        }
         try {
           debug_options.log ("  with annotations %s%n",
                              Arrays.toString(f.getDeclaredAnnotations()));
@@ -700,11 +705,11 @@ public class Options {
    * Like getAnnotation, but returns null (and prints a warning) rather
    * than throwing an exception.
    */
-  private <T extends Annotation> /*@Nullable*/ T
+  private static <T extends Annotation> /*@Nullable*/ T
   safeGetAnnotation(Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
     try {
-      @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
+      @SuppressWarnings("cast") // cast is redundant (except in JSR 308) -- still necessary??
       /*@Nullable*/ T cast = f.getAnnotation((Class</*@NonNull*/ T>) annotationClass);
       annotation = cast;
     } catch (Exception e) {
@@ -1291,7 +1296,7 @@ public class Options {
                               arg_value, arg_name);
     }
 
-    assert val != null : "@SuppressWarnings(nullness)";
+    assert val != null : "@AssumeAssertion(nullness)";
     return val;
   }
 

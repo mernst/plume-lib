@@ -1832,7 +1832,7 @@ public final class UtilMDE {
         argnames = split(all_argnames, ',');
       }
 
-      /*@LazyNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
+      /*@MonotonicNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
       for (int i=0; i<argnames.length; i++) {
         String bnArgname = argnames[i].trim();
         /*@ClassGetName*/ String cgnArgname = binaryNameToClassGetName(bnArgname);
@@ -2003,7 +2003,7 @@ public final class UtilMDE {
    * @return an error message explaining why s is not a regular expression, or null
    */
   @Deprecated
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s) {
     return RegexUtil.regexError(s);
   }
@@ -2016,7 +2016,7 @@ public final class UtilMDE {
    * @throws Error if s is not a regular expression
    */
   @Deprecated
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Regex*/ String asRegex(String s) {
     return RegexUtil.asRegex(s);
   }
@@ -2058,7 +2058,7 @@ public final class UtilMDE {
         throw new Error("This can't happen: " + e);
       }
       c = c.getSuperclass();
-      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+      assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }
@@ -2090,7 +2090,7 @@ public final class UtilMDE {
         // nothing to do; will now examine superclass
       }
       c = c.getSuperclass();
-      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+      assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }

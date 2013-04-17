@@ -44,7 +44,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/commons-logging-1.1.1.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.4.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.7.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.6.jar:lib/commons-logging-1.1.1.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -111,7 +111,7 @@ ifdef CHECKERS
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
 endif
-jsr308_imports=checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
+jsr308_imports=dataflow.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -323,10 +323,12 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p src/plume/*.class jar-contents/plume
+	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.1.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.7.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-io-1.4.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.1.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/checkers-quals.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.1.jar)
@@ -426,11 +428,17 @@ check-all: check-nullness check-interning check-regex check-signature
 
 CHECKERS_ARGS ?= -source 8 -Awarns
 
-JAVAC_NULLNESS_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
+JAVAC_NULLNESS_RAW_ARGS = -processor checkers.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing
+JAVAC_NULLNESS_FBC_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
-check-nullness: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+check-nullness: check-nullness-raw check-nullness-fbc
+
+check-nullness-raw: checkenv
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+
+check-nullness-fbc: checkenv
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
