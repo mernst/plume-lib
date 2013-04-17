@@ -3073,7 +3073,6 @@ public final class UtilMDE {
   }
 
 
-  // This name "human_readable" is terrible.
   /**
    * Convert a number into an abbreviation such as "5.00K" for 5000 or
    * "65.0M" for 65000000.  K stands for 1000, not 1024; M stands for
