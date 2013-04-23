@@ -147,8 +147,9 @@ public class TextFile implements Iterable<String> {
         /*@RequiresNonNull("in")*/
         void getNextLine(/*>>>@Raw(TextFileIterator.class) TextFileIterator this*/) {
             if (!closed) {
-                try { nextline = in.readLine(); }
-                catch (IOException e) {
+                try {
+                    nextline = in.readLine();
+                } catch (IOException e) {
                     throw new IllegalArgumentException(e);
                 }
                 if (nextline == null) {
