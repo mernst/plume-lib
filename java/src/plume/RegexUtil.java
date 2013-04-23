@@ -149,7 +149,7 @@ public class RegexUtil {
    * @return true iff s is a regular expression with groups groups
    */
   /*>>>
-  @SuppressWarnings({"regex","pure"})    // RegexUtil; for purity, catches an exception
+  @SuppressWarnings({"regex","deterministic"})    // RegexUtil; for purity, catches an exception
   @Pure
   @EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)
   */
