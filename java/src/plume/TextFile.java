@@ -142,8 +142,10 @@ public class TextFile implements Iterable<String> {
             throw new UnsupportedOperationException();
         }
 
-        /*@SuppressWarnings("not.sef") // no externally visible side effects
-        /*@SideEffectFree*/          // no externally visible side effects
+        /**
+         * Sets the nextline field to the next line to be returned,
+         * discarding the previous contents of that field.
+         */
         /*@RequiresNonNull("in")*/
         void getNextLine(/*>>>@Raw(TextFileIterator.class) TextFileIterator this*/) {
             if (!closed) {
