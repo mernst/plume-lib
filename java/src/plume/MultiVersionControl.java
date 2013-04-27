@@ -1131,13 +1131,12 @@ public class MultiVersionControl {
         case GIT:
           pb.command(git_executable, "status");
           addArgs(pb, git_arg);
-          replacers.add(new Replacer("(^|\\n)nothing to commit \\(working directory clean\\)\\n", "$1"));
+          replacers.add(new Replacer("(^|\\n)nothing to commit,? working directory clean\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)no changes added to commit \\(use \"git add\" and/or \"git commit -a\"\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing added to commit but untracked files present \\(use \"git add\" to track\\)\\n", "$1"));
 
           replacers.add(new Replacer("(^|\\n)#\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)# On branch master\\n", "$1"));
-          replacers.add(new Replacer("(^|\\n)# nothing to commit, working directory clean\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)# Changed but not updated:\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)#   \\(use \"git add <file>...\" to update what will be committed\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)#   \\(use \"git checkout -- <file>...\" to discard changes in working directory\\)\\n", "$1"));
