@@ -316,7 +316,7 @@ public class RegexUtil {
    * @param p pattern whose groups to count
    * @return the count of groups in the argument
    */
-  /*@SuppressWarnings("pure")*/     // Calls impure method, but only to create a temporary value
+  /*@SuppressWarnings("purity")*/     // Calls impure method, but only to create a temporary value
   /*@Pure*/
   private static int getGroupCount(Pattern p) {
     return p.matcher("").groupCount();
