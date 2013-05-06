@@ -18,6 +18,7 @@
 --suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 400:http://www.junit.org/
+--suppress-broken 403:http://www.edwardxwu.com/
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
 --suppress-broken 403:http://mercurial.selenic.com/wiki/MergeProgram
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html	
@@ -74,6 +75,7 @@
 --suppress-broken 406:http://www.seattlebicycle.org/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
+--suppress-broken 500:http://kevinjsullivan.org/
 --suppress-broken 500:http://conferences.iee.org/icse2004/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
