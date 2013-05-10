@@ -111,7 +111,7 @@ ifdef CHECKERS
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
 endif
-jsr308_imports=dataflow.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
+jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.

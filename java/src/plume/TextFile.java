@@ -147,7 +147,7 @@ public class TextFile implements Iterable<String> {
          * discarding the previous contents of that field.
          */
         /*@RequiresNonNull("in")*/
-        void getNextLine(/*>>>@Raw(TextFileIterator.class) TextFileIterator this*/) {
+        void getNextLine(/*>>> @UnknownInitialization(TextFileIterator.class) @Raw(TextFileIterator.class) TextFileIterator this*/) {
             if (!closed) {
                 try {
                     nextline = in.readLine();

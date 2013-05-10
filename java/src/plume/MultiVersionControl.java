@@ -371,7 +371,7 @@ public class MultiVersionControl {
 
   /*@RequiresNonNull("dir")*/
   /*@EnsuresNonNull("action")*/
-  public void parseArgs(/*>>> @Raw MultiVersionControl this,*/ String[] args) {
+  public void parseArgs(/*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
     Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse_or_usage (args);
     if (remaining_args.length != 1) {
