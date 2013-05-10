@@ -180,7 +180,7 @@ public class StrTok {
    * @see ErrorHandler
    */
   /*@EnsuresNonNull("this.errorHandler")*/
-  public void set_error_handler (/*>>>@Raw StrTok this,*/ ErrorHandler errorHandler) {
+  public void set_error_handler (/*>>>@UnknownInitialization @Raw StrTok this,*/ ErrorHandler errorHandler) {
     this.errorHandler = errorHandler;
   }
 

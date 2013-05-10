@@ -221,7 +221,7 @@ public class Options {
     Option option;
 
     /** Object containing the field.  Null if the field is static. **/
-    /*@Raw*/ /*@Nullable*/ Object obj;
+    /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj;
 
     /** Short (one character) argument name **/
     /*@Nullable*/ String short_name;
@@ -288,7 +288,7 @@ public class Options {
      * from the option annotation.  The long name is the name of the
      * field.  The default value is the current value of the field.
      */
-    OptionInfo (Field field, Option option, /*@Raw*/ /*@Nullable*/ Object obj, boolean unpublicized) {
+    OptionInfo (Field field, Option option, /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj, boolean unpublicized) {
       this.field = field;
       this.option = option;
       this.obj = obj;
@@ -552,7 +552,7 @@ public class Options {
    * unique across all the arguments.
    * @param args the classes whose options to process
    */
-  public Options (/*@Raw*/ Object... args) {
+  public Options (/*@UnknownInitialization*/ /*@Raw*/ Object... args) {
     this ("", args);
   }
 
@@ -566,7 +566,7 @@ public class Options {
    * @param usage_synopsis A synopsis of how to call your program
    * @param args the classes whose options to process
    */
-  public Options (String usage_synopsis, /*@Raw*/ Object... args) {
+  public Options (String usage_synopsis, /*@UnknownInitialization*/ /*@Raw*/ Object... args) {
 
     if (args.length == 0) {
       throw new Error("Must pass at least one object to Options constructor");
@@ -584,8 +584,8 @@ public class Options {
       boolean is_class = obj instanceof Class<?>;
       String current_group = null;
 
-      @SuppressWarnings("rawness") // if is_class is true, obj is not null
-      @NonRaw @NonNull Class<?> clazz = (is_class ? (/*@NonRaw*/ /*@NonNull*/ Class<?>) obj : obj.getClass());
+      @SuppressWarnings({"rawness","initialization"}) // if is_class is true, obj is a non-null initialized Class
+      /*@Initialized*/ /*@NonRaw*/ /*@NonNull*/ Class<?> clazz = (is_class ? (/*@Initialized*/ /*@NonRaw*/ /*@NonNull*/ Class<?>) obj : obj.getClass());
       if (main_class == Void.TYPE) {
         main_class = clazz;
       }
@@ -595,7 +595,7 @@ public class Options {
         try {
           // Possible exception because "obj" is not yet initialized; catch it and proceed
           @SuppressWarnings("cast")
-          Object obj_nonraw = (/*@NonRaw*/ Object) obj;
+          Object obj_nonraw = (/*@Initialized*/ /*@NonRaw*/ Object) obj;
           debug_options.log ("Considering field %s of object %s%n", f, obj_nonraw);
         } catch (Throwable t) {
           debug_options.log ("Considering field %s of object of type %s%n", f, obj.getClass());
