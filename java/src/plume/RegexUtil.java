@@ -6,7 +6,7 @@ import java.util.regex.PatternSyntaxException;
 /*>>>
 import checkers.nullness.quals.*;
 import checkers.regex.quals.*;
-import checkers.quals.EnsuresAnnotationIf;
+import checkers.quals.EnsuresQualifierIf;
 import dataflow.quals.Pure;
 */
 
@@ -136,7 +136,7 @@ public class RegexUtil {
    * @return true iff s is a regular expression
    */
   /*@Pure*/
-  /*@EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)*/
+  /*@EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)*/
   public static boolean isRegex(final String s) {
     return isRegex(s, 0);
   }
@@ -151,7 +151,7 @@ public class RegexUtil {
   /*>>>
   @SuppressWarnings({"regex","deterministic"})    // RegexUtil; for purity, catches an exception
   @Pure
-  @EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)
+  @EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)
   */
   public static boolean isRegex(String s, int groups) {
     Pattern p;
@@ -172,7 +172,7 @@ public class RegexUtil {
   /*>>>
   @SuppressWarnings("regex")    // RegexUtil
   @Pure
-  @EnsuresAnnotationIf(result=true, expression="#1", annotation=Regex.class)
+  @EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)
   */
   public static boolean isRegex(char c) {
     return isRegex(Character.toString(c));
