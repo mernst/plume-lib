@@ -709,7 +709,6 @@ public class Options {
   safeGetAnnotation(Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
     try {
-      @SuppressWarnings("cast") // cast is redundant (except in JSR 308) -- still necessary??
       /*@Nullable*/ T cast = f.getAnnotation((Class</*@NonNull*/ T>) annotationClass);
       annotation = cast;
     } catch (Exception e) {
