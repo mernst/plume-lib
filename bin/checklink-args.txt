@@ -75,11 +75,12 @@
 --suppress-broken 406:http://www.seattlebicycle.org/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
---suppress-broken 500:http://kevinjsullivan.org/
 --suppress-broken 500:http://conferences.iee.org/icse2004/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
+--suppress-broken 500:http://kevinjsullivan.org/
 --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/	
+--suppress-broken 500:http://www.eclipse.org/downloads/
 --suppress-broken 500:http://www.icse-conferences.org/2001/	
 --suppress-broken 500:http://www.icse-conferences.org/2003/	
 --suppress-broken 500:http://www.icse-conferences.org/2004/	
