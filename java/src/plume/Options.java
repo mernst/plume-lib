@@ -620,7 +620,8 @@ public class Options {
         if (is_class && !Modifier.isStatic (f.getModifiers()))
           throw new Error ("non-static option " + f + " in class " + obj);
 
-        OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
+        @SuppressWarnings("initialization") // "new MyClass(underInitializion)" yields @UnderInitializion even when @Initialized would be safe
+        /*@Initialized*/ OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
         options.add(oi);
 
         // FIXME: should also check that the option does not belong to an
@@ -705,6 +706,7 @@ public class Options {
    * Like getAnnotation, but returns null (and prints a warning) rather
    * than throwing an exception.
    */
+  @SuppressWarnings("initialization") // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
   private static <T extends Annotation> /*@Nullable*/ T
   safeGetAnnotation(Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
