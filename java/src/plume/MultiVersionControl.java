@@ -1137,6 +1137,7 @@ public class MultiVersionControl {
 
           replacers.add(new Replacer("(^|\\n)#\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)# On branch master\\n", "$1"));
+          replacers.add(new Replacer("(^|\\n)nothing to commit \\(working directory clean\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)# Changed but not updated:\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)#   \\(use \"git add <file>...\" to update what will be committed\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)#   \\(use \"git checkout -- <file>...\" to discard changes in working directory\\)\\n", "$1"));
