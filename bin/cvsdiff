@@ -1,0 +1,7 @@
+#!/bin/bash
+# I do not understand why, on my Ubuntu laptop as of 1/17/2007, the line
+# "#!/bin/sh" causes the error "/bin/sh: Can't open cleanup-cvsdiff" whereas
+# "#!/bin/bash" works.  (I see this when running under the two shells, too.)
+
+# Run "cvs diff", but eliminate some extraneous output
+cvs -q diff -b -u "$@" 2>&1 | cvsdiff-cleanup
