@@ -153,7 +153,7 @@ public class FileIOException extends IOException {
   /// Utility and helper methods
   ///
 
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     String result = super.toString();
     if (fileName != null) {
       result += " in file " + fileName;
