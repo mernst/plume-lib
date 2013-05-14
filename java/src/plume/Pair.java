@@ -25,7 +25,7 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   }
 
   @Override
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 

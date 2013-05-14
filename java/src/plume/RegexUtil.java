@@ -135,9 +135,8 @@ public class RegexUtil {
    * @param s string to check for being a regular expression
    * @return true iff s is a regular expression
    */
-  /*@Pure*/
   /*@EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)*/
-  public static boolean isRegex(final String s) {
+  /*@Pure*/ public static boolean isRegex(final String s) {
     return isRegex(s, 0);
   }
 

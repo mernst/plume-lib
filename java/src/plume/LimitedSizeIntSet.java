@@ -157,7 +157,7 @@ public class LimitedSizeIntSet
     return result;
   }
 
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return ("[size=" + size() + "; " +
             ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");
