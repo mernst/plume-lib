@@ -35,7 +35,8 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b) &ge; i
    **/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
+  @SuppressWarnings("purity")   // side effect to local state
+  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
     // 1. a.clone().and(b).cardinality()
@@ -68,7 +69,8 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b intersect c) &ge; i
    **/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
+  @SuppressWarnings("purity")   // side effect to local state
+  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -92,7 +94,8 @@ public final class UtilMDE {
    * @param b the second BitSet to intersect
    * @return size(a intersect b)
    **/
-  public static int intersectionCardinality(BitSet a, BitSet b) {
+  @SuppressWarnings("purity")   // side effect to local state
+  /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
     return intersection.cardinality();
@@ -104,7 +107,8 @@ public final class UtilMDE {
    * @param c the third BitSet to intersect
    * @return size(a intersect b intersect c)
    **/
-  public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
+  @SuppressWarnings("purity")   // side effect to local state
+  /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
     intersection.and(c);
@@ -465,7 +469,7 @@ public final class UtilMDE {
    * @param sup class to test for being a supertype
    * @return true iff sub is a subtype of sup
    */
-  public static boolean isSubtype(Class<?> sub, Class<?> sup) {
+  /*@Pure*/ public static boolean isSubtype(Class<?> sub, Class<?> sup) {
     if (sub == sup) {
       return true;
     }
@@ -915,7 +919,7 @@ public final class UtilMDE {
    * @param file2 second file to compare
    * @return true iff the files have the same contents
    */
-  public static boolean equalFiles(String file1, String file2) {
+  /*@Pure*/ public static boolean equalFiles(String file1, String file2) {
     return equalFiles(file1, file2, false);
   }
 
@@ -926,7 +930,8 @@ public final class UtilMDE {
    * @param trimLines if true, call String.trim on each line before comparing
    * @return true iff the files have the same contents
    */
-  public static boolean equalFiles(String file1, String file2, boolean trimLines) {
+  @SuppressWarnings("purity")   // reads files, side effects local state
+  /*@Pure*/ public static boolean equalFiles(String file1, String file2, boolean trimLines) {
     try {
       LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
       LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2);
@@ -1908,7 +1913,8 @@ public final class UtilMDE {
    * @param key name of the property to look up
    * @return true iff the property has value "true", "yes", or "1"
    **/
-  public static boolean propertyIsTrue(Properties p, String key) {
+  @SuppressWarnings("purity")   // does not depend on object identity
+  /*@Pure*/ public static boolean propertyIsTrue(Properties p, String key) {
     String pvalue = p.getProperty(key);
     if (pvalue == null) {
       return false;
@@ -1991,8 +1997,7 @@ public final class UtilMDE {
    * @return true iff s is a regular expression
    */
   @Deprecated
-  /*@Pure*/
-  public static boolean isRegex(String s) {
+  /*@Pure*/ public static boolean isRegex(String s) {
     return RegexUtil.isRegex(s);
   }
 
@@ -2687,7 +2692,7 @@ public final class UtilMDE {
   public static class NullableStringComparator
     implements Comparator<String>
   {
-    public int compare(String s1, String s2) {
+    /*@Pure*/ public int compare(String s1, String s2) {
       if (s1 == null && s2 == null) return 0;
       if (s1 == null && s2 != null) return 1;
       if (s1 != null && s2 == null) return -1;
@@ -2864,7 +2869,8 @@ public final class UtilMDE {
    * @param o2 second value to comare
    * @return true iff o1 and o2 are deeply equal
    */
-  public static boolean deepEquals(Object o1, Object o2) {
+  @SuppressWarnings("purity")   // side effect to local state
+  /*@Pure*/ public static boolean deepEquals(Object o1, Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
     if (sameObject)
@@ -2897,6 +2903,7 @@ public final class UtilMDE {
       return Arrays.equals((short[]) o1, (short[]) o2);
     }
 
+    @SuppressWarnings("purity") // creates local state
     WeakIdentityPair<Object, Object> mypair
       = new WeakIdentityPair<Object, Object>(o1, o2);
     if (deepEqualsUnderway.contains(mypair)) {

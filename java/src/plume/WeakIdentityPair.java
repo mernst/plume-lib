@@ -59,7 +59,7 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
   }
 
   @Override
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 

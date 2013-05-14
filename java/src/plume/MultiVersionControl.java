@@ -522,7 +522,7 @@ public class MultiVersionControl {
     }
 
     @Override
-      public String toString() {
+      /*@SideEffectFree*/ public String toString() {
       return repoType
         + " " + directory
         + " " + repository

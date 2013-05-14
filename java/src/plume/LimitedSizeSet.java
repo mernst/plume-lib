@@ -159,7 +159,7 @@ public class LimitedSizeSet<T>
   }
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return ("[size=" + size() + "; " +
             ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");

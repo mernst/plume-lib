@@ -411,7 +411,7 @@ public class Options {
      * @return a one-line description of the option
      */
     @Override
-    public String toString() {
+    /*@SideEffectFree*/ public String toString() {
       String prefix = use_single_dash ? "-" : "--";
       String short_name_str = "";
       if (short_name != null)
@@ -1136,11 +1136,11 @@ public class Options {
    * Package-private accessors/utility methods that are needed by the
    * OptionsDoclet class to generate HTML documentation.
    */
-  boolean isUsingGroups() {
+  /*@Pure*/ boolean isUsingGroups() {
     return use_groups;
   }
 
-  boolean isUsingSingleDash() {
+  /*@Pure*/ boolean isUsingSingleDash() {
     return use_single_dash;
   }
 
@@ -1397,7 +1397,8 @@ public class Options {
    * @return a description of all of the known options
    */
   @Override
-  public String toString() {
+  @SuppressWarnings("purity")   // side effect to local state
+  /*@SideEffectFree*/ public String toString() {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
     for (OptionInfo oi: options) {
