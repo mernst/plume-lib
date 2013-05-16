@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.HashMap;
 
+/*>>>
+import dataflow.quals.Pure;
+*/
 
 // If you are perplexed because of odd results, maybe it is because of the
 // transparency of your iCal items (this shows up as "available/busy" in
@@ -79,8 +82,15 @@ public class ICalAvailable {
   @Option("time ranges during which appointments are permitted")
   public static String business_hours = "9am-5pm";
 
-  static List<Period> businessHours;   // initialize to 9am-5pm
-  static List<Integer> businessDays;   // initialize to Mon-Fri
+  static List<Period> businessHours = new ArrayList<Period>();   // initialize to 9am-5pm
+  static List<Integer> businessDays = new ArrayList<Integer>();   // initialize to Mon-Fri
+  static {
+    businessDays.add(1);
+    businessDays.add(2);
+    businessDays.add(3);
+    businessDays.add(4);
+    businessDays.add(5);
+  }
 
   static TimeZoneRegistry tzRegistry = TimeZoneRegistryFactory.getInstance().createRegistry();
   /**
@@ -91,7 +101,11 @@ public class ICalAvailable {
   // don't need "e.g.: America/New_York" in message:  the default is an example
   @Option(value="<timezone> time zone, e.g.: America/New_York", noDocDefault=true)
   public static String timezone1 = TimeZone.getDefault().getID();
-  static TimeZone tz1;
+  // Either of these initializations causes a NullPointerException
+  // at net.fortuna.ical4j.model.TimeZone.<init>(TimeZone.java:67)
+  // static TimeZone tz1 = new TimeZone(new VTimeZone());
+  // static TimeZone tz1 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone1));
+  static /*@MonotonicNonNull*/ TimeZone tz1;
   // If I'm outputting in a different timezone, then my notion of a "day"
   // may be different than the other timezone's notion of a "day".  This
   // doesn't seem important enough to fix right now.
@@ -116,7 +130,8 @@ public class ICalAvailable {
 
   /// Procedures
 
-  @SuppressWarnings("deprecation") // for iCal4j
+  @SuppressWarnings("deprecation") // for iCal4j's use of Date.{get,set}Minutes
+  /*@EnsuresNonNull("tz1")*/
   static void processOptions(String[] args) {
     Options options = new Options ("ICalAvailable [options]", ICalAvailable.class);
     String[] remaining_args = options.parse_or_usage (args);
@@ -138,7 +153,7 @@ public class ICalAvailable {
     if (timezone2 != null) {
       tz2 = tzRegistry.getTimeZone(canonicalizeTimezone(timezone2));
       if (tz2 == null) {
-        System.err.println("Unrecognized time zone (see http://www.php.net/manual/en/timezones.php): " + timezone2);
+        System.err.println("Unrecognized time zone (see http://php.net/manual/en/timezones.php ): " + timezone2);
         System.exit(1);
       }
     }
@@ -170,7 +185,28 @@ public class ICalAvailable {
       try {
         URL url = new URL(URL);
         CalendarBuilder builder = new CalendarBuilder();
-        Calendar c = builder.build(url.openStream());
+        Calendar c;
+        try {
+          c = builder.build(url.openStream());
+        } catch (ParserException pe) {
+          if ("Error at line 1: Expected [BEGIN], read [<HTML>]".equals(pe.getMessage())) {
+            System.out.println();
+            System.out.println("It is possible that the calendar has moved.");
+            // Debugging: write the URL contents to standard output
+            URL url2 = new URL(URL);
+            InputStream url_is = url2.openStream();
+            System.out.printf("URL: %s%n", url2);
+            System.out.println("Contents:");
+            byte[] buffer = new byte[1024];
+            int len = url_is.read(buffer);
+            while (len != -1) {
+                System.out.write(buffer, 0, len);
+                len = url_is.read(buffer);
+            }
+            System.out.println();
+          }
+          throw pe;
+        }
         calendars.add(c);
       } catch (Exception e) {
         e.printStackTrace(System.err);
@@ -179,7 +215,6 @@ public class ICalAvailable {
       }
     }
 
-    businessHours = new ArrayList<Period>();
     for (String range : business_hours.split(",")) {
       String[] startEnd = range.split("-");
       if (startEnd.length != 2) {
@@ -190,14 +225,6 @@ public class ICalAvailable {
       DateTime busEnd = parseTime(startEnd[1]);
       businessHours.add(new Period(busStart, busEnd));
     }
-
-    businessDays = new ArrayList<Integer>();
-    businessDays.add(1);
-    businessDays.add(2);
-    businessDays.add(3);
-    businessDays.add(4);
-    businessDays.add(5);
-
   }
 
   static Map<String,String> canonicalTimezones = new HashMap<String,String>();
@@ -210,6 +237,8 @@ public class ICalAvailable {
     canonicalTimezones.put("boston", "America/New_York");
     canonicalTimezones.put("america/boston", "America/New_York");
     canonicalTimezones.put("central", "America/Chicago");
+    canonicalTimezones.put("mountain", "America/Denver");
+    canonicalTimezones.put("arizona", "America/Phoenix");
     canonicalTimezones.put("pacific", "America/Los_Angeles");
     canonicalTimezones.put("pst", "America/Los_Angeles");
     canonicalTimezones.put("pacific standard time", "America/Los_Angeles");
@@ -221,6 +250,8 @@ public class ICalAvailable {
 
     printedTimezones.put("Eastern Standard Time", "Eastern");
     printedTimezones.put("Central Standard Time", "Central");
+    // Don't do this due to Arizona wierdness; we want to know MST vs. MDT
+    // printedTimezones.put("Mountain Standard Time", "Mountain");
     printedTimezones.put("Pacific Standard Time", "Pacific");
   }
 
@@ -241,6 +272,7 @@ public class ICalAvailable {
 
   // Parse a time like "9:30pm"
   @SuppressWarnings("deprecation") // for iCal4j
+  /*@RequiresNonNull("tz1")*/
   static DateTime parseTime(String time) {
 
     Matcher m = timeRegexp.matcher(time);
@@ -339,7 +371,7 @@ public class ICalAvailable {
     // "Object" because PeriodList extends TreeSet, but it really ought to
     // extend TreeSet</*@NonNull*/ Period>
     for (Object p : pl) {
-      assert p != null : "@SuppressWarnings(nullness): non-generic container class; elements are non-null";
+      assert p != null : "@AssumeAssertion(nullness): non-generic container class; elements are non-null";
       result.append(rangeString((Period)p, tz) + "\n");
     }
     return result.toString();
@@ -367,6 +399,7 @@ public class ICalAvailable {
 
   // Process day-by-day because otherwise weekends and evenings are included.
   @SuppressWarnings("unchecked") // for iCal4j
+  /*@RequiresNonNull("tz1")*/
   static List<Period> oneDayAvailable(DateTime day, List<Calendar> calendars) {
     if (debug) {
       System.err.printf("oneDayAvailable(%s, ...)%n", day);
