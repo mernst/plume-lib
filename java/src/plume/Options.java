@@ -620,7 +620,7 @@ public class Options {
         if (is_class && !Modifier.isStatic (f.getModifiers()))
           throw new Error ("non-static option " + f + " in class " + obj);
 
-        @SuppressWarnings("initialization") // "new MyClass(underInitializion)" yields @UnderInitializion even when @Initialized would be safe
+        @SuppressWarnings("initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
         /*@Initialized*/ OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
         options.add(oi);
 
