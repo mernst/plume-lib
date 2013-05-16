@@ -372,7 +372,7 @@ public class MultiVersionControl {
   /*@RequiresNonNull("dir")*/
   /*@EnsuresNonNull("action")*/
   public void parseArgs(/*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
-    @SuppressWarnings("initialization") // "new MyClass(underInitializion)" yields @UnderInitializion even when @Initialized would be safe
+    @SuppressWarnings("initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
     /*@Initialized*/ Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse_or_usage (args);
     if (remaining_args.length != 1) {
