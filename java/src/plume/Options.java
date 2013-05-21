@@ -1397,7 +1397,7 @@ public class Options {
    * @return a description of all of the known options
    */
   @Override
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public String toString() {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);
 

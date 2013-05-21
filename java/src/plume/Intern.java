@@ -609,7 +609,7 @@ public final class Intern {
    * @param a an Object to canonicalize
    * @return a canonical version of a
    **/
-  @SuppressWarnings("purity")   // throw exception when argument is invalid
+  @SuppressWarnings("purity")   // defensive coding: throw exception when argument is invalid
   /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
     if (a == null) {
       return null;

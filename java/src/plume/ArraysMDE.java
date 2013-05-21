@@ -1746,7 +1746,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(Object /*@Nullable*/ [] a, boolean quoted) {
     if (a == null) {
       return "null";
@@ -1801,7 +1801,7 @@ public final class ArraysMDE {
    * @return a string representation of the list
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(/*@Nullable*/ List<?> a, boolean quoted) {
     if (a == null) {
       return "null";
@@ -1832,7 +1832,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(int[] a) {
     if (a == null) {
       return "null";
@@ -1857,7 +1857,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(long[] a) {
     if (a == null) {
       return "null";
@@ -1882,7 +1882,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(double[] a) {
     if (a == null) {
       return "null";
@@ -1907,7 +1907,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(float[] a) {
     if (a == null) {
       return "null";
@@ -1932,7 +1932,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(boolean[] a) {
     if (a == null) {
       return "null";
@@ -1958,7 +1958,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above.
    */
-  @SuppressWarnings("purity")   // throw exception when argument is invalid
+  @SuppressWarnings("purity")   // defensive coding: throw exception when argument is invalid
   /*@SideEffectFree*/ public static String toString(Object obj) throws IllegalArgumentException {
     if (obj instanceof boolean[]) {
       return toString((boolean[]) obj);
@@ -1987,7 +1987,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above.
    */
-  @SuppressWarnings("purity")   // throw exception when argument is invalid
+  @SuppressWarnings("purity")   // defensive coding: throw exception when argument is invalid
   /*@Pure*/ public static int length(Object obj) throws IllegalArgumentException {
     if (obj instanceof boolean[]) {
       return ((boolean[]) obj).length;
@@ -2066,7 +2066,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (boolean [] a) {
     HashSet<Boolean> hs = new HashSet<Boolean> ();
     for (int i = 0; i < a.length; i++) {
@@ -2085,7 +2085,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (byte[] a) {
     HashSet<Byte> hs = new HashSet<Byte> ();
     for (int i = 0; i < a.length; i++) {
@@ -2104,7 +2104,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (char[] a) {
     HashSet<Character> hs = new HashSet<Character> ();
     for (int i = 0; i < a.length; i++) {
@@ -2123,7 +2123,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (float[] a) {
     HashSet<Float> hs = new HashSet<Float> ();
     for (int i = 0; i < a.length; i++) {
@@ -2142,7 +2142,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (short[] a) {
     HashSet<Short> hs = new HashSet<Short> ();
     for (int i = 0; i < a.length; i++) {
@@ -2161,7 +2161,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (int[] a) {
     HashSet<Integer> hs = new HashSet<Integer> ();
     for (int i = 0; i < a.length; i++) {
@@ -2182,7 +2182,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (double[] a) {
     HashSet<Double> hs = new HashSet<Double> ();
     for (int i = 0; i < a.length; i++) {
@@ -2202,7 +2202,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (long[] a) {
     HashSet<Long> hs = new HashSet<Long> ();
     for (int i = 0; i < a.length; i++) {
@@ -2222,7 +2222,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (String[] a) {
     HashSet<String> hs = new HashSet<String> ();
     for (int i = 0; i < a.length; i++) {
@@ -2240,7 +2240,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean noDuplicates (Object[] a) {
     HashSet<Object> hs = new HashSet<Object> ();
     for (int i = 0; i < a.length; i++) {
@@ -2259,7 +2259,7 @@ public final class ArraysMDE {
    * @param a a list
    * @return true iff a does not contain duplicate elements
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static <T> boolean noDuplicates (List<T> a) {
     HashSet<T> hs = new HashSet<T> ();
     for (int i = 0; i < a.size(); i++) {
@@ -2282,7 +2282,7 @@ public final class ArraysMDE {
    * @return true iff all elements of a are in [0..a.length) and a
    * contains no duplicates.
    **/
-  @SuppressWarnings("purity")   // side effect to local variable
+  @SuppressWarnings("purity")   // side effect to local state (array)
   /*@Pure*/ public static boolean fn_is_permutation(int[] a) {
     // In the common case we expect to succeed, so use as few loops as possible
     boolean[] see = new boolean[a.length];
@@ -2386,7 +2386,7 @@ public final class ArraysMDE {
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
    **/
-  @SuppressWarnings("purity")   // object creation in deterministic method
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean isSubset(long[] smaller, long[] bigger) {
     Set<Long> setBigger = new HashSet<Long>();
 
@@ -2414,7 +2414,7 @@ public final class ArraysMDE {
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
    **/
-  @SuppressWarnings("purity")   // object creation in deterministic method
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean isSubset(double[] smaller, double[] bigger) {
     Set<Double> setBigger = new HashSet<Double>();
 
@@ -2441,7 +2441,7 @@ public final class ArraysMDE {
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
    **/
-  @SuppressWarnings("purity")   // object creation in deterministic method
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean isSubset(String[] smaller, String[] bigger) {
     Set<String> setBigger = new HashSet<String>();
 
