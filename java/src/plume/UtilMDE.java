@@ -35,7 +35,7 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b) &ge; i
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
@@ -69,7 +69,7 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b intersect c) &ge; i
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
@@ -94,7 +94,7 @@ public final class UtilMDE {
    * @param b the second BitSet to intersect
    * @return size(a intersect b)
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
@@ -107,7 +107,7 @@ public final class UtilMDE {
    * @param c the third BitSet to intersect
    * @return size(a intersect b intersect c)
    **/
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
@@ -2869,7 +2869,7 @@ public final class UtilMDE {
    * @param o2 second value to comare
    * @return true iff o1 and o2 are deeply equal
    */
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to static field deepEqualsUnderway
   /*@Pure*/ public static boolean deepEquals(Object o1, Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);

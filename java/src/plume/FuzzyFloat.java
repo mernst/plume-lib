@@ -224,7 +224,7 @@ public class FuzzyFloat {
    * @param a2 the first value to compare
    * @return true if a1 and a2 are set equivalent, false otherwise
    */
-  @SuppressWarnings("purity")   // side effect to local state in deterministic method
+  @SuppressWarnings("purity")   // side effect to local state (arrays)
   /*@Pure*/ public boolean isElemMatch (double[] a1, double[] a2) {
 
     //don't change our parameters
@@ -341,7 +341,7 @@ public class FuzzyFloat {
    * also a element of bigger) of bigger, false otherwise
    */
 
-  @SuppressWarnings("purity")   // side effect to local state in deterministic method
+  @SuppressWarnings("purity")   // side effect to local state (arrays)
   /*@Pure*/ public boolean isSubset (double[] smaller, double[] bigger) {
 
     //don't change our parameters
