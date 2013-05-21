@@ -428,8 +428,8 @@ check-all: check-nullness check-interning check-regex check-signature
 
 CHECKERS_ARGS ?= -source 8 -Awarns
 
-JAVAC_NULLNESS_RAW_ARGS = -processor checkers.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing
-JAVAC_NULLNESS_FBC_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing
+JAVAC_NULLNESS_RAW_ARGS = -processor checkers.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AenablePurity
+JAVAC_NULLNESS_FBC_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing -AenablePurity
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
 check-nullness: check-nullness-raw check-nullness-fbc
