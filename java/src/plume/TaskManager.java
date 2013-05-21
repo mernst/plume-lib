@@ -297,7 +297,7 @@ public class TaskManager {
     }
   }
 
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public String toString_short_ascii() {
     StringBuilder out = new StringBuilder();
     for (Task task : tasks) {
@@ -306,7 +306,7 @@ public class TaskManager {
     return (out.toString());
   }
 
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public String toString_short_html() {
     StringBuilder out = new StringBuilder();
     double total = 0.0;
@@ -324,7 +324,7 @@ public class TaskManager {
     return (out.toString());
   }
 
-  @SuppressWarnings("purity")   // side effect to local state
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public String toString_milestone_html() {
     StringBuilder out = new StringBuilder();
     out.append ("<table border cellspacing=0 cellpadding=2>" + lineSep);
