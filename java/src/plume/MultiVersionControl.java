@@ -1132,9 +1132,11 @@ public class MultiVersionControl {
         case GIT:
           pb.command(git_executable, "status");
           addArgs(pb, git_arg);
+          addArg(pb, "--untracked-files=no");
           replacers.add(new Replacer("(^|\\n)nothing to commit,? working directory clean\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)no changes added to commit \\(use \"git add\" and/or \"git commit -a\"\\)\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing added to commit but untracked files present \\(use \"git add\" to track\\)\\n", "$1"));
+          replacers.add(new Replacer("(^|\\n)nothing to commit \\(use -u to show untracked files\\)\n", "$1"));
 
           replacers.add(new Replacer("(^|\\n)#\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)# On branch master\\n", "$1"));
