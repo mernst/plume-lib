@@ -6,7 +6,7 @@
 # This script reassembles the two PDFs into one.
 
 # Invoke as:
-# pdfinterleave infile1.pdf infile2.pdf outfile.pdf
+# pdfinterleave oddsides.pdf evensides.pdf outfile.pdf
 
 # From http://www.accesspdf.com/article.php/2005020408520076
 
@@ -25,7 +25,7 @@ if [ $# -eq 3 ]; then
   FILE2="$2"
   FILE3="$3"
 else
-  echo "Usage: `basename $0` infile1.pdf infile2.pdf outfile.pdf"
+  echo "Usage: `basename $0` oddsides.pdf evensides.pdf outfile.pdf"
   exit $E_BADARGS
 fi
 fi
