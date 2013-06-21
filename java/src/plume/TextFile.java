@@ -142,15 +142,21 @@ public class TextFile implements Iterable<String> {
             throw new UnsupportedOperationException();
         }
 
-        void getNextLine() {
+        /**
+         * Sets the nextline field to the next line to be returned,
+         * discarding the previous contents of that field.
+         */
+        /*@RequiresNonNull("in")*/
+        void getNextLine(/*>>> @UnknownInitialization(TextFileIterator.class) @Raw(TextFileIterator.class) TextFileIterator this*/) {
             if (!closed) {
-                try { nextline = in.readLine(); }
-                catch(IOException e) {
+                try {
+                    nextline = in.readLine();
+                } catch (IOException e) {
                     throw new IllegalArgumentException(e);
                 }
                 if (nextline == null) {
                     try { in.close(); }
-                    catch(IOException ignored) {}
+                    catch (IOException ignored) {}
                     closed = true;
                 }
             }

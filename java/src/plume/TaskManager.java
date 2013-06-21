@@ -79,12 +79,13 @@ public class TaskManager {
     /*@Nullable*/ String description;
     /*@Nullable*/ String notes;
 
-    private void checkRep() {
-      assert filename != null : "No filename at line " + line_number;
-      assert task != null : "No task at line " + line_number;
-      assert responsible != null : "No responsible at line " + line_number;
-      assert duration != null : "No duration at line " + line_number;
-      assert completed != null : "No completed at line " + line_number;
+    /*@EnsuresNonNull({"filename", "task", "responsible", "duration", "completed"})*/
+    private void checkRep(/*>>> @UnderInitialization(Object.class) @Raw(Object.class) Task this*/) {
+      assert filename != null : "No filename at line " + line_number + " @AssumeAssertion(nullness)";
+      assert task != null : "No task at line " + line_number + " @AssumeAssertion(nullness)";
+      assert responsible != null : "No responsible at line " + line_number + " @AssumeAssertion(nullness)";
+      assert duration != null : "No duration at line " + line_number + " @AssumeAssertion(nullness)";
+      assert completed != null : "No completed at line " + line_number + " @AssumeAssertion(nullness)";
     }
 
     public Task (String body, String filename, long line_number)
@@ -173,30 +174,30 @@ public class TaskManager {
       checkRep();
     }
 
-    public static String short_str (float f) {
+    /*@SideEffectFree*/ public static String short_str (float f) {
       if (((double)f) - Math.floor ((double)(f)) > 0.1)
         return String.format ("%.1f", f);
       else
         return String.format ("%d", Math.round (f));
     }
 
-    private String completion_str() {
+    /*@SideEffectFree*/ private String completion_str() {
       return String.format ("%s/%s", short_str (completed),
                             short_str(duration));
     }
 
-    public String toString_short_ascii() {
+    /*@SideEffectFree*/ public String toString_short_ascii() {
       return String.format ("%-10s %-10s %-6s %s", responsible, milestone,
                             completion_str(), task);
     }
 
-    public String toString_short_html(double total) {
+    /*@SideEffectFree*/ public String toString_short_html(double total) {
       return String.format ("<tr> <td> %s </td><td> %s </td><td> "
                             + "%s </td><td> %f </td><td> %s </td></tr>",
                             responsible, milestone, completion_str(), total, task);
     }
 
-    public String toString_milestone_html(double total) {
+    /*@SideEffectFree*/ public String toString_milestone_html(double total) {
       String resp_str = responsible;
       if (resp_str.equals ("none"))
         resp_str = "<font color=red><b>" + resp_str + "</b></font>";
@@ -296,7 +297,8 @@ public class TaskManager {
     }
   }
 
-  public String toString_short_ascii() {
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
+  /*@SideEffectFree*/ public String toString_short_ascii() {
     StringBuilder out = new StringBuilder();
     for (Task task : tasks) {
       out.append (task.toString_short_ascii() + lineSep);
@@ -304,7 +306,8 @@ public class TaskManager {
     return (out.toString());
   }
 
-  public String toString_short_html() {
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
+  /*@SideEffectFree*/ public String toString_short_html() {
     StringBuilder out = new StringBuilder();
     double total = 0.0;
     String responsible = null;
@@ -321,7 +324,8 @@ public class TaskManager {
     return (out.toString());
   }
 
-  public String toString_milestone_html() {
+  @SuppressWarnings("purity")   // side effect to local state (string creation)
+  /*@SideEffectFree*/ public String toString_milestone_html() {
     StringBuilder out = new StringBuilder();
     out.append ("<table border cellspacing=0 cellpadding=2>" + lineSep);
     out.append ("<tr> <th> Responsible <th> C/D <th> Total <th> Task </tr>"
