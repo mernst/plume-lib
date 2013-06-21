@@ -5,6 +5,7 @@
 --exclude-docs http://groups.csail.mit.edu/pag/reading-group/
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://pag.csail.mit.edu/jsr308/dist/doc/javac_lifecycle
+--exclude-docs http://types.cs.washington.edu/checker-framework/api/(javac|jdk)/
 --exclude-docs http://types.cs.washington.edu/list-archives/
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go 
@@ -20,6 +21,7 @@
 --suppress-broken 400:http://www.junit.org/
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
 --suppress-broken 403:http://mercurial.selenic.com/wiki/MergeProgram
+--suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension	
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html	
 --suppress-broken 403:http://portal.acm.org/dl.cfm
 --suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
@@ -34,10 +36,13 @@
 --suppress-broken 403:http://www.cs.washington.edu/login/pc/pc	
 --suppress-broken 403:http://www.cs.washington.edu/orgs/student-affairs/gsc/jobs/
 --suppress-broken 403:http://www.dwheeler.com/sloccount/
+--suppress-broken 403:http://www.edwardxwu.com/
 --suppress-broken 403:http://www.elsevier.nl/locate/disc/
 --suppress-broken 403:http://www.javaworld.com/javaworld/javatips/jw-javatip122.html
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
+--suppress-broken 403:https://www.cs.washington.edu/internal/
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
+--suppress-broken 403:https://www.cs.washington.edu/login/pc
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 --suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
 --suppress-broken 404:http://docs.oracle.com/javase/7/docs/api/javax/lang/model/type/IntersectionType.html?is-external=true
@@ -63,6 +68,7 @@
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86.msi	
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86_64.msi	
 --suppress-broken 405:http://aws.amazon.com/datasets
+--suppress-broken 405:http://code.activestate.com/recipes/langs/python/	
 --suppress-broken 405:http://onlinelibrary.wiley.com/doi/10.1111/j.1468-0475.2011.00542.x/pdf
 --suppress-broken 405:http://thinkcspy.appspot.com/
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
@@ -72,8 +78,11 @@
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
 --suppress-broken 500:http://conferences.iee.org/icse2004/
+--suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
+--suppress-broken 500:http://kevinjsullivan.org/
 --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/	
+--suppress-broken 500:http://www.eclipse.org/downloads/
 --suppress-broken 500:http://www.icse-conferences.org/2001/	
 --suppress-broken 500:http://www.icse-conferences.org/2003/	
 --suppress-broken 500:http://www.icse-conferences.org/2004/	
@@ -162,6 +171,7 @@
 --suppress-redirect http://www.cs.ucl.ac.uk/icse07/->http://web4.cs.ucl.ac.uk/icse07/	
 --suppress-redirect http://www.cs.utexas.edu/->http://www.cs.utexas.edu/home/department/welcome.html
 --suppress-redirect http://www.cs.washington.edu/education/courses/cse331/12sp/forum.html->https://catalyst.uw.edu/gopost/board/mernst/27075/	
+--suppress-redirect http://www.cs.washington.edu/education/courses/cse331/13sp/forum.html->https://catalyst.uw.edu/gopost/board/mernst/32323/	
 --suppress-redirect http://www.csail.mit.edu/->http://www.csail.mit.edu/index.php
 --suppress-redirect http://www.dexonline.com/->http://www.dexonline.com/displayhome.ds
 --suppress-redirect http://www.elsevier.com/locate/disc/->http://www.elsevier.com/wps/find/journaldescription.cws_home/505610/description#description	
