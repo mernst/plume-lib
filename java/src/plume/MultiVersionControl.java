@@ -709,7 +709,9 @@ public class MultiVersionControl {
         checkouts.add(dirToCheckoutHg(dir, parent));
         return;
       } else if (dirName.equals(".svn")) {
-        checkouts.add(dirToCheckoutSvn(parent));
+        Checkout c = dirToCheckoutSvn(parent);
+        if (c != null)
+          checkouts.add(c);
         return;
       }
     }
@@ -830,8 +832,9 @@ public class MultiVersionControl {
   /**
    * Given a directory that contains a .svn subdirectory, create a
    * corresponding Checkout object.
+   * Returns null if this is not possible.
    */
-  static Checkout dirToCheckoutSvn(File dir) {
+  static /*@Nullable*/ Checkout dirToCheckoutSvn(File dir) {
 
     // For SVN, do
     //   svn info
@@ -850,7 +853,12 @@ public class MultiVersionControl {
     try {
       info = wcClient.doInfo(new File(dir.toString()), SVNRevision.WORKING);
     } catch (SVNException e) {
-      throw new Error("Problem in dirToCheckoutSvn(" + dir + "): ", e);
+      // throw new Error("Problem in dirToCheckoutSvn(" + dir + "): ", e);
+      System.err.println("Problem in dirToCheckoutSvn(" + dir + "): " + e.getMessage());
+      if (e.getMessage().contains("This client is too old")) {
+        System.err.println("Try checking out " + dir + " again.");
+      }
+      return null;
     }
     // getFile is null when operating on a working copy, as I am
     // String relativeFile = info.getPath(); // relative to repository root -- can use to determine root of checkout
