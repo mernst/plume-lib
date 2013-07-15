@@ -76,7 +76,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.subSequence(start, end);
   }
 
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return delegate.toString();
   }
 
