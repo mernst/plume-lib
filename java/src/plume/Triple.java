@@ -28,7 +28,7 @@ public class Triple<T1,T2,T3> {
     return new Triple<A, B, C>(a, b, c);
   }
 
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return "<" + String.valueOf(a)
       + "," + String.valueOf(b)
       + "," + String.valueOf(c)
