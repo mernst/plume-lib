@@ -188,7 +188,6 @@
 --suppress-redirect http://www.leelin.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2Fwww.leelin.com-a.googlepages.com%2Fhome
 --suppress-redirect http://www.nps.gov/mora/->http://www.nps.gov/mora/index.htm
 --suppress-redirect http://www.nsf.gov/home/cise/->http://www.nsf.gov/dir/index.jsp?org=CISE
---suppress-redirect http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
 --suppress-redirect http://www.pricegrabber.com/->http://www.pricegrabber.com/spiders.php
 --suppress-redirect http://www.rational.com/licensing->http://www-306.ibm.com/software/rational/support/licensing/
 --suppress-redirect http://www.rational.com/licensing/->http://www-306.ibm.com/software/rational/support/licensing/
