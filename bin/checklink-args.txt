@@ -16,6 +16,7 @@
 --suppress-broken 302:http://www.hotelatmit.com/
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
+--suppress-broken 302:http://www.oracle.com/technetwork/java/codeconv-138413.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
 --suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
@@ -117,6 +118,8 @@
 --suppress-broken 503:http://www.census.gov/popest/data/cities/totals/2009/files/SUB-EST2009_ALL.csv
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
+--suppress-broken 503:http://www.oracle.com/technetwork/java/codeconv-138413.html
+--suppress-broken 503:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
 --suppress-broken 503:https://blogs.oracle.com/darcy/entry/project_coin_final_five
 --suppress-broken 503:https://blogs.oracle.com/darcy/entry/so_you_want_to_change
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac
