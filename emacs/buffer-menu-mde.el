@@ -240,12 +240,20 @@ The regular expressions are implicitly anchored at the front.")
 		    (substring header-line-format 3)))
       (while (not (eobp))
 	(assert (looking-at "[C .]"))
-	(delete-char 1)
-	(insert " ")
+	(replace-char-and-inherit " ")
 	(assert (looking-at "[R %]"))
-	(delete-char 1)
-	(insert " ")
+	(replace-char-and-inherit " ")
 	(forward-line 1)))))
+
+
+(defun replace-char-and-inherit (newchar)
+  "Replace the character at point by `newchar', but inherit its properties."
+  ;; Gross implementation
+  (forward-char 1)
+  (insert-and-inherit " ")
+  (backward-char 2)
+  (delete-char 1)
+  (forward-char 1))
 
 
 ;;;
