@@ -1,3 +1,5 @@
+# Help Emacs read and write this file: -*- coding: raw-text -*-
+# (because it contains non-UTF-8 characters used by bibtex2web).
 #
 # This file can be found at
 # http://plume-lib.googlecode.com/hg/bin/html-canonical-urls
@@ -8,6 +10,7 @@
 # (http://homes.cs.washington.edu/~mernst/software/bibtex2web.html).
 # The textual string contains bibtex2web markup, not HTML markup,
 # for special characters.
+#
 #
 # As of 6/2011, Oege de Moor is not answering repeated email about this
 # broken link.
@@ -219,7 +222,7 @@ WS-MaTe 2006 http://www.selab.isti.cnr.it/ws-mate/
 # Xiaoxia Ren http://www.research.rutgers.edu/~xren/
 Yannis Smaragdakis http://www.cc.gatech.edu/~yannis/
 Yingyi Bu http://www.ics.uci.edu/~yingyib/
-Yoav Zibin http://www.flashtogether.com/yoavzibin/index.html
+Yoav Zibin http://flash-together.appspot.com/yoavzibin/index.html
 Yoonsik Cheon http://www.cs.utep.edu/cheon/
 #Permanent: Yuriy Brun http://alum.mit.edu/www/brun/
 Yuriy Brun http://people.cs.umass.edu/~brun/
