@@ -1,0 +1,51 @@
+This file contains diffs of the distributed checklink, version 4.6,
+against the modified version of checklink that appears in this directory.
+
+diff -u -b -r --exclude=CVS --exclude=.bzr --exclude=.hg --exclude=.hgtags --exclude=.git --exclude=.svn --exclude='*.class' /usr/local/bin/checklink /home/mernst/bin/src/plume-lib/bin/checklink
+--- /usr/local/bin/checklink	2010-12-19 11:59:15.000000000 -0800
++++ /home/mernst/bin/src/plume-lib/bin/checklink	2010-12-19 14:21:07.062812541 -0800
+@@ -28,6 +28,8 @@
+ 
+ use strict;
+ use 5.008;
++use English;
++$WARNING = 1;
+ 
+ # Get rid of potentially unsafe and unneeded environment variables.
+ delete(@ENV{qw(IFS CDPATH ENV BASH_ENV)});
+@@ -49,7 +51,7 @@
+ use LWP::UserAgent qw();
+ 
+ # if 0, ignore robots exclusion (useful for testing)
+-use constant USE_ROBOT_UA => 1;
++use constant USE_ROBOT_UA => 0;
+ 
+ if (USE_ROBOT_UA) {
+     @W3C::UserAgent::ISA = qw(LWP::RobotUA);
+@@ -227,6 +229,7 @@
+ use CSS::DOM::Constants qw(:rule);
+ use CSS::DOM::Style qw();
+ use CSS::DOM::Util qw();
++use File::Basename;
+ use HTML::Entities qw();
+ use HTML::Parser 3.40 qw();    # >= 3.40 for utf8_mode()
+ use HTTP::Headers::Util qw();
+@@ -1250,6 +1253,16 @@
+             }
+         }
+ 
++        if ($abs_link_uri eq "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd") {
++          $abs_link_uri = URI->new("file://" . dirname(__FILE__) . "/../etc/xhtml1-transitional.dtd");
++        }
++        if ($abs_link_uri eq "http://www.w3.org/TR/html4/frameset.dtd") {
++          $abs_link_uri = URI->new("file://" . dirname(__FILE__) . "/../etc/frameset.dtd");
++        }
++        if ($abs_link_uri eq "http://www.w3.org/TR/REC-html40/loose.dtd") {
++          $abs_link_uri = URI->new("file://" . dirname(__FILE__) . "/../etc/loose.dtd");
++        }
++
+         my $canon_uri = URI->new($abs_link_uri->canonical());
+         my $fragment  = $canon_uri->fragment(undef);
+         if (!defined($Opts{Exclude}) || $canon_uri !~ $Opts{Exclude}) {
+
+Diff finished.  Mon Dec 20 20:12:36 2010
