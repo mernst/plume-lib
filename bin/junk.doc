@@ -56,7 +56,7 @@ can set any subset of these variables in your environment.
 
   LATEX_OUT_JUNK = "*.log .*.log"
 
-  LATEX_IO_JUNK = "*.aux .*.aux *.toc .*.toc *.lof .*.lof *.lot .*.lot *.idx .*.idx *.glo .*.glo"
+  LATEX_IO_JUNK = "*.aux .*.aux *.toc .*.toc *.lof .*.lof *.lot .*.lot .*.idx *.glo .*.glo"
 
   LATEX_INDEX_JUNK = "*.bbl .*.bbl"
 
