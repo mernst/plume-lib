@@ -772,7 +772,7 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean equals (/*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals (/*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
@@ -788,7 +788,7 @@ public final class Intern {
               && this.end == other.end);
     }
 
-    public int hashCode() {
+    /*@Pure*/ public int hashCode() {
       return seq.hashCode() + start * 30 - end * 2;
     }
 

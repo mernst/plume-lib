@@ -65,7 +65,7 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
 
   @Override
   @SuppressWarnings("interning")
-  public boolean equals(/*@Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(/*@Nullable*/ Object obj) {
     if (! (obj instanceof WeakIdentityPair<?, ?>)) {
       return false;
     }
@@ -90,6 +90,7 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
 
 
   @Override
+  /*@Pure*/
   public int hashCode() {
     return hashCode;
   }
