@@ -125,6 +125,7 @@ public class LimitedSizeSet<T>
     return values == null;
   }
 
+  /*@SideEffectFree*/
   public LimitedSizeSet<T> clone() {
     LimitedSizeSet<T> result;
     try {

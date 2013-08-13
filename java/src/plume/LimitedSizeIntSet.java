@@ -128,7 +128,7 @@ public class LimitedSizeIntSet
     return values == null;
   }
 
-  public LimitedSizeIntSet clone() {
+  /*@SideEffectFree*/ public LimitedSizeIntSet clone() {
     LimitedSizeIntSet result;
     try {
       result = (LimitedSizeIntSet) super.clone();
