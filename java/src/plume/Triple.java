@@ -36,7 +36,7 @@ public class Triple<T1,T2,T3> {
   }
 
   @SuppressWarnings("interning")
-  public boolean equals(/*@Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(/*@Nullable*/ Object obj) {
     if (obj instanceof Triple<?,?,?>) {
       @SuppressWarnings("unchecked")
       Triple<T1,T2,T3> other = (Triple<T1,T2,T3>) obj;
@@ -53,7 +53,7 @@ public class Triple<T1,T2,T3> {
   }
 
   // See coment at Pair.hashCode.
-  public int hashCode() {
+  /*@Pure*/ public int hashCode() {
     return (((a == null) ? 0 : a.hashCode())
             + ((b == null) ? 0 : b.hashCode())
             + ((c == null) ? 0 : c.hashCode()));

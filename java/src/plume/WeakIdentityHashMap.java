@@ -300,7 +300,7 @@ public class WeakIdentityHashMap<K,V>
      * Expunge stale entries from the table.
      */
     @SuppressWarnings("purity") // actually has side effects due to weak pointers
-    /*@Pure*/ private void expungeStaleEntries() {
+    /*@SideEffectFree*/ private void expungeStaleEntries() {
 	Entry<K,V> e;
         // These types look wrong to me.
         while ( (e = (Entry<K,V>) queue.poll()) != null) { // unchecked cast
