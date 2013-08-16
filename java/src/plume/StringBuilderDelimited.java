@@ -68,7 +68,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.charAt(index);
   }
 
-  public int length() {
+  /*@Pure*/ public int length() {
     return delegate.length();
   }
 
@@ -76,7 +76,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.subSequence(start, end);
   }
 
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return delegate.toString();
   }
 

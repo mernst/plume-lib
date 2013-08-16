@@ -69,7 +69,13 @@ import java.util.StringTokenizer;
 
 public class JWhich {
 
-  private static String CLASSPATH;
+  private static /*@MonotonicNonNull*/ String CLASSPATH;
+
+  // Do not call; this class is a collection of functions rather than
+  // representing an object.
+  private JWhich() {
+    getClasspath();
+  }
 
   /**
    * Prints the absolute pathname of the class file
@@ -78,6 +84,7 @@ public class JWhich {
    *
    * @param className Name of the class.
    */
+  /*@EnsuresNonNull("CLASSPATH")*/
   public static void which(String className) {
 
     URL classUrl = findClass(className);
@@ -122,6 +129,7 @@ public class JWhich {
    * Valid class path entries include directories, <code>.zip</code>
    * files, and <code>.jar</code> files.
    */
+  /*@EnsuresNonNull("CLASSPATH")*/
   public static void validate() {
 
     StringTokenizer tokenizer =
@@ -146,6 +154,7 @@ public class JWhich {
     }
   }
 
+  /*@EnsuresNonNull("CLASSPATH")*/
   public static void printClasspath() {
 
     System.out.println("\nClasspath:");
@@ -156,10 +165,12 @@ public class JWhich {
     }
   }
 
+  /*@EnsuresNonNull("CLASSPATH")*/
   public static void setClasspath(String classpath) {
     CLASSPATH = classpath;
   }
 
+  /*@EnsuresNonNull("CLASSPATH")*/
   protected static String getClasspath() {
     if (CLASSPATH == null) {
       String classpath = System.getProperty("java.class.path");

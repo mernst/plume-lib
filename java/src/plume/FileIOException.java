@@ -153,7 +153,7 @@ public class FileIOException extends IOException {
   /// Utility and helper methods
   ///
 
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     String result = super.toString();
     if (fileName != null) {
       result += " in file " + fileName;
@@ -165,10 +165,10 @@ public class FileIOException extends IOException {
   }
 
   // Infers the line number from the "reader" field.
-  // Assumes the "reader" field is already set.
+  // Returns -1 if "reader" is null.
   // Not a setter method because field lineNumber is final, but
   // still clearer to abstract out.
-  private int getLineNumber(/*@Nullable*/ LineNumberReader reader) {
+  static private int getLineNumber(/*@Nullable*/ LineNumberReader reader) {
     if (reader != null) {
       return reader.getLineNumber();
     } else {

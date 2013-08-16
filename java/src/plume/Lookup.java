@@ -238,7 +238,7 @@ public class Lookup {
     // comment_re starts out non-null and the option processing code can't
     // make it null, so no null pointer exception is possible in the
     // if statement predicate that immediately follows this assertion.
-    assert comment_re != null : "@SuppressWarnings(nullness): application invariant";
+    assert comment_re != null : "@AssumeAssertion(nullness): application invariant";
 
     // If the comment regular expression is empty, turn off comment processing
     if (comment_re.equals (""))

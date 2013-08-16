@@ -356,7 +356,7 @@ public class BCELUtil {
     String out = "";
     // not generic because BCEL is not generic
     for (Iterator i = il.iterator(); i.hasNext();) {
-      @SuppressWarnings("nullness") // BCEL's InstructionList is raw but contains only non-null elements
+      @SuppressWarnings("nullness") // BCEL's InstructionList is raw (non-generic) but contains only non-null elements
       /*@NonNull*/ InstructionHandle handle = (InstructionHandle) i.next();
       out += handle.getInstruction().toString(pool.getConstantPool()) + "\n";
     }
@@ -540,7 +540,7 @@ public class BCELUtil {
    * @return the array (or a new one), with new_type at the end
    */
   public static Type[] add_type (Type[] types, Type new_type) {
-      /*@LazyNonNull*/ Type[] new_types = new Type[types.length + 1];
+      /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
       System.arraycopy(types, 0, new_types, 0, types.length);
       new_types[types.length] = new_type;
       @SuppressWarnings("cast")
@@ -556,7 +556,7 @@ public class BCELUtil {
    * @return the array (or a new one), with new_type at the beginning
    */
   public static Type[] insert_type (Type new_type, Type[] types) {
-      /*@LazyNonNull*/ Type[] new_types = new Type[types.length + 1];
+      /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
       System.arraycopy(types, 0, new_types, 1, types.length);
       new_types[0] = new_type;
       @SuppressWarnings("cast")

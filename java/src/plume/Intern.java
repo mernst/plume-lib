@@ -50,7 +50,7 @@ public final class Intern {
    * @return true iff value is interned
    **/
   @SuppressWarnings("interning")
-  public static boolean isInterned(/*@Nullable*/ Object value) {
+  /*@Pure*/ public static boolean isInterned(/*@Nullable*/ Object value) {
     if (value == null) {
       // nothing to do
       return true;
@@ -314,21 +314,25 @@ public final class Intern {
   // Interns a String.
   // Delegates to the builtin String.intern() method.  Provided for
   // completeness, so we can intern() any type used in OneOf.java.jpp.
-  public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
-    return (a == null) ? null : a.intern();
+  /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
+    // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
+    if (a == null) {
+      return null;
+    }
+    return a.intern();
   }
 
   // Interns a long.
   // A no-op.  Provided for completeness, so we can intern() any type
   // used in OneOf.java.jpp.
-  public static long intern(long l) {
+  /*@Pure*/ public static long intern(long l) {
     return l;
   }
 
   // Interns a long.
   // A no-op.  Provided for completeness, so we can intern() any type
   // used in OneOf.java.jpp.
-  public static double intern(double l) {
+  /*@Pure*/ public static double intern(double l) {
     return l;
   }
 
@@ -341,8 +345,8 @@ public final class Intern {
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Intern.valueOf is intended to promise
   // the same).  This does not currently take advantage of that.
-  @SuppressWarnings("interning")
-  public static /*@Interned*/ Integer intern(Integer a) {
+  @SuppressWarnings({"interning", "purity"})
+  /*@Pure*/ public static /*@Interned*/ Integer intern(Integer a) {
     WeakReference</*@Interned*/ Integer> lookup = internedIntegers.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -382,8 +386,8 @@ public final class Intern {
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Long.valueOf is intended to promise
   // the same).  This could take advantage of that.
-  @SuppressWarnings("interning")
-  public static /*@Interned*/ Long intern(Long a) {
+  @SuppressWarnings({"interning", "purity"})
+  /*@Pure*/ public static /*@Interned*/ Long intern(Long a) {
     WeakReference</*@Interned*/ Long> lookup =  internedLongs.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -426,8 +430,8 @@ public final class Intern {
    * @param a the array to canonicalize
    * @return a canonical representation for the int[] array
    **/
-  @SuppressWarnings("interning")
-  public static int /*@Interned*/ [] intern(int[] a) {
+  @SuppressWarnings({"interning", "purity"})
+  /*@Pure*/ public static int /*@Interned*/ [] intern(int[] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
@@ -450,8 +454,8 @@ public final class Intern {
    * @param a the array to canonicalize
    * @return a canonical representation for the long[] array
    **/
-  @SuppressWarnings("interning")
-  public static long /*@Interned*/ [] intern(long[] a) {
+  @SuppressWarnings({"interning", "purity"})
+  /*@Pure*/ public static long /*@Interned*/ [] intern(long[] a) {
     //System.out.printf ("intern %s %s long[] %s\n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
@@ -474,8 +478,8 @@ public final class Intern {
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Double.valueOf is intended to promise
   // the same).  This could take advantage of that.
-  @SuppressWarnings("interning")
-  public static /*@Interned*/ Double intern(Double a) {
+  @SuppressWarnings({"interning", "purity"})
+  /*@Pure*/ public static /*@Interned*/ Double intern(Double a) {
     // Double.NaN == Double.Nan  always evaluates to false.
     if (a.isNaN())
       return internedDoubleNaN;
@@ -524,8 +528,8 @@ public final class Intern {
    * @param a the array to canonicalize
    * @return a canonical representation for the double[] array
    **/
-  @SuppressWarnings("interning")
-  public static double /*@Interned*/ [] intern(double[] a) {
+  @SuppressWarnings({"interning", "purity"})
+  /*@Pure*/ public static double /*@Interned*/ [] intern(double[] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -547,8 +551,9 @@ public final class Intern {
    * @return a canonical representation for the String[] array
    **/
   @SuppressWarnings({"interning", // interns its argument
+      "purity",
       "cast"}) // cast is redundant (except in JSR 308)
-  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
+      /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
     for (int k = 0; k < a.length; k++)
@@ -577,8 +582,9 @@ public final class Intern {
    * @return a canonical representation for the Object[] array
    **/
   @SuppressWarnings({"interning", // interns its argument
+      "purity",
       "cast"}) // cast is redundant (except in JSR 308)
-  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
+      /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectArrays.get(a);
     /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [] result;
@@ -603,7 +609,8 @@ public final class Intern {
    * @param a an Object to canonicalize
    * @return a canonical version of a
    **/
-  public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
+  @SuppressWarnings("purity")   // defensive coding: throw exception when argument is invalid
+  /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
     if (a == null) {
       return null;
     } else if (a instanceof String) {
@@ -765,7 +772,7 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    public boolean equals (/*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals (/*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
@@ -775,18 +782,18 @@ public final class Intern {
       }
     }
 
-    public boolean equals (SequenceAndIndices<T> other) {
+    /*@Pure*/ public boolean equals (SequenceAndIndices<T> other) {
       return ((this.seq == other.seq)
               && this.start == other.start
               && this.end == other.end);
     }
 
-    public int hashCode() {
+    /*@Pure*/ public int hashCode() {
       return seq.hashCode() + start * 30 - end * 2;
     }
 
     // For debugging
-    public String toString() {
+    /*@SideEffectFree*/ public String toString() {
       return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
     }
 
@@ -829,7 +836,7 @@ public final class Intern {
   // // That is, it may return 0 if the arrays are not equal (but do contain
   // // identical numbers).
   // static final class IntArrayComparator implements Comparator {
-  //   public int compare(Object o1, Object o2) {
+  //   /*@Pure*/ public int compare(Object o1, Object o2) {
   //     if (o1 == o2)
   //       return 0;
   //     int[] a1 = (int[])o1;
@@ -851,7 +858,7 @@ public final class Intern {
   // // That is, it may return 0 if the arrays are not equal (but do contain
   // // identical objects).
   // static final class ObjectArrayComparator implements Comparator {
-  //   public int compare(Object o1, Object o2) {
+  //   /*@Pure*/ public int compare(Object o1, Object o2) {
   //     if (o1 == o2)
   //       return 0;
   //     Object[] a1 = (Object[])o1;
