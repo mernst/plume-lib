@@ -1748,9 +1748,9 @@ public final class UtilMDE {
     try {
       for (Map.Entry<K, V> entry : m.entrySet()) {
         sb.append(linePrefix);
-        sb.append(entry.getKey().toString());
+        sb.append(Objects.toString(entry.getKey()));
         sb.append(" => ");
-        sb.append(entry.getValue().toString());
+        sb.append(Objects.toString(entry.getValue()));
         sb.append(lineSep);
       }
     } catch (IOException e) {
@@ -2289,9 +2289,9 @@ public final class UtilMDE {
    **/
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) return "";
-    if (v.size() == 1) return v.get(0).toString();
+    if (v.size() == 1) return Objects.toString(v.get(0));
     // This should perhaps use an iterator rather than get(), for efficiency.
-    StringBuffer sb = new StringBuffer(v.get(0).toString());
+    StringBuffer sb = new StringBuffer(Objects.toString(v.get(0)));
     for (int i=1; i<v.size(); i++)
       sb.append(delim).append(v.get(i));
     return sb.toString();
@@ -2870,7 +2870,7 @@ public final class UtilMDE {
    * @return true iff o1 and o2 are deeply equal
    */
   @SuppressWarnings("purity")   // side effect to static field deepEqualsUnderway
-  /*@Pure*/ public static boolean deepEquals(Object o1, Object o2) {
+  /*@Pure*/ public static boolean deepEquals(@Nullable Object o1, @Nullable Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
     if (sameObject)
