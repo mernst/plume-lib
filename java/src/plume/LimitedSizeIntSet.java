@@ -128,6 +128,7 @@ public class LimitedSizeIntSet
     return values == null;
   }
 
+  @SuppressWarnings("sideeffectfree") // clone needs to be deep; sets fields to do so
   /*@SideEffectFree*/ public LimitedSizeIntSet clone() {
     LimitedSizeIntSet result;
     try {
