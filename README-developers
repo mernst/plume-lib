@@ -26,7 +26,7 @@ Ensure that the main documentation at README.html documents any new files.
 
 where x.y.z is the intended new version number of the release.
 
-The script requires that $JAVAC or 'javac' point to the JSR308 compiler.
+The script requires that $JAVAC or 'javac' point to the JSR 308 compiler.
 If this is the case, then the release is built and the test cases are run.  The
 release should be Java 5 compatible.
 
