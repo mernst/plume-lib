@@ -341,7 +341,7 @@ public class WeakIdentityHashMap<K,V>
      * entries that will be removed before next attempted access
      * because they are no longer referenced.
      */
-    public int size() {
+    /*@Pure*/ public int size() {
         if (size == 0)
             return 0;
         expungeStaleEntries();
@@ -354,7 +354,7 @@ public class WeakIdentityHashMap<K,V>
      * entries that will be removed before next attempted access
      * because they are no longer referenced.
      */
-    public boolean isEmpty() {
+    /*@Pure*/ public boolean isEmpty() {
         return size() == 0;
     }
 
@@ -372,7 +372,7 @@ public class WeakIdentityHashMap<K,V>
      *          <tt>null</tt> if the map contains no mapping for this key.
      * @see #put(Object, Object)
      */
-    public /*@Nullable*/ V get(/*@Nullable*/ Object key) {
+    /*@Pure*/ public /*@Nullable*/ V get(/*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
@@ -394,7 +394,7 @@ public class WeakIdentityHashMap<K,V>
      * @return  <tt>true</tt> if there is a mapping for <tt>key</tt>;
      *          <tt>false</tt> otherwise
      */
-    public boolean containsKey(/*@Nullable*/ Object key) {
+    /*@Pure*/ public boolean containsKey(/*@Nullable*/ Object key) {
         return getEntry(key) != null;
     }
 
@@ -648,7 +648,7 @@ public class WeakIdentityHashMap<K,V>
      * @return <tt>true</tt> if this map maps one or more keys to the
      *         specified value.
      */
-    public boolean containsValue(/*@Nullable*/ Object value) {
+    /*@Pure*/ public boolean containsValue(/*@Nullable*/ Object value) {
 	if (value==null)
             return containsNullValue();
 
@@ -693,11 +693,11 @@ public class WeakIdentityHashMap<K,V>
             this.next  = next;
         }
 
-        /*@SideEffectFree*/ public K getKey() {
+        /*@Pure*/ public K getKey() {
             return WeakIdentityHashMap.<K>unmaskNull(get());
         }
 
-        /*@SideEffectFree*/ public V getValue() {
+        /*@Pure*/ public V getValue() {
             return value;
         }
 
@@ -851,11 +851,11 @@ public class WeakIdentityHashMap<K,V>
             return new KeyIterator();
         }
 
-        public int size() {
+        /*@Pure*/ public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
-        public boolean contains(/*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             return containsKey(o);
         }
 
@@ -910,11 +910,11 @@ public class WeakIdentityHashMap<K,V>
             return new ValueIterator();
         }
 
-        public int size() {
+        /*@Pure*/ public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
-        public boolean contains(/*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             return containsValue(o);
         }
 
@@ -960,7 +960,7 @@ public class WeakIdentityHashMap<K,V>
             return new EntryIterator();
         }
 
-        /*@SideEffectFree*/ public boolean contains(/*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
             Map.Entry e = (Map.Entry)o;
@@ -973,7 +973,7 @@ public class WeakIdentityHashMap<K,V>
             return removeMapping(o) != null;
         }
 
-        public int size() {
+        /*@Pure*/ public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
@@ -1025,7 +1025,7 @@ public class WeakIdentityHashMap<K,V>
             return oldValue;
         }
 
-        public boolean equals(/*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
             return false;
             Map.Entry e = (Map.Entry)o;
@@ -1033,7 +1033,7 @@ public class WeakIdentityHashMap<K,V>
                 && eq(value, e.getValue());
         }
 
-        public int hashCode() {
+        /*@Pure*/ public int hashCode() {
             return ((key   == null)   ? 0 :   key.hashCode()) ^
                ((value == null)   ? 0 : value.hashCode());
         }
