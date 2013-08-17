@@ -125,7 +125,7 @@ public class LimitedSizeSet<T>
     return values == null;
   }
 
-  @SuppressWarnings("sideeffectfree") // clone needs to be deep; sets fields to do so
+  @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
   /*@SideEffectFree*/
   public LimitedSizeSet<T> clone() {
     LimitedSizeSet<T> result;
