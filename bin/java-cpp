@@ -197,7 +197,7 @@ sub unescape_comments ( $ ) {
     while (s/(".*)"  ?\+ "(.*")/$1$2/g) { }
     # Remove "# 22" lines.  (Turn them into blank lines that are removed later.)
     # The while loop is because there may be many such lines adjacent.
-    while (s/(^|\n)\# [0-9]+ ".*"($|\n)/$1$2/g) { }
+    while (s/(^|\n)\# [0-9]+ ".*"[1-4, ]*($|\n)/$1$2/g) { }
 
     ## This is no longer necessary, because I use "-traditional" cpp flag.
     # ## Remove extra horizontal space

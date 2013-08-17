@@ -47,14 +47,14 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
   /** Return the first element of the pair, or null if it has been garbage-collected.
    * @return the first element of the pail, or null if it has been garbage-collected
    */
-  public /*@Nullable*/ T1 getA() {
+  /*@SideEffectFree*/ public /*@Nullable*/ T1 getA() {
     return a.get();
   }
 
   /** Return the second element of the pair, or null if it has been garbage-collected.
    * @return the second element of the pair, or null if it has been garbage-collected
    */
-  public /*@Nullable*/ T2 getB() {
+  /*@SideEffectFree*/ public /*@Nullable*/ T2 getB() {
     return b.get();
   }
 
@@ -64,7 +64,7 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
   }
 
   @Override
-  @SuppressWarnings("interning")
+  @SuppressWarnings({"interning", "not.deterministic.call"}) // getA is not @deterministic, but its value is checked, so this method is deterministic
   /*@Pure*/ public boolean equals(/*@Nullable*/ Object obj) {
     if (! (obj instanceof WeakIdentityPair<?, ?>)) {
       return false;

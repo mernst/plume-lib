@@ -128,7 +128,7 @@ public class LimitedSizeIntSet
     return values == null;
   }
 
-  @SuppressWarnings("purity")   // side effect to local state (clone)
+  @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
   /*@SideEffectFree*/ public LimitedSizeIntSet clone() {
     LimitedSizeIntSet result;
     try {

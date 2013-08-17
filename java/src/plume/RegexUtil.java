@@ -169,7 +169,7 @@ public class RegexUtil {
    * @return true iff c is a regular expression
    */
   /*>>>
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings({"regex", "purity.not.deterministic.call"})    // RegexUtil; temp value used in pure method is equal up to equals but not up to ==
   @Pure
   @EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)
   */
