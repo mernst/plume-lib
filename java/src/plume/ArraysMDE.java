@@ -1053,7 +1053,7 @@ public final class ArraysMDE {
     if (a_len < sub_len)
       return false;
     for (int i=0; i<sub_len; i++)
-      if (! sub[i].equals(a[a_offset+i]))
+      if (! Objects.equals(sub[i], a[a_offset+i]))
         return false;
     return true;
   }
@@ -1095,7 +1095,7 @@ public final class ArraysMDE {
     if (a_len < sub_len)
       return false;
     for (int i=0; i<sub_len; i++)
-      if (! sub.get(i).equals(a[a_offset+i]))
+      if (! Objects.equals(sub.get(i), a[a_offset+i]))
         return false;
     return true;
   }
@@ -1179,7 +1179,7 @@ public final class ArraysMDE {
     if (a_len < sub_len)
       return false;
     for (int i=0; i<sub_len; i++)
-      if (! sub.get(i).equals(a.get(a_offset+i)))
+      if (! Objects.equals(sub.get(i), a.get(a_offset+i)))
         return false;
     return true;
   }
@@ -1797,7 +1797,7 @@ public final class ArraysMDE {
    * Return a string representation of the array.
    * The representation is patterned after that of java.util.Vector.
    * @param a a list
-   * @param quoted whether to quote the array elements
+   * @param quoted whether to quote the array elements that are Java strings
    * @return a string representation of the list
    * @see java.util.Vector#toString
    **/
@@ -1812,9 +1812,10 @@ public final class ArraysMDE {
       sb.append(a.get(0));
       for (int i=1; i<a.size(); i++) {
         sb.append(", ");
-        if (quoted) {
+        Object elt = a.get(i);
+        if (quoted && elt instanceof String) {
           sb.append('\"');
-          sb.append(UtilMDE.escapeNonJava((String)a.get(i)));
+          sb.append(UtilMDE.escapeNonJava((String)elt));
           sb.append('\"');
         } else {
           sb.append(a.get(i));
