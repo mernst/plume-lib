@@ -3,6 +3,9 @@ package plume;
 import java.io.Serializable;
 import java.util.*;
 
+/*>>>
+import dataflow.quals.Pure;
+*/
 
 /**
  * LimitedSizeSet stores up to some maximum number of unique
@@ -66,7 +69,7 @@ public class LimitedSizeSet<T>
       }
     }
     for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@SuppressWarnings(nullness): no relevant side effect:  add's side effects do not affect s.values, whether or not this == s";
+      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values, whether or not this == s";
       add(s.values[i]);
       if (repNulled()) {
         return;                 // optimization, not necessary for correctness
@@ -74,6 +77,7 @@ public class LimitedSizeSet<T>
     }
   }
 
+  @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
   /*@Pure*/
   public boolean contains(T elt) {
     if (values == null) {
@@ -115,12 +119,14 @@ public class LimitedSizeSet<T>
     }
   }
 
-  /*@AssertNonNullIfFalse("values")*/
+  /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
   public boolean repNulled() {
     return values == null;
   }
 
+  @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
+  /*@SideEffectFree*/
   public LimitedSizeSet<T> clone() {
     LimitedSizeSet<T> result;
     try {
@@ -155,7 +161,7 @@ public class LimitedSizeSet<T>
   }
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return ("[size=" + size() + "; " +
             ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");

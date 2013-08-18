@@ -71,7 +71,7 @@ for my $file (@ARGV) {
     if (m/type parameter in/) {
       if ($debug) { print STDERR "Considering: $_"; }
     }      
-    while (s%&lt;((\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>( extends (\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(<a [^>]*>[^ <]*</a>|[^ ]+))?,?)+&gt;%%i) {
+    while (s%&lt;((\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(\?|<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>)( extends (\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(<a [^>]*>[^ <]*</a>(&lt;\?(,\?)*&gt;)?|[^ ]+))?,?)+&gt;%%i) {
       # empty body
     }
     if (m/\"type parameter in/) { die "Substitution failed in $file, still has \"type parameter in\":\n$_"; }
