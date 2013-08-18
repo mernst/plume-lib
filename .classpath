@@ -3,13 +3,14 @@
 	<classpathentry kind="src" path="java/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="java/lib/bcel.jar"/>
-	<classpathentry kind="lib" path="java/lib/xom-1.2.1.jar"/>
-	<classpathentry kind="lib" path="java/lib/ical4j.jar"/>
-	<classpathentry kind="lib" path="java/lib/svnkit.jar"/>
-	<classpathentry kind="lib" path="java/lib/ini4j-0.5.1.jar"/>
-	<classpathentry kind="lib" path="jdk/lib/tools.jar"/>
-	<classpathentry kind="lib" path="java/lib/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="java/lib/backport-util-concurrent-3.1.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-io-1.4.jar"/>
-	<classpathentry kind="lib" path="java/lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="java/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="java/lib/ical4j.jar"/>
+	<classpathentry kind="lib" path="java/lib/ini4j-0.5.1.jar"/>
+	<classpathentry kind="lib" path="java/lib/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="java/lib/svnkit.jar"/>
+	<classpathentry kind="lib" path="java/lib/xom-1.2.1.jar"/>
+	<classpathentry kind="lib" path="jdk/lib/tools.jar"/>
 	<classpathentry kind="output" path="bin-eclipse"/>
 </classpath>

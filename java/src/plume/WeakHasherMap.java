@@ -172,7 +172,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 
         /* A WeakKey is equal to another WeakKey iff they both refer to objects
 	   that are, in turn, equal according to their own equals methods */
-	public boolean equals(/*@Nullable*/ Object o) {
+	/*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
 	    if (this == o) return true;
             // This test is illegal because WeakKey is a generic type,
             // so use the getClass hack below instead.
@@ -186,7 +186,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return keyEquals(t, u);
 	}
 
-	public int hashCode() {
+	/*@Pure*/ public int hashCode() {
 	    return hash;
 	}
 
@@ -277,14 +277,14 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * <code>Map</code> interface, the time required by this operation is
      * linear in the size of the map.</em>
      */
-    public int size() {
+    /*@Pure*/ public int size() {
 	return entrySet().size();
     }
 
     /**
      * Returns <code>true</code> if this map contains no key-value mappings.
      */
-    public boolean isEmpty() {
+    /*@Pure*/ public boolean isEmpty() {
 	return entrySet().isEmpty();
     }
 
@@ -294,7 +294,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      *
      * @param   key   The key whose presence in this map is to be tested
      */
-    public boolean containsKey(Object key) {
+    /*@Pure*/ public boolean containsKey(Object key) {
         @SuppressWarnings("unchecked")
         K kkey = (K) key;
 	return hash.containsKey(WeakKeyCreate(kkey));
@@ -310,7 +310,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      *
      * @param  key  The key whose associated value, if any, is to be returned
      */
-    public /*@Nullable*/ V get(Object key) {  // type of argument is Object, not K
+    /*@Pure*/ public /*@Nullable*/ V get(Object key) {  // type of argument is Object, not K
         @SuppressWarnings("unchecked")
         K kkey = (K) key;
 	return hash.get(WeakKeyCreate(kkey));
@@ -376,11 +376,11 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    this.key = key;
 	}
 
-	public K getKey() {
+	/*@Pure*/ public K getKey() {
 	    return key;
 	}
 
-	public V getValue() {
+	/*@Pure*/ public V getValue() {
 	    return ent.getValue();
 	}
 
@@ -403,7 +403,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 		    && valEquals(getValue(), e.getValue()));
 	}
 
-	public int hashCode() {
+	/*@Pure*/ public int hashCode() {
 	    V v;
 	    return (((key == null) ? 0 : keyHashCode(key))
 		    ^ (((v = getValue()) == null) ? 0 : v.hashCode()));
@@ -452,11 +452,11 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    };
 	}
 
-	public boolean isEmpty() {
+	/*@Pure*/ public boolean isEmpty() {
 	    return !(iterator().hasNext());
 	}
 
-	public int size() {
+	/*@Pure*/ public int size() {
 	    int j = 0;
 	    for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); i.next()) j++;
 	    return j;
@@ -478,7 +478,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return false;
 	}
 
-	public int hashCode() {
+	/*@Pure*/ public int hashCode() {
 	    int h = 0;
 	    for (Iterator<Map.Entry<WeakKey,V>> i = hashEntrySet.iterator(); i.hasNext(); ) {
 		Map.Entry<WeakKey,V> ent = i.next();
