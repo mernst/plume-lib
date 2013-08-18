@@ -593,7 +593,7 @@ With just C-u prefix argument, prompt for starting date and days."
       ;; Clean up an irritating warning message.
       (save-excursion
 	(goto-char old-point)
-	(if (looking-at "[A-Z][a-z][a-z] [123]?[0-9], 20[0-9][0-9] .* net.fortuna.ical4j.util.Configurator <clinit>\nINFO: ical4j.properties not found.\n")
+	(if (looking-at "[A-Z][a-z][a-z] [0123]?[0-9], 20[0-9][0-9] .* net.fortuna.ical4j.util.Configurator <clinit>\nINFO: ical4j.properties not found.\n")
 	    (replace-match ""))))))
 
 

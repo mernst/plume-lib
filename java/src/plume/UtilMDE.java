@@ -35,7 +35,8 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b) &ge; i
    **/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
     // 1. a.clone().and(b).cardinality()
@@ -68,7 +69,8 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b intersect c) &ge; i
    **/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -92,7 +94,8 @@ public final class UtilMDE {
    * @param b the second BitSet to intersect
    * @return size(a intersect b)
    **/
-  public static int intersectionCardinality(BitSet a, BitSet b) {
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
     return intersection.cardinality();
@@ -104,7 +107,8 @@ public final class UtilMDE {
    * @param c the third BitSet to intersect
    * @return size(a intersect b intersect c)
    **/
-  public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
+  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
     intersection.and(c);
@@ -465,7 +469,7 @@ public final class UtilMDE {
    * @param sup class to test for being a supertype
    * @return true iff sub is a subtype of sup
    */
-  public static boolean isSubtype(Class<?> sub, Class<?> sup) {
+  /*@Pure*/ public static boolean isSubtype(Class<?> sub, Class<?> sup) {
     if (sub == sup) {
       return true;
     }
@@ -915,7 +919,7 @@ public final class UtilMDE {
    * @param file2 second file to compare
    * @return true iff the files have the same contents
    */
-  public static boolean equalFiles(String file1, String file2) {
+  /*@Pure*/ public static boolean equalFiles(String file1, String file2) {
     return equalFiles(file1, file2, false);
   }
 
@@ -926,7 +930,8 @@ public final class UtilMDE {
    * @param trimLines if true, call String.trim on each line before comparing
    * @return true iff the files have the same contents
    */
-  public static boolean equalFiles(String file1, String file2, boolean trimLines) {
+  @SuppressWarnings("purity")   // reads files, side effects local state
+  /*@Pure*/ public static boolean equalFiles(String file1, String file2, boolean trimLines) {
     try {
       LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
       LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2);
@@ -1743,9 +1748,9 @@ public final class UtilMDE {
     try {
       for (Map.Entry<K, V> entry : m.entrySet()) {
         sb.append(linePrefix);
-        sb.append(entry.getKey().toString());
+        sb.append(Objects.toString(entry.getKey()));
         sb.append(" => ");
-        sb.append(entry.getValue().toString());
+        sb.append(Objects.toString(entry.getValue()));
         sb.append(lineSep);
       }
     } catch (IOException e) {
@@ -1832,7 +1837,7 @@ public final class UtilMDE {
         argnames = split(all_argnames, ',');
       }
 
-      /*@LazyNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
+      /*@MonotonicNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
       for (int i=0; i<argnames.length; i++) {
         String bnArgname = argnames[i].trim();
         /*@ClassGetName*/ String cgnArgname = binaryNameToClassGetName(bnArgname);
@@ -1908,7 +1913,8 @@ public final class UtilMDE {
    * @param key name of the property to look up
    * @return true iff the property has value "true", "yes", or "1"
    **/
-  public static boolean propertyIsTrue(Properties p, String key) {
+  @SuppressWarnings("purity")   // does not depend on object identity
+  /*@Pure*/ public static boolean propertyIsTrue(Properties p, String key) {
     String pvalue = p.getProperty(key);
     if (pvalue == null) {
       return false;
@@ -1991,8 +1997,7 @@ public final class UtilMDE {
    * @return true iff s is a regular expression
    */
   @Deprecated
-  /*@Pure*/
-  public static boolean isRegex(String s) {
+  /*@Pure*/ public static boolean isRegex(String s) {
     return RegexUtil.isRegex(s);
   }
 
@@ -2003,7 +2008,7 @@ public final class UtilMDE {
    * @return an error message explaining why s is not a regular expression, or null
    */
   @Deprecated
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s) {
     return RegexUtil.regexError(s);
   }
@@ -2016,7 +2021,7 @@ public final class UtilMDE {
    * @throws Error if s is not a regular expression
    */
   @Deprecated
-  /*@Pure*/
+  /*@SideEffectFree*/
   public static /*@Regex*/ String asRegex(String s) {
     return RegexUtil.asRegex(s);
   }
@@ -2058,7 +2063,7 @@ public final class UtilMDE {
         throw new Error("This can't happen: " + e);
       }
       c = c.getSuperclass();
-      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+      assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }
@@ -2090,7 +2095,7 @@ public final class UtilMDE {
         // nothing to do; will now examine superclass
       }
       c = c.getSuperclass();
-      assert c != null : "@SuppressWarnings(nullness): c was not Object, so is not null now";
+      assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
     throw new NoSuchFieldException (fieldName);
   }
@@ -2284,9 +2289,9 @@ public final class UtilMDE {
    **/
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) return "";
-    if (v.size() == 1) return v.get(0).toString();
+    if (v.size() == 1) return Objects.toString(v.get(0));
     // This should perhaps use an iterator rather than get(), for efficiency.
-    StringBuffer sb = new StringBuffer(v.get(0).toString());
+    StringBuffer sb = new StringBuffer(Objects.toString(v.get(0)));
     for (int i=1; i<v.size(); i++)
       sb.append(delim).append(v.get(i));
     return sb.toString();
@@ -2687,7 +2692,7 @@ public final class UtilMDE {
   public static class NullableStringComparator
     implements Comparator<String>
   {
-    public int compare(String s1, String s2) {
+    /*@Pure*/ public int compare(String s1, String s2) {
       if (s1 == null && s2 == null) return 0;
       if (s1 == null && s2 != null) return 1;
       if (s1 != null && s2 == null) return -1;
@@ -2864,7 +2869,8 @@ public final class UtilMDE {
    * @param o2 second value to comare
    * @return true iff o1 and o2 are deeply equal
    */
-  public static boolean deepEquals(Object o1, Object o2) {
+  @SuppressWarnings("purity")   // side effect to static field deepEqualsUnderway
+  /*@Pure*/ public static boolean deepEquals(@Nullable Object o1, @Nullable Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
     if (sameObject)
@@ -2897,6 +2903,7 @@ public final class UtilMDE {
       return Arrays.equals((short[]) o1, (short[]) o2);
     }
 
+    @SuppressWarnings("purity") // creates local state
     WeakIdentityPair<Object, Object> mypair
       = new WeakIdentityPair<Object, Object>(o1, o2);
     if (deepEqualsUnderway.contains(mypair)) {

@@ -43,11 +43,13 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
     this.comparator = comparator;
   }
   /** Set the next1 variable. */
-  private void setnext1() {
+  /*@RequiresNonNull("itor1")*/
+  private void setnext1(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
     next1 = itor1.hasNext() ? itor1.next() : null;
   }
   /** Set the next2 variable. */
-  private void setnext2() {
+  /*@RequiresNonNull("itor2")*/
+  private void setnext2(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
     next2 = itor2.hasNext() ? itor2.next() : null;
   }
   // Have the caller do this directly, probably.
@@ -90,12 +92,25 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
       } else {
         int comparison;
         // Either T extends Comparable<T>, or else a comparator was passed in.
-        if (comparator == null) {
-          @SuppressWarnings("unchecked")
-          Comparable<T> cble1 = (Comparable<T>)next1;
-          comparison = cble1.compareTo(next2);
-        } else {
-          comparison = comparator.compare(next1, next2);
+        try {
+          if (comparator == null) {
+            @SuppressWarnings("unchecked")
+              Comparable</*@NonNull*/ T> cble1 = (Comparable</*@NonNull*/ T>)next1;
+            comparison = cble1.compareTo(next2);
+          } else {
+            comparison = comparator.compare(next1, next2);
+          }
+        } catch (NullPointerException npe) {
+          // Either one of the arguments is null, or the comparator is buggy
+          if (next1 == null && next2 == null) {
+            comparison = 0;
+          } else if (next1 == null && next2 != null) {
+            comparison = -1;
+          } else if (next1 != null && next2 == null) {
+            comparison = 1;
+          } else {
+            throw new RuntimeException("this can't happen " + next1 + " " + next2);
+          }
         }
         if (comparison < 0)
           return return1();
