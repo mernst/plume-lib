@@ -2870,7 +2870,7 @@ public final class UtilMDE {
    * @return true iff o1 and o2 are deeply equal
    */
   @SuppressWarnings("purity")   // side effect to static field deepEqualsUnderway
-  /*@Pure*/ public static boolean deepEquals(@Nullable Object o1, @Nullable Object o2) {
+  /*@Pure*/ public static boolean deepEquals(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
     if (sameObject)
