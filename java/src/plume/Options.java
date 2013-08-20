@@ -62,7 +62,7 @@ import java.util.regex.Pattern;
  *  }</pre>
  * A user may invoke the program using the command-line arguments
  * <tt>-o</tt>, <tt>--outfile</tt>, <tt>-i</tt>, <tt>--ignore-case</tt>,
- * and, <tt>--temperature</tt>. <p>
+ * and <tt>--temperature</tt>. <p>
  *
  * The call to {@link #parse_or_usage} sets fields in object myInstance,
  * and sets static fields in class MyUtilityClass.  It returns the original
