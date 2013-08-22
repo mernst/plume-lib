@@ -841,7 +841,7 @@ public class WeakIdentityHashMap<K,V>
      *
      * @return a set view of the keys contained in this map.
      */
-    public Set<K> keySet() {
+    /*@SideEffectFree*/ public Set<K> keySet() {
         Set<K> ks = our_keySet;
         return (ks != null ? ks : (our_keySet = new KeySet()));
     }
@@ -900,7 +900,7 @@ public class WeakIdentityHashMap<K,V>
      *
      * @return a collection view of the values contained in this map.
      */
-    public Collection<V> values() {
+    /*@SideEffectFree*/ public Collection<V> values() {
         Collection<V> vs = our_values;
         return (vs != null ?  vs : (our_values = new Values()));
     }
@@ -950,7 +950,7 @@ public class WeakIdentityHashMap<K,V>
      * @return a collection view of the mappings contained in this map.
      * @see java.util.Map.Entry
      */
-    public Set<Map.Entry<K,V>> entrySet() {
+    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet() {
         Set<Map.Entry<K,V>> es = entrySet;
         return (es != null ? es : (entrySet = new EntrySet()));
     }
