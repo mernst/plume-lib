@@ -499,7 +499,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     /**
      * Returns a <code>Set</code> view of the mappings in this map.
      */
-    public Set<Map.Entry<K,V>> entrySet() {
+    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet() {
 	if (entrySet == null) entrySet = new EntrySet();
 	return entrySet;
     }
