@@ -277,6 +277,8 @@ public final class TestPlume extends TestCase {
       Integer[] f = new Integer[] { a[7], a[8], a[9] };
       Integer[] g = new Integer[] { a[7], new Integer(8), a[9] };
       Integer[] h = new Integer[] { a[7], a[8], a[9], new Integer(10) };
+      Integer[] i = new Integer[] { a[7], a[8], null, a[9], new Integer(10) };
+      Integer[] j = new Integer[] { a[8], null, a[9] };
       Integer[] c2 = new Integer[] { new Integer(0), new Integer(1), new Integer(2) };
       Integer[] d2 = new Integer[] { new Integer(1), new Integer(2) };
       Integer[] e2 = new Integer[] { new Integer(2), new Integer(3), new Integer(4), new Integer(5) };
@@ -304,6 +306,10 @@ public final class TestPlume extends TestCase {
       assert ArraysMDE.indexOfEq(a, g) == -1;
       assert ArraysMDE.indexOf(a, h) == -1;
       assert ArraysMDE.indexOfEq(a, h) == -1;
+      assert ArraysMDE.indexOf(i, j) == 1;
+      assert ArraysMDE.indexOfEq(i, j) == 1;
+      assert ArraysMDE.indexOf(a, i) == -1;
+      assert ArraysMDE.indexOfEq(a, i) == -1;
     }
 
 
@@ -354,7 +360,7 @@ public final class TestPlume extends TestCase {
     // public static boolean isSubarrayEq(Object[] a, Object[] sub, int a_offset)
     // public static boolean isSubarray(int[] a, int[] sub, int a_offset)
     // public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset)
-    // (The subarray tests are missing; I hope that the array indexOf
+    // (The subarray tests are missing; I hope that the indexOf(..., array)
     // operations above test them sufficiently.)
 
     // public static String toString(Object /*@Nullable*/ [] a)
@@ -368,6 +374,7 @@ public final class TestPlume extends TestCase {
       assert ArraysMDE.toStringQuoted((Object[]) null).equals("null");
       assert ArraysMDE.toString((List<?>) null).equals("null");
       assert ArraysMDE.toStringQuoted((List<?>) null).equals("null");
+      assert ArraysMDE.toStringQuoted(Arrays.asList(new Object[]{3.14, null, "hello"})).equals("[3.14, null, \"hello\"]");
     }
 
     // static String toString(int[] a)

@@ -9,7 +9,7 @@ import java.io.*;
  *
  * The major difference from StreamTokenizer is that all tokens are
  * returned as strings.  EOF returns a null, EOL returns an empty string.
- * A delimiters is returned as a one-character string.  Words and numbers
+ * A delimiter is returned as a one-character string.  Words and numbers
  * are returned as strings.  Quoted strings are also returned as strings
  * including their quote characters (so they can easily be differentiated
  * from words and numbers).
@@ -28,17 +28,14 @@ public class StrTok {
 
   Reader reader;
   public StreamTokenizer stok;
-  Error err = new Error();
+  ErrorHandler errorHandler;
 
   /**
    * Creates a tokenizer for the specified string.
    * @param s string to tokenize
    */
   public StrTok (String s) {
-
-    reader = new StringReader (s);
-    stok = new StreamTokenizer (reader);
-    stok.wordChars ('_', '_');
+    this(s, new ErrorHandler());
   }
 
   /**
@@ -47,8 +44,10 @@ public class StrTok {
    * @param s string to tokenize
    * @param e error handler
    */
-  public StrTok (String s, Error e) {
-    this(s);
+  public StrTok (String s, ErrorHandler e) {
+    reader = new StringReader (s);
+    stok = new StreamTokenizer (reader);
+    stok.wordChars ('_', '_');
     set_error_handler (e);
   }
 
@@ -56,9 +55,9 @@ public class StrTok {
    * Default class for error handling.  Throws a RuntimeException when an
    * error occurs.
    *
-   * @see #set_error_handler(Error)
+   * @see #set_error_handler(ErrorHandler)
    */
-  public static class Error {
+  public static class ErrorHandler {
 
     /**
      * Called when an unexpected token is found (see {@link #need(String)}).
@@ -163,31 +162,32 @@ public class StrTok {
   /** Returns true if the current token is a word (identifier)
    * @return true iff the current token is a word (identifier)
    */
-  public boolean isWord() {
+  /*@Pure*/ public boolean isWord() {
     return (stok.ttype == StreamTokenizer.TT_WORD);
   }
 
   /** Returns true if the current token is a quoted string
    * @return true iff the current token is a quoted string
    */
-  public boolean isQString() {
+  /*@Pure*/ public boolean isQString() {
     return ((stok.sval != null) && (stok.ttype > 0));
   }
 
   /**
    * Sets the error handler.  The default error handler will throw a
    * runtime exception on errors.
-   * @param err the new error handler
-   * @see Error
+   * @param errorHandler the new error handler
+   * @see ErrorHandler
    */
-  public void set_error_handler (Error err) {
-    this.err = err;
+  /*@EnsuresNonNull("this.errorHandler")*/
+  public void set_error_handler (/*>>>@UnknownInitialization @Raw StrTok this,*/ ErrorHandler errorHandler) {
+    this.errorHandler = errorHandler;
   }
 
   /**
    * Reads the next token and checks that it matches tok.  If it does
    * not match, calls the current error handling routine (see
-   * {@link #set_error_handler(StrTok.Error) set_error_handler()}).
+   * {@link #set_error_handler(StrTok.ErrorHandler) set_error_handler()}).
    * If it does match, just returns.
    * @param tok String to check next token against
    */
@@ -197,7 +197,7 @@ public class StrTok {
     if (tok.equals(t))
       return;
 
-    err.tok_error (String.format ("Token %s found where %s expected", t, tok));
+    errorHandler.tok_error (String.format ("Token %s found where %s expected", t, tok));
   }
 
   /**
@@ -209,9 +209,9 @@ public class StrTok {
   public String need_word() {
     String t = nextToken();
     if (!isWord()) {
-      err.tok_error (String.format ("'%s' found where identifier expected", t));
+      errorHandler.tok_error (String.format ("'%s' found where identifier expected", t));
     }
-    assert t != null : "@SuppressWarnings(nullness): dependent: because of isWord check";
+    assert t != null : "@AssumeAssertion(nullness): dependent: because of isWord check";
     return t;
   }
 
