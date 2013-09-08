@@ -1,12 +1,11 @@
 package plume;
 
-import static plume.EntryReader.Entry;
-
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.text.*;
-import com.sun.javadoc.*;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * TaskManager extracts information about tasks from text files and
