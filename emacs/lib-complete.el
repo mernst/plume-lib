@@ -106,8 +106,7 @@ If optional fourth argument FAST is non-nil, don't sort the completions,
   "(progn-with-message MESSAGE FORMS ...)
 Display MESSAGE and evaluate FORMS, returning value of the last one."
   ;; based on Hallvard Furuseth's funcall-with-message
-  (`
-   (if (eq (selected-window) (minibuffer-window))
+  `(if (eq (selected-window) (minibuffer-window))
        (save-excursion
 	 (goto-char (point-max))
 	 (let ((orig-pmax (point-max)))
@@ -118,9 +117,9 @@ Display MESSAGE and evaluate FORMS, returning value of the last one."
 		 ,@FORMS)
 	     (delete-region orig-pmax (point-max)))))
      (prog2
-      (message "%s" (, MESSAGE))
-      (progn ,@FORMS)
-      (message "")))))
+	 (message "%s" (, MESSAGE))
+	 (progn ,@FORMS)
+       (message ""))))
 ;; #+infodock (defalias 'lib-funcall-with-msg 'progn-with-message)
 
 (put 'progn-with-message 'lisp-indent-hook 1)

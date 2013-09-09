@@ -805,7 +805,7 @@ The old property is returned."
 ;; (defmacro in-buffer (buffer &rest body)
 ;;   "Execute, in BUFFER, forms of BODY."
 ;;   ;; Need get-buffer-create because BUFFER might be a string.
-;;   (` (let ((target-buffer (get-buffer-create ,buffer))
+;;   `(let ((target-buffer (get-buffer-create ,buffer))
 ;; 	   (this-buffer (current-buffer)))
 ;;        (if (eq target-buffer this-buffer)
 ;; 	   (progn
@@ -831,7 +831,7 @@ The old property is returned."
 ;; 			    (not (eq target-window (selected-window))))
 ;; 		       (set-window-point target-window (point))))))
 ;; 	   (if (non-killed-buffer-p this-buffer)
-;; 	       (set-buffer this-buffer)))))))
+;; 	       (set-buffer this-buffer))))))
 ;; (put 'in-buffer 'lisp-indent-hook 1)
 ;; (put 'in-buffer 'edebug-form-spec '(&rest form))
 
@@ -839,27 +839,27 @@ The old property is returned."
 ;;; This did more than I needed, and it screwed up point.
 ;; (defmacro in-buffer (buffer &rest body)
 ;;   "Executes, in BUFFER, forms of BODY."
-;;   (` (save-window-excursion
+;;   `(save-window-excursion
 ;;        (set-buffer ,buffer)
-;;        ,@body)))
+;;        ,@body))
 
 ;; ;; Why not just use save-excursion for this?
 ;; (defmacro in-buffer-simple (buffer &rest body)
 ;;   "Execute, in BUFFER, forms of BODY.
 ;; BODY shouldn't move point in a buffer displayed in a non-selected window."
-;;   (` (save-excursion
+;;   `(save-excursion
 ;;        (set-buffer ,buffer)
-;;        ,@body)))
+;;        ,@body))
 ;; (put 'in-buffer-simple 'lisp-indent-hook 1)
 
 ;; (defmacro in-buffer-simple (buffer &rest body)
 ;;   "Execute, in BUFFER, forms of BODY.
 ;; BODY shouldn't move point in a buffer displayed in a non-selected window."
-;;   (` (let ((this-buffer (current-buffer)))
+;;   `(let ((this-buffer (current-buffer)))
 ;;        (set-buffer ,buffer)
 ;;        (unwind-protect
 ;; 	   (progn ,@body)
-;; 	 (set-buffer this-buffer)))))
+;; 	 (set-buffer this-buffer))))
 
 
 ;; Similar tricks can be done with syntax-table and current-local-map.

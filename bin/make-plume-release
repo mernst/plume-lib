@@ -34,8 +34,8 @@ if hg outgoing &> /dev/null; then
     exit 1
 fi
 
-if [[ ! $(${JAVAC-"javac"} -version 2>&1) =~ "javac 1.7.0-jsr308" ]]; then
-    echo "Please use the JSR308 compiler to make a release."
+if [[ ! $(${JAVAC-"javac"} -version 2>&1) =~ "javac 1.8.0-jsr308" ]]; then
+    echo "Please use the JSR 308 compiler to make a release."
     exit 1
 fi
 
