@@ -45,11 +45,11 @@ public class FuzzyFloat {
   }
 
   /**
-   * Set the relative diff.
+   * Set all the fields of this class.
    * @param rel_diff the new relative diff to use
    * @see #FuzzyFloat
    */
-  public void set_rel_diff (double rel_diff) {
+  public void set_rel_diff (/*>>> @UnknownInitialization @Raw FuzzyFloat this,*/ double rel_diff) {
     min_ratio = 1 - rel_diff;
     max_ratio = 1 + rel_diff;
     off = (rel_diff == 0.0);
@@ -71,7 +71,7 @@ public class FuzzyFloat {
    * @return true if d1 and d2 are considered equal, false otherwise
    */
 
-  /* @ pure */ public boolean eq (double d1, double d2) {
+  /*@Pure*/ public boolean eq (double d1, double d2) {
 
     // NaNs are not considered equal.
     if (Double.isNaN(d1) && Double.isNaN(d2))
@@ -116,7 +116,7 @@ public class FuzzyFloat {
    * @return whether d1 and d2 are non-equal
    * @see #eq
    */
-  /* @ pure */ public boolean ne (double d1, double d2) {
+  /*@Pure*/ public boolean ne (double d1, double d2) {
    return (!eq (d1, d2));
   }
 
@@ -128,7 +128,7 @@ public class FuzzyFloat {
    * @return whether d1 &lt; d2
    * @see #eq
    */
-  /* @ pure */ public boolean lt (double d1, double d2) {
+  /*@Pure*/ public boolean lt (double d1, double d2) {
     return ((d1 < d2) && ne (d1, d2));
   }
 
@@ -140,7 +140,7 @@ public class FuzzyFloat {
    * @return whether d1 &le; d2
    * @see #eq
    */
-  /* @ pure */ public boolean lte (double d1, double d2) {
+  /*@Pure*/ public boolean lte (double d1, double d2) {
     return ((d1 <= d2) || eq (d1, d2));
   }
 
@@ -152,7 +152,7 @@ public class FuzzyFloat {
    * @return whether d1 &gt; d2
    * @see #eq
    */
-  /* @ pure */ public boolean gt (double d1, double d2) {
+  /*@Pure*/ public boolean gt (double d1, double d2) {
       return ((d1 > d2) && ne (d1, d2));
   }
 
@@ -164,7 +164,7 @@ public class FuzzyFloat {
    * @return whether d1 &gt; d2
    * @see #eq
    */
-  /* @ pure */ public boolean gte (double d1, double d2) {
+  /*@Pure*/ public boolean gte (double d1, double d2) {
     return ((d1 >= d2) || eq (d1, d2));
   }
 
@@ -178,7 +178,7 @@ public class FuzzyFloat {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
-  /* @ pure */ public int indexOf (double[] a, double elt) {
+  /*@Pure*/ public int indexOf (double[] a, double elt) {
      for (int i=0; i<a.length; i++)
        if (eq (elt, a[i]))
         return i;
@@ -197,7 +197,7 @@ public class FuzzyFloat {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    **/
-  /* @ pure */ public int indexOf (double[] a, double[] sub) {
+  /*@Pure*/ public int indexOf (double[] a, double[] sub) {
 
     int a_index_max = a.length - sub.length;
 
@@ -224,7 +224,8 @@ public class FuzzyFloat {
    * @param a2 the first value to compare
    * @return true if a1 and a2 are set equivalent, false otherwise
    */
-  /* @ pure */ public boolean isElemMatch (double[] a1, double[] a2) {
+  @SuppressWarnings("purity")   // side effect to local state (arrays)
+  /*@Pure*/ public boolean isElemMatch (double[] a1, double[] a2) {
 
     //don't change our parameters
     a1 = a1.clone();
@@ -306,14 +307,14 @@ public class FuzzyFloat {
    * Lexically compares two double arrays.
    */
 
-  /* @ pure */ public class DoubleArrayComparatorLexical implements Comparator<double[]> {
+  public class DoubleArrayComparatorLexical implements Comparator<double[]> {
 
     /**
      * Lexically compares o1 and o2 as double arrays.
      *
      * @return positive if o1 &gt; 02, 0 if o1 == o2, negative if o1 &lt; o2
      */
-    public int compare(double[] a1, double[] a2) {
+    /*@Pure*/ public int compare(double[] a1, double[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -340,7 +341,8 @@ public class FuzzyFloat {
    * also a element of bigger) of bigger, false otherwise
    */
 
-  /* @ pure */ public boolean isSubset (double[] smaller, double[] bigger) {
+  @SuppressWarnings("purity")   // side effect to local state (arrays)
+  /*@Pure*/ public boolean isSubset (double[] smaller, double[] bigger) {
 
     //don't change our parameters
     smaller = smaller.clone();

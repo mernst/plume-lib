@@ -25,13 +25,13 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   }
 
   @Override
-  public String toString() {
+  /*@SideEffectFree*/ public String toString() {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 
   @Override
   @SuppressWarnings("interning")
-  public boolean equals(/*@Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(/*@Nullable*/ Object obj) {
     if (! (obj instanceof Pair<?, ?>)) {
       return false;
     }
@@ -49,7 +49,7 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   // (And if they aren't final, it's a bit odd to be calling hashCode.)
   // But then the class would not be useful for mutable pairs.
   @Override
-  public int hashCode() {
+  /*@Pure*/ public int hashCode() {
     return (((a == null) ? 0 : a.hashCode()) +
             ((b == null) ? 0 : b.hashCode()));
   }
