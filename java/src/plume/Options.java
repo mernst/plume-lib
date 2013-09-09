@@ -766,13 +766,37 @@ public class Options {
     boolean ignore_options = false;
 
     // Loop through each argument
-    for (int ii = 0; ii < args.length; ii++) {
-      String arg = args[ii];
+    String tail="";
+    String arg;
+    for (int ii = 0; ii < args.length; ) {
+      // If there was a ':' separator in previous arg, use the tail as
+      // current arg; otherwise, fetch the next arg from args list.
+      if (tail.length() > 0) {
+          arg = tail;
+          tail = "";
+      } else {
+          arg = args[ii];
+      }    
+
       if (arg.equals ("--")) {
         ignore_options = true;
       } else if ((arg.startsWith ("--") || arg.startsWith("-")) && !ignore_options) {
         String arg_name;
         String arg_value;
+
+        // Allow ':' as an argument separator to get around
+        // some command line quoting problems.  (markro)
+        int split_pos = arg.indexOf (":-");
+        if (split_pos == 0) {
+            // Just discard the ':' if ":-" occurs at begining of string
+            arg = arg.substring (1);
+            split_pos = arg.indexOf (":-");
+        }
+        if (split_pos > 0) {
+            tail = arg.substring (split_pos+1);
+            arg = arg.substring (0, split_pos);
+        }
+
         int eq_pos = arg.indexOf ('=');
         if (eq_pos == -1) {
           arg_name = arg;
@@ -810,6 +834,10 @@ public class Options {
         non_options.add (arg);
       }
 
+      // If no ':' tail, advance to next args option
+      if (tail.length() == 0) {
+          ii++;
+      }    
     }
     String[] result = non_options.toArray (new String[non_options.size()]);
     return result;
