@@ -776,7 +776,7 @@ public class Options {
     String tail="";
     String arg;
     for (int ii = 0; ii < args.length; ) {
-      // If there was a ':' separator in previous arg, use the tail as
+      // If there was a ',' separator in previous arg, use the tail as
       // current arg; otherwise, fetch the next arg from args list.
       if (tail.length() > 0) {
           arg = tail;
@@ -791,13 +791,13 @@ public class Options {
         String arg_name;
         String arg_value;
 
-        // Allow ':' as an argument separator to get around
+        // Allow ',' as an argument separator to get around
         // some command line quoting problems.  (markro)
-        int split_pos = arg.indexOf (":-");
+        int split_pos = arg.indexOf (",-");
         if (split_pos == 0) {
-            // Just discard the ':' if ":-" occurs at begining of string
+            // Just discard the ',' if ",-" occurs at begining of string
             arg = arg.substring (1);
-            split_pos = arg.indexOf (":-");
+            split_pos = arg.indexOf (",-");
         }
         if (split_pos > 0) {
             tail = arg.substring (split_pos+1);
@@ -841,7 +841,7 @@ public class Options {
         non_options.add (arg);
       }
 
-      // If no ':' tail, advance to next args option
+      // If no ',' tail, advance to next args option
       if (tail.length() == 0) {
           ii++;
       }    
