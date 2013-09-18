@@ -1,0 +1,133 @@
+NAME
+
+junk - find junk files, and apply an operation to each
+
+
+SYNOPSIS
+
+junk [-c command] [-f filterlist] [-n namelist] [pathname ...]
+
+
+DESCRIPTION
+
+Junk descends the directory hierarchy for each pathname argument
+seeking files that satisfy an appropriate definition of junk, and
+applying command to each file found.
+
+If command is not specified, `echo' is used.  Application of command
+to a file name means that the filename is tacked on to the end of
+command to obtain a shell command which is executed.
+
+The filterlist argument can be used to narrow the files considered
+according to any additional expression in the style of FIND(1).  If it
+is absent it defaults to "".
+
+The namelist argument can be used to specify a list of filenames which
+will be considered to represent junk.  Normal shell file matching
+characters (e.g. *) may be used if quoted.  If this argument is absent
+the names will be determined from the setting of environment variables
+or will default to a suitably large list of patterns.  This is
+described below.
+
+If no -n option is present, then the namelist is taken from the
+environment variable JUNK_NAMES if it is set.  If it is not, then the
+names are accumulated from the environment variables specified by the
+environment variable JUNK_TYPES, which should be some subset of "PRINT
+EMACS LATEX BIBTEX TROFF EXEC MISC".  For each TYPE, the names are taken
+from the environment variable TYPE_JUNK if it is set; otherwise a
+rather inclusive set of names is used.  In the case of LATEX_JUNK,
+there is one extra level.  If LATEX_JUNK is not set, the latex junk
+names are accumulated from the environment variables LATEX_OUT_JUNK,
+LATEX_IO_JUNK, and LATEX_INDEX_JUNK according to the setting of the
+environment variable LATEX_JUNK_TYPES.
+
+The default values assumed for unset variables are given below.  You
+can set any subset of these variables in your environment.
+
+  JUNK_TYPES = "PRINT EMACS LATEX BIBTEX TROFF EXEC MISC"
+
+  PRINT_JUNK = "*.dvi .*.dvi *.imp .*.imp"
+
+  EMACS_JUNK = "*~ .*~ #* *.bak .*.bak"
+
+  TEX_JUNK = "*.log .*.log"
+
+  LATEX_JUNK_TYPES = "OUT IO INDEX"
+
+  LATEX_OUT_JUNK = "*.log .*.log"
+
+  LATEX_IO_JUNK = "*.aux .*.aux *.toc .*.toc *.lof .*.lof *.lot .*.lot .*.idx *.glo .*.glo"
+
+  LATEX_INDEX_JUNK = "*.bbl .*.bbl"
+
+  BIBTEX_JUNK = "*.blg .*.blg"
+
+  TROFF_JUNK = "*.t .*.t"
+
+  EXEC_JUNK = "core a.out *.o .*.o"
+
+  MISC_JUNK = ".tmp"
+
+You may wish to make PRINT_JUNK include PostScript files;
+
+  PRINT_JUNK = "*.dvi .*.dvi *.ps .*.ps *.PS .*.PS *.imp .*.imp"
+
+
+EXAMPLES
+
+Here are some examples of how you might use junk.  (Some of the
+examples use another function, total, which I have created.  See
+total.doc if you want information on other ways of using total.)  You
+don't have to look at all of these examples, if you start losing
+interest as they get more complicated.
+
+1.  See the names of all junk files in the current directory (and
+subdirectories recursively):
+
+	junk
+
+2.  See the names of all junk files in the directories foo and bar:
+
+	junk foo bar
+
+3.  See long ls and sizes in kilobytes (rounded up) of junk files (in cd):
+
+	junk -c 'ls -ls'
+
+4.  Remove junk files not accessed for more than 1 day ( BE CAREFUL !!!! ):
+
+	junk -c rm -f '-atime +1'
+
+5.  See total number of kilobytes (rounded up per file) in junk files:
+    (Note that hard links lead to double counting):
+
+	junk -c 'ls -s' | total '$1'
+
+6.  See long ls, and get the number of files and total bytes:
+
+	junk -c 'ls -l' | total -p 1 files '$4' bytes
+
+7.  Get the total number of bytes without multiple counting of hard links:
+
+	junk -c 'ls -l' | total '$4/$2' bytes
+
+8.  Get every user's number of bytes of junk and the sytem total and
+sort it (if you are root):
+
+	cd /u
+        echo >/tmp/junktotals
+	foreach user (*)
+  	  junk -c 'ls -l' $user | total '$4/$2' "bytes $user" | grep "Total"\
+            >>/tmp/junktotals
+	end
+	cat /tmp/junktotals | total -p '$1' | grep "Total" | sort -nr
+	rm /tmp/junktotals
+
+9.  Remove files starting with a digit or ending with a digit:
+
+	junk -c rm -n '[0-9]* *[0-9] .*[0-9]'
+
+
+SEE ALSO
+
+find(1)

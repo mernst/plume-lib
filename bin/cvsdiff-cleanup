@@ -1,0 +1,62 @@
+: # Use -*- Perl -*- without knowing its path
+  eval 'exec perl -S -w -n $0 "$@"'
+  if 0;
+# (Can't use "#!/usr/bin/env perl" because I want the "-n" switch.)
+
+# cvsdiff-cleanup -- filter out empty diffs in output of "cvs diff"
+# Michael Ernst <mernst@cs.washington.edu>
+
+
+# Get rid of empty diffs;
+# that is, get rid of all but the last line of stuff like this:
+
+# Index: Cecil/src/compiler/internal-representation/decls/object-graph.cecil
+# ===================================================================
+# RCS file: /projects/cecil/CVS/vortex/Cecil/src/compiler/internal-representation/decls/object-graph.cecil,v
+# retrieving revision 9.85
+# diff -b -u -r9.85 object-graph.cecil
+# Index: Cecil/src/compiler/internal-representation/decls/object-node.cecil
+
+use strict;
+use English;
+
+BEGIN { $INPUT_RECORD_SEPARATOR = "\nIndex: "; }
+
+if (m/\ndiff.*\n(Index: )?$/) {
+  # do nothing
+} elsif (m/^cvs diff: .* unrecognized keyword 'UseNewInfoFmtStrings'\n(Index: )?$/) {
+  # do nothing
+} else {
+  # Move "Index: " from the end of each record to the beginning.
+  # All but the last record end with "Index: "
+  s/Index: $//;
+  # Only the first record will start with "Index: "
+  if (! m/^Index: /) {
+    $_ = "Index: " . $_;
+  }
+  print;
+}
+
+# if (m/^cvs diff: Diffing/)
+# { # do nothing
+# }
+# elsif ((($lookingfor == 0) && m/^Index: /)
+#     || (($lookingfor == 1) && ($_ eq "===================================================================\n"))
+#     || (($lookingfor == 2) && m/^RCS file: /)
+#     || (($lookingfor == 3) && m/^retrieving revision /)
+#     || (($lookingfor == 4) && m/^diff /))
+# { $lines[$lookingfor] = $_;
+#   $lookingfor++; }
+# elsif (($lookingfor == 5) && m/^Index: /)
+# { $lines[0] = $_;
+#   $lookingfor = 1; }
+# elsif (($lookingfor == 5) && m/^cvs diff: /)
+# { $lookingfor = 0;
+#   print $_; }
+# elsif ($lookingfor != 0)
+# { for $i (0..$lookingfor-1)
+#     { print $lines[$i]; }
+#   print $_;
+#   $lookingfor = 0; }
+# else
+# { print; }
