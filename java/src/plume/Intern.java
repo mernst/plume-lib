@@ -553,7 +553,7 @@ public final class Intern {
   @SuppressWarnings({"interning", // interns its argument
       "purity",
       "cast"}) // cast is redundant (except in JSR 308)
-      /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
+  /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
     for (int k = 0; k < a.length; k++)
@@ -584,7 +584,7 @@ public final class Intern {
   @SuppressWarnings({"interning", // interns its argument
       "purity",
       "cast"}) // cast is redundant (except in JSR 308)
-      /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
+  /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings("nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectArrays.get(a);
     /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [] result;
