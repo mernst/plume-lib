@@ -111,7 +111,7 @@ public class RegexUtil {
      *
      * @return The full detail message
      */
-    /*@SideEffectFree*/ public String getMessage() {
+    /*@Pure*/ public String getMessage() {
       return pse.getMessage();
     }
 
