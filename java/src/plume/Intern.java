@@ -694,6 +694,10 @@ public final class Intern {
   }
 
   /**
+   * @param seq the sequence whose subsequence should be interned
+   * @param start the index of the start of the subsequence to be interned
+   * @param end the index of the end of the subsequence to be interned
+   * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
   public static double /*@Interned*/ [] internSubsequence (double /*@Interned*/ [] seq, int start, int end) {
@@ -711,6 +715,10 @@ public final class Intern {
   }
 
   /**
+   * @param seq the sequence whose subsequence should be interned
+   * @param start the index of the start of the subsequence to be interned
+   * @param end the index of the end of the subsequence to be interned
+   * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence (/*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
@@ -731,6 +739,10 @@ public final class Intern {
   }
 
   /**
+   * @param seq the sequence whose subsequence should be interned
+   * @param start the index of the start of the subsequence to be interned
+   * @param end the index of the end of the subsequence to be interned
+   * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence (/*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
