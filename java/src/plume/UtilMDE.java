@@ -1536,6 +1536,7 @@ public final class UtilMDE {
   }
 
   /** An iterator that only returns elements that match the given Filter. */
+  @SuppressWarnings("assignment.type.incompatible") // problems in DFF branch
   public static final class FilteredIterator<T> implements Iterator<T> {
     Iterator<T> itor;
     Filter<T> filter;
@@ -1580,6 +1581,7 @@ public final class UtilMDE {
    * last elements are removed.  They can be accessed via the getFirst and
    * getLast methods.
    **/
+  @SuppressWarnings("assignment.type.incompatible") // problems in DFF branch
   public static final class RemoveFirstAndLastIterator<T> implements Iterator<T> {
     Iterator<T> itor;
     // I don't think this works, because the iterator might itself return null
