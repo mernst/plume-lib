@@ -36,6 +36,11 @@
   (interactive)
   (find-file timelog-file)
   (goto-char (point-max))
+  (if (not (equal (timelog-get-date) (date-string)))
+      (progn
+	(insert "\n")
+	(delete-blank-lines)
+	(insert "\n" (date-string) "\n")))
   (if (looking-back "-[0-9][0-9][0-9][0-9]\n?")
       (delete-region (match-beginning 0) (point)))
   (if (looking-back "[0-9][0-9][0-9][0-9]\n")
@@ -48,6 +53,19 @@
 	    (insert "\n"))
 	(insert (rounded-current-time-string))))
   (message (current-time-string)))
+
+(defun timelog-get-date ()
+  (find-file timelog-file)
+  (save-excursion
+    (goto-char (point-max))
+    (re-search-backward "\n\n\\([0-9]+/[0-9]+\\)" nil t)
+    (match-string 1)))
+
+(defun date-string ()
+  (let* ((decoded (decode-time (current-time))))
+    (concat (int-to-string (nth 4 decoded))
+	    "/"
+	    (int-to-string (nth 3 decoded)))))
 
 (defun rounded-current-time-string ()
   (let* ((decoded (decode-time (current-time)))
