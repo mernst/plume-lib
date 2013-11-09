@@ -133,7 +133,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * <b>Troubleshooting</b> <p>
  * If you get an error such as <tt>ARGH! @Option</tt>, then you are using a
  * buggy version of gjdoc, the GNU Classpath implementation of Javadoc.
- * To avoid the problem, upgrade or use a different Javadoc implementation. <p>
+ * To avoid the problem, upgrade or use a different Javadoc implementation.
  *
  * @see plume.Option
  * @see plume.Options

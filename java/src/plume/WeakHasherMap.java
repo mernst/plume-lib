@@ -38,7 +38,7 @@ import plume.Hasher;
  * where appropriate.
  * I've changed the name so that this version is not used accidentally.
  * It is slightly less efficient, in the absence of a Hasher, and has
- * not been as extensively tested.<p>
+ * not been as extensively tested.
  *
  * <hr>
  *
