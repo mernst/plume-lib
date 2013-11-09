@@ -52,7 +52,6 @@ import java.util.StringTokenizer;
  * Usage is similar to the UNIX <code>which</code> command.
  * <p>
  * Example uses:
- * <p>
  * <blockquote>
  *    To find the absolute pathname of <code>MyClass.class</code>
  *    not in a package:
