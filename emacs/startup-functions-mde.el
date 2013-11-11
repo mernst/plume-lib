@@ -1888,83 +1888,83 @@ If called interactively, prompt for which index."
 
 ;;; This seems not necessary, since ediff-version-control-package is a symbol.
 ;;; It would be a valid patch if the variable were a string.
-;; These two ediff functions differ from that in Emacs 21.2 only by
-;; lowercasing the "%S" in "ediff-%S-...".  That is required for compatibility
-;; with custom-print (which inserts double-quote marks around "%S" arguments),
-;; and shouldn't affect non-users of custom-print.
-;; I should submit a bug report against Emacs 21.2.
-;;
-(eval-after-load "ediff"
-  '(progn
-     (defun ediff-merge-revisions-with-ancestor (&optional
-						 file startup-hooks
-						 ;; MERGE-BUFFER-FILE is the file to
-						 ;; be associated with the merge
-						 ;; buffer
-						 merge-buffer-file)
-       "Run Ediff by merging two revisions of a file with a common ancestor.
-The file is the optional FILE argument or the file visited by the current
-buffer."
-       (interactive)
-       (if (stringp file) (find-file file))
-       (let (rev1 rev2 ancestor-rev)
-	 (setq rev1
-	       (read-string
-		(format
-		 "Version 1 to merge (default %s's working version): "
-		 (if (stringp file)
-		     (file-name-nondirectory file) "current buffer")))
-	       rev2
-	       (read-string
-		(format
-		 "Version 2 to merge (default %s): "
-		 (if (stringp file)
-		     (file-name-nondirectory file) "current buffer")))
-	       ancestor-rev
-	       (read-string
-		(format
-		 "Ancestor version (default %s's base revision): "
-		 (if (stringp file)
-		     (file-name-nondirectory file) "current buffer"))))
-	 (ediff-load-version-control)
-	 (funcall
-	  (intern (format "ediff-%s-merge-internal" ediff-version-control-package))
-	  rev1 rev2 ancestor-rev startup-hooks merge-buffer-file)))
-
-     (defun ediff-revision (&optional file startup-hooks)
-       "Run Ediff by comparing versions of a file.
-The file is an optional FILE argument or the file entered at the prompt.
-Default: the file visited by the current buffer.
-Uses `vc.el' or `rcs.el' depending on `ediff-version-control-package'."
-       ;; if buffer is non-nil, use that buffer instead of the current buffer
-       (interactive "P")
-       (if (not (stringp file))
-	   (setq file
-		 (ediff-read-file-name "Compare revisions for file"
-				       (if ediff-use-last-dir
-					   ediff-last-dir-A
-					 default-directory)
-				       (ediff-get-default-file-name)
-				       'no-dirs)))
-       (find-file file)
-       (if (and (buffer-modified-p)
-		(y-or-n-p (format "Buffer %s is modified. Save buffer? "
-				  (buffer-name))))
-	   (save-buffer (current-buffer)))
-       (let (rev1 rev2)
-	 (setq rev1
-	       (read-string
-		(format "Revision 1 to compare (default %s's latest revision): "
-			(file-name-nondirectory file)))
-	       rev2
-	       (read-string
-		(format "Revision 2 to compare (default %s's current state): "
-			(file-name-nondirectory file))))
-	 (ediff-load-version-control)
-	 (funcall
-	  (intern (format "ediff-%s-internal" ediff-version-control-package))
-	  rev1 rev2 startup-hooks)
-	 ))))
+;; ;; These two ediff functions differ from that in Emacs 21.2 through Emacs 24.3 only by
+;; ;; lowercasing the "%S" in "ediff-%S-...".  That is required for compatibility
+;; ;; with custom-print (which inserts double-quote marks around "%S" arguments),
+;; ;; and shouldn't affect non-users of custom-print.
+;; ;; I should submit a bug report against Emacs 21.2.
+;; ;;
+;; (eval-after-load "ediff"
+;;   '(progn
+;;      (defun ediff-merge-revisions-with-ancestor (&optional
+;; 						 file startup-hooks
+;; 						 ;; MERGE-BUFFER-FILE is the file to
+;; 						 ;; be associated with the merge
+;; 						 ;; buffer
+;; 						 merge-buffer-file)
+;;        "Run Ediff by merging two revisions of a file with a common ancestor.
+;; The file is the optional FILE argument or the file visited by the current
+;; buffer."
+;;        (interactive)
+;;        (if (stringp file) (find-file file))
+;;        (let (rev1 rev2 ancestor-rev)
+;; 	 (setq rev1
+;; 	       (read-string
+;; 		(format
+;; 		 "Version 1 to merge (default %s's working version): "
+;; 		 (if (stringp file)
+;; 		     (file-name-nondirectory file) "current buffer")))
+;; 	       rev2
+;; 	       (read-string
+;; 		(format
+;; 		 "Version 2 to merge (default %s): "
+;; 		 (if (stringp file)
+;; 		     (file-name-nondirectory file) "current buffer")))
+;; 	       ancestor-rev
+;; 	       (read-string
+;; 		(format
+;; 		 "Ancestor version (default %s's base revision): "
+;; 		 (if (stringp file)
+;; 		     (file-name-nondirectory file) "current buffer"))))
+;; 	 (ediff-load-version-control)
+;; 	 (funcall
+;; 	  (intern (format "ediff-%s-merge-internal" ediff-version-control-package))
+;; 	  rev1 rev2 ancestor-rev startup-hooks merge-buffer-file)))
+;; 
+;;      (defun ediff-revision (&optional file startup-hooks)
+;;        "Run Ediff by comparing versions of a file.
+;; The file is an optional FILE argument or the file entered at the prompt.
+;; Default: the file visited by the current buffer.
+;; Uses `vc.el' or `rcs.el' depending on `ediff-version-control-package'."
+;;        ;; if buffer is non-nil, use that buffer instead of the current buffer
+;;        (interactive "P")
+;;        (if (not (stringp file))
+;; 	   (setq file
+;; 		 (ediff-read-file-name "Compare revisions for file"
+;; 				       (if ediff-use-last-dir
+;; 					   ediff-last-dir-A
+;; 					 default-directory)
+;; 				       (ediff-get-default-file-name)
+;; 				       'no-dirs)))
+;;        (find-file file)
+;;        (if (and (buffer-modified-p)
+;; 		(y-or-n-p (format "Buffer %s is modified. Save buffer? "
+;; 				  (buffer-name))))
+;; 	   (save-buffer (current-buffer)))
+;;        (let (rev1 rev2)
+;; 	 (setq rev1
+;; 	       (read-string
+;; 		(format "Revision 1 to compare (default %s's latest revision): "
+;; 			(file-name-nondirectory file)))
+;; 	       rev2
+;; 	       (read-string
+;; 		(format "Revision 2 to compare (default %s's current state): "
+;; 			(file-name-nondirectory file))))
+;; 	 (ediff-load-version-control)
+;; 	 (funcall
+;; 	  (intern (format "ediff-%s-internal" ediff-version-control-package))
+;; 	  rev1 rev2 startup-hooks)
+;; 	 ))))
 
 
 (provide 'startup-functions-mde)
