@@ -54,7 +54,7 @@ if [ $RESULT -ne $EXPECTED -o \( $PERMITSTDERR -eq 0 -a -s "$ERR" \) ]
     echo
     if [[ $EXPECTED -eq 0 ]]
     then
-        echo "RESULT CODE: $RESULT"
+        echo "RESULT CODE: $RESULT (0 means success)"
     else
         echo "RESULT CODE: $RESULT (expected: $EXPECTED)"
     fi
