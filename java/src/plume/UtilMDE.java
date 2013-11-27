@@ -3129,8 +3129,9 @@ public final class UtilMDE {
     else if (dval < 100)
       precision = "1";
 
-    return String.format ("%,1." + precision + "f" + mag, dval);
-
+    @SuppressWarnings("formatter") // format string computed from precision and mag
+    String result = String.format ("%,1." + precision + "f" + mag, dval);
+    return result;
   }
 
 }
