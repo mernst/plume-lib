@@ -77,6 +77,8 @@ public final class SimpleLog {
    * @param format format string for message
    * @param args values to be substituted into format
    */
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void log (String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
@@ -93,6 +95,8 @@ public final class SimpleLog {
    * @param format format string for message
    * @param args values to be substituted into format
    */
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void log_tb (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log (format, args);
@@ -138,6 +142,8 @@ public final class SimpleLog {
     }
   }
 
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void indent (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log (format, args);
@@ -161,6 +167,8 @@ public final class SimpleLog {
    * @param format format string for message
    * @param args values to be substituted into format
    */
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void clear (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       clear();
@@ -183,6 +191,8 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   @Deprecated
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void exdent (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       exdent();
@@ -194,6 +204,8 @@ public final class SimpleLog {
    * @param format format string for message
    * @param args values to be substituted into format
    */
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void exdent_time (String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       // This puts the time inside, not outside, the indentation.
@@ -242,6 +254,8 @@ public final class SimpleLog {
    * @param format format string for message
    * @param args values to be substituted into format
    */
+  /*@FormatMethod*/
+  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
   public final void log_time (String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
