@@ -1,0 +1,139 @@
+#! /bin/csh -f
+
+# junk -- view and manipulate junk files
+# Without argument, shows junk files subordinate to current directory.
+#  -c <command>  flag runs <commmand> on each file; e.g., "junk -c rm".
+# For more information, see junk.doc.
+
+set noglob
+
+set valid_opts = "-[icfn]"
+set dirs = ""
+
+while ($#argv > 0)
+  if ("$1" =~ $valid_opts) then
+    unset getcommand; unset getfilterlist; unset getnamelist
+    switch ("$1")
+    case -i:
+      set command = "rm -i";
+      breaksw
+    case -c:
+      set getcommand
+      breaksw
+    case -f:
+      set getfilterlist
+      breaksw
+    case -n:
+      set getnamelist
+      breaksw
+    endsw
+  else
+    if ($?getcommand) then
+      set command = "$1"; unset getcommand
+    else
+      if ($?getfilterlist) then
+        set filterlist = "$1"; unset getfilterlist
+      else
+        if ($?getnamelist) then
+          set JUNK_NAMES = "$1"; unset getnamelist
+        else
+          set dirs = "$dirs $1"
+        endif
+      endif
+    endif
+  endif
+  shift
+end
+
+if ("$dirs" == "") set dirs = .
+
+if (! $?command) set command = echo
+
+if (! $?filterlist) set filterlist = ""
+
+if (! $?JUNK_NAMES) then
+  set JUNK_NAMES = ""
+  if (! $?JUNK_TYPES) set JUNK_TYPES = "PRINT EMACS LATEX BIBTEX TROFF EXEC CVS MISC"
+
+  if (" $JUNK_TYPES " =~ *\ PRINT\ *) then
+    # if (! $?PRINT_JUNK) set PRINT_JUNK = "*.dvi .*.dvi *.ps .*.ps *.PS .*.PS *.imp .*.imp *.press .*.press"
+    # no PostScript
+    if (! $?PRINT_JUNK) set PRINT_JUNK = "*.dvi .*.dvi *.imp .*.imp"
+    set JUNK_NAMES = "$JUNK_NAMES $PRINT_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ EMACS\ *) then
+    if (! $?EMACS_JUNK) set EMACS_JUNK = "*~ .*~ #* *.bak .*.bak *.ckp .*.ckp"
+    set JUNK_NAMES = "$JUNK_NAMES $EMACS_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ TEX\ *) then
+    if (! $?TEX_JUNK) set TEX_JUNK = "*.log .*.log"
+    set JUNK_NAMES = "$JUNK_NAMES $TEX_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ LATEX\ *) then
+    if (! $?LATEX_JUNK) then
+      set LATEX_JUNK = ""
+      if (! $?LATEX_JUNK_TYPES) set LATEX_JUNK_TYPES = "OUT IO INDEX"
+
+      if (" $LATEX_JUNK_TYPES " =~ *\ OUT\ *) then
+        if (! $?LATEX_OUT_JUNK) set LATEX_OUT_JUNK = "*.log .*.log"
+        set LATEX_JUNK = "$LATEX_JUNK $LATEX_OUT_JUNK"
+      endif
+
+      if (" $LATEX_JUNK_TYPES " =~ *\ IO\ *) then
+        # not *.idx because git uses that for some internal files
+        if (! $?LATEX_IO_JUNK) set LATEX_IO_JUNK = "*.aux .*.aux *.toc .*.toc *.lof .*.lof *.lot .*.lot .*.idx *.glo .*.glo"
+        set LATEX_JUNK = "$LATEX_JUNK $LATEX_IO_JUNK"
+      endif
+
+      if (" $LATEX_JUNK_TYPES " =~ *\ INDEX\ *) then
+        if (! $?LATEX_INDEX_JUNK) set LATEX_INDEX_JUNK = "*.bbl .*.bbl"
+        set LATEX_JUNK = "$LATEX_JUNK $LATEX_INDEX_JUNK"
+      endif
+
+    endif
+    set JUNK_NAMES = "$JUNK_NAMES $LATEX_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ BIBTEX\ *) then
+    if (! $?BIBTEX_JUNK) set BIBTEX_JUNK = "*.blg .*.blg"
+    set JUNK_NAMES = "$JUNK_NAMES $BIBTEX_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ TROFF\ *) then
+    if (! $?TROFF_JUNK) set TROFF_JUNK = "*.t .*.t"
+    set JUNK_NAMES = "$JUNK_NAMES $TROFF_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ EXEC\ *) then
+    if (! $?EXEC_JUNK) set EXEC_JUNK = "core core.[0-9][0-9][0-9][0-9] core.[0-9][0-9][0-9][0-9][0-9] a.out *.o .*.o"
+    set JUNK_NAMES = "$JUNK_NAMES $EXEC_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ CVS\ *) then
+    # Added backslashes before pound signs.  MDE 6/18/2001
+    if (! $?CVS_JUNK) set CVS_JUNK = ".\#*.[0-9].[0-9] .\#*.[0-9].[0-9][0-9] .\#*.[0-9].[0-9][0-9][0-9] .\#*.[0-9][0-9].[0-9] .\#*.[0-9][0-9].[0-9][0-9] .\#*.[0-9][0-9].[0-9][0-9][0-9]"
+    set JUNK_NAMES = "$JUNK_NAMES $CVS_JUNK"
+  endif
+
+  if (" $JUNK_TYPES " =~ *\ MISC\ *) then
+    if (! $?MISC_JUNK) set MISC_JUNK = "*.tmp .*.tmp"
+    set JUNK_NAMES = "$JUNK_NAMES $MISC_JUNK"
+  endif
+
+endif
+
+set namelist = ()
+foreach name ($JUNK_NAMES)
+  if ("$name" != "") set namelist = ($namelist -o -name $name)
+end
+set namelist = ($namelist[2-])
+  
+if ("$namelist$filterlist" == "") then
+  echo 'junk:  setting of environment variables yields empty filter.'
+  exit(1)
+endif
+
+/usr/bin/find $dirs \( $namelist \) -type f $filterlist -exec $command {} \;
