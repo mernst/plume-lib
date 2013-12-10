@@ -46,15 +46,19 @@ fi
 # PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
 # PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
 
-PAGES1=`pdfcount $FILE1`
-PAGES2=`pdfcount $FILE2`
+# # Debugging
+# PAGES1=`pdfcount "$FILE1"`
+# PAGES2=`pdfcount "$FILE2"`
+
+echo PAGES1=$PAGES1
+echo PAGES2=$PAGES2
 
 if [ $PAGES1 != $PAGES2 ]; then
   echo "Differing numbers of pages in input files: $PAGES1 $PAGES2"
   exit 1
 fi
 # The backticks make output like (if $PAGES1=4): A1 B4 A2 B3 A3 B2 A4 B1
-eval pdftk A=$FILE1 B=$FILE2 cat `X=1;Y=$PAGES1;while [ $X -le $PAGES1 ];
+eval pdftk A=\"$FILE1\" B=\"$FILE2\" cat `X=1;Y=$PAGES1;while [ $X -le $PAGES1 ];
 do echo A$X B$Y; X=$((X+1));
 Y=$((Y-1));
-done` output $FILE3
+done` output \"$FILE3\"
