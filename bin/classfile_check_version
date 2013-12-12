@@ -28,7 +28,9 @@ if (("$header[1]" != "cafe") || ("$header[2]" != "babe")) then
   exit -1
 endif
 
-set version = `echo "ibase=16; " $header[4] | bc`
+# bc needs hex values in upper case
+set HEAD = `echo $header[4] | tr '[:lower:]' '[:upper:]'`
+set version = `echo "ibase=16; " $HEAD | bc`
 
 if ($version > $1) then
   echo $2 has version $version
