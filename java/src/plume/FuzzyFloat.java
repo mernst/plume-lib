@@ -117,7 +117,7 @@ public class FuzzyFloat {
    * @see #eq
    */
   /*@Pure*/ public boolean ne (double d1, double d2) {
-   return (!eq (d1, d2));
+    return (!eq (d1, d2));
   }
 
   /**
@@ -153,7 +153,7 @@ public class FuzzyFloat {
    * @see #eq
    */
   /*@Pure*/ public boolean gt (double d1, double d2) {
-      return ((d1 > d2) && ne (d1, d2));
+    return ((d1 > d2) && ne (d1, d2));
   }
 
   /**
@@ -179,8 +179,8 @@ public class FuzzyFloat {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public int indexOf (double[] a, double elt) {
-     for (int i=0; i<a.length; i++)
-       if (eq (elt, a[i]))
+    for (int i=0; i<a.length; i++)
+      if (eq (elt, a[i]))
         return i;
     return -1;
   }
