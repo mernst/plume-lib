@@ -13,7 +13,7 @@ import checkers.quals.PolyAll;
  * Utilities for manipulating arrays and collections.
  * This complements {@link java.util.Arrays} and {@link java.util.Collections}.
  **/
-@SuppressWarnings("interning")
+@SuppressWarnings("interning")  // to do later
 public final class ArraysMDE {
   @SuppressWarnings("nullness") // initialization: unused constructor
   private ArraysMDE() { throw new Error("do not instantiate"); }
