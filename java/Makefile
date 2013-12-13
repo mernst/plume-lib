@@ -110,8 +110,8 @@ ifdef CHECKERS
   ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
-else
-$(error Either JSR308 or CHECKERS must be defined.)
+# else
+# $(error Either JSR308 or CHECKERS must be defined.)
 endif
 jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
 
