@@ -1615,7 +1615,7 @@ public final class UtilMDE {
     }
 
     public T getFirst() {
-      @SuppressWarnings("interning")
+      @SuppressWarnings("interning") // check for equality to a special value
       boolean invalid = (first == nothing);
       if (invalid) {
         throw new NoSuchElementException();
