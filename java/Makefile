@@ -110,8 +110,6 @@ ifdef CHECKERS
   ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
-# else
-# $(error Either JSR308 or CHECKERS must be defined.)
 endif
 jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
 
@@ -146,7 +144,7 @@ compile_without_testing:  .class-files-timestamp
 # The timestamp file indicates when the files were last compiled.
 .class-files-timestamp: ${JAVA_AND_CPP_FILES}
 	${MAKE} tools_jar_exists
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
+	${JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
 	touch .class-files-timestamp
 
 # Remove most generated files, but not jar files which are desired in the release.
@@ -279,7 +277,6 @@ showvars:
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
 	@echo JAVA_HOME = "$(JAVA_HOME)"
 	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
-	@echo CHECKER_JAVAC_COMMAND = $(CHECKER_JAVAC_COMMAND)
 	@echo CLASSPATH = "$(CLASSPATH)"
 	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo jsr308_imports = $(jsr308_imports)
