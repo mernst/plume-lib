@@ -425,7 +425,7 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Pluggable type-checking
 ###
 
-check-all: check-nullness check-interning check-regex check-signature
+check-all: check-nullness-raw check-nullness-fbc check-interning check-regex check-signature
 
 ## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
 
@@ -435,7 +435,9 @@ JAVAC_NULLNESS_RAW_ARGS = -processor checkers.nullness.NullnessRawnessChecker -i
 JAVAC_NULLNESS_FBC_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing -AenablePurity
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
-check-nullness: check-nullness-raw check-nullness-fbc
+check-nullness: check-nullness-fbc
+
+check-nullness-both: check-nullness-raw check-nullness-fbc
 
 check-nullness-raw: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
