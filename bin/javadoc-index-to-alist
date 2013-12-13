@@ -79,7 +79,7 @@ for my $file (@ARGV) {
     # This regexp is intentionally not anchored at its beginning or end,
     # because sometimes line breaks are missing.
     # (Problem: Distributed XOM Javadocs do not use <B>...</B> tags.
-    while (m%<DT>[ \t]*(?:<span class="strong">)?<A HREF="([^"]*)"(?: title="[^"]*")?>(?:<(?:B|STRONG|span class="strong")>)?([^<]*)(\([^<]*\))?(?:</(?:B|STRONG|span)>)?</A>(?:</span>)?(\(.*?\))?(\.| - )%ig) {
+    while (m%<DT>[ \t]*(?:<span class="strong">)?<A HREF="([^"]*)"(?: title="[^"]*")?>(?:<(?:B|STRONG|span class="strong"|span class="typeNameLink")>)?([^<]*)(\([^<]*\))?(?:</(?:B|STRONG|span)>)?</A>(?:</span>)?(\(.*?\))?(\.| - )%ig) {
       # Either $3 or $4 could be set (but not both).
       # my ($this_ref,$this_item,$this_args1,$this_args2) = ($1,$2,$3,$4);
       my ($this_ref,$this_item) = ($1,$2);
