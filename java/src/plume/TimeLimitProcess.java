@@ -143,7 +143,7 @@ public class TimeLimitProcess extends Process {
   }
 
   /**
-   * Gets the error stream of the subprocess.
+   * Gets the error stream connected to the error output of the subprocess.
    * @see Process#getErrorStream()
    */
   public InputStream getErrorStream() {
@@ -162,7 +162,7 @@ public class TimeLimitProcess extends Process {
   }
 
   /**
-   * Gets the input stream of the subprocess.
+   * Gets an input stream connected to the output of the subprocess.
    * @see Process#getInputStream()
    */
   public InputStream getInputStream() {
@@ -185,7 +185,7 @@ public class TimeLimitProcess extends Process {
 
 
   /**
-   * Gets the output stream of the subprocess.
+   * Gets the output stream connected to the input of the subprocess.
    * @see Process#getOutputStream()
    */
   public OutputStream getOutputStream() {
