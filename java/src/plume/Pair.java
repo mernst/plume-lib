@@ -30,7 +30,7 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   }
 
   @Override
-  @SuppressWarnings("interning")
+  @SuppressWarnings("interning") // equality testing optimization
   /*@Pure*/ public boolean equals(/*@Nullable*/ Object obj) {
     if (! (obj instanceof Pair<?, ?>)) {
       return false;
