@@ -69,6 +69,7 @@
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-rh5-x86_64.sh
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86.msi
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86_64.msi
+--suppress-broken 405:http://www.verigames.com/login/google	
 --suppress-broken 405:http://aws.amazon.com/datasets
 --suppress-broken 405:http://code.activestate.com/recipes/langs/python/
 --suppress-broken 405:http://onlinelibrary.wiley.com/doi/10.1111/j.1468-0475.2011.00542.x/pdf
@@ -142,6 +143,9 @@
 --suppress-fragment http://types.cs.washington.edu/checker-framework/doc/checkers/quals/ImplicitFor.html#annotation_type_element_detail
 --suppress-fragment http://www.doodle.com/ie3q6emmex8xt4mt#calendar
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
+--suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
+--suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
+--suppress-redirect http://www.verigames.com/login/google->https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=http%3A%2F%2Fwww.verigames.com%2Flogin%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&client_id=451230570634.apps.googleusercontent.com&type=web_server	
 --suppress-redirect http://2006.ecoop.org/->http://www.emn.fr/x-info/ecoop2006/
 --suppress-redirect http://cascade.org/->http://cascade.org/Home/
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
