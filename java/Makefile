@@ -110,6 +110,7 @@ ifdef CHECKERS
   ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
+  JAVAC_COMMAND = ${CHECKERS}/binary/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 endif
 jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
 
