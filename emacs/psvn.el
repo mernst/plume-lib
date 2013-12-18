@@ -2417,7 +2417,7 @@ When called with a prefix argument, toggle the hiding of all subdirectories for 
           (fname (svn-status-line-info->filename (svn-status-get-line-information)))
           (fname-pos (point))
           (column (current-column)))
-      (setq cmd-list (sort cmd-list '(lambda (item1 item2) (string-lessp (car item1) (car item2)))))
+      (setq cmd-list (sort cmd-list #'(lambda (item1 item2) (string-lessp (car item1) (car item2)))))
       (while cmd-list
         (unless st-info (setq st-info svn-status-info))
         ;;(message "%S" (caar cmd-list))

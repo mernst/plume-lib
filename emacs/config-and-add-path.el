@@ -313,7 +313,7 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
   (setq load-path (remove-matching-strings "/DELETED\\($\\|/\\)" load-path))
 
   ;; Remove duplicates (due to symbolic links)
-  (let ((true-load-path (mapcar '(lambda (elt) (cons (file-truename elt) elt))
+  (let ((true-load-path (mapcar #'(lambda (elt) (cons (file-truename elt) elt))
 				load-path)))
     (while true-load-path
       (let ((dup (assoc (car (car true-load-path)) (cdr true-load-path))))
