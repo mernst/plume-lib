@@ -1550,7 +1550,7 @@ If the value is neither nil nor t, then the user is queried first.")
      ;; because that file defines the variables but leaves them set to nil
      (add-hook
       'fi:inferior-common-lisp-mode-hook
-      '(lambda ()
+      #'(lambda ()
 	 (define-key fi:inferior-common-lisp-mode-map "\C-hf" 'fi:clman)
 	 (define-key fi:inferior-common-lisp-mode-map "\ep" 'fi:pop-input)
 	 (define-key fi:inferior-common-lisp-mode-map "\en" 'fi:push-input)
@@ -1559,7 +1559,7 @@ If the value is neither nil nor t, then the user is queried first.")
 	 (setq comint-prompt-regexp "^\\(\\[[0-9]+\\] \\)?[-a-zA-Z]+([0-9]+): ")))
      (add-hook
       'fi:common-lisp-mode-hook
-      '(lambda ()
+      #'(lambda ()
 	 (define-key fi:common-lisp-mode-map "\C-hf" 'fi:clman)
 	 (define-key fi:common-lisp-mode-map "\C-ha" 'fi:clman-apropos)
 	 ;; Not eval-or-compile-last-sexp, because I want to see the result.
