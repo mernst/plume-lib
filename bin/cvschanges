@@ -1,0 +1,3 @@
+#!/bin/sh -f
+# Report changes by others since my last update, ignoring my changes since then
+cvsdiff -rBASE -rHEAD "$@" | grep -v "tag BASE is not in file"
