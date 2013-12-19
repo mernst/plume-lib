@@ -540,11 +540,10 @@ public class BCELUtil {
    * @return the array (or a new one), with new_type at the end
    */
   public static Type[] add_type (Type[] types, Type new_type) {
-      /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
+      Type[] new_types = new Type[types.length + 1];
       System.arraycopy(types, 0, new_types, 0, types.length);
       new_types[types.length] = new_type;
-      @SuppressWarnings("cast")
-      Type[] new_types_cast = (/*@NonNull*/ Type[]) new_types;
+      Type[] new_types_cast = new_types;
       return (new_types_cast);
   }
 
@@ -556,11 +555,10 @@ public class BCELUtil {
    * @return the array (or a new one), with new_type at the beginning
    */
   public static Type[] insert_type (Type new_type, Type[] types) {
-      /*@MonotonicNonNull*/ Type[] new_types = new Type[types.length + 1];
+      Type[] new_types = new Type[types.length + 1];
       System.arraycopy(types, 0, new_types, 1, types.length);
       new_types[0] = new_type;
-      @SuppressWarnings("cast")
-      Type[] new_types_cast = (/*@NonNull*/ Type[]) new_types;
+      Type[] new_types_cast = new_types;
       return (new_types_cast);
   }
 
