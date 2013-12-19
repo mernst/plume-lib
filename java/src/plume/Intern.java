@@ -30,7 +30,7 @@ public final class Intern {
    * @return an interned version of a
    * @see String#intern
    **/
-  @SuppressWarnings("interning")
+  @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
   public static /*@Interned*/ String[] internStrings(String[] a) {
     for (int i=0; i<a.length; i++)
       if (a[i] != null)
@@ -49,7 +49,7 @@ public final class Intern {
    * @param value the value to test for interning
    * @return true iff value is interned
    **/
-  @SuppressWarnings("interning")
+  @SuppressWarnings("interning") // interning implementation
   /*@Pure*/ public static boolean isInterned(/*@Nullable*/ Object value) {
     if (value == null) {
       // nothing to do
@@ -345,7 +345,7 @@ public final class Intern {
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Intern.valueOf is intended to promise
   // the same).  This does not currently take advantage of that.
-  @SuppressWarnings({"interning", "purity"})
+  @SuppressWarnings({"interning", "purity"}) // interning implementation
   /*@Pure*/ public static /*@Interned*/ Integer intern(Integer a) {
     WeakReference</*@Interned*/ Integer> lookup = internedIntegers.get(a);
     if (lookup != null) {
