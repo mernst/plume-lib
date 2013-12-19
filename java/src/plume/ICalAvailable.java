@@ -280,7 +280,7 @@ public class ICalAvailable {
       System.err.println("Bad time: " + time);
       System.exit(1);
     }
-    @SuppressWarnings("nullness") // group 1 always exists in regexp
+    @SuppressWarnings("nullness") // Regex Checker imprecision:  matches() guarantees that group 1 exists in regexp
     /*@NonNull*/ String hourString = m.group(1);
     String minuteString = m.group(3);
     String ampmString = m.group(4);
@@ -450,7 +450,7 @@ public class ICalAvailable {
         }
         continue;
       }
-      @SuppressWarnings("interning")
+      @SuppressWarnings("interning") // interned fields from a library, but not annotated so
       boolean isFree = (freefb.getParameter(Parameter.FBTYPE) == FbType.FREE);
       assert isFree;
       PeriodList freePeriods = freefb.getPeriods();
