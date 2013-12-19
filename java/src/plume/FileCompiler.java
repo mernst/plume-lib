@@ -148,7 +148,7 @@ public final class FileCompiler {
       HashSet<String> errorClasses = new HashSet<String>();
       Matcher m = java_filename_pattern.matcher(errorString);
       while (m.find()) {
-        @SuppressWarnings("nullness") // group 1 always exists in regexp
+        @SuppressWarnings("nullness") // Regex Checker imprecision:  find() guarantees that group 1 exists in regexp
         /*@NonNull*/ String sansExtension = m.group(1);
         errorClasses.add(sansExtension);
       }
