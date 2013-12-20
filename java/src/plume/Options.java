@@ -542,7 +542,13 @@ public class Options {
   public /*@Nullable*/ String usage_synopsis = null;
 
   // Debug loggers
+  // Does nothing if not enabled.
   private final SimpleLog debug_options = new SimpleLog (false);
+
+  /** Enable debug logging, depending on the argument. */
+  public void enableDebugLogging(boolean enabled) {
+    debug_options.enabled = enabled;
+  }
 
   /**
    * Prepare for option processing.  Creates an object that will set fields
@@ -1039,6 +1045,7 @@ public class Options {
    * @param format message to print before usage information
    * @param args objects to put in formatted message
    */
+  @SuppressWarnings("formatter") // acts as format method wrapper
   public void print_usage (PrintStream ps, String format, /*@Nullable*/ Object... args) {
     ps.printf (format, args);
     if (! format.endsWith("%n")) {
@@ -1053,6 +1060,7 @@ public class Options {
    * @param format message to print before usage information
    * @param args objects to put in formatted message
    */
+  /*@FormatMethod*/
   public void print_usage (String format, /*@Nullable*/ Object... args) {
     print_usage(System.out, format, args);
   }
@@ -1137,6 +1145,8 @@ public class Options {
       String default_str = "";
       if (oi.default_str != null)
         default_str = String.format(" [default %s]", oi.default_str);
+      
+      @SuppressWarnings("formatter") // format string computed from max_len argument
       String use = String.format("  %-" + max_len + "s - %s%s",
                                  oi.synopsis(), oi.description, default_str);
       buf.append(use);
@@ -1408,6 +1418,7 @@ public class Options {
 
     // Create the settings string
     for (OptionInfo oi : options) {
+      @SuppressWarnings("formatter") // format string computed from max_len
       String use = String.format ("%-" + max_len + "s = ", oi.long_name);
       try {
         use += oi.field.get (oi.obj);
@@ -1443,6 +1454,7 @@ public class Options {
   public static class ArgException extends Exception {
     static final long serialVersionUID = 20051223L;
     public ArgException (String s) { super (s); }
+    @SuppressWarnings("formatter") // acts as format method wrapper
     public ArgException (String format, /*@Nullable*/ Object... args) {
       super (String.format (format, args));
     }

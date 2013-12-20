@@ -112,7 +112,7 @@ ifdef CHECKERS
   endif
   JAVAC_COMMAND = ${CHECKERS}/binary/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 endif
-jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*
+jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*:checkers.formatter.quals.*
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -454,6 +454,11 @@ JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint
 
 check-regex: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+
+JAVAC_FORMATTER_ARGS = -processor checkers.formatter.FormatterChecker -implicit:class -Xlint:-processing
+
+check-formatter: checkenv
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_FORMATTER_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
 JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
