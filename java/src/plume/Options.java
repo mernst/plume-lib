@@ -545,7 +545,10 @@ public class Options {
   // Does nothing if not enabled.
   private final SimpleLog debug_options = new SimpleLog (false);
 
-  /** Enable debug logging, depending on the argument. */
+  /**
+   * Enable or disable debug logging.
+   * @param enabled whether to enable or disable logging.
+   */
   public void enableDebugLogging(boolean enabled) {
     debug_options.enabled = enabled;
   }
