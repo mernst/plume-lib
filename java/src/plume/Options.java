@@ -542,7 +542,13 @@ public class Options {
   public /*@Nullable*/ String usage_synopsis = null;
 
   // Debug loggers
+  // Does nothing if not enabled.
   private final SimpleLog debug_options = new SimpleLog (false);
+
+  /** Enable debug logging, depending on the argument. */
+  public void enableDebugLogging(boolean enabled) {
+    debug_options.enabled = enabled;
+  }
 
   /**
    * Prepare for option processing.  Creates an object that will set fields
