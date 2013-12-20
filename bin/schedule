@@ -1,0 +1,270 @@
+#!/usr/bin/env perl
+# schedule -- resolve scheduling constraints
+#
+#   Originally by Alan Donovan <adonovan@lcs.mit.edu>
+#   Cleaned up and extended by Michael Ernst <mernst@csail.mit.edu>
+
+# These days, creating a Doodle survey (http://www.doodle.com/) may be more
+# convenient.
+
+# Given a set of scheduling constraints (times that are impossible, and
+# times that are undesirable), this script outputs times that are possible,
+# and times that are desirable.
+#
+# The input is a file consisting of one line per individual.  Each line
+# consists of three whitespace-separated parts:  a name, a list of
+# impossible times, and a list of undesirable times.  Each list of times is
+# a comma-separated set of ranges, in standard MIT format.
+#
+# For instance, the input file might look like:
+#   mernst  TR12:30-3,R4-5,W9-5  MR12-1
+#   notearly MTWRF9-10
+#   cpacheco  MW1-4 TR9:30-11
+#   awilliam  T11-4,W11:30-1:30,R11-3,R4-5,F10-12  M11-12,F12-4:30
+#   smcc  R1-2,R4-5
+#   jhp     MW9:30-11,F2-3
+#   akiezun TR11:00-3,F10-12:30
+#   artzi TR10-17,F10-12
+#   pgbovine MWF1-4,T4:30-5:30,R1-2
+#   galen F12:30-1:30
+#   tschantz MW10:30-4,F10-11
+#   chenx05 M12-5,TR9:30-11,TR12-1,TR2-5:30,W1-3,F11-3
+#   mao F9-5
+
+# Typical instruction message:
+#
+#   Please send me a message containing a one-line expression of your
+#   schedule constraints, in the form of
+#
+#     username impossible_times undesirable_times
+#
+#   The times are comma-separated lists of time ranges (with no internal
+#   space).  A time range is a sequence of days (a subset of MTWRF; "Th" is
+#   acceptable as a substitute for "R") and a range of hours.  If your
+#   impossible or undesirable times are empty, use just a comma for that
+#   constraint.  For example, one possible set of constraints is
+#
+#     mernst MTWR9:30-11,M11-12 MR12-1,W9-5
+#
+#   Remember that you don't need to include any meetings with other members
+#   of the group, or the reading group.
+
+
+# FILE FORMAT
+# The meaning of each line is: USERNAME, CANNOT, PREFERNOT
+# Comments begin with "#"; blanks and comments are skipped.
+# Whitespace is explicit, and only permitted where '_' appears.
+
+# line		::= <name> _ <times_opt> _ <times_opt>
+#
+# name		::= identifier
+#
+# times_opt	::= ";"
+#		  | <times>
+#
+# times		::= <times> ";" <dayspec>
+#		  | <dayspec>
+#
+# dayspec       ::= <days> <hourspec>
+#
+# days          ::= <days> <day>
+#                 | <day>
+#
+# day		::= "M" | "T" | "W" | "R" | "F" | "S" | "Su"
+#
+# hourspec	::= <hourspec> "," <range>
+#                 | <range>
+#
+# range         ::= <time> "-" <time>
+#
+# time		::= <number> | <number> ":30" | <number> ":00"
+#                            | <number> ".30" | <number> ".00"
+
+
+use strict;
+use English;
+$WARNING = 1;
+
+
+my @days = ( "M", "T", "W", "R", "F", "S", "Su" );
+
+
+my $line = 0;
+
+# usage: decode <times_opt>
+sub decode()
+{
+    my($times_opt) = @_;
+    my $result = "";
+    $times_opt =~ s/\./:/g;   # '.' and ':' are equivalent
+    $times_opt =~ s/\;/,/g;   # ';' and ',' are equivalent
+    $times_opt =~ s/^,$//;
+    if ($times_opt =~ /^,|,$/) {
+      die "line $line: timespec starts or ends with a comma: '$times_opt'";
+    }
+    my @times = split(/[,;]/, $times_opt);
+    my $days;
+    foreach my $dayspec (@times) {
+	# <dayspec> ::= M1-2,3-4
+
+	($dayspec =~ /^([MTWRFHmtwrfh-]*)([0-9\-:\.]+)$/) ||
+	    die "line $line: syntax error: bad dayspec \`$dayspec'";
+        if ($1 ne "") { # no day specified: use previous spec
+            $days = $1;
+	    $days =~ s/Th/R/g;
+	    $days =~ s/H/R/g; # synonyms
+            # Expand day ranges.
+            # Just do brute force; it works and is simple.
+            $days =~ s/M-T/MT/;
+            $days =~ s/M-W/MTW/;
+            $days =~ s/M-R/MTWR/;
+            $days =~ s/M-F/MTWRF/;
+            $days =~ s/T-W/TW/;
+            $days =~ s/T-R/TWR/;
+            $days =~ s/T-F/TWRF/;
+            $days =~ s/W-R/WR/;
+            $days =~ s/W-F/WRF/;
+            $days =~ s/R-F/RF/;
+        }
+        defined $days || die "line $line: syntax error: no days specified or implicit: \`$dayspec'";
+
+	my $hourspec = $2;
+
+	foreach my $range (split(/,/, $hourspec))
+	{
+	    # <range> ::= hh:mm-hh:mm
+
+	    ($range =~ /^(\d\d?)(:([03]0))?-(\d\d?)(:([03]0))?/) ||
+		die "line $line: syntax error: bad range \`$range'";
+	    my $time_start = $1;
+            if (defined($3)) { $time_start += $3 / 60.0; }
+	    my $time_end   = $4;
+            if (defined($6)) { $time_end   += $6 / 60.0; }
+
+	    # normalise to half-open interval (8am - 8pm]
+	    if ($time_start < 8.00) {
+              $time_start += 12.00;
+            }
+	    if ($time_end < 8.00) {
+              $time_end   += 12.00;
+            }
+
+	    (($time_start >= $time_end) ||
+		($time_start > 20.00) ||
+		($time_end   > 20.00)) &&
+		die "line $line: syntax error: bad range \`$range' with start=$time_start, end=$time_end";
+
+	    my $days2 = $days;
+	    while($days2 =~ s/^([A-Z])//)
+	    {
+		my $day = $1;
+		grep ($day, @days) ||
+		    die "line $line: syntax error: bad day \`$day'";
+
+		for (my $time=$time_start; $time<$time_end; $time += 0.50)
+		{
+		    $result .= "$day$time ";
+		}
+	    }
+	}
+    }
+    return $result;
+}
+
+
+
+# usage: time2num <time>
+# converts e.g. F4:30 to a number, preserving order
+sub time2num()
+{
+    my($t) = @_;
+    my($day, $hour);
+
+    $t =~ /^([A-Za-z]+)([\d\.]+)$/;
+    $day  = $1;
+    $hour = $2;
+
+    my $d = 0;
+    foreach (@days) {
+	$d += 100;
+	/$day/ && return $d + $hour;
+    }
+    die "bad time \`$t'!";
+}
+
+# usage lsort <in>
+# remove duplicates and sort <in>
+sub lsort()
+{
+    my($in) = @_;
+
+    my %r = ();
+    $r{$_} = 1 foreach (split(/ /, $in));
+
+    my @out = (sort {&time2num($a) <=> &time2num($b);} (keys(%r)));
+    my $outstring = join(' ', @out);
+    return $outstring;
+}
+
+# usage: disjunc <a> <b>
+# calculate difference, a - b
+sub diff()
+{
+    my($a, $b) = @_;
+
+    my %r = ();
+    $r{$_} = 1 foreach (split(/ /, $a));
+    $r{$_} = 0 foreach (split(/ /, $b));
+
+    my $out = "";
+    foreach (sort(keys(%r))) {
+	($r{$_} == 1) && ($out .= "$_ ");
+    }
+    return $out;
+}
+
+# canonicalise (return list to MIT strings)
+sub encode()
+{
+    ###
+}
+
+my $cannot_union = "";
+
+# avoid lunchtime and fridays -- hardcoded:
+# $prefernot_union = &decode("F9-5;MTWRF12-1");
+
+my $prefernot_union = "";
+
+my $allweek = &decode("MTWRF8-5");
+# my $allweek = &decode("MTWRF9-8");
+
+while(<>)
+{
+    $line++;
+
+    s/^\s+//;		# trim leading ws
+    /^\#/ && next;	# skip comments
+    /^$/ && next;	# skip blanks
+
+    my ($name, $cannot, $prefernot) = /^(\S+)\s+(\S*)\s+(\S*)\s*$/;
+    ($name ne "") || die "line $line: syntax error";
+
+    if ($name eq 'allweek') {
+      $allweek = &decode($cannot);
+      next;
+    }
+
+    $cannot_union    .= &decode($cannot);
+    $prefernot_union .= &decode($prefernot);
+}
+
+
+my $possible = &lsort(&diff($allweek, $cannot_union));
+
+print "Possible times:\n$possible\n";
+
+
+my $preferred = &lsort(&diff($possible, $prefernot_union));
+
+print "Preferred times:\n$preferred\n";
