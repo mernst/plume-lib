@@ -2,6 +2,14 @@ This file contains a list of plume-lib releases.
 However, the recommended way to use plume-lib is by cloning its repository;
 for details, see http://plume-lib.googlecode.com/hg/README.html .
 
+plume-lib 1.0.5, released January 1, 2014
+New version of BCEL that understands (a little about) generics.
+Give a way for a client to enable SimpleLog.
+Change multi-option separator from ':' to ','.
+Fix 8 null pointer exceptions (detected by the Nullness Checker)
+File java/lib/README documents included libraries.
+Other bug fixes and documentation improvements.
+
 plume-lib 1.0.4, released July 3, 2013
 Bug fixes and documentation improvements.
 
