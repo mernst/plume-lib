@@ -65,7 +65,7 @@ if ! hg archive -t files -r v$new "$release"; then
 fi
 
 echo "[3/6] Building plume-lib."
-export JAVAC_TARGET_FLAGS="-target 5"
+export JAVAC_TARGET_FLAGS="-target 7"
 make -C "$release/java" all
 if [[ $? -ne 0 ]]; then
     echo "Error building plume-lib."
