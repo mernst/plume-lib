@@ -17,12 +17,8 @@ ifndef JAVA_HOME
 endif
 
 
-# On MacOS, there is no separate tools.jar
-ifneq (,$(findstring darwin,$(OSTYPE)))
-  TOOLS_JAR ?= /System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar
-else
-  TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
-endif
+# With Java 7, MacOS now has same layout as linux.
+TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 
 # Cygwin doesn't export OSTYPE.
 ifeq (cygwin,$(OSTYPE))
@@ -261,13 +257,8 @@ endif
 # This target only fires if TOOLS_JAR does not exist
 # The make program has serious problems with filenames containing spaces, unfortunately.
 ${TOOLS_JAR}:
-ifneq (,$(findstring darwin,$(OSTYPE)))
-	@echo "Cannot find classes.jar at ${TOOLS_JAR}"
-	@echo "Please set TOOLS_JAR to the location of classes.jar"
-else
 	@echo "Cannot find tools.jar at ${TOOLS_JAR}"
 	@echo "Please set JAVA_HOME and/or TOOLS_JAR"
-endif
 # Cause the Make job to fail
 	@false
 
