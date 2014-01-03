@@ -1,0 +1,24 @@
+: # Use -*- Perl -*- without knowing its path
+  eval 'exec perl -S -w -p $0 "$@"'
+  if 0;
+# (Can't use "#!/usr/bin/env perl" because I want the "-p" switch.)
+
+# diff-remove-empty -- filter out empty parts of a diff file
+# This is useful after running some other program that removes some lines
+# from a diff file.
+# Michael Ernst <mernst@cs.washington.edu>
+
+use strict;
+use English;
+
+BEGIN { $INPUT_RECORD_SEPARATOR = undef; } # slurp whole file
+
+# Remove empty hunks -- those with no line with a leading "-" or "+"
+while (s/^@@.*\n( .*\n)+(@@|---)/$2/g) {
+  # no body
+}
+
+# Remove files with no hunks
+while (s/(^|\n)---.*\n\+\+\+.*\n($|---)/$1$2/g) {
+  # no body
+}
