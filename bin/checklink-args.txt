@@ -41,6 +41,7 @@
 --suppress-broken 403:http://www.edwardxwu.com/
 --suppress-broken 403:http://www.elsevier.nl/locate/disc/
 --suppress-broken 403:http://www.javaworld.com/javaworld/javatips/jw-javatip122.html
+--suppress-broken 403:http://www.kivancmuslu.com/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://www.cs.washington.edu/internal/
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
@@ -69,12 +70,12 @@
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-rh5-x86_64.sh
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86.msi
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86_64.msi
---suppress-broken 405:http://www.verigames.com/login/google	
 --suppress-broken 405:http://aws.amazon.com/datasets
 --suppress-broken 405:http://code.activestate.com/recipes/langs/python/
 --suppress-broken 405:http://onlinelibrary.wiley.com/doi/10.1111/j.1468-0475.2011.00542.x/pdf
 --suppress-broken 405:http://thinkcspy.appspot.com/
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
+--suppress-broken 405:http://www.verigames.com/login/google	
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
 --suppress-broken 406:http://www.seattlebicycle.org/
@@ -142,10 +143,9 @@
 --suppress-fragment http://types.cs.washington.edu/checker-framework/doc/checkers/quals/DefaultQualifiers.html#annotation_type_element_detail
 --suppress-fragment http://types.cs.washington.edu/checker-framework/doc/checkers/quals/ImplicitFor.html#annotation_type_element_detail
 --suppress-fragment http://www.doodle.com/ie3q6emmex8xt4mt#calendar
---suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
---suppress-redirect http://www.verigames.com/login/google->https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=http%3A%2F%2Fwww.verigames.com%2Flogin%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&client_id=451230570634.apps.googleusercontent.com&type=web_server	
+--suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
 --suppress-redirect http://2006.ecoop.org/->http://www.emn.fr/x-info/ecoop2006/
 --suppress-redirect http://cascade.org/->http://cascade.org/Home/
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
@@ -200,6 +200,7 @@
 --suppress-redirect http://www.rational.com/licensing/->http://www-306.ibm.com/software/rational/support/licensing/
 --suppress-redirect http://www.thestranger.com/->http://www.thestranger.com/seattle/Home
 --suppress-redirect http://www.usps.gov/ncsc/lookups/lookup_zip%2B4.html->http://www.usps.com/ncsc/lookups/lookup_zip%2b4.html
+--suppress-redirect http://www.verigames.com/login/google->https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=http%3A%2F%2Fwww.verigames.com%2Flogin%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&client_id=451230570634.apps.googleusercontent.com&type=web_server	
 --suppress-redirect http://www.weather.com/weather/local/USWA0395->http://xhtml.weather.com/xhtml/search
 --suppress-redirect http://yoav.zibin.googlepages.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2FYoav.Zibin.googlepages.com%2Fhome
 --suppress-redirect https://sqlshare.escience.washington.edu/->https://sqlshare.escience.washington.edu/accounts/login/?next=/sqlshare/	
