@@ -17,7 +17,6 @@ ifndef JAVA_HOME
 endif
 
 
-# With Java 7, MacOS now has same layout as linux.
 TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 
 # Cygwin doesn't export OSTYPE.
