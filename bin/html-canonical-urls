@@ -38,7 +38,7 @@ ASE 2005 http://ase.cs.uni-essen.de/ase/past/ase2005/
 ASE 2006 http://ase.cs.uni-essen.de/ase/past/ase2006/
 # Broken as of 11/2013:
 # ASE 2007 http://www.cse.msu.edu/ase2007/
-Barbara Ryder http://www.cs.rutgers.edu/~ryder/
+Barbara Ryder http://people.cs.vt.edu/~ryder/
 # Benjamin Morse http://web.mit.edu/scruffy/www/
 Bill Howe http://homes.cs.washington.edu/~billhowe/
 # Bjarne Steensgaard http://research.microsoft.com/~rusa/
@@ -134,10 +134,10 @@ Lilian Burdy http://www-sop.inria.fr/everest/personnel/Lilian.Burdy/
 Magdalena Balazinska http://www.cs.washington.edu/people/faculty/magda/
 Mahmood Ali: http://www.notnoop.com/
 Mahmut Kandemir http://www.cse.psu.edu/~kandemir/
-Manos Renieris http://www.cs.brown.edu/people/er/
+Manos Renieris http://cs.brown.edu/~er/
 Marcelo d'Amorim http://www.cin.ufpe.br/~damorim/
 Martin Rinard http://people.csail.mit.edu/rinard/
-Mary Jean Harrold http://www.cc.gatech.edu/~harrold/
+#Deceased: Mary Jean Harrold http://www.cc.gatech.edu/~harrold/
 Mary Shaw http://spoke.compose.cs.cmu.edu/shaweb/
 Mauro PezzÃ¨ http://www.lta.disco.unimib.it/homepage/Mauro.Pezze/Mauro.index.htm
 # MIT http://web.mit.edu/
@@ -160,7 +160,7 @@ Nancy Lynch http://people.csail.mit.edu/lynch/
 #Broken link reported 6/2009, still broken 9/2009 OOPSLA 2005 http://www.oopsla.org/2005/ShowPage.do?id=Home
 OOPSLA 2007 http://www.oopsla.org/oopsla2007/
 OOPSLA 2008 http://www.oopsla.org/oopsla2008/
-Ophelia Chesley http://www.research.rutgers.edu/~ochesley/
+# Broken as of 1/2014 Ophelia Chesley http://www.research.rutgers.edu/~ochesley/
 Orna Raz http://www-2.cs.cmu.edu/~ornar/
 PASTE'04 http://www.st.cs.uni-saarland.de/paste/
 PASTE 2005 http://homes.cs.washington.edu/~mernst/meetings/paste2005/
@@ -180,16 +180,16 @@ Saman Amarasinghe http://people.csail.mit.edu/saman/
 SAVCBS 2004 http://www.eecs.ucf.edu/~leavens/SAVCBS/2004/
 Sergio Yovine http://www-verimag.imag.fr/~yovine/
 Seth Cooper http://homes.cs.washington.edu/~scooper/
-Seung Woo Son http://www.mcs.anl.gov/~sson/
+Seung Woo Son http://users.eecs.northwestern.edu/~sson/
 Shay Artzi http://people.csail.mit.edu/artzi/
-Shriram Krishnamurthi http://www.cs.brown.edu/~sk/
+Shriram Krishnamurthi http://cs.brown.edu/~sk/
 Shuvendu K. Lahiri http://research.microsoft.com/en-us/people/shuvendu/
 Software Tools for Technology Transfer http://sttt.cs.uni-dortmund.de/
-Sri Hari Krishna Narayanan http://www.cse.psu.edu/~snarayan/
+Sri Hari Krishna Narayanan http://www.mcs.anl.gov/~snarayan/
 Stelios Sidiroglou http://people.csail.mit.edu/stelios/
 Stephen J. Garland http://people.csail.mit.edu/garland/
 Stephen McCamant http://people.csail.mit.edu/smcc/
-Steven P. Reiss http://www.cs.brown.edu/~spr/
+Steven P. Reiss http://cs.brown.edu/~spr/
 Sunghun Kim http://www.cse.ust.hk/~hunkim/
 Tao Xie http://people.engr.ncsu.edu/txie/
 Thomas Ball http://research.microsoft.com/en-us/people/tball/
@@ -213,7 +213,7 @@ Wei Huang http://www.cs.rpi.edu/~huangw5/
 Weng-Fai Wong http://www.comp.nus.edu.sg/~wongwf/
 Werner Dietl https://ece.uwaterloo.ca/~wdietl/
 Werner M. Dietl https://ece.uwaterloo.ca/~wdietl/
-Willem Visser http://www.visserhome.com/willem/
+Willem Visser http://visserhome.co.za/willem/
 William G. Griswold http://cseweb.ucsd.edu/~wgg/
 William Thies http://research.microsoft.com/en-us/um/people/thies/
 # The shorter name substitutes within the longer ones, so omit one or the other.
@@ -222,7 +222,7 @@ Workshop on Dynamic Analysis (WODA 2003) http://www.cs.nmsu.edu/~jcook/woda2003/
 WODA 2003: ICSE Workshop on Dynamic Analysis http://www.cs.nmsu.edu/~jcook/woda2003/
 WS-MaTe 2006 http://www.selab.isti.cnr.it/ws-mate/
 # Xiaoxia Ren http://www.research.rutgers.edu/~xren/
-Yannis Smaragdakis http://www.cc.gatech.edu/~yannis/
+Yannis Smaragdakis http://cgi.di.uoa.gr/~smaragd/
 Yingyi Bu http://www.ics.uci.edu/~yingyib/
 Yoav Zibin http://flash-together.appspot.com/yoavzibin/index.html
 Yoonsik Cheon http://www.cs.utep.edu/cheon/
