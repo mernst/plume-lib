@@ -12,6 +12,7 @@
 --suppress-broken 404:http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/dir.html
 --suppress-broken 404:http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/dir/index.html
 --suppress-broken 404:http://webhostingrating.net/libs/daikon-faq-be/
+--suppress-broken 406:http://spinroot.com/spin/Workshops/ws03/GroceVisser.pdf
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-announce
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-discuss
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Complete-installation.html#Complete-installation
