@@ -110,6 +110,7 @@
 --suppress-broken 405:http://onlinelibrary.wiley.com/doi/10.1111/j.1468-0475.2011.00542.x/pdf
 --suppress-broken 405:http://thinkcspy.appspot.com/
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
+--suppress-broken 405:http://www.kivancmuslu.com/
 --suppress-broken 405:http://www.verigames.com/login/google	
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
