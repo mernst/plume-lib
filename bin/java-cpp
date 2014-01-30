@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # java-cpp -- C preprocessor specialized for Java
 # Michael Ernst
-# Time-stamp: <2013-03-24 13:44:18 mernst>
+# Time-stamp: <2014-01-30 14:23:04 mernst>
 
 # This acts like the C preprocessor (cpp), but
 #  * it does not remove comments, and
@@ -67,8 +67,8 @@ my $file_handle_nonce = 'fh00';
   close(TMPFILE);
 
   my $argv = join(' ', @ARGV);
-  # intentionally does not capture standard error; it goes straight through
-  my $cpp_command = "cpp -traditional $argv $tmpfile_in > $tmpfile_out 2> $tmpfile_err";
+  # Intentionally does not capture standard error; it goes straight through.
+  my $cpp_command = "cpp -ffreestanding -traditional $argv $tmpfile_in > $tmpfile_out 2> $tmpfile_err";
   if ($debug) {
     print STDERR "// running command: $cpp_command\n";
   }
