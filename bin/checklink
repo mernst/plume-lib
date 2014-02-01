@@ -1338,12 +1338,12 @@ EOF
                     # print "is_suppressed_fragment for $u#$fragment: $grep_result\n";
                 }
 
-                # # Debugging of the below
-                # if (! exists $results{$u}{fragments}{$fragment}) {
-                #     printf("Exists \$results{%s}: %s\n", $u, exists $results{$u});
-                #     printf("Exists \$results{%s}{fragments}: %s\n", $u, exists $results{$u}{fragments});
-                #     printf("Exists \$results{%s}{fragments}{%s}: %s\n", $u, $fragment, exists $results{$u}{fragments}{$fragment});
-                # }
+                # Debugging of the below
+                if (! exists $results{$u}{fragments}{$fragment}) {
+                    printf("Exists \$results{%s}: %s\n", $u, exists $results{$u});
+                    printf("Exists \$results{%s}{fragments}: %s\n", $u, exists $results{$u}{fragments});
+                    printf("Exists \$results{%s}{fragments}{%s}: %s\n", $u, $fragment, exists $results{$u}{fragments}{$fragment});
+                }
                 
                 # A broken fragment?
                 if ($results{$u}{fragments}{$fragment} == 0) {
