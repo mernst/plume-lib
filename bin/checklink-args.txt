@@ -77,6 +77,7 @@
 --suppress-broken 403:http://www.elsevier.nl/locate/disc/
 --suppress-broken 403:http://www.javaworld.com/javaworld/javatips/jw-javatip122.html
 --suppress-broken 403:http://www.kivancmuslu.com/
+--suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://www.cs.washington.edu/internal/
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
