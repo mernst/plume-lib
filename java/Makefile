@@ -156,6 +156,8 @@ clean-except-jar:
 clean: clean-except-jar
 	rm -f plume.jar lookup.jar task_manager.jar
 
+very-clean: very_clean
+
 # Remove every generated file.
 # The goal is to restore the directory to its original state when checked out.
 very_clean: clean
