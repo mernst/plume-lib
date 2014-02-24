@@ -8,7 +8,7 @@
 # Invoke as:
 # pdfinterleave oddsides.pdf evensides.pdf outfile.pdf
 
-# This script requires that pdftk and ksh are installed.
+# This script requires that pdftk is installed.
 # The original idea is from http://www.accesspdf.com/article.php/2005020408520076
 
 # (A for-pay program with the same functionality is advertised at
@@ -39,21 +39,15 @@ fi
 ## There are two ways to count the number of pages in PDF file.
 
 ## Technique 1 to count the number of pages in PDF file:
-# Problem: PDF output of "Simple Scan" Ubuntu application is not recognized
-# by pdftk 1.41 as a PDF file, giving the error:
-#   Unexpected command-line data: 
-#      infile.pdf
-#   where we were expecting an input PDF filename
-# The dump_data command is just to get the page count, and the cat command
-# still works, though.  For now, replace the use of pdftk dump_data by a
-# separate script (that requires korn shell).
-# PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
-# PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+## Does not work for some PDF files with pdftk 1.41; pdftk 2.01 seems fine.
+PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
 
-## Technique 2 to count the number of pages in PDF file:
-pdfcountprog=`dirname $0`/pdfcount
-PAGES1=`$pdfcountprog "$FILE1"`
-PAGES2=`$pdfcountprog "$FILE2"`
+# ## Technique 2 to count the number of pages in PDF file:
+# ## Requires that ksh is installed.
+# pdfcountprog=`dirname $0`/pdfcount
+# PAGES1=`$pdfcountprog "$FILE1"`
+# PAGES2=`$pdfcountprog "$FILE2"`
 
 # # Debugging
 # echo PAGES1=$PAGES1
