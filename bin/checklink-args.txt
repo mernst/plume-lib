@@ -106,6 +106,7 @@
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-rh5-x86_64.sh
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86.msi
 --suppress-broken 404:https://www.enthought.com/repo/epd/installers/epd-7.3-2-win-x86_64.msi
+--suppress-broken 404:https://www.google.com/calendar/embed?mode=WEEK&src=mernst%40cs.washington.edu&ctz=America/Los_Angeles
 --suppress-broken 405:http://aws.amazon.com/datasets
 --suppress-broken 405:http://code.activestate.com/recipes/langs/python/
 --suppress-broken 405:http://onlinelibrary.wiley.com/doi/10.1111/j.1468-0475.2011.00542.x/pdf
