@@ -60,12 +60,16 @@ for my $line (@toplevel_lines) {
   while ($line =~ s/\\(verbatim)?(input|include)\{([-a-z0-9_\.+\/]+)\}/___TOKEN___/i) {
     my $verbatim_p = ($1 eq "verbatim");
     my $file = "$3";
-    if ($file !~ m/\./) {
+    if ($debug) { print STDERR "INPUT: $file\n"; }
+    if (-e "$file.tex") {
       $file .= ".tex";
+      open(F, "$file") or die("Can't open $file");
+    } elsif (-e "$file") {
+      open(F, "$file") or die("Can't open $file");
+    } else {
+      die("File does not exist: $file.tex or $file");
     }
     push @files, $file;
-    if ($debug) { print STDERR "INPUT: $file\n"; }
-    open(F, "$file") or die("Can't open $file");
     my @lines = <F>;
     close F;
     my $replace = join('', @lines);
