@@ -3,10 +3,16 @@
 
 package plume;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.Vector;
 
 /*>>>
-import checkers.quals.PolyAll;
+import org.checkerframework.framework.qual.PolyAll;
 */
 
 /**
@@ -1462,7 +1468,7 @@ public final class ArraysMDE {
 //         return a;
 //       } else {
 //         String[] result = new String[a.length + b.length];
-// 
+//
 //         System.arraycopy(a, 0, result, 0, a.length);
 //         System.arraycopy(b, 0, result, a.length, b.length);
 //         return result;
@@ -2476,8 +2482,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(int[] a1, int[] a2) {
+     */
+    /*@Pure*/
+    public int compare(int[] a1, int[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -2505,8 +2512,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(long[] a1, long[] a2) {
+     */
+    /*@Pure*/
+    public int compare(long[] a1, long[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -2534,8 +2542,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(double[] a1, double[] a2) {
+     */
+    /*@Pure*/
+    public int compare(double[] a1, double[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -2564,8 +2573,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(String[] a1, String[] a2) {
+     */
+    /*@Pure*/
+    public int compare(String[] a1, String[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -2602,8 +2612,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(T[] a1, T[] a2) {
+     */
+    /*@Pure*/
+    public int compare(T[] a1, T[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -2643,8 +2654,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(Object[] a1, Object[] a2) {
+     */
+    /*@Pure*/
+    public int compare(Object[] a1, Object[] a2) {
       if (a1 == a2)
         return 0;
       int len = Math.min(a1.length, a2.length);
@@ -2684,8 +2696,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(int[] a1, int[] a2) {
+     */
+    /*@Pure*/
+    public int compare(int[] a1, int[] a2) {
       if (a1 == a2)
         return 0;
       int tmp;
@@ -2715,8 +2728,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(long[] a1, long[] a2) {
+     */
+    /*@Pure*/
+    public int compare(long[] a1, long[] a2) {
       if (a1 == a2)
         return 0;
       int lendiff = a1.length - a2.length;
@@ -2746,8 +2760,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(T[] a1, T[] a2) {
+     */
+    /*@Pure*/
+    public int compare(T[] a1, T[] a2) {
       if (a1 == a2)
         return 0;
       int tmp;
@@ -2789,8 +2804,9 @@ public final class ArraysMDE {
      * @param a1 first array to compare
      * @param a2 first array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
-     */       
-    /*@Pure*/ public int compare(Object[] a1, Object[] a2) {
+     */
+    /*@Pure*/
+    public int compare(Object[] a1, Object[] a2) {
       if (a1 == a2)
         return 0;
       int tmp;

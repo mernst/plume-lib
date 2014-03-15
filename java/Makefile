@@ -39,7 +39,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/checkers-quals.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.7.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.6.jar:lib/commons-logging-1.1.1.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.7.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.6.jar:lib/commons-logging-1.1.1.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.8.2.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -77,13 +77,9 @@ endif
 
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
-# When using the JSR 308 compiler, this expects checkers-quals.jar on the classpath.
-# The "-classpath" argument is only necessary when using the JSR 308 javac,
-# since it's a shell command for "javac -jar ..." which ignores the
-# CLASSPATH environment variable and thus must be supplied explicitly.
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
-CHECKER_JAVAC_COMMAND = ${CHECKERS}/binary/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+CHECKER_JAVAC_COMMAND = ${CHECKERS}/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
@@ -101,13 +97,13 @@ ifdef JSR308
   CHECKERS ?= ${JSR308}/checker-framework/checkers
 endif
 ifdef CHECKERS
-  CLASSPATH := ${CHECKERS}/binary/checkers.jar:${CLASSPATH}
+  CLASSPATH := ${CHECKERS}/dist/checker.jar:${CLASSPATH}
   ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
     CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
   endif
-  JAVAC_COMMAND = ${CHECKERS}/binary/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+  JAVAC_COMMAND = ${CHECKERS}/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 endif
-jsr308_imports=dataflow.quals.*:checkers.initialization.quals.*:checkers.interning.quals.*:checkers.nullness.quals.*:checkers.regex.quals.*:checkers.signature.quals.*:checkers.formatter.quals.*
+jsr308_imports=org.checkerframework.dataflow.qual.*:org.checkerframework.checker.initialization.qual.*:org.checkerframework.checker.interning.qual.*:org.checkerframework.checker.nullness.qual.*:org.checkerframework.checker.regex.qual.*:org.checkerframework.checker.signature.qual.*:org.checkerframework.checker.formatter.qual.*
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -322,7 +318,6 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/commons-io-1.4.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.1.1.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/checkers-quals.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/junit-4.8.2.jar)
@@ -417,12 +412,12 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 check-all: check-nullness-raw check-nullness-fbc check-interning check-regex check-signature
 
-## These targets require checkers.jar (not just checkers-quals.jar) on the classpath.
+## These targets require checker.jar (not just checker-qual.jar) on the classpath.
 
 CHECKERS_ARGS ?= -source 8 -Awarns
 
-JAVAC_NULLNESS_RAW_ARGS = -processor checkers.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AenablePurity
-JAVAC_NULLNESS_FBC_ARGS = -processor checkers.nullness.NullnessChecker -implicit:class -Xlint:-processing -AenablePurity
+JAVAC_NULLNESS_RAW_ARGS = -processor org.checkerframework.checker.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AenablePurity
+JAVAC_NULLNESS_FBC_ARGS = -processor org.checkerframework.checker.nullness.NullnessChecker -implicit:class -Xlint:-processing -AenablePurity
 # A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
 
 check-nullness: check-nullness-fbc
@@ -435,24 +430,24 @@ check-nullness-raw: checkenv
 check-nullness-fbc: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
-JAVAC_INTERNING_ARGS = -processor checkers.interning.InterningChecker -implicit:class -Xlint:-processing
+JAVAC_INTERNING_ARGS = -processor org.checkerframework.checker.interning.InterningChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
 
 check-interning: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
-JAVAC_REGEX_ARGS = -processor checkers.regex.RegexChecker -implicit:class -Xlint:-processing
+JAVAC_REGEX_ARGS = -processor org.checkerframework.checker.regex.RegexChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
 
 check-regex: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
-JAVAC_FORMATTER_ARGS = -processor checkers.formatter.FormatterChecker -implicit:class -Xlint:-processing
+JAVAC_FORMATTER_ARGS = -processor org.checkerframework.checker.formatter.FormatterChecker -implicit:class -Xlint:-processing
 
 check-formatter: checkenv
 	${CHECKER_JAVAC_COMMAND} ${JAVAC_FORMATTER_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
 
-JAVAC_SIGNATURE_ARGS = -processor checkers.signature.SignatureChecker -implicit:class -Xlint:-processing
+JAVAC_SIGNATURE_ARGS = -processor org.checkerframework.checker.signature.SignatureChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
 
 check-signature: checkenv
