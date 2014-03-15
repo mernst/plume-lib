@@ -1,10 +1,10 @@
 package plume;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.List;
 
 /*>>>
-import dataflow.quals.Pure;
+import org.checkerframework.dataflow.qual.Pure;
 */
 
 /**

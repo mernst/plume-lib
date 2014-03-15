@@ -1,26 +1,41 @@
 package plume;
 
-import net.fortuna.ical4j.model.*;
-import net.fortuna.ical4j.model.component.*;
-import net.fortuna.ical4j.model.parameter.*;
-import net.fortuna.ical4j.model.property.*;
-import net.fortuna.ical4j.data.*;
-
-import java.io.*;
+import java.io.InputStream;
 import java.net.URL;
-import java.text.*;
-import java.util.regex.*;
-// Can't "import java.util.*;" because of Date, etc.
-import java.util.Iterator;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+//Can't "import java.util.*;" because of Date, etc.
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.regex.Pattern;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.fortuna.ical4j.data.CalendarBuilder;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Component;
+import net.fortuna.ical4j.model.ComponentList;
+import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.Dur;
+import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.Period;
+import net.fortuna.ical4j.model.PeriodList;
+import net.fortuna.ical4j.model.TimeZone;
+import net.fortuna.ical4j.model.TimeZoneRegistry;
+import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VFreeBusy;
+import net.fortuna.ical4j.model.parameter.FbType;
+import net.fortuna.ical4j.model.property.DtStart;
+import net.fortuna.ical4j.model.property.FreeBusy;
 
 /*>>>
-import dataflow.quals.Pure;
+import org.checkerframework.dataflow.qual.Pure;
 */
 
 // If you are perplexed because of odd results, maybe it is because of the
