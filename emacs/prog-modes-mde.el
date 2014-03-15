@@ -1849,7 +1849,7 @@ Use as a hook, like so:
 	 (setq compile-command "ant -e -find build.xml compile-no-eclipse"))
 	((string-match "/pastry/" default-directory)
 	 (make-local-variable 'compile-command)
-	 (setq compile-command "ant -e -find build.xml -Djsr308.checkers.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dcheckers.interning.InterningChecker checker"))
+	 (setq compile-command "ant -e -find build.xml -Djsr308.checkers.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dorg.checkerframework.checker.interning.InterningChecker checker"))
 	((string-match "/checkers/tests/\\([^/]*\\)/" default-directory)
 	 (let ((dir (match-string 1 default-directory)))
 	   (if (equal dir "src")

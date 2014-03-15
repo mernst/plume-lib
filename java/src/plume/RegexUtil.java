@@ -4,10 +4,10 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /*>>>
-import checkers.nullness.quals.*;
-import checkers.regex.quals.*;
-import checkers.quals.EnsuresQualifierIf;
-import dataflow.quals.Pure;
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+import org.checkerframework.framework.qual.EnsuresQualifierIf;
+import org.checkerframework.dataflow.qual.Pure;
 */
 
 // This class should be kept in sync with checkers.regex.RegexUtil .
@@ -111,7 +111,8 @@ public class RegexUtil {
      *
      * @return The full detail message
      */
-    /*@Pure*/ public String getMessage() {
+    /*@Pure*/
+    public String getMessage() {
       return pse.getMessage();
     }
 
@@ -201,7 +202,7 @@ public class RegexUtil {
    * @return null, or a string describing why the argument is not a regex.
    */
   /*>>>
-  @SuppressWarnings({"regex","not.sef"})    // RegexUtil; 
+  @SuppressWarnings({"regex","not.sef"})    // RegexUtil;
   */
   /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s, int groups) {
