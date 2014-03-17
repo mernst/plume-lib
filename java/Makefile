@@ -96,7 +96,7 @@ JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 ifdef JSR308
   CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
 endif
-ifdef CHECKERFRAMEWORK
+ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/dist/checker.jar)" "${CHECKERFRAMEWORK}/checker/dist/checker.jar"
   CLASSPATH := ${CHECKERFRAMEWORK}/checker/dist/checker.jar:${CLASSPATH}
   ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/build)" "${CHECKERFRAMEWORK}/checker/build"
     CLASSPATH := ${CHECKERFRAMEWORK}/checker/build:${CLASSPATH}
