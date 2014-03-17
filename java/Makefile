@@ -79,7 +79,7 @@ endif
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
-CHECKER_JAVAC_COMMAND = ${CHECKERS}/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
@@ -94,14 +94,14 @@ JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
 ifdef JSR308
-  CHECKERS ?= ${JSR308}/checker-framework/checkers
+  CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
 endif
-ifdef CHECKERS
-  CLASSPATH := ${CHECKERS}/dist/checker.jar:${CLASSPATH}
-  ifeq "$(wildcard ${CHECKERS}/build)" "${CHECKERS}/build"
-    CLASSPATH := ${CHECKERS}/build:${CLASSPATH}
+ifdef CHECKERFRAMEWORK
+  CLASSPATH := ${CHECKERFRAMEWORK}/checker/dist/checker.jar:${CLASSPATH}
+  ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/build)" "${CHECKERFRAMEWORK}/checker/build"
+    CLASSPATH := ${CHECKERFRAMEWORK}/checker/build:${CLASSPATH}
   endif
-  JAVAC_COMMAND = ${CHECKERS}/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+  JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 endif
 jsr308_imports=org.checkerframework.dataflow.qual.*:org.checkerframework.checker.initialization.qual.*:org.checkerframework.checker.interning.qual.*:org.checkerframework.checker.nullness.qual.*:org.checkerframework.checker.regex.qual.*:org.checkerframework.checker.signature.qual.*:org.checkerframework.checker.formatter.qual.*
 
@@ -414,7 +414,7 @@ check-all: check-nullness-raw check-nullness-fbc check-interning check-regex che
 
 ## These targets require checker.jar (not just checker-qual.jar) on the classpath.
 
-CHECKERS_ARGS ?= -source 8 -Awarns
+CHECKER_ARGS ?= -source 8 -Awarns
 
 JAVAC_NULLNESS_RAW_ARGS = -processor org.checkerframework.checker.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AenablePurity
 JAVAC_NULLNESS_FBC_ARGS = -processor org.checkerframework.checker.nullness.NullnessChecker -implicit:class -Xlint:-processing -AenablePurity
@@ -425,33 +425,33 @@ check-nullness: check-nullness-fbc
 check-nullness-both: check-nullness-raw check-nullness-fbc
 
 check-nullness-raw: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 check-nullness-fbc: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 JAVAC_INTERNING_ARGS = -processor org.checkerframework.checker.interning.InterningChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
 
 check-interning: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 JAVAC_REGEX_ARGS = -processor org.checkerframework.checker.regex.RegexChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
 
 check-regex: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 JAVAC_FORMATTER_ARGS = -processor org.checkerframework.checker.formatter.FormatterChecker -implicit:class -Xlint:-processing
 
 check-formatter: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_FORMATTER_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_FORMATTER_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 JAVAC_SIGNATURE_ARGS = -processor org.checkerframework.checker.signature.SignatureChecker -implicit:class -Xlint:-processing
 # A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
 
 check-signature: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKERS_ARGS} ${JAVA_FILES}
+	${CHECKER_JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 
 
