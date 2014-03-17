@@ -11,6 +11,6 @@
 	<classpathentry kind="lib" path="java/lib/junit-4.8.2.jar"/>
 	<classpathentry kind="lib" path="java/lib/svnkit.jar"/>
 	<classpathentry kind="lib" path="java/lib/xom-1.2.1.jar"/>
-	<classpathentry kind="lib" path="/home/software/openjdk7/current/jdk1.7.0/lib/tools.jar"/>
+	<classpathentry kind="lib" path="jdk/lib/tools.jar"/>
 	<classpathentry kind="output" path="bin-eclipse"/>
 </classpath>
