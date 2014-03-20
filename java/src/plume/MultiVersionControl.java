@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.regex.*;
 import java.net.URL;
 
-// Also see the "mr" program (http://kitenet.net/~joey/code/mr/).
+// A related program is the "mr" program (http://kitenet.net/~joey/code/mr/).
 // To read its documentation:  pod2man mr | nroff -man 
 // Some differences are:
 //  * mvc knows how to search for all repositories
@@ -58,8 +58,9 @@ import java.net.URL;
  * The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
+ *   <li><b>--home=</b><i>string</i>. User home directory [default C:\Users\mernst]</li>
  *   <li><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading.
- *  Defaults to <tt>$HOME/.mvc-checkouts</tt>.</li>
+ *  Defaults to <tt>$HOME/.mvc-checkouts</tt>. [default ~/.mvc-checkouts]</li>
  *   <li><b>--dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to search for checkouts; default=home dir</li>
  *   <li><b>--ignore-dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to NOT search for checkouts</li>
  *   <li><b>--search=</b><i>boolean</i>. Search for all checkouts, not just those listed in a file [default false]</li>
@@ -205,14 +206,15 @@ import java.net.URL;
 
 public class MultiVersionControl {
 
-  static final String userHome = System.getProperty ("user.home");
+  @Option("User home directory")
+  public static String home = System.getProperty ("user.home");
 
   /**
    * File with list of checkouts.  Set it to /dev/null to suppress reading.
    * Defaults to <tt>$HOME/.mvc-checkouts</tt>.
    */
-  @Option(value="File with list of checkouts.  Set it to /dev/null to suppress reading.", noDocDefault=true)
-  public String checkouts = new File(userHome, ".mvc-checkouts").getPath();
+  @Option(value="File with list of checkouts.  Set it to /dev/null to suppress reading.")
+  public String checkouts = "~/.mvc-checkouts";
 
   @Option("Directory under which to search for checkouts; default=home dir")
   public List<String> dir = new ArrayList<String>();
@@ -310,6 +312,11 @@ public class MultiVersionControl {
 
   private Action action;
 
+  // Replace "~" by the expansion of "$HOME".
+  private static String expandTilde (String path) {
+    return path.replaceFirst("^~", home);
+  }
+
   public static void main (String[] args) {
     setupSVNKIT();
     MultiVersionControl mvc = new MultiVersionControl(args);
@@ -325,7 +332,7 @@ public class MultiVersionControl {
     if (mvc.search) {
       // Postprocess command-line arguments
       for (String adir : mvc.ignore_dir) {
-        File afile = new File(adir.replaceFirst("^~", userHome));
+        File afile = new File(expandTilde(adir));
         if (! afile.exists()) {
             System.err.printf("Warning: Directory to ignore while searching for checkouts does not exist:%n  %s%n", adir);
         } else if (! afile.isDirectory()) {
@@ -336,7 +343,7 @@ public class MultiVersionControl {
       }
 
       for (String adir : mvc.dir) {
-        adir = adir.replaceFirst("^~", userHome);
+        adir = expandTilde(adir);
         if (debug) {
           System.out.println("Searching for checkouts under " + adir);
         }
@@ -394,8 +401,11 @@ public class MultiVersionControl {
     }
 
     // clean up options
+
+    checkouts = expandTilde(checkouts);
+
     if (dir.isEmpty()) {
-      dir.add(userHome);
+      dir.add(home);
     }
 
     if (dry_run) {
@@ -605,8 +615,6 @@ public class MultiVersionControl {
         System.exit(1);
       }
 
-      // Replace "~" by "$HOME", because -d (and Athena's "cd" command) does not
-      // understand ~, but it does understand $HOME.
       String dirname;
       String root = currentRoot;
       if (root.endsWith("/")) root = root.substring(0,root.length()-1);
@@ -621,7 +629,7 @@ public class MultiVersionControl {
       }
 
       // The directory may not yet exist if we are doing a checkout.
-      File dir = new File(dirname.replaceFirst("^~", userHome));
+      File dir = new File(expandTilde(dirname));
 
       if (module == null) {
           module = dir.getName();
