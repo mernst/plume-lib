@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * The programmer does not have to write any code, only declare and
  * document variables.  For each field that you want to set from a
  * command-line argument, you write Javadoc and an @{@link plume.Option}
- * annotation.  Then, field is is automatically set from a command-line
+ * annotation.  Then, the field is automatically set from a command-line
  * option of the same name, and usage messages and printed documentation
  * are generated automatically.
  * <p>

@@ -62,7 +62,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  *   using the same indentation.  Inline <code>@link</code> and
  *   <code>@see</code> tags in the Javadoc input are left untouched.
  *
- *   <li> <b>html</b> This format outputs HTML for general purpose use, meaning
+ *   <li> <b>html</b> This format outputs HTML for general-purpose use, meaning
  *   inline <code>@link</code> and <code>@see</code> tags in the Javadoc input
  *   are suitably replaced.  This is the default output format and does not
  *   need to be specified explicitly.  
@@ -104,7 +104,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * option. <p>
  *
  * Omitting the generated default value string is useful for options that have
- * system dependent defaults.  Such options are not an issue for usage messages
+ * system-dependent defaults.  Such options are not an issue for usage messages
  * that are generated at runtime.  However, system dependent defaults do pose
  * a problem for static documentation, which is rarely regenerated and meant to
  * apply to all users.  Consider the following <code>@Option</code>-annotated
@@ -131,7 +131,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  * <code>@Unpublicized</code> options are not included in the output at all. <p>
  *
  * <b>Troubleshooting</b> <p>
- * If you get an error such as <tt>ARGH! @Option</tt>, then you are using a
+ * If you get an error such as "<tt>ARGH! @Option</tt>", then you are using a
  * buggy version of gjdoc, the GNU Classpath implementation of Javadoc.
  * To avoid the problem, upgrade or use a different Javadoc implementation.
  *
@@ -241,12 +241,13 @@ public class OptionsDoclet {
   }
 
   /**
-   * Returns the number of tokens corresponding to a command-line argument of
-   * this doclet or 0 if the argument is unrecognized.  This method is
+   * Given a command-line option of this doclet, returns the number of
+   * arguments you must specify on the command line for the given option.
+   * Returns 0 if the argument is not recognized.  This method is
    * automatically invoked.
    *
-   * @param option the command-line argument
-   * @return the number of tokens corresponding to option
+   * @param option the command-line option
+   * @return the number of command-line arguments needed when using the option
    * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static int optionLength(String option) {
@@ -619,7 +620,7 @@ public class OptionsDoclet {
     if (oi.list != null)
       b.append(" <tt>[+]</tt>");
     b.append(". ");
-    String jdoc = oi.jdoc == null ? "" : oi.jdoc; // FIXME: suppress nullness warnings
+    String jdoc = oi.jdoc == null ? "" : oi.jdoc;
     if (oi.no_doc_default || oi.default_str == null) {
       f.format("%s", jdoc);
     } else {
