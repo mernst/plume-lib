@@ -58,7 +58,7 @@ import java.net.URL;
  * The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
- *   <li><b>--home=</b><i>string</i>. User home directory [default C:\Users\mernst]</li>
+ *   <li><b>--home=</b><i>string</i>. User home directory</li>
  *   <li><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading.
  *  Defaults to <tt>$HOME/.mvc-checkouts</tt>. [default ~/.mvc-checkouts]</li>
  *   <li><b>--dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to search for checkouts; default=home dir</li>
@@ -206,14 +206,14 @@ import java.net.URL;
 
 public class MultiVersionControl {
 
-  @Option("User home directory")
+  @Option(value="User home directory", noDocDefault=true)
   public static String home = System.getProperty ("user.home");
 
   /**
    * File with list of checkouts.  Set it to /dev/null to suppress reading.
    * Defaults to <tt>$HOME/.mvc-checkouts</tt>.
    */
-  @Option(value="File with list of checkouts.  Set it to /dev/null to suppress reading.")
+  @Option("File with list of checkouts.  Set it to /dev/null to suppress reading.")
   public String checkouts = "~/.mvc-checkouts";
 
   @Option("Directory under which to search for checkouts; default=home dir")
