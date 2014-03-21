@@ -17,6 +17,7 @@ emacs:
 all: java emacs
 
 # Remove files that should not appear in the release.
+# Don't run this unless making a release!  It removes files that appear in the version control system.
 .PHONY: release-clean
 release-clean:
 	rm -f .hgignore .hgtags .hg_archival.txt
