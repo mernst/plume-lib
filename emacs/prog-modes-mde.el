@@ -548,7 +548,7 @@ This is disabled on lines with a comment containing the string \"interned\"."
 		  "~/research/types/annotation-tools/scene-lib/src"
 		  "~/research/types/annotation-tools/scene-lib/src-devel"
 		  "~/research/types/annotation-tools/asmx/src"
-		  "~/research/types/checker-framework/checkers/src"
+		  "~/research/types/checker-framework/checker/src"
 		  "~/research/types/jsr308-langtools/src/share/classes"
 		  "~/java/java-6-src"
 		  "~/java/junit-4.5-src"
@@ -1849,26 +1849,26 @@ Use as a hook, like so:
 	 (setq compile-command "ant -e -find build.xml compile-no-eclipse"))
 	((string-match "/pastry/" default-directory)
 	 (make-local-variable 'compile-command)
-	 (setq compile-command "ant -e -find build.xml -Djsr308.checkers.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dorg.checkerframework.checker.interning.InterningChecker checker"))
-	((string-match "/checkers/tests/\\([^/]*\\)/" default-directory)
+	 (setq compile-command "ant -e -find build.xml -Djsr308.checker.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dorg.checkerframework.checker.interning.InterningChecker checker"))
+	((string-match "/checker/tests/\\([^/]*\\)/" default-directory)
 	 (let ((dir (match-string 1 default-directory)))
 	   (if (equal dir "src")
 	       (setq dir "all"))
 	   (make-local-variable 'compile-command)
 	   (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
-;; 	((string-match "/annotations/demos/nonnull-interned-demo/checkers/" default-directory)
+;; 	((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
 ;; 	 (make-local-variable 'compile-command)
-;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/checkers/; ant -e framework"))
+;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
 ;; 	((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
 ;; 	 (make-local-variable 'compile-command)
 ;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
 ;; 	((string-match "/annotations/demos/nonnull-interned-demo/junit/" default-directory)
 ;; 	 (make-local-variable 'compile-command)
 ;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
- 	((and buffer-file-name (string-match "/demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotationLocation.java" buffer-file-name))
+ 	((and buffer-file-name (string-match "/demos/nonnull-interned-demo/IGJChecker/src/checker/types/AnnotationLocation.java" buffer-file-name))
  	 (make-local-variable 'compile-command)
  	 (setq compile-command "ant -e -find build.xml location"))
- 	((and buffer-file-name (string-match "/demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotatedTypeFactory.java" buffer-file-name))
+ 	((and buffer-file-name (string-match "/demos/nonnull-interned-demo/IGJChecker/src/checker/types/AnnotatedTypeFactory.java" buffer-file-name))
  	 (make-local-variable 'compile-command)
  	 (setq compile-command "ant -e -find build.xml factory"))
  	((and buffer-file-name (string-match "/demos/nonnull-interned-demo/junit/tests/JUnitTests.java" buffer-file-name))
