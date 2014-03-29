@@ -59,6 +59,7 @@
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
 --suppress-broken 403:http://mercurial.selenic.com/wiki/MergeProgram
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
+--suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html
 --suppress-broken 403:http://portal.acm.org/dl.cfm
 --suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
@@ -79,6 +80,7 @@
 --suppress-broken 403:http://www.kivancmuslu.com/
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
+--suppress-broken 403:https://wiki.gnome.org/Apps/Dia
 --suppress-broken 403:https://www.cs.washington.edu/internal/
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
 --suppress-broken 403:https://www.cs.washington.edu/login/pc
@@ -135,6 +137,8 @@
 --suppress-broken 500:http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
 --suppress-broken 500:http://www.washington.edu/home/maps/southcentral.html?80,70,792,660
 --suppress-broken 500:https://ca.mit.edu:444/moira/showresult.jhtml?list=parg&operation=displaylistinfo
+--suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_Spring_2014
+--suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_spring_2014_proposal_pairs	
 --suppress-broken 500:https://eecsfacweb.mit.edu/
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a1.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a2.html
@@ -150,6 +154,7 @@
 --suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/staging/www/
+--suppress-broken 500:https://wiki.state.ma.us/confluence/download/attachments/16842777/Scrum+Development+Process.pdf
 --suppress-broken 500:https://www.cvshome.org/docs/manual/cvs-1.11.18/cvs_5.html
 --suppress-broken 500:https://www2.enthought.com/accounts/register/?next=/licenses/academic
 --suppress-broken 501:http://www.bizrate.com/
