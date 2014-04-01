@@ -1259,9 +1259,10 @@ EOF
         if ($abs_link_uri eq "http://www.w3.org/TR/html4/frameset.dtd") {
           $abs_link_uri = URI->new("file://" . dirname(__FILE__) . "/../etc/frameset.dtd");
         }
-        if ($abs_link_uri eq "http://www.w3.org/TR/REC-html40/loose.dtd") {
+        if ($abs_link_uri eq "http://www.w3.org/TR/html4/loose.dtd") {
           $abs_link_uri = URI->new("file://" . dirname(__FILE__) . "/../etc/loose.dtd");
         }
+        # printf("FILE %s \n", $abs_link_uri);
 
         my $canon_uri = URI->new($abs_link_uri->canonical());
         my $fragment  = $canon_uri->fragment(undef);
