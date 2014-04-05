@@ -99,7 +99,10 @@
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://kevinjsullivan.org/
 --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/
+--suppress-broken 500:http://www.eclipse.org/
+--suppress-broken 500:http://www.eclipse.org/documentation/
 --suppress-broken 500:http://www.eclipse.org/downloads/
+--suppress-broken 500:http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/junosr2	
 --suppress-broken 500:http://www.icse-conferences.org/2001/
 --suppress-broken 500:http://www.icse-conferences.org/2003/
 --suppress-broken 500:http://www.icse-conferences.org/2004/
