@@ -19,6 +19,22 @@ endif
 
 TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 
+ifeq "$(wildcard $(TOOLS_JAR))" ""
+  ifndef JDK_HOME
+    javac_cmd := $(shell readlink -f `which javac`)
+    JDK_HOME := $(subst /bin//javac,,$(subst /bin/javac,,$(javac_cmd)))
+    ifeq "$(wildcard $(JDK_HOME)/lib/tools.jar)" ""
+      javac_cmd := $(shell readlink -f /usr/bin/javac)
+      JDK_HOME := $(subst /bin//javac,,$(subst /bin/javac,,$(javac_cmd)))
+    endif
+  endif
+  ifneq "$(wildcard $(JDK_HOME)/lib/tools.jar)" ""
+    TOOLS_JAR := $(JDK_HOME)/lib/tools.jar
+    I_set_TOOLS_JAR := true
+  endif
+endif
+
+
 # Cygwin doesn't export OSTYPE.
 ifeq (cygwin,$(OSTYPE))
 else
@@ -269,6 +285,10 @@ showvars:
 	@echo CLASSPATH = "$(CLASSPATH)"
 	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo jsr308_imports = $(jsr308_imports)
+	@echo JDK_HOME = $(JDK_HOME)
+	@echo javac_cmd = $(javac_cmd)
+	@echo TOOLS_JAR = $(TOOLS_JAR)
+	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
 
 
 ###########################################################################
