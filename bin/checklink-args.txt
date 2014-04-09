@@ -97,6 +97,7 @@
 --suppress-broken 500:http://conferences.iee.org/icse2004/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
+--suppress-broken 500:http://junit.org/	
 --suppress-broken 500:http://kevinjsullivan.org/
 --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/
 --suppress-broken 500:http://www.eclipse.org/
