@@ -49,6 +49,7 @@
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://wiki.gnome.org/Apps/Dia
 --suppress-broken 403:https://www.cs.washington.edu/internal/
+--suppress-broken 403:https://www.cs.washington.edu/lab/local/course-resources/cubist/
 --suppress-broken 403:https://www.cs.washington.edu/lab/www/MediaWiki.shtml
 --suppress-broken 403:https://www.cs.washington.edu/login/pc
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
