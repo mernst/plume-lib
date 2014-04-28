@@ -24,11 +24,16 @@ import java.lang.ref.ReferenceQueue;
 
 
 /**
- * This is a modified version of {@link java.util.WeakHashMap} from JDK 1.5,
- * that uses System.identityHashCode() rather than
- * the object's hash code.  All equality checks are identity checks
- * (==) rather than objet equality (.equals); @see{IdentityHashMap}
- * for more information on the changes made in an identity hash map.
+ * This class combines the features of {@link WeakHashMap} and {@link
+ * IdentityHashMap}.
+ * The implementation is a modified version of {@link java.util.WeakHashMap}
+ * from JDK 1.5, which differs from the original in two ways:
+ * <ul>
+ *  <ul> uses of hashCode() are replaced by System.identityHashCode()</ul>
+ *  <ul> uses of object equality (.equals) are replaced by identity checks (==)</ul>
+ * </ul>
+ * @see{IdentityHashMap}
+ * for more information on the changes made in an identity hash map..
  *
  * <hr>
  *
