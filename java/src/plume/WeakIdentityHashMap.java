@@ -24,15 +24,15 @@ import java.lang.ref.ReferenceQueue;
 
 
 /**
- * This class combines the features of {@link WeakHashMap} and {@link
- * IdentityHashMap}.
+ * This class combines the features of {@link java.util.WeakHashMap} and
+ * {@link java.util.IdentityHashMap}.
  * The implementation is a modified version of {@link java.util.WeakHashMap}
  * from JDK 1.5, which differs from the original in two ways:
  * <ul>
  *  <ul> uses of hashCode() are replaced by System.identityHashCode()</ul>
  *  <ul> uses of object equality (.equals) are replaced by identity checks (==)</ul>
  * </ul>
- * @see{IdentityHashMap}
+ * @see{java.util.IdentityHashMap}
  * for more information on the changes made in an identity hash map..
  *
  * <hr>
