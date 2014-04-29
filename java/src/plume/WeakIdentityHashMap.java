@@ -32,7 +32,7 @@ import java.lang.ref.ReferenceQueue;
  *  <ul> uses of hashCode() are replaced by System.identityHashCode()</ul>
  *  <ul> uses of object equality (.equals) are replaced by identity checks (==)</ul>
  * </ul>
- * @see{java.util.IdentityHashMap}
+ * See {@link java.util.IdentityHashMap}
  * for more information on the changes made in an identity hash map..
  *
  * <hr>
