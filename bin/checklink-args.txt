@@ -286,6 +286,7 @@
 --suppress-redirect https://sqlshare.escience.washington.edu/->https://sqlshare.escience.washington.edu/accounts/login/?next=/sqlshare/	
 --suppress-redirect https://tools.usps.com/go/ZipLookupAction!input.action->https://www.usps.com/root/global/server_responses/webtools-msg.htm	
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
+--suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://link.springer.com/article/10.1007%2Fs10515-006-0002-0	
 
 --suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
 --suppress-redirect-prefix http://doi.acm.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
