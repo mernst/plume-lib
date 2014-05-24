@@ -29,8 +29,8 @@ import java.lang.ref.ReferenceQueue;
  * The implementation is a modified version of {@link java.util.WeakHashMap}
  * from JDK 1.5, which differs from the original in two ways:
  * <ul>
- *  <ul> uses of hashCode() are replaced by System.identityHashCode()</ul>
- *  <ul> uses of object equality (.equals) are replaced by identity checks (==)</ul>
+ *  <li> uses of hashCode() are replaced by System.identityHashCode()</li>
+ *  <li> uses of object equality (.equals) are replaced by identity checks (==)</li>
  * </ul>
  * See {@link java.util.IdentityHashMap}
  * for more information on the changes made in an identity hash map..
