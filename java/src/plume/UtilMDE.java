@@ -2998,10 +2998,10 @@ public final class UtilMDE {
         results.add (simple);
       } else {
         List<List<T>> combos = create_combinations (dims-1, i, objs);
-        for (Iterator<List<T>> j = combos.iterator(); j.hasNext(); ) {
+        for (List<T> lt : combos) {
           List<T> simple = new ArrayList<T>();
           simple.add (objs.get(i));
-          simple.addAll (j.next());
+          simple.addAll (lt);
           results.add (simple);
         }
       }
@@ -3042,10 +3042,10 @@ public final class UtilMDE {
 
     for (int i = start; i <= cnt; i++) {
       ArrayList<ArrayList<Integer>> combos = create_combinations (arity-1, i, cnt);
-      for (Iterator<ArrayList<Integer>> j = combos.iterator(); j.hasNext(); ) {
+      for (ArrayList<Integer> li : combos) {
         ArrayList<Integer> simple = new ArrayList<Integer>();
         simple.add (new Integer(i));
-        simple.addAll (j.next());
+        simple.addAll (li);
         results.add (simple);
       }
     }
