@@ -86,7 +86,7 @@ public class TimeLimitProcess extends Process {
       new StdoutStreamReaderThread().start();
       new StderrStreamReaderThread().start();
     }
-      
+
   }
 
   /**

@@ -8,14 +8,14 @@ import java.util.*;
  * comparator.  If an element has no equal element in the other iterator,
  * then the element is paired with null.
  * <p>
- * 
+ *
  * For example, suppose that the inputs are
  *   [1, 2, 3, 5] and
  *   [1, 3, 5, 7, 9].
  * Then the output is
  *   [(1,1), (2,null), (3,3), (5,5), (null,7), (null, 9)].
  * <p>
- * 
+ *
  * (This operation is similar to, but not the same as, the operation called
  * "zipping".)
  * <p>
