@@ -174,7 +174,7 @@ public class BCELUtil {
   /**
    * Print the methods in the class, to standard output.
    * @class gen the class whose methods to print
-   */   
+   */
   static void dump_methods(ClassGen gen) {
 
     System.out.printf("Class %s methods:\n", gen.getClassName());

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * Thus, the programmer is freed from writing duplicative, boilerplate code
  * and documentation that could get out of sync with the rest of the program.
  * <p>
- * 
+ *
  * The programmer does not have to write any code, only declare and
  * document variables.  For each field that you want to set from a
  * command-line argument, you write Javadoc and an @{@link plume.Option}
@@ -40,18 +40,18 @@ import java.util.regex.Pattern;
  * <!-- Example needs some more words of explanation and example command lines. -->
  * <pre>
  *  import plume.*;
- * 
+ *
  *  public class MyProgram {
- * 
+ *
  *    &#64;Option("-o &lt;filename&gt; the output file ")
  *    public static File outfile = new File("/tmp/foobar");
- * 
+ *
  *    &#64;Option("-i ignore case")
  *    public static boolean ignore_case;
- * 
+ *
  *    &#64;Option("set the initial temperature")
  *    public static double temperature = 75.0;
- * 
+ *
  *    public static void main(String[] args) {
  *      MyProgram myInstance = new MyProgram();
  *      Options options = new Options("MyProgram [options] infile outfile",
@@ -110,7 +110,7 @@ import java.util.regex.Pattern;
  * The @{@link OptionGroup} annotation can be used to assign a name to a set of
  * related options.  This is useful for organizing a list of
  * options.  Options in the same group are displayed under the same heading
- * in usage texts. <p> 
+ * in usage texts. <p>
  *
  * The @{@link OptionGroup} annotation must be specified on a field in addition
  * to an @{@link Option} annotation.  Note that, due to a deficiency in
@@ -137,7 +137,7 @@ import java.util.regex.Pattern;
  *       even when passing the group's name
  *       explicitly as a parameter to {@link #usage(String...)}.
  * </ul>
- * 
+ *
  * If an option group is not unpublicized but contains only unpublicized
  * options, it will not be included in the default usage message. <p>
  *
@@ -161,7 +161,7 @@ import java.util.regex.Pattern;
  * be useful in other circumstances.
  * See the {@link plume.OptionsDoclet} class for instructions about generating
  * HTML documentation. <p>
- * 
+ *
  * <b>Supported field types</b> <p>
  * A field with an @{@link Option} annotation may be of the following types:
  * <ul>
@@ -208,7 +208,7 @@ import java.util.regex.Pattern;
  * @see plume.OptionsDoclet
  **/
 public class Options {
-  
+
   private static String eol = System.getProperty("line.separator");
 
   /** Information about an option **/
@@ -393,7 +393,7 @@ public class Options {
      * <pre>-s --long=&lt;type&gt;</pre>
      * <strong>or</strong> (if use_single_dash is true)
      * <pre>-s -long=&lt;type&gt;</pre>
-     * 
+     *
      **/
     public String synopsis() {
       String prefix = use_single_dash ? "-" : "--";
@@ -582,7 +582,7 @@ public class Options {
     }
 
     this.usage_synopsis = usage_synopsis;
-    
+
     this.use_groups = false;
 
     // true once the first @Option annotation is observed, false until then.
@@ -792,7 +792,7 @@ public class Options {
           tail = "";
       } else {
           arg = args[ii];
-      }    
+      }
 
       if (arg.equals ("--")) {
         ignore_options = true;
@@ -853,7 +853,7 @@ public class Options {
       // If no ',' tail, advance to next args option
       if (tail.length() == 0) {
           ii++;
-      }    
+      }
     }
     String[] result = non_options.toArray (new String[non_options.size()]);
     return result;
@@ -1103,7 +1103,7 @@ public class Options {
       return format_options(options, max_opt_len(options, include_unpublicized),
                             include_unpublicized);
     }
-     
+
     List<OptionGroupInfo> groups = new ArrayList<OptionGroupInfo>();
     if (group_names.length > 0) {
       for (String group_name : group_names) {
@@ -1148,7 +1148,7 @@ public class Options {
       String default_str = "";
       if (oi.default_str != null)
         default_str = String.format(" [default %s]", oi.default_str);
-      
+
       @SuppressWarnings("formatter") // format string computed from max_len argument
       String use = String.format("  %-" + max_len + "s - %s%s",
                                  oi.synopsis(), oi.description, default_str);
@@ -1316,7 +1316,7 @@ public class Options {
    * string to the constructor.  The only expected error is some sort
    * of parse error from the constructor.
    */
-  private /*@NonNull*/ Object get_ref_arg (OptionInfo oi, String arg_name, 
+  private /*@NonNull*/ Object get_ref_arg (OptionInfo oi, String arg_name,
                                            String arg_value) throws ArgException {
 
     Object val = null;
