@@ -65,7 +65,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  *   <li> <b>html</b> This format outputs HTML for general-purpose use, meaning
  *   inline <code>@link</code> and <code>@see</code> tags in the Javadoc input
  *   are suitably replaced.  This is the default output format and does not
- *   need to be specified explicitly.  
+ *   need to be specified explicitly.
  * </ul>
  *
  * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
@@ -157,11 +157,11 @@ public class OptionsDoclet {
     "-singledash            Use single dashes for long options (see plume.Options)\n" +
     "See the OptionsDoclet documentation for more details.";
 
-  private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times"; 
+  private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times";
 
 
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
-  private String endDelim = "<!-- end options doc -->"; 
+  private String endDelim = "<!-- end options doc -->";
 
   private /*@Nullable*/ File docFile = null;
   private /*@Nullable*/ File outFile = null;
@@ -372,7 +372,7 @@ public class OptionsDoclet {
 
   /**
    * Determine if a class needs to be instantiated in order to work properly
-   * with {@link Options}. 
+   * with {@link Options}.
    */
   private static boolean needsInstantiation(Class<?> clazz) {
     for (Field f : clazz.getDeclaredFields()) {
@@ -647,7 +647,7 @@ public class OptionsDoclet {
    * Replace the @link tags and block @see tags in a Javadoc comment with
    * sensible, non-hyperlinked HTML.  This keeps most of the information in the
    * comment while still being presentable. <p>
-   * 
+   *
    * This is only a temporary solution.  Ideally, @link/@see tags would be
    * converted to HTML links that point to actual documentation.
    *

@@ -14,7 +14,7 @@ import java.util.regex.*;
 import java.net.URL;
 
 // A related program is the "mr" program (http://kitenet.net/~joey/code/mr/).
-// To read its documentation:  pod2man mr | nroff -man 
+// To read its documentation:  pod2man mr | nroff -man
 // Some differences are:
 //  * mvc knows how to search for all repositories
 //  * mvc uses a timeout
@@ -1344,9 +1344,9 @@ public class MultiVersionControl {
     }
     return null;
   }
-  
+
   private Pattern invalidCertificatePattern = Pattern.compile("^https://[^.]*[.][^.]*[.]googlecode[.]com/hg$");
-  
+
   private boolean invalidCertificate(File dir) {
     String defaultPath = defaultPath(dir);
     if (debug) { System.out.printf("defaultPath=%s for %s%n", defaultPath, dir); }

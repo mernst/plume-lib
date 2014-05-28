@@ -481,7 +481,7 @@ public final class UtilMDE {
         && (parent == sup || isSubtype(parent, sup))) {
       return true;
     }
-       
+
     // Handle interfaces
     for (Class<?> ifc : sub.getInterfaces()) {
       if (ifc == sup || isSubtype(ifc, sup)) {
@@ -668,7 +668,7 @@ public final class UtilMDE {
     StringTokenizer args_tokenizer
       = new StringTokenizer(comma_sep_args, ",", false);
     for ( ; args_tokenizer.hasMoreTokens(); ) {
-      @SuppressWarnings("signature") // substring 
+      @SuppressWarnings("signature") // substring
       /*@BinaryName*/ String arg = args_tokenizer.nextToken().trim();
       result += binaryNameToFieldDescriptor(arg);
     }
@@ -2982,7 +2982,7 @@ public final class UtilMDE {
    * @param <T> type of the input list elements, and type of the innermost output list elements
    * @param dims number of dimensions:  that is, size of each innermost list
    * @param start initial index
-   * @param objs list of elements to 
+   * @param objs list of elements to
    * @return list of lists of length dims, each of which combines elements from objs
    */
   public static <T> List<List<T>> create_combinations (int dims, int start, List<T> objs) {

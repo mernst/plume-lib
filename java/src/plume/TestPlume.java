@@ -2135,12 +2135,12 @@ public final class TestPlume extends TestCase {
     l2.add(zatft2);
     l3.add(zatff);
     // Don't test .equals because it suffers infinite recursion.
-    // assert ! l1.equals(l2); 
-    // assert ! l1.equals(l3); 
-    // assert ! l2.equals(l3); 
-    assert UtilMDE.deepEquals(l1, l2); 
-    assert ! UtilMDE.deepEquals(l1, l3); 
-    assert ! UtilMDE.deepEquals(l2, l3); 
+    // assert ! l1.equals(l2);
+    // assert ! l1.equals(l3);
+    // assert ! l2.equals(l3);
+    assert UtilMDE.deepEquals(l1, l2);
+    assert ! UtilMDE.deepEquals(l1, l3);
+    assert ! UtilMDE.deepEquals(l2, l3);
 
 
 
@@ -2769,7 +2769,7 @@ public final class TestPlume extends TestCase {
     assert t.day.equals("Monday");
     assert t.temperature == -12.3;
     assert !t.printVersion;
- 
+
     options.parse("-d Monday -temp -12.3");
     assert t.day.equals("Monday");
     assert t.temperature == -12.3;
@@ -2779,7 +2779,7 @@ public final class TestPlume extends TestCase {
     assert t.day.equals("Monday");
     assert t.temperature == 21.7;
     assert t.printVersion;
- 
+
     options.parse("-t 21.7 -version");
     assert t.day.equals("Monday");
     assert t.temperature == 21.7;
