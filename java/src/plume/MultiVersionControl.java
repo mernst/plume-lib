@@ -1045,6 +1045,7 @@ public class MultiVersionControl {
       case SVN:
         replacers.add(new Replacer("(svn: Network connection closed unexpectedly)", "$1 for " + dir));
         replacers.add(new Replacer("(svn: Repository) (UUID)", "$1 " + dir + " $2"));
+        replacers.add(new Replacer("(svn: E155037: Previous operation has not finished; run 'cleanup' if it was interrupted)", "$1; for " + dir));
         break;
       default:
         assert false;
