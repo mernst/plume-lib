@@ -1252,6 +1252,9 @@ EOF
                 $abs_link_uri = URI->new($nlink);
             }
         }
+# These next three ifs are to work around a performance issue.
+# The www.w3.org web site can be extreamly slow to respond; so
+# we redirect to local copies of the files.
 
         if ($abs_link_uri eq "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd") {
           $abs_link_uri = URI->new("file://" . dirname(__FILE__) . "/../etc/xhtml1-transitional.dtd");
