@@ -1085,9 +1085,9 @@ public final class TestPlume extends TestCase {
     }
   }
 
-  // Add elements 0..limit-1 to the set.
+  // Add 100 elements randomly selected from the range 0..limit-1 to the set.
   private static void lsis_add_elts(int limit, LimitedSizeSet<Integer> s) {
-    Random r = new Random();
+    Random r = new Random(20140613);
     for (int i=0; i<100; i++) {
       s.add(r.nextInt(limit));
     }
@@ -1100,7 +1100,7 @@ public final class TestPlume extends TestCase {
       lsis_add_elts(i, s);
       int size = s.size();
       assert ((i<=max_size) ? (size == i) : (size == max_size+1))
-                 : "" + size + " " + i + " " + max_size + " " + s;
+        : String.format("(%d<=%d) ? (%d==%d) : (%d==%d+1)   size=%d, i=%d, max_size=%d, s=%s", i, max_size, size, i, size, max_size, size, i, max_size, s);
     }
   }
 
