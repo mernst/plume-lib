@@ -234,6 +234,7 @@
 --suppress-redirect http://dx.doi.org/10.1109/2.59->http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=59&tag=1&tag=1&tag=1&tag=1&tag=1
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
+--suppress-redirect http://homes.cs.washington.edu/~burg/->http://brrian.org/	
 --suppress-redirect http://ieeexplore.ieee.org/->http://ieeexplore.ieee.org/Xplore/home.jsp
 --suppress-redirect http://libraries.mit.edu/get/ieee->http://aeryn.mit.edu/emetrics/count.php?http://libproxy.mit.edu/login?url=http://ieeexplore.ieee.org/
 --suppress-redirect http://libraries.mit.edu/get/lncs->http://aeryn.mit.edu/emetrics/count.php?http://libproxy.mit.edu/login?url=http://www.springerlink.com/openurl.asp?genre=journal&issn=0302-9743
