@@ -150,6 +150,10 @@ webpage that you maintain.
 <dd>
   A set of command-line arguments to the checklink program, that suppress
   spurious warnings and thus make the output easier to scan for real problems.
+  Run <tt>checklink</tt> like this:
+<pre>
+   plume-lib/bin/checklink -q -r `grep -v '^#' plume-lib/bin/checklink-args.txt` MYURL
+</pre>
 </dd>
 
 
