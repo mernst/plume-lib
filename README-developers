@@ -6,7 +6,10 @@ The main plume-lib documentation is in file README.html .
 
 To make a plume-lib release and upload it to Google Code:
 
-1. Update changelog.txt.  To help writing the text, run a command such as:
+1. Browse to each URL in plume-lib/bin/checklink-args.txt and remove any
+that are not valid.
+
+2. Update changelog.txt.  To help writing the text, run a command such as:
 
     hg log
 
@@ -17,9 +20,9 @@ to view the changes since the last release, or
 to see the changes.  You can search for "--- /dev/null" to find new files;
 Ensure that the main documentation at README.html documents any new files.
 
-2. Commit and push any changes in your copy of the plume-lib repository.
+3. Commit and push any changes in your copy of the plume-lib repository.
 
-3. Run the make-plume-release script located in plume-lib/bin:
+4. Run the make-plume-release script located in plume-lib/bin:
 
     cd plume-lib
     bin/make-plume-release x.y.z
@@ -36,12 +39,12 @@ Code username and password.  This step requires that googlecode_upload.py
 (http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py)
 be in your $PATH.
 
-4. Check that the artifacts were successfully uploaded to Google Code, or upload
+5. Check that the artifacts were successfully uploaded to Google Code, or upload
 them manually if not using googlecode_upload.py (use labels "Type-Source",
 "OpSys-All", and "Featured").  For the previous release downloads, change
 the "Featured" label to "Deprecated".
 
-5. Update the web version of the Javadoc.  On a machine connected to the UW
+6. Update the web version of the Javadoc.  On a machine connected to the UW
 CSE file system:
 
     cd $pl/java
@@ -50,6 +53,6 @@ CSE file system:
 
 This step can be done even without making a new release.
 
-6. Push the new Mercurial tag created by the script to the repository:
+7. Push the new Mercurial tag created by the script to the repository:
 
     hg push
