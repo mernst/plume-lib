@@ -57,9 +57,10 @@ for my $line (@toplevel_lines) {
   # kill comments on the line
   $line =~ s/((^|[^\\])%).*?$/$1/;
 
-  while ($line =~ s/\\(verbatim)?(input|include|subfile)\{([-a-z0-9_\.+\/]+)\}/___TOKEN___/i) {
-    my $verbatim_p = ($1 eq "verbatim");
-    my $file = "$3";
+  while ($line =~ s/\\(input|include|subfile|lstinputlisting|verbatiminput)\{([-a-z0-9_\.+\/]+)\}/___TOKEN___/i) {
+    my $verbatim_p = ($1 eq "verbatiminput");
+    my $lstinput_p = ($1 eq "lstinputlisting");
+    my $file = "$2";
     if ($debug) { print STDERR "INPUT: $file\n"; }
     if (-e "$file.tex") {
       $file .= ".tex";
@@ -77,6 +78,10 @@ for my $line (@toplevel_lines) {
       $replace = "\\begin{verbatim}\n" .
 	$replace .
 	"\\end{verbatim}\n";
+    } elsif ($lstinput_p) {
+      $replace = "\\begin{lstlisting}\n" .
+	$replace .
+	"\\end{lstlisting}\n";
     } else {
       # kill comments
       $replace =~ s/([^\\]%).*?$/$1/gm;
