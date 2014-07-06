@@ -115,6 +115,7 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
 --suppress-broken 500:https://ugradnews.cs.washington.edu/category/research/
+--suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
 # https://web.mit.edu/21.guide/www requires a client certificate
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
