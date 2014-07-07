@@ -79,6 +79,7 @@
 --suppress-broken 405:http://www.amazon.com/exec/obidos/tg/detail/-/0321205758/103-2932545-5299831?v=glance
 --suppress-broken 405:http://www.kivancmuslu.com/
 --suppress-broken 405:http://www.verigames.com/login/google	
+--suppress-broken 406:http://kevinjsullivan.org/
 --suppress-broken 406:http://spinroot.com/spin/Workshops/ws03/GroceVisser.pdf
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
