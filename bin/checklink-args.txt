@@ -27,6 +27,7 @@
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
 --suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html
+--suppress-broken 403:http://metro.kingcounty.gov/schedules/
 --suppress-broken 403:http://portal.acm.org/dl.cfm
 # Requires UW CSE credentials
 --suppress-broken 403:http://reserve.cs.washington.edu/room/index.php
