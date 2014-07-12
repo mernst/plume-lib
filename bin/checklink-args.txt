@@ -1,15 +1,15 @@
 # To use this file, run a command like the following:
 #   plume-lib/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` MYURL
 
+--exclude-docs /serialized-form.html
 --exclude-docs /~adonovan/
 --exclude-docs bugzilla/
 --exclude-docs daikon/download/jdoc
 # An archived copy of a since-removed document, which contains broken links.
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
---exclude-docs http://types.cs.washington.edu/checker-framework/api/(javac|jdk)/
-#--exclude-docs http://types.cs.washington.edu/list-archives/
+--exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
+--exclude-docs http://types.cs.washington.edu/list-archives/
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
---exclude-docs /serialized-form.html
 
 
 # --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go
@@ -143,9 +143,7 @@
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-discuss
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Complete-installation.html#Complete-installation
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Configuration-options.html#Configuration-options
---suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/convertcsv_002epl.html#convertcsv_002epl
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Daikon-debugging-options.html#Daikon-debugging-options
---suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/dfepl.html#dfepl
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Dynamic-abstract-type-inference-_0028DynComp_0029.html#Dynamic-abstract-type-inference-_0028DynComp_0029
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/General-configuration-options.html#General-configuration-options
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Invariant-syntax.html#Invariant-syntax
@@ -154,6 +152,8 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Splitter-info-file-format.html#Splitter-info-file-format
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/StackAr-example.html#StackAr-example
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Variable-names.html#Variable-names
+--suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/convertcsv_002epl.html#convertcsv_002epl
+--suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/dfepl.html#dfepl
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Compiling-Daikon.html#Compiling-Daikon
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Dataflow-hierarchy.html#Dataflow-hierarchy
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Declarations.html#Declarations
@@ -168,6 +168,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/dir.html#Top
+--suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-framework%22
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
