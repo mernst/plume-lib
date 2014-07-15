@@ -168,7 +168,6 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/dir.html#Top
---suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-framework%22
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
