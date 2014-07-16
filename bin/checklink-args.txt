@@ -13,6 +13,7 @@
 
 
 # --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go
+--suppress-broken 301:https://tools.usps.com/go/ZipLookupAction!input.action
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
 # Official URL, but redirects elsewhere
 --suppress-broken 302:http://dx.doi.org/10.1109/2.59
