@@ -205,6 +205,7 @@
 --suppress-redirect http://defects4j.org/->http://homes.cs.washington.edu/~rjust/defects4j/
 --suppress-redirect http://doi.ieeecomputersociety.org/10.1109/TSE.2006.90->http://www.computer.org/csdl/trans/ts/2006/09/e0718-abs.html
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
+--suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://link.springer.com/article/10.1007%2Fs10515-006-0002-0	
 --suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://www.springerlink.com/link.asp?id=A5U0J7H002247138
 --suppress-redirect http://dx.doi.org/10.1109/2.59->http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=59&tag=1&tag=1&tag=1&tag=1&tag=1
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page
@@ -256,13 +257,13 @@
 --suppress-redirect http://www.rational.com/licensing/->http://www-306.ibm.com/software/rational/support/licensing/
 --suppress-redirect http://www.thestranger.com/->http://www.thestranger.com/seattle/Home
 --suppress-redirect http://www.usps.gov/ncsc/lookups/lookup_zip%2B4.html->http://www.usps.com/ncsc/lookups/lookup_zip%2b4.html
+--suppress-redirect http://www.verigames.com/login/facebook->https://www.facebook.com/unsupportedbrowser	
 --suppress-redirect http://www.verigames.com/login/google->https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=http%3A%2F%2Fwww.verigames.com%2Flogin%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&client_id=451230570634.apps.googleusercontent.com&type=web_server	
 --suppress-redirect http://www.weather.com/weather/local/USWA0395->http://xhtml.weather.com/xhtml/search
 --suppress-redirect http://yoav.zibin.googlepages.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2FYoav.Zibin.googlepages.com%2Fhome
 --suppress-redirect https://sqlshare.escience.washington.edu/->https://sqlshare.escience.washington.edu/accounts/login/?next=/sqlshare/	
 --suppress-redirect https://tools.usps.com/go/ZipLookupAction!input.action->https://www.usps.com/root/global/server_responses/webtools-msg.htm	
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
---suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://link.springer.com/article/10.1007%2Fs10515-006-0002-0	
 
 --suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
 --suppress-redirect-prefix http://doi.acm.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
@@ -278,7 +279,9 @@
 --suppress-redirect-prefix http://pag.csail.mit.edu/~->http://people.csail.mit.edu/
 --suppress-redirect-prefix http://texi2html.cvshome.org/->https://texi2html.cvshome.org/
 --suppress-redirect-prefix http://types.cs.washington.edu/checker-framework/->http://types.cs.washington.edu/checker-framework/current/
+--suppress-redirect-prefix http://verigames.com/->http://www.verigames.com/	
 --suppress-redirect-prefix http://www.csail.mit.edu/~->http://people.csail.mit.edu/
 --suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/->http://www-2.dc.uba.ar/exclusivos/
 --suppress-redirect-prefix http://www.dc.uba.ar/people/exclusivos/garbervetsky/->http://www-2.dc.uba.ar/exclusivos/garbervetsky/presentaciones/
 --suppress-redirect-prefix http://www.ibm.com/->http://www-01.ibm.com/
+--suppress-redirect-prefix http://www.verigames.com/->https://www.verigames.com/
