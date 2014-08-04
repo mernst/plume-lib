@@ -434,7 +434,7 @@ check-all: check-nullness-raw check-nullness-fbc check-interning check-regex che
 
 ## These targets require checker.jar (not just checker-qual.jar) on the classpath.
 
-CHECKER_ARGS ?= -source 8 -Awarns
+CHECKER_ARGS ?= -source 7 -target 7 -Awarns
 
 JAVAC_NULLNESS_RAW_ARGS = -processor org.checkerframework.checker.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AcheckPurityAnnotations
 JAVAC_NULLNESS_FBC_ARGS = -processor org.checkerframework.checker.nullness.NullnessChecker -implicit:class -Xlint:-processing -AcheckPurityAnnotations
