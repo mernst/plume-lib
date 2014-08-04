@@ -92,7 +92,8 @@ else
 endif
 
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
+# That variable appears last and overrides the values we provide here.
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
@@ -434,7 +435,7 @@ check-all: check-nullness-raw check-nullness-fbc check-interning check-regex che
 
 ## These targets require checker.jar (not just checker-qual.jar) on the classpath.
 
-CHECKER_ARGS ?= -source 8 -Awarns
+CHECKER_ARGS ?= -source 7 -target 7 -Awarns
 
 JAVAC_NULLNESS_RAW_ARGS = -processor org.checkerframework.checker.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AcheckPurityAnnotations
 JAVAC_NULLNESS_FBC_ARGS = -processor org.checkerframework.checker.nullness.NullnessChecker -implicit:class -Xlint:-processing -AcheckPurityAnnotations
