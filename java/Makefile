@@ -92,7 +92,8 @@ else
 endif
 
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m ${JAVAC_TARGET_FLAGS}
+# That variable appears last and overrides the values we provide here.
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
