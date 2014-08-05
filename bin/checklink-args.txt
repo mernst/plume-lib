@@ -142,6 +142,9 @@
 
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-announce
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-discuss
+
+# This next group of suppress-fragments are required because makeinfo does the
+# chapter splits using indirect references through stub files.
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/daikon/Complete-installation.html#Complete-installation
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/daikon/Configuration-options.html#Configuration-options
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/daikon/Daikon-debugging-options.html#Daikon-debugging-options
@@ -194,6 +197,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Track-logging.html#Track-logging
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
+
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
