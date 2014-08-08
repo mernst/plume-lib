@@ -1235,6 +1235,8 @@ public class MultiVersionControl {
           break;
         case GIT:
           replacers.add(new Replacer("(^|\\n)Already up-to-date\\.\\n", "$1"));
+          replacers.add(new Replacer("(^|\\n)error:", "error in " + dir + ":"));
+          replacers.add(new Replacer("(^|\\n)Please, commit your changes or stash them before you can merge.\\nAborting", ""));
           pb.command(git_executable, "pull", "-q");
           addArgs(pb, git_arg);
           break;
