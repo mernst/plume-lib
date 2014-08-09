@@ -1,7 +1,7 @@
 # This file augments checklink-args.txt.
 
 # These are checklink arguments that are appropriate for use when checking
-# Drupal-generated URLs at UW CSE (cs.washington.edu) but that are not
+# Drupal-generated URLs at UW CSE (www.cs.washington.edu) but that are not
 # generally desirable.
 
 # Drupal installation adds this extra trailing slash and it is not convenient
