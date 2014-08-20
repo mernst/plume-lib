@@ -34,8 +34,8 @@
 
 ;;; Code:
 
-(require 'vm-version)			; required by vm-mime
-(require 'vm-mime)
+(require 'vm-version nil 'noerror)			; required by vm-mime
+(require 'vm-mime nil 'noerror)
 (require 'w3m)
 
 (defvar vm-message-pointer)
