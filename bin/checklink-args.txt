@@ -132,6 +132,8 @@
 --suppress-broken 501:http://www.bizrate.com/
 --suppress-broken 501:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
+--suppress-broken 502:http://www.linkedin.com/pub/ittai-balaban/4/213/b85
+--suppress-broken 502:https://www.linkedin.com/pub/hao-lu/77/41/867
 --suppress-broken 503:http://www.census.gov/popest/data/cities/totals/2009/files/SUB-EST2009_ALL.csv
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscb-boston-marriott
 --suppress-broken 503:http://www.marriott.com/hotels/travel/boscm-residence-inn-boston-cambridge/
