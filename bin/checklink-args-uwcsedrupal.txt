@@ -7,3 +7,6 @@
 # Drupal installation adds this extra trailing slash and it is not convenient
 # to remove it.
 --suppress-redirect http://www.w3.org/1999/xhtml/vocab/->http://www.w3.org/1999/xhtml/vocab	
+
+## Suppress directory redirects.
+--directory
