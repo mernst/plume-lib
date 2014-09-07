@@ -19,6 +19,23 @@
 #       latex-process-inputs --makefilelist main-file.tex
 #       latex-process-inputs --antlist main-file.tex
 
+# To do:
+# This script needs to be cognizant of directories/subdirectories; it does not
+# properly handle files included across directories.  Given:
+#   foo.tex contains \include{subdir/bar.tex}
+#   subdir/bar.tex contains \include{../baz.tex}
+# the "../baz.tex" will be interpreted with respect to where this script was run, not the file in which it exists.  You can reproduce the problem with:
+#   cd ~/research/vakilian/2015-ICSE-TQI/paper/text
+#   latex-process-inputs -list 2015-icse-tqi.tex
+# The fix is challenging given the current design because the document is
+# treated as one huge block of text that is searched for \input, with that
+#replaced by the text of the inputted file and the process repeating until
+#there are no more \input commands.  The script does not know which file a
+# given \input command came from.  The solution is to rewrite the script to
+# work line-by-line.  That will also do a better job of not handling \input
+# and %-comments in verbatm-included files.
+# Writing a test suite would help with validating this change.
+
 my $debug = 0;
 # $debug = 1;
 
@@ -45,6 +62,7 @@ if ((@ARGV[0] eq "-help") || (@ARGV[0] eq "--help")) {
 if (scalar(@ARGV) > 1) {
   die "Supply exactly one file on the command line (got " . scalar(@ARGV) . ": " . join(" ", @ARGV) . ")";
 }
+# A list of all the files that have been processed so far.
 my @files = ($ARGV[0]);
 
 # I ought to abstract this out into a (recursively-called) procedure.
