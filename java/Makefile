@@ -19,12 +19,19 @@ endif
 
 TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+  READLINK_F := readlink
+else
+  READLINK_F := readlink -f
+endif
+
 ifeq "$(wildcard $(TOOLS_JAR))" ""
   ifndef JDK_HOME
-    javac_cmd := $(shell readlink -f `which javac`)
+    javac_cmd := $(shell $(READLINK_F) `which javac`)
     JDK_HOME := $(subst /bin//javac,,$(subst /bin/javac,,$(javac_cmd)))
     ifeq "$(wildcard $(JDK_HOME)/lib/tools.jar)" ""
-      javac_cmd := $(shell readlink -f /usr/bin/javac)
+      javac_cmd := $(shell $(READLINK_F) /usr/bin/javac)
       JDK_HOME := $(subst /bin//javac,,$(subst /bin/javac,,$(javac_cmd)))
     endif
   endif
@@ -242,6 +249,7 @@ optionsdoc: .optionsdoc-timestamp
 ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
 	echo "Skipping optionsdoc target because of bugs in $(JAVADOC) version $(JAVADOC_VERSION)"
 else
+	${MAKE} dos2unix_exists
 #	@echo "JAVADOC = $(JAVADOC)"
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
@@ -268,6 +276,9 @@ else
 	$(MAKE) ${TOOLS_JAR}
 endif
 
+dos2unix_exists: dos2unix_which
+dos2unix_which: ; @which dos2unix > /dev/null
+
 # This target only fires if TOOLS_JAR does not exist
 # The make program has serious problems with filenames containing spaces, unfortunately.
 ${TOOLS_JAR}:
@@ -278,18 +289,20 @@ ${TOOLS_JAR}:
 
 
 showvars:
+# Short output
+	@echo OSTYPE = $(OSTYPE)
+	@echo JAVA_HOME = "$(JAVA_HOME)"
+	@echo javac_cmd = $(javac_cmd)
+	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
+	@echo JDK_HOME = $(JDK_HOME)
+	@echo TOOLS_JAR = $(TOOLS_JAR)
+	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
+# Long output
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
-	@echo JAVA_HOME = "$(JAVA_HOME)"
-	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
 	@echo CLASSPATH = "$(CLASSPATH)"
-	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo jsr308_imports = $(jsr308_imports)
-	@echo JDK_HOME = $(JDK_HOME)
-	@echo javac_cmd = $(javac_cmd)
-	@echo TOOLS_JAR = $(TOOLS_JAR)
-	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
 
 
 ###########################################################################
