@@ -408,16 +408,31 @@ public class MultiVersionControl {
       dir.add(home);
     }
 
-    if (dry_run) {
-      show = true;
-      redo_existing = true;
-    }
-
     if (action == CHECKOUT) {
       search = false;
       show = true;
       // Checkouts can be much slower than other operations.
       timeout = timeout * 10;
+
+      // Set dry_run to true unless it was explicitly specified
+      boolean explicit_run_dry = false;
+      for (String arg : args) {
+        if (arg.startsWith("--dry-run") || arg.startsWith("--dry_run")) {
+          explicit_run_dry = true;
+        }
+      }
+      if (! explicit_run_dry) {
+        if (! quiet) {
+          System.out.println("No --dry-run argument, so using --dry-run=true; override with --dry-run=false");
+        }
+        dry_run = true;
+      }
+
+    }
+
+    if (dry_run) {
+      show = true;
+      redo_existing = true;
     }
 
     if (debug) {
