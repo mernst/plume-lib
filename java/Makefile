@@ -255,16 +255,16 @@ else
 #Can also use -verbose for debugging
 	$(MAKE) compile
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
-	dos2unix src/plume/Lookup.java
+	dos2unix --quiet src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
-	dos2unix src/plume/ICalAvailable.java
+	dos2unix --quiet src/plume/ICalAvailable.java
 	@\rm -f ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	dos2unix src/plume/MultiVersionControl.java
+	dos2unix --quiet src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
-	dos2unix src/plume/TaskManager.java
+	dos2unix --quiet src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
 
