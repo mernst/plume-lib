@@ -458,7 +458,7 @@ public class MultiVersionControl {
      * Non-null for CVS and SVN.
      * May be null for distributed version control systems (Bzr, Git, Hg).
      * For distributed systems, refers to the parent repository from which
-     * this was cloned, not the one here in this directory
+     * this was cloned, not the one here in this directory.
      * <p>
      * Most operations don't need this.  it is needed for checkout, though.
      */
@@ -1165,6 +1165,7 @@ public class MultiVersionControl {
           pb.command(git_executable, "status");
           addArgs(pb, git_arg);
           addArg(pb, "--untracked-files=no");
+          addArg(pb, "--short"); // experimenting with short output
           replacers.add(new Replacer("(^|\\n)On branch master\\nYour branch is up-to-date with 'origin/master'.\\n\\n?", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing to commit,? working directory clean\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)no changes added to commit \\(use \"git add\" and/or \"git commit -a\"\\)\\n", "$1"));
@@ -1184,6 +1185,8 @@ public class MultiVersionControl {
           // This must come after the above, since it matches a prefix of the above
           replacers.add(new Replacer("(^|\\n)(#\t)", "$1untracked: " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)# Your branch is ahead of .*\\n", "$1unpushed changesets: " + pb.directory() + "\n"));
+          replacers.add(new Replacer("(^|\\n) M ", "$1 M " + dir + "/"));
+
           // Useful info, but don't bother to report it, for consistency with other VCSes
           replacers.add(new Replacer("(^|\\n)# Your branch is behind .*\\n", "$1unpushed changesets: " + pb.directory() + "\n"));
 
