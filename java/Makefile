@@ -127,7 +127,6 @@ ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/dist/checker.jar)" "${CHECKERFRAMEW
   endif
   JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 endif
-jsr308_imports=org.checkerframework.dataflow.qual.*:org.checkerframework.checker.initialization.qual.*:org.checkerframework.checker.interning.qual.*:org.checkerframework.checker.nullness.qual.*:org.checkerframework.checker.regex.qual.*:org.checkerframework.checker.signature.qual.*:org.checkerframework.checker.formatter.qual.*
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -141,7 +140,6 @@ jsr308_imports=org.checkerframework.dataflow.qual.*:org.checkerframework.checker
 #   TOOLS_JAR := '$(shell cygpath -w $(TOOLS_JAR))'
 # endif
 
-export jsr308_imports
 export CLASSPATH
 
 default: jar
@@ -302,7 +300,6 @@ showvars:
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
 	@echo CLASSPATH = "$(CLASSPATH)"
-	@echo jsr308_imports = $(jsr308_imports)
 
 
 ###########################################################################

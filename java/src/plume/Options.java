@@ -15,6 +15,14 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/*>>>
+import org.checkerframework.checker.formatter.qual.*;
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
+
 /**
  * The Options class:
  * <ul>

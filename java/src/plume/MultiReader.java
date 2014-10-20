@@ -4,6 +4,12 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+*/
+
+
 /**
  * Class that reads "entries" from a file.  In the simplest case, entries
  * can be lines.  It supports:

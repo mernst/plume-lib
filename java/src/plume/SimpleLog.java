@@ -3,6 +3,12 @@ package plume;
 import java.util.Stack;
 import java.io.PrintStream;
 
+/*>>>
+import org.checkerframework.checker.formatter.qual.*;
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 /**
  * A logging class with the following features:
  * <ul>
