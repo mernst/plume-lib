@@ -2,6 +2,12 @@ package plume;
 
 import java.lang.ref.WeakReference;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
+
 /**
  * Immutable pair class:
  * type-safely holds two objects of possibly-different types.

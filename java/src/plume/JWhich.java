@@ -36,6 +36,11 @@ import java.io.*;
 import java.net.URL;
 import java.util.StringTokenizer;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
+
 // PROBLEM:  The "java" binary places rt.jar at the front of the
 // bootclasspath, and this program will find a class there even if the
 // class appears at the beginning of the real classpath.

@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /*>>>
-import org.checkerframework.dataflow.qual.Pure;
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
 */
 
 /**

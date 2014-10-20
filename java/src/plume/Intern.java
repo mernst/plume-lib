@@ -3,6 +3,12 @@ package plume;
 import java.lang.ref.WeakReference;
 import java.util.*;
 
+/*>>>
+import org.checkerframework.checker.interning.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
 /**
  * Utilities for interning objects.  Interning is also known as
  * canonicalization or hash-consing:  it returns a single representative

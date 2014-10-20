@@ -17,6 +17,11 @@ import java.lang.Class;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.signature.qual.*;
+*/
+
 /**
  * Generates HTML documentation of command-line options.  Works with the
  * {@link plume.Options} class.

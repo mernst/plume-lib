@@ -27,6 +27,12 @@ import java.lang.ref.ReferenceQueue;
 
 import plume.Hasher;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
+
 // The purpose of this class is to be used by Intern.java.  It is difficult
 // to upgrade this to use the Java 1.5 version of WeakHashMap (which is
 // generic, among other advantages) because that implementation uses

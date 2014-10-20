@@ -2,6 +2,11 @@ package plume;
 
 import java.util.*;
 
+/*>>>
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 /**
  * Given two sorted iterators, this class returns a new iterator that pairs
  * equal elements of the inputs, according to the sort order or the given

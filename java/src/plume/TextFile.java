@@ -4,6 +4,11 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/*>>>
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 // Deprecated.  Use MultiReader instead.
 
 // This code was originally taken from
