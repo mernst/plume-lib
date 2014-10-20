@@ -1,0 +1,64 @@
+#!/bin/sh -f
+
+# Suppose you scanned two-side paper in two passes (doing the second side
+# by just turning over the whole pile).  In other words, you have the odd
+# pages in forward order and the even pages in reverse order.
+# This script reassembles the two PDFs into one.
+
+# Invoke as:
+# pdfinterleave oddsides.pdf evensides.pdf outfile.pdf
+
+# This script requires that pdftk is installed.
+# The original idea is from http://www.accesspdf.com/article.php/2005020408520076
+
+# (A for-pay program with the same functionality is advertised at
+# http://try67.blogspot.com/2008/12/acrobat-combine-even-odd-pages.html .)
+
+E_BADARGS=65
+
+if [ $# -eq 0 ]; then
+  FILE1="scan0001.pdf"
+  FILE2="scan0002.pdf"
+  FILE3="scan.pdf"
+else
+if [ $# -eq 3 ]; then
+  FILE1="$1"
+  FILE2="$2"
+  FILE3="$3"
+else
+  echo "Usage: `basename $0` oddsides.pdf evensides.pdf outfile.pdf"
+  exit $E_BADARGS
+fi
+fi
+
+# # Debugging
+# echo FILE1=$FILE1
+# echo FILE2=$FILE2
+# echo FILE3=$FILE3
+
+## There are two ways to count the number of pages in PDF file.
+
+## Technique 1 to count the number of pages in PDF file:
+## Does not work for some PDF files with pdftk 1.41; pdftk 2.01 seems fine.
+PAGES1=`pdftk $FILE1 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+PAGES2=`pdftk $FILE2 dump_data output | grep -i NumberOfPages | cut -d' ' -f2`
+
+# ## Technique 2 to count the number of pages in PDF file:
+# ## Requires that ksh is installed.
+# pdfcountprog=`dirname $0`/pdfcount
+# PAGES1=`$pdfcountprog "$FILE1"`
+# PAGES2=`$pdfcountprog "$FILE2"`
+
+# # Debugging
+# echo PAGES1=$PAGES1
+# echo PAGES2=$PAGES2
+
+if [ $PAGES1 != $PAGES2 ]; then
+  echo "Differing numbers of pages in input files: $PAGES1 $PAGES2"
+  exit 1
+fi
+# The backticks make output like (if $PAGES1=4): A1 B4 A2 B3 A3 B2 A4 B1
+eval pdftk A=\"$FILE1\" B=\"$FILE2\" cat `X=1;Y=$PAGES1;while [ $X -le $PAGES1 ];
+do echo A$X B$Y; X=$((X+1));
+Y=$((Y-1));
+done` output \"$FILE3\"
