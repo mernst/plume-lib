@@ -11,6 +11,13 @@ import java.util.zip.*;
 import java.lang.reflect.*;
 // import Assert;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
 /** Utility functions that do not belong elsewhere in the plume package. */
 public final class UtilMDE {
   private UtilMDE() { throw new Error("do not instantiate"); }

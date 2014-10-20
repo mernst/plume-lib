@@ -6,8 +6,8 @@ import java.util.regex.PatternSyntaxException;
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
+import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.EnsuresQualifierIf;
-import org.checkerframework.dataflow.qual.Pure;
 */
 
 // This class should be kept in sync with checkers.regex.RegexUtil .

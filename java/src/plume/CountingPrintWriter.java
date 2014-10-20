@@ -2,6 +2,11 @@ package plume;
 
 import java.io.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
+
 // This solution only works for PrintWriter.
 // The class really ought to be reimplemented as a wrapper around an
 // arbitrary Writer.

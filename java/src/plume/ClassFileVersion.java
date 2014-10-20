@@ -4,6 +4,10 @@ import java.io.*;
 import java.util.jar.*;
 import java.util.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 /**
  * Given a list of .class files, print the class file version and also the
  * JDK/JRE version required to run it.

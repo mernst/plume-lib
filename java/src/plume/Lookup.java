@@ -7,6 +7,12 @@ import java.util.*;
 import java.util.regex.*;
 import com.sun.javadoc.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+*/
+
+
 /**
  * Lookup searches a set of files, much like <tt>grep</tt> does.  However,
  * Lookup searches by entry (by default, paragraphs) rather than by line,
