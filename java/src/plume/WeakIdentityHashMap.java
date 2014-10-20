@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.lang.ref.WeakReference;
 import java.lang.ref.ReferenceQueue;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
 
 /**
  * This class combines the features of {@link java.util.WeakHashMap} and

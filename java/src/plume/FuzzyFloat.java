@@ -2,6 +2,13 @@ package plume;
 
 import java.util.*;
 
+/*>>>
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
 /**
  * Routines for doing approximate ('fuzzy') floating point comparisons.
  * Those are comparisons that only require the floating point numbers to be

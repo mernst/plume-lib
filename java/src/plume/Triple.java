@@ -1,5 +1,10 @@
 package plume;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
 /**
  * Mutable triple class:
  * type-safely holds three objects of possibly-different types.

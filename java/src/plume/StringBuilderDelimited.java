@@ -3,6 +3,11 @@ package plume;
 import java.util.*;
 import java.io.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
 // NEEDS DOCUMENTATION!
 // (Probably mostly Javadoc "see" directives, possibly with first line of relevant method doc.)
 

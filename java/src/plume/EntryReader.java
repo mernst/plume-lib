@@ -5,6 +5,11 @@ import java.util.*;
 import java.util.regex.*;
 import java.nio.CharBuffer;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+*/
+
 // TODO:
 // EntryReader has a public concept of "short entry", but I don't think that
 // concept is logically part of EntryReader.  I think it would be better for
