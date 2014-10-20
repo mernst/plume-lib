@@ -3,6 +3,10 @@ package plume;
 import java.io.PrintStream;
 import java.util.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 /**
  * Graph utility methods.  This class does not model a graph:  all methods
  * are static.

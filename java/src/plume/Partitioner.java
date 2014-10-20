@@ -1,5 +1,8 @@
 package plume;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+*/
 
 /** A Partitioner accepts Objects and assigns them to an equivalence
  * class.

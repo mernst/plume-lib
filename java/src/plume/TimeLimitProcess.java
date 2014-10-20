@@ -4,6 +4,11 @@ import java.io.*;
 import java.util.*;
 import org.apache.commons.io.IOUtils;
 
+/*>>>
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 /**
  * TimeLimitProcess is a subclass of Process such that the process is
  * killed if it runs for more than the specified number of milliseconds.

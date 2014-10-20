@@ -26,6 +26,11 @@ import java.util.*;
 import java.io.*;
 import static java.lang.System.out;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.signature.qual.*;
+*/
+
 
 /**
  * Static utility methods for working with BCEL.

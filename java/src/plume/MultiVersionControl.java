@@ -13,6 +13,14 @@ import java.util.*;
 import java.util.regex.*;
 import java.net.URL;
 
+/*>>>
+import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+import org.checkerframework.dataflow.qual.*;
+*/
+
+
 // A related program is the "mr" program (http://kitenet.net/~joey/code/mr/).
 // To read its documentation:  pod2man mr | nroff -man
 // Some differences are:

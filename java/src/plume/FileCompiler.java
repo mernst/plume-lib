@@ -4,6 +4,11 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.regex.qual.*;
+*/
+
 /**
  * This class has methods {@link #compile_source(String)} and {@link
  * #compile_source(List)} that compile Java source files.

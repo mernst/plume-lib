@@ -1,5 +1,9 @@
 package plume;
 
+/*>>>
+import org.checkerframework.checker.nullness.qual.*;
+*/
+
 /**
  * Interface for things that make boolean decisions.
  * This is inspired by java.io.FilenameFilter.
