@@ -23,6 +23,7 @@
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
+--suppress-broken 303:http://hdl.handle.net/2142/54893
 --suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
@@ -271,6 +272,7 @@
 --suppress-redirect https://sqlshare.escience.washington.edu/->https://sqlshare.escience.washington.edu/accounts/login/?next=/sqlshare/	
 --suppress-redirect https://tools.usps.com/go/ZipLookupAction!input.action->https://www.usps.com/root/global/server_responses/webtools-msg.htm	
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
+--suppress-redirect http://hdl.handle.net/2142/54893->https://www.ideals.illinois.edu/handle/2142/54893
 
 --suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
 --suppress-redirect-prefix http://doi.acm.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
