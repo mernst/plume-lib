@@ -90,6 +90,7 @@
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
+--suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://junit.org/	
 # Goes up and down a lot, not worth getting notified about.
@@ -120,7 +121,7 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
 --suppress-broken 500:https://ugradnews.cs.washington.edu/category/research/
---suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
+--suppress-broken 500:https://weblogs.java.net/blog/forax/archive/2008/05/javac_invokedyn_1.html
 # https://web.mit.edu/21.guide/www requires a client certificate
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-wr.htm
