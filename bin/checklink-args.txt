@@ -9,8 +9,8 @@
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
 --exclude-docs http://types.cs.washington.edu/list-archives/
+--exclude-docs https://groups.csail.mit.edu/pag/cert/
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
-
 
 # --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go
 --suppress-broken 301:http://www.cs.virginia.edu/~sullivan/
