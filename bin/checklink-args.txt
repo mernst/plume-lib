@@ -110,6 +110,7 @@
 --suppress-broken 500:http://www.w3.org/TR/html4/loose.dtd
 --suppress-broken 500:http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
 --suppress-broken 500:http://www.washington.edu/home/maps/southcentral.html?80,70,792,660
+--suppress-broken 500:http://ximbiot.com/cvs/manual/cvs-1.11.18/cvs_5.html
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_Spring_2014
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_spring_2014_proposal_pairs	
 --suppress-broken 500:https://eecsfacweb.mit.edu/
