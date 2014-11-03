@@ -1,0 +1,15 @@
+TODO: document all included libraries.
+
+BCEL 5.1 (bcel.jar)
+- java class file reader/writer
+- Our local changes partially support Java 1.5
+- Built by jhp in ~jhp/research/jakarta-bcel
+  make bcel.jar
+
+Apache Commons IO components (commons-io.jar)
+- "Standard" library of IO utility
+- http://commons.apache.org/
+
+JUnit (junit.jar)
+- Automated unit testing framework
+- http://www.junit.org
