@@ -110,6 +110,7 @@
 --suppress-broken 500:http://www.w3.org/TR/html4/loose.dtd
 --suppress-broken 500:http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
 --suppress-broken 500:http://www.washington.edu/home/maps/southcentral.html?80,70,792,660
+--suppress-broken 500:http://ximbiot.com/cvs/manual/cvs-1.11.18/cvs_5.html
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_Spring_2014
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_spring_2014_proposal_pairs	
 --suppress-broken 500:https://eecsfacweb.mit.edu/
@@ -177,6 +178,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/New-invariants.html#New-invariants
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Nonsensical-values.html#Nonsensical-values
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Program-point-declarations.html#Program-point-declarations
+--suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Reading-dtrace-files.html#Reading-dtrace-files
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Track-logging.html#Track-logging
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
@@ -203,6 +205,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/New-invariants.html#New-invariants
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Nonsensical-values.html#Nonsensical-values
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Program-point-declarations.html#Program-point-declarations
+--suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Reading-dtrace-files.html#Reading-dtrace-files
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Track-logging.html#Track-logging
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
