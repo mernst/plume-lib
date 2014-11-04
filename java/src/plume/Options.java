@@ -203,7 +203,7 @@ import org.checkerframework.dataflow.qual.*;
  *  <li> The "--no-long" option to turn off a boolean option named "long"
  *  is not supported; use "--long=false" instead.
  *
- * </ul>
+ * </ul> <p>
  *
  * <b>Possible enhancements</b> <ul>
  *  <li> Positional arguments (non-options that must be provided in a given
