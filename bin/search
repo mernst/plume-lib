@@ -1,7 +1,9 @@
 : # Use -*- Perl -*- without knowing its path
-  eval 'exec perl -S -w $0 "$@"'
+  eval 'exec perl -S $0 "$@"'
   if 0;
 # The above three lines used to be just:  #!/usr/bin/perl -w
+# The below is legal nroff (but looks like a string to Perl), so that
+# This can be processed as a man page.
 'di
 .ig 00
 ';
@@ -711,7 +713,7 @@ sub read_rc
     local($line_num, $ln, $tag) = 0;
     local($use_default, @default) = 0;
 
-    { package magic; $ = 0; } ## turn off warnings for when we run EXPR's
+    { package magic; $WARNING = 0; } ## turn off warnings for when we run EXPR's
 
     unless (open(RC, "$file")) {
 	$use_default=1;
