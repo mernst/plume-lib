@@ -240,6 +240,16 @@ javadoc-publish: javadoc
 
 optionsdoc: .optionsdoc-timestamp
 
+# This test should use "command -v" instead of "which"
+DOS2UNIX ?= $(shell which dos2unix)
+ifeq ($(DOS2UNIX),)
+  ifeq ($(shell which perl),)
+    $(error Install either dos2unix or perl)
+  else
+    DOS2UNIX ?= perl -pi -e 's/\r\n|\n|\r/\n/g'
+  endif
+endif
+
 # This target does not create any new files -- it just updates existing ones.
 .optionsdoc-timestamp: $(JAVA_FILES)
 # This should presumably test for other buggy versions of gjdoc as well.
@@ -247,22 +257,21 @@ optionsdoc: .optionsdoc-timestamp
 ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
 	echo "Skipping optionsdoc target because of bugs in $(JAVADOC) version $(JAVADOC_VERSION)"
 else
-	${MAKE} dos2unix_exists
 #	@echo "JAVADOC = $(JAVADOC)"
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
-	dos2unix --quiet src/plume/Lookup.java
+	$(DOS2UNIX) --quiet src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
-	dos2unix --quiet src/plume/ICalAvailable.java
+	$(DOS2UNIX) --quiet src/plume/ICalAvailable.java
 	@\rm -f ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	dos2unix --quiet src/plume/MultiVersionControl.java
+	$(DOS2UNIX) --quiet src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
-	dos2unix --quiet src/plume/TaskManager.java
+	$(DOS2UNIX) --quiet src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
 
@@ -273,9 +282,6 @@ ifeq (cygwin,$(OSTYPE))
 else
 	$(MAKE) ${TOOLS_JAR}
 endif
-
-dos2unix_exists: dos2unix_which
-dos2unix_which: ; @which dos2unix > /dev/null
 
 # This target only fires if TOOLS_JAR does not exist
 # The make program has serious problems with filenames containing spaces, unfortunately.
