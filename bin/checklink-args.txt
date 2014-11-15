@@ -1,6 +1,9 @@
 # To use this file, run a command like the following:
 #   plume-lib/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` MYURL
 
+# Please keep the file organized.  Each type of argument goes in its own
+# section, alphabetized within the section.
+
 --exclude-docs /serialized-form.html
 --exclude-docs /~adonovan/
 --exclude-docs bugzilla/
