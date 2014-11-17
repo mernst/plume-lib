@@ -232,12 +232,22 @@ The regular expressions are implicitly anchored at the front.")
     (save-excursion
       (goto-char (point-min))
       ;; First, fix the header line (which is part of the text in Emacs 21).
+      ;; TODO: These two assertions are failing in Emacs 24.4.  Apparently it added a space before the C?
       (assert (= ?C (aref header-line-format 1)))
-      (assert (= ?R (aref header-line-format 2)))
-      (setq header-line-format
-	    (concat (substring header-line-format 0 1)
-		    "  "		; 2 spaces instead of "CR"
-		    (substring header-line-format 3)))
+      (cond ((= ?R (aref header-line-format 2))
+	     (setq header-line-format
+		   (concat (substring header-line-format 0 1)
+			   " "		; 1 spaces instead of "CR"
+			   (substring header-line-format 3))))
+	    ((and (= ?  (aref header-line-format 2))
+		  (= ?R (aref header-line-format 3))
+		  (= ?  (aref header-line-format 4)))
+	     (setq header-line-format
+		   (concat (substring header-line-format 0 1)
+			   "  "		; 2 spaces instead of "C R "
+			   (substring header-line-format 5))))
+	    (t
+	     (assert nil nil "Bad header-line-format: %s" header-line-format)))
       (while (not (eobp))
 	(assert (looking-at "[C .]"))
 	(replace-char-and-inherit " ")
