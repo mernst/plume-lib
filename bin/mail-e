@@ -1,7 +1,7 @@
 #! /bin/sh
 # No "-f" argument above?
 
-# This script reads standard output, and if not empty calls the "mail"
+# This script reads standard input, and if not empty calls the "mail"
 # program.
 
 # In other words it is a version of "mail" that assumes the -e argument:
