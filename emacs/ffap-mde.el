@@ -152,5 +152,15 @@ Sets `ffap-string-at-point' and `ffap-string-at-point-region'."
 ;; (ffap-expand-semi-env-vars "annotations/README.txt")
 ;; (ffap-expand-semi-env-vars "annotations")
 
+;;; Handle lines like these, by ignoring the leading "a/" or "b/":
+;;; --- a/java/daikon/AnnotateNullable.java
+;;; +++ b/java/daikon/AnnotateNullable.java
+(defun ffap-strip-diff-prefix (name)
+  (if (string-match "^[ab]/" name)
+      (substring name 2)))
+(setq ffap-alist
+      (append ffap-alist
+	      '(("" . ffap-strip-diff-prefix))))
+
 
 (require 'ff-paths)
