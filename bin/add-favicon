@@ -1,8 +1,9 @@
 #!/bin/sh
-# Patch favicon into header of javadoc-generated API documentation HTML files.
+# Add favicon to header of HTML files.
+# One use case is for javadoc-generated API documentation.
 #
 # Run like this:
-# patch-favicon <directory> <favicon.png>
+# add-favicon <directory> <favicon.png>
 # The arguments should be paths relative to the current working directory.
 
 # Originally from http://stackoverflow.com/questions/13112123/creating-javadoc-html-pages-that-use-a-favicon
