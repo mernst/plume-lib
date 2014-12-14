@@ -1899,6 +1899,16 @@ Use as a hook, like so:
 ;;; Compilation error regexps
 ;;;
 
+;; omake is said to be inefficient (http://emacs.1067599.n5.nabble.com/bug-13369-24-1-compile-message-parsing-slow-because-of-omake-hack-td274585.html) and I don't know what it is needed for.
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (delete 'omake compilation-error-regexp-alist)))
+;; ... but an equally serious problem is maven, which is very slow on long
+;; lines, such as those created when buildign the Daikon manual.
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (delete 'maven compilation-error-regexp-alist)))
+
 ;; What language is this for??
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
@@ -1917,19 +1927,22 @@ Use as a hook, like so:
 	       compilation-error-regexp-alist)))
 
 
-;; ant output, such as
-;; "    [javac] /afs/athena.mit.edu/user/m/e/mernst/6.170/ps0/src/ps0/Ball.java:18: cannot find symbol"
-(eval-after-load "compile"
-  '(setq compilation-error-regexp-alist
-	 (cons (list
-		(concat " *\\[[a-z]+\\] "
-			"\\([a-zA-Z][-a-zA-Z._0-9]+: ?\\)?\
-\\([a-zA-Z]?:?[^:( \t\n]*[^:( \t\n0-9][^:( \t\n]*\\)[:(][ \t]*\\([0-9]+\\)\
-\\([) \t]\\|:\\(\\([0-9]+:\\)\\|[0-9]*[^:0-9]\\)\\)") 2 3 6)
-	       compilation-error-regexp-alist)))
+;; I suspect this regexp is extremely inefficient, and I don't understand it.
+;; ;; ant output, such as
+;; ;; "    [javac] /afs/athena.mit.edu/user/m/e/mernst/6.170/ps0/src/ps0/Ball.java:18: cannot find symbol"
+;; (eval-after-load "compile"
+;;   '(setq compilation-error-regexp-alist
+;; 	 (cons (list
+;; 		(concat "^ *\\[[a-z]+\\] "
+;; 			"\\([a-zA-Z][-a-zA-Z._0-9]+: ?\\)?" ;; what is this for?
+;; 			"\\([a-zA-Z]?:?[^:( \t\n]*[^:( \t\n0-9][^:( \t\n]*\\)[:(][ \t]*\\([0-9]+\\)"
+;; 			"\\([) \t]\\|:\\(\\([0-9]+:\\)\\|[0-9]*[^:0-9]\\)\\)")
+;; 		2 3 6)
+;; 	       compilation-error-regexp-alist)))
+
 ;; jdb output, such as
 ;; "  [4] daikon.VarInfo$1GuardingVisitor.visitSlice (VarInfo.java:1,690)"
-;; Notice the comma!!  Yuck...
+;; Notice the comma!!  Yuck...   [Does that actually mean lien 1690?]
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (cons (list
