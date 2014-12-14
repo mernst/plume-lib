@@ -82,6 +82,14 @@
 	       "&btnI=Lucky"
 	     ""))))
 
+(defun wikipedia-lookup (phrase &optional searchtype)
+  "Search using Wikipedia."
+  (interactive "sSearch via Wikipedia: ")
+  (require 'browse-url)
+  (browse-url
+   (concat "http://en.wikipedia.org/wiki/"
+	   (altavista-quote phrase))))
+
 (defun wayback-machine (url)
   "Look up a URL in the Internet Archive Wayback Machine."
   (interactive "sWayback Machine: ")
