@@ -22,3 +22,7 @@ all: java emacs
 release-clean:
 	rm -f .hgignore .hgtags .hg_archival.txt
 	${MAKE} -C java release_clean
+
+.PHONY: clean
+clean:
+	${MAKE} -C java clean
