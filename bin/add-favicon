@@ -21,7 +21,7 @@ function patchIt () {
       tmpfile=`mktemp patch_favicon_XXXXX`
       sed -e " s%<head>\$%<head><link rel=\"icon\" href=\"$2\" type=\"image/png\"/>%" \
 	  $f > $tmpfile  ; mv -f $tmpfile $f ;
-    fi; 
+    fi;
   done ;
   for d in $1/* ; do
     if [ -d $d ]; then echo "descending to "$d ; patchIt $d ../$2 ; fi ;
