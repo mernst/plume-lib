@@ -7,7 +7,7 @@
 --exclude-docs /serialized-form.html
 --exclude-docs /~adonovan/
 --exclude-docs bugzilla/
---exclude-docs daikon/download/jdoc
+--exclude-docs daikon/download/api
 # An archived copy of a since-removed document, which contains broken links.
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
