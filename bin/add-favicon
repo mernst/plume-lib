@@ -23,7 +23,7 @@ patchIt () {
       # This creates tmpfile, with the same permissions as $f.
       # The next command will overwrite it but preserve the permissions.
       # Hat tip to http://superuser.com/questions/170226/standard-way-to-duplicate-a-files-permissions for this trick.
-      /usr/bin/cp -p $f $tmpfile
+      cp -p $f $tmpfile
       sed -e " s%<head>\$%<head><link rel=\"icon\" href=\"$2\" type=\"image/png\"/>%" $f > $tmpfile
       mv -f $tmpfile $f
     fi;
