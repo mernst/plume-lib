@@ -1340,7 +1340,9 @@ public class Options {
         if (oi.factory == null) {
           throw new Error("No constructor or factory for argument " + arg_name);
         }
-        val = oi.factory.invoke (null, arg_value);
+        @SuppressWarnings("nullness") // oi.factory is a static method, so null first argument is OK
+        Object tmpVal = oi.factory.invoke (null, arg_value);
+        val = tmpVal;
       }
     } catch (Exception e) {
       throw new ArgException ("Invalid argument (%s) for argument %s",
