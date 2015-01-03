@@ -8,6 +8,17 @@ To make a plume-lib release and upload it to Google Code:
 
 1. Browse to each URL in plume-lib/bin/checklink-args.txt and remove any
 that are not valid.
+Something like this could work (to avoid doing all of the URLs in one go):
+  (defun browse-url-checklink (number-prefix)
+    (find-file "bin/checklink-args.txt")
+    (browse-url-once-if-matched (concat number-prefix ":\\(http.*\\)") 1))
+  (browse-url-checklink "0")
+  (browse-url-checklink "1")
+  (browse-url-checklink "2")
+  (browse-url-checklink "3")
+  (browse-url-checklink "4")
+  (browse-url-checklink "5")
+  (browse-url-checklink "6")
 
 2. Update changelog.txt.  To help writing the text, run a command such as:
 
