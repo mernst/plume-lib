@@ -1903,6 +1903,7 @@ public final class UtilMDE {
     // TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
     try {
       Process p = pb.start();
+      @SuppressWarnings("nullness") // input stream is non-null because we didn't redirect the input stream
       String output = UtilMDE.streamString(p.getInputStream());
       return output;
     } catch (IOException e) {
