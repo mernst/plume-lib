@@ -154,7 +154,7 @@ public class TimeLimitProcess extends Process {
   public InputStream getErrorStream() {
     if (cached_stderr == null) {
       @SuppressWarnings("nullness") // non-null because we didn't redirect the error stream
-      @NonNull InputStream errorStream = p.getErrorStream();
+      /*@NonNull*/ InputStream errorStream = p.getErrorStream();
       return errorStream;
     } else {
       // Convert a String to an InputStream
@@ -175,7 +175,7 @@ public class TimeLimitProcess extends Process {
   public InputStream getInputStream() {
     if (cached_stdout == null) {
       @SuppressWarnings("nullness") // non-null because we didn't redirect the input stream
-      @NonNull InputStream inputStream = p.getInputStream();
+      /*@NonNull*/ InputStream inputStream = p.getInputStream();
       return inputStream;
     } else {
       return stringToInputStream(cached_stdout.toString());
