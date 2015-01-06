@@ -92,7 +92,8 @@
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
---suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
+# Should link to http://cacm.acm.org/magazines/2009/5/24646-api-design-matters/fulltext instead
+# --suppress-broken 500:http://cacm.acm.org/magazines/2009/5/24646-api-design-matters
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
 --suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
