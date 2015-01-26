@@ -1,0 +1,27 @@
+This package, plume, is intended to supplement java.util.
+It provides general functionality, not specific to any particular client.
+
+For documentation, please see
+  http://plume-lib.googlecode.com/hg/README.html#Java_libraries
+or file ../README.html .
+
+
+A note about licenses, which augments the main text in ../LICENSE.txt :
+
+This package includes modified versions of code from the Java 2 SDK, such
+as those for hashing.  (I've renamed classes so they won't be used
+accidentally and won't conflict with other classes of the same name.)
+My understanding of the Java 2 SDK License is:
+  * I can distribute modified executables to anyone for
+    research use.  [3.1 (d) (ii)]
+  * I can distribute modified source to other licensees (only).
+    [3.1 (d) (i)]
+  * I can re-use the JDK's names if I choose, but only for modified
+    versions of the original code of those names.  [3.1 (d) (iii)]
+
+I have tried a few times to update WeakHasherMap to a more recent version
+of the JDK (which has a different license), but failed.  It should probably
+be left as is.  Or, use guava, which offers similar functionality.  This
+doesn't actually solve the licensing problem:  guava is licensed under the
+Apache License 2.0 and thus strictly speaking could not be used with any
+project that uses the GPL.
