@@ -34,7 +34,7 @@
 --suppress-broken 303:http://hdl.handle.net/2142/54893
 --suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
---suppress-broken 400:http://www.computer.org/web/tse/
+--suppress-broken 400:http://www.computer.org/web/tse
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
 --suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
@@ -254,9 +254,6 @@
 --suppress-redirect http://www.amtrak.com/->http://www.amtrak.com/servlet/ContentServer?pagename=Amtrak/HomePage
 --suppress-redirect http://www.aro.ncren.net/->http://www.arl.army.mil/main/main/default.cfm?Action=29&Page=29
 --suppress-redirect http://www.cascade.org/->http://www.cascade.org/Home/
---suppress-redirect http://www.computer.org/tse/->http://www.computer.org/portal/site/transactions/index.jsp?pageID=tse_home/
---suppress-redirect http://www.computer.org/tse/->http://www.computer.org/portal/web/tse/
---suppress-redirect http://www.computer.org/tse/->http://www2.computer.org/portal/web/tse/
 --suppress-redirect http://www.cs.cmu.edu/~dpelleg/kmeans.html->http://www-2.cs.cmu.edu/~dpelleg/kmeans.html
 --suppress-redirect http://www.cs.ucl.ac.uk/icse07/->http://web4.cs.ucl.ac.uk/icse07/
 --suppress-redirect http://www.cs.utexas.edu/->http://www.cs.utexas.edu/home/department/welcome.html
