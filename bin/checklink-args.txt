@@ -36,6 +36,7 @@
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 400:http://www.computer.org/web/tse
 --suppress-broken 403:http://arxiv.org/pdf/cs.SE/0508108
+--suppress-broken 403:http://homes.cs.washington.edu/~mernst/uw-only/research/potential-research-projects.html
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
 --suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
 --suppress-broken 403:http://metro.kingcounty.gov/oltools/timetables.html
