@@ -23,6 +23,7 @@
 # --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go
 --suppress-broken 301:http://www.cs.virginia.edu/~sullivan/
 --suppress-broken 301:https://tools.usps.com/go/ZipLookupAction!input.action
+--suppress-broken 301:http://www.nwfolklife.org/festival/
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
 # Official URL, but redirects elsewhere
 --suppress-broken 302:http://dx.doi.org/10.1109/2.59
@@ -274,6 +275,7 @@
 --suppress-redirect http://www.leelin.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2Fwww.leelin.com-a.googlepages.com%2Fhome
 --suppress-redirect http://www.nps.gov/mora/->http://www.nps.gov/mora/index.htm
 --suppress-redirect http://www.nsf.gov/home/cise/->http://www.nsf.gov/dir/index.jsp?org=CISE
+--suppress-redirect http://www.nwfolklife.org/festival/->http://www.nwfolklife.org/festival2015/	
 --suppress-redirect http://www.pricegrabber.com/->http://www.pricegrabber.com/spiders.php
 --suppress-redirect http://www.rational.com/licensing->http://www-306.ibm.com/software/rational/support/licensing/
 --suppress-redirect http://www.rational.com/licensing/->http://www-306.ibm.com/software/rational/support/licensing/
