@@ -52,7 +52,7 @@ import org.checkerframework.checker.regex.qual.*;
  *
  * The default behavior can be customized by way of command-line options. <p>
  *
- * The command-line options are as follows:
+ * The <a name="command-line-options">command-line options</a> are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
  *   <li>Getting help
