@@ -204,6 +204,15 @@ webpage that you maintain.
   bar of your browser when you browse to the given page.
   <a href="http://plume-lib.googlecode.com/hg/bin/html-add-favicon">Documentation</a> at top of file.
 </dd>
+
+<dt>add-favicon</dt>
+<dd>
+  Takes as arguments a directory and a <tt>.png</tt> file for a "favicon".
+  It makes each HTML file under the given directory use the given favicon.  A
+  favicon is a favorites icon, which is intended to appear in the address
+  bar of your browser when you browse to the given page.
+  <a href="http://plume-lib.googlecode.com/hg/bin/add-favicon">Documentation</a> at top of file.
+</dd>
 </dl>
 
 
@@ -809,11 +818,12 @@ generally well-documented, so feel free to browse.
   <ul>
     <li>parses command-line options and sets fields in your program accordingly,</li>
     <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
-    <li>creates documentation suitable for a manual or manpage.</li>
+    <li>creates documentation suitable for a manual, webpage, or manpage.</li>
   </ul>
   Thus, the programmer is freed from writing duplicative, boilerplate code
   and documentation that could get out of sync with the rest of the program.
   <a href="http://types.cs.washington.edu/plume-lib/api/plume/Options.html">Documentation</a>.
+  <!-- The popular JCommander library was written later and takes a similar approach to plume-lib, having many of the same features.  But it does not generate usage messages nor manual/manpage/webpage documentation. -->
 </dd>
 </dl>
 
