@@ -54,8 +54,8 @@ public class GraphMDE {
     List<T> nodes = new ArrayList<T>(preds.keySet());
 
     // Compute roots & non-roots, for convenience
-    List<T> roots = new ArrayList<T>();
-    List<T> non_roots = new ArrayList<T>();
+    List</*@KeyFor({"preds","dom"})*/ T> roots = new ArrayList<T>();
+    List</*@KeyFor({"preds","dom"})*/ T> non_roots = new ArrayList<T>();
 
     Map<T,List<T>> dom = new HashMap<T,List<T>>();
 
