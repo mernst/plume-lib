@@ -264,6 +264,7 @@ public class ICalAvailable {
     canonicalTimezones.put("china", "Asia/Shanghai");
     canonicalTimezones.put("berlin", "Europe/Berlin");
     canonicalTimezones.put("israel", "Asia/Tel_Aviv");
+    canonicalTimezones.put("art", "America/Buenos_Aires");
 
     printedTimezones.put("Eastern Standard Time", "Eastern");
     printedTimezones.put("Central Standard Time", "Central");
