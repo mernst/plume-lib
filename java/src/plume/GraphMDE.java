@@ -52,24 +52,24 @@ public class GraphMDE {
   <T> Map<T,List<T>> dominators(Map<T,List<T>> preds) {
 
     List<T> nodes = new ArrayList<T>(preds.keySet());
+    Map<T,List<T>> dom = new HashMap<T,List<T>>();
 
     // Compute roots & non-roots, for convenience
     List</*@KeyFor({"preds","dom"})*/ T> roots = new ArrayList<T>();
     List</*@KeyFor({"preds","dom"})*/ T> non_roots = new ArrayList<T>();
 
-    Map<T,List<T>> dom = new HashMap<T,List<T>>();
 
     // Initialize result:  for roots just the root, otherwise everything
     for (T node : preds.keySet()) {
       if (preds.get(node).isEmpty()) {
-        // This is a root
-        roots.add(node);
         // Its only dominator is itself.
         Set<T> set = Collections.singleton(node);
         dom.put(node, new ArrayList<T>(set));
+        // This is a root
+        roots.add(node);
       } else {
-        non_roots.add(node);
         dom.put(node, new ArrayList<T>(nodes));
+        non_roots.add(node);
       }
     }
     assert roots.size() + non_roots.size() == nodes.size();
