@@ -62,10 +62,10 @@ public class GraphMDE {
     // Initialize result:  for roots just the root, otherwise everything
     for (T node : preds.keySet()) {
       if (preds.get(node).isEmpty()) {
+        // This is a root.
         // Its only dominator is itself.
         Set<T> set = Collections.singleton(node);
         dom.put(node, new ArrayList<T>(set));
-        // This is a root
         roots.add(node);
       } else {
         dom.put(node, new ArrayList<T>(nodes));
