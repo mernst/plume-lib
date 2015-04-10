@@ -60,7 +60,9 @@ public class LimitedSizeIntSet
   }
 
   public void addAll(LimitedSizeIntSet s) {
-    if (this == s)
+    @SuppressWarnings("interning") // optimization; not a subclass of Collection, though
+    boolean sameObject = (this == s);
+    if (sameObject)
       return;
     if (repNulled())
       return;
