@@ -200,7 +200,7 @@ is easier than clicking on the error."
 		;; (etags-recognize-tags-table)
 		(initialize-new-tags-table)))
 	  (goto-char (point-min))
-	  (if (re-search-forward (concat "\f\n\\(.*/\\)?" file) nil t)
+	  (if (re-search-forward (concat "\f\n\\(.*/\\)?" (regexp-quote file)) nil t)
 	      ;; return the buffer
 	      (find-file-noselect
 	       (concat default-directory

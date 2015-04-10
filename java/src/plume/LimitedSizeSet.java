@@ -54,6 +54,10 @@ public class LimitedSizeSet<T>
   }
 
   public void addAll(LimitedSizeSet<? extends T> s) {
+    @SuppressWarnings("interning") // optimization; not a subclass of Collection, though
+    boolean sameObject = (this == s);
+    if (sameObject)
+      return;
     if (repNulled())
       return;
     if (s.repNulled()) {
@@ -70,7 +74,8 @@ public class LimitedSizeSet<T>
       }
     }
     for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values, whether or not this == s";
+      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
+      assert s.values[i] != null : "@AssumeAssertion(nullness): used portion of array";
       add(s.values[i]);
       if (repNulled()) {
         return;                 // optimization, not necessary for correctness
@@ -107,10 +112,10 @@ public class LimitedSizeSet<T>
   }
 
   /**
-   * An upper bound how many distinct elements can be individually
+   * An upper bound on how many distinct elements can be individually
    * represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
-   * @return maximim capacity of the set representation
+   * @return maximum capacity of the set representation
    **/
   public int max_size() {
     if (values == null) {
