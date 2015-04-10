@@ -119,8 +119,12 @@ public class GraphMDE {
     }
 
     for (T node : preds.keySet()) {
-      assert dom.containsKey(node);
-      assert dom.get(node).contains(node);
+      // TODO: The following two assert statements would be easier to read
+      // than the one combined one, but a bug (TODO:  Jonathan will add a
+      // bug number) prevents it from type-checking.
+      // assert dom.containsKey(node);
+      // assert dom.get(node).contains(node);
+      assert dom.containsKey(node) && dom.get(node).contains(node);
     }
 
     return dom;
