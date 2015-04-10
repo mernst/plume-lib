@@ -1,0 +1,9 @@
+Options:
+* Replace split_lists with a better mechanism that uses (), {}, or [].
+
+OptionsDoclet:
+* Automatically detect whether to use javadoc output or html output.
+* Support markdown as an output format.
+* Add examples of how to generate man pages from OptionsDoclet output using
+  Pandoc. This would be more meaningful if OptionsDoclet could output markdown.
+* Include possible values for enum types in the HTML documentation.
