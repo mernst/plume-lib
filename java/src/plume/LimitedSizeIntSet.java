@@ -47,10 +47,8 @@ public class LimitedSizeIntSet
     if (values == null)
       return;
 
-    for (int i=0; i < num_values; i++) {
-      if (values[i] == elt) {
-        return;
-      }
+    if (contains(elt)) {
+      return;
     }
     if (num_values == values.length) {
       values = null;
@@ -62,6 +60,8 @@ public class LimitedSizeIntSet
   }
 
   public void addAll(LimitedSizeIntSet s) {
+    if (this == s)
+      return;
     if (repNulled())
       return;
     if (s.repNulled()) {
@@ -78,7 +78,7 @@ public class LimitedSizeIntSet
       }
     }
     for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values, whether or not this == s";
+      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
       add(s.values[i]);
       if (repNulled()) {
         return;                 // optimization, not necessary for correctness
@@ -86,6 +86,8 @@ public class LimitedSizeIntSet
     }
   }
 
+  @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
+  /*@Pure*/
   public boolean contains(int elt) {
     if (values == null) {
       throw new UnsupportedOperationException();
