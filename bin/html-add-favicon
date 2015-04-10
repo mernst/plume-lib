@@ -11,6 +11,8 @@
 # Both the .png and the .html filenames should be relative (not absolute),
 # as in the given example.
 
+# Also see the add-favicon script in plume-lib, which has a similar effect.
+
 use strict;
 use English;
 $WARNING = 1;

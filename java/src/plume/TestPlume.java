@@ -2978,12 +2978,18 @@ public final class TestPlume extends TestCase {
   }
 
 
-  public static void testGraphMDE() {
+  // Figure 1 from http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
+  private static Map<Integer, List</*@KeyFor("preds1")*/ Integer>> preds1;
+  private static Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
 
-    // Figure 1 from http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
+  @SuppressWarnings("keyfor")
+  private static void initializePreds1AndSucc1() {
+    if (preds1 != null) {
+      return;
+    }
 
-    Map<Integer, List<Integer>> preds1 = new LinkedHashMap<Integer, List<Integer>>();
-    Map<Integer, List<Integer>> succs1 = new LinkedHashMap<Integer, List<Integer>>();
+    preds1 = new LinkedHashMap<Integer, List<Integer>>();
+    succs1 = new LinkedHashMap<Integer, List<Integer>>();
     for (int i=0; i<=7; i++) {
       preds1.put(new Integer(i), new ArrayList<Integer>());
       succs1.put(new Integer(i), new ArrayList<Integer>());
@@ -2997,6 +3003,12 @@ public final class TestPlume extends TestCase {
     succs1.get(4).add(6);    preds1.get(6).add(4);
     succs1.get(5).add(7);    preds1.get(7).add(5);
     succs1.get(6).add(4);    preds1.get(4).add(6);
+  }
+    
+  public static void testGraphMDE() {
+
+    initializePreds1AndSucc1();
+
     Map<Integer,List<Integer>> dom1post = GraphMDE.dominators(succs1);
     assert dom1post.get(0).toString().equals("[7, 1, 0]");
     assert dom1post.get(1).toString().equals("[7, 1]");

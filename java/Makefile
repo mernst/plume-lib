@@ -83,6 +83,8 @@ endif
 endif
 endif
 
+# To run doclint, do
+#   JAVADOC="~/research/types/jsr308-langtools/dist/bin/javadoc" make javadoc
 ifeq (cygwin, $(OSTYPE))
   ## Make the classpath explicit on the command line so it can be processed by *-cygwin
   JAVA ?= ${PLUME_DIR}/bin/java-cygwin -ea -classpath "${CLASSPATH}"
