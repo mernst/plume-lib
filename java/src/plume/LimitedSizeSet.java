@@ -54,7 +54,9 @@ public class LimitedSizeSet<T>
   }
 
   public void addAll(LimitedSizeSet<? extends T> s) {
-    if (this == s)
+    @SuppressWarnings("interning") // optimization; not a subclass of Collection, though
+    boolean sameObject = (this == s);
+    if (sameObject)
       return;
     if (repNulled())
       return;
