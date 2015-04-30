@@ -1194,6 +1194,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)(#\t)", "$1untracked: " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)# Your branch is ahead of .*\\n", "$1unpushed changesets: " + pb.directory() + "\n"));
           replacers.add(new Replacer("(^|\\n) M ", "$1 M " + dir + "/"));
+          replacers.add(new Replacer("(^|\\n)(R[ M]) ", "$1$2 " + dir + "/"));
 
           // Useful info, but don't bother to report it, for consistency with other VCSes
           replacers.add(new Replacer("(^|\\n)# Your branch is behind .*\\n", "$1unpushed changesets: " + pb.directory() + "\n"));
