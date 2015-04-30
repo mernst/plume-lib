@@ -7,9 +7,11 @@ import java.nio.CharBuffer;
 
 /**
  * Clean a BibTeX file by removing text outside BibTeX entries.
+ * <p>
  *
  * Remove each non-empty line that is not in a BibTeX entry, except retain
  * any line that starts with "%".
+ * <p>
  *
  * Arguments are the names of the original files.  Cleaned copies of those
  * files are written in the CURRENT DIRECTORY.  Therefore, this should be
