@@ -9,6 +9,7 @@
 # of them.
 
 # Eventually, optionally delete older output files.
+# But, there is no harm in keeping them around indefinitely.
 
 import glob
 import os
