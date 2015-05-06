@@ -52,7 +52,6 @@ toc::[]
 html-update::
   The "html-update" family of programs automatically updates text on a
   webpage that you maintain.
-  +
   * `html-toc` computes a webpage's table of contents, based on its
   header tags (`<h1>`, `<h2>`, etc.).
   http://plume-lib.googlecode.com/hg/bin/html-toc[Documentation] at top
