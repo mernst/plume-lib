@@ -1,4 +1,3 @@
-syntax: glob
 *.class
 *.elc
 *~
@@ -23,10 +22,10 @@ java/src/plume/task_manager.jar
 java/src/plume/utilMDE.jar
 java/task_manager.jar
 
+# Ignore Eclipse output
+bin-eclipse/
+
 syntax: regexp
 # Not a glob because it starts with # which looks like a comment.
 (.*/)?\#[^/]*\#$
 (.*/)?\.\#.*
-
-# Ignore Eclipse output
-bin-eclipse/
