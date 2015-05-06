@@ -1173,7 +1173,7 @@ public class MultiVersionControl {
           pb.command(git_executable, "status");
           addArgs(pb, git_arg);
           addArg(pb, "--untracked-files=no");
-          addArg(pb, "--short"); // experimenting with short output
+          addArg(pb, "--porcelain"); // experimenting with porcelain output
           replacers.add(new Replacer("(^|\\n)On branch master\\nYour branch is up-to-date with 'origin/master'.\\n\\n?", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing to commit,? working directory clean\\n", "$1"));
           replacers.add(new Replacer("(^|\\n)no changes added to commit \\(use \"git add\" and/or \"git commit -a\"\\)\\n", "$1"));
@@ -1202,11 +1202,14 @@ public class MultiVersionControl {
           // Could remove all other output, but this could suppress messages
           // replacers.add(new Replacer("(^|\\n)#.*\\n", "$1"));
 
-          // Unnecessary because "git status" reports:
+          // Necessary because "git status --porcelain" does not report:
           //   # Your branch is ahead of 'origin/master' by 1 commit.
-          // Or, see "git-outgoing" at http://github.com/ddollar/git-utils
-          // pb2.command(git_executable, "log", "origin..HEAD");
-          // addArgs(pb2, git_arg);
+          pb2.command(git_executable, "log", "FETCH_HEAD..", "--exit-code");
+          addArgs(pb2, git_arg);
+          replacers.add(new Replacer("^commit .*(.*\\n)+", "unpushed commits: " + pb2.directory() + "\n"));
+
+          // TODO: look for stashes
+
           break;
         case HG:
           pb.command(hg_executable, "status");
