@@ -3240,7 +3240,7 @@ These are the files marked with '?' in the `svn-status-buffer-name' buffer.
 If the function is called with a prefix arg, unmark all these files."
   (interactive "P")
   (svn-status-apply-usermark-checked
-   '(lambda (info) (eq (svn-status-line-info->filemark info) ??)) (not arg)))
+   #'(lambda (info) (eq (svn-status-line-info->filemark info) ??)) (not arg)))
 
 (defun svn-status-mark-added (arg)
   "Mark all added files.
@@ -3248,7 +3248,7 @@ These are the files marked with 'A' in the `svn-status-buffer-name' buffer.
 If the function is called with a prefix ARG, unmark all these files."
   (interactive "P")
   (svn-status-apply-usermark-checked
-   '(lambda (info) (eq (svn-status-line-info->filemark info) ?A)) (not arg)))
+   #'(lambda (info) (eq (svn-status-line-info->filemark info) ?A)) (not arg)))
 
 (defun svn-status-mark-modified (arg)
   "Mark all modified files.
@@ -3256,7 +3256,7 @@ These are the files marked with 'M' in the `svn-status-buffer-name' buffer.
 If the function is called with a prefix ARG, unmark all these files."
   (interactive "P")
   (svn-status-apply-usermark-checked
-   '(lambda (info) (or (eq (svn-status-line-info->filemark info) ?M)
+   #'(lambda (info) (or (eq (svn-status-line-info->filemark info) ?M)
                        (eq (svn-status-line-info->filemark info)
                            svn-status-file-modified-after-save-flag)))
    (not arg)))
@@ -3267,7 +3267,7 @@ These are the files marked with 'D' in the `svn-status-buffer-name' buffer.
 If the function is called with a prefix ARG, unmark all these files."
   (interactive "P")
   (svn-status-apply-usermark-checked
-   '(lambda (info) (eq (svn-status-line-info->filemark info) ?D)) (not arg)))
+   #'(lambda (info) (eq (svn-status-line-info->filemark info) ?D)) (not arg)))
 
 (defun svn-status-mark-changed (arg)
   "Mark all files that could be committed.
@@ -3285,7 +3285,7 @@ If called with a prefix ARG, unmark all such files."
 
 (defun svn-status-unset-all-usermarks ()
   (interactive)
-  (svn-status-apply-usermark-checked '(lambda (info) t) nil))
+  (svn-status-apply-usermark-checked #'(lambda (info) t) nil))
 
 (defvar svn-status-regexp-history nil
   "History list of regular expressions used in svn status commands.")
@@ -3301,7 +3301,7 @@ If the function is called with a prefix arg, unmark all these files."
                                          " files (regexp): "))
          (if current-prefix-arg t nil)))
   (svn-status-apply-usermark-checked
-   '(lambda (info) (string-match regexp (svn-status-line-info->filename-nondirectory info))) (not unmark)))
+   #'(lambda (info) (string-match regexp (svn-status-line-info->filename-nondirectory info))) (not unmark)))
 
 (defun svn-status-mark-by-file-ext (ext &optional unmark)
   "Mark all files matching the given file extension EXT.
@@ -3311,7 +3311,7 @@ If the function is called with a prefix arg, unmark all these files."
                                          " files with extensions: "))
          (if current-prefix-arg t nil)))
   (svn-status-apply-usermark-checked
-   '(lambda (info) (let ((case-fold-search nil))
+   #'(lambda (info) (let ((case-fold-search nil))
                      (string-match (concat "\\." ext "$") (svn-status-line-info->filename-nondirectory info)))) (not unmark)))
 
 (defun svn-status-toggle-hide-unknown ()
@@ -4516,7 +4516,7 @@ When called with a prefix argument, it is possible to enter a new property."
     (while d-list
       (setq dir (caar d-list))
       (setq f-info (cdar d-list))
-      (setq ext-list (mapcar '(lambda (i)
+      (setq ext-list (mapcar #'(lambda (i)
                                 (svn-status-line-info->filename-nondirectory i)) f-info))
       ;;(message "ignore in dir %s: %S" dir f-info)
       (save-window-excursion
