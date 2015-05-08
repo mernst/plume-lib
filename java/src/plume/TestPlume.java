@@ -2153,6 +2153,7 @@ public final class TestPlume extends TestCase {
     // public static Vector makeVector(Enumeration e)
 
 
+    Locale.setDefault(Locale.US);
     assert UtilMDE.abbreviateNumber(5).equals("5.00");
     assert UtilMDE.abbreviateNumber(5000).equals("5.00K");
     assert UtilMDE.abbreviateNumber(5000000).equals("5.00M");
@@ -2167,6 +2168,16 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.abbreviateNumber(12345678).equals("12.3M");
     assert UtilMDE.abbreviateNumber(123456789).equals("123M");
     assert UtilMDE.abbreviateNumber(1234567890).equals("1.23G");
+    assert UtilMDE.abbreviateNumber(9).equals("9.00");
+    assert UtilMDE.abbreviateNumber(98).equals("98.0");
+    assert UtilMDE.abbreviateNumber(987).equals("987");
+    assert UtilMDE.abbreviateNumber(9876).equals("9.88K");
+    assert UtilMDE.abbreviateNumber(98765).equals("98.8K");
+    assert UtilMDE.abbreviateNumber(987654).equals("988K");
+    assert UtilMDE.abbreviateNumber(9876543).equals("9.88M");
+    assert UtilMDE.abbreviateNumber(98765432).equals("98.8M");
+    assert UtilMDE.abbreviateNumber(987654321).equals("988M");
+    assert UtilMDE.abbreviateNumber(9876543210L).equals("9.88G");
 
   }
 
