@@ -2841,6 +2841,8 @@ public final class UtilMDE {
   }
 
 
+  // This should perhaps be named withoutDuplicates to emphasize that
+  // it does not side-effect its argument.
   /**
    * Return a copy of the list with duplicates removed.
    * Retains the original order.
@@ -2849,14 +2851,8 @@ public final class UtilMDE {
    * @return a copy of the list with duplicates removed
    **/
   public static <T> List<T> removeDuplicates(List<T> l) {
-    // There are shorter solutions that do not maintain order.
-    HashSet<T> hs = new HashSet<T>(l.size());
-    List<T> result = new ArrayList<T>();
-    for (T t : l) {
-      if (hs.add(t)) {
-        result.add(t);
-      }
-    }
+    HashSet<T> hs = new LinkedHashSet<T>(l);
+    List<T> result = new ArrayList<T>(hs);
     return result;
   }
 
