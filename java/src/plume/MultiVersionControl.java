@@ -1204,7 +1204,8 @@ public class MultiVersionControl {
 
           // Necessary because "git status --porcelain" does not report:
           //   # Your branch is ahead of 'origin/master' by 1 commit.
-          pb2.command(git_executable, "log", "FETCH_HEAD..", "--exit-code");
+          // If you have pushed but not pulled, then this will report 
+          pb2.command(git_executable, "log", "--branches", "--not", "--remotes");
           addArgs(pb2, git_arg);
           replacers.add(new Replacer("^commit .*(.*\\n)+", "unpushed commits: " + pb2.directory() + "\n"));
 
