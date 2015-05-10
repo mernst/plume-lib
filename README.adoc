@@ -218,7 +218,7 @@ plume-bib::
   Not a part of plume-lib, but a companion project.
   https://github.com/mernst/plume-bib[plume-bib] is a collection of
   bibliographies in BibTeX format. See its
-  https://raw.githubusercontent.com/mernst/plume-bib/master/README[README]
+  http://rawgit.com/mernst/plume-bib/master/README[README]
   file for an explanation of its benefits and features.
 
 
