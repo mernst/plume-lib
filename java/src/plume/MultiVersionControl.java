@@ -91,6 +91,7 @@ import org.checkerframework.dataflow.qual.*;
  *   <li><b>--svn-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the svn program</li>
  *   <li><b>--debug=</b><i>boolean</i>. Print debugging output [default false]</li>
  *   <li><b>--debug-replacers=</b><i>boolean</i>. Debug 'replacers' that filter command output [default false]</li>
+ *   <li><b>--debug-process-output=</b><i>boolean</i>. Lightweight debugging of 'replacers' that filter command output [default false]</li>
  * </ul>
  * <tt>[+]</tt> marked option can be specified multiple times
  * <!-- end options doc -->
@@ -305,6 +306,9 @@ public class MultiVersionControl {
 
   @Option("Debug 'replacers' that filter command output")
   public boolean debug_replacers = false;
+
+  @Option("Lightweight debugging of 'replacers' that filter command output")
+  public boolean debug_process_output = false;
 
   static enum Action {
     CHECKOUT,
@@ -1424,6 +1428,10 @@ public class MultiVersionControl {
       // my $command_redirected = "$command > $tmpfile 2>&1";
       TimeLimitProcess p = new TimeLimitProcess(pb.start(), timeout * 1000, true);
       p.waitFor();
+      // For reasons that are mysterious to me, this is necessary in order to
+      // reliably capture the process's output.  I don't know why.  Calling
+      // waitFor on the result of pb.start() didn't help -- only this did.
+      Thread.sleep(10);
       if (p.timed_out()) {
         System.out.printf("Timed out (limit: %ss):%n", timeout);
         System.out.println(command(pb));
@@ -1436,19 +1444,23 @@ public class MultiVersionControl {
       //  * when debugging
       //  * other circumstances?
       // Try printing always, to better understand this question.
-      if (show_normal_output || p.exitValue() != 0 || debug_replacers) {
+      if (show_normal_output || p.exitValue() != 0 || debug_replacers || debug_process_output) {
         // Filter then print the output.
         // String output = UtilMDE.readerContents(new BufferedReader(new InputStreamReader(p.getInputStream())));
         // String output = UtilMDE.streamString(p.getInputStream());
         String output = UtilMDE.streamString(p.getInputStream());
-        if (debug_replacers) { System.out.println("preoutput=<<<" + output + ">>>"); }
+        if (debug_replacers || debug_process_output) {
+          System.out.println("preoutput=<<<" + output + ">>>");
+        }
         for (Replacer r : replacers) {
           // Don't loop, because some regexps will continue to match repeatedly
           output = r.replaceAll(output);
           if (debug_replacers) { System.out.println("midoutput[" + r.regexp + "]=<<<" + output + ">>>"); }
         }
-        if (debug_replacers) {
+        if (debug_replacers || debug_process_output) {
           System.out.println("postoutput=<<<" + output + ">>>");
+        }
+        if (debug_replacers) {
           for (int i=0; i<Math.min(100,output.length()); i++) {
             System.out.println(i + ": " + (int) output.charAt(i) + "\n        \"" + output.charAt(i) + "\"");
           }
