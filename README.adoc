@@ -18,7 +18,7 @@ pointers to more detailed documentation of each program and library.
 1.  Obtain the https://github.com/mernst/plume-lib[source code]:
 +
 ----
-hg clone https://github.com/mernst/plume-lib.git
+git clone https://github.com/mernst/plume-lib.git
 ----
 2.  Build plume-lib:
 +
