@@ -162,7 +162,7 @@
 
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-announce
 --suppress-fragment http://groups.google.com/forum/#!forum/daikon-discuss
---suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
+--suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
