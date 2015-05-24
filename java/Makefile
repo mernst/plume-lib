@@ -227,7 +227,7 @@ javadoc: .javadoc-timestamp
 	mkdir -p api
 	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
-	\rm -f ical4j.properties
+	rm -f ical4j.properties
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
@@ -269,7 +269,7 @@ else
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 	$(DOS2UNIX) --quiet src/plume/ICalAvailable.java
-	@\rm -f ical4j.properties
+	@rm -f ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
 	$(DOS2UNIX) --quiet src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
