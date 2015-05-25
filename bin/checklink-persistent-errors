@@ -18,6 +18,9 @@ pp = pprint.PrettyPrinter()
 import re
 import sys
 
+debug=False
+# For debugging
+# debug=True
 
 def main():
 
@@ -83,11 +86,13 @@ def parse_checklink_output_file(file):
         f = open(file, 'r')
         paragraphs = f.read().split("\n\n")
         for p in paragraphs:
-                # print ("<<<%s>>>" % p)
+                if debug: print ("<<<%s>>>" % p)
         	if re.match("Processing	", p):
                         url = p
                         continue
-                if p == "----------------------------------------":
+                if (p == "----------------------------------------"
+                    # for very first record
+                    or p == "\n----------------------------------------"):
                         url = None
                         continue
                 if p.startswith(listof):
