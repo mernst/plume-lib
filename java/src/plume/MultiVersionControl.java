@@ -890,7 +890,7 @@ public class MultiVersionControl {
     } catch (SVNException e) {
       // throw new Error("Problem in dirToCheckoutSvn(" + dir + "): ", e);
       System.err.println("Problem in dirToCheckoutSvn(" + dir + "): " + e.getMessage());
-      if (e.getMessage().contains("This client is too old")) {
+      if (e.getMessage() != null && e.getMessage().contains("This client is too old")) {
         System.err.println("Try checking out " + dir + " again.");
       }
       return null;
