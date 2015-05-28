@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="java/lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="java/lib/ical4j.jar"/>
 	<classpathentry kind="lib" path="java/lib/ini4j-0.5.1.jar"/>
-	<classpathentry kind="lib" path="java/lib/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="java/lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="java/lib/svnkit.jar"/>
 	<classpathentry kind="lib" path="java/lib/xom-1.2.1.jar"/>
 	<classpathentry kind="lib" path="jdk/lib/tools.jar"/>
