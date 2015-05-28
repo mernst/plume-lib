@@ -1715,7 +1715,7 @@ public final class TestPlume extends TestCase {
       assert ! UtilMDE.canCreateAndWrite(new File("temp/temp"));
     } catch (IOException e) {
       e.printStackTrace();
-      junit.framework.Assert.fail("failure while testing UtilMDE.canCreateAndWrite(): " + e.toString());
+      org.junit.Assert.fail("failure while testing UtilMDE.canCreateAndWrite(): " + e.toString());
     }
 
     {
