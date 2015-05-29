@@ -1176,7 +1176,8 @@ public class MultiVersionControl {
         case GIT:
           pb.command(git_executable, "status");
           addArgs(pb, git_arg);
-          addArg(pb, "--untracked-files=no");
+          // Why was I using this option??
+          // addArg(pb, "--untracked-files=no");
           addArg(pb, "--porcelain"); // experimenting with porcelain output
           replacers.add(new Replacer("(^|\\n)On branch master\\nYour branch is up-to-date with 'origin/master'.\\n\\n?", "$1"));
           replacers.add(new Replacer("(^|\\n)nothing to commit,? working directory clean\\n", "$1"));
@@ -1197,6 +1198,7 @@ public class MultiVersionControl {
           // This must come after the above, since it matches a prefix of the above
           replacers.add(new Replacer("(^|\\n)(#\t)", "$1untracked: " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)# Your branch is ahead of .*\\n", "$1unpushed changesets: " + pb.directory() + "\n"));
+          replacers.add(new Replacer("(^|\\n)([?][?]) ", "$1$2 " + dir + "/"));
           replacers.add(new Replacer("(^|\\n) M ", "$1 M " + dir + "/"));
           replacers.add(new Replacer("(^|\\n)(R[ M]) ", "$1$2 " + dir + "/"));
 
