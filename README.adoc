@@ -1,9 +1,0 @@
-= Plume-lib: a library of utilities for programming
-
-If you are connected to the Internet, the README file is:
-https://github.com/mernst/plume-lib/blob/master/README.html .
-
-If you are not connected to the Internet, then do
-    git checkout gh-pages
-and see file README.html .
-
