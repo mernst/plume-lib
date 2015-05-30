@@ -1,0 +1,8 @@
+Plume-lib: a library of utilities for programming
+
+If you are connected to the Internet, the README file is:
+https://mernst.github.io/plume-lib/
+
+If you are not connected to the Internet, then do
+    git checkout gh-pages
+and see file index.html .
