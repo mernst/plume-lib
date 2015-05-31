@@ -7,7 +7,9 @@
 #     alias git=git-auto-invoke-mergetool.sh
 #   fi
 
-# From http://stackoverflow.com/questions/10032265, with improvements.
+
+# This script is originally from http://stackoverflow.com/questions/10032265 .
+# I have made improvements, such as to the grep patterns and the documentation.
 
 # TODO: Improve the grep patterns.
 

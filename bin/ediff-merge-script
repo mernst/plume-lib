@@ -1,6 +1,4 @@
 #!/bin/bash
-# From http://stackoverflow.com/questions/1817370/using-ediff-as-git-mergetool
-# extended so it handles both emacs and emacsclient, and with other improvements.
 
 ## USAGE:
 ## To make this be invoked when you run `git mergetool`, add the following
@@ -17,6 +15,12 @@
 ## fresh context and avoids cluttering the original emacs with merge buffers.
 _EMACSCLIENT=emacs
 # _EMACSCLIENT=emacsclient
+
+
+# This script is originally from
+#   http://stackoverflow.com/questions/1817370/using-ediff-as-git-mergetool
+# I have extended so it handles both emacs and emacsclient,
+# and made other improvements.
 
 
 # test args
