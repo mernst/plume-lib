@@ -1,6 +1,20 @@
 This file contains a list of plume-lib releases.
-However, the recommended way to use plume-lib is by cloning its repository;
-for details, see http://plume-lib.googlecode.com/hg/README.html .
+However, the recommended way to use the latest version of plume-lib is
+by cloning its repository; run:
+  git clone https://github.com/mernst/plume-lib.git
+
+plume-lib 1.0.6, released May 31, 2015
+The plume-lib homepage has moved to http://mernst.github.io/plume-lib/
+The plume-lib repository has moved to https://github.com/mernst/plume-lib.git
+New programs:
+  add-favicon:  adds a favicon to webpages (image appears in browser tabs)
+  checklink-persistent-errors:  ignores transient http errors
+  ediff-merge-script and git-auto-invoke-mergetool.sh:  Git support
+Updated Java libraries: bcel.jar (for Java 8) junit.jar svnkit.jar (for SVN 1.8)
+MultiVersionControl:  improved Git support; --dry-run default for 'checkout'
+Fixes for Mac OS support
+Many more URLs in checklink-args.txt, reduces noise from checklink program.
+Many other bug fixes and enhancements.
 
 plume-lib 1.0.5, released January 1, 2014
 New version of BCEL that understands (a little about) generics.
