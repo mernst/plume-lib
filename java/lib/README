@@ -13,3 +13,22 @@ Apache Commons IO components (commons-io.jar)
 JUnit (junit.jar)
 - Automated unit testing framework
 - http://www.junit.org
+
+svnkit-1.8.10-complete.jar: for use by MultiVersionControl program
+To create the file, I ran the following commands:
+  cd ~/tmp
+  wget http://www.svnkit.com/org.tmatesoft.svn_1.8.10.standalone.zip
+  unzip org.tmatesoft.svn_1.8.10.standalone.zip
+  cd svnkit-1.8.10/lib
+  mkdir jar-contents
+  cd jar-contents
+  for file in ../*.jar; do
+    jar xf $file;
+  done
+  find * -type f | $pl/bin/sort-directory-order > jar-contents.txt
+  jar cf ../svnkit-1.8.10-complete.jar @jar-contents.txt
+  cd ..
+  /rm -rf jar-contents
+  mv svnkit-1.8.10-complete.jar $pl/java/lib
+  cd ~/tmp
+  \rm -rf org.tmatesoft.svn_1.8.10.standalone.zip svnkit-1.8.10

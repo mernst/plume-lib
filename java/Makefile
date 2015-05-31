@@ -62,7 +62,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.7.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.6.jar:lib/commons-logging-1.1.1.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.12.jar:lib/svnkit.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.7.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.6.jar:lib/commons-logging-1.1.1.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -360,7 +360,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/svnkit.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_5)" com/sun/javadoc)

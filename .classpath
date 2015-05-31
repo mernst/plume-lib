@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="java/lib/ical4j.jar"/>
 	<classpathentry kind="lib" path="java/lib/ini4j-0.5.1.jar"/>
 	<classpathentry kind="lib" path="java/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="java/lib/svnkit.jar"/>
+	<classpathentry kind="lib" path="java/lib/svnkit-1.8.10-complete.jar"/>
 	<classpathentry kind="lib" path="java/lib/xom-1.2.1.jar"/>
 	<classpathentry kind="lib" path="jdk/lib/tools.jar"/>
 	<classpathentry kind="output" path="bin-eclipse"/>
