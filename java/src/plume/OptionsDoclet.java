@@ -553,7 +553,7 @@ public class OptionsDoclet {
         if (!gi.any_publicized())
           continue;
 
-        b.append("  <li>" + gi.name);
+        b.append("  <li id=\"optiongroup:" + gi.name.replace(" ", "-") + "\">" + gi.name);
         b.append("    <ul>");
         b.append(optionListToHtml(gi.optionList, 6));
         b.append("    </ul>");
@@ -602,7 +602,7 @@ public class OptionsDoclet {
       StringBuilder bb = new StringBuilder();
       String optHtml = optionToHtml(oi);
       bb.append(StringUtils.repeat(" ", padding));
-      bb.append("<li>").append(optHtml).append("</li>");
+      bb.append("<li id=\"option:" + oi.long_name + "\">").append(optHtml).append("</li>");
       b.append(bb);
     }
     return b.toString();
