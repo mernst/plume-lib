@@ -44,8 +44,11 @@ make</pre>
 </li>
 </ol>
 <p>
-(As an alternative to steps 1 and 2 above, you can download file
-<a href="https://github.com/mernst/plume-lib/releases"><tt>plume-lib-<em>X.Y.Z</em>.tar.gz</tt></a>.)
+(As an alternative to steps 1 and 2 above, you can download and unpack file
+<a href="https://github.com/mernst/plume-lib/releases"><tt>plume-lib-<em>X.Y.Z</em>.tar.gz</tt></a>.
+However, to get the latest and greatest version of plume-lib, we recommend
+cloning the repository and periodically doing <tt>git pull</tt> to refresh
+it.)
 
 </p>
 
@@ -157,6 +160,12 @@ webpage that you maintain.
 </pre>
 </dd>
 
+<dt>checklink-persistent-errors</dt>
+<dd>
+  This script reports errors that persist over multiple runs of the
+  checklink program, ignoring transient errors.
+  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/checklink-persistent-errors">Documentation</a> at top of file.
+</dd>
 
 
 <dt>HtmlPrettyPrint</dt>
@@ -233,7 +242,20 @@ webpage that you maintain.
   Report changes by others since my last <tt>cvs update</tt>, ignoring my
   changes since then.
 </dd>
+
+<dt>ediff-merge-script</dt>
+<dd>
+  A script for use as a git mergetool; runs Emacs ediff as the mergetool.
+  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/ediff-merge-script">Documentation</a> at top of file.
+</dd>
+
+<dt>git-auto-invoke-mergetool.sh</dt>
+<dd>
+  An alias for git that runs <tt>git mergetool</tt> whenever there is a conflict.
+  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/git-auto-invoke-mergetool.sh">Documentation</a> at top of file.
+</dd>
 </dl>
+
 
 <h3 id="Quieter_output_from_CVS">Quieter output from CVS</h3>
 
