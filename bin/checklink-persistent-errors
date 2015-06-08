@@ -35,7 +35,7 @@ debug=False
 def main():
 
 	if len(sys.argv) != 3:
-		print ("%s requires exactly 2 arguments, got %d" % (sys.argv[0], len(sys.argv)))
+		print ("%s requires exactly 2 arguments, got %d" % (sys.argv[0], len(sys.argv)-1))
 	        exit(1)
 	basename = sys.argv[1]
 	instances = int(sys.argv[2])
@@ -102,7 +102,9 @@ def parse_checklink_output_file(file):
                         continue
                 if (p == "----------------------------------------"
                     # for very first record
-                    or p == "\n----------------------------------------"):
+                    or p == "\n----------------------------------------"
+                    # for empty file
+                    or p == ""):
                         url = None
                         continue
                 if p.startswith(listof):
