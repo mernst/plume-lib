@@ -39,6 +39,8 @@ Ensure that the main documentation at index.html in the gh-pages branch document
 
 4. Run the make-plume-release script located in plume-lib/bin:
 
+[[TODO: The compilation that creates plume.jar needs to run every pluggable type-checker, so that defaulting is done correctly.]]
+
     cd plume-lib
     bin/make-plume-release x.y.z
 
