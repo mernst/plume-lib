@@ -97,7 +97,7 @@ def parse_checklink_output_file(file):
         paragraphs = f.read().split("\n\n")
         for p in paragraphs:
                 if debug: print ("<<<%s>>>" % p)
-        	if re.match("Processing	", p):
+        	if re.match("\n?Processing	", p):
                         url = p
                         continue
                 if (p == "----------------------------------------"
