@@ -1,3 +1,11 @@
+all-but-emacs: java git-hooks
+
+# This is not the default target, because it isn't strictly necessary to
+# compile the .el files and because errors can arise.  For example, to
+# compile or use bbdb-mew requires that the non-standard mew package is
+# installed.
+all: all-but-emacs emacs
+
 # Compile Java files
 .PHONY: java jar
 java:
@@ -5,16 +13,17 @@ java:
 jar:
 	${MAKE} -C java jar
 
+.PHONY: git-hooks
+git-hooks: .git/hooks/pre-commit .git/hooks/post-merge
+.git/hooks/pre-commit: bin/plume-lib.post-merge
+	cp -pf $< $@
+.git/hooks/post-merge: bin/plume-lib.post-merge
+	cp -pf $< $@
+
 # Compile Emacs Lisp files
 .PHONY: emacs
 emacs:
 	${MAKE} -C emacs
-
-# This is not the default target, because it isn't strictly necessary to
-# compile the .el files and because errors can arise.  For example, to
-# compile or use bbdb-mew requires that the non-standard mew package is
-# installed.
-all: java emacs
 
 # Remove files that should not appear in the release.
 # Don't run this unless making a release!  It removes files that appear in the version control system.
