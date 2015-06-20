@@ -1318,8 +1318,10 @@ public class MultiVersionControl {
       } else {
         // Directory does not exist
         File parent = dir.getParentFile();
-        if ((parent == null) && (action != CHECKOUT)) {
-          System.err.printf("Directory %s does not exist, nor does its parent%n", dir);
+        if (parent == null) {
+          // This happens when dir is the root directory.
+          // It doesn't happen merely when the parent doesn't yet exist.
+          System.err.printf("Directory %s does not exist, and it has no parent%n", dir);
           continue;
         }
         switch (action) {
