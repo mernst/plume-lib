@@ -1972,11 +1972,11 @@ Use as a hook, like so:
 ;;; Automatic compilation of changed files
 ;;;
 
-;; Emacs 19's local-write-file-hooks isn't the right thing, since it runs
-;; before the file is written.  Perhaps rather than this code, I should
-;; just add the hooks unconditionally, but have them check major-mode and
-;; perhaps do nothing.  That would be a bit less efficient, but would be
-;; less code.
+;; Emacs 19's local-write-file-hooks (or Emacs 22's write-file-functions)
+;; isn't the right thing, since it runs before the file is written.
+;; Perhaps rather than this code, I should just add the hooks
+;; unconditionally, but have them check major-mode and perhaps do nothing.
+;; That would be a bit less efficient, but would be less code.
 
 
 ;;; Ask to compile .el and .scm files after saving them.
