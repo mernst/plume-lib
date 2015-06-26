@@ -38,28 +38,30 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * This program, mvc for Multiple Version Control, lets you run a version
  * control command, such as "status" or "update", on a <b>set</b> of
- * CVS/SVN/Hg checkouts rather than just one.<p>
+ * CVS/Git/Hg/SVN checkouts rather than just one.<p>
  *
  * This program simplifies managing your checkouts/clones.  You might
- * want to know whether any of them have uncommitted changes, or you
- * might want to update all of them.  Or, when setting up a new account,
- * you might want to check them all out.  This program does any of those
- * tasks.  In particular, it accepts these arguments:
+ * want to update/pull all of them, or you might want to know whether any
+ * of them have uncommitted changes.  When setting up a new account,
+ * you might want to clone or check them all out.  This program does any
+ * of those tasks.  In particular, it accepts these arguments:
  * <pre>
- *   checkout  -- Check out all repositories.
+ *   checkout  -- Check out (clone) all repositories.
+ *   clone     -- Same as checkout.
  *   update    -- Update all checkouts.  For a distributed version control
- *                system such as Mercurial, also does a pull.
+ *                system such as Git or Mercurial, also does a pull.
+ *   pull      -- Same as update.
  *   status    -- Show files that are changed but not committed, or committed
  *                but not pushed, or have shelved/stashed changes.
- *   list      -- List the checkouts that this program is aware of.
+ *   list      -- List the checkouts/clones that this program is aware of.
  * </pre>
  * (The <tt>commit</tt> action is not supported, because that is not
- * something that should be done in an automated way.)<p>
+ * something that should be done in an automated way -- it needs a user-
+ * written commit message.)<p>
  *
- * You can specify the set of checkouts for the program to manage, or it
- * can search your directory structure to find all of your checkouts, or
- * both.  A command that you can run right away to list un-committed
- * changed files is:
+ * You can specify the set of checkouts/clones for the program to manage, or
+ * it can search your directory structure to find all of your checkouts, or
+ * both.  To list all un-committed changed files under your home directory:
  * <pre>java plume.MultiVersionControl status --search=true</pre>
  *
  * <b>Command-line arguments</b><p>
