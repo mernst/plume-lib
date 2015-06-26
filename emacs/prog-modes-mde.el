@@ -861,7 +861,8 @@ This is disabled on lines with a comment containing the string \"interned\"."
 
 (defun mde-xml-mode-hook ()
   "Michael Ernst's XML mode hook."
-  (if (string-equal "build.xml" (file-name-nondirectory (buffer-file-name)))
+  (if (and (buffer-file-name)
+	   (string-equal "build.xml" (file-name-nondirectory (buffer-file-name))))
       (local-set-key "\C-c\C-c" 'compile)))
 (add-hook 'sgml-mode-hook 'mde-xml-mode-hook)
 
