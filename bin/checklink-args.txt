@@ -168,6 +168,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Compiling-Daikon.html#Compiling-Daikon
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Dataflow-hierarchy.html#Dataflow-hierarchy
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Declarations.html#Declarations
+--suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Declaration-version.html#Declaration-version
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Instrumenting-C-programs.html#Instrumenting-C-programs
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/ListImplementors-declaration.html#ListImplementors-declaration
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/New-formatting-for-invariants.html#New-formatting-for-invariants
@@ -179,6 +180,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Track-logging.html#Track-logging
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
+--suppress-fragment http://plse.cs.washington.edu/daikon/download/doc/developer/Version-control-repository.html#Version-control-repository
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Complete-installation.html#Complete-installation
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Configuration-options.html#Configuration-options
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/daikon/Daikon-debugging-options.html#Daikon-debugging-options
@@ -195,6 +197,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Compiling-Daikon.html#Compiling-Daikon
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Dataflow-hierarchy.html#Dataflow-hierarchy
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Declarations.html#Declarations
+--suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Declaration-version.html#Declaration-version
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Instrumenting-C-programs.html#Instrumenting-C-programs
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/ListImplementors-declaration.html#ListImplementors-declaration
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/New-formatting-for-invariants.html#New-formatting-for-invariants
@@ -206,6 +209,7 @@
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Track-logging.html#Track-logging
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-comparability.html#Variable-comparability
 --suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
+--suppress-fragment http://plse.cs.washington.edu/daikon/staging-daikon/download/doc/developer/Version-control-repository.html#Version-control-repository
 
 # These are redirects, where I prefer to use the first, more canonical
 # URL rather than the one it redirects to.
