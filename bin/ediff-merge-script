@@ -71,12 +71,14 @@ else
   _EVAL_PREFIX2="(setq ediff-quit-hook 'kill-emacs)"
 fi
 
-# run emacsclient
+# run emacs or emacsclient
+# # For debugging
+# echo ${_EMACSCLIENT} ${_EMACSCLIENTOPTS} --eval "(progn ${_EVAL_PREFIX} ${_EVAL_PREFIX2} ${_EVAL})"
 ${_EMACSCLIENT} ${_EMACSCLIENTOPTS} --eval "(progn ${_EVAL_PREFIX} ${_EVAL_PREFIX2} ${_EVAL})" 2>&1
 
 
 # check modified file
-if [ ! $(egrep -c '^(<<<<<<<|=======|>>>>>>>|####### Ancestor)' ${_MERGED}) = 0 ]; then
+if [ ! $(egrep -c '^(<<<<<<<|=======|>>>>>>>|####### Ancestor)$' ${_MERGED}) = 0 ]; then
     _MERGEDSAVE=$(${_MKTEMP} --tmpdir `${_BASENAME} ${_MERGED}`.XXXXXXXXXX)
     ${_CP} ${_MERGED} ${_MERGEDSAVE}
     echo 1>&2 "Oops! Conflict markers detected in $_MERGED."
