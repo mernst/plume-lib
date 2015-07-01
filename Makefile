@@ -26,10 +26,11 @@ emacs:
 	${MAKE} -C emacs
 
 # Remove files that should not appear in the release.
-# Don't run this unless making a release!  It removes files that appear in the version control system.
+# Don't run this unless making a release!  And don't run it in your main clone!
+# It removes files that appear in the version control system.
 .PHONY: release-clean
 release-clean:
-	rm -f .hgignore .hgtags .hg_archival.txt
+	rm -rf .git .gitignore
 	${MAKE} -C java release_clean
 
 .PHONY: clean
