@@ -26,12 +26,17 @@ if [[ -z $new ]]; then
     exit 1
 fi
 
-if ! git status 2>&1 /dev/null; then
+if ! git status 2>&1 > /dev/null; then
     echo "$PWD is not a Git repository."
 fi
 
-if [[ -n $(git status -q) ]]; then
-    echo "Uncommitted changes; commit and push changes before making a release."
+if git diff --exit-code; then
+    echo "Unstaged local changes; stage, commit, and push changes before making a release."
+    exit 1
+fi
+
+if git diff --cached --exit-code; then
+    echo "Staged but uncommited local changes; stage and push changes before making a release."
     exit 1
 fi
 
@@ -96,7 +101,7 @@ done_release() {
     echo "Script complete."
     echo "To finalize the release, perform the following steps manually:"
     if ! $uploaded; then
-        echo "* Upload $release_tar to Google Code."
+        echo "* Upload $release_tar to GitHub."
     fi
     echo "* Push the newly created tag by running:  git push --tags"
     exit 0
