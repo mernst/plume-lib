@@ -105,8 +105,6 @@ endif
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
-CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} -proc:only
-
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
 # Leading "./" is for consistency with output of "find", so that names are
@@ -119,17 +117,6 @@ JAVA_FILES ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | s
 JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
-ifdef JSR308
-  CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
-endif
-ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/dist/checker.jar)" "${CHECKERFRAMEWORK}/checker/dist/checker.jar"
-  CLASSPATH := ${CHECKERFRAMEWORK}/checker/dist/checker.jar:${CLASSPATH}
-  ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/build)" "${CHECKERFRAMEWORK}/checker/build"
-    CLASSPATH := ${CHECKERFRAMEWORK}/checker/build:${CLASSPATH}
-  endif
-  JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
-endif
-
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
 # # On cygwin, translate the classpath and sourcepath to windows format.
@@ -141,6 +128,33 @@ endif
 #   endif
 #   TOOLS_JAR := '$(shell cygpath -w $(TOOLS_JAR))'
 # endif
+
+## Pluggable typechecking
+
+ifdef JSR308
+  CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
+endif
+ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/dist/checker.jar)" "${CHECKERFRAMEWORK}/checker/dist/checker.jar"
+  CLASSPATH := ${CHECKERFRAMEWORK}/checker/dist/checker.jar:${CLASSPATH}
+  ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/build)" "${CHECKERFRAMEWORK}/checker/build"
+    CLASSPATH := ${CHECKERFRAMEWORK}/checker/build:${CLASSPATH}
+  endif
+  JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+endif
+
+# Note that pluggable type-checking requires checker.jar (not just
+# checker-qual.jar) on the classpath.
+
+JAVACHECK_ARGS = -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker
+
+
+# JAVACHECK_EXTRA_ARGS ?= -classpath ${CHECKERFRAMEWORK}/checker/lib/java-getopt-1.0.14-annotated.jar:${CLASSPATH}
+
+JAVACHECK = ${CHECKERFRAMEWORK}/checker/bin/javac
+JAVACHECK_COMMAND = ${JAVACHECK} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} ${JAVACHECK_ARGS} ${JAVACHECK_EXTRA_ARGS}
+
+## ... end pluggable typechecking
+
 
 export CLASSPATH
 
@@ -160,7 +174,11 @@ compile_without_testing:  .class-files-timestamp
 # The timestamp file indicates when the files were last compiled.
 .class-files-timestamp: ${JAVA_AND_CPP_FILES}
 	${MAKE} tools_jar_exists
-	${JAVAC_COMMAND} ${JAVAC_EXTRA_ARGS} ${JAVA_FILES} 2>&1
+ifneq ("$(wildcard $(JAVACHECK))","")
+	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
+else
+	${JAVAC_COMMAND} ${JAVA_FILES} 2>&1
+endif
 	touch .class-files-timestamp
 
 # Remove most generated files, but not jar files which are desired in the release.
@@ -300,6 +318,7 @@ showvars:
 	@echo JAVA_HOME = "$(JAVA_HOME)"
 	@echo javac_cmd = $(javac_cmd)
 	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
+	@echo JAVACHECK_COMMAND = $(JAVACHECK_COMMAND)
 	@echo JDK_HOME = $(JDK_HOME)
 	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
@@ -442,55 +461,6 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 	rm -f plume.tar.gz
 	mv /tmp/plume.tar.gz .
 	rm -rf /tmp/plume
-
-
-
-###########################################################################
-### Pluggable type-checking
-###
-
-check-all: check-nullness-raw check-nullness-fbc check-interning check-regex check-signature
-
-## These targets require checker.jar (not just checker-qual.jar) on the classpath.
-
-CHECKER_ARGS ?= -source 7 -target 7 -Awarns
-
-JAVAC_NULLNESS_RAW_ARGS = -processor org.checkerframework.checker.nullness.NullnessRawnessChecker -implicit:class -Xlint:-processing -AcheckPurityAnnotations
-JAVAC_NULLNESS_FBC_ARGS = -processor org.checkerframework.checker.nullness.NullnessChecker -implicit:class -Xlint:-processing -AcheckPurityAnnotations
-# A user may set JAVAC_USER_NULLNESS_ARGS to override or augment the above.
-
-check-nullness: check-nullness-fbc
-
-check-nullness-both: check-nullness-raw check-nullness-fbc
-
-check-nullness-raw: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_RAW_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
-
-check-nullness-fbc: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_NULLNESS_FBC_ARGS} ${JAVAC_USER_NULLNESS_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
-
-JAVAC_INTERNING_ARGS = -processor org.checkerframework.checker.interning.InterningChecker -implicit:class -Xlint:-processing
-# A user may set JAVAC_USER_INTERNING_ARGS to override or augment the above.
-
-check-interning: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_INTERNING_ARGS} ${JAVAC_USER_INTERNING_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
-
-JAVAC_REGEX_ARGS = -processor org.checkerframework.checker.regex.RegexChecker -implicit:class -Xlint:-processing
-# A user may set JAVAC_USER_REGEX_ARGS to override or augment the above.
-
-check-regex: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_REGEX_ARGS} ${JAVAC_USER_REGEX_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
-
-JAVAC_FORMATTER_ARGS = -processor org.checkerframework.checker.formatter.FormatterChecker -implicit:class -Xlint:-processing
-
-check-formatter: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_FORMATTER_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
-
-JAVAC_SIGNATURE_ARGS = -processor org.checkerframework.checker.signature.SignatureChecker -implicit:class -Xlint:-processing
-# A user may set JAVAC_USER_SIGNATURE_ARGS to override or augment the above.
-
-check-signature: checkenv
-	${CHECKER_JAVAC_COMMAND} ${JAVAC_SIGNATURE_ARGS} ${JAVAC_USER_SIGNATURE_ARGS} ${CHECKER_ARGS} ${JAVA_FILES}
 
 
 

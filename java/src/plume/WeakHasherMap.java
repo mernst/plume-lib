@@ -117,7 +117,7 @@ import org.checkerframework.dataflow.qual.*;
  * @see		java.lang.ref.WeakReference
  */
 
-@SuppressWarnings({"nullness", "keyfor", "interning"}) // old, non-typesafe Sun code, not worth annotating or checking
+@SuppressWarnings({"nullness", "keyfor", "interning", "purity"}) // old, non-typesafe Sun code, not worth annotating or checking
 public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,V> {
 
     /* A WeakHashMap is implemented as a HashMap that maps WeakKeys to values.
@@ -127,11 +127,11 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
        allocation overhead is tolerable. */
 
     private Hasher hasher = null;
-    private boolean keyEquals(Object k1, Object k2) {
+    /*@Pure*/ private boolean keyEquals(Object k1, Object k2) {
 	return (hasher==null ? k1.equals(k2)
 			     : hasher.equals(k1, k2));
     }
-    private int keyHashCode(Object k1) {
+    /*@Pure*/ private int keyHashCode(Object k1) {
 	return (hasher==null ? k1.hashCode()
 			     : hasher.hashCode(k1));
     }
@@ -394,15 +394,15 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return ent.setValue(value);
 	}
 
-	private boolean keyvalEquals(K o1, K o2) {
+        /*@Pure*/ private boolean keyvalEquals(K o1, K o2) {
 	    return (o1 == null) ? (o2 == null) : keyEquals(o1, o2);
 	}
 
-	private boolean valEquals(V o1, V o2) {
+        /*@Pure*/ private boolean valEquals(V o1, V o2) {
 	    return (o1 == null) ? (o2 == null) : o1.equals(o2);
 	}
 
-	public boolean equals(Map.Entry<K,V> e /* Object o*/) {
+        /*@Pure*/ public boolean equals(Map.Entry<K,V> e /* Object o*/) {
             // if (! (o instanceof Map.Entry)) return false;
             // Map.Entry<K,V> e = (Map.Entry<K,V>)o;
 	    return (keyvalEquals(key, e.getKey())
