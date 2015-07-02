@@ -70,8 +70,8 @@ if ! git tag v$new &> /dev/null; then
 fi
 
 echo "[2/6] Running 'git archive'."
-if ! git archive -t files -r v$new "$release"; then
-    echo "Error running 'git archive'."
+if ! git clone . "$release"; then
+    echo "Error running 'git clone'."
     exit 1
 fi
 
@@ -100,10 +100,11 @@ done_release() {
     echo ""
     echo "Script complete."
     echo "To finalize the release, perform the following steps manually:"
-    if ! $uploaded; then
-        echo "* Upload $release_tar to GitHub."
-    fi
     echo "* Push the newly created tag by running:  git push --tags"
+    if ! $uploaded; then
+        echo "* Make a new relase on GitHub at https://github.com/mernst/plume-lib/releases/new"
+        echo "* Upload $release_tar to GitHub"
+    fi
     exit 0
 }
 
