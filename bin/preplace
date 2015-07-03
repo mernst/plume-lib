@@ -101,7 +101,7 @@ sub collect {
   # Never consider version control directories.
   # (This needs to be documented and customizable.)
   if ((-d $fullname)
-      && ($_ =~ /^(\.bzr|CVS|\.hg|\.svn)$/)) {
+      && ($_ =~ /^(\.bzr|CVS|\.git|\.hg|\.svn)$/)) {
     $File::Find::prune = 1;
   }
   if ((-f $fullname)
