@@ -403,12 +403,16 @@ public class MultiVersionControl {
     String action_string = remaining_args[0];
     if ("checkout".startsWith(action_string)) {
       action = CHECKOUT;
+    } else if ("clone".startsWith(action_string)) {
+      action = CHECKOUT;
+    } else if ("list".startsWith(action_string)) {
+      action = LIST;
+    } else if ("pull".startsWith(action_string)) {
+      action = UPDATE;
     } else if ("status".startsWith(action_string)) {
       action = STATUS;
     } else if ("update".startsWith(action_string)) {
       action = UPDATE;
-    } else if ("list".startsWith(action_string)) {
-      action = LIST;
     } else {
       options.print_usage("Unrecognized action \"%s\"", action_string);
       System.exit(1);
