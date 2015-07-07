@@ -19,6 +19,7 @@
 --exclude-docs http://types.cs.washington.edu/sparta/release/versions/
 --exclude-docs https://groups.csail.mit.edu/pag/cert/
 --exclude-docs https://pag.csail.mit.edu/pag/
+--exclude-docs http://pag.csail.mit.edu/pag/
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --exclude-docs http://www.w3.org/1999/xhtml/vocab/
 
