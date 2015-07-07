@@ -1061,6 +1061,7 @@ public class MultiVersionControl {
         break;
       case GIT:
         replacers.add(new Replacer("(^|\\n)fatal:", "$1fatal in " + dir + ":"));
+        replacers.add(new Replacer("(^|\\n)warning:", "$1warning in " + dir + ":"));
         break;
       case HG:
         // "real URL" is for bitbucket.org.  (Should be early in list.)
