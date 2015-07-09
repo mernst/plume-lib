@@ -1062,7 +1062,7 @@ public class MultiVersionControl {
       case GIT:
         replacers.add(new Replacer("(^|\\n)fatal:", "$1fatal in " + dir + ":"));
         replacers.add(new Replacer("(^|\\n)warning:", "$1warning in " + dir + ":"));
-        replacers.add(new Replacer("(^|\\n)(There is no tracking informtion for the current branch):", "$1" + dir + ": " + "$2"));
+        replacers.add(new Replacer("(^|\\n)(There is no tracking information for the current branch):", "$1" + dir + ": " + "$2"));
         break;
       case HG:
         // "real URL" is for bitbucket.org.  (Should be early in list.)
@@ -1469,9 +1469,10 @@ public class MultiVersionControl {
           System.out.println("preoutput=<<<" + output + ">>>");
         }
         for (Replacer r : replacers) {
+          if (debug_replacers) { System.out.println("midoutput_pre[" + r.regexp + "]=<<<" + output + ">>>"); }
           // Don't loop, because some regexps will continue to match repeatedly
           output = r.replaceAll(output);
-          if (debug_replacers) { System.out.println("midoutput[" + r.regexp + "]=<<<" + output + ">>>"); }
+          if (debug_replacers) { System.out.println("midoutput_post[" + r.regexp + "]=<<<" + output + ">>>"); }
         }
         if (debug_replacers || debug_process_output) {
           System.out.println("postoutput=<<<" + output + ">>>");
