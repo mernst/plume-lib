@@ -70,7 +70,7 @@ public class FuzzyFloat {
    * are not considered equal (consistent with the == operator). <p>
    *
    * Note that if one of the numbers if 0.0, then the other number must
-   * be less than the square of the fuzzy ratio.  This policy accomodates
+   * be less than the square of the fuzzy ratio.  This policy accommodates
    * round off errors in floating point values.
    *
    * @param d1 the first value to compare
@@ -95,7 +95,7 @@ public class FuzzyFloat {
       return (true);
 
     // when one number is 0, check that the other is less than the square
-    // of the fuzzy ration (accomodates round off errors in floating point
+    // of the fuzzy ration (accommodates round off errors in floating point
     // values)
 
     if (d1 == 0.0 || d2 == 0.0) {
