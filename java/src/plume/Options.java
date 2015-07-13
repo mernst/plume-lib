@@ -222,16 +222,16 @@ public class Options {
   /** Information about an option **/
   class OptionInfo {
 
-    /** Field containing the value of the option **/
+    /** What variable the option sets **/
     Field field;
 
-    /** Option information for the field **/
+    /** Option annotation on the field **/
     Option option;
 
     /** Object containing the field.  Null if the field is static. **/
     /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj;
 
-    /** Short (one character) argument name **/
+    /** Short (one-character) argument name **/
     /*@Nullable*/ String short_name;
 
     /** Long argument name **/
@@ -240,10 +240,10 @@ public class Options {
     /** Aliases for this option **/
     String[] aliases;
 
-    /** Argument description **/
+    /** Argument description: the first line **/
     String description;
 
-    /** Javadoc description **/
+    /** Full Javadoc description **/
     /*@Nullable*/ String jdoc;
 
     /**

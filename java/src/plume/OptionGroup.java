@@ -15,6 +15,11 @@ import java.lang.annotation.*;
  * the following <code>@Option</code>-annotated fields (including the one the
  * <code>@OptionGroup</code> annotation is applied to) belong to the same
  * option group.  Option groups are documented in {@link Options}.
+ * <p>
+ * 
+ * Note that <code>@OptionGroup</code> is applied to a field and must
+ * appear after that field's Javadoc comment, if any.  A Javadoc comment
+ * between {@code @OptionGroup} and the field is ignored.
  *
  * @see plume.Options
  * @see plume.Option

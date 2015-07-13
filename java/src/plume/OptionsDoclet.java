@@ -170,8 +170,9 @@ public class OptionsDoclet {
 
   private /*@Nullable*/ File docFile = null;
   private /*@Nullable*/ File outFile = null;
-  // If true, then docFile is non-null
+  /** If true, then edit docFile in place (and docFile is non-null). */
   private boolean inPlace = false;
+  /** If true, then output format is Javadoc */
   private boolean formatJavadoc = false;
   private boolean includeClassDoc = false;
 
@@ -671,10 +672,12 @@ public class OptionsDoclet {
     SeeTag[] seetags = doc.seeTags();
     if (seetags.length > 0) {
       b.append(" See: ");
-      StringBuilderDelimited bb = new StringBuilderDelimited(", ");
-      for (SeeTag tag : seetags)
-        bb.append("<code>" + tag.text() + "</code>");
-      b.append(bb);
+      {
+        StringBuilderDelimited bb = new StringBuilderDelimited(", ");
+        for (SeeTag tag : seetags)
+          bb.append("<code>" + tag.text() + "</code>");
+        b.append(bb);
+      }
       b.append(".");
     }
     return b.toString();
