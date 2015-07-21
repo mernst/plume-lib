@@ -218,8 +218,6 @@ tags: TAGS
 TAGS: ${JAVA_AND_CPP_FILES}
 	etags ${JAVA_AND_CPP_FILES}
 
-# This "set" form doesn't seem to work for me (maybe needs to be export?).
-# Used to depend on targets "clean all", but I want to run this in "all".
 test: .test-timestamp
 
 # Using compile_without_testing instead of .class-files-timestamp as the
