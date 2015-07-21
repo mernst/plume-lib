@@ -2,6 +2,8 @@
 *.elc
 *~
 TAGS
+bin/checklink-persistent-errors-test/errors1.output
+bin/checklink-persistent-errors-test/errors2.output
 java/.class-files-timestamp
 java/.javadoc-timestamp
 java/.optionsdoc-timestamp

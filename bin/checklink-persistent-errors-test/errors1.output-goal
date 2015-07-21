@@ -1,0 +1,38 @@
+
+----------------------------------------
+
+Processing	http://homes.cs.washington.edu/~mernst/advice/career-grant.html
+
+http://www.engr.washington.edu/curr_students/studentprogs/wise	
+  Line: 81
+  Code: 404 Not Found
+ To do: The link is broken. Double-check that you have not made any typo,
+	or mistake in copy-pasting. If the link points to a resource that
+	no longer exists, you may want to remove or fix the link.
+
+----------------------------------------
+
+Processing	http://homes.cs.washington.edu/~mernst/advice/organize-workshop.html
+
+https://homes.cs.washington.edu/~djg/	
+  Line: 14
+  Code: 500 Can't connect to homes.cs.washington.edu:443
+ To do: This is a server side problem. Check the URI.
+
+----------------------------------------
+
+Processing	http://homes.cs.washington.edu/~mernst/links2.html
+
+http://access.wa.gov/	
+  Line: 183
+  Code: 500 read timeout
+ To do: This is a server side problem. Check the URI.
+
+----------------------------------------
+
+Processing	http://homes.cs.washington.edu/~mernst/pubs/verify-distsystem-pldi2015-abstract.html
+
+https://homes.cs.washington.edu/~xi/	
+  Line: 28
+  Code: 500 Can't connect to homes.cs.washington.edu:443
+ To do: This is a server side problem. Check the URI.

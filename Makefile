@@ -1,10 +1,15 @@
-all-but-emacs: java git-hooks
+all-but-emacs: bin java git-hooks
 
 # This is not the default target, because it isn't strictly necessary to
 # compile the .el files and because errors can arise.  For example, to
 # compile or use bbdb-mew requires that the non-standard mew package is
 # installed.
 all: all-but-emacs emacs
+
+# Run tests
+.PHONY: bin
+bin:
+	${MAKE} -C bin
 
 # Compile Java files
 .PHONY: java jar

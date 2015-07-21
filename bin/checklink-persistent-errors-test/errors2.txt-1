@@ -1,0 +1,18 @@
+
+----------------------------------------
+
+Processing	http://www.cs.washington.edu/research/plse/publications
+
+
+List of broken links and other issues:
+http://dx.doi.org/10.1109/32.917525
+-> http://ieeexplore.ieee.org/Xplore/defdeny.jsp?url=http%3A%2F%2Fieeexplore.ieee.org%2FXplore%2Ferror.jsp&denyReason=-133&productsMatched=null&userType=inst	
+  Line: 1242
+  Code: 303 -> 302 Moved Temporarily
+ To do: This is a temporary redirect. Update the link if you believe it
+	makes sense, or leave it as is.
+
+http://www.cs.nmsu.edu/~jcook/woda2003/	
+  Line: 1184
+  Code: 500 Status read failed: Connection reset by peer
+ To do: This is a server side problem. Check the URI.
