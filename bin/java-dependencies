@@ -14,6 +14,10 @@
 #
 #  The list of all files used by <main> is written to standard out.
 
+debug=
+# For debugging
+# debug=1
+
 # get the arguments
 if [ $# -ne 3 ]; then
     echo `basename $0`" takes 3 arguments, but $# were supplied"
@@ -50,5 +54,9 @@ for file in $files; do
 done
 cd ..
     
-# remove the temporary directory
-/bin/rm -rf $scratch
+if [ $debug ]; then
+  echo "scratch = $scratch"
+else
+  # remove the temporary directory
+  /bin/rm -rf $scratch
+fi
