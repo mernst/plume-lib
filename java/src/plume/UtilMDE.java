@@ -786,26 +786,28 @@ public final class UtilMDE {
   ///
 
   /**
-   * This static nested class has no purpose but to define loadClassFromFile.
+   * This static nested class has no purpose but to define defineClassFromFile.
    * ClassLoader.defineClass is protected, so I subclass ClassLoader in
    * order to call defineClass.
    **/
   private static class PromiscuousLoader extends ClassLoader {
-    /** Load a class from a .class file, and return it.
-     * The real work is done by defineClass.
+    /**
+     * Converts the bytes in a file into an instance of
+     * class Class, and also resolves (links) the class.
+     * Delegates the real work to defineClass.
      * @see ClassLoader#defineClass(String,byte[],int,int)
-     * @param name The expected binary name of the class, or null if not known
+     * @param name The expected binary name of the class to define, or null if not known
      * @param pathname The file from which to load the class
      * @return The <tt>Class</tt> object that was created
      */
-    public Class<?> loadClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
+    public Class<?> defineClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
       FileInputStream fi = new FileInputStream(pathname);
       int numbytes = fi.available();
       byte[] classBytes = new byte[numbytes];
       fi.read(classBytes);
       fi.close();
       Class<?> return_class = defineClass(className, classBytes, 0, numbytes);
-      resolveClass(return_class);
+      resolveClass(return_class); // link the class
       return return_class;
     }
   }
@@ -813,14 +815,36 @@ public final class UtilMDE {
   private static PromiscuousLoader thePromiscuousLoader = new PromiscuousLoader();
 
   /**
-   * @param className the class to load
+   * Converts the bytes in a file into an instance of class Class, and
+   * resolves (links) the class.
+   * Like {@link ClassLoader#defineClass(String,byte[],int,int)}, but takes a
+   * file name rather than an array of bytes as an argument, and also resolves
+   * (links) the class.
+   * @see ClassLoader#defineClass(String,byte[],int,int)
+   * @param className the name of the class to define, or null if not known
    * @param pathname the pathname of a .class file
    * @return a Java Object corresponding to the Class defined in the .class file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    **/
+  // Also throws UnsupportedClassVersionError and some other exceptions.
+  public static Class<?> defineClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
+    return thePromiscuousLoader.defineClassFromFile(className, pathname);
+  }
+
+  /**
+   * Deprecated.  Use {@link #defineClassFromFile(String,String)} instead.
+   * @deprecated use {@link #defineClassFromFile(String,String)}.
+   * @param className the name of the class to define, or null if not known
+   * @param pathname the pathname of a .class file
+   * @return a Java Object corresponding to the Class defined in the .class file
+   * @throws FileNotFoundException if the file cannot be found
+   * @throws IOException if there is trouble reading the file
+   **/
+  // Also throws UnsupportedClassVersionError and some other exceptions.
+  @Deprecated
   public static Class<?> loadClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
-    return thePromiscuousLoader.loadClassFromFile(className, pathname);
+    return thePromiscuousLoader.defineClassFromFile(className, pathname);
   }
 
 
