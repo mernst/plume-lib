@@ -61,15 +61,15 @@ def main():
         urls = urls & r.viewkeys()
 
     for url in sorted(urls):
-        if debug_printing: print "processing URL: %s" % url
+        if debug_printing: print ("processing URL: %s" % url)
         persistent = results[0][url]
-        if debug_printing: print "initial persistent = %s" % persistent
+        if debug_printing: print ("initial persistent = %s" % persistent)
         for r in results:
-            # if debug_printing: print "r = %s" % r
-            if debug_printing: print "r[url] = %s" % r[url]
+            # if debug_printing: print ("r = %s" % r)
+            if debug_printing: print ("r[url] = %s" % r[url])
             persistent = [x for x in persistent if x in r[url]]
-            if debug_printing: print "persistent at end of loop = %s" % persistent
-        if debug_printing: print "final persistent = %s" % persistent
+            if debug_printing: print ("persistent at end of loop = %s" % persistent)
+        if debug_printing: print ("final persistent = %s" % persistent)
         if len(persistent) > 0:
             print
             print "----------------------------------------"
@@ -127,7 +127,7 @@ def parse_checklink_output_file(file):
             result[url] = []
         if debug_parsing: print ("adding to result[%s]: <<<%s>>>" % (url, p))
         result[url].append(p)
-        if debug_parsing: print "result = %s" % result
+        if debug_parsing: print ("result = %s" % result)
 
     return result
 
