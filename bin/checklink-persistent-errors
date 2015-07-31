@@ -56,9 +56,9 @@ def main():
         results.append(parse_checklink_output_file(file))
         # pp.pprint()
     
-    urls = results[0].viewkeys()
+    urls = set(results[0].keys())
     for r in results:
-        urls = urls & r.viewkeys()
+        urls = urls & set(r.keys())
 
     for url in sorted(urls):
         if debug_printing: print ("processing URL: %s" % url)
