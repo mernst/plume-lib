@@ -37,7 +37,7 @@ debug_printing=False
 def main():
 
     if len(sys.argv) != 3:
-        print ("%s requires exactly 2 arguments, got %d" % (sys.argv[0], len(sys.argv)-1))
+        print("%s requires exactly 2 arguments, got %d" % (sys.argv[0], len(sys.argv)-1))
         exit(1)
     basename = sys.argv[1]
     instances = int(sys.argv[2])
@@ -61,24 +61,24 @@ def main():
         urls = urls & set(r.keys())
 
     for url in sorted(urls):
-        if debug_printing: print ("processing URL: %s" % url)
+        if debug_printing: print("processing URL: %s" % url)
         persistent = results[0][url]
-        if debug_printing: print ("initial persistent = %s" % persistent)
+        if debug_printing: print("initial persistent = %s" % persistent)
         for r in results:
-            # if debug_printing: print ("r = %s" % r)
-            if debug_printing: print ("r[url] = %s" % r[url])
+            # if debug_printing: print("r = %s" % r)
+            if debug_printing: print("r[url] = %s" % r[url])
             persistent = [x for x in persistent if x in r[url]]
-            if debug_printing: print ("persistent at end of loop = %s" % persistent)
-        if debug_printing: print ("final persistent = %s" % persistent)
+            if debug_printing: print("persistent at end of loop = %s" % persistent)
+        if debug_printing: print("final persistent = %s" % persistent)
         if len(persistent) > 0:
-            print
-            print "----------------------------------------"
-            print
-            print url
+            print()
+            print("----------------------------------------")
+            print()
+            print(url)
             # It's not worth outputting "List of broken links and other issues:"
             for report in persistent:
-                print
-                print report
+                print()
+                print(report)
 
 
 def paragraphs(fileobj, separator='\n'):
@@ -98,13 +98,13 @@ listof2 = "\nList of redirects\n"
 
 def parse_checklink_output_file(file):
     "Returns a map from URLs to list of problem reports for the URL"
-    if debug_parsing: print ("parse_checklink_output_file: %s" % file)
+    if debug_parsing: print("parse_checklink_output_file: %s" % file)
     result = {}
     url = None
     f = open(file, 'r')
     paragraphs = f.read().split("\n\n")
     for p in paragraphs:
-        if debug_parsing: print ("url = %s, paragraph = <<<%s>>>" % (url, p))
+        if debug_parsing: print("url = %s, paragraph = <<<%s>>>" % (url, p))
         if re.match("\n?Processing\t", p):
             url = p
             continue
@@ -121,13 +121,13 @@ def parse_checklink_output_file(file):
             p = p[len(listof2):]
         if p.endswith("\n"):
             p = p[:-1]
-        if debug_parsing: print ("Cleaned-up paragraph: <<<%s>>>" % p)
-        if (url == None): print ("bad url None for <<<%s>>>" % p)
+        if debug_parsing: print("Cleaned-up paragraph: <<<%s>>>" % p)
+        if (url == None): print("bad url None for <<<%s>>>" % p)
         if not (url in result):
             result[url] = []
-        if debug_parsing: print ("adding to result[%s]: <<<%s>>>" % (url, p))
+        if debug_parsing: print("adding to result[%s]: <<<%s>>>" % (url, p))
         result[url].append(p)
-        if debug_parsing: print ("result = %s" % result)
+        if debug_parsing: print("result = %s" % result)
 
     return result
 
