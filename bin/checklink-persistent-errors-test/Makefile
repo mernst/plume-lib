@@ -7,3 +7,6 @@ errors1.output: ../checklink-persistent-errors
 
 errors2.output: ../checklink-persistent-errors
 	../checklink-persistent-errors errors2.txt 2 > $@
+
+clean:
+	rm -f errors1.output errors2.output
