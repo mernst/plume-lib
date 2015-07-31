@@ -23,10 +23,12 @@
 
 import glob
 import os
-import pprint
-pp = pprint.PrettyPrinter()
 import re
 import sys
+
+# For debugging
+import pprint
+pp = pprint.PrettyPrinter()
 
 DEBUG_PARSING = False
 DEBUG_PRINTING = False
@@ -54,7 +56,6 @@ def main():
     for i in range(0, instances):
         file = files[-(i+1)]
         results.append(parse_checklink_output_file(file))
-        # pp.pprint()
 
     urls = set(results[0].keys())
     for r in results:
@@ -71,13 +72,13 @@ def main():
             if DEBUG_PRINTING: print("persistent at end of loop = %s" % persistent)
         if DEBUG_PRINTING: print("final persistent = %s" % persistent)
         if len(persistent) > 0:
-            print()
+            print("")
             print("----------------------------------------")
-            print()
+            print("")
             print(url)
             # It's not worth outputting "List of broken links and other issues:"
             for report in persistent:
-                print()
+                print("")
                 print(report)
 
 
