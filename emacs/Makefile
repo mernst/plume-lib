@@ -5,4 +5,4 @@ ELC_FILES = $(patsubst %.el,%.elc,$(EL_FILES))
 compile: ${ELC_FILES}
 
 %.elc: %.el
-	emacs -batch -l ${HOME}/.emacs -f batch-byte-compile $<
+	emacs -q --batch --eval "(add-to-list 'load-path \".\")" -f batch-byte-compile $<
