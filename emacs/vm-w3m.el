@@ -36,7 +36,7 @@
 
 (require 'vm-version nil 'noerror)			; required by vm-mime
 (require 'vm-mime nil 'noerror)
-(require 'w3m)
+(require 'w3m nil 'noerror)
 
 (defvar vm-message-pointer)
 (defvar vm-mode-map)
