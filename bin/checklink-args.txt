@@ -222,6 +222,8 @@
 --suppress-redirect http://cascade.org/->http://cascade.org/Home/
 # Temporary until checkerframework.org is the canonical website
 --suppress-redirect http://checkerframework.org/->http://types.cs.washington.edu/checker-framework/
+# Don't redirect http://checker-framework.org/ because we shouldn't even be using it; it exists to catch typos.
+# --suppress-redirect http://checker-framework.org/->http://types.cs.washington.edu/checker-framework/
 --suppress-redirect http://defects4j.org/->http://homes.cs.washington.edu/~rjust/defects4j/
 --suppress-redirect http://doi.ieeecomputersociety.org/10.1109/TSE.2006.90->http://www.computer.org/csdl/trans/ts/2006/09/e0718-abs.html
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
