@@ -168,12 +168,9 @@ public class BCELUtil {
    * @return true iff the class is part of the JDK (rt.jar)
    */
   public static boolean in_jdk(String classname) {
-    return classname.startsWith("java.") || classname.startsWith("com.sun.")
-      || classname.startsWith("javax.") || classname.startsWith("org.ietf.")
-      || classname.startsWith("org.omg.") || classname.startsWith("org.w3c.")
-      || classname.startsWith("org.xml.") || classname.startsWith("sun.")
-      || classname.startsWith("[")
-      || classname.startsWith("sunw.");
+    return classname.startsWith("java.") || classname.startsWith("com.")
+      || classname.startsWith("javax.") || classname.startsWith("org.")
+      || classname.startsWith("sun.") || classname.startsWith("sunw.");
   }
 
   /**
