@@ -20,7 +20,7 @@ jar:
 
 .PHONY: git-hooks
 git-hooks: .git/hooks/pre-commit .git/hooks/post-merge
-.git/hooks/pre-commit: bin/plume-lib.post-merge
+.git/hooks/pre-commit: bin/plume-lib.pre-commit
 	cp -pf $< $@
 .git/hooks/post-merge: bin/plume-lib.post-merge
 	cp -pf $< $@
