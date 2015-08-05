@@ -62,7 +62,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.7.jar:lib/commons-io-1.4.jar:lib/commons-lang-2.6.jar:lib/commons-logging-1.1.1.jar:lib/ical4j.jar:lib/ini4j-0.5.1.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.jar:lib/xom-1.2.1.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -102,7 +102,7 @@ endif
 
 # Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx800m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
@@ -153,6 +153,7 @@ JAVACHECK_ARGS = -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing 
 ## For testing -AsafeDefaultsForUnannotatedBytecode, uncomment:
 # JAVACHECK_EXTRA_ARGS ?= -AsafeDefaultsForUnannotatedBytecode -AprintErrorStack -classpath ${CHECKERFRAMEWORK}/checker/lib/java-getopt-1.0.14-annotated.jar:${CLASSPATH}
 
+# JAVACHECK has to be a single file name.
 JAVACHECK = ${CHECKERFRAMEWORK}/checker/bin/javac
 JAVACHECK_COMMAND = ${JAVACHECK} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} ${JAVACHECK_ARGS} ${JAVACHECK_EXTRA_ARGS}
 
@@ -373,16 +374,16 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.7.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-io-1.4.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.1.1.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/ical4j.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_5)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.

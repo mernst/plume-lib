@@ -14,8 +14,8 @@ import java.lang.reflect.*;
 import com.sun.javadoc.*;
 
 import java.lang.Class;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -482,7 +482,7 @@ public class OptionsDoclet {
             if (fd.getRawCommentText().length() == 0) {
               // Input is a string rather than a Javadoc (HTML) comment so we
               // must escape it.
-              oi.jdoc = StringEscapeUtils.escapeHtml(oi.description);
+              oi.jdoc = StringEscapeUtils.escapeHtml4(oi.description);
             } else if (formatJavadoc) {
               oi.jdoc = fd.commentText();
             } else {
@@ -633,7 +633,7 @@ public class OptionsDoclet {
       String default_str = "default " + oi.default_str;
       // The default string must be HTML escaped since it comes from a string
       // rather than a Javadoc comment.
-      f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml(default_str));
+      f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml4(default_str));
     }
     if (oi.base_type.isEnum()) {
       b.append("<ul>");
