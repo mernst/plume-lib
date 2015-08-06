@@ -12,4 +12,5 @@ notifications:
     - mernst@cs.washington.edu
 
 after-success:
-  - bin/trigger-travis.sh mernst randoop JajuCi2u6gf8gABmQPAdxg
+  - bin/trigger-travis.sh mernst randoop 
+  - curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token JajuCi2u6gf8gABmQPAdxg" -d '{"request": {"branch":"master"}}' https://api.travis-ci.org/repo/mernst%2Frandoop/requests
