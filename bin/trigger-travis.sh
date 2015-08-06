@@ -1,19 +1,21 @@
 #!/bin/sh -f
 
 # Trigger a new Travis-CI job
-# Add the following section to your .travis.yml file:
+# Add something the following section to your .travis.yml file:
 #
 # after-success:
-#   - trigger-travis.sh mernst randoop JajuCi2u6gf8gABmQPAdxg
+#   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT MYTRAVISTOKEN
+#
+# Determine MYTRAVISTOKEN via:  travis login && travis token
+# You may need to first do:  sudo apt-get install ruby-dev && gem install travis
+# This differs from the token available at https://travis-ci.org/profile
 
 
 # Question: is there a way to do this without putting the token in the
 # travis.yml file?  According to
 # http://blog.travis-ci.com/2013-01-28-token-token-token/, "it's not super
-# secret", but it would still be nice not to include it.
-
-
-# From http://docs.travis-ci.com/user/triggering-builds/
+# secret", but nonetheless it would be preferable not to include it in the
+# publicly-visible .travis.yaml file.
 
 # An alternative would be to install the Travis command-line client and
 # then run, for example,
@@ -21,11 +23,10 @@
 # That is undesirable because it deletes an old job and loses its history,
 # rather than starting a new one.
 
+# This script was taken from http://docs.travis-ci.com/user/triggering-builds/
 
 USER=$1
 REPO=$2
-# This is *not* the token available at https://travis-ci.org/profile
-# Determine the token via: sudo apt-get install ruby-dev && gem install travis && travis login && travis token
 TOKEN=$3
 
 body='{
