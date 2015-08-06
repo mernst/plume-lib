@@ -14,7 +14,7 @@ bin:
 # Compile Java files
 .PHONY: java jar
 java:
-	${MAKE} -C java jar javadoc
+	${MAKE} -C java all
 jar:
 	${MAKE} -C java jar
 
