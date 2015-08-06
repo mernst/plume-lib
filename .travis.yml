@@ -10,3 +10,6 @@ jdk:
 notifications:
   email:
     - mernst@cs.washington.edu
+
+after-success:
+  - bin/trigger-travis.sh mernst randoop JajuCi2u6gf8gABmQPAdxg
