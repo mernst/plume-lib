@@ -8,7 +8,7 @@ The plume-lib homepage has moved to http://mernst.github.io/plume-lib/
 The plume-lib repository has moved to https://github.com/mernst/plume-lib.git
 New programs:
   add-favicon:  adds a favicon to webpages (image appears in browser tabs)
-  checklink-persistent-errors:  ignores transient http errors
+  checklink-persistent-errors:  ignores transient HTTP errors
   ediff-merge-script and git-auto-invoke-mergetool.sh:  Git support
 Updated Java libraries: bcel.jar (for Java 8) junit.jar svnkit.jar (for SVN 1.8)
 MultiVersionControl:  improved Git support; --dry-run is default for 'checkout';
