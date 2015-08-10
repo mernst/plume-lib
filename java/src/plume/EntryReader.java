@@ -36,17 +36,15 @@ import org.checkerframework.checker.regex.qual.*;
  *
  * Example use:
  * <pre>
- *  EntryReader er;
- *  try {
- *    // args are filename, comment regexp, include regexp
- *    er = new EntryReader(filename, "^#.*", null);
+ *  // args are filename, comment regexp, include regexp
+ *  try (EntryReader er = new EntryReader(filename, "^#.*", null)) {
+ *    for (String line : er) {
+ *      ...
+ *    }
  *  } catch (IOException e) {
- *    System.err.println("Unable to read " + filename);
+ *    System.err.println("Problem reading " + filename + ": " + e.getMessage());
  *    System.exit(2);
  *    throw new Error("This can't happen"); // for definite assignment check
- *  }
- *  for (String line : er) {
- *    ...
  *  }
  * </pre>
  *
@@ -244,7 +242,10 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   private static class DummyReader extends Reader {
     @Override
-    public void close() { throw new Error("DummyReader"); }
+    public void close() {
+      // No error, because closing is OK if it appears in try-with-resources.
+      // Later maybe create two versions (with and without exception here).
+    }
     @Override
     public void mark(int readAheadLimit) { throw new Error("DummyReader"); }
     @Override

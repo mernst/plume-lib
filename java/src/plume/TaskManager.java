@@ -246,20 +246,21 @@ public class TaskManager {
     // Read in each specified task file
     for (String filename : filenames) {
       filename = UtilMDE.expandFilename (filename);
-      EntryReader reader = new EntryReader (filename, comment_re, include_re);
-      while (true) {
-        EntryReader.Entry entry = reader.get_entry();
-        if (entry == null) break;
-        try {
-          tasks.add (new Task (entry.body, entry.filename, entry.line_number));
-        } catch (IOException e) {
-          throw new Error ("Error parsing " + entry.filename + " at line "
-                           + entry.line_number, e);
+      try (EntryReader reader = new EntryReader (filename, comment_re, include_re)) {
+        while (true) {
+          EntryReader.Entry entry = reader.get_entry();
+          if (entry == null) break;
+          try {
+            tasks.add (new Task (entry.body, entry.filename, entry.line_number));
+          } catch (IOException e) {
+            throw new Error ("Error parsing " + entry.filename + " at line "
+                             + entry.line_number, e);
+          }
         }
       }
     }
   }
-
+  
   public static void main (String args[]) throws IOException {
 
     Options options = new Options (usage_string, TaskManager.class);
@@ -280,7 +281,7 @@ public class TaskManager {
     if (verbose) {
       System.out.printf ("All tasks:%n");
       for (Task task : tm.tasks) {
-        System.out.printf ("%s\n\n", task.all_vals());
+        System.out.printf ("%s%n%n", task.all_vals());
       }
     }
 

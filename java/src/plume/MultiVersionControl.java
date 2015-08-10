@@ -1018,7 +1018,7 @@ public class MultiVersionControl {
     pb.command(command);
   }
 
-  private class Replacer {
+  private static class Replacer {
     /*@Regex*/ String regexp;
     String replacement;
     public Replacer(/*@Regex*/ String regexp, String replacement) {
@@ -1383,19 +1383,16 @@ public class MultiVersionControl {
   // calling "hg showconfig".  This hack is good enough for now.
   private /*@Nullable*/ String defaultPath(File dir) {
     File hgrc = new File(new File(dir, ".hg"), "hgrc");
-    EntryReader er;
-    try {
-      // args are filename, comment regexp, include regexp
-      er = new EntryReader(hgrc, "^#.*", null);
+    try (EntryReader er = new EntryReader(hgrc, "^#.*", null)) {
+      for (String line : er) {
+        Matcher m = defaultPattern.matcher(line);
+        if (m.matches()) {
+          return m.group(1);
+        }
+      }
     } catch (IOException e) {
       // System.out.printf("IOException: " + e);
       return null;
-    }
-    for (String line : er) {
-      Matcher m = defaultPattern.matcher(line);
-      if (m.matches()) {
-        return m.group(1);
-      }
     }
     return null;
   }
@@ -1525,7 +1522,7 @@ public class MultiVersionControl {
 //       if ($result == -1) {
 //         print "failed to execute: $command_redirected: $!\n";
 //       } elsif ($result & 127) {
-//         printf "child died with signal %d, %s coredump\n",
+//         printf "child died with signal %d, %s coredump%n",
 //         ($result & 127),  ($result & 128) ? 'with' : 'without';
 //       } else {
 //         # Problem:  diff returns failure status if there were differences
@@ -1545,7 +1542,7 @@ public class MultiVersionControl {
 //       }
 //       if ($debug && $show_directory) {
 //         print "show-directory: $dir:\n";
-//         printf "tmpfile size: %d, zeroness: %d, non-zeroness %d\n", (-s $tmpfile), (-z $tmpfile), (! -z $tmpfile);
+//         printf "tmpfile size: %d, zeroness: %d, non-zeroness %d%n", (-s $tmpfile), (-z $tmpfile), (! -z $tmpfile);
 //       }
 //       if ((! -z $tmpfile) && $show_directory) {
 //         print "$dir:\n";

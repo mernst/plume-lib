@@ -46,36 +46,33 @@ public class BibtexClean {
         System.exit(2);
         throw new Error("This can't happen"); // for definite assignment check
       }
-      EntryReader er;
-      try {
-        er = new EntryReader(filename);
-      } catch (IOException e) {
-        System.err.println("Unable to read " + in);
-        System.exit(2);
-        throw new Error("This can't happen"); // for definite assignment check
-      }
-      for (String line : er) {
-        if (line.equals("") || line.startsWith("%")) {
-          out.println(line);
-        } else if (line.startsWith("@")) {
-          if (stringDef.matcher(line).matches()) {
+      try (EntryReader er = new EntryReader(filename)) {
+        for (String line : er) {
+          if (line.equals("") || line.startsWith("%")) {
             out.println(line);
-          } else {
-            out.println(line);
-            while (er.hasNext() && ((line = er.next()) != null)) {
+          } else if (line.startsWith("@")) {
+            if (stringDef.matcher(line).matches()) {
               out.println(line);
-              if (entry_end.matcher(line).lookingAt()) {
-                break;
-              } else if (line.equals("")) {
-                System.err.printf("%s:%d: unterminated entry%n",
-                                  er.getFileName(), er.getLineNumber());
-                break;
+            } else {
+              out.println(line);
+              while (er.hasNext() && ((line = er.next()) != null)) {
+                out.println(line);
+                if (entry_end.matcher(line).lookingAt()) {
+                  break;
+                } else if (line.equals("")) {
+                  System.err.printf("%s:%d: unterminated entry%n",
+                                    er.getFileName(), er.getLineNumber());
+                  break;
+                }
               }
             }
           }
         }
+      } catch (IOException e) {
+        System.err.println("Problem reading " + in + ": " + e.getMessage());
+        System.exit(2);
+        throw new Error("This can't happen"); // for definite assignment check
       }
-      out.close();
     }
   }
 

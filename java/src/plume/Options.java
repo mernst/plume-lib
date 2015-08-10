@@ -225,8 +225,8 @@ public class Options {
     /** What variable the option sets **/
     Field field;
 
-    /** Option annotation on the field **/
-    Option option;
+//    /** Option annotation on the field **/
+//    Option option;
 
     /** Object containing the field.  Null if the field is static. **/
     /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj;
@@ -298,7 +298,7 @@ public class Options {
      */
     OptionInfo (Field field, Option option, /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj, boolean unpublicized) {
       this.field = field;
-      this.option = option;
+//      this.option = option;
       this.obj = obj;
       this.base_type = field.getType();
       this.unpublicized = unpublicized;
@@ -377,7 +377,6 @@ public class Options {
           if (base_type == Pattern.class) {
             factory = Pattern.class.getMethod ("compile", String.class);
           } else { // look for a string constructor
-            assert base_type != null; // nullness checker: problem with flow
             constructor = base_type.getConstructor (String.class);
           }
         } catch (Exception e) {
@@ -435,7 +434,7 @@ public class Options {
   }
 
   /** Information about an option group **/
-  class OptionGroupInfo {
+  static class OptionGroupInfo {
 
     /** The name of this option group **/
     String name;

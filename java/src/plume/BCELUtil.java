@@ -43,9 +43,9 @@ public class BCELUtil {
   private static final Type string_array = Type.getType("[Ljava.lang.String;");
 
   static void dump_method_declarations(ClassGen gen) {
-    out.printf("method signatures for class %s\n", gen.getClassName());
+    out.printf("method signatures for class %s%n", gen.getClassName());
     for (Method m : gen.getMethods()) {
-      out.printf("  %s\n", get_method_declaration(m));
+      out.printf("  %s%n", get_method_declaration(m));
     }
   }
 
@@ -179,9 +179,9 @@ public class BCELUtil {
    */
   static void dump_methods(ClassGen gen) {
 
-    System.out.printf("Class %s methods:\n", gen.getClassName());
+    System.out.printf("Class %s methods:%n", gen.getClassName());
     for (Method m : gen.getMethods())
-      System.out.printf("  %s\n", m);
+      System.out.printf("  %s%n", m);
   }
 
   /**
@@ -194,7 +194,7 @@ public class BCELUtil {
       return;
 
     try {
-      mgen.toString();
+      mgen.toString();         // ensure it can be formatted without exceptions
       mgen.getLineNumberTable(mgen.getConstantPool());
 
       InstructionList ilist = mgen.getInstructionList();
@@ -210,7 +210,7 @@ public class BCELUtil {
           .getConstantPool());
       nmg.getLineNumberTable(mgen.getConstantPool());
     } catch (Throwable t) {
-      System.out.printf("failure in method %s.%s\n", mgen.getClassName(), mgen
+      System.out.printf("failure in method %s.%s%n", mgen.getClassName(), mgen
           .getName());
       t.printStackTrace();
       throw new Error(t);
@@ -245,7 +245,7 @@ public class BCELUtil {
       for (int ii = 2; ii < ste.length; ii++)
         System.out.printf(" [%s line %d]", ste[ii].getFileName(), ste[ii]
             .getLineNumber());
-      System.out.printf("\n");
+      System.out.printf("%n");
       dump_methods(gen);
     }
   }
@@ -305,42 +305,42 @@ public class BCELUtil {
       PrintStream p = new PrintStream(path);
 
       // Print the class, super class and interfaces
-      p.printf("class %s extends %s\n", jc.getClassName(), jc
+      p.printf("class %s extends %s%n", jc.getClassName(), jc
           .getSuperclassName());
       String[] inames = jc.getInterfaceNames();
       if ((inames != null) && (inames.length > 0)) {
         p.printf("   ");
         for (String iname : inames)
           p.printf("implements %s ", iname);
-        p.printf("\n");
+        p.printf("%n");
       }
 
       // Print each field
-      p.printf("\nFields\n");
+      p.printf("%nFields%n");
       for (Field f : jc.getFields())
-        p.printf("  %s\n", f);
+        p.printf("  %s%n", f);
 
       // Print the signature of each method
-      p.printf("\nMethods\n");
+      p.printf("%nMethods%n");
       for (Method m : jc.getMethods())
-        p.printf("  %s\n", m);
+        p.printf("  %s%n", m);
 
       // If this is not an interface, print the code for each method
       if (!jc.isInterface()) {
         for (Method m : jc.getMethods()) {
-          p.printf("\nMethod %s\n", m);
+          p.printf("%nMethod %s%n", m);
           Code code = m.getCode();
           if (code != null)
-            p.printf("  %s\n", code.toString().replace("\n", "\n  "));
+            p.printf("  %s%n", code.toString().replace("\n", "\n  "));
         }
       }
 
       // Print the details of the constant pool.
-      p.printf("Constant Pool:\n");
+      p.printf("Constant Pool:%n");
       ConstantPool cp = jc.getConstantPool();
       Constant[] constants = cp.getConstantPool();
       for (int ii = 0; ii < constants.length; ii++) {
-        p.printf("  %d %s\n", ii, constants[ii]);
+        p.printf("  %d %s%n", ii, constants[ii]);
       }
 
       p.close();
@@ -372,12 +372,12 @@ public class BCELUtil {
    */
   public static String local_var_descr(MethodGen mg) {
 
-    String out = String.format("Locals for %s [cnt %d]\n", mg, mg
+    String out = String.format("Locals for %s [cnt %d]%n", mg, mg
         .getMaxLocals());
     LocalVariableGen[] lvgs = mg.getLocalVariables();
     if ((lvgs != null) && (lvgs.length > 0)) {
       for (LocalVariableGen lvg : lvgs)
-        out += String.format("  %s [index %d]\n", lvg, lvg.getIndex());
+        out += String.format("  %s [index %d]%n", lvg, lvg.getIndex());
     }
     return (out);
   }

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 //Can't "import java.util.*;" because of Date, etc.
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -138,7 +139,7 @@ public class ICalAvailable {
   @Option("enable debugging output")
   public static boolean debug = false;
 
-  /** The appointments (the times that are unavailable for meeting) */
+  /** The appointments (the times that are unavailable for a meeting) */
   static List<Calendar> calendars = new ArrayList<Calendar>();
 
   static DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
@@ -153,7 +154,7 @@ public class ICalAvailable {
     Options options = new Options ("ICalAvailable [options]", ICalAvailable.class);
     String[] remaining_args = options.parse_or_usage (args);
     if (remaining_args.length != 0) {
-      System.err.println("Unrecognized arguments: " + remaining_args);
+      System.err.println("Unrecognized arguments: " + Arrays.toString(remaining_args));
       System.exit(1);
     }
     if (iCal_URL.isEmpty()) {

@@ -1208,6 +1208,7 @@ public final class TestPlume extends TestCase {
     assert MathMDE.gcd_differences(new int[] {0, 768, 1092}) == 12;
     assert MathMDE.gcd_differences(new int[] {0, 2400, 2448, 2484}) == 12;
     assert MathMDE.gcd_differences(new int[] {0, 2400, 2472, 2508}) == 12;
+    assert MathMDE.gcd_differences(new int[] {5, 5, 5, 5}) == 0;
 
     // int mod_positive(int x, int y)
     assert MathMDE.mod_positive(33, 5) == 3;
@@ -1303,11 +1304,13 @@ public final class TestPlume extends TestCase {
     testModulus.check(new int[] {3,7}, null);
     testModulus.check(new int[] {2,3,5,7}, null);
     testModulus.check(new int[] {2,19,101}, null);
+    testModulus.check(new int[] {5,5,5,5,5}, null);
 
     testModulus.check_iterator(new int[] {3,7,47,51}, new int[] { 3,4 });
     testModulus.check_iterator(new int[] {3,11,43,51}, new int[] { 3,8 });
     testModulus.check_iterator(new int[] {3,11,47,55}, new int[] { 3,4 });
     testModulus.check_iterator(new int[] {2383,4015,-81,463,-689}, new int[] { 15,32 });
+    testModulus.check_iterator(new int[] {5,5,5,5,5}, null);
 
 
     // int[] nonmodulus_strict(int[] nums)
@@ -1776,7 +1779,7 @@ public final class TestPlume extends TestCase {
       class OddFilter implements Filter<Integer> {
         public OddFilter() { }
         public boolean accept(Integer i) {
-          return i.intValue() % 2 == 1;
+          return i.intValue() % 2 != 0;
         }
       }
 
@@ -1784,7 +1787,7 @@ public final class TestPlume extends TestCase {
 
       Vector<Integer> iota10_odd = new Vector<Integer>();
       for (int i=0; i<iota10.size(); i++)
-        if (i%2 == 1)
+        if (i%2 != 0)
           iota10_odd.add(new Integer(i));
       assert iota10_odd.equals(toVector(new UtilMDE.FilteredIterator<Integer>(iota10.iterator(), new OddFilter())));
 
@@ -2964,7 +2967,7 @@ public final class TestPlume extends TestCase {
       // should fail: can not leave out _ or -
       options.parse(new String[] {"--firstPass", "smartrle"});
       assert false;
-    } catch (Exception e) {
+    } catch (plume.Options.ArgException e) {
     }
   }
 
@@ -2973,7 +2976,7 @@ public final class TestPlume extends TestCase {
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
     String[] sa = UtilMDE.splitLines (str);
     // for (String s : sa)
-    //   System.out.printf ("'%s'\n", s);
+    //   System.out.printf ("'%s'%n", s);
     assert sa.length == 11;
     assert sa[0].equals("one");
     assert sa[1].equals("two");

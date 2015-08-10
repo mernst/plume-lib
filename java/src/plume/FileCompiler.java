@@ -10,8 +10,8 @@ import org.checkerframework.checker.regex.qual.*;
 */
 
 /**
- * This class has methods {@link #compile_source(String)} and {@link
- * #compile_source(List)} that compile Java source files.
+ * This class has method {@link #compileFiles(List)}
+ * that compiles Java source files.
  * It invokes a user-specified external command, such as <tt>javac</tt> or
  * <tt>jikes</tt>.
  **/
@@ -108,15 +108,14 @@ public final class FileCompiler {
     return compile_errors;
   }
 
-  /**
-   * @param filename the path of the Java source to be compiled
-   **/
-  private TimeLimitProcess compile_source(String filename) throws IOException {
-    String command = compiler + " " + filename;
-    // System.out.println ("\nexecuting compile command: " + command);
-
-    return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
-  }
+//   /**
+//    * @param filename the path of the Java source to be compiled
+//    **/
+//   private TimeLimitProcess compile_source(String filename) throws IOException {
+//     String command = compiler + " " + filename;
+//     // System.out.println ("\nexecuting compile command: " + command);
+//     return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
+//   }
 
   /**
    * @param filenames the paths of the java source to be compiled as Strings.

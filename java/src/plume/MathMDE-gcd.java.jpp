@@ -57,7 +57,7 @@ The correct way to build the system is to run 'make'.
    * Return the gcd (greatest common divisor) of the differences
    * between the elements of INT array a.
    * @param a array of operands
-   * @return greatest common divisor of the differentes between the elements of a
+   * @return greatest common divisor of the differences between the elements of a
    */
   public static INT gcd_differences(INT[] a) {
     // Euclid's method

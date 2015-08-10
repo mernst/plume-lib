@@ -32,7 +32,7 @@ The correct way to build the system is to run 'make'.
       return null;
 
     INT modulus = Math.abs(gcd_differences(nums));
-    if (modulus == 1)
+    if ((modulus == 0) || (modulus == 1))
       return null;
 
     INT remainder = nums[0] % modulus;

@@ -462,7 +462,7 @@ public final class Intern {
    **/
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/ public static long /*@Interned*/ [] intern(long[] a) {
-    //System.out.printf ("intern %s %s long[] %s\n", a.getClass(),
+    //System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
     if (lookup != null) {

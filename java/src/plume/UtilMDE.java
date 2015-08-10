@@ -883,10 +883,11 @@ public final class UtilMDE {
    * @throws IOException if there is trouble reading the file
    **/
   public static long count_lines(String filename) throws IOException {
-    LineNumberReader reader = UtilMDE.lineNumberFileReader(filename);
     long count = 0;
-    while (reader.readLine() != null)
-      count++;
+    try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
+      while (reader.readLine() != null)
+        count++;
+    }
     return count;
   }
 
@@ -905,41 +906,42 @@ public final class UtilMDE {
    * @throws IOException if there is trouble reading the file
    */
   public static String inferLineSeparator(File file) throws IOException {
-    BufferedReader r = UtilMDE.bufferedFileReader(file);
-    int unix = 0;
-    int dos = 0;
-    int mac = 0;
-    while (true) {
-      String s = r.readLine();
-      if (s == null) {
-        break;
+    try (BufferedReader r = UtilMDE.bufferedFileReader(file)) {
+      int unix = 0;
+      int dos = 0;
+      int mac = 0;
+      while (true) {
+        String s = r.readLine();
+        if (s == null) {
+          break;
+        }
+        if (s.endsWith("\r\n")) {
+          dos++;
+        } else if (s.endsWith("\r")) {
+          mac++;
+        } else if (s.endsWith("\n")) {
+          unix++;
+        } else {
+          // This can happen only if the last line is not terminated.
+        }
       }
-      if (s.endsWith("\r\n")) {
-        dos++;
-      } else if (s.endsWith("\r")) {
-        mac++;
-      } else if (s.endsWith("\n")) {
-        unix++;
-      } else {
-        // This can happen only if the last line is not terminated.
+      if ((dos > mac && dos > unix)
+          || (lineSep.equals("\r\n") && dos >= unix && dos >= mac)) {
+        return "\r\n";
       }
+      if ((mac > dos && mac > unix)
+          || (lineSep.equals("\r") && mac >= dos && mac >= unix)) {
+        return "\r";
+      }
+      if ((unix > dos && unix > mac)
+          || (lineSep.equals("\n") && unix >= dos && unix >= mac)) {
+        return "\n";
+      }
+      // The two non-preferred line endings are tied and have more votes than
+      // the preferred line ending.  Give up and return the line separator
+      // for the system on which Java is currently running.
+      return lineSep;
     }
-    if ((dos > mac && dos > unix)
-        || (lineSep.equals("\r\n") && dos >= unix && dos >= mac)) {
-      return "\r\n";
-    }
-    if ((mac > dos && mac > unix)
-        || (lineSep.equals("\r") && mac >= dos && mac >= unix)) {
-      return "\r";
-    }
-    if ((unix > dos && unix > mac)
-        || (lineSep.equals("\n") && unix >= dos && unix >= mac)) {
-      return "\n";
-    }
-    // The two non-preferred line endings are tied and have more votes than
-    // the preferred line ending.  Give up and return the line separator
-    // for the system on which Java is currently running.
-    return lineSep;
   }
 
 
@@ -963,9 +965,8 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity")   // reads files, side effects local state
   /*@Pure*/ public static boolean equalFiles(String file1, String file2, boolean trimLines) {
-    try {
-      LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
-      LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2);
+    try (LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
+         LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2);) {
       String line1 = reader1.readLine();
       String line2 = reader2.readLine();
       while (line1 != null && line2 != null) {
@@ -984,8 +985,8 @@ public final class UtilMDE {
       }
       return false;
     } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
+      throw new RuntimeException(e);
+    }
   }
 
 
@@ -1054,12 +1055,16 @@ public final class UtilMDE {
     String path = System.getProperty("java.io.tmpdir") + fs +
       System.getProperty("user.name") + fs;
     File pathFile =  new File(path);
-    pathFile.mkdirs();
+    if (! pathFile.mkdirs()) {
+      throw new IOException("Could not create directory: " + pathFile);
+    }
     File tmpfile = File.createTempFile(prefix + "_", "_", pathFile);
     String tmpDirPath = tmpfile.getPath() + suffix;
     tmpfile.delete();
     File tmpDir = new File(tmpDirPath);
-    tmpDir.mkdirs();
+    if (! tmpDir.mkdirs()) {
+      throw new IOException("Could not create directory: " + tmpDir);
+    }
     return tmpDir;
   }
 
@@ -2623,7 +2628,6 @@ public final class UtilMDE {
   public static String removeWhitespaceBefore(String arg, String delimiter) {
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
     // String orig = arg;
-    int delim_len = delimiter.length();
     int delim_index = arg.indexOf(delimiter);
     while (delim_index > -1) {
       int non_ws_index = delim_index-1;

@@ -140,7 +140,7 @@ public class RandomSelector<T> {
                 values.add (next);
             }
             else {
-                int rem = (int) (values.size() * generator.nextDouble());
+                int rem = generator.nextInt(values.size());
                 values.set (rem, next);
             }
         }
