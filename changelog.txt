@@ -3,6 +3,9 @@ However, the recommended way to use the latest version of plume-lib is
 by cloning its repository; run:
   git clone https://github.com/mernst/plume-lib.git
 
+plume-lib 1.0.7, released ??
+plume-lib now requires Java 7.
+
 plume-lib 1.0.6, released July 1, 2015
 The plume-lib homepage has moved to http://mernst.github.io/plume-lib/
 The plume-lib repository has moved to https://github.com/mernst/plume-lib.git
