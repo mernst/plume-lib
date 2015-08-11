@@ -2967,7 +2967,7 @@ public final class TestPlume extends TestCase {
       // should fail: can not leave out _ or -
       options.parse(new String[] {"--firstPass", "smartrle"});
       assert false;
-    } catch (plume.Options.ArgException e) {
+    } catch (ArgException e) {
     }
   }
 
