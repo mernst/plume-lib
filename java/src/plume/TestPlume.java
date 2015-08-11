@@ -2961,12 +2961,12 @@ public final class TestPlume extends TestCase {
     assert TestOptionsEnums.secondPass == TestOptionsEnums.Compressor.HUFFMAN;
   }
 
-  public static void testOptionsEnumsFail() throws ArgException {
+  public static void testOptionsEnumsFail() {
     Options options = new Options("test", TestOptionsEnums.class);
     try {
       // should fail: can not leave out _ or -
       options.parse(new String[] {"--firstPass", "smartrle"});
-      assert false;
+      org.junit.Assert.fail("Didn't throw ArgException as expected");
     } catch (plume.Options.ArgException e) {
     }
   }
