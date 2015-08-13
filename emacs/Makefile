@@ -6,3 +6,6 @@ compile: ${ELC_FILES}
 
 %.elc: %.el
 	emacs -q --batch --eval "(add-to-list 'load-path \".\")" -f batch-byte-compile $<
+
+clean:
+	rm -f *.elc
