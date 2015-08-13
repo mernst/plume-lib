@@ -355,14 +355,14 @@ public class BCELUtil {
   public static String instruction_descr(InstructionList il,
       ConstantPoolGen pool) {
 
-    String out = "";
+    StringBuilder out = new StringBuilder();
     // not generic because BCEL is not generic
     for (Iterator i = il.iterator(); i.hasNext();) {
       @SuppressWarnings("nullness") // BCEL's InstructionList is raw (non-generic) but contains only non-null elements
       /*@NonNull*/ InstructionHandle handle = (InstructionHandle) i.next();
-      out += handle.getInstruction().toString(pool.getConstantPool()) + "\n";
+      out.append(handle.getInstruction().toString(pool.getConstantPool()) + "\n");
     }
-    return (out);
+    return (out.toString());
   }
 
   /**
@@ -372,14 +372,14 @@ public class BCELUtil {
    */
   public static String local_var_descr(MethodGen mg) {
 
-    String out = String.format("Locals for %s [cnt %d]%n", mg, mg
-        .getMaxLocals());
+    StringBuilder out = new StringBuilder();
+    out.append(String.format("Locals for %s [cnt %d]%n", mg, mg.getMaxLocals()));
     LocalVariableGen[] lvgs = mg.getLocalVariables();
     if ((lvgs != null) && (lvgs.length > 0)) {
       for (LocalVariableGen lvg : lvgs)
-        out += String.format("  %s [index %d]%n", lvg, lvg.getIndex());
+        out.append(String.format("  %s [index %d]%n", lvg, lvg.getIndex()));
     }
-    return (out);
+    return (out.toString());
   }
 
   /**

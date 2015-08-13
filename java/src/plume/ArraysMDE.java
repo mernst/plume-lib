@@ -3,6 +3,7 @@
 
 package plume;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -2478,7 +2479,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
    **/
-  public static final class IntArrayComparatorLexical implements Comparator<int[]> {
+  public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
@@ -2508,7 +2511,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
    **/
-  public static final class LongArrayComparatorLexical implements Comparator<long[]> {
+  public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
@@ -2538,7 +2543,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
    **/
-  public static final class DoubleArrayComparatorLexical implements Comparator<double[]> {
+  public static final class DoubleArrayComparatorLexical implements Comparator<double[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
@@ -2569,7 +2576,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * Strings).
    **/
-  public static final class StringArrayComparatorLexical implements Comparator<String[]> {
+  public static final class StringArrayComparatorLexical implements Comparator<String[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
@@ -2608,7 +2617,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
    **/
-  public static final class ComparableArrayComparatorLexical<T extends Comparable<T>> implements Comparator<T[]> {
+  public static final class ComparableArrayComparatorLexical<T extends Comparable<T>> implements Comparator<T[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
@@ -2650,7 +2661,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
    **/
-  public static final class ObjectArrayComparatorLexical implements Comparator<Object[]> {
+  public static final class ObjectArrayComparatorLexical implements Comparator<Object[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
@@ -2692,7 +2705,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
    **/
-  public static final class IntArrayComparatorLengthFirst implements Comparator<int[]> {
+  public static final class IntArrayComparatorLengthFirst implements Comparator<int[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
@@ -2724,7 +2739,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
    **/
-  public static final class LongArrayComparatorLengthFirst implements Comparator<long[]> {
+  public static final class LongArrayComparatorLengthFirst implements Comparator<long[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
@@ -2756,7 +2773,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
    **/
-  public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>> implements Comparator<T[]> {
+  public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>> implements Comparator<T[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
@@ -2800,7 +2819,9 @@ public final class ArraysMDE {
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
    **/
-  public static final class ObjectArrayComparatorLengthFirst implements Comparator<Object[]> {
+  public static final class ObjectArrayComparatorLengthFirst implements Comparator<Object[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
+
     /**
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare

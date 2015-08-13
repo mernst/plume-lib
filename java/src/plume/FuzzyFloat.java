@@ -1,5 +1,6 @@
 package plume;
 
+import java.io.Serializable;
 import java.util.*;
 
 /*>>>
@@ -314,7 +315,8 @@ public class FuzzyFloat {
    * Lexically compares two double arrays.
    */
 
-  public class DoubleArrayComparatorLexical implements Comparator<double[]> {
+  public class DoubleArrayComparatorLexical implements Comparator<double[]>, Serializable {
+    static final long serialVersionUID = 20150812L;
 
     /**
      * Lexically compares o1 and o2 as double arrays.

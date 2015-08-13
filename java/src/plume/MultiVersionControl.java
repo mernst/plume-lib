@@ -541,7 +541,7 @@ public class MultiVersionControl {
 
 
     @Override
-    @SuppressWarnings("interning") // interning checker bug (or at least weakness)
+    @SuppressWarnings("interning")
     /*@Pure*/ public boolean equals(/*@Nullable*/ Object other) {
       if (! (other instanceof Checkout))
         return false;
@@ -549,10 +549,10 @@ public class MultiVersionControl {
       return ((repoType == c2.repoType)
               && directory.equals(c2.directory)
               && ((repository == null)
-                  ? (repository == c2.repository)
+                  ? (c2.repository == null)
                   : repository.equals(c2.repository))
               && ((module == null)
-                  ? (module == c2.module)
+                  ? (c2.module == null)
                   : module.equals(c2.module)));
     }
 

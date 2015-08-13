@@ -804,8 +804,12 @@ public final class UtilMDE {
       FileInputStream fi = new FileInputStream(pathname);
       int numbytes = fi.available();
       byte[] classBytes = new byte[numbytes];
-      fi.read(classBytes);
+      int bytesRead = fi.read(classBytes);
       fi.close();
+      if (bytesRead < numbytes) {
+        throw new Error(String.format("Expected to read %d bytes from %s, got %d",
+                                      numbytes, pathname, bytesRead));
+      }
       Class<?> return_class = defineClass(className, classBytes, 0, numbytes);
       resolveClass(return_class); // link the class
       return return_class;
@@ -1030,7 +1034,7 @@ public final class UtilMDE {
 
   /**
    * Creates an empty directory in the default temporary-file directory,
-   * using the given prefix and suffix to generate its name. For example
+   * using the given prefix and suffix to generate its name. For example,
    * calling createTempDir("myPrefix", "mySuffix") will create the following
    * directory: temporaryFileDirectory/myUserName/myPrefix_someString_suffix.
    * someString is internally generated to ensure no temporary files of the
@@ -1054,13 +1058,15 @@ public final class UtilMDE {
     String fs = File.separator;
     String path = System.getProperty("java.io.tmpdir") + fs +
       System.getProperty("user.name") + fs;
-    File pathFile =  new File(path);
+    File pathFile = new File(path);
     if (! pathFile.mkdirs()) {
       throw new IOException("Could not create directory: " + pathFile);
     }
     File tmpfile = File.createTempFile(prefix + "_", "_", pathFile);
     String tmpDirPath = tmpfile.getPath() + suffix;
-    tmpfile.delete();
+    // What was the point of this "tmpfile.delete()"?  tmpfile isn't a file
+    // that we ever use, we merely append to its name.
+    // tmpfile.delete();
     File tmpDir = new File(tmpDirPath);
     if (! tmpDir.mkdirs()) {
       throw new IOException("Could not create directory: " + tmpDir);
@@ -1071,27 +1077,27 @@ public final class UtilMDE {
 
   /**
    * Deletes the directory at dirName and all its files.
-   * Fails if dirName has any subdirectories.
    * @param dirName the directory to delete
+   * @return true if and only if the file or directory is successfully deleted; false otherwise
    */
-  public static void deleteDir(String dirName) {
-    deleteDir(new File(dirName));
+  public static boolean deleteDir(String dirName) {
+    return deleteDir(new File(dirName));
   }
 
   /**
    * Deletes the directory at dir and all its files.
-   * Fails if dir has any subdirectories.
    * @param dir the directory to delete
+   * @return true if and only if the file or directory is successfully deleted; false otherwise
    */
-  public static void deleteDir(File dir) {
+  public static boolean deleteDir(File dir) {
     File[] files = dir.listFiles();
     if (files == null) {
-      return;
+      return false;
     }
     for (int i = 0; i < files.length; i++) {
       files[i].delete();
     }
-    dir.delete();
+    return dir.delete();
   }
 
 
@@ -2728,8 +2734,10 @@ public final class UtilMDE {
    * and place them at the beginning.
    */
   public static class NullableStringComparator
-    implements Comparator<String>
+    implements Comparator<String>, Serializable
   {
+    static final long serialVersionUID = 20150812L;
+
     /*@Pure*/ public int compare(String s1, String s2) {
       if (s1 == null && s2 == null) return 0;
       if (s1 == null && s2 != null) return 1;

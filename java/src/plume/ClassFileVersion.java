@@ -52,7 +52,9 @@ public class ClassFileVersion {
       }
 
       if (filename.endsWith(".class")) {
-        processClassFile(filename, new FileInputStream(filename));
+        try (FileInputStream fis = new FileInputStream(filename)) {
+          processClassFile(filename, fis);
+        }
       } else if (filename.endsWith(".jar")) {
         JarFile jarFile = new JarFile(filename);
         for (Enumeration<JarEntry> e = jarFile.entries(); e.hasMoreElements();) {
@@ -60,8 +62,9 @@ public class ClassFileVersion {
           String entryName = entry.getName();
           // Should really process recursively included jar files...
           if (entryName.endsWith(".class")) {
-            InputStream is = jarFile.getInputStream(entry);
-            processClassFile(filename + ":" + entryName, is);
+            try (InputStream is = jarFile.getInputStream(entry)) {
+              processClassFile(filename + ":" + entryName, is);
+            }
           }
         }
       } else {

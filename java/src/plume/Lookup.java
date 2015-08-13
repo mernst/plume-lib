@@ -391,7 +391,6 @@ public class Lookup {
       if (line == null)
         return (null);
 
-      String body = "";
       Entry entry = null;
       String filename = reader.getFileName();
       long line_number = reader.getLineNumber();
@@ -406,11 +405,12 @@ public class Lookup {
         line = line.replaceFirst ("^>entry *", "");
         String first_line = line;
 
+        StringBuilder body = new StringBuilder();
         // Read until we find the termination of the entry
         while ((line != null) && !line.startsWith (">entry") &&
                !line.equals ("<entry")
                && current_filename.equals (reader.getFileName())) {
-          body += line + lineSep;
+          body.append(line); body.append(lineSep);
           line = reader.readLine();
         }
 
@@ -420,19 +420,20 @@ public class Lookup {
                            || !current_filename.equals (reader.getFileName())))
           reader.putback (line);
 
-        entry = new Entry (first_line, body, filename, line_number, false);
+        entry = new Entry (first_line, body.toString(), filename, line_number, false);
 
       } else { // blank separated entry
 
         String first_line = line;
 
+        StringBuilder body = new StringBuilder();
         // Read until we find another blank line
         while ((line != null) && (line.trim().length() != 0)) {
-          body += String.format ("%s%n", line);
+          body.append(line); body.append(lineSep);
           line = reader.readLine();
         }
 
-        entry = new Entry (first_line, body, filename, line_number, true);
+        entry = new Entry (first_line, body.toString(), filename, line_number, true);
       }
 
       return (entry);

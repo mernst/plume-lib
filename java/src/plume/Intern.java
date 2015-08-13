@@ -853,7 +853,7 @@ public final class Intern {
   // // Note: this comparator imposes orderings that are inconsistent with equals.
   // // That is, it may return 0 if the arrays are not equal (but do contain
   // // identical numbers).
-  // static final class IntArrayComparator implements Comparator {
+  // static final class IntArrayComparator implements Comparator, Serializable {
   //   /*@Pure*/ public int compare(Object o1, Object o2) {
   //     if (o1 == o2)
   //       return 0;
@@ -875,7 +875,7 @@ public final class Intern {
   // // Note: this comparator imposes orderings that are inconsistent with equals.
   // // That is, it may return 0 if the arrays are not equal (but do contain
   // // identical objects).
-  // static final class ObjectArrayComparator implements Comparator {
+  // static final class ObjectArrayComparator implements Comparator, Serializable {
   //   /*@Pure*/ public int compare(Object o1, Object o2) {
   //     if (o1 == o2)
   //       return 0;

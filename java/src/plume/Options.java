@@ -892,7 +892,7 @@ public class Options {
     for (int ii = 0; ii < args.length(); ii++) {
       char ch = args.charAt (ii);
       if ((ch == '\'') || (ch == '"')) {
-        arg+= ch;
+        arg += ch;
         ii++;
         while ((ii < args.length()) && (args.charAt(ii) != ch))
           arg += args.charAt(ii++);

@@ -86,9 +86,8 @@ public class StrTok {
 
     // Get the next token.  Turn IO exceptions into runtime exceptions
     // so that callers don't have to catch them.
-    int ttype;
     try {
-      ttype = stok.nextToken();
+      stok.nextToken();
     } catch (Exception e) {
       throw new RuntimeException ("StreamTokenizer exception: ", e);
     }

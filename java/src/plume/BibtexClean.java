@@ -38,15 +38,8 @@ public class BibtexClean {
   public static void main(String[] args) {
     for (String filename : args) {
       File in = new File(filename);
-      PrintWriter out;
-      try {
-        out = new PrintWriter(UtilMDE.bufferedFileWriter(in.getName())); // in current directory
-      } catch (IOException e) {
-        System.err.println("Unable to write " + in.getName());
-        System.exit(2);
-        throw new Error("This can't happen"); // for definite assignment check
-      }
-      try (EntryReader er = new EntryReader(filename)) {
+      try (PrintWriter out = new PrintWriter(UtilMDE.bufferedFileWriter(in.getName())); // in current directory
+           EntryReader er = new EntryReader(filename)) {
         for (String line : er) {
           if (line.equals("") || line.startsWith("%")) {
             out.println(line);
@@ -69,9 +62,8 @@ public class BibtexClean {
           }
         }
       } catch (IOException e) {
-        System.err.println("Problem reading " + in + ": " + e.getMessage());
+        System.err.println("Problem reading or writing " + in + ": " + e.getMessage());
         System.exit(2);
-        throw new Error("This can't happen"); // for definite assignment check
       }
     }
   }

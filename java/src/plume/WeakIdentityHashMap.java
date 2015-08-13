@@ -975,7 +975,7 @@ public class WeakIdentityHashMap<K,V>
                 return false;
             Map.Entry e = (Map.Entry)o;
             Object k = e.getKey();
-            Entry candidate = getEntry(e.getKey());
+            Entry candidate = getEntry(k);
             return candidate != null && candidate.equals(e);
         }
 
