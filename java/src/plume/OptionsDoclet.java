@@ -91,8 +91,12 @@ import org.checkerframework.checker.signature.qual.*;
  * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java</pre>
  * <p>
  *
+ * For a more extensive example, see file <tt>java/Makefile</tt> in
+ * plume-lib itself.
+ * <p>
+ *
  * <b>Requirements</b> <p>
- * Classes passed to OptionsDoclet that have <code>@Option</code> annotations on
+ * Classes passed to OptionsDoclet that have <code>@</code>{@link Option} annotations on
  * non-static fields should have a nullary (no-argument) constructor.  The
  * nullary constructor may be private or public.  This is required because an
  * object instance is needed to get the default value of a non-static field.  It
@@ -226,6 +230,11 @@ public class OptionsDoclet {
       }
     }
 
+    if (objs.isEmpty()) {
+      System.out.println("Error: no classes found");
+      return false;
+    }
+
     Object[] objarray = objs.toArray();
     Options options = new Options(objarray);
     if (options.getOptions().size() < 1) {
@@ -302,7 +311,7 @@ public class OptionsDoclet {
         }
         File f = new File(os[1]);
         if (!f.exists()) {
-          reporter.printError("file not found: " + os[1]);
+          reporter.printError("-docfile file not found: " + os[1]);
           return false;
         }
         docFile = os[1];
