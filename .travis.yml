@@ -12,4 +12,4 @@ notifications:
     - mernst@cs.washington.edu
 
 after_success:
-  - bin/trigger-travis.sh codespecs daikon JajuCi2u6gf8gABmQPAdxg
+  - bin/trigger-travis.sh codespecs daikon $TRAVISTOKEN

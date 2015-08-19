@@ -1,29 +1,31 @@
 #!/bin/sh -f
 
 # Trigger a new Travis-CI job
-# Add something the following section to your .travis.yml file:
+
+# Add one of the following after-success blocks to your .travis.yml file:
 #
 # after-success:
-#   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT MYTRAVISTOKEN
+#   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $MYTRAVISTOKEN
 #
-# Determine MYTRAVISTOKEN via:  travis login && travis token
+# after-success:
+#   - echo Triggering build of MYGITHUBID/MYGITHUBPROJECT
+#   - curl -s https://raw.githubusercontent.com/mernst/plume-lib/master/bin/trigger-travis.sh > trigger-travis.sh
+#   - bash trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
+#   - rm trigger-travis.sh
+#
+# and also set an environment variable TRAVISTOKEN by navigating to
+# https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
+# Determine the value of TRAVISTOKEN via:  travis login && travis token
 # You may need to first do:  sudo apt-get install ruby-dev && gem install travis
 # This differs from the token available at https://travis-ci.org/profile
 
-
-# Question: is there a way to do this without putting the token in the
-# travis.yml file?  According to
-# http://blog.travis-ci.com/2013-01-28-token-token-token/, "it's not super
-# secret", but nonetheless it would be preferable not to include it in the
-# publicly-visible .travis.yaml file.
-
-# An alternative would be to install the Travis command-line client and
-# then run, for example,
+# An alternative to this script would be to install the Travis command-line
+# client and then run, for example,
 #   travis restart -r mernst/plume-lib
 # That is undesirable because it deletes an old job and loses its history,
-# rather than starting a new one.
+# rather than starting a new job which is our goal.
 
-# This script was taken from http://docs.travis-ci.com/user/triggering-builds/
+# This script was originally taken from http://docs.travis-ci.com/user/triggering-builds/
 
 USER=$1
 REPO=$2
