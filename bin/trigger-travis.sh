@@ -12,10 +12,8 @@
 # after-success:
 #   - echo Triggering build of MYGITHUBID/MYGITHUBPROJECT
 #   - curl -s https://raw.githubusercontent.com/mernst/plume-lib/master/bin/trigger-travis.sh > trigger-travis.sh
-#   - bash trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
+#   - sh trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
 #   - rm trigger-travis.sh
-#
-# or, alternatively, put the commands in your travis build script.
 #
 # 2. Set an environment variable TRAVISTOKEN by navigating to
 #   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
