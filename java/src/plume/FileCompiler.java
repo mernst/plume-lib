@@ -32,7 +32,15 @@ public final class FileCompiler {
     try {
       @SuppressWarnings("regex") // output of escapeNonJava() can appear in a character class in a regex
       /*@Regex(1)*/ String java_filename_re
-        = "([^" + UtilMDE.escapeNonJava(File.separator) + "]+)\\.java";
+      // A javac error message may consist of several lines of output.
+      // The filename will be found at the beginning of the first line,
+      // the additional lines of information will all be indented.
+      // (?m) turns on MULTILINE mode so the first "^" matches the
+      // start of each error line output by javac. The blank space after
+      // the second "^" is intentional; together with the first "^", this
+      // says a filename can only be found at the start of a non-indented
+      // line as noted above.
+        = "(?m)^([^ " + UtilMDE.escapeNonJava(File.separator) + "]+?)\\.java";
       java_filename_pattern = Pattern.compile(java_filename_re);
     } catch (PatternSyntaxException me) {
       me.printStackTrace();
@@ -207,17 +215,10 @@ public final class FileCompiler {
   private static String getClassName(String sourceFilePath) {
     int dotIndex = sourceFilePath.lastIndexOf('.');
     int slashIndex = sourceFilePath.lastIndexOf(File.separator);
-    if (dotIndex == -1) {
+    if ((dotIndex == -1) || (dotIndex < slashIndex)) {
         throw new IllegalArgumentException("sourceFilePath: " +
                                            sourceFilePath +
                                            " must end with an extention.");
-    } else if (slashIndex == -1) {
-      slashIndex = 0;
-    }
-    if (dotIndex < slashIndex) {
-      throw new IllegalArgumentException("sourceFilePath: " +
-                                         sourceFilePath +
-                                         " must end with an extention.");
     }
     return sourceFilePath.substring(slashIndex + 1, dotIndex);
   }
