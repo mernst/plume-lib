@@ -19,9 +19,8 @@ public final class FileCompiler {
 
   public static Runtime runtime = java.lang.Runtime.getRuntime();
   /**
-   * Matches the names of Java source files, without directory name.
-   * Match group 1 is the class name:  the base filename without the
-   * ".java" extension..
+   * Matches the names of Java source files.
+   * Match group 1 is the complete filename.
    **/
   static /*@Regex(1)*/ Pattern java_filename_pattern;
   /** External command used to compile Java files. **/
@@ -40,7 +39,7 @@ public final class FileCompiler {
       // the second "^" is intentional; together with the first "^", this
       // says a filename can only be found at the start of a non-indented
       // line as noted above.
-        = "(?m)^([^ " + UtilMDE.escapeNonJava(File.separator) + "]+?)\\.java";
+        = "(?m)^([^ ]+?\\.java)";
       java_filename_pattern = Pattern.compile(java_filename_re);
     } catch (PatternSyntaxException me) {
       me.printStackTrace();
@@ -171,7 +170,7 @@ public final class FileCompiler {
         sourceFileName = sourceFileName.trim();
         String classFilePath = getClassFilePath(sourceFileName);
         if (! fileExists(classFilePath)) {
-          if (! errorClasses.contains(getClassName(sourceFileName))) {
+          if (! errorClasses.contains(sourceFileName)) {
             retry.add(sourceFileName);
             filenames += " " + sourceFileName;
           }
@@ -191,7 +190,6 @@ public final class FileCompiler {
     }
   }
 
-
   /**
    * Return the file path to where a class file for a source
    * file at sourceFilePath would be generated.
@@ -203,24 +201,7 @@ public final class FileCompiler {
                                          + sourceFilePath +
                                          " must end with an extention.");
     }
-    String classFilePath = sourceFilePath.substring(0, index);
-    classFilePath = classFilePath + ".class";
-    return classFilePath;
-  }
-
-  /**
-   * Returns the name of the class that sourceFilePath is
-   * a path for.
-   */
-  private static String getClassName(String sourceFilePath) {
-    int dotIndex = sourceFilePath.lastIndexOf('.');
-    int slashIndex = sourceFilePath.lastIndexOf(File.separator);
-    if ((dotIndex == -1) || (dotIndex < slashIndex)) {
-        throw new IllegalArgumentException("sourceFilePath: " +
-                                           sourceFilePath +
-                                           " must end with an extention.");
-    }
-    return sourceFilePath.substring(slashIndex + 1, dotIndex);
+    return sourceFilePath.substring(0, index) + ".class";
   }
 
   private static boolean fileExists(String pathName) {
