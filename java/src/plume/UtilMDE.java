@@ -1059,18 +1059,21 @@ public final class UtilMDE {
     String path = System.getProperty("java.io.tmpdir") + fs +
       System.getProperty("user.name") + fs;
     File pathFile = new File(path);
-    if (! pathFile.mkdirs()) {
-      throw new IOException("Could not create directory: " + pathFile);
+    if (! pathFile.isDirectory()) {
+      if (! pathFile.mkdirs()) {
+        throw new IOException("Could not create directory: " + pathFile);
+      }
     }
+    // Call Java runtime to create a file with a unique name
     File tmpfile = File.createTempFile(prefix + "_", "_", pathFile);
     String tmpDirPath = tmpfile.getPath() + suffix;
-    // What was the point of this "tmpfile.delete()"?  tmpfile isn't a file
-    // that we ever use, we merely append to its name.
-    // tmpfile.delete();
     File tmpDir = new File(tmpDirPath);
     if (! tmpDir.mkdirs()) {
       throw new IOException("Could not create directory: " + tmpDir);
     }
+    // Now that we have created our directory, we should get rid
+    // of the intermediate TempFile we created.
+    tmpfile.delete();
     return tmpDir;
   }
 
