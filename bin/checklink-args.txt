@@ -157,6 +157,7 @@
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr308-discuss
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
+--suppress-fragment http://htmlpreview.github.io/?https://bitbucket.org/typetools/jsr308-langtools/raw/tip/doc/README-jsr308.html#reporting-bugs
 
 # This next group of suppress-fragments are required because makeinfo does the
 # chapter splits using indirect references through stub files.
