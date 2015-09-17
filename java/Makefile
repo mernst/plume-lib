@@ -131,6 +131,9 @@ JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
 ## Pluggable typechecking
 
+# To avoid pluggable typechecking, do
+# (unset JSR308; unset CHECKERFRAMEWORK; make)
+
 ifdef JSR308
   CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
 endif
