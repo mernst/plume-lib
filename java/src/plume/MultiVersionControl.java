@@ -1283,6 +1283,7 @@ public class MultiVersionControl {
           replacers.add(new Replacer("(^|\\n)error:", "$1error in " + dir + ":"));
           replacers.add(new Replacer("(^|\\n)Please, commit your changes or stash them before you can merge.\\nAborting\\n", "$1"));
           replacers.add(new Replacer("((^|\\n)CONFLICT \\(content\\): Merge conflict in )", "$1" + dir + "/"));
+          replacers.add(new Replacer("(^|\\n)([ACDMRU]\t)", "$1$2" + dir + "/"));
           pb.command(git_executable, "pull", "-q");
           addArgs(pb, git_arg);
           break;
