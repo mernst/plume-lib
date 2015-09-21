@@ -147,10 +147,11 @@
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for
 
---suppress-fragment http://groups.google.com/forum/#!forum/daikon-announce
---suppress-fragment http://groups.google.com/forum/#!forum/daikon-discuss
---suppress-fragment http://groups.google.com/forum/#!forum/jsr-305  
---suppress-fragment http://groups.google.com/forum/#!overview
+--suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-discuss
+--suppress-fragment https://groups.google.com/forum/#!forum/daikon-announce
+--suppress-fragment https://groups.google.com/forum/#!forum/daikon-discuss
+--suppress-fragment https://groups.google.com/forum/#!forum/jsr-305  
+--suppress-fragment https://groups.google.com/forum/#!overview
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
