@@ -1063,6 +1063,7 @@ public class MultiVersionControl {
         replacers.add(new Replacer("(^|\\n)fatal:", "$1fatal in " + dir + ":"));
         replacers.add(new Replacer("(^|\\n)warning:", "$1warning in " + dir + ":"));
         replacers.add(new Replacer("(^|\\n)(There is no tracking information for the current branch\\.)", "$1" + dir + ": " + "$2"));
+        replacers.add(new Replacer("(^|\\n)(Your configuration specifies to merge)", dir + ": $1$2"));
         break;
       case HG:
         // "real URL" is for bitbucket.org.  (Should be early in list.)
