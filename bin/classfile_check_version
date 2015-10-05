@@ -20,7 +20,7 @@ if (!( -e $2)) then
   exit -1
 endif
 
-set header = (`xxd -l 8 $2 | sed 's/^0000000: //' | sed 's/   *.*$//'`)
+set header = (`xxd -l 8 $2 | sed 's/^0*0: //' | sed 's/   *.*$//'`)
 #echo $header
 #echo $#header
 if (("$header[1]" != "cafe") || ("$header[2]" != "babe")) then
