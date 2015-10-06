@@ -3,7 +3,7 @@
 # from the checklink program.  This file contains such warning suppressions.
 
 # To use this file, run a command like the following:
-#   plume-lib/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` MYURL
+#   $pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` MYURL
 
 # Please keep the file organized.  Each type of argument goes in its own
 # section, alphabetized within the section.
@@ -293,13 +293,13 @@
 --suppress-redirect https://tools.usps.com/go/ZipLookupAction!input.action->https://www.usps.com/root/global/server_responses/webtools-msg.htm	
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
 --suppress-redirect http://hdl.handle.net/2142/54893->https://www.ideals.illinois.edu/handle/2142/54893
+--suppress-redirect http://hdl.handle.net/2429/46122->https://circle.ubc.ca/handle/2429/46122
 
 --suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
 --suppress-redirect-prefix http://doi.acm.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
 --suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www.computer.org/portal/web/csdl/doi/
 --suppress-redirect-prefix http://doi.ieeecomputersociety.org/->http://www2.computer.org/portal/web/csdl/doi/
 --suppress-redirect-prefix http://dx.doi.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
---suppress-redirect-prefix http://hdl.handle.net/2429/46122->http://circle.ubc.ca/handle/2429/46122
 --suppress-redirect-prefix http://java.sun.com/->http://download.oracle.com/
 --suppress-redirect-prefix http://java.sun.com/j2se/->http://download.oracle.com/javase/
 --suppress-redirect-prefix http://maps.google.com/maps?->http://maps.google.com/m/directions?
