@@ -42,7 +42,10 @@ public @interface Option {
 
   /**
    * For information about the this parameter, see the section on Option
-   * aliases in {@link plume.Options}.
+   * aliases in {@link plume.Options}.  If there is only a single,
+   * one-character alias, it can be put at the beginning of the value field
+   * without the need for an aliases field.
+   * 
    * @return aliases for this option
    */
   String[] aliases() default {};

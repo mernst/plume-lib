@@ -153,15 +153,19 @@ import org.checkerframework.dataflow.qual.*;
  * The @{@link Option} annotation has an optional parameter <code>aliases</code>,
  * which accepts an array of strings.  Each string in the array is an alias for
  * the option being defined and can be used in place of an option's long name
- * or short name.  Aliases should start with a single dash or double dash.  It
- * is the user's responsibility to ensure that aliases does not cause ambiguity
- * and do not collide with other options. <p>
+ * or short name.</p>
  *
  * For example:
  * <pre>
  *     // The user may supply --help, -h, or -help, all of which mean the same thing and set this variable
  *     &#64;Option(value="-h Print a help message", aliases={"-help"})
  *     public static boolean help;</pre>
+ *
+ * Aliases should start with a single dash or double dash.
+ * If there is only a single, one-character alias, it can be put at the
+ * beginning of the value field without the need for an aliases field.
+ * It is the user's responsibility to ensure that no alias is the same as other
+ * options or aliases and that they can be parsed unambiguously. <p>
  *
  * <b>Generating documentation for a manual or manpage</b> <p>
  * The class Javadoc for a class that has a main method should generally
