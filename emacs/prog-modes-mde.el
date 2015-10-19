@@ -1144,7 +1144,7 @@ otherwise, raise an error after the first problem is encountered."
   (setq python-honour-comment-indentation t)
   (define-key python-mode-map "\C-c\C-c"  'py-execute-import-or-reload) ; was py-execute-buffer
   (define-key python-mode-map "\C-cb" 'py-execute-buffer) ; was unbound
-  (define-key python-mode-map "\C-hf" 'python-describe-function)
+  (define-key python-mode-map "\C-hf" 'pylookup-lookup)
   (define-key python-mode-map "\C-x-" 'python-override-my-kill-buffer-and-window) ; too easy to hit when I intend "C-c -"
   (make-local-variable 'write-contents-hooks)
   ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
@@ -1256,34 +1256,51 @@ otherwise, raise an error after the first problem is encountered."
       (goto-char (1- (match-end 0)))
     ad-do-it))
 
-;; Lifted from scheme-describe-function; they should be re-merged (better,
-;; use the Emacs 20 functionality for this).
-(defun python-describe-function (function)
-  "Display manual entry regarding a FUNCTION (a string or symbol).
-When called interactively, prompts for the symbol (defaults to the function
-point is currently near)."
-  (interactive (list (let* ((default (python-symbol-around-point))
-			    (fn (read-string (format "Describe Python function (default %s): " default))))
-		       (if (string= fn "") default fn))))
-  (if (symbolp function) (setq function (symbol-name function)))
-  (let (message)
-    (save-window-excursion
-      (info)
-      ;; was (Info-guess-node 'python-mode); we've partial-evaluated it.
-      (eval-when-compile (require 'info))
-      (if (not (string-match "python-lib" Info-current-file))
-	  (progn
-	    (Info-directory)
-	    (Info-menu "Python-lib")))
-      (setq message (condition-case nil
-			(Info-index function)
-		      (error nil))))
-    (if message
-	(progn
-	  (switch-to-buffer-other-window "*info*")
-	  (recenter)
-	  (message "%s" message))
-      (error (format "No \"%s\" in index." function)))))
+;; Superseded by the below.
+;; ;; Lifted from scheme-describe-function; they should be re-merged (better,
+;; ;; use the Emacs 20 functionality for this).
+;; (defun python-describe-function (function)
+;;   "Display manual entry regarding a FUNCTION (a string or symbol).
+;; When called interactively, prompts for the symbol (defaults to the function
+;; point is currently near)."
+;;   (interactive (list (let* ((default (python-symbol-around-point))
+;; 			    (fn (read-string (format "Describe Python function (default %s): " default))))
+;; 		       (if (string= fn "") default fn))))
+;;   (if (symbolp function) (setq function (symbol-name function)))
+;;   (let (message)
+;;     (save-window-excursion
+;;       (info)
+;;       ;; was (Info-guess-node 'python-mode); we've partial-evaluated it.
+;;       (eval-when-compile (require 'info))
+;;       (if (not (string-match "python-lib" Info-current-file))
+;; 	  (progn
+;; 	    (Info-directory)
+;; 	    (Info-menu "Python-lib")))
+;;       (setq message (condition-case nil
+;; 			(Info-index function)
+;; 		      (error nil))))
+;;     (if message
+;; 	(progn
+;; 	  (switch-to-buffer-other-window "*info*")
+;; 	  (recenter)
+;; 	  (message "%s" message))
+;;       (error (format "No \"%s\" in index." function)))))
+
+;; From https://github.com/tsgates/pylookup
+(setq pylookup-dir "~/emacs/pylookup")
+(add-to-list 'load-path pylookup-dir)
+(eval-when-compile (require 'pylookup))
+;; set executable file and db file
+(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
+(setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
+;; set search option if you want
+;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
+;; to speedup, just load it on demand
+(autoload 'pylookup-lookup "pylookup"
+  "Lookup SEARCH-TERM in the Python HTML indexes." t)
+(autoload 'pylookup-update "pylookup" 
+  "Run pylookup-update and create the database at `pylookup-db-file'." t)
+
 
 ;; To fix later.  Executing this causes the error
 ;;   "Info-insert-dir: Can't find the Info directory node"
