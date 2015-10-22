@@ -1287,9 +1287,13 @@ otherwise, raise an error after the first problem is encountered."
 ;;       (error (format "No \"%s\" in index." function)))))
 
 ;; From https://github.com/tsgates/pylookup
+;; I need to have done:
+;;   cd ~/emacs && git clone https://github.com/tsgates/pylookup.git && cd pylookup/ && make download
+(eval-when-compile (require 'pylookup nil 'noerror))
+(if (locate-library "pylookup")
+    (progn
 (setq pylookup-dir "~/emacs/pylookup")
 (add-to-list 'load-path pylookup-dir)
-(eval-when-compile (require 'pylookup))
 ;; set executable file and db file
 (setq pylookup-program (concat pylookup-dir "/pylookup.py"))
 (setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
@@ -1300,7 +1304,7 @@ otherwise, raise an error after the first problem is encountered."
   "Lookup SEARCH-TERM in the Python HTML indexes." t)
 (autoload 'pylookup-update "pylookup" 
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
-
+))
 
 ;; To fix later.  Executing this causes the error
 ;;   "Info-insert-dir: Can't find the Info directory node"
