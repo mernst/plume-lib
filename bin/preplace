@@ -14,16 +14,16 @@ Args are:
   		  applicable only if a list of files was not explicitly given
   -i.bak	back up each file with extension ".bak"
   -preserve	preserve the old timestamp even if replacement occurs
-  --		end of argument list (optional)
+  --		end of command-line arguments; file names follow (optional)
   -help		print this message
   -debug        print debugging output
 This is like
   perl -pi -e 's/OLD/NEW/g'
 except that the timestamp on each file is updated only if the replacement
-is performed.  If the replacement is not performed (because the target did
-not appear in the file), then the timestamp is unmodified.  Thus, you can
-call it on as many files as you like without losing the historical
-information about when a file was last modified.
+is performed.  If the replacement is not performed (because the old regular
+expression did not match in the file), then the timestamp is unmodified.
+Thus, you can call it on as many files as you like without losing the
+historical information about when a file was last modified.
 END_OF_USAGE
 }
 
