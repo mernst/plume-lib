@@ -242,10 +242,12 @@
 --suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://www.springerlink.com/link.asp?id=A5U0J7H002247138
 --suppress-redirect http://dx.doi.org/10.1109/2.59->http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=59&tag=1&tag=1&tag=1&tag=1&tag=1
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/Xplore/defdeny.jsp?url=http%3A%2F%2Fieeexplore.ieee.org%2FXplore%2Ferror.jsp&denyReason=-133&productsMatched=null&userType=inst	
+--suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org:80/Xplore/errorpage.jsp?reload=true
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
 --suppress-redirect http://homes.cs.washington.edu/~burg/->http://brrian.org/	
 --suppress-redirect http://hdl.handle.net/2429/46122->https://circle.ubc.ca/handle/2429/46122
+--suppress-redirect http://hdl.handle.net/2429/46122->https://open.library.ubc.ca/cIRcle/collections/facultyresearchandpublications/8865/items/1.0051021
 --suppress-redirect http://ieeexplore.ieee.org/->http://ieeexplore.ieee.org/Xplore/home.jsp
 --suppress-redirect http://libraries.mit.edu/get/ieee->http://aeryn.mit.edu/emetrics/count.php?http://libproxy.mit.edu/login?url=http://ieeexplore.ieee.org/
 --suppress-redirect http://libraries.mit.edu/get/lncs->http://aeryn.mit.edu/emetrics/count.php?http://libproxy.mit.edu/login?url=http://www.springerlink.com/openurl.asp?genre=journal&issn=0302-9743
