@@ -36,7 +36,9 @@
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
+--suppress-broken 303:http://dx.doi.org/10.1109/WODA.2007.3
 --suppress-broken 303:http://hdl.handle.net/2142/54893
+--suppress-broken 303:http://hdl.handle.net/2429/46122
 --suppress-broken 303:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 303:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 400:http://www.computer.org/web/tse
