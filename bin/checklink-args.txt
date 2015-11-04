@@ -27,6 +27,7 @@
 --suppress-broken 301:http://www.cs.virginia.edu/~sullivan/
 --suppress-broken 301:https://tools.usps.com/go/ZipLookupAction!input.action
 --suppress-broken 301:http://www.nwfolklife.org/festival/
+--suppress-broken 301:http://pag.csail.mit.edu/pag/
 --suppress-broken 302:MAY-NEED-TO-ALSO-LIST-IN-suppress-redirect-CLAUSE
 # Official URL, but redirects elsewhere
 --suppress-broken 302:http://dx.doi.org/10.1109/2.59
