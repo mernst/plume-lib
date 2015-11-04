@@ -2116,6 +2116,7 @@ public final class UtilMDE {
     throw new NoSuchFieldException (fieldName);
   }
 
+  // TODO: set the field back to private after is is accessed.
   /**
    * Reads the given field, which may be private.
    * Leaves the field accessible.
