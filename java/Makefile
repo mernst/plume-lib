@@ -266,12 +266,16 @@ javadoc-publish: javadoc
 optionsdoc: .optionsdoc-timestamp
 
 # This test should use "command -v" instead of "which"
-DOS2UNIX ?= $(shell which dos2unix)
-ifeq ($(DOS2UNIX),)
-  ifeq ($(shell which perl),)
-    $(error Install either dos2unix or perl)
+ifndef DOS2UNIX
+  WHICHDOS2UNIX := $(shell which dos2unix)
+  ifneq ($(WHICHDOS2UNIX),)
+    DOS2UNIX = $(WHICHDOS2UNIX) --quiet
   else
-    DOS2UNIX ?= perl -pi -e 's/\r\n|\n|\r/\n/g'
+    ifneq ($(shell which perl),)
+      DOS2UNIX = perl -pi -e 's/\r\n|\n|\r/\n/g'
+    else
+      $(error Install either dos2unix or perl)
+    endif
   endif
 endif
 
@@ -287,16 +291,16 @@ else
 #Can also use -verbose for debugging
 	$(MAKE) compile
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
-	$(DOS2UNIX) --quiet src/plume/Lookup.java
+	$(DOS2UNIX) src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
-	$(DOS2UNIX) --quiet src/plume/ICalAvailable.java
+	$(DOS2UNIX) src/plume/ICalAvailable.java
 	@rm -f ical4j.properties
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	$(DOS2UNIX) --quiet src/plume/MultiVersionControl.java
+	$(DOS2UNIX) src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
-	$(DOS2UNIX) --quiet src/plume/TaskManager.java
+	$(DOS2UNIX) src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
 
