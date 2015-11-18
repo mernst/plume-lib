@@ -1,3 +1,4 @@
+# Default target
 all-but-emacs: bin java git-hooks
 
 # This is not the default target, because it isn't strictly necessary to
