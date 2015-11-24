@@ -23,6 +23,7 @@ import java.lang.ref.WeakReference;
 import java.lang.ref.ReferenceQueue;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -310,7 +311,7 @@ public class WeakIdentityHashMap<K,V>
      * Expunge stale entries from the table.
      */
     @SuppressWarnings("purity") // actually has side effects due to weak pointers
-    /*@SideEffectFree*/ private void expungeStaleEntries() {
+    /*@SideEffectFree*/ private void expungeStaleEntries(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
 	Entry<K,V> e;
         // These types look wrong to me.
         while ( (e = (Entry<K,V>) queue.poll()) != null) { // unchecked cast
@@ -340,7 +341,7 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Return the table after first expunging stale entries
      */
-    /*@Pure*/ private /*@Nullable*/ Entry<K,V>[] getTable() {
+    /*@Pure*/ private /*@Nullable*/ Entry<K,V>[] getTable(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
         expungeStaleEntries();
         return table;
     }
@@ -351,7 +352,7 @@ public class WeakIdentityHashMap<K,V>
      * entries that will be removed before next attempted access
      * because they are no longer referenced.
      */
-    /*@Pure*/ public int size() {
+    /*@Pure*/ public int size(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
         if (size == 0)
             return 0;
         expungeStaleEntries();
@@ -382,7 +383,7 @@ public class WeakIdentityHashMap<K,V>
      *          <tt>null</tt> if the map contains no mapping for this key.
      * @see #put(Object, Object)
      */
-    /*@Pure*/ public /*@Nullable*/ V get(/*@Nullable*/ Object key) {
+    /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
@@ -435,7 +436,7 @@ public class WeakIdentityHashMap<K,V>
      *	       also indicate that the HashMap previously associated
      *	       <tt>null</tt> with the specified key.
      */
-    public /*@Nullable*/ V put(K key, V value) {
+    public /*@Nullable*/ V put(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ K key, V value) {
         @SuppressWarnings("unchecked")
         K k = (K) maskNull(key);
         int h = System.identityHashCode (k);
@@ -473,7 +474,7 @@ public class WeakIdentityHashMap<K,V>
      *        capacity is MAXIMUM_CAPACITY (in which case value
      *        is irrelevant).
      */
-    void resize(int newCapacity) {
+    void resize(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ int newCapacity) {
         /*@Nullable*/ Entry<K,V>[] oldTable = getTable();
         int oldCapacity = oldTable.length;
         if (oldCapacity == MAXIMUM_CAPACITY) {
@@ -501,7 +502,7 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /** Transfer all entries from src to dest tables */
-    private void transfer(/*@Nullable*/ Entry<K,V>[] src, /*@Nullable*/ Entry<K,V>[] dest) {
+    private void transfer(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@Nullable*/ Entry<K,V>[] src, /*@Nullable*/ Entry<K,V>[] dest) {
         for (int j = 0; j < src.length; ++j) {
             Entry<K,V> e = src[j];
             src[j] = null;          // Help GC (?)
@@ -857,11 +858,11 @@ public class WeakIdentityHashMap<K,V>
     }
 
     private class KeySet extends AbstractSet<K> {
-        public Iterator<K> iterator() {
+        public Iterator<K> iterator(/*>>>@GuardSatisfied KeySet this*/) {
             return new KeyIterator();
         }
 
-        /*@Pure*/ public int size() {
+        /*@Pure*/ public int size(/*>>>@GuardSatisfied KeySet this*/) {
             return WeakIdentityHashMap.this.size();
         }
 
@@ -916,11 +917,11 @@ public class WeakIdentityHashMap<K,V>
     }
 
     private class Values extends AbstractCollection<V> {
-        public Iterator<V> iterator() {
+        public Iterator<V> iterator(/*>>>@GuardSatisfied Values this*/) {
             return new ValueIterator();
         }
 
-        /*@Pure*/ public int size() {
+        /*@Pure*/ public int size(/*>>>@GuardSatisfied Values this*/) {
             return WeakIdentityHashMap.this.size();
         }
 
@@ -966,7 +967,7 @@ public class WeakIdentityHashMap<K,V>
     }
 
     private class EntrySet extends AbstractSet<Map.Entry<K,V>> {
-        public Iterator<Map.Entry<K,V>> iterator() {
+        public Iterator<Map.Entry<K,V>> iterator(/*>>>@GuardSatisfied EntrySet this*/) {
             return new EntryIterator();
         }
 
@@ -983,7 +984,7 @@ public class WeakIdentityHashMap<K,V>
             return removeMapping(o) != null;
         }
 
-        /*@Pure*/ public int size() {
+        /*@Pure*/ public int size(/*>>>@GuardSatisfied EntrySet this*/) {
             return WeakIdentityHashMap.this.size();
         }
 
