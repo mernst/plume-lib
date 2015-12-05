@@ -52,10 +52,10 @@ else
   endif
 endif
 
-# tools.jar file from JDK 5, so plume.jar is fully compatible with Java version 5.
-TOOLS_JAR_5 ?= ${TOOLS_JAR}
+# tools.jar file from JDK 7, so plume.jar is fully compatible with Java version 7.
+TOOLS_JAR_7 ?= ${TOOLS_JAR}
 ifeq (cygwin,$(OSTYPE))
-  TOOLS_JAR_5 := $(shell cygpath -w $(TOOLS_JAR_5))
+  TOOLS_JAR_7 := $(shell cygpath -w $(TOOLS_JAR_7))
 endif
 
 
@@ -100,7 +100,7 @@ else
   JAR ?= jar
 endif
 
-# Add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
+# A user can add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
@@ -393,10 +393,14 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
-	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_5)" com/sun/javadoc)
+	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_7)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
+# Halt if Java 8 .class files exist; goal is to ensure usability of Java 7 JVM
+	(cd jar-contents; cat jar-contents.txt | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
+	if [ -s jar-contents/version-52-files.txt ] ; then echo "Version 52.0 files exist: see list in jar-contents/version-52-files.txt"; exit 1; fi
+	rm -f jar-contents/version-52-files.txt
 	(cd jar-contents; "${JAR}" cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
