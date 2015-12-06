@@ -28,6 +28,7 @@ import java.lang.ref.ReferenceQueue;
 import plume.Hasher;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -142,11 +143,11 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     // were static in the original version of this code.
     // This finesses that.
 
-    private /*@Nullable*/ WeakKey WeakKeyCreate(K k) {
+    private /*@Nullable*/ WeakKey WeakKeyCreate(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ K k) {
 	if (k == null) return null;
 	else return new WeakKey(k);
     }
-    private /*@Nullable*/ WeakKey WeakKeyCreate(K k, ReferenceQueue<? super K> q) {
+    private /*@Nullable*/ WeakKey WeakKeyCreate(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ K k, ReferenceQueue<? super K> q) {
 	if (k == null) return null;
 	else return new WeakKey(k, q);
     }
@@ -213,7 +214,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
        public accessors because that can lead to surprising
        ConcurrentModificationExceptions. */
     @SuppressWarnings("unchecked")
-    private void processQueue() {
+    private void processQueue(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	WeakKey wk;
 	while ((wk = (WeakKey)queue.poll()) != null) { // unchecked cast
 	    hash.remove(wk);
@@ -284,7 +285,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * <code>Map</code> interface, the time required by this operation is
      * linear in the size of the map.</em>
      */
-    /*@Pure*/ public int size() {
+    /*@Pure*/ public int size(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	return entrySet().size();
     }
 
@@ -317,7 +318,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      *
      * @param  key  The key whose associated value, if any, is to be returned
      */
-    /*@Pure*/ public /*@Nullable*/ V get(Object key) {  // type of argument is Object, not K
+    /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ Object key) {  // type of argument is Object, not K
         @SuppressWarnings("unchecked")
         K kkey = (K) key;
 	return hash.get(WeakKeyCreate(kkey));
@@ -337,7 +338,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @return  The previous value to which this key was mapped, or
      *          <code>null</code> if if there was no mapping for the key
      */
-    public V put(K key, V value) {
+    public V put(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ K key, V value) {
 	processQueue();
 	return hash.put(WeakKeyCreate(key, queue), value);
     }
@@ -423,7 +424,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     private final class EntrySet extends AbstractSet<Map.Entry<K,V>> {
 	Set<Map.Entry<WeakKey,V>> hashEntrySet = hash.entrySet();
 
-	public Iterator<Map.Entry<K,V>> iterator() {
+	public Iterator<Map.Entry<K,V>> iterator(/*>>>@GuardSatisfied EntrySet this*/) {
 
 	    return new Iterator<Map.Entry<K,V>>() {
 		Iterator<Map.Entry<WeakKey,V>> hashIterator = hashEntrySet.iterator();
@@ -463,7 +464,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return !(iterator().hasNext());
 	}
 
-	/*@Pure*/ public int size() {
+	/*@Pure*/ public int size(/*>>>@GuardSatisfied EntrySet this*/) {
 	    int j = 0;
 	    for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); i.next()) j++;
 	    return j;
@@ -506,7 +507,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     /**
      * Returns a <code>Set</code> view of the mappings in this map.
      */
-    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet() {
+    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	if (entrySet == null) entrySet = new EntrySet();
 	return entrySet;
     }

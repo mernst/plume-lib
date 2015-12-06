@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
@@ -94,7 +95,7 @@ public class TextFile implements Iterable<String> {
         this.charsetName = charsetName;
     }
 
-    public Iterator<String> iterator() {
+    public Iterator<String> iterator(/*>>>@GuardSatisfied TextFile this*/) {
         try {
             return new TextFileIterator(is, charsetName);
         }
