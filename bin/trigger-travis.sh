@@ -4,10 +4,19 @@
 
 # To use this, do two things:
 # 
+# 1. Set an environment variable TRAVISTOKEN by navigating to
+#   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
+# The environment variable will be set when Travis runs the job,
+# but won't be visible to anyone even though the repository is public.
+# Determine the value to set TRAVISTOKEN to via:  travis login && travis token
+# You may need to first do:  sudo apt-get install ruby-dev && sudo gem install travis
+# (don't do "sudo apt-get install travis"; use the above instead).
+# This differs from the token available at https://travis-ci.org/profile .
+# 
 # 1. Add one of the following after-success blocks to your .travis.yml file:
 #
 # after-success:
-#   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $MYTRAVISTOKEN
+#   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
 #
 # after-success:
 #   - echo Triggering build of MYGITHUBID/MYGITHUBPROJECT
@@ -15,12 +24,6 @@
 #   - sh trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
 #   - rm trigger-travis.sh
 #
-# 2. Set an environment variable TRAVISTOKEN by navigating to
-#   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
-# Determine the value of TRAVISTOKEN via:  travis login && travis token
-# You may need to first do:  sudo apt-get install ruby-dev && gem install travis
-# This differs from the token available at https://travis-ci.org/profile
-
 # An alternative to this script would be to install the Travis command-line
 # client and then run,
 #   travis restart -r MYGITHUBID/MYGITHUBPROJECT
