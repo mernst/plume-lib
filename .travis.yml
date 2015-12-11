@@ -6,7 +6,7 @@ sudo: false
 
 jdk:
   - oraclejdk8
-  - oraclejdk7
+#  - oraclejdk7
   - openjdk7
 
 notifications:
@@ -15,3 +15,4 @@ notifications:
 
 after_success:
   - bin/trigger-travis.sh codespecs daikon $TRAVISTOKEN
+  - bin/trigger-travis.sh codespecs plume-lib-typecheck $TRAVISTOKEN
