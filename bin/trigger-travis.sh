@@ -9,11 +9,12 @@
 # The environment variable will be set when Travis runs the job,
 # but won't be visible to anyone even though the repository is public.
 # Determine the value to set TRAVISTOKEN to via:  travis login && travis token
-# You may need to first do:  sudo apt-get install ruby-dev && sudo gem install travis
-# (don't do "sudo apt-get install travis"; use the above instead).
+# (You may need to first:  sudo apt-get install ruby-dev && sudo gem install travis
+# Don't do "sudo apt-get install travis"; use the above instead.)
 # This differs from the token available at https://travis-ci.org/profile .
 # 
-# 1. Add one of the following after-success blocks to your .travis.yml file:
+# 1. Add one of the following after-success blocks to your .travis.yml file,
+# where $TRAVISTOKEN is literal text but MYGITHUB* should be replaced:
 #
 # after-success:
 #   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
