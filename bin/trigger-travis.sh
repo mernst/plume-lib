@@ -20,10 +20,8 @@
 #   - trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
 #
 # after-success:
-#   - echo Triggering build of MYGITHUBID/MYGITHUBPROJECT
 #   - curl -s https://raw.githubusercontent.com/mernst/plume-lib/master/bin/trigger-travis.sh > trigger-travis.sh
 #   - sh trigger-travis.sh MYGITHUBID MYGITHUBPROJECT $TRAVISTOKEN
-#   - rm trigger-travis.sh
 #
 # An alternative to this script would be to install the Travis command-line
 # client and then run,
