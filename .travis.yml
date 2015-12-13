@@ -14,5 +14,5 @@ notifications:
     - mernst@cs.washington.edu
 
 after_success:
-  - bin/trigger-travis.sh codespecs daikon $TRAVISTOKEN
   - bin/trigger-travis.sh codespecs plume-lib-typecheck $TRAVISTOKEN
+  - bin/trigger-travis.sh codespecs daikon $TRAVISTOKEN
