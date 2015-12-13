@@ -748,8 +748,9 @@ trigger-travis.sh
 </dt>
 <dd>
 Trigger a new Travis-CI job.
-This is useful, for example, in an "after-success:" block, so that if
-Travis job A succeeds, then Travis job B is run next.
+This is useful for triggering a dependent build:  invoke this in the
+"after-success:" block of repository A's <tt>.travis.yml</tt> file,
+so that if Travis job A succeeds, then Travis job B is run next.
 </dd>
 
 </dl>
