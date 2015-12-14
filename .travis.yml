@@ -14,5 +14,6 @@ notifications:
     - mernst@cs.washington.edu
 
 after_success:
-  - bin/trigger-travis.sh codespecs daikon $TRAVISTOKEN
-  - bin/trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN
+  - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+  - sh trigger-travis.sh codespecs daikon $TRAVISTOKEN "Triggered by upstream build of mernst/plume-lib"
+  - sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN "Triggered by upstream build of mernst/plume-lib"
