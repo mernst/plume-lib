@@ -13,7 +13,7 @@ notifications:
   email:
     - mernst@cs.washington.edu
 
-after-success:
+after_success:
   - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
   - python travis_after_all.py
   - export $(cat .to_export_back)

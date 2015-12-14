@@ -17,27 +17,27 @@
 # but don't do "sudo apt-get install travis"; use the above instead.)
 # This differs from the token available at https://travis-ci.org/profile .
 # 
-# 2. Add the following after-success block to your .travis.yml file,
+# 2. Add the following after_success block to your .travis.yml file,
 # where you replace OTHERGITHUB* by a specific downstream project,
 # but you leave $TRAVISTOKEN and $TRAVIS_REPO_SLUG as literal text:
 #
-# after-success:
+# after_success:
 #   - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
 #   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
 
-# There are two caveats to calling this in the "after-success:" block.
+# There are two caveats to calling this in the "after_success:" block.
 #
-# 1. Travis does not fail a job if an after-success command fails.  If you
+# 1. Travis does not fail a job if an after_success command fails.  If you
 # misspell a GitHub ID or project name, then Travis won't inform you of
 # this mistake.  So, check the end of the Travis buid log the first
 # time that a build of THISGITHUBID/THISGITHUBPROJECT succeeds.
 #
-# 2. The "after-success:" block is run once for every matrix build, but you
+# 2. The "after_success:" block is run once for every matrix build, but you
 # only want it to run once if all the builds in the matrix succeed.  For
 # a workaround, see https://github.com/dmakhno/travis_after_all .  You would
 # write in your .travis.yml file:
 #
-# after-success:
+# after_success:
 #   - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
 #   - python travis_after_all.py
 #   - export $(cat .to_export_back)
