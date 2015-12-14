@@ -15,6 +15,7 @@ notifications:
 
 after_success:
   - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+  - export GITHUB_TOKEN=6cf3446436684455cd957838282c66402f01bfbf
   - python travis_after_all.py https://api.travis-ci.org
   - export $(cat .to_export_back)
   - |
@@ -27,6 +28,7 @@ after_success:
       fi
 after_failure:
   - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+  - export GITHUB_TOKEN=6cf3446436684455cd957838282c66402f01bfbf
   - python travis_after_all.py https://api.travis-ci.org
   - export $(cat .to_export_back)
   - |
