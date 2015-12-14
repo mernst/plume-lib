@@ -7,23 +7,23 @@
 
 # To use this script, do two things:
 # 
-# 1. Set an environment variable TRAVISTOKEN by navigating to
+# 1. Set an environment variable TRAVIS_ACCESS_TOKEN by navigating to
 #   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
 # The environment variable will be set when Travis runs the job,
 # but won't be visible to anyone browsing https://travis-ci.org/.
-# Determine the value for TRAVISTOKEN via:  travis login && travis token
+# Determine the value for TRAVIS_ACCESS_TOKEN via: travis login && travis token
 # (You may need to first do:
 #    sudo apt-get install ruby-dev && sudo gem install travis
-# but don't do "sudo apt-get install travis"; use the above instead.)
+# Don't do "sudo apt-get install travis" which installs a trajectory analyzer.)
 # This differs from the token available at https://travis-ci.org/profile .
 # 
 # 2. Add the following after_success block to your .travis.yml file,
 # where you replace OTHERGITHUB* by a specific downstream project,
-# but you leave $TRAVISTOKEN and $TRAVIS_REPO_SLUG as literal text:
+# but you leave $TRAVIS_ACCESS_TOKEN and $TRAVIS_REPO_SLUG as literal text:
 #
 # after_success:
 #   - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
 
 # There are two caveats to calling this in the "after_success:" block.
 #
@@ -32,30 +32,33 @@
 # this mistake.  So, check the end of the Travis buid log the first
 # time that a build of THISGITHUBID/THISGITHUBPROJECT succeeds.
 #
-# 2. The "after_success:" block is run once for every matrix build, but you
-# only want it to run once if all the builds in the matrix succeed.  For
-# a workaround, see https://github.com/dmakhno/travis_after_all .  You would
-# write in your .travis.yml file:
+# 2. This second point is relevant only if your .travis.yml defines a build
+# matrix (https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix)
+# that runs the same job using different configurations.
+# The "after_success:" block is run once for every build in the matrix, but
+# you only want it to run once if all the builds in the matrix succeed.  For
+# a workaround, see https://github.com/dmakhno/travis_after_all , but I
+# couldn't get its permissions to work and don't know why.  A hack is to have
+# only the first job in the matrix trigger downstream builds.  This isn't
+# perfect, because the downstream job is triggered even if some job other
+# than the first one fails.  However, it is simple and it works.  Write in
+# your .travis.yml file:
 #
 # after_success:
-#   - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
-#   - python travis_after_all.py
-#   - export $(cat .to_export_back)
-#   # the vertical bar (pipe) means multi-line command in YAML
+#   # The vertical bar (pipe) means multi-line command in YAML.
 #   - |
-#       if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+#       if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]] ; then
 #         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
 #       fi
-
 
 # An alternative to this script would be to install the Travis command-line
 # client and then run:
 #   travis restart -r OTHERGITHUBID/OTHERGITHUBPROJECT
-# That is undesirable because it restarts an old job, making its history
-# hard to see, rather than starting a new job which is our goal.
+# That is undesirable because it restarts an old job, destroying its history,
+# rather than starting a new job which is our goal.
 
-# This script was originally taken from
+# Parts of this script were originally taken from
 # http://docs.travis-ci.com/user/triggering-builds/
 
 USER=$1
