@@ -71,6 +71,7 @@ elif [ -n "$TRAVIS_REPO_SLUG" ] ; then
 else
     MESSAGE=""
 fi
+echo "MESSAGE=$MESSAGE"
 
 body="{
 \"request\": {
