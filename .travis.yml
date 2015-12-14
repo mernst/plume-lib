@@ -14,7 +14,6 @@ notifications:
     - mernst@cs.washington.edu
 
 after_success:
-  - echo "TRAVIS_JOB_NUMBER = $TRAVIS_JOB_NUMBER"
   # The vertical bar (pipe) means multi-line command in YAML.
   - |
       if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]] ; then
