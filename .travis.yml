@@ -17,6 +17,7 @@ after_success:
   - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
   - python travis_after_all.py
   - export $(cat .to_export_back)
+  - echo "$BUILD_LEADER $BUILD_AGGREGATE_STATUS"
   # the vertical bar (pipe) means multi-line command in YAML
   - |
       if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
