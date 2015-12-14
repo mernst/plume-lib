@@ -8,7 +8,7 @@
 # To use this script, do two things:
 # 
 # 1. Set an environment variable TRAVISTOKEN by navigating to
-#   https://travis-ci.org/THISGITHUBID/THISGITHUBPROJECT/settings
+#   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
 # The environment variable will be set when Travis runs the job,
 # but won't be visible to anyone browsing https://travis-ci.org/.
 # Determine the value for TRAVISTOKEN via:  travis login && travis token
@@ -18,13 +18,12 @@
 # This differs from the token available at https://travis-ci.org/profile .
 # 
 # 2. Add the following after-success block to your .travis.yml file,
-# where you replace OTHERGITHUB* by a specific downstream project and
-# THISGITHUB* by the project in which the .travis.yml file appears,
-# but you leave $TRAVISTOKEN as literal text:
+# where you replace OTHERGITHUB* by a specific downstream project,
+# but you leave $TRAVISTOKEN and $TRAVIS_REPO_SLUG as literal text:
 #
 # after-success:
 #   - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of THISGITHUBID/THISGITHUBPROJECT"
+#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
 
 # There are two caveats to calling this in the "after-success:" block.
 #
@@ -39,9 +38,15 @@
 # write in your .travis.yml file:
 #
 # after-success:
-#   - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of THISGITHUBID/THISGITHUBPROJECT"
-
+#   - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+#   - python travis_after_all.py
+#   - export $(cat .to_export_back)
+#   # the vertical bar (pipe) means multi-line command in YAML
+#   - |
+#       if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+#         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+#         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#       fi
 
 
 # An alternative to this script would be to install the Travis command-line

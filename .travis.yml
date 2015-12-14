@@ -13,7 +13,14 @@ notifications:
   email:
     - mernst@cs.washington.edu
 
-after_success:
-  - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-  - sh trigger-travis.sh codespecs daikon $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
-  - sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+after-success:
+  - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  # the vertical bar (pipe) means multi-line command in YAML
+  - |
+      if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+        curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+        sh trigger-travis.sh codespecs daikon $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+        sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+      fi
