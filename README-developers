@@ -11,6 +11,7 @@ To make a plume-lib release and upload it to GitHub:
 2. For each .jar file in plume-lib/java/lib/, if a more recent version is
 available, replace the out-of-date one.  Update file names in files
 plume-lib/java/.classpath and (in 2 places) plume-lib/java/Makefile .
+(Question: where did I obtain, or how did I make, svnkit-1.8.10-complete.jar?)
 
 3. Browse to each URL in plume-lib/bin/checklink-args.txt and remove any
 that are not valid.
