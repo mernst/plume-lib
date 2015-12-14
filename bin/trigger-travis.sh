@@ -23,7 +23,7 @@
 #
 # after_success:
 #   - curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#   - sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 
 # There are two caveats to calling this in the "after_success:" block.
 #
@@ -49,7 +49,7 @@
 #   - |
 #       if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]] ; then
 #         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 #       fi
 
 # An alternative to this script would be to install the Travis command-line
@@ -66,6 +66,8 @@ REPO=$2
 TOKEN=$3
 if [ $# -eq 4 ] ; then
     MESSAGE=",\"message\": \"$4\""
+elif [ -n "$TRAVIS_REPO_SLUG" ] ; then
+    MESSAGE="Triggered by upstream build of $TRAVIS_REPO_SLUG commit "`git rev-parse --short HEAD`
 else
     MESSAGE=""
 fi

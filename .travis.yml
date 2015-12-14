@@ -18,6 +18,6 @@ after_success:
   - |
       if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]] ; then
         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-        sh trigger-travis.sh codespecs daikon $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
-        sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+        sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
+        sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN
       fi
