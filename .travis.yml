@@ -14,14 +14,42 @@ notifications:
     - mernst@cs.washington.edu
 
 after_success:
-  - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
-  - python travis_after_all.py
+  - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+  - python travis_after_all.py https://api.travis-ci.com
   - export $(cat .to_export_back)
-  - echo "$BUILD_LEADER $BUILD_AGGREGATE_STATUS"
-  # the vertical bar (pipe) means multi-line command in YAML
   - |
-      if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
-        curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-        sh trigger-travis.sh codespecs daikon $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
-        sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+          echo "All jobs succeeded! PUBLISHING..."
+        else
+          echo "Some jobs failed"
+        fi
       fi
+after_failure:
+  - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+  - python travis_after_all.py https://api.travis-ci.com
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_failed" ]; then
+          echo "All jobs failed"
+        else
+          echo "Some jobs failed"
+        fi
+      fi
+after_script:
+  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
+
+
+# after_success:
+#   - curl -LO https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+#   - python travis_after_all.py
+#   - export $(cat .to_export_back)
+#   - echo "$BUILD_LEADER $BUILD_AGGREGATE_STATUS"
+#   # the vertical bar (pipe) means multi-line command in YAML
+#   - |
+#       if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+#         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+#         sh trigger-travis.sh codespecs daikon $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#         sh trigger-travis.sh typetools plume-lib-typecheck $TRAVISTOKEN "Triggered by upstream build of $TRAVIS_REPO_SLUG"
+#       fi
