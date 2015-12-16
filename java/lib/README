@@ -8,8 +8,11 @@ Two are nonstandard:
 BCEL 5.2+ (bcel.jar)
 - java class file reader/writer
 - many local changes to support StackMaps and Java8
+- detailed history in history-bcel.txt (in the repo)
 - Mercurial repository: /projects/swlab1/bcel/bcel-java7
-- detailed history in history-bcel.txt (in the repo above)
+- to build: mvn verify
+- result is target/bcel-java7-SNAPSHOT.jar
+- copy to this directory and rename bcel.jar
 
 svnkit-1.8.10-complete.jar: for use by MultiVersionControl program
 To create the file, I ran the following commands:
