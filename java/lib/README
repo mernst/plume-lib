@@ -1,18 +1,15 @@
-TODO: document all included libraries.
+These libraries are included in plume-lib and in the plume.jar file in
+order to make plume-lib self-contained.  (They do make it large, though.)
+
+Most libraries are standard, downloaded from their respective webpages.
+
+Two are nonstandard:
 
 BCEL 5.1 (bcel.jar)
 - java class file reader/writer
 - Our local changes partially support Java 1.5
 - Built by jhp in ~jhp/research/jakarta-bcel
   make bcel.jar
-
-Apache Commons IO components (commons-io.jar)
-- "Standard" library of IO utility
-- http://commons.apache.org/
-
-JUnit (junit.jar)
-- Automated unit testing framework
-- http://www.junit.org
 
 svnkit-1.8.10-complete.jar: for use by MultiVersionControl program
 To create the file, I ran the following commands:
