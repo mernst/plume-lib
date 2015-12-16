@@ -1,11 +1,10 @@
 #!/bin/sh -f
 
 # Trigger a new Travis-CI job.
-# Useful for triggering a dependent build in Travis.
 # Usage:
 #   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVISTOKEN [MESSAGE]
 
-# To use this script, do two things:
+# To use this script to trigger a dependent build in Travis, do two things:
 # 
 # 1. Set an environment variable TRAVIS_ACCESS_TOKEN by navigating to
 #   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
@@ -28,9 +27,9 @@
 # There are two caveats to calling this in the "after_success:" block.
 #
 # 1. Travis does not fail a job if an after_success command fails.  If you
-# misspell a GitHub ID or project name, then Travis won't inform you of
-# this mistake.  So, check the end of the Travis buid log the first
-# time that a build of THISGITHUBID/THISGITHUBPROJECT succeeds.
+# misspell a GitHub ID or project name, then this script will fail, but
+# Travis won't inform you of the mistake.  So, check the end of the Travis
+# buid log the first time that a build succeeds.
 #
 # 2. This second point is relevant only if your .travis.yml defines a build
 # matrix (https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix)
