@@ -136,6 +136,7 @@
 --suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/staging/www/
 --suppress-broken 500:https://wiki.state.ma.us/confluence/download/attachments/16842777/Scrum+Development+Process.pdf
+--suppress-broken 500:https://www.cs.rutgers.edu/~vinodg/papers/tdsc2011/tdsc2011.pdf
 --suppress-broken 500:https://www.enthought.com/accounts/register/?next=/licenses/academic
 --suppress-broken 501:http://www.bizrate.com/
 --suppress-broken 501:https://web.mit.edu/21.guide/www/l-rec-wr.htm
