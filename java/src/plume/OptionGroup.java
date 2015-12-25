@@ -17,9 +17,24 @@ import java.lang.annotation.*;
  * option group.  Option groups are documented in {@link Options}.
  * <p>
  * 
- * Note that <code>@OptionGroup</code> is applied to a field and must
+ * Note that <code>@OptionGroup</code> must be applied to a field and must
  * appear after that field's Javadoc comment, if any.  A Javadoc comment
  * between {@code @OptionGroup} and the field is ignored.
+ *
+ * For example, you must write
+ * <pre>
+ * /** comment for first option{@literal *}/
+ *{@literal @}OptionGroup("the group")
+ *{@literal @}Option("the first option")
+ * public static int first_option = blah;</pre>
+ * instead of
+ * <pre>
+ *
+ *{@literal @}OptionGroup("the group")
+ *
+ * /** comment for first option{@literal *}/
+ *{@literal @}Option("the first option")
+ * public static int first_option = blah;</pre>
  *
  * @see plume.Options
  * @see plume.Option
