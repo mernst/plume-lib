@@ -1,14 +1,14 @@
 #!/usr/bin/env perl
 
-# Clean up a path environment variable by removing duplicates and
+# Shorten a path environment variable by removing duplicates and
 # non-existent directories.
 # With optional argument "-r REGEXP", removes any matching path element.
 # Works for either space- or colon- delimiated paths.
 # Usage:
 #   # csh
-#   setenv PATH `echo $PATH | $HOME/bin/src/plume-lib/bin/path-remove`
+#   setenv PATH `echo $PATH | .../plume-lib/bin/path-remove`
 #   # sh
-#   set path = (`echo $path | $HOME/bin/src/plume-lib/bin/path-remove`)
+#   set path = (`echo $path | .../plume-lib/bin/path-remove`)
 
 my $debug = 0;
 # $debug = 1;
