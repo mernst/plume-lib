@@ -15,6 +15,9 @@
 # An archived copy of a since-removed document, which contains broken links.
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
+# Old releases contain numerous broken links that are fixed in the current release
+--exclude-docs http://types.cs.washington.edu/checker-framework/releases/
+--exclude-docs http://types.cs.washington.edu/dev/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/list-archives/
 --exclude-docs http://types.cs.washington.edu/sparta/release/versions/
 --exclude-docs https://groups.csail.mit.edu/pag/cert/
