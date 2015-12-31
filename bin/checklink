@@ -1333,7 +1333,8 @@ EOF
                 # my $is_suppressed_fragment = grep { $_ eq "$u#$fragment" } @{$Opts{Suppress_Fragment}};
 
                 # Debugging of the below
-                if (! exists $results{$u}{fragments}{$fragment}) {
+                if ((! exists $results{$u}{fragments}{$fragment})
+                    && (! is_pdf_page_fragment($u, $fragment))) {
                     # printf("Exists \$results{%s}: %s\n", $u, exists $results{$u});
                     # printf("Exists \$results{%s}{fragments}: %s\n", $u, exists $results{$u}{fragments});
                     # printf("Exists \$results{%s}{fragments}{%s}: %s\n", $u, $fragment, exists $results{$u}{fragments}{$fragment});
@@ -1350,11 +1351,12 @@ EOF
                         (scalar(@line_nums) > 1) ? 's' : '',
                         join(', ', @line_nums)
                     );
-                    # print "is_suppressed_fragment for $u#$fragment: $grep_result\n";
+                    # print "is_suppressed_fragment for $u#$fragment: $is_suppressed_fragment\n";
                 }
 
                 # A broken fragment?
-                if ($results{$u}{fragments}{$fragment} == 0) {
+                if (exists $results{$u}{fragments}{$fragment}
+                    && $results{$u}{fragments}{$fragment} == 0) {
                     $broken{$u}{fragments}{$fragment} += 2;
                 }
             }
@@ -2280,7 +2282,8 @@ sub check_validity ($$$\%\%)
     foreach my $fragment (keys %{$links->{$uri}{fragments}}) {
         if (defined($p->{Anchors}{$fragment}) ||
             &escape_match($fragment, $p->{Anchors}) ||
-            grep { $_ eq "$uri#$fragment" } @{$Opts{Suppress_Fragment}})
+            grep { $_ eq "$uri#$fragment" } @{$Opts{Suppress_Fragment}} ||
+            is_pdf_page_fragment($uri, $fragment))
         {
             $results{$uri}{fragments}{$fragment} = 1;
         }
@@ -2289,6 +2292,12 @@ sub check_validity ($$$\%\%)
         }
     }
     return;
+}
+
+sub is_pdf_page_fragment ($$)
+{
+    my ($uri, $fragment) = @_;
+    return ($uri =~ /\.pdf$/ && $fragment =~ /^page=[0-9]+$/);
 }
 
 sub escape_match ($\%)
