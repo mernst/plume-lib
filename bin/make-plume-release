@@ -30,17 +30,17 @@ if ! git status 2>&1 > /dev/null; then
     echo "$PWD is not a Git repository."
 fi
 
-if git diff --exit-code; then
+if ! git diff --exit-code; then
     echo "Unstaged local changes; stage, commit, and push changes before making a release."
     exit 1
 fi
 
-if git diff --cached --exit-code; then
+if ! git diff --cached --exit-code; then
     echo "Staged but uncommited local changes; stage and push changes before making a release."
     exit 1
 fi
 
-if git log --branches --not --remotes &> /dev/null; then
+if ! git log --branches --not --remotes &> /dev/null; then
     echo "Unpushed changes; push changes before making a release."
     exit 1
 fi
@@ -102,8 +102,11 @@ done_release() {
     echo "To finalize the release, perform the following steps manually:"
     echo "* Push the newly created tag by running:  git push --tags"
     if ! $uploaded; then
-        echo "* Make a new relase on GitHub at https://github.com/mernst/plume-lib/releases/new"
-        echo "* Upload $release_tar to GitHub"
+        echo "* Make a new release on GitHub:"
+        echo "   * browse to https://github.com/mernst/plume-lib/releases/new"
+        echo "   * Name is: plume-lib version $new"
+        echo "   * description from changelog, with line breaks fixed"
+        echo "   * attach $release_tar"
     fi
     exit 0
 }

@@ -11,7 +11,7 @@ New program: trigger-travis.sh.  Trigger a new Travis-CI job. This is
 New Java library: plume.DeterministicObject.  A version of Object with a
   deterministic hashCode() method.  Instantiate this instead of Object to
   remove a source of nondeterminism from your programs.
-Many third-party library jar files update to newer versions.
+Many third-party library jar files updated to newer versions.
 The Java portion of plume-lib now requires Java 7.
 The Python portion of plume-lib now works with Python 2 or Python 3.
 Many other bug fixes and enhancements.
