@@ -47,6 +47,8 @@ to see the changes.
 
 6. Push the changes in your copy of the plume-lib repository.
 
+    git push
+
 7. Run the make-plume-release script located in plume-lib/bin:
 
     cd plume-lib
