@@ -30,17 +30,17 @@ if ! git status 2>&1 > /dev/null; then
     echo "$PWD is not a Git repository."
 fi
 
-if git diff --exit-code; then
+if ! git diff --exit-code; then
     echo "Unstaged local changes; stage, commit, and push changes before making a release."
     exit 1
 fi
 
-if git diff --cached --exit-code; then
+if ! git diff --cached --exit-code; then
     echo "Staged but uncommited local changes; stage and push changes before making a release."
     exit 1
 fi
 
-if git log --branches --not --remotes &> /dev/null; then
+if ! git log --branches --not --remotes &> /dev/null; then
     echo "Unpushed changes; push changes before making a release."
     exit 1
 fi
