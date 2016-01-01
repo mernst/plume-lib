@@ -102,8 +102,11 @@ done_release() {
     echo "To finalize the release, perform the following steps manually:"
     echo "* Push the newly created tag by running:  git push --tags"
     if ! $uploaded; then
-        echo "* Make a new relase on GitHub at https://github.com/mernst/plume-lib/releases/new"
-        echo "* Upload $release_tar to GitHub"
+        echo "* Make a new release on GitHub:"
+        echo "   * browse to https://github.com/mernst/plume-lib/releases/new"
+        echo "   * Name is: plume-lib version $new"
+        echo "   * description from changelog, with line breaks fixed"
+        echo "   * attach $release_tar"
     fi
     exit 0
 }
