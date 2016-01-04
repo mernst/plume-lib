@@ -2279,7 +2279,7 @@ sub check_validity ($$$\%\%)
     }
 
     # Check that the fragments exist
-    foreach my $fragment (keys %{$links->{$uri}{fragments}}) {
+    foreach my $fragment (sort keys %{$links->{$uri}{fragments}}) {
         if (defined($p->{Anchors}{$fragment}) ||
             &escape_match($fragment, $p->{Anchors}) ||
             grep { $_ eq "$uri#$fragment" } @{$Opts{Suppress_Fragment}} ||
