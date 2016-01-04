@@ -409,6 +409,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 # Fails if plume.jar has Java 8 .class files, which cannot be used on Java 7 JVM
 verify-plume-jar-classfile-version:
 	rm -rf jar-contents
+	mkdir jar-contents
 	(cd jar-contents; jar xf ../plume.jar)
 	(cd jar-contents; find . -type f '*.class' | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
 	if [ -s jar-contents/version-52-files.txt ] ; then echo "Version 52.0 files exist: see list in jar-contents/version-52-files.txt"; exit 1; fi
