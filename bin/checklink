@@ -2282,7 +2282,7 @@ sub check_validity ($$$\%\%)
     foreach my $fragment (sort keys %{$links->{$uri}{fragments}}) {
         if (defined($p->{Anchors}{$fragment}) ||
             &escape_match($fragment, $p->{Anchors}) ||
-            grep { $_ eq "$uri#$fragment" } @{$Opts{Suppress_Fragment}} ||
+            (grep { $_ eq "$uri#$fragment" } @{$Opts{Suppress_Fragment}}) ||
             is_pdf_page_fragment($uri, $fragment))
         {
             $results{$uri}{fragments}{$fragment} = 1;
