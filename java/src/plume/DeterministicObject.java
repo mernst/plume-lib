@@ -1,7 +1,8 @@
 package plume;
 
-// Even with these, Javadoc doesn't make links to HashMap or HashSet because
-// the class's public interface does not use these classes.
+// Even with these, Javadoc wouldn't make links from {@link HashMap} or
+// {@link HashSet} because this class's public interface does not use those
+// classes.
 // import java.util.HashMap;
 // import java.util.HashSet;
 
@@ -16,7 +17,7 @@ package plume;
  * Any use of {@code Object.hashCode()} is nondeterministic because the
  * return value of {@code Object.hashCode()} depends on when the garbage
  * collector runs.  That nondeterminism can affect the iteration order of
- * {@link HashMap}s and {@link HashSet}s.
+ * HashMaps and HashSets.
  */
 public class DeterministicObject {
 
