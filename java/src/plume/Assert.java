@@ -24,9 +24,15 @@ import org.checkerframework.checker.nullness.qual.*;
  */
 @Deprecated
 public final class Assert {
-  private Assert() { throw new Error("do not instantiate"); }
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private Assert() {
+    throw new Error("do not instantiate");
+  }
+
   /** If false, the Assert class is disabled. */
   public static final boolean enabled = true;
+
   /**
    * Throw AssertionException with the argument string
    * if the condition does not hold.  Named "assertTrue" instead of
@@ -35,22 +41,29 @@ public final class Assert {
    * @param s message string for assertion
    * @throws AssertionException if b is not true
    **/
-  public static final void assertTrue(boolean b, /*@Nullable*/ String s) {
-    if (enabled && !b)
+  public static void assertTrue(boolean b, /*@Nullable*/ String s) {
+    if (enabled && !b) {
       throw new AssertionException(s);
+    }
   }
+
   /**
    * Throw AssertionException if the condition does not hold.  Named
    * "assertTrue" instead of "assert" because "assert" is a Java 1.4 keyword.
    * @param b condition to be checked
    * @throws AssertionException if b is not true
    **/
-  public static final void assertTrue(boolean b) {
+  public static void assertTrue(boolean b) {
     assertTrue(b, null);
   }
+
   /** Error class for failed assertions. **/
   public static final class AssertionException extends Error {
     static final long serialVersionUID = 20050923L;
+    /**
+     * Create a report about a failed assertion.
+     * @param s description of the assertion failure
+     */
     public AssertionException(/*@Nullable*/ String s) {
       super(s);
     }

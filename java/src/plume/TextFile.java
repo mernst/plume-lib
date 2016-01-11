@@ -1,6 +1,13 @@
 package plume;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -72,11 +79,13 @@ public class TextFile implements Iterable<String> {
     public TextFile(File f, /*@Nullable*/ String charsetName)
         throws IOException
     {
-        if (!f.exists())
+        if (!f.exists()) {
             throw new FileNotFoundException(f.getPath());
-        if (!f.canRead())
+        }
+        if (!f.canRead()) {
             throw new IOException("Can't read: " +
                                   f.getPath());
+        }
         // Not "this(new FileInputStream(f), charsetName);"
         // because a call to "this" must be the first thing in a constructor.
         this.is = new FileInputStream(f);

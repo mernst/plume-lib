@@ -8,7 +8,10 @@
 
 package plume;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Indicates that the annotated field is set via command-line option.
@@ -38,22 +41,24 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Option {
+  /** String that describes the option.
+   * @see Option
+   */
   String value();
 
   /**
-   * For information about the this parameter, see the section on Option
+   * Aliases for this option.
+   * For information about the use of this field, see the section on Option
    * aliases in {@link plume.Options}.  If there is only a single,
    * one-character alias, it can be put at the beginning of the value field
    * without the need for an aliases field.
-   * 
-   * @return aliases for this option
    */
   String[] aliases() default {};
 
   /**
+   * Whether not to hide default values.
    * For information about this parameter, see the section on hiding default
-   * values strings in {@link plume.OptionsDoclet}.
-   * @return whether not to hide default values
+   * values in {@link plume.OptionsDoclet}.
    */
   boolean noDocDefault() default false;
 }

@@ -2,11 +2,32 @@ package plume;
 
 import static plume.Options.ArgException;
 
-import junit.framework.*;
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.ByteArrayInputStream;
+import java.io.CharArrayWriter;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Random;
+import java.util.Vector;
+import java.util.regex.Pattern;
+
+import junit.framework.TestCase;
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -74,20 +95,22 @@ public final class TestPlume extends TestCase {
 //     System.out.println("All plume tests succeeded.");
 //   }
 
-  public static final void assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
+  public static void assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
      boolean result = Arrays.equals(a1, a2);
-     if (! result)
+     if (! result) {
        System.out.println("Arrays differ: " + ArraysMDE.toString(a1)
                           + ", " + ArraysMDE.toString(a2));
+     }
      assert result;
 //      assert(Arrays.equals(a1, a2),
 //         "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
    }
-  public static final void assert_arrays_equals(double[] a1, double[] a2) {
+  public static void assert_arrays_equals(double[] a1, double[] a2) {
      boolean result = Arrays.equals(a1, a2);
-     if (! result)
+     if (! result) {
        System.out.println("Arrays differ: " + ArraysMDE.toString(a1)
                           + ", " + ArraysMDE.toString(a2));
+     }
      assert result;
    }
 
@@ -98,24 +121,27 @@ public final class TestPlume extends TestCase {
 
   public static Iterator<Integer> int_array_iterator(int[] nums) {
     List<Integer> asList = new ArrayList<Integer>(nums.length);
-    for (int i=0; i<nums.length; i++)
+    for (int i=0; i<nums.length; i++) {
       asList.add(nums[i]);
+    }
     return asList.iterator();
   }
 
   public static int[] int_iterator_array(Iterator<Integer> itor) {
     Vector<Integer> v = new Vector<Integer>();
-    while (itor.hasNext())
+    while (itor.hasNext()) {
       v.add(itor.next());
+    }
     int[] a = new int[v.size()];
-    for (int i=0; i<a.length; i++)
+    for (int i=0; i<a.length; i++) {
       a[i] = v.elementAt(i).intValue();
+    }
     return a;
   }
 
   public static <T> Vector<T> toVector(Iterator<T> itor) {
     Vector<T> v = new Vector<T>();
-    for ( ; itor.hasNext() ; ) {
+    while (itor.hasNext()) {
       v.add(itor.next());
     }
     return v;
@@ -123,7 +149,7 @@ public final class TestPlume extends TestCase {
 
   public static <T> Vector<T> toVector(Enumeration<T> e) {
     Vector<T> v = new Vector<T>();
-    for ( ; e.hasMoreElements() ; ) {
+    while (e.hasMoreElements()) {
       v.add(e.nextElement());
     }
     return v;
@@ -175,8 +201,8 @@ public final class TestPlume extends TestCase {
 
     // public static int sum(int[][] a)
     assert 0 == ArraysMDE.sum(new int[0][0]);
-    assert 78  == ArraysMDE.sum
-           (new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}});
+    assert 78  == ArraysMDE.sum(
+           new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}});
 
     // public static double sum(double[] a)
     assert 0 == ArraysMDE.sum(new double[0]);
@@ -199,8 +225,9 @@ public final class TestPlume extends TestCase {
     // public static int indexOfEq(Object[] a, Object elt)
     {
       Integer[] a = new Integer[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = new Integer(i);
+      }
       assert ArraysMDE.indexOf(a, new Integer(-1)) == -1;
       assert ArraysMDE.indexOf(a, new Integer(0)) == 0;
       assert ArraysMDE.indexOf(a, new Integer(7)) == 7;
@@ -237,8 +264,9 @@ public final class TestPlume extends TestCase {
     // public static int indexOf(int[] a, int elt)
     {
       int[] a = new int[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = i;
+      }
       assert ArraysMDE.indexOf(a, -1) == -1;
       assert ArraysMDE.indexOf(a, 0) == 0;
       assert ArraysMDE.indexOf(a, 7) == 7;
@@ -250,8 +278,9 @@ public final class TestPlume extends TestCase {
     // public static int indexOf(boolean[] a, boolean elt)
     {
       boolean[] a = new boolean[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = false;
+      }
       assert ArraysMDE.indexOf(a, true) == -1;
       assert ArraysMDE.indexOf(a, false) == 0;
       a[9] = true;
@@ -263,8 +292,9 @@ public final class TestPlume extends TestCase {
       a[0] = true;
       assert ArraysMDE.indexOf(a, true) == 0;
       assert ArraysMDE.indexOf(a, false) == 1;
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = true;
+      }
       assert ArraysMDE.indexOf(a, true) == 0;
       assert ArraysMDE.indexOf(a, false) == -1;
     }
@@ -273,8 +303,9 @@ public final class TestPlume extends TestCase {
     // public static int indexOfEq(Object[] a, Object[] sub)
     {
       Integer[] a = new Integer[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = new Integer(i);
+      }
       Integer[] b = new Integer[] { };
       Integer[] c = new Integer[] { a[0], a[1], a[2] };
       Integer[] d = new Integer[] { a[1], a[2] };
@@ -321,8 +352,9 @@ public final class TestPlume extends TestCase {
     // public static int indexOf(int[] a, int[] sub)
     {
       int[] a = new int[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = i;
+      }
       int[] b = new int[] { };
       int[] c = new int[] { a[0], a[1], a[2] };
       int[] d = new int[] { a[1], a[2] };
@@ -532,22 +564,24 @@ public final class TestPlume extends TestCase {
       double[] f1 = new double[10];
       double[] f2 = new double[20];
 
-      for (int j = 0; j < f2.length; j++)
+      for (int j = 0; j < f2.length; j++) {
         f2[j] = j;
+      }
       for (int i = 0; i < f2.length - f1.length; i++) {
 
         //fill up f1 with elements of f2
-        for (int j = 0; j < f1.length; j++)
+        for (int j = 0; j < f1.length; j++) {
           f1[j] = f2[i+j];
+        }
 
         f1[5] = f2[i];
 
         double[] f1_copy = f1.clone();
         double[] f2_copy = f2.clone();
 
-        assert ArraysMDE.isSubset (f1, f2);
-        assert_arrays_equals (f1, f1_copy);
-        assert_arrays_equals (f2, f2_copy);
+        assert ArraysMDE.isSubset(f1, f2);
+        assert_arrays_equals(f1, f1_copy);
+        assert_arrays_equals(f2, f2_copy);
       }
 
       double [] a1 = new double [] {1, 5, 10};
@@ -557,13 +591,13 @@ public final class TestPlume extends TestCase {
       double [] a5 = new double [] {1, 10, 15, 20};
       double [] a6 = new double [] {10, 10, 10, 10, 10, 1};
 
-      assert ArraysMDE.isSubset (a2, a1);
-      assert !ArraysMDE.isSubset (a1, a2);
-      assert !ArraysMDE.isSubset (a1, a5);
-      assert ArraysMDE.isSubset (a3, a1);
-      assert ArraysMDE.isSubset (a4, a1);
-      assert ArraysMDE.isSubset (a6, a1);
-      assert !ArraysMDE.isSubset (a1, a6);
+      assert ArraysMDE.isSubset(a2, a1);
+      assert !ArraysMDE.isSubset(a1, a2);
+      assert !ArraysMDE.isSubset(a1, a5);
+      assert ArraysMDE.isSubset(a3, a1);
+      assert ArraysMDE.isSubset(a4, a1);
+      assert ArraysMDE.isSubset(a6, a1);
+      assert !ArraysMDE.isSubset(a1, a6);
     }
 
     // public static class IntArrayComparatorLexical implements Comparator
@@ -628,8 +662,8 @@ public final class TestPlume extends TestCase {
       assert iaclf.compare(a7, a4) < 0;
       assert iacl.compare(a4, a7) < 0;
       assert iaclf.compare(a4, a7) > 0;
-      assert iacl.compare (a8, a9) < 0;
-      assert iaclf.compare (a8, a9) < 0;
+      assert iacl.compare(a8, a9) < 0;
+      assert iaclf.compare(a8, a9) < 0;
       assert iacl.compare(a10, a7) < 0;
     }
 
@@ -694,8 +728,8 @@ public final class TestPlume extends TestCase {
       assert laclf.compare(a7, a4) < 0;
       assert lacl.compare(a4, a7) < 0;
       assert laclf.compare(a4, a7) > 0;
-      assert lacl.compare (a8, a9) < 0;
-      assert laclf.compare (a8, a9) < 0;
+      assert lacl.compare(a8, a9) < 0;
+      assert laclf.compare(a8, a9) < 0;
       assert lacl.compare(a10, a7) < 0;
     }
 
@@ -910,10 +944,11 @@ public final class TestPlume extends TestCase {
         for (int i=0; i<arrays.length; i++) {
           int[] a = new int[10];
           for (int j=0; j<a.length; j++) {
-            if (random)
+            if (random) {
               a[j] = random_gen.nextInt(1000);
-            else
+            } else {
               a[j] = j;
+            }
           }
           arrays[i] = a;
           // System.out.println(ArraysMDE.toString(a));
@@ -922,18 +957,23 @@ public final class TestPlume extends TestCase {
           a = null;
         }
         System.gc();
-        if (Intern.numIntArrays() != 0)
+        if (Intern.numIntArrays() != 0) {
           throw new Error(" expected 0 int arrays at start, found "
                             + Intern.numIntArrays());
-        for (int i=0; i<arrays.length; i++)
+        }
+        for (int i=0; i<arrays.length; i++) {
           Intern.intern(arrays[i]);
-        if (Intern.numIntArrays() != size1)
+        }
+        if (Intern.numIntArrays() != size1) {
           throw new Error("Expected " + size1 + ", got " + Intern.numIntArrays() + " int arrays");
+        }
         System.gc();
-        if (Intern.numIntArrays() != size1)
+        if (Intern.numIntArrays() != size1) {
           throw new Error();
-        for (int i=10; i<arrays.length; i++)
+        }
+        for (int i=10; i<arrays.length; i++) {
           arrays[i] = null;
+        }
         System.gc();
         if (Intern.numIntArrays() != size2) {
           if (Intern.numIntArrays() < size2 + 10) {
@@ -941,8 +981,9 @@ public final class TestPlume extends TestCase {
                                + Intern.numIntArrays());
           } else {
             System.out.println("================");
-            for (int i=0; i<arrays.length; i++)
+            for (int i=0; i<arrays.length; i++) {
               System.out.println(ArraysMDE.toString(arrays[i]));
+            }
             System.out.println("================");
             for (Iterator<int[]> itor = Intern.intArrays(); itor.hasNext(); ) {
               System.out.println(ArraysMDE.toString(itor.next()));
@@ -1265,19 +1306,24 @@ public final class TestPlume extends TestCase {
       // javadoc won't let this be static
       void check(int[] nums, int[] goal_rm) {
         int[] rm = MathMDE.modulus(nums);
-        if (!Arrays.equals(rm, goal_rm))
+        if (!Arrays.equals(rm, goal_rm)) {
           throw new Error("Expected (r,m)=" + ArraysMDE.toString(goal_rm)
                           + ", saw (r,m)=" + ArraysMDE.toString(rm));
-        if (rm == null)
+        }
+        if (rm == null) {
           return;
+        }
         int goal_r = rm[0];
         int m = rm[1];
         for (int i=0; i<nums.length; i++) {
           int r = nums[i] % m;
-          if (r < 0) r += m;
-          if (r != goal_r)
+          if (r < 0) {
+            r += m;
+          }
+          if (r != goal_r) {
             throw new Error("Expected " + nums[i] + " % " + m + " = " + goal_r
                             + ", got " + r);
+          }
         }
       }
 
@@ -1333,22 +1379,28 @@ public final class TestPlume extends TestCase {
       // javadoc won't let this be static
       void check(int[] nums, int[] goal_rm, boolean strict) {
         int[] rm;
-        if (strict)
+        if (strict) {
           rm = MathMDE.nonmodulus_strict(nums);
-        else
+        } else {
           rm = MathMDE.nonmodulus_nonstrict(nums);
-        if (!Arrays.equals(rm, goal_rm))
+        }
+        if (!Arrays.equals(rm, goal_rm)) {
           throw new Error("Expected (r,m)=" + ArraysMDE.toString(goal_rm)
                           + ", saw (r,m)=" + ArraysMDE.toString(rm));
-        if (rm == null)
+        }
+        if (rm == null) {
           return;
+        }
         int goal_r = rm[0];
         int m = rm[1];
         for (int i=0; i<nums.length; i++) {
           int r = nums[i] % m;
-          if (r < 0) r += m;
-          if (r == goal_r)
+          if (r < 0) {
+            r += m;
+          }
+          if (r == goal_r) {
             throw new Error("Expected inequality, saw " + nums[i] + " % " + m + " = " + r);
+          }
         }
       }
     }
@@ -1375,14 +1427,17 @@ public final class TestPlume extends TestCase {
     final int NULL = -2222;
 
     Vector<Integer> ones = new Vector<Integer>();
-    for (int i=1; i<=30; i++)
+    for (int i=1; i<=30; i++) {
       ones.add(new Integer(i));
+    }
     Vector<Integer> twos = new Vector<Integer>();
-    for (int i=2; i<=30; i+=2)
+    for (int i=2; i<=30; i+=2) {
       twos.add(new Integer(i));
+    }
     Vector<Integer> threes = new Vector<Integer>();
-    for (int i=3; i<=30; i+=3)
+    for (int i=3; i<=30; i+=3) {
       threes.add(new Integer(i));
+    }
 
     // I've replaced the nulls by 0 in order to permit the array elements
     // to be ints instead of Integers.
@@ -1726,8 +1781,9 @@ public final class TestPlume extends TestCase {
       // array of all the numbers up to its argument.
       Vector<Integer> iota0 = new Vector<Integer>();
       Vector<Integer> iota10 = new Vector<Integer>();
-      for (int i=0; i<10; i++)
+      for (int i=0; i<10; i++) {
         iota10.add(new Integer(i));
+      }
       Vector<Integer> iota10_twice = new Vector<Integer>();
       iota10_twice.addAll(iota10);
       iota10_twice.addAll(iota10);
@@ -1786,9 +1842,11 @@ public final class TestPlume extends TestCase {
       // public static final class FilteredIterator implements Iterator
 
       Vector<Integer> iota10_odd = new Vector<Integer>();
-      for (int i=0; i<iota10.size(); i++)
-        if (i%2 != 0)
+      for (int i=0; i<iota10.size(); i++) {
+        if (i%2 != 0) {
           iota10_odd.add(new Integer(i));
+        }
+      }
       assert iota10_odd.equals(toVector(new UtilMDE.FilteredIterator<Integer>(iota10.iterator(), new OddFilter())));
 
     }
@@ -1796,11 +1854,13 @@ public final class TestPlume extends TestCase {
     // public static final class RemoveFirstAndLastIterator implements Iterator
     {
       Vector<Integer> iota5 = new Vector<Integer>();
-      for (int i=0; i<5; i++)
+      for (int i=0; i<5; i++) {
         iota5.add(new Integer(i));
+      }
       Vector<Integer> iota5middle = new Vector<Integer>();
-      for (int i=1; i<4; i++)
+      for (int i=1; i<4; i++) {
         iota5middle.add(new Integer(i));
+      }
       UtilMDE.RemoveFirstAndLastIterator<Integer> rfali = new UtilMDE.RemoveFirstAndLastIterator<Integer>(iota5.iterator());
       Vector<Integer> rfali_vector = toVector(rfali);
       assert iota5middle.equals(rfali_vector);
@@ -1815,13 +1875,24 @@ public final class TestPlume extends TestCase {
     class IotaIterator implements Iterator<Integer> {
       int i = 0;
       int limit;
-      public IotaIterator(int limit) { this.limit = limit; }
-      public boolean hasNext() { return i<limit; }
+      public IotaIterator(int limit) {
+        this.limit = limit;
+      }
+      @Override
+      public boolean hasNext() {
+        return i<limit;
+      }
+      @Override
       public Integer next() {
-        if (! hasNext()) throw new NoSuchElementException();
+        if (! hasNext()) {
+          throw new NoSuchElementException();
+        }
         return new Integer(i++);
       }
-      public void remove() { throw new UnsupportedOperationException(); }
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
     }
     {
       // Typically, no progress reports are printed, because the loop
@@ -1852,7 +1923,7 @@ public final class TestPlume extends TestCase {
           List<Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m=0; m<chosen.size(); m++) {
             for (int n=m+1; n<chosen.size(); n++) {
-              if ( chosen.get(m).intValue() == chosen.get(n).intValue() ) {
+              if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
                 throw new Error("Duplicate at " + m + "," + n);
               }
             }
@@ -2207,17 +2278,17 @@ public final class TestPlume extends TestCase {
       = new WeakIdentityHashMap<String,Integer>();
     // WeakHashMap<String,Integer> m = new WeakHashMap<String,Integer>();
 
-    m.put (s1, 1);
-    m.put (s2, 2);
-    m.put (s3, 3);
+    m.put(s1, 1);
+    m.put(s2, 2);
+    m.put(s3, 3);
 
     String s1a = new String(s1);
     String s2a = new String(s2);
     String s3a = new String(s3);
 
-    m.put (s1a, 1);
-    m.put (s2a, 2);
-    m.put (s3a, 3);
+    m.put(s1a, 1);
+    m.put(s2a, 2);
+    m.put(s3a, 3);
 
     assert m.get(s1) == 1;
     assert m.get(s2) == 2;
@@ -2226,9 +2297,9 @@ public final class TestPlume extends TestCase {
     assert m.get(s2a) == 2;
     assert m.get(s3a) == 3;
 
-    m.remove (s1);
-    m.remove (s2);
-    m.remove (s3);
+    m.remove(s1);
+    m.remove(s2);
+    m.remove(s3);
     assert m.get(s1) == null;
     assert m.get(s2) == null;
     assert m.get(s3) == null;
@@ -2289,21 +2360,21 @@ public final class TestPlume extends TestCase {
     int j = 4;
     int k = 5;
 
-    int[] s1 = Intern.internSubsequence (a1, i, j);
-    int[] s2 = Intern.internSubsequence (a2, i, j);
-    int[] s3 = Intern.internSubsequence (a1, j, k);
-    int[] s4 = Intern.internSubsequence (a1, j, k);
-    int[] s5 = Intern.internSubsequence (a3, j-1, k-1);
+    int[] s1 = Intern.internSubsequence(a1, i, j);
+    int[] s2 = Intern.internSubsequence(a2, i, j);
+    int[] s3 = Intern.internSubsequence(a1, j, k);
+    int[] s4 = Intern.internSubsequence(a1, j, k);
+    int[] s5 = Intern.internSubsequence(a3, j-1, k-1);
 
     assert a1 == a2;
     assert s1 == s2;
     assert s3 == s4;
     assert s3 == s5;
-    assert ArraysMDE.isSubarray(s1, ArraysMDE.subarray (a1, i, j-i), 0);
-    assert ArraysMDE.isSubarray(ArraysMDE.subarray (a1, i, j-i), s1, 0);
+    assert ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, i, j-i), 0);
+    assert ArraysMDE.isSubarray(ArraysMDE.subarray(a1, i, j-i), s1, 0);
 
     long[] l1 = Intern.intern(new long[] {1, 2, 3, 4, 5, 6});
-    assert l1 == Intern.internSubsequence (l1, 0, l1.length);
+    assert l1 == Intern.internSubsequence(l1, 0, l1.length);
   }
 
   // To do
@@ -2316,7 +2387,7 @@ public final class TestPlume extends TestCase {
    */
   public static void testFuzzyFloat() {
 
-    FuzzyFloat  ff = new FuzzyFloat (0.0001);
+    FuzzyFloat  ff = new FuzzyFloat(0.0001);
     double      offset   = 0.00007;
     double      offhigh  = 1 + offset;
     double      offlow   = 1 - offset;
@@ -2325,52 +2396,53 @@ public final class TestPlume extends TestCase {
 
     //test equality for a variety of postive and negative numbers
     for (double d = -20000; d < 20000; d += 1000.36) {
-      assert ff.eq (d, d * offhigh);
-      assert ff.eq (d, d * offlow);
-      assert !ff.eq (d, d * offhigh2);
-      assert !ff.eq (d, d * offlow2);
-      assert !ff.ne (d, d * offhigh);
-      assert !ff.ne (d, d * offlow);
-      assert ff.ne (d, d * offhigh2);
-      assert ff.ne (d, d * offlow2);
+      assert ff.eq(d, d * offhigh);
+      assert ff.eq(d, d * offlow);
+      assert !ff.eq(d, d * offhigh2);
+      assert !ff.eq(d, d * offlow2);
+      assert !ff.ne(d, d * offhigh);
+      assert !ff.ne(d, d * offlow);
+      assert ff.ne(d, d * offhigh2);
+      assert ff.ne(d, d * offlow2);
     }
 
     //make sure nothing is equal to zero
-    assert ff.eq (0, Double.MIN_VALUE);
-    assert ff.eq (0, -Double.MIN_VALUE);
-    assert !ff.ne (0, Double.MIN_VALUE);
-    assert !ff.ne (0, -Double.MIN_VALUE);
+    assert ff.eq(0, Double.MIN_VALUE);
+    assert ff.eq(0, -Double.MIN_VALUE);
+    assert !ff.ne(0, Double.MIN_VALUE);
+    assert !ff.ne(0, -Double.MIN_VALUE);
 
     //make sure that 0 equals 0
-    assert ff.eq (0, 0);
-    assert !ff.ne (0, 0);
+    assert ff.eq(0, 0);
+    assert !ff.ne(0, 0);
 
     //make sure that NaNs are not equal
-    assert !ff.eq (Double.NaN, Double.NaN);
+    assert !ff.eq(Double.NaN, Double.NaN);
 
     //make sure that various unusual values are equal
-    assert ff.eq (Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-    assert ff.eq (Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
+    assert ff.eq(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+    assert ff.eq(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
 
     //rudimentary checks on the comparison operators (since they all just
     //use eq and ne anyway)
     {
       double d = 2563.789;
-      assert !ff.gt (d, d * offlow);
-      assert !ff.lt (d, d * offhigh);
-      assert ff.gt (d, d * offlow2);
-      assert ff.lt (d, d * offhigh2);
-      assert ff.gte (d, d * offhigh);
-      assert ff.lte (d, d * offlow);
-      assert !ff.gte (d, d * offhigh2);
-      assert !ff.lte (d, d * offlow2);
+      assert !ff.gt(d, d * offlow);
+      assert !ff.lt(d, d * offhigh);
+      assert ff.gt(d, d * offlow2);
+      assert ff.lt(d, d * offhigh2);
+      assert ff.gte(d, d * offhigh);
+      assert ff.lte(d, d * offlow);
+      assert !ff.gte(d, d * offhigh2);
+      assert !ff.lte(d, d * offlow2);
     }
 
     // public int indexOf (double[] a, double elt)
     {
       double[] a = new double[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = i;
+      }
       double[] a_copy = a.clone();
       assert ff.indexOf(a, -1) == -1;
       assert ff.indexOf(a, 0) == 0;
@@ -2383,14 +2455,15 @@ public final class TestPlume extends TestCase {
       assert ff.indexOf(a, 9 * offlow) == 9;
       assert ff.indexOf(a, 7 * offhigh2) == -1;
       assert ff.indexOf(a, 9 * offlow2) == -1;
-      assert_arrays_equals (a, a_copy);
+      assert_arrays_equals(a, a_copy);
     }
 
     // public int indexOf (double[] a, double[] sub)
     {
       double[] a = new double[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = i;
+      }
       double[] b = new double[] { };
       double[] c = new double[] { a[0], a[1], a[2] };
       double[] d = new double[] { a[1], a[2] };
@@ -2409,8 +2482,9 @@ public final class TestPlume extends TestCase {
     }
     {
       double[] a = new double[10];
-      for (int i=0; i<a.length; i++)
+      for (int i=0; i<a.length; i++) {
         a[i] = i;
+      }
       double[] b = new double[] { };
       double[] c = new double[] { a[0] *offlow, a[1]*offhigh, a[2]*offlow };
       double[] d = new double[] { a[1]*offhigh, a[2]*offlow };
@@ -2435,14 +2509,14 @@ public final class TestPlume extends TestCase {
       assert ff.indexOf(a, g) == -1;
       assert ff.indexOf(a, h) == -1;
 
-      assert_arrays_equals (a, a_copy);
-      assert_arrays_equals (b, b_copy);
-      assert_arrays_equals (c, c_copy);
-      assert_arrays_equals (d, d_copy);
-      assert_arrays_equals (e, e_copy);
-      assert_arrays_equals (f, f_copy);
-      assert_arrays_equals (g, g_copy);
-      assert_arrays_equals (h, h_copy);
+      assert_arrays_equals(a, a_copy);
+      assert_arrays_equals(b, b_copy);
+      assert_arrays_equals(c, c_copy);
+      assert_arrays_equals(d, d_copy);
+      assert_arrays_equals(e, e_copy);
+      assert_arrays_equals(f, f_copy);
+      assert_arrays_equals(g, g_copy);
+      assert_arrays_equals(h, h_copy);
     }
 
     // public boolean isElemMatch (double[] a1, double[] a2)
@@ -2469,9 +2543,9 @@ public final class TestPlume extends TestCase {
 
         //test with each array the bigger one
         if ((j % 2) == 0) {
-          assert ff.isElemMatch (f1, f2);
+          assert ff.isElemMatch(f1, f2);
         } else {
-          assert ff.isElemMatch (f2, f1);
+          assert ff.isElemMatch(f2, f1);
         }
       }
       for (int j = 0; j < 200; j++) {
@@ -2495,12 +2569,12 @@ public final class TestPlume extends TestCase {
         double[] f1_copy = f1.clone();
         double[] f2_copy = f2.clone();
         if ((j % 2) == 0) {
-          assert !ff.isElemMatch (f1, f2);
+          assert !ff.isElemMatch(f1, f2);
         } else {
-          assert !ff.isElemMatch (f2, f1);
+          assert !ff.isElemMatch(f2, f1);
         }
-        assert_arrays_equals (f1, f1_copy);
-        assert_arrays_equals (f2, f2_copy);
+        assert_arrays_equals(f1, f1_copy);
+        assert_arrays_equals(f2, f2_copy);
       }
     }
     {
@@ -2508,11 +2582,11 @@ public final class TestPlume extends TestCase {
       double[] b = new double[] { };
       double[] c = new double[] {1, 1, 1, 1};
       double[] d = new double[] {1};
-      assert !ff.isElemMatch (a, b);
-      assert !ff.isElemMatch (b, a);
-      assert ff.isElemMatch (c, d);
-      assert ff.isElemMatch (d, c);
-      assert ff.isElemMatch (b, b);
+      assert !ff.isElemMatch(a, b);
+      assert !ff.isElemMatch(b, a);
+      assert ff.isElemMatch(c, d);
+      assert ff.isElemMatch(d, c);
+      assert ff.isElemMatch(b, b);
     }
 
     // public class DoubleArrayComparatorLexical implements Comparator
@@ -2559,14 +2633,14 @@ public final class TestPlume extends TestCase {
       assert comparator.compare(a7, a4) > 0;
       assert comparator.compare(a4, a7) < 0;
 
-      assert_arrays_equals (a0, a0_copy);
-      assert_arrays_equals (a1, a1_copy);
-      assert_arrays_equals (a2, a2_copy);
-      assert_arrays_equals (a3, a3_copy);
-      assert_arrays_equals (a4, a4_copy);
-      assert_arrays_equals (a5, a5_copy);
-      assert_arrays_equals (a6, a6_copy);
-      assert_arrays_equals (a7, a7_copy);
+      assert_arrays_equals(a0, a0_copy);
+      assert_arrays_equals(a1, a1_copy);
+      assert_arrays_equals(a2, a2_copy);
+      assert_arrays_equals(a3, a3_copy);
+      assert_arrays_equals(a4, a4_copy);
+      assert_arrays_equals(a5, a5_copy);
+      assert_arrays_equals(a6, a6_copy);
+      assert_arrays_equals(a7, a7_copy);
     }
 
     // public boolean FuzzyFloat.isSubset (double[] a1, double[] a2)
@@ -2574,22 +2648,24 @@ public final class TestPlume extends TestCase {
       double[] f1 = new double[10];
       double[] f2 = new double[20];
 
-      for (int j = 0; j < f2.length; j++)
+      for (int j = 0; j < f2.length; j++) {
         f2[j] = j;
+      }
       for (int i = 0; i < f2.length - f1.length; i++) {
 
         //fill up f1 with elements of f2
-        for (int j = 0; j < f1.length; j++)
+        for (int j = 0; j < f1.length; j++) {
           f1[j] = f2[i+j];
+        }
 
         f1[5] = f2[i] * offhigh;
 
         double[] f1_copy = f1.clone();
         double[] f2_copy = f2.clone();
 
-        assert ff.isSubset (f1, f2);
-        assert_arrays_equals (f1, f1_copy);
-        assert_arrays_equals (f2, f2_copy);
+        assert ff.isSubset(f1, f2);
+        assert_arrays_equals(f1, f1_copy);
+        assert_arrays_equals(f2, f2_copy);
       }
 
       double [] a1 = new double [] {1, 5, 10};
@@ -2599,13 +2675,13 @@ public final class TestPlume extends TestCase {
       double [] a5 = new double [] {1, 10, 15, 20};
       double [] a6 = new double [] {10, 10, 10, 10, 10, 1};
 
-      assert ff.isSubset (a2, a1);
-      assert !ff.isSubset (a1, a2);
-      assert !ff.isSubset (a1, a5);
-      assert ff.isSubset (a3, a1);
-      assert ff.isSubset (a4, a1);
-      assert ff.isSubset (a6, a1);
-      assert !ff.isSubset (a1, a6);
+      assert ff.isSubset(a2, a1);
+      assert !ff.isSubset(a1, a2);
+      assert !ff.isSubset(a1, a5);
+      assert ff.isSubset(a3, a1);
+      assert ff.isSubset(a4, a1);
+      assert ff.isSubset(a6, a1);
+      assert !ff.isSubset(a1, a6);
     }
 
   }
@@ -2620,58 +2696,58 @@ public final class TestPlume extends TestCase {
     Object a = new Object();
     Object b = new Object();
     Object c = new Object();
-    List<Object> a_list = Arrays.<Object>asList (new Object[] {a});
-    List<Object> b_list = Arrays.<Object>asList (new Object[] {b});
-    List<Object> c_list = Arrays.<Object>asList (new Object[] {c});
-    List<Object> aa = Arrays.<Object>asList (new Object[] {a, a});
-    List<Object> bb = Arrays.<Object>asList (new Object[] {b, b});
-    List<Object> cc = Arrays.<Object>asList (new Object[] {c, c});
-    List<Object> ab = Arrays.<Object>asList (new Object[] {a, b});
-    List<Object> ac = Arrays.<Object>asList (new Object[] {a, c});
-    List<Object> bc = Arrays.<Object>asList (new Object[] {b, c});
+    List<Object> a_list = Arrays.<Object>asList(new Object[] {a});
+    List<Object> b_list = Arrays.<Object>asList(new Object[] {b});
+    List<Object> c_list = Arrays.<Object>asList(new Object[] {c});
+    List<Object> aa = Arrays.<Object>asList(new Object[] {a, a});
+    List<Object> bb = Arrays.<Object>asList(new Object[] {b, b});
+    List<Object> cc = Arrays.<Object>asList(new Object[] {c, c});
+    List<Object> ab = Arrays.<Object>asList(new Object[] {a, b});
+    List<Object> ac = Arrays.<Object>asList(new Object[] {a, c});
+    List<Object> bc = Arrays.<Object>asList(new Object[] {b, c});
 
-    List<Object> abc = Arrays.asList (a,b,c);
-    List<List<Object>> combo1 = UtilMDE.create_combinations (1, 0, abc);
+    List<Object> abc = Arrays.asList(a,b,c);
+    List<List<Object>> combo1 = UtilMDE.create_combinations(1, 0, abc);
     assert combo1.size() == 3;
-    assert combo1.contains (a_list);
-    assert combo1.contains (b_list);
-    assert combo1.contains (c_list);
+    assert combo1.contains(a_list);
+    assert combo1.contains(b_list);
+    assert combo1.contains(c_list);
 
-    List<List<Object>> combo2 = UtilMDE.create_combinations (2, 0, abc);
+    List<List<Object>> combo2 = UtilMDE.create_combinations(2, 0, abc);
     assert combo2.size() == 6;
-    assert combo2.contains (aa);
-    assert combo2.contains (ab);
-    assert combo2.contains (ac);
-    assert combo2.contains (bb);
-    assert combo2.contains (bc);
-    assert combo2.contains (cc);
+    assert combo2.contains(aa);
+    assert combo2.contains(ab);
+    assert combo2.contains(ac);
+    assert combo2.contains(bb);
+    assert combo2.contains(bc);
+    assert combo2.contains(cc);
 
     // public static List create_combinations (int arity, int start, int cnt)
     Integer i0 = new Integer(0);
     Integer i1 = new Integer(1);
     Integer i2 = new Integer(2);
 
-    List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations (1, 0, 2);
+    List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations(1, 0, 2);
     assert combo3.size() == 3;
-    assert combo3.contains (Arrays.asList (new Integer [] {i0}));
-    assert combo3.contains (Arrays.asList (new Integer [] {i1}));
-    assert combo3.contains (Arrays.asList (new Integer [] {i2}));
+    assert combo3.contains(Arrays.asList(new Integer [] {i0}));
+    assert combo3.contains(Arrays.asList(new Integer [] {i1}));
+    assert combo3.contains(Arrays.asList(new Integer [] {i2}));
 
-    List<ArrayList<Integer>> combo4 = UtilMDE.create_combinations (2, 0, 2);
+    List<ArrayList<Integer>> combo4 = UtilMDE.create_combinations(2, 0, 2);
     assert combo4.size() == 6;
-    assert combo4.contains (Arrays.asList (new Integer[] { i0, i0}));
-    assert combo4.contains (Arrays.asList (new Integer[] { i0, i1}));
-    assert combo4.contains (Arrays.asList (new Integer[] { i0, i2}));
-    assert combo4.contains (Arrays.asList (new Integer[] { i1, i1}));
-    assert combo4.contains (Arrays.asList (new Integer[] { i1, i2}));
-    assert combo4.contains (Arrays.asList (new Integer[] { i2, i2}));
+    assert combo4.contains(Arrays.asList(new Integer[] { i0, i0}));
+    assert combo4.contains(Arrays.asList(new Integer[] { i0, i1}));
+    assert combo4.contains(Arrays.asList(new Integer[] { i0, i2}));
+    assert combo4.contains(Arrays.asList(new Integer[] { i1, i1}));
+    assert combo4.contains(Arrays.asList(new Integer[] { i1, i2}));
+    assert combo4.contains(Arrays.asList(new Integer[] { i2, i2}));
 
   }
 
-  public static void test_unqualified_name () {
+  public static void test_unqualified_name() {
 
     assert UtilMDE.unqualified_name("java.lang.String").equals("String");
-    assert UtilMDE.unqualified_name ("String").equals ("String");
+    assert UtilMDE.unqualified_name("String").equals("String");
 
   }
 
@@ -2709,8 +2785,8 @@ public final class TestPlume extends TestCase {
   public static void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
-    Options options = new Options ("test", t);
-    options.parse (new String[] { "--lp=foo",
+    Options options = new Options("test", t);
+    options.parse(new String[] { "--lp=foo",
                                   "--lp", "bar",
                                   "-i", "24",
                                   "-d=37.8",
@@ -2729,24 +2805,24 @@ public final class TestPlume extends TestCase {
 
     // Test non-options
     t.bool = false;
-    String[] args = options.parse (new String[] {"one", "two", "three", "-b"});
-    assert args[0].equals ("one") : args[0];
-    assert args[1].equals ("two") : args[1];
-    assert args[2].equals ("three") : args[2];
+    String[] args = options.parse(new String[] {"one", "two", "three", "-b"});
+    assert args[0].equals("one") : args[0];
+    assert args[1].equals("two") : args[1];
+    assert args[2].equals("three") : args[2];
     assert t.bool;
 
     // Test --
     t.bool = false;
-    args = options.parse (new String[] { "--", "one", "two", "-b"});
-    assert args[0].equals ("one") : args[0];
-    assert args[1].equals ("two") : args[1];
-    assert args[2].equals ("-b") : args[2];
+    args = options.parse(new String[] { "--", "one", "two", "-b"});
+    assert args[0].equals("one") : args[0];
+    assert args[1].equals("two") : args[1];
+    assert args[2].equals("-b") : args[2];
     assert !t.bool;
 
     // Test split_lists
     t.ld.clear();
     Options.split_lists = true;
-    args = options.parse (new String[] {"--ld", "42.1 9.3 10.5", "--ld", "2.7"});
+    args = options.parse(new String[] {"--ld", "42.1 9.3 10.5", "--ld", "2.7"});
     assert args.length == 0;
     assert t.ld.size() == 4;
     assert t.ld.get(0).doubleValue() == 42.1;
@@ -2755,16 +2831,14 @@ public final class TestPlume extends TestCase {
     assert t.ld.get(3).doubleValue() == 2.7;
 
     // Test list with no default
-    args = options.parse (new String[] {"--ls", "hello", "--ls", "world"});
+    args = options.parse(new String[] {"--ls", "hello", "--ls", "world"});
     assert args.length == 0;
     assert t.ls.size() == 2;
     assert t.ls.get(0).equals("hello");
     assert t.ls.get(1).equals("world");
   }
 
-  /**
-   * Test class for option alias testing
-   */
+  /** Test class for option alias testing. */
   public static class TestOptionsAliases {
     @Option ("-d Set the day")
     public String day = "Friday";
@@ -2777,7 +2851,7 @@ public final class TestPlume extends TestCase {
   }
 
   /**
-   * Test option aliases (Options)
+   * Test option aliases (Options).
    * @throws ArgException if there is an illegal argument
    */
   public static void testOptionsAliases() throws ArgException {
@@ -2817,9 +2891,7 @@ public final class TestPlume extends TestCase {
     assert t.printVersion;
 }
 
-  /**
-   * Test class for testing option groups
-   */
+  /** Test class for testing option groups. */
   public static class TestOptionGroups1 {
     @Option ("-m Set the mass")
     public static int mass;
@@ -2835,9 +2907,7 @@ public final class TestPlume extends TestCase {
     public static int z;
   }
 
-  /**
-   * Test class for testing option groups
-   */
+  /** Test class for testing option groups. */
   public static class TestOptionGroups2 {
     @OptionGroup ("General options")
     @Option (value="-h Display help message", aliases={"-help"})
@@ -2856,9 +2926,7 @@ public final class TestPlume extends TestCase {
     public static boolean color = false;
   }
 
-  /**
-   * Test class for testing option groups
-   */
+  /** Test class for testing option groups. */
   public static class TestOptionGroups3 {
     @OptionGroup ("General options")
     @Option (value="-h Display help message", aliases={"-help"})
@@ -2880,7 +2948,7 @@ public final class TestPlume extends TestCase {
 
 
   /**
-   * Test option groups (Options)
+   * Test option groups (Options).
    * @throws ArgException if there is an illegal argument
    */
   public static void testOptionGroups() throws ArgException {
@@ -2974,7 +3042,7 @@ public final class TestPlume extends TestCase {
   public static void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
-    String[] sa = UtilMDE.splitLines (str);
+    String[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
     assert sa.length == 11;
@@ -3018,7 +3086,7 @@ public final class TestPlume extends TestCase {
     succs1.get(5).add(7);    preds1.get(7).add(5);
     succs1.get(6).add(4);    preds1.get(4).add(6);
   }
-    
+
   public static void testGraphMDE() {
 
     initializePreds1AndSucc1();

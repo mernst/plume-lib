@@ -1,8 +1,13 @@
 package plume;
 
-import java.io.*;
-import java.util.jar.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -20,11 +25,19 @@ import org.checkerframework.checker.nullness.qual.*;
  * subdirectory, run
  *   <pre>  find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6</pre>
  **/
-public class ClassFileVersion {
+public final class ClassFileVersion {
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private ClassFileVersion() {
+    throw new Error("do not instantiate");
+  }
 
   /** Only report versions that are at least this large. **/
   static double minversion = 0;
 
+  /** Main method for the ClassFileVersion program.
+   * @param args command-line arguments
+   */
   public static void main(String[] args) throws Exception {
     if (args.length == 0) {
       System.out.println("Supplied no arguments.");
@@ -36,10 +49,11 @@ public class ClassFileVersion {
     if ((args.length >= 2)
         && (args[0].equals("-min"))) {
       minversion = Double.parseDouble(args[1]);
-      if (minversion == 1.6)
+      if (minversion == 1.6) {
         minversion = 6;
-      else if (minversion == 1.7)
+      } else if (minversion == 1.7) {
         minversion = 7;
+      }
       args = ArraysMDE.subarray(args, 2, args.length - 2);
     }
 
@@ -73,6 +87,11 @@ public class ClassFileVersion {
     }
   }
 
+  /**
+   * Print, to standard out, the version number for the class file found in is.
+   * @param filename file name to appear in printed messages
+   * @param is input stream from which to read classfile bytes to process
+   */
   public static void processClassFile(String filename, InputStream is) {
     double[] versions = versionNumbers(is);
     if (versions == null) {

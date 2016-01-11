@@ -2,14 +2,21 @@
 
 package plume;
 
-import java.security.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
 
 /**
  * Computes a message digest for a file.  The primary entry point into this
  * class is {@link #getFileDigest(String,MessageDigest)}.
  */
-public class Digest {
+public final class Digest {
+
+  /** This class is a collecton of methods; it does not represent anything. */
+  private Digest() {
+    throw new Error("do not instantiate");
+  }
 
   /**
    * This convenience method is used by both create() and verify().  It
@@ -29,10 +36,12 @@ public class Digest {
     DigestInputStream in =
       new DigestInputStream(new FileInputStream(filename),md);
 
-    // Read to the end of the file, discarding everything we read.
+    // Read to the end of the file, discarding everything we read. {
     // The DigestInputStream automatically passes all the bytes read to
     // the update() method of the MessageDigest
-    while (in.read(buffer) != -1) /* do nothing */ ;
+    while (in.read(buffer) != -1) {
+      /* do nothing */
+    }
 
     // Finally, compute and return the digest value.
     byte[] result = md.digest();
@@ -40,11 +49,11 @@ public class Digest {
     return result;
   }
 
-  /** This static buffer is used by getFileDigest() above */
-  public static byte[] buffer = new byte[4096];
+  /** This static buffer is used by {@link #getFileDigest}. */
+  private static byte[] buffer = new byte[4096];
 
-  /** This array is used to convert from bytes to hexadecimal numbers */
-  static final char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7',
+  /** This array is used to convert from bytes to hexadecimal numbers. */
+  private static final char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7',
                                  '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
   /**
@@ -77,15 +86,20 @@ public class Digest {
       byte[] r = new byte[len/2];
       for (int i = 0; i < r.length; i++) {
         int digit1 = s.charAt(i*2), digit2 = s.charAt(i*2 + 1);
-        if ((digit1 >= '0') && (digit1 <= '9')) digit1 -= '0';
-        else if ((digit1 >= 'a') && (digit1 <= 'f')) digit1 -= 'a' - 10;
-        if ((digit2 >= '0') && (digit2 <= '9')) digit2 -= '0';
-        else if ((digit2 >= 'a') && (digit2 <= 'f')) digit2 -= 'a' - 10;
+        if ((digit1 >= '0') && (digit1 <= '9')) {
+          digit1 -= '0';
+        } else if ((digit1 >= 'a') && (digit1 <= 'f')) {
+          digit1 -= 'a' - 10;
+        }
+        if ((digit2 >= '0') && (digit2 <= '9')) {
+          digit2 -= '0';
+        } else if ((digit2 >= 'a') && (digit2 <= 'f')) {
+          digit2 -= 'a' - 10;
+        }
         r[i] = (byte)((digit1 << 4) + digit2);
       }
       return r;
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new IllegalArgumentException("hexDecode(): invalid input");
     }
   }

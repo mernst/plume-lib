@@ -1,6 +1,8 @@
 package plume;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * RandomSelector selects k elements uniformly at random from
@@ -45,8 +47,9 @@ import java.util.*;
  *   }
  *   catch (IOException e2) { e2.printStackTrace(); }
  * </pre>
+ *
+ * @param <T> the type of elements being selected over
  **/
-
 public class RandomSelector<T> {
 
     // Rep Invariant: values != null && values.size() <= num_elts &&
@@ -75,7 +78,7 @@ public class RandomSelector<T> {
      *
      * Sets 'number_to_take' = num_elts
      **/
-    public RandomSelector (int num_elts) {
+    public RandomSelector(int num_elts) {
         this (num_elts, new Random());
     }
 
@@ -86,7 +89,7 @@ public class RandomSelector<T> {
      *
      * Sets 'number_to_take' = num_elts
      **/
-    public RandomSelector (int num_elts, Random r) {
+    public RandomSelector(int num_elts, Random r) {
         values = new ArrayList<T>();
         this.num_elts = num_elts;
         observed = 0;
@@ -97,7 +100,7 @@ public class RandomSelector<T> {
      * selected from the oncoming Iteration.
      * @param r The seed to give for random number generation.
      **/
-    public RandomSelector (double keep_probability, Random r) {
+    public RandomSelector(double keep_probability, Random r) {
         values = new ArrayList<T>();
         this.keep_probability = keep_probability;
         coin_toss_mode = true;
@@ -118,16 +121,15 @@ public class RandomSelector<T> {
      *
      * @param next value to be added to this selector
      **/
-    public void accept (T next) {
+    public void accept(T next) {
 
         // if we are in coin toss mode, then we want to keep
         // with probability == keep_probability.
         if (coin_toss_mode) {
             if (generator.nextDouble() < keep_probability) {
-                values.add (next);
+                values.add(next);
                 // System.out.println ("ACCEPTED " + keep_probability );
-            }
-            else {
+            } else {
                 // System.out.println ("didn't accept " + keep_probability );
             }
             return;
@@ -137,11 +139,10 @@ public class RandomSelector<T> {
         // of being accepted where k is number_to_take.
         if (generator.nextDouble() < ((double) num_elts / (++observed))) {
             if (values.size() < num_elts) {
-                values.add (next);
-            }
-            else {
+                values.add(next);
+            } else {
                 int rem = generator.nextInt(values.size());
-                values.set (rem, next);
+                values.set(rem, next);
             }
         }
         // do nothing if the probability condition is not met
@@ -153,7 +154,7 @@ public class RandomSelector<T> {
     public List<T> getValues() {
         // avoid concurrent mod errors and rep exposure
         ArrayList<T> ret = new ArrayList<T>();
-        ret.addAll (values);
+        ret.addAll(values);
         return ret;
     }
 

@@ -492,6 +492,16 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 
 ###########################################################################
+### Code quality
+###
+
+checkstyle:
+# This invocation works on Ubuntu.
+# Need to ignore files we don't edit: Fmt.java TextFile.java WeakHasherMap.java WeakIdentityHashMap.java
+	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES}
+
+
+###########################################################################
 ### Makefile bookkeeping
 ###
 

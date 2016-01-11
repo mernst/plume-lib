@@ -8,6 +8,9 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * Mutable triple class:
  * type-safely holds three objects of possibly-different types.
+ * @param <T1> the type of the first element of the triple
+ * @param <T2> the type of the second element of the triple
+ * @param <T3> the type of the third element of the triple
  **/
 public class Triple<T1,T2,T3> {
   public T1 a;

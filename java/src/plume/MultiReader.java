@@ -1,8 +1,8 @@
 package plume;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -30,7 +30,7 @@ public class MultiReader extends EntryReader {
   ///
 
   /**
-   * Create a MultiReader
+   * Create a MultiReader.
    *
    *    @param reader source from which to read entries
    *    @param filename file name corresponding to reader, for use in error messages
@@ -41,7 +41,7 @@ public class MultiReader extends EntryReader {
    *                      The expression should define one group that contains
    *                      the include file name
    */
-  public MultiReader (BufferedReader reader, String filename,
+  public MultiReader(BufferedReader reader, String filename,
                       /*@Nullable*/ /*@Regex*/ String comment_re_string,
                       /*@Nullable*/ /*@Regex(1)*/ String include_re_string) {
     super(reader, filename, comment_re_string, include_re_string);
@@ -49,13 +49,14 @@ public class MultiReader extends EntryReader {
 
   /** Create a MultiReader that does not support comments or include directives.
    * @param reader source from which to read entries
-   * @see #MultiReader(BufferedReader,String,String,String) **/
-  public MultiReader (BufferedReader reader) {
+   * @see #MultiReader(BufferedReader,String,String,String)
+   */
+  public MultiReader(BufferedReader reader) {
     super(reader);
   }
 
   /**
-   * Create a MultiReader
+   * Create a MultiReader.
    *
    *    @param file       Initial file to read.
    *    @param comment_re Regular expression that matches comments.
@@ -66,7 +67,7 @@ public class MultiReader extends EntryReader {
    *                      the include file name.
    * @throws IOException if there is a problem reading the file
    */
-  public MultiReader (File file, /*@Nullable*/ /*@Regex*/ String comment_re,
+  public MultiReader(File file, /*@Nullable*/ /*@Regex*/ String comment_re,
                       /*@Nullable*/ /*@Regex(1)*/ String include_re) throws IOException {
     super(file, comment_re, include_re);
   }
@@ -74,9 +75,10 @@ public class MultiReader extends EntryReader {
   /** Create a MultiReader that does not support comments or include directives.
    * @param file source from which to read entries
    * @throws IOException if there is a problem reading the file
-   * @see #MultiReader(File,String,String) **/
-  public MultiReader (File file) throws IOException {
-    super (file);
+   * @see #MultiReader(File,String,String)
+   */
+  public MultiReader(File file) throws IOException {
+    super(file);
   }
 
   /**
@@ -91,7 +93,7 @@ public class MultiReader extends EntryReader {
    * @throws IOException if there is a problem reading the file
    * @see #MultiReader(File,String,String)
    */
-  public MultiReader (String filename, /*@Nullable*/ /*@Regex*/ String comment_re,
+  public MultiReader(String filename, /*@Nullable*/ /*@Regex*/ String comment_re,
                       /*@Nullable*/ /*@Regex(1)*/ String include_re) throws IOException {
     super(filename, comment_re, include_re);
   }
@@ -99,8 +101,9 @@ public class MultiReader extends EntryReader {
   /** Create a MultiReader that does not support comments or include directives.
    * @param filename the source from which to read entries
    * @throws IOException if there is a problem reading the file
-   * @see #MultiReader(String,String,String) **/
-  public MultiReader (String filename) throws IOException {
+   * @see #MultiReader(String,String,String)
+   */
+  public MultiReader(String filename) throws IOException {
     super(filename);
   }
 

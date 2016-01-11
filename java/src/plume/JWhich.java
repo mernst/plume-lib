@@ -32,7 +32,7 @@
 
 package plume;
 
-import java.io.*;
+import java.io.File;
 import java.net.URL;
 import java.util.StringTokenizer;
 
@@ -71,7 +71,7 @@ import org.checkerframework.checker.nullness.qual.*;
  * @author <a href="http://www.clarkware.com">Clarkware Consulting, Inc.</a>
  */
 
-public class JWhich {
+public final class JWhich {
 
   private static /*@MonotonicNonNull*/ String CLASSPATH;
 
@@ -94,11 +94,10 @@ public class JWhich {
     URL classUrl = findClass(className);
 
     if (classUrl == null) {
-      System.out.println("\nClass '" + className +
-        "' not found.");
+      System.out.println("\nClass '" + className + "' not found.");
     } else {
-      System.out.println("\nClass '" + className +
-        "' found in \n'" + classUrl.getFile() + "'");
+      System.out.println("\nClass '" + className
+                         + "' found in \n'" + classUrl.getFile() + "'");
     }
 
     validate();
@@ -144,20 +143,20 @@ public class JWhich {
       File f = new File(element);
 
       if (!f.exists()) {
-        System.out.println("\nClasspath element '" +
-          element + "' " + "does not exist.");
-      } else if ( (!f.isDirectory()) &&
-            (!element.toLowerCase().endsWith(".jar")) &&
-            (!element.toLowerCase().endsWith(".zip")) ) {
+        System.out.println("\nClasspath element '"
+                           + element + "' " + "does not exist.");
+      } else if ((!f.isDirectory())
+                 && (!element.toLowerCase().endsWith(".jar"))
+                 && (!element.toLowerCase().endsWith(".zip"))) {
 
-        System.out.println("\nClasspath element '" +
-          element + "' " +
-          "is not a directory, .jar file, or .zip file.");
+        System.out.println("\nClasspath element '" + element + "' "
+          + "is not a directory, .jar file, or .zip file.");
 
       }
     }
   }
 
+  /** Print the classpath to System.out. */
   /*@EnsuresNonNull("CLASSPATH")*/
   public static void printClasspath() {
 
@@ -169,11 +168,17 @@ public class JWhich {
     }
   }
 
+  /** Set the classpath to the given string.
+   * @param classpath the new classpath
+   */
   /*@EnsuresNonNull("CLASSPATH")*/
   public static void setClasspath(String classpath) {
     CLASSPATH = classpath;
   }
 
+  /** Return the classpath.
+   * @return the classpath
+   */
   /*@EnsuresNonNull("CLASSPATH")*/
   protected static String getClasspath() {
     if (CLASSPATH == null) {
@@ -202,6 +207,7 @@ public class JWhich {
     }
   }
 
+  /** Print how to call the JWhich program. */
   private static void printUsage() {
 
     System.out.println("\nSyntax: java JWhich [options] className");

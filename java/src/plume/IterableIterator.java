@@ -2,7 +2,7 @@
 
 package plume;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * In Java, Iterators are not Iterable, so they cannot be used in new-style
@@ -47,15 +47,21 @@ import java.util.*;
  * twice on a given Iterable results in two objects that can both iterate over
  * the whole sequence, and that won't interfere with one another.  That is
  * not the case for this Iterable.
+ *
+ * @param <T> the element type of the IterableIterator
  */
-
 public class IterableIterator<T> implements Iterable<T> {
+    /** The Iterator that this is a wrapper around. */
     private Iterator<T> iter;
 
+    /** Create an IterableIterator. */
     public IterableIterator(Iterator<T> iter) {
         this.iter = iter;
     }
 
+    /** Return the iterator.
+     * @return the iterator
+     */
     public Iterator<T> iterator() {
         return iter;
     }

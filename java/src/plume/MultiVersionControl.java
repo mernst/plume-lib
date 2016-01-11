@@ -8,10 +8,17 @@ import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
 import org.tmatesoft.svn.core.*;
 import org.ini4j.Ini;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.net.URL;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
@@ -218,7 +225,7 @@ import org.checkerframework.dataflow.qual.*;
 public class MultiVersionControl {
 
   @Option(value="User home directory", noDocDefault=true)
-  public static String home = System.getProperty ("user.home");
+  public static String home = System.getProperty("user.home");
 
   /**
    * File with list of checkouts.  Set it to /dev/null to suppress reading.
@@ -304,7 +311,7 @@ public class MultiVersionControl {
   // It would be good to be able to set this per-checkout.
   // This variable is static because it is used in static methods.
   @Option("Print debugging output")
-  static public boolean debug = false;
+  public static boolean debug = false;
 
   @Option("Debug 'replacers' that filter command output")
   public boolean debug_replacers = false;
@@ -327,11 +334,11 @@ public class MultiVersionControl {
   private Action action;
 
   // Replace "~" by the expansion of "$HOME".
-  private static String expandTilde (String path) {
+  private static String expandTilde(String path) {
     return path.replaceFirst("^~", home);
   }
 
-  public static void main (String[] args) {
+  public static void main(String[] args) {
     setupSVNKIT();
     MultiVersionControl mvc = new MultiVersionControl(args);
 
@@ -394,8 +401,8 @@ public class MultiVersionControl {
   /*@EnsuresNonNull("action")*/
   public void parseArgs(/*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
     @SuppressWarnings("initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
-    /*@Initialized*/ Options options = new Options ("mvc [options] {checkout,status,update,list}", this);
-    String[] remaining_args = options.parse_or_usage (args);
+    /*@Initialized*/ Options options = new Options("mvc [options] {checkout,status,update,list}", this);
+    String[] remaining_args = options.parse_or_usage(args);
     if (remaining_args.length != 1) {
       options.print_usage("Please supply exactly one argument (found %d)%n%s", remaining_args.length, UtilMDE.join(remaining_args, " "));
       System.exit(1);
@@ -469,7 +476,7 @@ public class MultiVersionControl {
   // TODO: have subclasses of Checkout for the different varieties, perhaps.
   static class Checkout {
     RepoType repoType;
-    /** Local directory */
+    /** Local directory. */
     // actually the parent directory?
     File directory;
     /**
@@ -543,8 +550,9 @@ public class MultiVersionControl {
     @Override
     @SuppressWarnings("interning")
     /*@Pure*/ public boolean equals(/*@Nullable*/ Object other) {
-      if (! (other instanceof Checkout))
+      if (! (other instanceof Checkout)) {
         return false;
+      }
       Checkout c2 = (Checkout) other;
       return ((repoType == c2.repoType)
               && directory.equals(c2.directory)
@@ -650,7 +658,9 @@ public class MultiVersionControl {
 
       String dirname;
       String root = currentRoot;
-      if (root.endsWith("/")) root = root.substring(0,root.length()-1);
+      if (root.endsWith("/")) {
+        root = root.substring(0,root.length()-1);
+      }
       String module = null;
 
       int spacePos = line.lastIndexOf(' ');
@@ -751,8 +761,9 @@ public class MultiVersionControl {
         return;
       } else if (dirName.equals(".svn")) {
         Checkout c = dirToCheckoutSvn(parent);
-        if (c != null)
+        if (c != null) {
           checkouts.add(c);
+        }
         return;
       }
     }
@@ -1129,7 +1140,9 @@ public class MultiVersionControl {
         case HG:
           pb.command(hg_executable, "clone", c.repository, dirbase);
           addArgs(pb, hg_arg);
-          if (insecure) addArg(pb, "--insecure");
+          if (insecure) {
+            addArg(pb, "--insecure");
+          }
           break;
         case SVN:
           if (c.module != null) {
@@ -1219,7 +1232,7 @@ public class MultiVersionControl {
 
           // Necessary because "git status --porcelain" does not report:
           //   # Your branch is ahead of 'origin/master' by 1 commit.
-          // If you have pushed but not pulled, then this will report 
+          // If you have pushed but not pulled, then this will report
           pb2.command(git_executable, "log", "--branches", "--not", "--remotes");
           addArgs(pb2, git_arg);
           replacers.add(new Replacer("^commit .*(.*\\n)+", "unpushed commits: " + pb2.directory() + "\n"));
@@ -1239,7 +1252,9 @@ public class MultiVersionControl {
             pb2.command(hg_executable, "outgoing", "-l", "1");
           }
           addArgs(pb2, hg_arg);
-          if (insecure) addArg(pb2, "--insecure");
+          if (insecure) {
+            addArg(pb2, "--insecure");
+          }
           // The third line is either "no changes found" or "changeset".
           replacers.add(new Replacer("^comparing with .*\\nsearching for changes\\nchangeset[^\001]*", "unpushed changesets: " + pb.directory() + "\n"));
           replacers.add(new Replacer("^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
@@ -1299,7 +1314,9 @@ public class MultiVersionControl {
             pb2.command(hg_executable, "-q", "fetch");
           }
           addArgs(pb2, hg_arg);
-          if (insecure) addArg(pb2, "--insecure");
+          if (insecure) {
+            addArg(pb2, "--insecure");
+          }
           break;
         case SVN:
           replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
@@ -1370,8 +1387,12 @@ public class MultiVersionControl {
         System.out.println(dir + " :");
       }
       perform_command(pb, replacers, show_normal_output);
-      if (pb2.command().size() > 0) perform_command(pb2, replacers, show_normal_output);
-      if (pb3.command().size() > 0) perform_command(pb3, replacers3, show_normal_output);
+      if (pb2.command().size() > 0) {
+        perform_command(pb2, replacers, show_normal_output);
+      }
+      if (pb3.command().size() > 0) {
+        perform_command(pb3, replacers3, show_normal_output);
+      }
     }
   }
 
@@ -1404,7 +1425,9 @@ public class MultiVersionControl {
 
   private boolean invalidCertificate(File dir) {
     String defaultPath = defaultPath(dir);
-    if (debug) { System.out.printf("defaultPath=%s for %s%n", defaultPath, dir); }
+    if (debug) {
+      System.out.printf("defaultPath=%s for %s%n", defaultPath, dir);
+    }
     if (defaultPath == null) {
       return false;
     }
@@ -1469,10 +1492,14 @@ public class MultiVersionControl {
           System.out.println("preoutput=<<<" + output + ">>>");
         }
         for (Replacer r : replacers) {
-          if (debug_replacers) { System.out.println("midoutput_pre[" + r.regexp + "]=<<<" + output + ">>>"); }
+          if (debug_replacers) {
+            System.out.println("midoutput_pre[" + r.regexp + "]=<<<" + output + ">>>");
+          }
           // Don't loop, because some regexps will continue to match repeatedly
           output = r.replaceAll(output);
-          if (debug_replacers) { System.out.println("midoutput_post[" + r.regexp + "]=<<<" + output + ">>>"); }
+          if (debug_replacers) {
+            System.out.println("midoutput_post[" + r.regexp + "]=<<<" + output + ">>>");
+          }
         }
         if (debug_replacers || debug_process_output) {
           System.out.println("postoutput=<<<" + output + ">>>");

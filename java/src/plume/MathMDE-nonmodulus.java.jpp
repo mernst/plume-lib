@@ -89,8 +89,9 @@ The correct way to build the system is to run 'make'.
     // The argument iterator must return the Integers in sorted order
     MissingNumbersIteratorINT(Iterator<INTEGER> nums_itor, boolean add_ends) {
       this.add_ends = add_ends;
-      if (!nums_itor.hasNext())
+      if (!nums_itor.hasNext()) {
         throw new Error("No elements in nums_itor");
+      }
       current_nonmissing = nums_itor.next().INTValue();
       if (add_ends) {
         current_missing = current_nonmissing - 1;
@@ -102,8 +103,9 @@ The correct way to build the system is to run 'make'.
     }
 
     public boolean hasNext() {
-      if (current_missing < current_nonmissing)
+      if (current_missing < current_nonmissing) {
         return true;
+      }
       // This loop ("while" instead of "if") permits duplicates in nums.
       while (current_missing == current_nonmissing) {
         if (nums != null) {
@@ -129,8 +131,9 @@ The correct way to build the system is to run 'make'.
           // prev_nonmissing is for testing only
           INT prev_nonmissing = current_nonmissing;
           current_nonmissing = nums_itor.next().INTValue();
-          if (! (prev_nonmissing < current_nonmissing))
+          if (! (prev_nonmissing < current_nonmissing)) {
             throw new Error("Non-sorted Iterator supplied to " + stringify(MissingNumbersIteratorINT) + ": prev_nonmissing = " + prev_nonmissing + ", current_nonmissing = " + current_nonmissing);
+          }
         } else {
           throw new Error("Can't happen");
         }
@@ -145,8 +148,9 @@ The correct way to build the system is to run 'make'.
     }
 
     public INTEGER next() {
-      if (!hasNext())
+      if (!hasNext()) {
         throw new NoSuchElementException();
+      }
       INTEGER result = new INTEGER(current_missing);
       current_missing++;
       return result;
@@ -169,11 +173,13 @@ The correct way to build the system is to run 'make'.
     // This implementation is particularly inefficient; find a better way to
     // compute this.  Perhaps obtain the new modulus numbers incrementally
     // instead of all at once.
-    if (nums.length == 0)
+    if (nums.length == 0) {
       return null;
+    }
     INT range = ArraysMDE.element_range(nums);
-    if (range > 65536)
+    if (range > 65536) {
       return null;
+    }
     return nonmodulus_strict_INT_internal(new MissingNumbersIteratorINT(nums, true));
   }
 
@@ -184,10 +190,12 @@ The correct way to build the system is to run 'make'.
     UtilMDE.RemoveFirstAndLastIterator<INTEGER> missing_nums
       = new UtilMDE.RemoveFirstAndLastIterator<INTEGER>(missing);
     INT[] result = modulus_strict_INT(missing_nums, false);
-    if (result == null)
+    if (result == null) {
       return result;
-    if (! check_first_and_last_nonmodulus(result, missing_nums))
+    }
+    if (! check_first_and_last_nonmodulus(result, missing_nums)) {
       return null;
+    }
 
     return result;
   }
@@ -222,11 +230,13 @@ The correct way to build the system is to run 'make'.
   //   // This implementation is particularly inefficient; find a better way to
   //   // compute this.  Perhaps obtain the new modulus numbers incrementally
   //   // instead of all at once.
-  //   if (nums.length == 0)
+  //   if (nums.length == 0) {
   //     return null;
+  //   }
   //   INT range = ArraysMDE.element_range(nums);
-  //   if (range > 65536)
+  //   if (range > 65536) {
   //     return null;
+  //   }
   //   return modulus(missing_numbers(nums));
   // }
 
@@ -241,8 +251,9 @@ The correct way to build the system is to run 'make'.
   // This seems to give too many false positives (or maybe my probability
   // model was wrong); use nonmodulus_strict instead.
   public static INT /*@Nullable*/ [] nonmodulus_nonstrict(INT[] nums) {
-    if (nums.length < 4)
+    if (nums.length < 4) {
       return null;
+    }
     int max_modulus = CastToInt(Math.min(nums.length/2, ArraysMDE.element_range(nums)/2));
 
     // System.out.println("nums.length=" + nums.length + ", range=" + ArraysMDE.element_range(nums) + ", max_modulus=" + max_modulus);
@@ -259,10 +270,11 @@ The correct way to build the system is to run 'make'.
           has_modulus[rem] = true;
           num_nonmodulus--;
           // System.out.println("rem=" + rem + " for " + nums[i] + "; num_nonmodulus=" + num_nonmodulus);
-          if (num_nonmodulus == 0)
+          if (num_nonmodulus == 0) {
             // Quit as soon as we see every remainder instead of processing
             // each element of the input list.
             break;
+          }
         }
       }
       // System.out.println("For m=" + m + ", num_nonmodulus=" + num_nonmodulus);

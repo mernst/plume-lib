@@ -8,12 +8,31 @@
 
 package plume;
 
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
-import com.sun.javadoc.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
-import java.lang.Class;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.Doc;
+import com.sun.javadoc.DocErrorReporter;
+import com.sun.javadoc.FieldDoc;
+import com.sun.javadoc.RootDoc;
+import com.sun.javadoc.SeeTag;
+import com.sun.javadoc.Tag;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -157,14 +176,14 @@ public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
 
-  private static String usage = "Provided by Options doclet:\n" +
-    "-docfile <file>        Specify file into which options documentation is inserted\n" +
-    "-outfile <file>        Specify destination for resulting output\n" +
-    "-i                     Edit the docfile in-place\n" +
-    "-format javadoc        Format output as a Javadoc comment\n" +
-    "-classdoc              Include 'main' class documentation in output\n" +
-    "-singledash            Use single dashes for long options (see plume.Options)\n" +
-    "See the OptionsDoclet documentation for more details.";
+  private static String usage = "Provided by Options doclet:\n"
+    + "-docfile <file>        Specify file into which options documentation is inserted\n"
+    + "-outfile <file>        Specify destination for resulting output\n"
+    + "-i                     Edit the docfile in-place\n"
+    + "-format javadoc        Format output as a Javadoc comment\n"
+    + "-classdoc              Include 'main' class documentation in output\n"
+    + "-singledash            Use single dashes for long options (see plume.Options)\n"
+    + "See the OptionsDoclet documentation for more details.";
 
   private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times";
 
@@ -176,7 +195,7 @@ public class OptionsDoclet {
   private /*@Nullable*/ File outFile = null;
   /** If true, then edit docFile in place (and docFile is non-null). */
   private boolean inPlace = false;
-  /** If true, then output format is Javadoc */
+  /** If true, then output format is Javadoc .*/
   private boolean formatJavadoc = false;
   private boolean includeClassDoc = false;
 
@@ -203,8 +222,9 @@ public class OptionsDoclet {
       // between these two name formats.  For now, we simply ignore inner
       // classes.  This limitation can be removed when we figure out a better
       // way to go from ClassDoc to Class<?>.
-      if (doc.containingClass() != null)
+      if (doc.containingClass() != null) {
         continue;
+      }
 
       Class<?> clazz;
       try {
@@ -270,14 +290,14 @@ public class OptionsDoclet {
       System.out.println(usage);
       return 1;
     }
-    if (option.equals("-i") ||
-        option.equals("-classdoc") ||
-        option.equals("-singledash")) {
+    if (option.equals("-i")
+        || option.equals("-classdoc")
+        || option.equals("-singledash")) {
       return 1;
     }
-    if (option.equals("-docfile") ||
-        option.equals("-outfile") ||
-        option.equals("-format")) {
+    if (option.equals("-docfile")
+        || option.equals("-outfile")
+        || option.equals("-format")) {
       return 2;
     }
     return 0;
@@ -293,7 +313,7 @@ public class OptionsDoclet {
    * @return true iff the command-line options are valid
    * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
-  public static boolean validOptions(String options[][],
+  public static boolean validOptions(String[][] options,
                                      DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
@@ -375,8 +395,9 @@ public class OptionsDoclet {
       } else if (opt.equals("-i")) {
         this.inPlace = true;
       } else if (opt.equals("-format")) {
-        if (os[1].equals("javadoc"))
+        if (os[1].equals("javadoc")) {
           setFormatJavadoc(true);
+        }
       } else if (opt.equals("-classdoc")) {
         this.includeClassDoc = true;
       } else if (opt.equals("-singledash")) {
@@ -391,9 +412,10 @@ public class OptionsDoclet {
    */
   private static boolean needsInstantiation(Class<?> clazz) {
     for (Field f : clazz.getDeclaredFields()) {
-      if (f.isAnnotationPresent(Option.class) &&
-          !Modifier.isStatic(f.getModifiers()))
+      if (f.isAnnotationPresent(Option.class)
+          && !Modifier.isStatic(f.getModifiers())) {
         return true;
+      }
     }
     return false;
   }
@@ -430,10 +452,11 @@ public class OptionsDoclet {
    */
   public String output() throws Exception {
     if (docFile == null) {
-      if (formatJavadoc)
+      if (formatJavadoc) {
         return optionsToJavadoc(0);
-      else
+      } else {
         return optionsToHtml();
+      }
     }
 
     return newDocFileText();
@@ -452,19 +475,21 @@ public class OptionsDoclet {
 
     while ((docline = doc.readLine()) != null) {
       if (replacing) {
-        if (docline.trim().equals(endDelim))
+        if (docline.trim().equals(endDelim)) {
           replacing = false;
-        else
+        } else {
           continue;
+        }
       }
 
       b.append(docline);
 
       if (!replaced_once && docline.trim().equals(startDelim)) {
-        if (formatJavadoc)
+        if (formatJavadoc) {
           b.append(optionsToJavadoc(docline.indexOf('*')));
-        else
+        } else {
           b.append(optionsToHtml());
+        }
         replaced_once = true;
         replacing = true;
       }
@@ -485,7 +510,7 @@ public class OptionsDoclet {
       if (opt_doc != null) {
         String nameWithUnderscores = oi.long_name.replace('-', '_');
         for (FieldDoc fd : opt_doc.fields()) {
-          if (fd.name().equals (nameWithUnderscores)) {
+          if (fd.name().equals(nameWithUnderscores)) {
             // If Javadoc for field is unavailable, then use the @Option
             // description in the documentation.
             if (fd.getRawCommentText().length() == 0) {
@@ -513,8 +538,9 @@ public class OptionsDoclet {
    */
   private void processEnumJavadoc(Options.OptionInfo oi) {
     Enum<?>[] constants = (Enum<?>[]) oi.base_type.getEnumConstants();
-    if (constants == null)
+    if (constants == null) {
       return;
+    }
 
     oi.enum_jdoc = new LinkedHashMap<String, String>();
 
@@ -524,8 +550,9 @@ public class OptionsDoclet {
     }
 
     ClassDoc enum_doc = root.classNamed(oi.base_type.getName());
-    if (enum_doc == null)
+    if (enum_doc == null) {
       return;
+    }
 
     assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): bug in flow?";
     for (String name : oi.enum_jdoc.keySet()) {
@@ -560,8 +587,9 @@ public class OptionsDoclet {
     } else {
       for (Options.OptionGroupInfo gi : options.getOptionGroups()) {
         // Do not include groups without publicized options in output
-        if (!gi.any_publicized())
+        if (!gi.any_publicized()) {
           continue;
+        }
 
         b.append("  <li id=\"optiongroup:" + gi.name.replace(" ", "-") + "\">" + gi.name);
         b.append("    <ul>");
@@ -607,8 +635,9 @@ public class OptionsDoclet {
   private String optionListToHtml(List<Options.OptionInfo> opt_list, int padding) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
     for (Options.OptionInfo oi : opt_list) {
-      if (oi.unpublicized)
+      if (oi.unpublicized) {
         continue;
+      }
       StringBuilder bb = new StringBuilder();
       String optHtml = optionToHtml(oi);
       bb.append(StringUtils.repeat(" ", padding));
@@ -626,14 +655,17 @@ public class OptionsDoclet {
   public String optionToHtml(Options.OptionInfo oi) {
     StringBuilder b = new StringBuilder();
     Formatter f = new Formatter(b);
-    if (oi.short_name != null)
+    if (oi.short_name != null) {
       f.format("<b>-%s</b> ", oi.short_name);
-    for (String a : oi.aliases)
+    }
+    for (String a : oi.aliases) {
       f.format("<b>%s</b> ", a);
+    }
     String prefix = getUseSingleDash() ? "-" : "--";
     f.format("<b>%s%s=</b><i>%s</i>", prefix, oi.long_name, oi.type_name);
-    if (oi.list != null)
+    if (oi.list != null) {
       b.append(" <tt>[+]</tt>");
+    }
     b.append(". ");
     String jdoc = oi.jdoc == null ? "" : oi.jdoc;
     if (oi.no_doc_default || oi.default_str == null) {
@@ -649,8 +681,9 @@ public class OptionsDoclet {
       assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
         b.append("<li><b>").append(entry.getKey()).append("</b>");
-        if (entry.getValue().length() != 0)
+        if (entry.getValue().length() != 0) {
           b.append(" ").append(entry.getValue());
+        }
         b.append("</li>");
       }
       b.append("</ul>");
@@ -673,18 +706,20 @@ public class OptionsDoclet {
     StringBuilder b = new StringBuilder();
     Tag[] tags = doc.inlineTags();
     for (Tag tag : tags) {
-      if (tag instanceof SeeTag)
+      if (tag instanceof SeeTag) {
         b.append("<code>" + tag.text() + "</code>");
-      else
+      } else {
         b.append(tag.text());
+      }
     }
     SeeTag[] seetags = doc.seeTags();
     if (seetags.length > 0) {
       b.append(" See: ");
       {
         StringBuilderDelimited bb = new StringBuilderDelimited(", ");
-        for (SeeTag tag : seetags)
+        for (SeeTag tag : seetags) {
           bb.append("<code>" + tag.text() + "</code>");
+        }
         b.append(bb);
       }
       b.append(".");

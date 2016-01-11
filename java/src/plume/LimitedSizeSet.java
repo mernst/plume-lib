@@ -11,10 +11,9 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * LimitedSizeSet stores up to some maximum number of unique
  * values, at which point its rep is nulled, in order to save space.
+ * @param <T> the type of elements in the set
  **/
-public class LimitedSizeSet<T>
-  implements Serializable, Cloneable
-{
+public class LimitedSizeSet<T> implements Serializable, Cloneable {
   // We are Serializable, so we specify a version to allow changes to
   // method signatures without breaking serialization.  If you add or
   // remove fields, you should change this number to the current date.
@@ -22,12 +21,15 @@ public class LimitedSizeSet<T>
 
   // public final int max_values;
 
-  // If null, then at least num_values distinct values have been seen.
-  // The size is not separately stored, because that would take extra space.
+  /**
+   * If null, then at least num_values distinct values have been seen.
+   * The size is not separately stored, because that would take extra space.
+   */
   protected /*@Nullable*/ T /*@Nullable*/ [] values;
-  // The number of active elements (equivalently, the first unused index).
+  /** The number of active elements (equivalently, the first unused index). */
   int num_values;
 
+  /** Create a new LimitedSizeSet that can hold max_values values. */
   public LimitedSizeSet(int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
@@ -38,8 +40,9 @@ public class LimitedSizeSet<T>
   }
 
   public void add(T elt) {
-    if (values == null)
+    if (values == null) {
       return;
+    }
 
     if (contains(elt)) {
       return;
@@ -56,10 +59,12 @@ public class LimitedSizeSet<T>
   public void addAll(LimitedSizeSet<? extends T> s) {
     @SuppressWarnings("interning") // optimization; not a subclass of Collection, though
     boolean sameObject = (this == s);
-    if (sameObject)
+    if (sameObject) {
       return;
-    if (repNulled())
+    }
+    if (repNulled()) {
       return;
+    }
     if (s.repNulled()) {
       int values_length = values.length;
       // We don't know whether the elements of this and the argument were
@@ -168,8 +173,8 @@ public class LimitedSizeSet<T>
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
   /*@SideEffectFree*/ public String toString() {
-    return ("[size=" + size() + "; " +
-            ((values == null) ? "null" : ArraysMDE.toString(values))
+    return ("[size=" + size() + "; "
+            + ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");
   }
 

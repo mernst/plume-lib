@@ -22,7 +22,12 @@ import org.checkerframework.framework.qual.EnsuresQualifierIf;
  * whether a string is a regular expression</a> in the Checker Framework
  * manual.
  */
-public class RegexUtil {
+public final class RegexUtil {
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private RegexUtil() {
+    throw new Error("do not instantiate");
+  }
 
   /**
    * A checked version of {@link PatternSyntaxException}.
@@ -59,6 +64,7 @@ public class RegexUtil {
 
     private static final long serialVersionUID = 6266881831979001480L;
 
+    /** The PatternSyntaxException that this is a wrapper around. */
     private final PatternSyntaxException pse;
 
     /**
@@ -124,10 +130,6 @@ public class RegexUtil {
     public String getPattern() {
       return pse.getPattern();
     }
-  }
-
-  private RegexUtil() {
-    throw new AssertionError("Class RegexUtil shouldn't be instantiated");
   }
 
   /**
@@ -307,8 +309,8 @@ public class RegexUtil {
    */
   /*@SideEffectFree*/
   private static String regexErrorMessage(String s, int expectedGroups, int actualGroups) {
-    return "regex \"" + s + "\" has " + actualGroups + " groups, but " +
-        expectedGroups + " groups are needed.";
+    return "regex \"" + s + "\" has " + actualGroups + " groups, but "
+      + expectedGroups + " groups are needed.";
   }
 
   /**

@@ -24,7 +24,10 @@ import org.checkerframework.framework.qual.PolyAll;
  **/
 @SuppressWarnings("interning")  // to do later
 public final class ArraysMDE {
-  private ArraysMDE() { throw new Error("do not instantiate"); }
+  /** This class is a collecton of methods; it does not represent anything. */
+  private ArraysMDE() {
+    throw new Error("do not instantiate");
+  }
 
   ///////////////////////////////////////////////////////////////////////////
   /// min, max
@@ -39,11 +42,13 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int min(int[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(int[])");
+    }
     int result = a[0];
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       result = Math.min(result, a[i]);
+    }
     return result;
   }
 
@@ -54,11 +59,13 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long min(long[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(long[])");
+    }
     long result = a[0];
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       result = Math.min(result, a[i]);
+    }
     return result;
   }
 
@@ -69,11 +76,13 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static double min(double[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(double[])");
+    }
     double result = a[0];
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       result = Math.min(result, a[i]);
+    }
     return result;
   }
 
@@ -84,8 +93,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Integer min(Integer[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Integer[])");
+    }
     Integer result = a[0];      // to return a value actually in the array
     int result_int = result.intValue(); // for faster comparison
     for (int i=1; i<a.length; i++) {
@@ -104,8 +114,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Long min(Long[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Long[])");
+    }
     Long result = a[0]; // to return a value actually in the array
     long result_long = result.longValue();      // for faster comparison
     for (int i=1; i<a.length; i++) {
@@ -124,8 +135,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Double min(Double[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Double[])");
+    }
     Double result = a[0];       // to return a value actually in the array
     int result_int = result.intValue(); // for faster comparison
     for (int i=1; i<a.length; i++) {
@@ -144,11 +156,13 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int max(int[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(int[])");
+    }
     int result = a[0];
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       result = Math.max(result, a[i]);
+    }
     return result;
   }
 
@@ -159,11 +173,13 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long max(long[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(long[])");
+    }
     long result = a[0];
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       result = Math.max(result, a[i]);
+    }
     return result;
   }
 
@@ -174,11 +190,13 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static double max(double[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(double[])");
+    }
     double result = a[0];
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       result = Math.max(result, a[i]);
+    }
     return result;
   }
 
@@ -189,8 +207,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Integer max(Integer[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Integer[])");
+    }
     Integer result = a[0];      // to return a value actually in the array
     int result_int = result.intValue(); // for faster comparison
     for (int i=1; i<a.length; i++) {
@@ -209,8 +228,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Long max(Long[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Long[])");
+    }
     Long result = a[0]; // to return a value actually in the array
     long result_long = result.longValue();      // for faster comparison
     for (int i=1; i<a.length; i++) {
@@ -229,8 +249,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static Double max(Double[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Double[])");
+    }
     Double result = a[0];       // to return a value actually in the array
     int result_int = result.intValue(); // for faster comparison
     for (int i=1; i<a.length; i++) {
@@ -289,8 +310,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static int element_range(int[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(int[])");
+    }
     int [] min_max = min_max(a);
     return min_max[1] - min_max[0];
   }
@@ -302,8 +324,9 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    **/
   public static long element_range(long[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(long[])");
+    }
     long [] min_max = min_max(a);
     return min_max[1] - min_max[0];
   }
@@ -322,7 +345,7 @@ public final class ArraysMDE {
   }
 
   /**
-   * Returns the sum of all the elements of a 2d array of integers
+   * Returns the sum of all the elements of a 2d array of integers.
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of integers
    */
@@ -384,9 +407,11 @@ public final class ArraysMDE {
     if (elt == null) {
       return indexOfEq(a, elt);
     }
-    for (int i=0; i<a.length; i++)
-      if (elt.equals(a[i]))
+    for (int i=0; i<a.length; i++) {
+      if (elt.equals(a[i])) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -406,10 +431,12 @@ public final class ArraysMDE {
   /*@Pure*/ public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
-        }
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt.equals(a[i]))
+    }
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt.equals(a[i])) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -443,9 +470,11 @@ public final class ArraysMDE {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt.equals(a.get(i)))
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt.equals(a.get(i))) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -459,9 +488,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOfEq(/*@PolyAll*/ Object[] a, /*@Nullable*/ Object elt) {
-    for (int i=0; i<a.length; i++)
-      if (elt == a[i])
+    for (int i=0; i<a.length; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -478,9 +509,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOfEq(/*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt == a[i])
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -494,9 +527,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOfEq(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt) {
-    for (int i=0; i<a.size(); i++)
-      if (elt == a.get(i))
+    for (int i=0; i<a.size(); i++) {
+      if (elt == a.get(i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -513,9 +548,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOfEq(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt == a.get(i))
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt == a.get(i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -528,9 +565,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(int[] a, int elt) {
-    for (int i=0; i<a.length; i++)
-      if (elt == a[i])
+    for (int i=0; i<a.length; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -543,9 +582,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(long[] a, long elt) {
-    for (int i=0; i<a.length; i++)
-      if (elt == a[i])
+    for (int i=0; i<a.length; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -561,9 +602,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(int[] a, int elt, int minindex, int indexlimit) {
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt == a[i])
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -579,9 +622,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(long[] a, long elt, int minindex, int indexlimit) {
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt == a[i])
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -594,9 +639,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(boolean[] a, boolean elt) {
-    for (int i=0; i<a.length; i++)
-      if (elt == a[i])
+    for (int i=0; i<a.length; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -609,9 +656,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(double[] a, double elt) {
-    for (int i=0; i<a.length; i++)
-      if (elt == a[i])
+    for (int i=0; i<a.length; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -627,9 +676,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    **/
   /*@Pure*/ public static int indexOf(boolean[] a, boolean elt, int minindex, int indexlimit) {
-    for (int i=minindex; i<indexlimit; i++)
-      if (elt == a[i])
+    for (int i=minindex; i<indexlimit; i++) {
+      if (elt == a[i]) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -656,9 +707,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(Object[] a, Object[] sub) {
     int a_index_max = a.length - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -674,9 +727,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOfEq(Object[] a, Object[] sub) {
     int a_index_max = a.length - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarrayEq(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarrayEq(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -692,9 +747,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(List<?> a, Object[] sub) {
     int a_index_max = a.size() - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -710,9 +767,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOfEq(List<?> a, Object[] sub) {
     int a_index_max = a.size() - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarrayEq(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarrayEq(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -728,9 +787,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(Object[] a, List<?> sub) {
     int a_index_max = a.length - sub.size() + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -746,9 +807,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOfEq(Object[] a, List<?> sub) {
     int a_index_max = a.length - sub.size() + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarrayEq(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarrayEq(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -764,9 +827,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(List<?> a, List<?> sub) {
     int a_index_max = a.size() - sub.size() + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -782,9 +847,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOfEq(List<?> a, List<?> sub) {
     int a_index_max = a.size() - sub.size() + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarrayEq(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarrayEq(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -799,9 +866,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(int[] a, int[] sub) {
     int a_index_max = a.length - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -816,9 +885,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(double[] a, double[] sub) {
     int a_index_max = a.length - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -834,9 +905,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(long[] a, long[] sub) {
     int a_index_max = a.length - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -851,9 +924,11 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static int indexOf(boolean[] a, boolean[] sub) {
     int a_index_max = a.length - sub.length + 1;
-    for (int i=0; i<=a_index_max; i++)
-      if (isSubarray(a, sub, i))
+    for (int i=0; i<=a_index_max; i++) {
+      if (isSubarray(a, sub, i)) {
         return i;
+      }
+    }
     return -1;
   }
 
@@ -1058,11 +1133,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(Object[] a, Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (! Objects.equals(sub[i], a[a_offset+i]))
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (! Objects.equals(sub[i], a[a_offset+i])) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1079,11 +1157,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarrayEq(Object[] a, Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub[i] != a[a_offset+i])
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub[i] != a[a_offset+i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1100,11 +1181,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (! Objects.equals(sub.get(i), a[a_offset+i]))
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (! Objects.equals(sub.get(i), a[a_offset+i])) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1121,11 +1205,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarrayEq(Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub.get(i) != a[a_offset+i])
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub.get(i) != a[a_offset+i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1142,11 +1229,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(List<?> a, Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (! sub[i].equals(a.get(a_offset+i)))
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (! sub[i].equals(a.get(a_offset+i))) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1163,11 +1253,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarrayEq(List<?> a, Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub[i] != a.get(a_offset+i))
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub[i] != a.get(a_offset+i)) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1184,11 +1277,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (! Objects.equals(sub.get(i), a.get(a_offset+i)))
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (! Objects.equals(sub.get(i), a.get(a_offset+i))) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1205,11 +1301,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub.get(i) != a.get(a_offset+i))
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub.get(i) != a.get(a_offset+i)) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1225,11 +1324,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub[i] != a[a_offset+i])
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub[i] != a[a_offset+i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1245,11 +1347,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub[i] != a[a_offset+i])
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub[i] != a[a_offset+i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1265,11 +1370,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub[i] != a[a_offset+i])
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub[i] != a[a_offset+i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1285,11 +1393,14 @@ public final class ArraysMDE {
   /*@Pure*/ public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
-    if (a_len < sub_len)
+    if (a_len < sub_len) {
       return false;
-    for (int i=0; i<sub_len; i++)
-      if (sub[i] != a[a_offset+i])
+    }
+    for (int i=0; i<sub_len; i++) {
+      if (sub[i] != a[a_offset+i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -1301,7 +1412,12 @@ public final class ArraysMDE {
   // Concat used to return null if both arguments are null.  That is
   // convenient for the implementer, but not so good for clients.
 
-  // Exists to suppress warnings
+  /**
+   * Call this method in order to suppress compiler warnings.
+   * @param <T> the base type of the result
+   * @param lst the list to convert to an array
+   * @return the result of lst.toArray, casted to a more precise type than Object[]
+   */
   private static <T> T[] toTArray(List<T> lst) {
     @SuppressWarnings("unchecked")
     T[] asArray = (T[]) lst.toArray();
@@ -1984,8 +2100,8 @@ public final class ArraysMDE {
     } else if (obj instanceof List<?>) {
       return toString((List<?>) obj);
     } else {
-      throw new IllegalArgumentException("Argument is " + ((obj == null) ? "null" :
-                                         "of class " + obj.getClass().getName()));
+      throw new IllegalArgumentException("Argument is " + ((obj == null) ? "null"
+                                         : "of class " + obj.getClass().getName()));
     }
   }
 
@@ -2011,8 +2127,8 @@ public final class ArraysMDE {
     } else if (obj instanceof List<?>) {
       return ((List<?>) obj).size();
     } else {
-      throw new IllegalArgumentException("Argument is " + ((obj == null) ? "null" :
-                                         "of class " + obj.getClass().getName()));
+      throw new IllegalArgumentException("Argument is " + ((obj == null) ? "null"
+                                         : "of class " + obj.getClass().getName()));
     }
   }
 
@@ -2027,9 +2143,11 @@ public final class ArraysMDE {
    * @return true iff the array is sorted
    */
   /*@Pure*/ public static boolean sorted(int[] a) {
-    for (int i=0; i<a.length-1; i++)
-      if (a[i+1] < a[i])
+    for (int i=0; i<a.length-1; i++) {
+      if (a[i+1] < a[i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -2039,9 +2157,11 @@ public final class ArraysMDE {
    * @return true iff the array is sorted
    */
   /*@Pure*/ public static boolean sorted(long[] a) {
-    for (int i=0; i<a.length-1; i++)
-      if (a[i+1] < a[i])
+    for (int i=0; i<a.length-1; i++) {
+      if (a[i+1] < a[i]) {
         return false;
+      }
+  }
     return true;
   }
 
@@ -2051,9 +2171,11 @@ public final class ArraysMDE {
    * @return true iff the array is sorted in desending order
    */
   /*@Pure*/ public static boolean sorted_descending(int[] a) {
-    for (int i=0; i<a.length-1; i++)
-      if (a[i+1] > a[i])
+    for (int i=0; i<a.length-1; i++) {
+      if (a[i+1] > a[i]) {
         return false;
+      }
+    }
     return true;
   }
 
@@ -2063,27 +2185,10 @@ public final class ArraysMDE {
    * @return true iff the array is sorted in desending order
    */
   /*@Pure*/ public static boolean sorted_descending(long[] a) {
-    for (int i=0; i<a.length-1; i++)
-      if (a[i+1] > a[i])
+    for (int i=0; i<a.length-1; i++) {
+      if (a[i+1] > a[i]) {
         return false;
-    return true;
-  }
-
-  /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
-   * @param a an array
-   * @return true iff a does not contain duplicate elements
-   */
-  @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (boolean [] a) {
-    HashSet<Boolean> hs = new HashSet<Boolean> ();
-    for (int i = 0; i < a.length; i++) {
-      // Could be optimized not to add the last element,
-      // but that would make the code much less readable.
-      Boolean n = Boolean.valueOf (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      }
     }
     return true;
   }
@@ -2095,14 +2200,16 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (byte[] a) {
-    HashSet<Byte> hs = new HashSet<Byte> ();
+  /*@Pure*/ public static boolean noDuplicates(boolean [] a) {
+    HashSet<Boolean> hs = new HashSet<Boolean>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Byte n = new Byte (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Boolean n = Boolean.valueOf(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2114,14 +2221,16 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (char[] a) {
-    HashSet<Character> hs = new HashSet<Character> ();
+  /*@Pure*/ public static boolean noDuplicates(byte[] a) {
+    HashSet<Byte> hs = new HashSet<Byte>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Character n = new Character (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Byte n = new Byte(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2133,14 +2242,16 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (float[] a) {
-    HashSet<Float> hs = new HashSet<Float> ();
+  /*@Pure*/ public static boolean noDuplicates(char[] a) {
+    HashSet<Character> hs = new HashSet<Character>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Float n = new Float (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Character n = new Character(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2152,14 +2263,16 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (short[] a) {
-    HashSet<Short> hs = new HashSet<Short> ();
+  /*@Pure*/ public static boolean noDuplicates(float[] a) {
+    HashSet<Float> hs = new HashSet<Float>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Short n = new Short (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Float n = new Float(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2171,14 +2284,37 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (int[] a) {
-    HashSet<Integer> hs = new HashSet<Integer> ();
+  /*@Pure*/ public static boolean noDuplicates(short[] a) {
+    HashSet<Short> hs = new HashSet<Short>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Integer n = new Integer (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Short n = new Short(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
+    }
+    return true;
+  }
+
+  /**
+   * Return true iff a does not contain duplicate elements,
+   * using O(n) time and O(n) space.
+   * @param a an array
+   * @return true iff a does not contain duplicate elements
+   */
+  @SuppressWarnings("purity")   // side effect to local state (HashSet)
+  /*@Pure*/ public static boolean noDuplicates(int[] a) {
+    HashSet<Integer> hs = new HashSet<Integer>();
+    for (int i = 0; i < a.length; i++) {
+      // Could be optimized not to add the last element,
+      // but that would make the code much less readable.
+      Integer n = new Integer(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2192,14 +2328,16 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (double[] a) {
-    HashSet<Double> hs = new HashSet<Double> ();
+  /*@Pure*/ public static boolean noDuplicates(double[] a) {
+    HashSet<Double> hs = new HashSet<Double>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
       // but that would make the code much less readable.
-      Double n = new Double (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Double n = new Double(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2212,14 +2350,16 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (long[] a) {
-    HashSet<Long> hs = new HashSet<Long> ();
+  /*@Pure*/ public static boolean noDuplicates(long[] a) {
+    HashSet<Long> hs = new HashSet<Long>();
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
       // but that would make the code much less readable.
-      Long n = new Long (a[i]);
-      if (hs.contains(n)) { return false; }
-      hs.add (n);
+      Long n = new Long(a[i]);
+      if (hs.contains(n)) {
+        return false;
+      }
+      hs.add(n);
     }
     return true;
   }
@@ -2232,13 +2372,15 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (String[] a) {
-    HashSet<String> hs = new HashSet<String> ();
+  /*@Pure*/ public static boolean noDuplicates(String[] a) {
+    HashSet<String> hs = new HashSet<String>();
     for (int i = 0; i < a.length; i++) {
-      if (hs.contains(a[i])) { return false; }
+      if (hs.contains(a[i])) {
+        return false;
+      }
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      hs.add (a[i]);
+      hs.add(a[i]);
     }
     return true;
   }
@@ -2250,13 +2392,15 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static boolean noDuplicates (Object[] a) {
-    HashSet<Object> hs = new HashSet<Object> ();
+  /*@Pure*/ public static boolean noDuplicates(Object[] a) {
+    HashSet<Object> hs = new HashSet<Object>();
     for (int i = 0; i < a.length; i++) {
-      if (hs.contains(a[i])) { return false; }
+      if (hs.contains(a[i])) {
+        return false;
+      }
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      hs.add (a[i]);
+      hs.add(a[i]);
     }
     return true;
   }
@@ -2269,13 +2413,15 @@ public final class ArraysMDE {
    * @return true iff a does not contain duplicate elements
    */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
-  /*@Pure*/ public static <T> boolean noDuplicates (List<T> a) {
-    HashSet<T> hs = new HashSet<T> ();
+  /*@Pure*/ public static <T> boolean noDuplicates(List<T> a) {
+    HashSet<T> hs = new HashSet<T>();
     for (int i = 0; i < a.size(); i++) {
-      if (hs.contains(a.get(i))) { return false; }
+      if (hs.contains(a.get(i))) {
+        return false;
+      }
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      hs.add (a.get(i));
+      hs.add(a.get(i));
     }
     return true;
   }
@@ -2297,8 +2443,9 @@ public final class ArraysMDE {
     boolean[] see = new boolean[a.length];
     for (int i=0; i<a.length; i++) {
       int n = a[i];
-      if (n < 0 || n >= a.length || see[n])
+      if (n < 0 || n >= a.length || see[n]) {
         return false;
+      }
       see[n] = true;
     }
     return true;
@@ -2405,7 +2552,9 @@ public final class ArraysMDE {
 
     for (int i = 0; i < smaller.length; i++) {
       Long elt = new Long(smaller[i]);
-      if (!setBigger.contains(elt)) return false;
+      if (!setBigger.contains(elt)) {
+        return false;
+      }
     }
 
     return true;
@@ -2433,7 +2582,9 @@ public final class ArraysMDE {
 
     for (int i = 0; i < smaller.length; i++) {
       Double elt = new Double(smaller[i]);
-      if (!setBigger.contains(elt)) return false;
+      if (!setBigger.contains(elt)) {
+        return false;
+      }
     }
 
     return true;
@@ -2459,7 +2610,9 @@ public final class ArraysMDE {
     }
 
     for (int i = 0; i < smaller.length; i++) {
-      if (!setBigger.contains(smaller[i])) return false;
+      if (!setBigger.contains(smaller[i])) {
+        return false;
+      }
     }
 
     return true;
@@ -2486,16 +2639,20 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer,
+     * depending on whether the first argument is less than,
+     * equal to, or greater than the second argument
      */
     /*@Pure*/
     public int compare(int[] a1, int[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int len = Math.min(a1.length, a2.length);
       for (int i=0; i<len; i++) {
-        if (a1[i] != a2[i])
+        if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
+        }
       }
       return a1.length - a2.length;
     }
@@ -2522,12 +2679,14 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(long[] a1, long[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int len = Math.min(a1.length, a2.length);
       for (int i=0; i<len; i++) {
-        if (a1[i] != a2[i])
+        if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
+        }
       }
       return a1.length - a2.length;
     }
@@ -2554,13 +2713,15 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(double[] a1, double[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int len = Math.min(a1.length, a2.length);
       for (int i=0; i<len; i++) {
         int result = Double.compare(a1[i], a2[i]);
-        if (result != 0)
+        if (result != 0) {
           return (result);
+        }
       }
       return a1.length - a2.length;
     }
@@ -2587,21 +2748,24 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(String[] a1, String[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int len = Math.min(a1.length, a2.length);
       for (int i=0; i<len; i++) {
         int tmp = 0;
-        if ((a1[i] == null) && (a2[i] == null))
+        if ((a1[i] == null) && (a2[i] == null)) {
           tmp = 0;
-        else if (a1[i] == null)
+        }  else if (a1[i] == null) {
           tmp = -1;
-        else if (a2[i] == null)
+        } else if (a2[i] == null) {
           tmp = 1;
-        else
-          tmp = a1[i].compareTo (a2[i]);
-        if (tmp != 0)
+        } else {
+          tmp = a1[i].compareTo(a2[i]);
+        }
+        if (tmp != 0) {
           return (tmp);
+        }
       }
       return a1.length - a2.length;
     }
@@ -2628,22 +2792,27 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(T[] a1, T[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int len = Math.min(a1.length, a2.length);
       for (int i=0; i<len; i++) {
         T elt1 = a1[i];
         T elt2 = a2[i];
         // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null))
+        if ((elt1 == null) && (elt2 == null)) {
           continue;
-        if (elt1 == null)
+        }
+        if (elt1 == null) {
           return -1;
-        if (elt2 == null)
+        }
+        if (elt2 == null) {
           return 1;
+        }
         int tmp = elt1.compareTo(elt2);
-        if (tmp != 0)
+        if (tmp != 0) {
           return tmp;
+        }
         // Check the assumption that the two elements are equal.
         assert elt1.equals(elt2);
       }
@@ -2672,22 +2841,27 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(Object[] a1, Object[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int len = Math.min(a1.length, a2.length);
       for (int i=0; i<len; i++) {
         Object elt1 = a1[i];
         Object elt2 = a2[i];
         // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null))
+        if ((elt1 == null) && (elt2 == null)) {
           continue;
-        if (elt1 == null)
+        }
+        if (elt1 == null) {
           return -1;
-        if (elt2 == null)
+        }
+        if (elt2 == null) {
           return 1;
+        }
         int tmp = elt1.hashCode() - elt2.hashCode();
-        if (tmp != 0)
+        if (tmp != 0) {
           return tmp;
+        }
         // I'm counting on the fact that hashCode returns a different
         // number for each Object in the system.  This checks that assumption.
         assert elt1.equals(elt2);
@@ -2716,15 +2890,18 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(int[] a1, int[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int tmp;
       tmp = a1.length - a2.length;
-      if (tmp != 0)
+      if (tmp != 0) {
         return tmp;
+      }
       for (int i=0; i<a1.length; i++) {
-        if (a1[i] != a2[i])
+        if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
+        }
       }
       return 0;
     }
@@ -2750,15 +2927,18 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(long[] a1, long[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int lendiff = a1.length - a2.length;
-      if (lendiff != 0)
+      if (lendiff != 0) {
         return lendiff;
+      }
       long tmp;
       for (int i=0; i<a1.length; i++) {
-        if (a1[i] != a2[i])
+        if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
+        }
       }
       return 0;
     }
@@ -2784,25 +2964,31 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(T[] a1, T[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int tmp;
       tmp = a1.length - a2.length;
-      if (tmp != 0)
+      if (tmp != 0) {
         return tmp;
+      }
       for (int i=0; i<a1.length; i++) {
         T elt1 = a1[i];
         T elt2 = a2[i];
         // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null))
+        if ((elt1 == null) && (elt2 == null)) {
           continue;
-        if (elt1 == null)
+        }
+        if (elt1 == null) {
           return -1;
-        if (elt2 == null)
+        }
+        if (elt2 == null) {
           return 1;
+        }
         tmp = elt1.compareTo(elt2);
-        if (tmp != 0)
+        if (tmp != 0) {
           return tmp;
+        }
         // Check the assumption that the two elements are equal.
         assert elt1.equals(elt2);
       }
@@ -2830,25 +3016,31 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     public int compare(Object[] a1, Object[] a2) {
-      if (a1 == a2)
+      if (a1 == a2) {
         return 0;
+      }
       int tmp;
       tmp = a1.length - a2.length;
-      if (tmp != 0)
+      if (tmp != 0) {
         return tmp;
+      }
       for (int i=0; i<a1.length; i++) {
         Object elt1 = a1[i];
         Object elt2 = a2[i];
         // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null))
+        if ((elt1 == null) && (elt2 == null)) {
           continue;
-        if (elt1 == null)
+        }
+        if (elt1 == null) {
           return -1;
-        if (elt2 == null)
+        }
+        if (elt2 == null) {
           return 1;
+        }
         tmp = elt1.hashCode() - elt2.hashCode();
-        if (tmp != 0)
+        if (tmp != 0) {
           return tmp;
+        }
         // I'm counting on the fact that hashCode returns a different
         // number for each Object in the system.  This checks that assumption.
         assert elt1.equals(elt2);
@@ -2868,8 +3060,9 @@ public final class ArraysMDE {
    * @return true iff some element of a is null (false if a is zero-sized)
    **/
   /*@Pure*/ public static boolean any_null(Object[] a) {
-    if (a.length == 0)
+    if (a.length == 0) {
       return false;
+    }
     // The cast ensures that the right version of IndexOfEq gets called.
     return indexOfEq(a, (/*@Nullable*/ Object) null) >= 0;
   }
@@ -2881,8 +3074,9 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static boolean all_null(Object[] a) {
     for (int i=0; i<a.length; i++) {
-      if (! (a[i] == null))
+      if (! (a[i] == null)) {
         return false;
+      }
     }
     return true;
   }
@@ -2893,8 +3087,9 @@ public final class ArraysMDE {
    * @return true iff some element of a is null (false if a is zero-sized)
    **/
   /*@Pure*/ public static boolean any_null(List<?> a) {
-    if (a.size() == 0)
+    if (a.size() == 0) {
       return false;
+    }
     // The cast ensures that the right version of IndexOfEq gets called.
     return indexOfEq(a, (/*@Nullable*/ Object) null) >= 0;
   }
@@ -2906,8 +3101,9 @@ public final class ArraysMDE {
    **/
   /*@Pure*/ public static boolean all_null(List<?> a) {
     for (int i=0; i<a.size(); i++) {
-      if (! (a.get(i) == null))
+      if (! (a.get(i) == null)) {
         return false;
+      }
     }
     return true;
   }
@@ -2917,7 +3113,8 @@ public final class ArraysMDE {
   /// javadoc hacks
   ///
 
-  // this is so that javadoc can find "java.util.Vector".
+  // Without this, the Javadoc mentions of "java.util.Vector", are not links
+  // in the generated HTML.
   // "private static Vector v;" doesn't work, nor does
   // "static { new java.util.Vector(); }", nor does "private Vector v".
   // Yuck!

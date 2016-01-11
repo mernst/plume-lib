@@ -1,7 +1,7 @@
 package plume;
 
 import java.lang.ref.WeakReference;
-import java.util.*;
+import java.util.Iterator;
 
 /*>>>
 import org.checkerframework.checker.interning.qual.*;
@@ -23,7 +23,12 @@ import org.checkerframework.dataflow.qual.*;
  * methods in this class extend interning to all Java objects.
  **/
 public final class Intern {
-  private Intern() { throw new Error("do not instantiate"); }
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private Intern() {
+    throw new Error("do not instantiate");
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////
   /// Strings
@@ -38,9 +43,11 @@ public final class Intern {
    **/
   @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
   public static /*@Interned*/ String[] internStrings(String[] a) {
-    for (int i=0; i<a.length; i++)
-      if (a[i] != null)
+    for (int i=0; i<a.length; i++) {
+      if (a[i] != null) {
         a[i] = a[i].intern();
+      }
+    }
     return a;
   }
 
@@ -96,9 +103,11 @@ public final class Intern {
    * @see Hasher
    **/
   private static final class IntegerHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return a1.equals(a2);
     }
+    @Override
     public int hashCode(Object o) {
       Integer i = (Integer) o;
       return i.intValue();
@@ -111,9 +120,11 @@ public final class Intern {
    * @see Hasher
    **/
   private static final class LongHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return a1.equals(a2);
     }
+    @Override
     public int hashCode(Object o) {
       Long i = (Long) o;
       return i.intValue();
@@ -127,9 +138,11 @@ public final class Intern {
    * @see java.util.Arrays#equals(int[], int[])
    **/
   private static final class IntArrayHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return java.util.Arrays.equals((int[])a1, (int[])a2);
     }
+    @Override
     public int hashCode(Object o) {
       int[] a = (int[])o;
       int result = 0;
@@ -147,9 +160,11 @@ public final class Intern {
    * @see java.util.Arrays#equals (long[], long[])
    **/
   private static final class LongArrayHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return java.util.Arrays.equals((long[])a1, (long[])a2);
     }
+    @Override
     public int hashCode(Object o) {
       long[] a = (long[])o;
       long result = 0;
@@ -169,9 +184,11 @@ public final class Intern {
    * @see Hasher
    **/
   private static final class DoubleHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return a1.equals(a2);
     }
+    @Override
     public int hashCode(Object o) {
       Double d = (Double) o;
       // Could add "... % Integer.MAX_VALUE" here; is that good to do?
@@ -187,14 +204,16 @@ public final class Intern {
    * @see java.util.Arrays#equals(Object[],Object[])
    **/
   private static final class DoubleArrayHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       // "java.util.Arrays.equals" considers +0.0 != -0.0.
       // Also, it gives inconsistent results (on different JVMs/classpaths?).
       // return java.util.Arrays.equals((double[])a1, (double[])a2);
       double[] da1 = (double[])a1;
       double[] da2 = (double[])a2;
-      if (da1.length != da2.length)
+      if (da1.length != da2.length) {
         return false;
+      }
       for (int i=0; i<da1.length; i++) {
         if (! ((da1[i] == da2[i])
                || (Double.isNaN(da1[i]) && Double.isNaN(da2[i])))) {
@@ -203,6 +222,7 @@ public final class Intern {
       }
       return true;
     }
+    @Override
     public int hashCode(Object o) {
       double[] a = (double[])o;
       double running = 0;
@@ -223,9 +243,11 @@ public final class Intern {
    * java.util.Arrays.equals
    **/
   private static final class StringArrayHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return java.util.Arrays.equals((String[])a1, (String[])a2);
     }
+    @Override
     public int hashCode(Object o) {
       String[] a = (String[])o;
       int result = 0;
@@ -244,9 +266,11 @@ public final class Intern {
    * @see java.util.Arrays#equals(Object[], Object[])
    **/
   private static final class ObjectArrayHasher implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       return java.util.Arrays.equals((/*@Nullable*/ Object[])a1, (/*@Nullable*/ Object[])a2);
     }
+    @Override
     public int hashCode(Object o) {
       /*@Nullable*/ Object[] a = (/*@Nullable*/ Object[])o;
       int result = 0;
@@ -300,26 +324,61 @@ public final class Intern {
   }
 
   // For testing only
-  public static int numIntegers() { return internedIntegers.size(); }
-  public static int numLongs() { return internedLongs.size(); }
-  public static int numIntArrays() { return internedIntArrays.size(); }
-  public static int numLongArrays() { return internedLongArrays.size(); }
-  public static int numDoubles() { return internedDoubles.size(); }
-  public static int numDoubleArrays() { return internedDoubleArrays.size(); }
-  public static int numStringArrays() { return internedStringArrays.size(); }
-  public static int numObjectArrays() { return internedObjectArrays.size(); }
-  public static Iterator</*@Interned*/ Integer> integers() { return internedIntegers.keySet().iterator(); }
-  public static Iterator</*@Interned*/ Long> longs() { return internedLongs.keySet().iterator(); }
-  public static Iterator<int /*@Interned*/ []> intArrays() { return internedIntArrays.keySet().iterator(); }
-  public static Iterator<long /*@Interned*/ []> longArrays() { return internedLongArrays.keySet().iterator(); }
-  public static Iterator</*@Interned*/ Double> doubles() { return internedDoubles.keySet().iterator(); }
-  public static Iterator<double /*@Interned*/ []> doubleArrays() { return internedDoubleArrays.keySet().iterator(); }
-  public static Iterator</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []> stringArrays() { return internedStringArrays.keySet().iterator(); }
-  public static Iterator</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> objectArrays() { return internedObjectArrays.keySet().iterator(); }
+  public static int numIntegers() {
+    return internedIntegers.size();
+  }
+  public static int numLongs() {
+    return internedLongs.size();
+  }
+  public static int numIntArrays() {
+    return internedIntArrays.size();
+  }
+  public static int numLongArrays() {
+    return internedLongArrays.size();
+  }
+  public static int numDoubles() {
+    return internedDoubles.size();
+  }
+  public static int numDoubleArrays() {
+    return internedDoubleArrays.size();
+  }
+  public static int numStringArrays() {
+    return internedStringArrays.size();
+  }
+  public static int numObjectArrays() {
+    return internedObjectArrays.size();
+  }
+  public static Iterator</*@Interned*/ Integer> integers() {
+    return internedIntegers.keySet().iterator();
+  }
+  public static Iterator</*@Interned*/ Long> longs() {
+    return internedLongs.keySet().iterator();
+  }
+  public static Iterator<int /*@Interned*/ []> intArrays() {
+    return internedIntArrays.keySet().iterator();
+  }
+  public static Iterator<long /*@Interned*/ []> longArrays() {
+    return internedLongArrays.keySet().iterator();
+  }
+  public static Iterator</*@Interned*/ Double> doubles() {
+    return internedDoubles.keySet().iterator();
+  }
+  public static Iterator<double /*@Interned*/ []> doubleArrays() {
+    return internedDoubleArrays.keySet().iterator();
+  }
+  public static Iterator</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []> stringArrays() {
+    return internedStringArrays.keySet().iterator();
+  }
+  public static Iterator</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> objectArrays() {
+    return internedObjectArrays.keySet().iterator();
+  }
 
-  // Interns a String.
-  // Delegates to the builtin String.intern() method.  Provided for
-  // completeness, so we can intern() any type used in OneOf.java.jpp.
+  /**
+   * Interns a String.
+   * Delegates to the builtin String.intern() method.
+   * Provided for completeness.
+   * @return an interned version of the argument
+   */
   /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
     // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
     if (a == null) {
@@ -328,16 +387,20 @@ public final class Intern {
     return a.intern();
   }
 
-  // Interns a long.
-  // A no-op.  Provided for completeness, so we can intern() any type
-  // used in OneOf.java.jpp.
+  /**
+   * Interns a long.
+   * A no-op.  Provided for completeness.
+   * @return an interned version of the argument
+   */
   /*@Pure*/ public static long intern(long l) {
     return l;
   }
 
-  // Interns a long.
-  // A no-op.  Provided for completeness, so we can intern() any type
-  // used in OneOf.java.jpp.
+  /**
+   * Interns a double
+   * A no-op.  Provided for completeness.
+   * @return an interned version of the argument
+   */
   /*@Pure*/ public static double intern(double l) {
     return l;
   }
@@ -487,11 +550,13 @@ public final class Intern {
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/ public static /*@Interned*/ Double intern(Double a) {
     // Double.NaN == Double.Nan  always evaluates to false.
-    if (a.isNaN())
+    if (a.isNaN()) {
       return internedDoubleNaN;
+    }
     // Double.+0 == Double.-0,  but they compare true via equals()
-    if (a.doubleValue() == 0)   // catches both positive and negative zero
+    if (a.doubleValue() == 0) {   // catches both positive and negative zero
       return internedDoubleZero;
+    }
     WeakReference</*@Interned*/ Double> lookup = internedDoubles.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -562,8 +627,9 @@ public final class Intern {
   /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(/*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
-    for (int k = 0; k < a.length; k++)
-      assert a[k] == Intern.intern (a[k]);
+    for (int k = 0; k < a.length; k++) {
+      assert a[k] == Intern.intern(a[k]);
+    }
 
     WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []> lookup = internedStringArrays.get(a);
     /*@Nullable*/ /*@Interned*/ String /*@Interned*/ [] result;
@@ -642,8 +708,8 @@ public final class Intern {
       /*@Interned*/ Object[] asArray = (/*@Interned*/ Object[]) a;
       return intern(asArray);
     } else {
-      throw new IllegalArgumentException
-        ("Arguments of type " + a.getClass() + " cannot be interned");
+      throw new IllegalArgumentException(
+        "Arguments of type " + a.getClass() + " cannot be interned");
     }
   }
 
@@ -664,16 +730,16 @@ public final class Intern {
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
    **/
-  public static int /*@Interned*/ [] internSubsequence (int /*@Interned*/ [] seq, int start, int end) {
+  public static int /*@Interned*/ [] internSubsequence(int /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
-    SequenceAndIndices<int /*@Interned*/ []> sai = new SequenceAndIndices<int /*@Interned*/ []> (seq, start, end);
+    SequenceAndIndices<int /*@Interned*/ []> sai = new SequenceAndIndices<int /*@Interned*/ []>(seq, start, end);
     WeakReference<int /*@Interned*/ []> lookup = internedIntSequenceAndIndices.get(sai);
     if (lookup != null) {
       return lookup.get();
     } else {
       int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start);
-      int /*@Interned*/ [] subseq = Intern.intern (subseqUninterned);
-      internedIntSequenceAndIndices.put (sai, new WeakReference<int /*@Interned*/ []>(subseq));
+      int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
+      internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
       return subseq;
     }
   }
@@ -685,16 +751,16 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
-  public static long /*@Interned*/ [] internSubsequence (long /*@Interned*/ [] seq, int start, int end) {
+  public static long /*@Interned*/ [] internSubsequence(long /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
-    SequenceAndIndices<long /*@Interned*/ []> sai = new SequenceAndIndices<long /*@Interned*/ []> (seq, start, end);
+    SequenceAndIndices<long /*@Interned*/ []> sai = new SequenceAndIndices<long /*@Interned*/ []>(seq, start, end);
     WeakReference<long /*@Interned*/ []> lookup = internedLongSequenceAndIndices.get(sai);
     if (lookup != null) {
       return lookup.get();
     } else {
       long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
-      long /*@Interned*/ [] subseq = Intern.intern (subseq_uninterned);
-      internedLongSequenceAndIndices.put (sai, new WeakReference<long /*@Interned*/ []>(subseq));
+      long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
+      internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
       return subseq;
     }
   }
@@ -706,16 +772,16 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
-  public static double /*@Interned*/ [] internSubsequence (double /*@Interned*/ [] seq, int start, int end) {
+  public static double /*@Interned*/ [] internSubsequence(double /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
-    SequenceAndIndices<double /*@Interned*/ []> sai = new SequenceAndIndices<double /*@Interned*/ []> (seq, start, end);
+    SequenceAndIndices<double /*@Interned*/ []> sai = new SequenceAndIndices<double /*@Interned*/ []>(seq, start, end);
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleSequenceAndIndices.get(sai);
     if (lookup != null) {
       return lookup.get();
     } else {
       double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
-      double /*@Interned*/ [] subseq = Intern.intern (subseq_uninterned);
-      internedDoubleSequenceAndIndices.put (sai, new WeakReference<double /*@Interned*/ []>(subseq));
+      double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
+      internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
       return subseq;
     }
   }
@@ -727,19 +793,19 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
-  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence (/*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
+  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(/*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
-    SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> sai = new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> (seq, start, end);
+    SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> sai = new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(seq, start, end);
     @SuppressWarnings("nullness")                   // same nullness as key
     WeakReference</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> lookup = internedObjectSequenceAndIndices.get(sai);
     if (lookup != null) {
       return lookup.get();
     } else {
       /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
-      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern (subseq_uninterned);
+      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
       Object ignore = // assignment just so there is a place to hang the @SuppressWarnings annotation
-      internedObjectSequenceAndIndices.put (sai, new WeakReference</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(subseq));
+      internedObjectSequenceAndIndices.put(sai, new WeakReference</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(subseq));
       return subseq;
     }
   }
@@ -751,19 +817,19 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
    **/
-  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence (/*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
+  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(/*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
-    SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> sai = new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> (seq, start, end);
+    SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> sai = new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(seq, start, end);
     @SuppressWarnings("nullness")                   // same nullness as key
     WeakReference</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> lookup = internedStringSequenceAndIndices.get(sai);
     if (lookup != null) {
       return lookup.get();
     } else {
       /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
-      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern (subseq_uninterned);
+      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
       Object ignore = // assignment just so there is a place to hang the @SuppressWarnings annotation
-      internedStringSequenceAndIndices.put (sai, new WeakReference</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(subseq));
+      internedStringSequenceAndIndices.put(sai, new WeakReference</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(subseq));
       return subseq;
     }
   }
@@ -782,7 +848,7 @@ public final class Intern {
     /**
      * @param seq An interned array
      **/
-    public SequenceAndIndices (T seq, int start, int end) {
+    public SequenceAndIndices(T seq, int start, int end) {
       this.seq = seq;
       this.start = start;
       this.end = end;
@@ -790,7 +856,7 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    /*@Pure*/ public boolean equals (/*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals(/*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
@@ -800,7 +866,7 @@ public final class Intern {
       }
     }
 
-    /*@Pure*/ public boolean equals (SequenceAndIndices<T> other) {
+    /*@Pure*/ public boolean equals(SequenceAndIndices<T> other) {
       return ((this.seq == other.seq)
               && this.start == other.start
               && this.end == other.end);

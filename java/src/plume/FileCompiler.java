@@ -1,8 +1,13 @@
 package plume;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -17,6 +22,7 @@ import org.checkerframework.checker.regex.qual.*;
  **/
 public final class FileCompiler {
 
+  /** The Runtime of the JVM. */
   public static Runtime runtime = java.lang.Runtime.getRuntime();
   /**
    * Matches the names of Java source files.
@@ -25,6 +31,7 @@ public final class FileCompiler {
   static /*@Regex(1)*/ Pattern java_filename_pattern;
   /** External command used to compile Java files. **/
   private String compiler;
+  /** Time limit for compilation jobs. */
   private long timeLimit;
 
   static {
@@ -79,7 +86,7 @@ public final class FileCompiler {
     // System.out.printf ("compileFiles: %s%n", fileNames);
 
     // Start a process to compile all of the files (in one command)
-    TimeLimitProcess p = compile_source (fileNames);
+    TimeLimitProcess p = compile_source(fileNames);
 
     String compile_errors = "";
     String compile_output = "";
@@ -88,20 +95,21 @@ public final class FileCompiler {
       int result = p.waitFor();
     } catch (Throwable e) {
       // Print stderr and stdout if there is an unexpected exception (timeout).
-      compile_errors = UtilMDE.streamString (p.getErrorStream());
-      compile_output = UtilMDE.streamString (p.getInputStream());
-      System.out.println ("Unexpected exception while compiling " + e);
-      if (p.timed_out())
-        System.out.println ("Compile timed out after " + p.timeout_msecs()
+      compile_errors = UtilMDE.streamString(p.getErrorStream());
+      compile_output = UtilMDE.streamString(p.getInputStream());
+      System.out.println("Unexpected exception while compiling " + e);
+      if (p.timed_out()) {
+        System.out.println("Compile timed out after " + p.timeout_msecs()
                             + " msecs");
+      }
       // System.out.println ("Compile errors: " + compile_errors);
       // System.out.println ("Compile output: " + compile_output);
       e.printStackTrace();
-      runtime.exit (1);
+      runtime.exit(1);
     }
 
-    compile_errors = UtilMDE.streamString (p.getErrorStream());
-    compile_output = UtilMDE.streamString (p.getInputStream());
+    compile_errors = UtilMDE.streamString(p.getErrorStream());
+    compile_output = UtilMDE.streamString(p.getInputStream());
     // System.out.println ("Compile errors: " + compile_errors);
     // System.out.println ("Compile output: " + compile_output);
 
@@ -109,7 +117,7 @@ public final class FileCompiler {
     // is an error in one of the files.  Remove all the erring files
     // and recompile only the good ones.
     if (compiler.indexOf("javac") != -1) {
-      recompile_without_errors (fileNames, compile_errors);
+      recompile_without_errors(fileNames, compile_errors);
     }
 
     return compile_errors;
@@ -152,8 +160,11 @@ public final class FileCompiler {
    * necessary when compiling with javac because javac does not
    * compile all the files supplied to it if some of them contain
    * errors. So some "good" files end up not being compiled.
+   * @param fileNames all the files that were attempted to be compiled
+   * @param errorString the error string that indicates which files
+   *   could not be compiled
    */
-  private void recompile_without_errors (List<String> fileNames, String errorString) throws IOException {
+  private void recompile_without_errors(List<String> fileNames, String errorString) throws IOException {
     // search the error string and extract the files with errors.
     if (errorString != null) {
       HashSet<String> errorClasses = new HashSet<String>();
@@ -183,7 +194,7 @@ public final class FileCompiler {
         try {
           tp.waitFor();
         } catch (InterruptedException e) {
-          System.out.println ("Compile of " + filenames + " interrupted: "
+          System.out.println("Compile of " + filenames + " interrupted: "
                               + e);
         }
       }
@@ -193,17 +204,23 @@ public final class FileCompiler {
   /**
    * Return the file path to where a class file for a source
    * file at sourceFilePath would be generated.
+   * @param sourceFilePath the path to the .java file
+   * @return the path to the corresponding .class file
    */
   private static String getClassFilePath(String sourceFilePath) {
     int index = sourceFilePath.lastIndexOf('.');
     if (index == -1) {
       throw new IllegalArgumentException("sourceFilePath: "
-                                         + sourceFilePath +
-                                         " must end with an extention.");
+                                         + sourceFilePath
+                                         + " must end with an extention.");
     }
     return sourceFilePath.substring(0, index) + ".class";
   }
 
+  /** Returns true if the given file exists.
+   * @param pathName path to check for existence
+   * @return true iff the file exists
+   */
   private static boolean fileExists(String pathName) {
     return (new File(pathName)).exists();
   }

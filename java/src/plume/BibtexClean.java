@@ -1,9 +1,9 @@
 package plume;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.nio.CharBuffer;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.regex.Pattern;
 
 /**
  * Clean a BibTeX file by removing text outside BibTeX entries.
@@ -30,11 +30,21 @@ import java.nio.CharBuffer;
 // "long entries" start after a blank line.  (That can be considered an
 // EntryReader bug, or at least inflexibility in its interface.)
 
-public class BibtexClean {
+public final class BibtexClean {
 
+  /** This class is a collection of methods; it does not represent anything. */
+  private BibtexClean() {
+    throw new Error("do not instantiate");
+  }
+
+  /** Regex for the end of a BibTeX entry. */
   private static Pattern entry_end = Pattern.compile("^[ \t]*(?i)(year[ \t]*=[ \t]*[12][0-9][0-9][0-9][ \t]*)?[)}]");
+  /** Regex for a BibTeX string definition. */
   private static Pattern stringDef = Pattern.compile("^@(?i)string(\\{.*\\}|\\(.*\\))$");
 
+  /** Main method for the BibtexClean program.
+   * @param args command-line arguments
+   */
   public static void main(String[] args) {
     for (String filename : args) {
       File in = new File(filename);

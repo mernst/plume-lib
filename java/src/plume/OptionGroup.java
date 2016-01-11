@@ -8,7 +8,10 @@
 
 package plume;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Used in conjunction with the <code>@Option</code> annotation to indicate that
@@ -16,7 +19,7 @@ import java.lang.annotation.*;
  * <code>@OptionGroup</code> annotation is applied to) belong to the same
  * option group.  Option groups are documented in {@link Options}.
  * <p>
- * 
+ *
  * Note that <code>@OptionGroup</code> must be applied to a field and must
  * appear after that field's Javadoc comment, if any.  A Javadoc comment
  * between {@code @OptionGroup} and the field is ignored.
@@ -44,6 +47,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface OptionGroup {
+  /** Name of this option group. */
   String value();
+  /** Whether this option group is unpublicized. */
   boolean unpublicized() default false;
 }

@@ -1,6 +1,8 @@
 package plume;
 
-import java.io.*;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -101,12 +103,13 @@ public class CountingPrintWriter extends PrintWriter {
    * @return bytes in the string, or null
    * @param s A String
    */
-  public int countBytes (String s) {
-    if (s == null)
+  public int countBytes(String s) {
+    if (s == null) {
       return -1;
+    }
     int numchars = s.length();
     int numbytes = 0;
-    for (int i = 0 ; i < numchars ; i++) {
+    for (int i = 0; i < numchars; i++) {
       char c = s.charAt(i);
       numbytes += countBytes(c);
     }
@@ -118,10 +121,14 @@ public class CountingPrintWriter extends PrintWriter {
    * @param c a character
    * @return number of bytes used to represent c
    */
-  public int countBytes (char c) {
-      if ((c >= 0x0001) && (c <= 0x007F)) return 1;
-      else if (c > 0x07FF) return 3;
-      else return 2;
+  public int countBytes(char c) {
+    if ((c >= 0x0001) && (c <= 0x007F)) {
+      return 1;
+    } else if (c > 0x07FF) {
+      return 3;
+    } else {
+      return 2;
+    }
   }
 
   // Accessor Methods
@@ -171,13 +178,13 @@ public class CountingPrintWriter extends PrintWriter {
    * bytes according to the platform's default character encoding, and
    * these bytes are written in exactly the manner of the write(int)
    * method.
+   * @param s the string to be printed, or null
    */
   public void print(/*@Nullable*/ String s) {
     if (s == null) {
       printedBytes += countBytes("null");
       printedChars += 4;
-    }
-    else {
+    } else {
       printedBytes += countBytes(s);
       printedChars += s.length();
     }
@@ -189,6 +196,7 @@ public class CountingPrintWriter extends PrintWriter {
    * String.valueOf(boolean) is translated into bytes according to the
    * platform's default character encoding, and these bytes are
    * written in exactly the manner of the write(int) method.
+   * @param b the boolean to be printed
    */
   public void print(boolean b) {
     String s = String.valueOf(b);
@@ -202,10 +210,11 @@ public class CountingPrintWriter extends PrintWriter {
    * bytes according to the platform's default character encoding, and
    * these bytes are written in exactly the manner of the write(int)
    * method.
+   * @param c the char to be printed
    */
   public void print(char c) {
     printedBytes += countBytes(c);
-    printedChars ++;
+    printedChars++;
   }
 
   /**
@@ -213,6 +222,7 @@ public class CountingPrintWriter extends PrintWriter {
    * bytes according to the platform's default character encoding, and
    * these bytes are written in exactly the manner of the write(int)
    * method.
+   * @param s the char[] to be printed
    */
   public void print(char[] s) {
     for (int i=0; i < s.length; i++) {
@@ -228,6 +238,7 @@ public class CountingPrintWriter extends PrintWriter {
    * produced by String.valueOf(double) is translated into bytes
    * according to the platform's default character encoding, and these
    * bytes are written in exactly the manner of the write(int) method.
+   * @param d the double to be printed
    */
   public void print(double d) {
     String s = String.valueOf(d);
@@ -242,6 +253,7 @@ public class CountingPrintWriter extends PrintWriter {
    * String.valueOf(float) is translated into bytes according to the
    * platform's default character encoding, and these bytes are
    * written in exactly the manner of the write(int) method.
+   * @param f the float to be printed
    */
   public void print(float f) {
     String s = String.valueOf(f);
@@ -255,6 +267,7 @@ public class CountingPrintWriter extends PrintWriter {
    *  translated into bytes according to the platform's default
    *  character encoding, and these bytes are written in exactly the
    *  manner of the write(int) method.
+   * @param i the int to be printed
    */
   public void print(int i) {
     String s = String.valueOf(i);
@@ -292,6 +305,7 @@ public class CountingPrintWriter extends PrintWriter {
    *  String.valueOf(long) is translated into bytes according to the
    *  platform's default character encoding, and these bytes are
    *  written in exactly the manner of the write(int) method.
+   * @param l the long to be printed
    */
   public void print(long l) {
     String s = String.valueOf(l);
@@ -305,6 +319,7 @@ public class CountingPrintWriter extends PrintWriter {
    * String.valueOf(Object) method is translated into bytes according
    * to the platform's default character encoding, and these bytes are
    * written in exactly the manner of the write(int) method.
+   * @param obj the object to be printed
    */
   public void print(/*@Nullable*/ Object obj) {
     String s = String.valueOf(obj);
@@ -313,6 +328,7 @@ public class CountingPrintWriter extends PrintWriter {
     super.print(obj);
   }
 
+  /** The system-specific line separator. */
   private static final String lineSep = System.getProperty("line.separator");
 
   /**
@@ -333,9 +349,10 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Print a String and then terminate the line. This method behaves
    * as though it invokes print(String) and then println().
+   * @param s the string to be printed
    */
-  public void println(/*@Nullable*/ String x) {
-    print(x);
+  public void println(/*@Nullable*/ String s) {
+    print(s);
     println();
   }
 
@@ -343,6 +360,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Write an array of characters. This method cannot be inherited
    * from the Writer class because it must suppress I/O exceptions.
+   * @param buf the char[] to be printed
    */
   public void write(char[] buf) {
     for (int i=0; i < buf.length; i++) {
@@ -369,6 +387,7 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Write a string.
+   * @param s the string to be printed
    */
   public void write(String s) {
     writtenBytes += countBytes(s);

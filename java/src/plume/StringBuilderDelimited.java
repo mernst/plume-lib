@@ -1,8 +1,5 @@
 package plume;
 
-import java.util.*;
-import java.io.*;
-
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -23,10 +20,17 @@ import org.checkerframework.dataflow.qual.*;
  **/
 public class StringBuilderDelimited implements Appendable, CharSequence {
 
+  /** The StringBuilder to which this delegates work. */
   private StringBuilder delegate = new StringBuilder();
+  /** False iff some text has already been appended to this. */
   private boolean empty = true;
+  /** The delimiter put between strings appended to this. */
   private final String delimiter;
 
+  /** Create a new StringBuilderDelimited.
+   * @param delimiter the delimiter to be put between strings that are
+   * appended to this.
+   */
   public StringBuilderDelimited(String delimiter) {
     this.delimiter = delimiter;
   }

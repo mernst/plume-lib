@@ -1,7 +1,12 @@
 package plume;
 
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -11,7 +16,13 @@ import org.checkerframework.checker.nullness.qual.*;
  * Graph utility methods.  This class does not model a graph:  all methods
  * are static.
  */
-public class GraphMDE {
+public final class GraphMDE {
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private GraphMDE() {
+    throw new Error("do not instantiate");
+  }
+
 
   // Algorithms for computing dominators:
   //
@@ -88,10 +99,10 @@ public class GraphMDE {
     //  * every key in dom
     //  * elery element of every dom value
     // So, the type of pred is now
-    //   
+    //
     // rather than its original type
     //   Map<T,List</*@KeyFor("preds")*/ T>> preds
-    
+
     boolean changed = true;
     while (changed) {
       changed = false;
@@ -130,6 +141,12 @@ public class GraphMDE {
     return dom;
   }
 
+  /**
+   * Print a representation of the graph to ps, indented by intent spaces.
+   * @param graph the graph to print
+   * @param ps the PrintStream to which to print the graph
+   * @param indent the number of spaces by which to indent the printed representation
+   */
   public static
   <T> void print(Map<T,List<T>> graph, PrintStream ps, int indent) {
     String indentString = "";

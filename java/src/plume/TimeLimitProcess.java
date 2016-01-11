@@ -1,7 +1,13 @@
 package plume;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.apache.commons.io.IOUtils;
 
 /*>>>
@@ -58,7 +64,7 @@ public class TimeLimitProcess extends Process {
    * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
    **/
-  public TimeLimitProcess (Process p, long timeLimit) {
+  public TimeLimitProcess(Process p, long timeLimit) {
     this(p, timeLimit, false);
   }
 
@@ -74,7 +80,7 @@ public class TimeLimitProcess extends Process {
    * cached_stdout method.  This is necessary because when a Java process
    * is terminated, its standard output is no longer available.
    */
-  public TimeLimitProcess (Process p, long timeLimit, boolean cacheStdout) {
+  public TimeLimitProcess(Process p, long timeLimit, boolean cacheStdout) {
     this.p = p;
     timer = new Timer(true);
     this.timeLimit = timeLimit;
@@ -149,6 +155,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Gets the error stream connected to the error output of the subprocess.
+   * @return the error stream
    * @see Process#getErrorStream()
    */
   public InputStream getErrorStream() {
@@ -170,6 +177,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Gets an input stream connected to the output of the subprocess.
+   * @return the input stream
    * @see Process#getInputStream()
    */
   public InputStream getInputStream() {
@@ -195,6 +203,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Gets the output stream connected to the input of the subprocess.
+   * @return the output stream
    * @see Process#getOutputStream()
    */
   @SuppressWarnings("nullness") // non-null because we didn't redirect the output stream
@@ -204,6 +213,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * Causes the current thread to wait, if necessary, until the process represented by this Process object has terminated.
+   * @return the exit value of the subprocess
    * @see Process#waitFor()
    */
   public int waitFor() throws InterruptedException {
@@ -213,7 +223,7 @@ public class TimeLimitProcess extends Process {
   /**
    * @return true if the process if finished, false otherwise
    **/
-  public boolean finished () {
+  public boolean finished() {
     try {
       // Process.exitValue() throws an exception if the process is not
       // finished.

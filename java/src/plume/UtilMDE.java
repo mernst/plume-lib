@@ -3,13 +3,55 @@
 
 package plume;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import java.util.zip.*;
-import java.lang.reflect.*;
-// import Assert;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -20,7 +62,11 @@ import org.checkerframework.dataflow.qual.*;
 
 /** Utility functions that do not belong elsewhere in the plume package. */
 public final class UtilMDE {
-  private UtilMDE() { throw new Error("do not instantiate"); }
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private UtilMDE() {
+    throw new Error("do not instantiate");
+  }
 
   private static final String lineSep = System.getProperty("line.separator");
 
@@ -359,7 +405,7 @@ public final class UtilMDE {
    * @throws IOException if there is trouble writing the file
    **/
   public static BufferedWriter bufferedFileWriter(String filename) throws IOException {
-    return bufferedFileWriter (filename, false);
+    return bufferedFileWriter(filename, false);
   }
 
   /**
@@ -544,10 +590,10 @@ public final class UtilMDE {
           throw e;
         }
         @SuppressWarnings("signature") // checked below & exception is handled
-        /*@ClassGetName*/ String inner_name = className.substring (0, pos) + "$"
-          + className.substring (pos+1);
+        /*@ClassGetName*/ String inner_name = className.substring(0, pos) + "$"
+          + className.substring(pos+1);
         try {
-          return Class.forName (inner_name);
+          return Class.forName(inner_name);
         } catch (ClassNotFoundException ee) {
           throw e;
         }
@@ -613,7 +659,7 @@ public final class UtilMDE {
    * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
    */
   @Deprecated
-  public static String primitive_name_to_jvm (String primitive_name) {
+  public static String primitive_name_to_jvm(String primitive_name) {
     return primitiveTypeNameToFieldDescriptor(primitive_name);
   }
 
@@ -624,8 +670,8 @@ public final class UtilMDE {
    * @return name of the type, in field descriptor format
    * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
    */
-  public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor (String primitive_name) {
-    String result = primitiveClassesJvm.get (primitive_name);
+  public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(String primitive_name) {
+    String result = primitiveClassesJvm.get(primitive_name);
     if (result == null) {
       throw new IllegalArgumentException("Not the name of a primitive type: " + primitive_name);
     }
@@ -674,7 +720,7 @@ public final class UtilMDE {
     String comma_sep_args = arglist.substring(1, arglist.length()-1);
     StringTokenizer args_tokenizer
       = new StringTokenizer(comma_sep_args, ",", false);
-    for ( ; args_tokenizer.hasMoreTokens(); ) {
+    while (args_tokenizer.hasMoreTokens()) {
       @SuppressWarnings("signature") // substring
       /*@BinaryName*/ String arg = args_tokenizer.nextToken().trim();
       result += binaryNameToFieldDescriptor(arg);
@@ -756,8 +802,9 @@ public final class UtilMDE {
     String result = "(";
     int pos = 1;
     while (pos < arglist.length()-1) {
-      if (pos > 1)
+      if (pos > 1) {
         result += ", ";
+      }
       int nonarray_pos = pos;
       while (arglist.charAt(nonarray_pos) == '[') {
         nonarray_pos++;
@@ -796,7 +843,7 @@ public final class UtilMDE {
      * class Class, and also resolves (links) the class.
      * Delegates the real work to defineClass.
      * @see ClassLoader#defineClass(String,byte[],int,int)
-     * @param name The expected binary name of the class to define, or null if not known
+     * @param className The expected binary name of the class to define, or null if not known
      * @param pathname The file from which to load the class
      * @return The <tt>Class</tt> object that was created
      */
@@ -889,8 +936,9 @@ public final class UtilMDE {
   public static long count_lines(String filename) throws IOException {
     long count = 0;
     try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
-      while (reader.readLine() != null)
+      while (reader.readLine() != null) {
         count++;
+      }
     }
     return count;
   }
@@ -1056,8 +1104,8 @@ public final class UtilMDE {
   public static File createTempDir(String prefix, String suffix)
     throws IOException {
     String fs = File.separator;
-    String path = System.getProperty("java.io.tmpdir") + fs +
-      System.getProperty("user.name") + fs;
+    String path = System.getProperty("java.io.tmpdir") + fs
+      + System.getProperty("user.name") + fs;
     File pathFile = new File(path);
     if (! pathFile.isDirectory()) {
       if (! pathFile.mkdirs()) {
@@ -1119,34 +1167,37 @@ public final class UtilMDE {
     String suffix;
     public WildcardFilter(String filename) {
       int astloc = filename.indexOf("*");
-      if (astloc == -1)
+      if (astloc == -1) {
         throw new Error("No asterisk in wildcard argument: " + filename);
+      }
       prefix = filename.substring(0, astloc);
       suffix = filename.substring(astloc+1);
-      if (filename.indexOf("*") != -1)
+      if (filename.indexOf("*") != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
+      }
     }
     public boolean accept(File dir, String name) {
       return name.startsWith(prefix) && name.endsWith(suffix);
     }
   }
 
-  static final String userHome = System.getProperty ("user.home");
+  static final String userHome = System.getProperty("user.home");
 
   /**
    * Does tilde expansion on a file name (to the user's home directory).
    * @param name file whose name to expand
    * @return file with expanded file
    */
-  public static File expandFilename (File name) {
+  public static File expandFilename(File name) {
     String path = name.getPath();
-    String newname = expandFilename (path);
+    String newname = expandFilename(path);
     @SuppressWarnings("interning")
     boolean changed = (newname != path);
-    if (changed)
-      return new File (newname);
-    else
+    if (changed) {
+      return new File(newname);
+    } else {
       return name;
+    }
   }
 
   /**
@@ -1154,11 +1205,12 @@ public final class UtilMDE {
    * @param name filename to expand
    * @return expanded filename
    */
-  public static String expandFilename (String name) {
-    if (name.contains ("~"))
-      return (name.replace ("~", userHome));
-    else
+  public static String expandFilename(String name) {
+    if (name.contains("~")) {
+      return (name.replace("~", userHome));
+    } else {
       return name;
+    }
   }
 
 
@@ -1175,9 +1227,9 @@ public final class UtilMDE {
    * @param name file to quote
    * @return a string version of the name that can be used in Java source
    */
-  public static String java_source (File name) {
+  public static String java_source(File name) {
 
-    return name.getPath().replace ("\\", "\\\\");
+    return name.getPath().replace("\\", "\\\\");
   }
 
   ///
@@ -1242,7 +1294,7 @@ public final class UtilMDE {
       r.close();
       return contents.toString();
     } catch (Exception e) {
-      throw new Error ("Unexpected error in readerContents(" + r + ")", e);
+      throw new Error("Unexpected error in readerContents(" + r + ")", e);
     }
   }
 
@@ -1253,22 +1305,22 @@ public final class UtilMDE {
    * @param file the file to read
    * @return the entire contents of the reader, as a string
    */
-  public static String readFile (File file) {
+  public static String readFile(File file) {
 
     try {
-      BufferedReader reader = UtilMDE.bufferedFileReader (file);
+      BufferedReader reader = UtilMDE.bufferedFileReader(file);
       StringBuilder contents = new StringBuilder();
       String line = reader.readLine();
       while (line != null) {
-        contents.append (line);
+        contents.append(line);
         // Note that this converts line terminators!
-        contents.append (lineSep);
+        contents.append(lineSep);
         line = reader.readLine();
       }
       reader.close();
       return contents.toString();
     } catch (Exception e) {
-      throw new Error ("Unexpected error in readFile(" + file + ")", e);
+      throw new Error("Unexpected error in readFile(" + file + ")", e);
     }
   }
 
@@ -1279,14 +1331,14 @@ public final class UtilMDE {
    * @param file the file to write to
    * @param contents the text to put in the file
    */
-  public static void writeFile (File file, String contents) {
+  public static void writeFile(File file, String contents) {
 
     try {
-      FileWriter writer = new FileWriter (file);
-      writer.write (contents, 0, contents.length());
+      FileWriter writer = new FileWriter(file);
+      writer.write(contents, 0, contents.length());
       writer.close();
     } catch (Exception e) {
-      throw new Error ("Unexpected error in writeFile(" + file + ")", e);
+      throw new Error("Unexpected error in writeFile(" + file + ")", e);
     }
   }
 
@@ -1321,7 +1373,7 @@ public final class UtilMDE {
    * @param x value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(double x) {
+  public static int hash(double x) {
     return hash(Double.doubleToLongBits(x));
   }
 
@@ -1330,7 +1382,7 @@ public final class UtilMDE {
    * @param b value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(double a, double b) {
+  public static int hash(double a, double b) {
     double result = 17;
     result = result * 37 + a;
     result = result * 37 + b;
@@ -1343,7 +1395,7 @@ public final class UtilMDE {
    * @param c value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(double a, double b, double c) {
+  public static int hash(double a, double b, double c) {
     double result = 17;
     result = result * 37 + a;
     result = result * 37 + b;
@@ -1355,7 +1407,7 @@ public final class UtilMDE {
    * @param a value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(double /*@Nullable*/ [] a) {
+  public static int hash(double /*@Nullable*/ [] a) {
     double result = 17;
     if (a != null) {
       result = result * 37 + a.length;
@@ -1371,7 +1423,7 @@ public final class UtilMDE {
    * @param b value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(double /*@Nullable*/ [] a, double /*@Nullable*/ [] b) {
+  public static int hash(double /*@Nullable*/ [] a, double /*@Nullable*/ [] b) {
     return hash(hash(a), hash(b));
   }
 
@@ -1385,7 +1437,7 @@ public final class UtilMDE {
    * @param l value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(long l) {
+  public static int hash(long l) {
     // If possible, use the value itself.
     if (l >= Integer.MIN_VALUE && l <= Integer.MAX_VALUE) {
       return (int) l;
@@ -1404,7 +1456,7 @@ public final class UtilMDE {
    * @param b value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(long a, long b) {
+  public static int hash(long a, long b) {
     long result = 17;
     result = result * 37 + a;
     result = result * 37 + b;
@@ -1417,7 +1469,7 @@ public final class UtilMDE {
    * @param c value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(long a, long b, long c) {
+  public static int hash(long a, long b, long c) {
     long result = 17;
     result = result * 37 + a;
     result = result * 37 + b;
@@ -1429,7 +1481,7 @@ public final class UtilMDE {
    * @param a value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(long /*@Nullable*/ [] a) {
+  public static int hash(long /*@Nullable*/ [] a) {
     long result = 17;
     if (a != null) {
       result = result * 37 + a.length;
@@ -1445,7 +1497,7 @@ public final class UtilMDE {
    * @param b value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(long /*@Nullable*/ [] a, long /*@Nullable*/ [] b) {
+  public static int hash(long /*@Nullable*/ [] a, long /*@Nullable*/ [] b) {
     return hash(hash(a), hash(b));
   }
 
@@ -1453,7 +1505,7 @@ public final class UtilMDE {
    * @param a value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(/*@Nullable*/ String a) {
+  public static int hash(/*@Nullable*/ String a) {
     return (a == null) ? 0 : a.hashCode();
   }
 
@@ -1462,7 +1514,7 @@ public final class UtilMDE {
    * @param b value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(/*@Nullable*/ String a, /*@Nullable*/ String b) {
+  public static int hash(/*@Nullable*/ String a, /*@Nullable*/ String b) {
     long result = 17;
     result = result * 37 + hash(a);
     result = result * 37 + hash(b);
@@ -1475,7 +1527,7 @@ public final class UtilMDE {
    * @param c value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(/*@Nullable*/ String a, /*@Nullable*/ String b, /*@Nullable*/ String c) {
+  public static int hash(/*@Nullable*/ String a, /*@Nullable*/ String b, /*@Nullable*/ String c) {
     long result = 17;
     result = result * 37 + hash(a);
     result = result * 37 + hash(b);
@@ -1487,7 +1539,7 @@ public final class UtilMDE {
    * @param a value to be hashed
    * @return a hash of the arguments
    */
-  public static final int hash(/*@Nullable*/ String /*@Nullable*/ [] a) {
+  public static int hash(/*@Nullable*/ String /*@Nullable*/ [] a) {
     long result = 17;
     if (a != null) {
       result = result * 37 + a.length;
@@ -1509,18 +1561,32 @@ public final class UtilMDE {
   /** Converts an Enumeration into an Iterator. */
   public static final class EnumerationIterator<T> implements Iterator<T> {
     Enumeration<T> e;
-    public EnumerationIterator(Enumeration<T> e) { this.e = e; }
-    public boolean hasNext() { return e.hasMoreElements(); }
-    public T next() { return e.nextElement(); }
-    public void remove() { throw new UnsupportedOperationException(); }
+    public EnumerationIterator(Enumeration<T> e) {
+      this.e = e;
+    }
+    public boolean hasNext() {
+      return e.hasMoreElements();
+    }
+    public T next() {
+      return e.nextElement();
+    }
+    public void remove() {
+      throw new UnsupportedOperationException();
+    }
   }
 
   /** Converts an Iterator into an Enumeration. */
   public static final class IteratorEnumeration<T> implements Enumeration<T> {
     Iterator<T> itor;
-    public IteratorEnumeration(Iterator<T> itor) { this.itor = itor; }
-    public boolean hasMoreElements() { return itor.hasNext(); }
-    public T nextElement() { return itor.next(); }
+    public IteratorEnumeration(Iterator<T> itor) {
+      this.itor = itor;
+    }
+    public boolean hasMoreElements() {
+      return itor.hasNext();
+    }
+    public T nextElement() {
+      return itor.next();
+    }
   }
 
   // This must already be implemented someplace else.  Right??
@@ -1538,12 +1604,13 @@ public final class UtilMDE {
       return (itor1.hasNext() || itor2.hasNext());
     }
     public T next() {
-      if (itor1.hasNext())
+      if (itor1.hasNext()) {
         return itor1.next();
-      else if (itor2.hasNext())
+      } else if (itor2.hasNext()) {
         return itor2.next();
-      else
+      } else {
         throw new NoSuchElementException();
+      }
     }
     public void remove() {
       throw new UnsupportedOperationException();
@@ -1558,7 +1625,9 @@ public final class UtilMDE {
    **/
   public static final class MergedIterator<T> implements Iterator<T> {
     Iterator<Iterator<T>> itorOfItors;
-    public MergedIterator(Iterator<Iterator<T>> itorOfItors) { this.itorOfItors = itorOfItors; }
+    public MergedIterator(Iterator<Iterator<T>> itorOfItors) {
+      this.itorOfItors = itorOfItors;
+    }
 
     // an empty iterator to prime the pump
     Iterator<T> current = new ArrayList<T>().iterator();
@@ -1715,10 +1784,10 @@ public final class UtilMDE {
     // where n == num_elts:
     //   n n/2 n/3 n/4 n/5 ...
 
-    RandomSelector<T> rs = new RandomSelector<T> (num_elts, random);
+    RandomSelector<T> rs = new RandomSelector<T>(num_elts, random);
 
     while (itor.hasNext()) {
-      rs.accept (itor.next());
+      rs.accept(itor.next());
     }
     return rs.getValues();
 
@@ -1812,8 +1881,8 @@ public final class UtilMDE {
    * @return a sorted version of m.keySet()
    */
   public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m) {
-    ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K> (m.keySet());
-    Collections.sort (theKeys);
+    ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K>(m.keySet());
+    Collections.sort(theKeys);
     return theKeys;
   }
 
@@ -1825,8 +1894,8 @@ public final class UtilMDE {
    * @return a sorted version of m.keySet()
    */
   public static <K,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
-    ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K> (m.keySet());
-    Collections.sort (theKeys, comparator);
+    ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K>(m.keySet());
+    Collections.sort(theKeys, comparator);
     return theKeys;
   }
 
@@ -2105,15 +2174,16 @@ public final class UtilMDE {
         f.set(o, value);
         return;
       } catch (NoSuchFieldException e) {
-        if (c.getSuperclass() == Object.class) // Class is interned
+        if (c.getSuperclass() == Object.class) { // Class is interned
           throw e;
+        }
       } catch (IllegalAccessException e) {
         throw new Error("This can't happen: " + e);
       }
       c = c.getSuperclass();
       assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
-    throw new NoSuchFieldException (fieldName);
+    throw new NoSuchFieldException(fieldName);
   }
 
   // TODO: set the field back to private after is is accessed.
@@ -2139,14 +2209,15 @@ public final class UtilMDE {
         System.out.println("in getPrivateField, IllegalAccessException: " + e);
         throw new Error("This can't happen: " + e);
       } catch (NoSuchFieldException e) {
-        if (c.getSuperclass() == Object.class) // Class is interned
+        if (c.getSuperclass() == Object.class) { // Class is interned
           throw e;
+        }
         // nothing to do; will now examine superclass
       }
       c = c.getSuperclass();
       assert c != null : "@AssumeAssertion(nullness): c was not Object, so is not null now";
     }
-    throw new NoSuchFieldException (fieldName);
+    throw new NoSuchFieldException(fieldName);
   }
 
 
@@ -2224,7 +2295,9 @@ public final class UtilMDE {
    * @return target with all instances of oldStr replaced by newStr
    **/
   public static String replaceString(String target, String oldStr, String newStr) {
-    if (oldStr.equals("")) throw new IllegalArgumentException();
+    if (oldStr.equals("")) {
+      throw new IllegalArgumentException();
+    }
 
     StringBuffer result = new StringBuffer();
     int lastend = 0;
@@ -2297,7 +2370,7 @@ public final class UtilMDE {
    * @return an array of Strings, one for each line in the argument
    **/
   public static String[] splitLines(String s) {
-    return s.split ("\r\n?|\n\r?", -1);
+    return s.split("\r\n?|\n\r?", -1);
   }
 
   /**
@@ -2309,11 +2382,16 @@ public final class UtilMDE {
    * @return the concatenation of the string representations of the values, with the delimiter between
    **/
   public static String join(Object[] a, String delim) {
-    if (a.length == 0) return "";
-    if (a.length == 1) return String.valueOf(a[0]);
+    if (a.length == 0) {
+      return "";
+    }
+    if (a.length == 1) {
+      return String.valueOf(a[0]);
+    }
     StringBuffer sb = new StringBuffer(String.valueOf(a[0]));
-    for (int i=1; i<a.length; i++)
+    for (int i=1; i<a.length; i++) {
       sb.append(delim).append(a[i]);
+    }
     return sb.toString();
   }
 
@@ -2337,12 +2415,17 @@ public final class UtilMDE {
    * @return the concatenation of the string representations of the values, with the delimiter between
    **/
   public static String join(List<?> v, String delim) {
-    if (v.size() == 0) return "";
-    if (v.size() == 1) return Objects.toString(v.get(0));
+    if (v.size() == 0) {
+      return "";
+    }
+    if (v.size() == 1) {
+      return Objects.toString(v.get(0));
+    }
     // This should perhaps use an iterator rather than get(), for efficiency.
     StringBuffer sb = new StringBuffer(Objects.toString(v.get(0)));
-    for (int i=1; i<v.size(); i++)
+    for (int i=1; i<v.size(); i++) {
       sb.append(delim).append(v.get(i));
+    }
     return sb.toString();
   }
 
@@ -2414,8 +2497,9 @@ public final class UtilMDE {
         // Nothing to do: i gets incremented
       }
     }
-    if (sb.length() == 0)
+    if (sb.length() == 0) {
       return orig;
+    }
     sb.append(orig.substring(post_esc));
     return sb.toString();
   }
@@ -2480,13 +2564,15 @@ public final class UtilMDE {
       return new String(new char[] { c });
     } else if (c < 256) {
       String octal = Integer.toOctalString(c);
-      while (octal.length() < 3)
+      while (octal.length() < 3) {
         octal = '0' + octal;
+      }
       return "\\" + octal;
     } else {
       String hex = Integer.toHexString(c);
-      while (hex.length() < 4)
+      while (hex.length() < 4) {
         hex = "0" + hex;
+      }
       return "\\u" + hex;
     }
   }
@@ -2537,11 +2623,12 @@ public final class UtilMDE {
         int ii = this_esc+1;
         while (ii < orig.length()) {
           char ch = orig.charAt(ii++);
-          if ((ch < '0') || (ch > '8'))
+          if ((ch < '0') || (ch > '8')) {
             break;
-          octal_char = (char) ((octal_char * 8)+ Character.digit (ch, 8));
+          }
+          octal_char = (char) ((octal_char * 8)+ Character.digit(ch, 8));
         }
-        sb.append (octal_char);
+        sb.append(octal_char);
         post_esc = ii-1;
         break;
 
@@ -2554,8 +2641,9 @@ public final class UtilMDE {
       }
       this_esc = orig.indexOf('\\', post_esc);
     }
-    if (post_esc == 0)
+    if (post_esc == 0) {
       return orig;
+    }
     sb.append(orig.substring(post_esc));
     return sb.toString();
   }
@@ -2667,13 +2755,14 @@ public final class UtilMDE {
    * @return noun, if n==1; otherwise, pluralization of noun
    */
   public static String nplural(int n, String noun) {
-    if (n == 1)
+    if (n == 1) {
       return n + " " + noun;
-    else if (noun.endsWith("ch") || noun.endsWith("s") ||
-             noun.endsWith("sh") || noun.endsWith("x"))
+    } else if (noun.endsWith("ch") || noun.endsWith("s")
+               || noun.endsWith("sh") || noun.endsWith("x")) {
       return n + " " + noun + "es";
-    else
+    } else {
       return n + " " + noun + "s";
+    }
   }
 
 
@@ -2737,15 +2826,19 @@ public final class UtilMDE {
    * Same as built-in String comparison, but accept null arguments,
    * and place them at the beginning.
    */
-  public static class NullableStringComparator
-    implements Comparator<String>, Serializable
-  {
+  public static class NullableStringComparator implements Comparator<String>, Serializable {
     static final long serialVersionUID = 20150812L;
 
     /*@Pure*/ public int compare(String s1, String s2) {
-      if (s1 == null && s2 == null) return 0;
-      if (s1 == null && s2 != null) return 1;
-      if (s1 != null && s2 == null) return -1;
+      if (s1 == null && s2 == null) {
+        return 0;
+      }
+      if (s1 == null && s2 != null) {
+        return 1;
+      }
+      if (s1 != null && s2 == null) {
+        return -1;
+      }
       return s1.compareTo(s2);
     }
   }
@@ -2874,7 +2967,7 @@ public final class UtilMDE {
    * @param l a list to sort
    * @param c a sorted version of the list
    **/
-  public static <T> List<T> sortList (List<T> l, Comparator<? super T> c) {
+  public static <T> List<T> sortList(List<T> l, Comparator<? super T> c) {
     List<T> result = new ArrayList<T>(l);
     Collections.sort(result, c);
     return result;
@@ -2919,10 +3012,12 @@ public final class UtilMDE {
   /*@Pure*/ public static boolean deepEquals(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
-    if (sameObject)
+    if (sameObject) {
       return true;
-    if (o1 == null || o2 == null)
+    }
+    if (o1 == null || o2 == null) {
       return false;
+    }
 
     if (o1 instanceof boolean[] && o2 instanceof boolean[]) {
       return Arrays.equals((boolean[]) o1, (boolean[]) o2);
@@ -3029,24 +3124,26 @@ public final class UtilMDE {
    * @param objs list of elements to
    * @return list of lists of length dims, each of which combines elements from objs
    */
-  public static <T> List<List<T>> create_combinations (int dims, int start, List<T> objs) {
+  public static <T> List<List<T>> create_combinations(int dims, int start, List<T> objs) {
 
-    if (dims < 1) throw new IllegalArgumentException();
+    if (dims < 1) {
+      throw new IllegalArgumentException();
+    }
 
     List<List<T>> results = new ArrayList<List<T>>();
 
     for (int i = start; i < objs.size(); i++) {
       if (dims == 1) {
         List<T> simple = new ArrayList<T>();
-        simple.add (objs.get(i));
-        results.add (simple);
+        simple.add(objs.get(i));
+        results.add(simple);
       } else {
-        List<List<T>> combos = create_combinations (dims-1, i, objs);
+        List<List<T>> combos = create_combinations(dims-1, i, objs);
         for (List<T> lt : combos) {
           List<T> simple = new ArrayList<T>();
-          simple.add (objs.get(i));
-          simple.addAll (lt);
-          results.add (simple);
+          simple.add(objs.get(i));
+          simple.addAll(lt);
+          results.add(simple);
         }
       }
     }
@@ -3074,23 +3171,23 @@ public final class UtilMDE {
    * @param cnt maximum element value
    * @return list of lists of length arity, each of which combines integers from start to cnt
    */
-  public static ArrayList<ArrayList<Integer>> create_combinations (int arity, int start, int cnt) {
+  public static ArrayList<ArrayList<Integer>> create_combinations(int arity, int start, int cnt) {
 
     ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
 
     // Return a list with one zero length element if arity is zero
     if (arity == 0) {
-      results.add (new ArrayList<Integer>());
+      results.add(new ArrayList<Integer>());
       return (results);
     }
 
     for (int i = start; i <= cnt; i++) {
-      ArrayList<ArrayList<Integer>> combos = create_combinations (arity-1, i, cnt);
+      ArrayList<ArrayList<Integer>> combos = create_combinations(arity-1, i, cnt);
       for (ArrayList<Integer> li : combos) {
         ArrayList<Integer> simple = new ArrayList<Integer>();
-        simple.add (new Integer(i));
-        simple.addAll (li);
-        results.add (simple);
+        simple.add(new Integer(i));
+        simple.addAll(li);
+        results.add(simple);
       }
     }
 
@@ -3105,12 +3202,13 @@ public final class UtilMDE {
    * @param qualified_name the qualified name of a class
    * @return the simple unqualified name of the class
    **/
-  public static String unqualified_name (String qualified_name) {
+  public static String unqualified_name(String qualified_name) {
 
-    int offset = qualified_name.lastIndexOf ('.');
-    if (offset == -1)
+    int offset = qualified_name.lastIndexOf('.');
+    if (offset == -1) {
       return (qualified_name);
-    return (qualified_name.substring (offset+1));
+    }
+    return (qualified_name.substring(offset+1));
   }
 
   /**
@@ -3120,9 +3218,9 @@ public final class UtilMDE {
    * @param cls a class
    * @return the simple unqualified name of the class
    **/
-  public static String unqualified_name (Class<?> cls) {
+  public static String unqualified_name(Class<?> cls) {
 
-    return (unqualified_name (cls.getName()));
+    return (unqualified_name(cls.getName()));
   }
 
 
@@ -3136,7 +3234,7 @@ public final class UtilMDE {
    * @return an abbreviated string representation of the value
    */
   @Deprecated
-  public static String human_readable (long val) {
+  public static String human_readable(long val) {
     return abbreviateNumber(val);
   }
 
@@ -3149,14 +3247,14 @@ public final class UtilMDE {
    * @param val a numeric value
    * @return an abbreviated string representation of the value
    */
-  public static String abbreviateNumber (long val) {
+  public static String abbreviateNumber(long val) {
 
     double dval = (double) val;
     String mag = "";
 
-    if (val < 1000)
-      ;
-    else if (val < 1000000) {
+    if (val < 1000) {
+      // nothing to do
+    } else if (val < 1000000) {
       dval = val / 1000.0;
       mag = "K";
     } else if (val < 1000000000) {
@@ -3168,13 +3266,14 @@ public final class UtilMDE {
     }
 
     String precision = "0";
-    if (dval < 10)
+    if (dval < 10) {
       precision = "2";
-    else if (dval < 100)
+    } else if (dval < 100) {
       precision = "1";
+    }
 
     @SuppressWarnings("formatter") // format string computed from precision and mag
-    String result = String.format ("%,1." + precision + "f" + mag, dval);
+    String result = String.format("%,1." + precision + "f" + mag, dval);
     return result;
   }
 

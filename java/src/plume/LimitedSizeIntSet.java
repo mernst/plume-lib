@@ -20,9 +20,7 @@ import org.checkerframework.dataflow.qual.*;
 // Consider adding:
 //  * @deprecated Use LimitedSizeSet instead
 // @Deprecated
-public class LimitedSizeIntSet
-  implements Serializable, Cloneable
-{
+public class LimitedSizeIntSet implements Serializable, Cloneable {
   // We are Serializable, so we specify a version to allow changes to
   // method signatures without breaking serialization.  If you add or
   // remove fields, you should change this number to the current date.
@@ -30,12 +28,15 @@ public class LimitedSizeIntSet
 
   // public final int max_values;
 
-  // If null, then at least num_values distinct values have been seen.
-  // The size is not separately stored, because that would take extra space.
+  /**
+   * If null, then at least num_values distinct values have been seen.
+   * The size is not separately stored, because that would take extra space.
+   */
   protected int /*@Nullable*/ [] values;
-  // The number of active elements (equivalently, the first unused index).
+  /** The number of active elements (equivalently, the first unused index). */
   int num_values;
 
+  /** Create a new LimitedSizeIntSet that can hold max_values values. */
   public LimitedSizeIntSet(int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
@@ -44,8 +45,9 @@ public class LimitedSizeIntSet
   }
 
   public void add(int elt) {
-    if (values == null)
+    if (values == null) {
       return;
+    }
 
     if (contains(elt)) {
       return;
@@ -62,10 +64,12 @@ public class LimitedSizeIntSet
   public void addAll(LimitedSizeIntSet s) {
     @SuppressWarnings("interning") // optimization; not a subclass of Collection, though
     boolean sameObject = (this == s);
-    if (sameObject)
+    if (sameObject) {
       return;
-    if (repNulled())
+    }
+    if (repNulled()) {
       return;
+    }
     if (s.repNulled()) {
       int values_length = values.length;
       // We don't know whether the elements of this and the argument were
@@ -155,7 +159,7 @@ public class LimitedSizeIntSet
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
    * @return a LimitedSizeIntSet that merges the elements of slist
    **/
-  public static LimitedSizeIntSet merge (int max_values, List<LimitedSizeIntSet> slist) {
+  public static LimitedSizeIntSet merge(int max_values, List<LimitedSizeIntSet> slist) {
     LimitedSizeIntSet result = new LimitedSizeIntSet(max_values);
     for (LimitedSizeIntSet s : slist) {
       result.addAll(s);
@@ -164,8 +168,8 @@ public class LimitedSizeIntSet
   }
 
   /*@SideEffectFree*/ public String toString() {
-    return ("[size=" + size() + "; " +
-            ((values == null) ? "null" : ArraysMDE.toString(values))
+    return ("[size=" + size() + "; "
+            + ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");
   }
 

@@ -8,11 +8,19 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * Mutable pair class:
  * type-safely holds two objects of possibly-different types.
+ * @param <T1> the type of the first element of the pair
+ * @param <T2> the type of the second element of the pair
  **/
 public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Object> {
+  /** The first element of the pair. */
   public T1 a;
+  /** The second element of the pair. */
   public T2 b;
 
+  /** Make a new pair.
+   * @param a the first element of the pair
+   * @param b the second element of the pair
+   */
   public Pair(T1 a, T2 b) {
     this.a = a;
     this.b = b;
@@ -55,8 +63,8 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
   // But then the class would not be useful for mutable pairs.
   @Override
   /*@Pure*/ public int hashCode() {
-    return (((a == null) ? 0 : a.hashCode()) +
-            ((b == null) ? 0 : b.hashCode()));
+    return (((a == null) ? 0 : a.hashCode())
+            + ((b == null) ? 0 : b.hashCode()));
   }
 
 }

@@ -5,7 +5,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-//Can't "import java.util.*;" because of Date, etc.
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -74,7 +73,13 @@ import org.checkerframework.dataflow.qual.Pure;
  * <tt>[+]</tt> marked option can be specified multiple times
  * <!-- end options doc -->
  **/
-public class ICalAvailable {
+public final class ICalAvailable {
+
+  /** This class is a collection of methods; it does not represent anything. */
+  private ICalAvailable() {
+    throw new Error("do not instantiate");
+  }
+
 
   /// User options
 
@@ -139,7 +144,7 @@ public class ICalAvailable {
   @Option("enable debugging output")
   public static boolean debug = false;
 
-  /** The appointments (the times that are unavailable for a meeting) */
+  /** The appointments (the times that are unavailable for a meeting). */
   static List<Calendar> calendars = new ArrayList<Calendar>();
 
   static DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
@@ -151,8 +156,8 @@ public class ICalAvailable {
   @SuppressWarnings("deprecation") // for iCal4j's use of Date.{get,set}Minutes
   /*@EnsuresNonNull("tz1")*/
   static void processOptions(String[] args) {
-    Options options = new Options ("ICalAvailable [options]", ICalAvailable.class);
-    String[] remaining_args = options.parse_or_usage (args);
+    Options options = new Options("ICalAvailable [options]", ICalAvailable.class);
+    String[] remaining_args = options.parse_or_usage(args);
     if (remaining_args.length != 0) {
       System.err.println("Unrecognized arguments: " + Arrays.toString(remaining_args));
       System.exit(1);
@@ -400,6 +405,7 @@ public class ICalAvailable {
   /**
    * Creates a new DateTime with date taken from the first argument and
    * time taken from the second argument.
+   * @return the merged DateTime
    **/
   @SuppressWarnings("deprecation") // for iCal4j
   static DateTime mergeDateAndTime(DateTime date, DateTime time) {
@@ -485,18 +491,19 @@ public class ICalAvailable {
   }
 
   static SimpleDateFormat[] dateFormats
-    = { new SimpleDateFormat( "yyyy/MM/dd" ),
-        new SimpleDateFormat( "MM/dd/yyyy" ),
-        new SimpleDateFormat( "MM/dd/yy" ),
+    = { new SimpleDateFormat("yyyy/MM/dd"),
+        new SimpleDateFormat("MM/dd/yyyy"),
+        new SimpleDateFormat("MM/dd/yy"),
         // Bad idea:  sets year to 1970.  So require the year, at least for now.
-        // new SimpleDateFormat( "MM/dd" ),
+        // new SimpleDateFormat("MM/dd"),
   };
 
   /**
    * Parses a date when formatted in several common formats.
+   * @return a Date read from the given string
    * @see dateFormats
    **/
-  static java.util.Date parseDate( String strDate ) throws ParseException {
+  static java.util.Date parseDate(String strDate) throws ParseException {
     if (Pattern.matches("^[0-9][0-9]?/[0-9][0-9]?$", date)) {
       @SuppressWarnings("deprecation") // for iCal4j
       int year = new Date().getYear() + 1900;
@@ -505,9 +512,9 @@ public class ICalAvailable {
     for (DateFormat this_df : dateFormats) {
       this_df.setLenient(false);
       try {
-        java.util.Date result = this_df.parse( strDate );
+        java.util.Date result = this_df.parse(strDate);
         return result;
-      } catch ( ParseException e ) {
+      } catch (ParseException e) {
         // Try the next format in the list.
       }
     }

@@ -11,10 +11,11 @@ The correct way to build the system is to run 'make'.
    * @param y modulus
    * @return x % y, where the result is constrained to be positive
    */
-  public static final INT mod_positive(INT x, INT y) {
+  public static INT mod_positive(INT x, INT y) {
     INT result = x % y;
-    if (result < 0)
+    if (result < 0) {
       result += Math.abs(y);
+    }
     return result;
   }
 
@@ -28,16 +29,19 @@ The correct way to build the system is to run 'make'.
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m)
    **/
   public static INT /*@Nullable*/ [] modulus(INT[] nums) {
-    if (nums.length < 3)
+    if (nums.length < 3) {
       return null;
+    }
 
     INT modulus = Math.abs(gcd_differences(nums));
-    if ((modulus == 0) || (modulus == 1))
+    if ((modulus == 0) || (modulus == 1)) {
       return null;
+    }
 
     INT remainder = nums[0] % modulus;
-    if (remainder < 0)
+    if (remainder < 0) {
       remainder += modulus;
+    }
 
     return new INT[] { remainder, modulus };
   }
@@ -52,27 +56,33 @@ The correct way to build the system is to run 'make'.
    * @see #modulus(INT[])
    **/
   public static INT /*@Nullable*/ [] modulus_INT(Iterator<INTEGER> itor) {
-    if (!itor.hasNext())
+    if (!itor.hasNext()) {
       return null;
+    }
     INT avalue = itor.next().INTValue();
-    if (!itor.hasNext())
+    if (!itor.hasNext()) {
       return null;
+    }
     INT modulus = Math.abs(avalue - itor.next().INTValue());
-    if (modulus == 1)
+    if (modulus == 1) {
       return null;
+    }
     int count = 2;
     while (itor.hasNext()) {
       INT i = itor.next().INTValue();
-      if (i == avalue)
+      if (i == avalue) {
         continue;
+      }
       modulus = MathMDE.gcd(modulus, Math.abs(avalue - i));
       count++;
-      if (modulus == 1)
+      if (modulus == 1) {
         return null;
       }
-    if (count < 3)
+      }
+    if (count < 3) {
       return null;
-    return new INT[] { MathMDE.mod_positive(avalue, modulus), modulus } ;
+    }
+    return new INT[] { MathMDE.mod_positive(avalue, modulus), modulus };
   }
 
 
@@ -110,21 +120,26 @@ The correct way to build the system is to run 'make'.
       last_nonstrict = nums[last_index];
       last_index--;
     }
-    if (last_index - first_index < 2)
+    if (last_index - first_index < 2) {
       return null;
+    }
 
     INT modulus = nums[first_index+1] - nums[first_index];
-    if (modulus == 1)
+    if (modulus == 1) {
       return null;
-    for (int i=first_index+2; i<=last_index; i++)
-      if (nums[i] - nums[i-1] != modulus)
+    }
+    for (int i=first_index+2; i<=last_index; i++) {
+      if (nums[i] - nums[i-1] != modulus) {
         return null;
+      }
+    }
 
     INT r = mod_positive(nums[first_index], modulus);
     if (nonstrict_ends) {
       if ((r != mod_positive(first_nonstrict, modulus))
-          || (r != mod_positive(last_nonstrict, modulus)))
+          || (r != mod_positive(last_nonstrict, modulus))) {
         return null;
+      }
     }
 
     return new INT[] { r, modulus };
@@ -143,8 +158,9 @@ The correct way to build the system is to run 'make'.
    * @see #modulus_strict(int[], boolean)
    **/
   public static INT /*@Nullable*/ [] modulus_strict_INT(Iterator<INTEGER> itor, boolean nonstrict_ends) {
-    if (!itor.hasNext())
+    if (!itor.hasNext()) {
       return null;
+    }
 
     INT first_nonstrict = 0;    // arbitrary initial value
     INT last_nonstrict = 0;     // arbitrary initial value
@@ -153,12 +169,14 @@ The correct way to build the system is to run 'make'.
     }
 
     INT prev = itor.next().INTValue();
-    if (!itor.hasNext())
+    if (!itor.hasNext()) {
       return null;
+    }
     INT next = itor.next().INTValue();
     INT modulus = next-prev;
-    if (modulus == 1)
+    if (modulus == 1) {
       return null;
+    }
     int count = 2;
     while (itor.hasNext()) {
       prev = next;
@@ -168,21 +186,24 @@ The correct way to build the system is to run 'make'.
         break;
       }
 
-      if (next - prev != modulus)
+      if (next - prev != modulus) {
         return null;
+      }
       count++;
     }
-    if (count < 3)
+    if (count < 3) {
       return null;
+    }
 
     INT r = MathMDE.mod_positive(next, modulus);
     if (nonstrict_ends) {
       if ((r != mod_positive(first_nonstrict, modulus))
-          || (r != mod_positive(last_nonstrict, modulus)))
+          || (r != mod_positive(last_nonstrict, modulus))) {
         return null;
+      }
     }
 
-    return new INT[] { r, modulus } ;
+    return new INT[] { r, modulus };
   }
 
 

@@ -1,6 +1,8 @@
 package plume;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
@@ -27,6 +29,8 @@ import org.checkerframework.checker.nullness.qual.*;
  *
  * In some cases this is just the right abstraction.  But in some cases
  * it's appropriate to use set intersection/difference instead.
+ *
+ * @param <T> the element type of the component iterator; this OrderedPairIterator has elements of type Pair&lt;T,T&gt;
  */
 // T need not extend Comparable<T>, because a comparator can be passed in.
 public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullable*/ T,/*@Nullable*/ T>> {
@@ -62,7 +66,9 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
   //   this((new TreeSet(s1)).iterator(), (new TreeSet(s2)).iterator());
   // }
   @Override
-  public boolean hasNext() { return ((next1 != null) || (next2 != null)); }
+  public boolean hasNext() {
+    return ((next1 != null) || (next2 != null));
+  }
   /** Return an element of the first iterator, paired with null. */
   private Pair</*@Nullable*/ T,/*@Nullable*/ T> return1() {
     Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, (/*@Nullable*/ T)null);
@@ -117,15 +123,18 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
             throw new RuntimeException("this can't happen " + next1 + " " + next2);
           }
         }
-        if (comparison < 0)
+        if (comparison < 0) {
           return return1();
-        else if (comparison > 0)
+        } else if (comparison > 0) {
           return return2();
-        else
+        } else {
           return returnboth();
+        }
       }
     }
   }
   @Override
-  public void remove() { throw new UnsupportedOperationException(); }
+  public void remove() {
+    throw new UnsupportedOperationException();
+  }
 }
