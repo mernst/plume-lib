@@ -52,6 +52,7 @@ public @interface Option {
    * aliases in {@link plume.Options}.  If there is only a single,
    * one-character alias, it can be put at the beginning of the value field
    * without the need for an aliases field.
+   * @return aliases for this option
    */
   String[] aliases() default {};
 
@@ -59,6 +60,7 @@ public @interface Option {
    * Whether not to hide default values.
    * For information about this parameter, see the section on hiding default
    * values in {@link plume.OptionsDoclet}.
+   * @return whether not to hide default values
    */
   boolean noDocDefault() default false;
 }
