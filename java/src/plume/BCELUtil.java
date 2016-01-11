@@ -5,29 +5,29 @@ import java.io.PrintStream;
 import java.util.Formatter;
 import java.util.Iterator;
 
-import org.apache.bcel.Constants;
-import org.apache.bcel.classfile.Attribute;
-import org.apache.bcel.classfile.Code;
-import org.apache.bcel.classfile.Constant;
-import org.apache.bcel.classfile.ConstantClass;
-import org.apache.bcel.classfile.ConstantPool;
-import org.apache.bcel.classfile.ConstantUtf8;
-import org.apache.bcel.classfile.Field;
-import org.apache.bcel.classfile.Method;
-import org.apache.bcel.classfile.JavaClass;
-import org.apache.bcel.generic.ClassGen;
-import org.apache.bcel.generic.CodeExceptionGen;
-import org.apache.bcel.generic.ConstantPoolGen;
-import org.apache.bcel.generic.InstructionHandle;
-import org.apache.bcel.generic.InstructionList;
-import org.apache.bcel.generic.InstructionTargeter;
-import org.apache.bcel.generic.LineNumberGen;
-import org.apache.bcel.generic.LocalVariableGen;
-import org.apache.bcel.generic.MethodGen;
-import org.apache.bcel.generic.ObjectType;
-import org.apache.bcel.generic.ArrayType;
-import org.apache.bcel.generic.Type;
-import org.apache.bcel.generic.RETURN;
+import org.apache.commons.bcel6.Const;
+import org.apache.commons.bcel6.classfile.Attribute;
+import org.apache.commons.bcel6.classfile.Code;
+import org.apache.commons.bcel6.classfile.Constant;
+import org.apache.commons.bcel6.classfile.ConstantClass;
+import org.apache.commons.bcel6.classfile.ConstantPool;
+import org.apache.commons.bcel6.classfile.ConstantUtf8;
+import org.apache.commons.bcel6.classfile.Field;
+import org.apache.commons.bcel6.classfile.Method;
+import org.apache.commons.bcel6.classfile.JavaClass;
+import org.apache.commons.bcel6.generic.ClassGen;
+import org.apache.commons.bcel6.generic.CodeExceptionGen;
+import org.apache.commons.bcel6.generic.ConstantPoolGen;
+import org.apache.commons.bcel6.generic.InstructionHandle;
+import org.apache.commons.bcel6.generic.InstructionList;
+import org.apache.commons.bcel6.generic.InstructionTargeter;
+import org.apache.commons.bcel6.generic.LineNumberGen;
+import org.apache.commons.bcel6.generic.LocalVariableGen;
+import org.apache.commons.bcel6.generic.MethodGen;
+import org.apache.commons.bcel6.generic.ObjectType;
+import org.apache.commons.bcel6.generic.ArrayType;
+import org.apache.commons.bcel6.generic.Type;
+import org.apache.commons.bcel6.generic.RETURN;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -89,13 +89,13 @@ public final class BCELUtil {
     int flags = m.getAccessFlags();
 
     StringBuffer buf = new StringBuffer();
-    for (int i = 0, pow = 1; i <= Constants.MAX_ACC_FLAG; i++) {
+    for (int i = 0, pow = 1; i <= Const.MAX_ACC_FLAG; i++) {
       if ((flags & pow) != 0) {
         if (buf.length() > 0) {
           buf.append(" ");
         }
-        if (i < Constants.ACCESS_NAMES.length) {
-          buf.append(Constants.ACCESS_NAMES[i]);
+        if (i < Const.ACCESS_NAMES_LENGTH) {
+          buf.append(Const.getAccessName(i));
         } else {
           buf.append(String.format("ACC_BIT %x", pow));
         }
