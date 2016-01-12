@@ -33,7 +33,7 @@ which might overpower your browser):
 4. Ensure that the main documentation at index.html in the gh-pages branch
 documents any new files.  To find new files, do something like
 
-    git diff --name-status v1.0.6 | grep '^A'
+    git diff --name-status v1.0.7 | grep '^A'
 
 5. Update changelog.txt.  To help writing the text, run a command such as:
 
@@ -41,11 +41,11 @@ documents any new files.  To find new files, do something like
 
 to view the changes since the last release, or something like
 
-    git diff v1.0.5..HEAD
+    git diff v1.0.7..HEAD
 
 to see the changes.
 
-6. Push the changes in your copy of the plume-lib repository.
+6. Commit and push the changes in your copy of the plume-lib repository.
 
     git push
 
@@ -70,8 +70,8 @@ them manually.
 9. Update the web version of the Javadoc.  On a machine connected to the UW
 CSE file system:
 
-    cd $pl/java
-    hg fetch
+    cd plume-lib/java
+    git pull
     make javadoc-publish
 
 This step can be done even without making a new release.
