@@ -67,7 +67,21 @@ username and password.
 8. Check that the artifacts were successfully uploaded to GitHub, or upload
 them manually.
 
-9. Update the web version of the Javadoc.  On a machine connected to the UW
+9. Push the new Git tag created by the script to the repository:
+
+    git push --tags
+
+10. Make a new release on GitHub.
+
+The exact steps are displayed at the end of the make-plume-release script. They
+are repeated below, but you must replace x.y.z with the correct version number.
+* browse to https://github.com/mernst/plume-lib/releases/new
+* Name is: plume-lib version x.y.z
+* description from changelog, with line breaks fixed
+* attach plume-lib-x.y.z.tar.gz
+* set tag to vx.y.z
+
+11. Update the web version of the Javadoc.  On a machine connected to the UW
 CSE file system:
 
     cd plume-lib/java
@@ -76,6 +90,3 @@ CSE file system:
 
 This step can be done even without making a new release.
 
-10. Push the new Git tag created by the script to the repository:
-
-    git push --tags
