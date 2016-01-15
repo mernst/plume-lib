@@ -36,7 +36,7 @@ Removed deprecated classes and methods:
   UtilMDE.human_readable(long)
 
 plume-lib 1.0.8, released January 12, 2016
-We have updated plume-lib to include a newer version of BCEL.
+Plume-lib includes a newer version of BCEL.
 If you receive an error such as the following:
     "BCEL must be in the classpath.  Normally it is found in daikon.jar."
 Then the problem is most likely that your classpath contains a previous
