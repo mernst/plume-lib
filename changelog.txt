@@ -3,13 +3,44 @@ However, the recommended way to use the latest version of plume-lib is
 by cloning its repository; run:
   git clone https://github.com/mernst/plume-lib.git
 
+plume-lib 1.0.9, released ??
+Removed deprecated classes and methods:
+  Assert
+  BCELUtil.type_to_classname(Type)
+  BCELUtil.type_to_classgetname(Type)
+  EntryReader.get_filename()
+  EntryReader.get_line_number()
+  Fmt
+  MultiReader
+  Options.ignore_options_after_arg(boolean)
+  Options.parse_and_usage(String[])
+  Options.parse_and_usage(String)
+  SimpleLog.exdent(String, Object...)
+  SimpleLog.start_time()
+  UtilMDE.BufferedFileReader(String)
+  UtilMDE.BufferedFileReader(String, boolean)
+  UtilMDE.BufferedFileReader(File)
+  UtilMDE.LineNumberFileReader(String)
+  UtilMDE.LineNumberFileReader(File)
+  UtilMDE.classnameToJvm(String)
+  UtilMDE.primitive_name_to_jvm(String)
+  UtilMDE.classnameFromJvm(String)
+  UtilMDE.loadClassFromFile(String, String)
+  UtilMDE.setDefault(Properties, String, String)
+  UtilMDE.patternQuote(String)
+  UtilMDE.isRegex(String)
+  UtilMDE.regexError(String)
+  UtilMDE.asRegex(String)
+  UtilMDE.joinLines(List<String>, String)
+  UtilMDE.backTrace()
+  UtilMDE.human_readable(long)
+
 plume-lib 1.0.8, released January 12, 2016
 We have updated plume-lib to include a newer version of BCEL.
 If you receive an error such as the following:
     "BCEL must be in the classpath.  Normally it is found in daikon.jar."
 Then the problem is most likely that your classpath contains a previous
 version of daikon.jar or plume.jar.
-
 
 plume-lib 1.0.7, released January 1, 2016
 New program: trigger-travis.sh.  Trigger a new Travis-CI job. This is

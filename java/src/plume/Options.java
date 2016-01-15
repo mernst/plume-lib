@@ -798,14 +798,6 @@ public class Options {
     parse_options_after_arg = val;
   }
 
-  /** @deprecated Use {@link #parse_options_after_arg(boolean)}.
-   * @param val whether to ignore arguments after a non-option command-line argument
-   */
-  @Deprecated
-  public void ignore_options_after_arg(boolean val) {
-    parse_options_after_arg = !val;
-  }
-
   /**
    * If true, long options (those derived from field names) will be parsed with
    * a single dash prefix as in -longOption.  The default is false and long
@@ -1026,24 +1018,6 @@ public class Options {
       // throw new Error ("usage error: ", ae);
     }
     return (non_options);
-  }
-
-  /** @deprecated Use {@link #parse_or_usage(String[])}.
-   * @param args the command line to parse
-   * @return all non-option arguments
-   */
-  @Deprecated
-  public String[] parse_and_usage(String[] args) {
-    return parse_or_usage(args);
-  }
-
-  /** @deprecated Use {@link #parse_or_usage(String)}.
-   * @param args the command line to parse
-   * @return all non-option arguments
-   */
-  @Deprecated
-  public String[] parse_and_usage(String args) {
-    return parse_or_usage(args);
   }
 
 

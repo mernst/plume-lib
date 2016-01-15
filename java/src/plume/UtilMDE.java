@@ -458,58 +458,6 @@ public final class UtilMDE {
   }
 
 
-  /** @deprecated use bufferedFileReader (note lowercase first letter)
-   * @param filename the possibly-compressed file to read
-   * @return a BufferedReader for filename
-   * @throws FileNotFoundException if the file cannot be found
-   * @throws IOException if there is trouble reading the file
-   */
-  @Deprecated // since June 2005
-  public static BufferedReader BufferedFileReader(String filename) throws FileNotFoundException, IOException {
-    return bufferedFileReader(filename);
-  }
-  /** @deprecated use lineNumberFileReader (note lowercase first letter)
-   * @param filename the possibly-compressed file to read
-   * @return a BufferedReader for filename
-   * @throws FileNotFoundException if the file cannot be found
-   * @throws IOException if there is trouble reading the file
-   */
-  @Deprecated // since June 2005
-  public static LineNumberReader LineNumberFileReader(String filename) throws FileNotFoundException, IOException {
-    return lineNumberFileReader(filename);
-  }
-  /** @deprecated use lineNumberFileReader (note lowercase first letter)
-   * @param file the possibly-compressed file to read
-   * @return a BufferedReader for file
-   * @throws FileNotFoundException if the file cannot be found
-   * @throws IOException if there is trouble reading the file
-   */
-  @Deprecated // since June 2005
-  public static LineNumberReader LineNumberFileReader(File file) throws FileNotFoundException, IOException {
-    return lineNumberFileReader(file);
-  }
-  /** @deprecated use bufferedFileWriter (note lowercase first letter)
-   * @param filename the possibly-compressed file to read
-   * @return a BufferedReader for filename
-   * @throws IOException if there is trouble reading the file
-   */
-  @Deprecated // since June 2005
-  public static BufferedWriter BufferedFileWriter(String filename) throws IOException {
-    return bufferedFileWriter(filename);
-  }
-  /** @deprecated use bufferedFileWriter (note lowercase first letter)
-   * @param filename the possibly-compressed file to read
-   * @param append if true, the resulting BufferedOutputStream appends to the end
-   * of the file instead of the beginning.
-   * @return a BufferedReader for filename
-   * @throws IOException if there is trouble reading the file
-   */
-  @Deprecated // since June 2005
-  public static BufferedWriter BufferedFileWriter(String filename, boolean append) throws IOException {
-    return bufferedFileWriter(filename, append);
-  }
-
-
   ///////////////////////////////////////////////////////////////////////////
   /// Class
   ///
@@ -614,18 +562,6 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a binary class name to a field descriptor.
-   * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;".
-   * @deprecated use binaryNameToFieldDescriptor
-   * @param classname name of the class, in binary class name format
-   * @return name of the class, in field descriptor format
-   **/
-  @Deprecated
-  public static String classnameToJvm(/*@BinaryName*/ String classname) {
-    return binaryNameToFieldDescriptor(classname);
-  }
-
-  /**
    * Convert a binary name to a field descriptor.
    * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;"
    * or "int" to "I".
@@ -648,19 +584,6 @@ public final class UtilMDE {
       result = "[" + result;
     }
     return result.replace('.', '/');
-  }
-
-  /**
-   * Convert a primitive java type name (e.g., "int", "double", etc.) to
-   * a field descriptor (e.g., "I", "D", etc.).
-   * @deprecated use primitiveTypeNameToFieldDescriptor
-   * @param primitive_name name of the type, in Java format
-   * @return name of the type, in field descriptor format
-   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
-   */
-  @Deprecated
-  public static String primitive_name_to_jvm(String primitive_name) {
-    return primitiveTypeNameToFieldDescriptor(primitive_name);
   }
 
   /**
@@ -740,19 +663,6 @@ public final class UtilMDE {
     primitiveClassesFromJvm.put("I", "int");
     primitiveClassesFromJvm.put("J", "long");
     primitiveClassesFromJvm.put("S", "short");
-  }
-
-  /**
-   * Convert a classname from JVML format to Java format.
-   * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]"
-   * or "I" to "int".
-   * @deprecated use fieldDescriptorToBinaryName
-   * @param classname name of the type, in JVML format
-   * @return name of the type, in Java format
-   **/
-  @Deprecated
-  public static /*@BinaryName*/ String classnameFromJvm(String classname) {
-    return fieldDescriptorToBinaryName(classname);
   }
 
   // does not convert "V" to "void".  Should it?
@@ -880,21 +790,6 @@ public final class UtilMDE {
    **/
   // Also throws UnsupportedClassVersionError and some other exceptions.
   public static Class<?> defineClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
-    return thePromiscuousLoader.defineClassFromFile(className, pathname);
-  }
-
-  /**
-   * Deprecated.  Use {@link #defineClassFromFile(String,String)} instead.
-   * @deprecated use {@link #defineClassFromFile(String,String)}.
-   * @param className the name of the class to define, or null if not known
-   * @param pathname the pathname of a .class file
-   * @return a Java Object corresponding to the Class defined in the .class file
-   * @throws FileNotFoundException if the file cannot be found
-   * @throws IOException if there is trouble reading the file
-   **/
-  // Also throws UnsupportedClassVersionError and some other exceptions.
-  @Deprecated
-  public static Class<?> loadClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
     return thePromiscuousLoader.defineClassFromFile(className, pathname);
   }
 
@@ -2056,25 +1951,6 @@ public final class UtilMDE {
 
   /**
    * Set the property only if it was not previously set.
-   * @deprecated use setDefaultMaybe
-   * @see Properties#getProperty
-   * @see Properties#setProperty
-   * @param p Properties object in which to look up the property
-   * @param key name of the property to look up
-   * @param value value to set the property to, if it is not already set
-   * @return the previous value of the property
-   **/
-  @Deprecated
-  public static /*@Nullable*/ String setDefault(Properties p, String key, String value) {
-    String currentValue = p.getProperty(key);
-    if (currentValue == null) {
-      p.setProperty(key, value);
-    }
-    return currentValue;
-  }
-
-  /**
-   * Set the property only if it was not previously set.
    * @see Properties#getProperty
    * @see Properties#setProperty
    * @param p Properties object in which to look up the property
@@ -2095,53 +1971,7 @@ public final class UtilMDE {
   /// Regexp (regular expression)
   ///
 
-  /**
-   * @deprecated Use Pattern.quote instead
-   * @see Pattern#quote(String)
-   * @param s a string to be quoted as a regular expression
-   * @return a regular expression that matches s
-   */
-  @Deprecated
-  /*@Pure*/
-  public static /*@Regex*/ String patternQuote(String s) {
-    return Pattern.quote(s);
-  }
-
-  /**
-   * @deprecated Use RegexUtil.isRegex instead
-   * @see RegexUtil#isRegex(String)
-   * @param s a string to test for being a regular expression
-   * @return true iff s is a regular expression
-   */
-  @Deprecated
-  /*@Pure*/ public static boolean isRegex(String s) {
-    return RegexUtil.isRegex(s);
-  }
-
-  /**
-   * @deprecated Use RegexUtil.regexError instead
-   * @see RegexUtil#regexError(String)
-   * @param s a string to test for being a regular expression
-   * @return an error message explaining why s is not a regular expression, or null
-   */
-  @Deprecated
-  /*@SideEffectFree*/
-  public static /*@Nullable*/ String regexError(String s) {
-    return RegexUtil.regexError(s);
-  }
-
-  /**
-   * @deprecated Use RegexUtil.asRegex instead
-   * @see RegexUtil#asRegex(String)
-   * @param s a string to test for being a regular expression
-   * @return s if it is a regular expression
-   * @throws Error if s is not a regular expression
-   */
-  @Deprecated
-  /*@SideEffectFree*/
-  public static /*@Regex*/ String asRegex(String s) {
-    return RegexUtil.asRegex(s);
-  }
+  // See RegexUtil class.
 
 
   ///////////////////////////////////////////////////////////////////////////
@@ -2427,20 +2257,6 @@ public final class UtilMDE {
       sb.append(delim).append(v.get(i));
     }
     return sb.toString();
-  }
-
-  /**
-   * Concatenate the string representations of the objects, placing the
-   * system-specific line separator between them.
-   * @deprecated use single-argument version
-   * @see java.util.AbstractCollection#toString()
-   * @param v list of values to concatenate
-   * @param delim ignore
-   * @return the concatenation of the string representations of the values each on its own line
-   **/
-  @Deprecated
-  public static String joinLines(List<String> v, String delim) {
-    return join(v, lineSep);
   }
 
   /**
@@ -2936,24 +2752,6 @@ public final class UtilMDE {
     return result;
   }
 
-  // Deprecated as of 2/1/2004.
-  /**
-   * @deprecated use "backtrace(new Throwable())" instead, to avoid
-   * spurious "at plume.UtilMDE.backTrace(UtilMDE.java:1491)" in output.
-   * @see #backTrace(Throwable)
-   * @return  a String representation of the current backtrace
-   **/
-  @Deprecated
-  public static String backTrace() {
-    StringWriter sw = new StringWriter();
-    PrintWriter pw = new PrintWriter(sw);
-    new Throwable().printStackTrace(pw);
-    pw.close();
-    String result = sw.toString();
-    // TODO: should remove "at plume.UtilMDE.backTrace(UtilMDE.java:1491)"
-    return result;
-  }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Collections
@@ -3221,21 +3019,6 @@ public final class UtilMDE {
   public static String unqualified_name(Class<?> cls) {
 
     return (unqualified_name(cls.getName()));
-  }
-
-
-  /**
-   * Convert a number into an abbreviation such as "5.00K" for 5000 or
-   * "65.0M" for 65000000.  K stands for 1000, not 1024; M stands for
-   * 1000000, not 1048576, etc.  There are always exactly 3 decimal digits
-   * of precision in the result (counting both sides of the decimal point).
-   * @deprecated Use {@link #abbreviateNumber(long)}
-   * @param val a numeric value
-   * @return an abbreviated string representation of the value
-   */
-  @Deprecated
-  public static String human_readable(long val) {
-    return abbreviateNumber(val);
   }
 
 

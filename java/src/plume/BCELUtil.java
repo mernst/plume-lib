@@ -527,17 +527,6 @@ public final class BCELUtil {
   }
 
   /**
-   * Return the Java classname that corresponds to type.
-   * @param type the type
-   * @return the Java classname that corresponds to type
-   * @deprecated use {@link #type_to_classgetname(Type)}
-   */
-  @java.lang.Deprecated
-  public static /*@ClassGetName*/ String type_to_classname(Type type) {
-    return type_to_classgetname(type);
-  }
-
-  /**
    * Returns the Java class name, in the format of {@link Class#getName()},
    * that corresponds to type.
    * @param type the type
@@ -555,7 +544,7 @@ public final class BCELUtil {
    */
   public static Class<?> type_to_class(Type type) {
 
-    String classname = type_to_classname(type);
+    String classname = type_to_classgetname(type);
     try {
       Class<?> c = UtilMDE.classForName(classname);
       return c;

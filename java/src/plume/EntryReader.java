@@ -594,8 +594,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
     StringBuilder body = new StringBuilder(10000);
     Entry entry = null;
-    String filename = get_filename();
-    long line_number = get_line_number();
+    String filename = getFileName();
+    long line_number = getLineNumber();
 
     // If first line matches entry_start_re, this is a long entry.
     /*@Regex(1)*/ Matcher entry_match = null;
@@ -621,7 +621,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       while ((line != null)
              && !entry_match.find()
              && !end_entry_match.find()
-             && filename.equals(get_filename())) {
+             && filename.equals(getFileName())) {
         body.append(line);
         body.append(lineSep);
         line = readLine();
@@ -635,7 +635,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       // If this entry was terminated by the start of the next one,
       // put that line back
       if ((line != null) && (entry_match.find(0)
-                             || !filename.equals(get_filename()))) {
+                             || !filename.equals(getFileName()))) {
         putback(line);
       }
 
@@ -648,7 +648,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
       // Read until we find another blank line
       while ((line != null) && (line.trim().length() != 0)
-             && filename.equals(get_filename())) {
+             && filename.equals(getFileName())) {
         body.append(line);
         body.append(lineSep);
         line = readLine();
@@ -656,7 +656,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
       // If this entry was terminated by the start of a new input file
       // put that line back
-      if ((line != null) && !filename.equals(get_filename())) {
+      if ((line != null) && !filename.equals(getFileName())) {
         putback(line);
       }
 
@@ -695,17 +695,6 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * @deprecated
-   * @return the current filename
-   * @see #getFileName
-   */
-  @Deprecated
-  public String get_filename() {
-    return getFileName();
-  }
-
-
-  /**
    * Returns the current filename.
    * @return the current filename
    */
@@ -715,16 +704,6 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       throw new Error("Past end of input");
     }
     return ri.filename;
-  }
-
-  /**
-   * @deprecated
-   * @return the current line number
-   * @see #getLineNumber
-   */
-  @Deprecated
-  public long get_line_number() {
-    return getLineNumber();
   }
 
   /**
@@ -849,8 +828,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
     String line = reader.readLine();
     while (line != null) {
-      System.out.printf("%s: %d: %s%n", reader.get_filename(),
-                         reader.get_line_number(), line);
+      System.out.printf("%s: %d: %s%n", reader.getFileName(),
+                         reader.getLineNumber(), line);
       line = reader.readLine();
     }
   }

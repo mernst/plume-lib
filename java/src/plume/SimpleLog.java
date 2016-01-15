@@ -192,23 +192,6 @@ public final class SimpleLog {
     }
   }
 
-  /**
-   * Extents and <b>then</b> prints.  This is confusing.
-   * @deprecated Use separate calls to {@link #exdent()} and
-   * {@link #log(String, Object...)}.
-   * @param format format string for message
-   * @param args values to be substituted into format
-   */
-  @Deprecated
-  /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
-  public void exdent(String format, /*@Nullable*/ Object... args) {
-    if (enabled) {
-      exdent();
-      log(format, args);
-    }
-  }
-
   /** Prints the time and then exdents.
    * @param format format string for message
    * @param args values to be substituted into format
@@ -227,15 +210,6 @@ public final class SimpleLog {
   ///////////////////////////////////////////////////////////////////////////
   /// Timing
   ///
-
-  /**
-   * This overwrites the current start time; it does not push a new one!!
-   * @deprecated Use {@link #reset_start_time()}.
-   */
-  @Deprecated
-  public void start_time() {
-    reset_start_time();
-  }
 
   /** This overwrites the current start time; it does not push a new one!! */
   public void reset_start_time() {
