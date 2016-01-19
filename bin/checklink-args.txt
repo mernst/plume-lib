@@ -95,6 +95,7 @@
 --suppress-broken 405:http://www.edwardxwu.com/
 --suppress-broken 405:http://www.kivancmuslu.com/
 --suppress-broken 405:http://www.verigames.com/login/google	
+--suppress-broken 405:https://www.linkedin.com/in/ittaibalaban
 --suppress-broken 406:http://kevinjsullivan.org/
 --suppress-broken 406:http://spinroot.com/spin/Workshops/ws03/GroceVisser.pdf
 --suppress-broken 406:http://www.artscrush.org/
