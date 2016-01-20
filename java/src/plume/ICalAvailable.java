@@ -57,18 +57,25 @@ import org.checkerframework.dataflow.qual.Pure;
  * The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
- *   <li id="option:date"><b>--date=</b><i>string</i>. first date to summarize [default today]</li>
- *   <li id="option:days"><b>--days=</b><i>int</i>. number of calendar days to summarize [default 8]</li>
- *   <li id="option:iCal-URL"><b>--iCal-URL=</b><i>url</i> <tt>[+]</tt>. For a Google calendar:  go to settings, then click on the green "ICAL"
+ *   <li id="option:date"><b>--date=</b><i>string</i>.
+ *  first date to summarize [default today]</li>
+ *   <li id="option:days"><b>--days=</b><i>int</i>.
+ *  number of calendar days to summarize [default 8]</li>
+ *   <li id="option:iCal-URL"><b>--iCal-URL=</b><i>url</i> <tt>[+]</tt>.
+ *  For a Google calendar:  go to settings, then click on the green "ICAL"
  *  icon for the "private address".</li>
- *   <li id="option:business-hours"><b>--business-hours=</b><i>string</i>. A list of time ranges, expressed as a String.
+ *   <li id="option:business-hours"><b>--business-hours=</b><i>string</i>.
+ *  A list of time ranges, expressed as a String.
  *  Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
- *   <li id="option:timezone1"><b>--timezone1=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
+ *   <li id="option:timezone1"><b>--timezone1=</b><i>timezone</i>.
+ *  Time zone as an Olson timezone ID, e.g.: America/New_York.
  *  Available times are printed in this time zone.  It defaults to the
  *  system time zone.</li>
- *   <li id="option:timezone2"><b>--timezone2=</b><i>timezone</i>. Time zone as an Olson timezone ID, e.g.: America/New_York.
+ *   <li id="option:timezone2"><b>--timezone2=</b><i>timezone</i>.
+ *  Time zone as an Olson timezone ID, e.g.: America/New_York.
  *  If set, then free times are printed in two time zones.</li>
- *   <li id="option:debug"><b>--debug=</b><i>boolean</i>. enable debugging output [default false]</li>
+ *   <li id="option:debug"><b>--debug=</b><i>boolean</i>.
+ *  enable debugging output [default false]</li>
  * </ul>
  * <tt>[+]</tt> marked option can be specified multiple times
  * <!-- end options doc -->

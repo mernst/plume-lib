@@ -37,6 +37,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 /*>>>
+import org.checkerframework.checker.formatter.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -176,14 +177,14 @@ public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
 
-  private static String usage = "Provided by Options doclet:\n"
-    + "-docfile <file>        Specify file into which options documentation is inserted\n"
-    + "-outfile <file>        Specify destination for resulting output\n"
-    + "-i                     Edit the docfile in-place\n"
-    + "-format javadoc        Format output as a Javadoc comment\n"
-    + "-classdoc              Include 'main' class documentation in output\n"
-    + "-singledash            Use single dashes for long options (see plume.Options)\n"
-    + "See the OptionsDoclet documentation for more details.";
+  private static /*@Format({})*/ String usage = "Provided by Options doclet:%n"
+    + "-docfile <file>        Specify file into which options documentation is inserted%n"
+    + "-outfile <file>        Specify destination for resulting output%n"
+    + "-i                     Edit the docfile in-place%n"
+    + "-format javadoc        Format output as a Javadoc comment%n"
+    + "-classdoc              Include 'main' class documentation in output%n"
+    + "-singledash            Use single dashes for long options (see plume.Options)%n"
+    + "See the OptionsDoclet documentation for more details.%n";
 
   private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times";
 
@@ -195,7 +196,7 @@ public class OptionsDoclet {
   private /*@Nullable*/ File outFile = null;
   /** If true, then edit docFile in place (and docFile is non-null). */
   private boolean inPlace = false;
-  /** If true, then output format is Javadoc .*/
+  /** If true, then output format is Javadoc. */
   private boolean formatJavadoc = false;
   private boolean includeClassDoc = false;
 
@@ -287,7 +288,7 @@ public class OptionsDoclet {
    */
   public static int optionLength(String option) {
     if (option.equals("-help")) {
-      System.out.println(usage);
+      System.out.printf(usage);
       return 1;
     }
     if (option.equals("-i")
@@ -578,7 +579,7 @@ public class OptionsDoclet {
 
     if (includeClassDoc) {
       b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
-      b.append("<p>Command line options: </p>");
+      b.append("<p>Command line options:</p>");
     }
 
     b.append("<ul>");
@@ -666,8 +667,8 @@ public class OptionsDoclet {
     if (oi.list != null) {
       b.append(" <tt>[+]</tt>");
     }
-    b.append(". ");
-    String jdoc = oi.jdoc == null ? "" : oi.jdoc;
+    f.format(".%n ");
+    String jdoc = ((oi.jdoc == null) ? "" : oi.jdoc);
     if (oi.no_doc_default || oi.default_str == null) {
       f.format("%s", jdoc);
     } else {

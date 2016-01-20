@@ -75,32 +75,55 @@ import org.checkerframework.dataflow.qual.*;
  * The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
- *   <li id="option:home"><b>--home=</b><i>string</i>. User home directory</li>
- *   <li id="option:checkouts"><b>--checkouts=</b><i>string</i>. File with list of checkouts.  Set it to /dev/null to suppress reading.
+ *   <li id="option:home"><b>--home=</b><i>string</i>.
+ *  User home directory</li>
+ *   <li id="option:checkouts"><b>--checkouts=</b><i>string</i>.
+ *  File with list of checkouts.  Set it to /dev/null to suppress reading.
  *  Defaults to <tt>$HOME/.mvc-checkouts</tt>. [default ~/.mvc-checkouts]</li>
- *   <li id="option:dir"><b>--dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to search for checkouts; default=home dir</li>
- *   <li id="option:ignore-dir"><b>--ignore-dir=</b><i>string</i> <tt>[+]</tt>. Directory under which to NOT search for checkouts</li>
- *   <li id="option:search"><b>--search=</b><i>boolean</i>. Search for all checkouts, not just those listed in a file [default false]</li>
- *   <li id="option:show"><b>--show=</b><i>boolean</i>. Display commands as they are executed [default false]</li>
- *   <li id="option:print-directory"><b>--print-directory=</b><i>boolean</i>. Print the directory before executing commands [default false]</li>
- *   <li id="option:dry-run"><b>--dry-run=</b><i>boolean</i>. Do not execute commands; just print them.  Implies --show --redo-existing [default false]</li>
- *   <li id="option:redo-existing"><b>--redo-existing=</b><i>boolean</i>. Default is for checkout command to skip existing directories. [default false]</li>
- *   <li id="option:timeout"><b>--timeout=</b><i>int</i>. Terminating the process can leave the repository in a bad state, so
+ *   <li id="option:dir"><b>--dir=</b><i>string</i> <tt>[+]</tt>.
+ *  Directory under which to search for checkouts; default=home dir</li>
+ *   <li id="option:ignore-dir"><b>--ignore-dir=</b><i>string</i> <tt>[+]</tt>.
+ *  Directory under which to NOT search for checkouts</li>
+ *   <li id="option:search"><b>--search=</b><i>boolean</i>.
+ *  Search for all checkouts, not just those listed in a file [default false]</li>
+ *   <li id="option:show"><b>--show=</b><i>boolean</i>.
+ *  Display commands as they are executed [default false]</li>
+ *   <li id="option:print-directory"><b>--print-directory=</b><i>boolean</i>.
+ *  Print the directory before executing commands [default false]</li>
+ *   <li id="option:dry-run"><b>--dry-run=</b><i>boolean</i>.
+ *  Do not execute commands; just print them.  Implies --show --redo-existing [default false]</li>
+ *   <li id="option:redo-existing"><b>--redo-existing=</b><i>boolean</i>.
+ *  Default is for checkout command to skip existing directories. [default false]</li>
+ *   <li id="option:timeout"><b>--timeout=</b><i>int</i>.
+ *  Terminating the process can leave the repository in a bad state, so
  *  set this rather high for safety.  Also, the timeout needs to account
  *  for the time to run hooks (that might recompile or run tests). [default 600]</li>
- *   <li id="option:quiet"><b>-q</b> <b>--quiet=</b><i>boolean</i>. Run quietly (e.g., no output about missing directories) [default true]</li>
- *   <li id="option:cvs-executable"><b>--cvs-executable=</b><i>string</i>. Path to the cvs program [default cvs]</li>
- *   <li id="option:git-executable"><b>--git-executable=</b><i>string</i>. Path to the git program [default git]</li>
- *   <li id="option:hg-executable"><b>--hg-executable=</b><i>string</i>. Path to the hg program [default hg]</li>
- *   <li id="option:svn-executable"><b>--svn-executable=</b><i>string</i>. Path to the svn program [default svn]</li>
- *   <li id="option:insecure"><b>--insecure=</b><i>boolean</i>. Pass --insecure argument to hg (and likewise for other programs) [default false]</li>
- *   <li id="option:cvs-arg"><b>--cvs-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass to the cvs program</li>
- *   <li id="option:git-arg"><b>--git-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the git program</li>
- *   <li id="option:hg-arg"><b>--hg-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the hg program</li>
- *   <li id="option:svn-arg"><b>--svn-arg=</b><i>string</i> <tt>[+]</tt>. Extra argument to pass  to the svn program</li>
- *   <li id="option:debug"><b>--debug=</b><i>boolean</i>. Print debugging output [default false]</li>
- *   <li id="option:debug-replacers"><b>--debug-replacers=</b><i>boolean</i>. Debug 'replacers' that filter command output [default false]</li>
- *   <li id="option:debug-process-output"><b>--debug-process-output=</b><i>boolean</i>. Lightweight debugging of 'replacers' that filter command output [default false]</li>
+ *   <li id="option:quiet"><b>-q</b> <b>--quiet=</b><i>boolean</i>.
+ *  Run quietly (e.g., no output about missing directories) [default true]</li>
+ *   <li id="option:cvs-executable"><b>--cvs-executable=</b><i>string</i>.
+ *  Path to the cvs program [default cvs]</li>
+ *   <li id="option:git-executable"><b>--git-executable=</b><i>string</i>.
+ *  Path to the git program [default git]</li>
+ *   <li id="option:hg-executable"><b>--hg-executable=</b><i>string</i>.
+ *  Path to the hg program [default hg]</li>
+ *   <li id="option:svn-executable"><b>--svn-executable=</b><i>string</i>.
+ *  Path to the svn program [default svn]</li>
+ *   <li id="option:insecure"><b>--insecure=</b><i>boolean</i>.
+ *  Pass --insecure argument to hg (and likewise for other programs) [default false]</li>
+ *   <li id="option:cvs-arg"><b>--cvs-arg=</b><i>string</i> <tt>[+]</tt>.
+ *  Extra argument to pass to the cvs program</li>
+ *   <li id="option:git-arg"><b>--git-arg=</b><i>string</i> <tt>[+]</tt>.
+ *  Extra argument to pass  to the git program</li>
+ *   <li id="option:hg-arg"><b>--hg-arg=</b><i>string</i> <tt>[+]</tt>.
+ *  Extra argument to pass  to the hg program</li>
+ *   <li id="option:svn-arg"><b>--svn-arg=</b><i>string</i> <tt>[+]</tt>.
+ *  Extra argument to pass  to the svn program</li>
+ *   <li id="option:debug"><b>--debug=</b><i>boolean</i>.
+ *  Print debugging output [default false]</li>
+ *   <li id="option:debug-replacers"><b>--debug-replacers=</b><i>boolean</i>.
+ *  Debug 'replacers' that filter command output [default false]</li>
+ *   <li id="option:debug-process-output"><b>--debug-process-output=</b><i>boolean</i>.
+ *  Lightweight debugging of 'replacers' that filter command output [default false]</li>
  * </ul>
  * <tt>[+]</tt> marked option can be specified multiple times
  * <!-- end options doc -->
