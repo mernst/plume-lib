@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -73,7 +74,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.charAt(index);
   }
 
-  /*@Pure*/ public int length() {
+  /*@Pure*/ public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
 
@@ -81,7 +82,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.subSequence(start, end);
   }
 
-  /*@SideEffectFree*/ public String toString() {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.toString();
   }
 

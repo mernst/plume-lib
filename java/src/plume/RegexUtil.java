@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -112,7 +113,7 @@ public class RegexUtil {
      * @return The full detail message
      */
     /*@Pure*/
-    public String getMessage() {
+    public String getMessage(/*>>>@GuardSatisfied CheckedPatternSyntaxException this*/) {
       return pse.getMessage();
     }
 

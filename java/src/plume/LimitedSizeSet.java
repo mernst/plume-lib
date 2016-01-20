@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -107,7 +108,7 @@ public class LimitedSizeSet<T>
    * @return a number that is a lower bound on the number of elements added to the set
    **/
   /*@Pure*/
-  public int size() {
+  public int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return num_values;
   }
 
@@ -133,7 +134,7 @@ public class LimitedSizeSet<T>
 
   @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
   /*@SideEffectFree*/
-  public LimitedSizeSet<T> clone() {
+  public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
       @SuppressWarnings("unchecked")
@@ -167,7 +168,7 @@ public class LimitedSizeSet<T>
   }
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
-  /*@SideEffectFree*/ public String toString() {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return ("[size=" + size() + "; " +
             ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");

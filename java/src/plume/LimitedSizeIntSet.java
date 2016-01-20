@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -134,7 +135,7 @@ public class LimitedSizeIntSet
   }
 
   @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
-  /*@SideEffectFree*/ public LimitedSizeIntSet clone() {
+  /*@SideEffectFree*/ public LimitedSizeIntSet clone(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
       result = (LimitedSizeIntSet) super.clone();
@@ -163,7 +164,7 @@ public class LimitedSizeIntSet
     return result;
   }
 
-  /*@SideEffectFree*/ public String toString() {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return ("[size=" + size() + "; " +
             ((values == null) ? "null" : ArraysMDE.toString(values))
             + "]");

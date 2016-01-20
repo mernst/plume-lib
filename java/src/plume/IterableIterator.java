@@ -4,10 +4,6 @@ package plume;
 
 import java.util.*;
 
-/*>>>
-import org.checkerframework.checker.lock.qual.*;
-*/
-
 /**
  * In Java, Iterators are not Iterable, so they cannot be used in new-style
  * for loops.  This wrapper works around that by making an Iterator that is
@@ -60,7 +56,7 @@ public class IterableIterator<T> implements Iterable<T> {
         this.iter = iter;
     }
 
-    public Iterator<T> iterator(/*>>>@GuardSatisfied IterableIterator<T> this*/) {
+    public Iterator<T> iterator() {
         return iter;
     }
 }

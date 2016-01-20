@@ -464,7 +464,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return a line-by-line iterator for this file
    **/
   @Override
-  public Iterator<String> iterator(/*>>>@GuardSatisfied EntryReader this*/) {
+  public Iterator<String> iterator() {
     return this;
   }
 
