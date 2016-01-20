@@ -2,7 +2,7 @@
 
 # Trigger a new Travis-CI job.
 # Usage:
-#   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVISTOKEN [MESSAGE]
+#   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
 
 # To use this script to trigger a dependent build in Travis, do two things:
 #
