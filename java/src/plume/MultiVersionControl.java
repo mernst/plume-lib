@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -572,7 +573,7 @@ public class MultiVersionControl {
 
     @Override
     @SuppressWarnings("interning")
-    /*@Pure*/ public boolean equals(/*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Checkout this,*/ /*>>>@GuardSatisfied @Nullable*/ Object other) {
       if (! (other instanceof Checkout)) {
         return false;
       }
@@ -588,7 +589,7 @@ public class MultiVersionControl {
     }
 
     @Override
-    /*@Pure*/ public int hashCode() {
+    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Checkout this*/) {
       return (repoType.hashCode()
               + directory.hashCode()
               + (repository == null ? 0 : repository.hashCode())
@@ -596,7 +597,7 @@ public class MultiVersionControl {
     }
 
     @Override
-      /*@SideEffectFree*/ public String toString() {
+      /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Checkout this*/) {
       return repoType
         + " " + directory
         + " " + repository

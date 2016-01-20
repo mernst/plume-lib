@@ -507,14 +507,14 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Return a line-by-line interator for this file.
+   * Return a line-by-line iterator for this file.
    * <p>
    *
    * <b>Warning:</b> This does not return a fresh iterator each time.  The
    * iterator is a singleton, the same one is returned each time, and a new
    * one can never be created after it is exhausted.
    *
-   * @return a line-by-line interator for this file
+   * @return a line-by-line iterator for this file
    **/
   @Override
   public Iterator<String> iterator() {

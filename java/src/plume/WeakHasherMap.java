@@ -28,6 +28,7 @@ import java.lang.ref.ReferenceQueue;
 import plume.Hasher;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -117,7 +118,9 @@ import org.checkerframework.dataflow.qual.*;
  * @see		java.lang.ref.WeakReference
  */
 
-@SuppressWarnings({"nullness", "keyfor", "interning", "purity"}) // old, non-typesafe Sun code, not worth annotating or checking
+@SuppressWarnings({"nullness", "keyfor", "interning", "purity"}) // old, non-typesafe Sun code, not worth annotating or checking.
+// Annotated for lock checking as an experiment in annotating non-typesafe code.
+// The lock annotations are not perfect and include @SuppressWarnings("lock:...").
 public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,V> {
 
     /* A WeakHashMap is implemented as a HashMap that maps WeakKeys to values.
@@ -142,11 +145,11 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     // were static in the original version of this code.
     // This finesses that.
 
-    private /*@Nullable*/ WeakKey WeakKeyCreate(K k) {
+    private /*@Nullable*/ WeakKey WeakKeyCreate(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ K k) {
 	if (k == null) return null;
 	else return new WeakKey(k);
     }
-    private /*@Nullable*/ WeakKey WeakKeyCreate(K k, ReferenceQueue<? super K> q) {
+    private /*@Nullable*/ WeakKey WeakKeyCreate(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ K k, ReferenceQueue<? super K> q) {
 	if (k == null) return null;
 	else return new WeakKey(k, q);
     }
@@ -178,7 +181,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 
         /* A WeakKey is equal to another WeakKey iff they both refer to objects
 	   that are, in turn, equal according to their own equals methods */
-	/*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
+	/*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakKey this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
             if (o == null) return false; // never happens
 	    if (this == o) return true;
             // This test is illegal because WeakKey is a generic type,
@@ -193,7 +196,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return keyEquals(t, u);
 	}
 
-	/*@Pure*/ public int hashCode() {
+	/*@Pure*/ public int hashCode(/*>>>@GuardSatisfied WeakKey this*/) {
 	    return hash;
 	}
 
@@ -213,7 +216,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
        public accessors because that can lead to surprising
        ConcurrentModificationExceptions. */
     @SuppressWarnings("unchecked")
-    private void processQueue() {
+    private void processQueue(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	WeakKey wk;
 	while ((wk = (WeakKey)queue.poll()) != null) { // unchecked cast
 	    hash.remove(wk);
@@ -284,14 +287,14 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * <code>Map</code> interface, the time required by this operation is
      * linear in the size of the map.</em>
      */
-    /*@Pure*/ public int size() {
+    /*@Pure*/ public int size(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	return entrySet().size();
     }
 
     /**
      * Returns <code>true</code> if this map contains no key-value mappings.
      */
-    /*@Pure*/ public boolean isEmpty() {
+    /*@Pure*/ public boolean isEmpty(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	return entrySet().isEmpty();
     }
 
@@ -301,8 +304,10 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      *
      * @param   key   The key whose presence in this map is to be tested
      */
-    /*@Pure*/ public boolean containsKey(Object key) {
-        @SuppressWarnings("unchecked")
+    /*@Pure*/ public boolean containsKey(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ /*@GuardSatisfied*/ Object key) {
+        @SuppressWarnings({"unchecked", "lock:cast.unsafe"}) // It is OK to cast @GuardSatisfied into @GuardedBy({}) in this case because the
+        // key returned by WeakKeyCreate never leaks to the caller of this method, and is only used by hash.containsKey which is @Pure.
+        // Hence the @GuardSatisfied qualifier on 'key' is respected even in the call to hash.containsKey.
         K kkey = (K) key;
 	return hash.containsKey(WeakKeyCreate(kkey));
     }
@@ -317,8 +322,10 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      *
      * @param  key  The key whose associated value, if any, is to be returned
      */
-    /*@Pure*/ public /*@Nullable*/ V get(Object key) {  // type of argument is Object, not K
-        @SuppressWarnings("unchecked")
+    /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ /*@GuardSatisfied*/ Object key) {  // type of argument is Object, not K
+        @SuppressWarnings({"unchecked", "lock:cast.unsafe"}) // It is OK to cast @GuardSatisfied into @GuardedBy({}) in this case because the
+        // key returned by WeakKeyCreate never leaks to the caller of this method, and is only used by hash.get which is @Pure.
+        // Hence the @GuardSatisfied qualifier on 'key' is respected even in the call to hash.get.
         K kkey = (K) key;
 	return hash.get(WeakKeyCreate(kkey));
     }
@@ -383,11 +390,11 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    this.key = key;
 	}
 
-	/*@Pure*/ public K getKey() {
+	/*@Pure*/ public K getKey(/*>>>@GuardSatisfied Entry<K,V> this*/) {
 	    return key;
 	}
 
-	/*@Pure*/ public V getValue() {
+	/*@Pure*/ public V getValue(/*>>>@GuardSatisfied Entry<K,V> this*/) {
 	    return ent.getValue();
 	}
 
@@ -395,22 +402,22 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return ent.setValue(value);
 	}
 
-        /*@Pure*/ private boolean keyvalEquals(K o1, K o2) {
+        /*@Pure*/ private boolean keyvalEquals(/*>>>@GuardSatisfied Entry<K,V> this,*/ K o1, K o2) {
 	    return (o1 == null) ? (o2 == null) : keyEquals(o1, o2);
 	}
 
-        /*@Pure*/ private boolean valEquals(V o1, V o2) {
+        /*@Pure*/ private boolean valEquals(/*>>>@GuardSatisfied Entry<K,V> this,*/ V o1, V o2) {
 	    return (o1 == null) ? (o2 == null) : o1.equals(o2);
 	}
 
-        /*@Pure*/ public boolean equals(Map.Entry<K,V> e /* Object o*/) {
+        /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Entry<K,V> this,*/ Map.Entry<K,V> e /* Object o*/) {
             // if (! (o instanceof Map.Entry)) return false;
             // Map.Entry<K,V> e = (Map.Entry<K,V>)o;
 	    return (keyvalEquals(key, e.getKey())
 		    && valEquals(getValue(), e.getValue()));
 	}
 
-	/*@Pure*/ public int hashCode() {
+	/*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Entry<K,V> this*/) {
 	    V v;
 	    return (((key == null) ? 0 : keyHashCode(key))
 		    ^ (((v = getValue()) == null) ? 0 : v.hashCode()));
@@ -459,11 +466,21 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    };
 	}
 
-	/*@Pure*/ public boolean isEmpty() {
+	// TODO: isEmpty() is @Pure and should not be calling iterator() which is not @Pure.
+	// Fix this and remove the @SuppressWarnings("lock:method.invocation.invalid") below.
+	// The warning is issued because the receiver type on iterator is not annotated with
+	// @GuardSatisfied.
+	@SuppressWarnings("lock:method.invocation.invalid")
+	/*@Pure*/ public boolean isEmpty(/*>>>@GuardSatisfied EntrySet this*/) {
 	    return !(iterator().hasNext());
 	}
 
-	/*@Pure*/ public int size() {
+	// TODO: size() is @Pure and should not be calling iterator() which is not @Pure.
+	// Fix this and remove the @SuppressWarnings("lock:method.invocation.invalid") below.
+	// The warning is issued because the receiver type on iterator is not annotated with
+	// @GuardSatisfied.
+	@SuppressWarnings("lock:method.invocation.invalid")
+	/*@Pure*/ public int size(/*>>>@GuardSatisfied EntrySet this*/) {
 	    int j = 0;
 	    for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); i.next()) j++;
 	    return j;
@@ -485,7 +502,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	    return false;
 	}
 
-	/*@Pure*/ public int hashCode() {
+	/*@Pure*/ public int hashCode(/*>>>@GuardSatisfied EntrySet this*/) {
 	    int h = 0;
 	    for (Iterator<Map.Entry<WeakKey,V>> i = hashEntrySet.iterator(); i.hasNext(); ) {
 		Map.Entry<WeakKey,V> ent = i.next();
@@ -506,7 +523,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     /**
      * Returns a <code>Set</code> view of the mappings in this map.
      */
-    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet() {
+    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet(/*>>>@GuardSatisfied WeakHasherMap<K,V> this*/) {
 	if (entrySet == null) entrySet = new EntrySet();
 	return entrySet;
     }

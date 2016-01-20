@@ -6,6 +6,10 @@ package plume;
 // import java.util.HashMap;
 // import java.util.HashSet;
 
+/*>>>
+import org.checkerframework.checker.lock.qual.*;
+*/
+
 /**
  * This is a deterministic version of the {@link Object} class.  To remove
  * one source of nondeterminism from your program, do not instantiate the
@@ -32,7 +36,7 @@ public class DeterministicObject {
   }
 
   @Override
-  public int hashCode() {
+  public int hashCode(/*>>>@GuardSatisfied DeterministicObject this*/) {
     return id;
   }
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -177,7 +178,7 @@ public class FileIOException extends IOException {
   /// Utility and helper methods
   ///
 
-  /*@SideEffectFree*/ public String toString() {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied FileIOException this*/) {
     String result = super.toString();
     if (fileName != null) {
       result += " in file " + fileName;
