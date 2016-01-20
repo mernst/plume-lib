@@ -135,6 +135,8 @@ same (modification mark doesn't change otherwise).
 	      (setq temp-buffer-show-function (function ignore))
 	      (if (and (interactive-p) (not quiet))
 		  (message "No differences encountered"))))
+	(with-current-buffer bdiff-buffer-name
+	  (diff-mode))
 	modified))))
 
 (defun bdiff-prefix-arg (buf)

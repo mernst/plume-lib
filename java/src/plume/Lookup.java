@@ -74,8 +74,8 @@ import org.checkerframework.checker.regex.qual.*;
  *     <ul>
  *       <li id="option:regular-expressions"><b>-e</b> <b>--regular-expressions=</b><i>boolean</i>. Specifies that keywords are regular expressions.  If false, keywords
  *  are text matches. [default false]</li>
- *       <li id="option:case-sensitive"><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>. If true, keywords matching is case sensistive.  By default both
- *  regular expressions and text keywords are case insensitive. [default false]</li>
+ *       <li id="option:case-sensitive"><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>. If true, keywords matching is case sensistive.  By default, both
+ *  regular expressions and text keywords are case-insensitive. [default false]</li>
  *       <li id="option:word-match"><b>-w</b> <b>--word-match=</b><i>boolean</i>. If true, match a text keyword only as a separate word, not as a
  *  substring of a word.  This option is ignored if
  *  regular_expressions is true. [default false]</li>
@@ -143,8 +143,8 @@ public class Lookup {
   public static boolean regular_expressions = false;
 
   /**
-   * If true, keywords matching is case sensistive.  By default both
-   * regular expressions and text keywords are case insensitive.
+   * If true, keywords matching is case sensistive.  By default, both
+   * regular expressions and text keywords are case-insensitive.
    */
   @Option ("-c Keywords are case sensistive")
   public static boolean case_sensitive = false;

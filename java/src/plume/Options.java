@@ -1359,7 +1359,7 @@ public class Options {
 
   /**
    * Behaves like {@link java.lang.Enum#valueOf}, except that <code>name</code>
-   * is case insensitive and hyphen insensitive (hyphens can be used in place of
+   * is case-insensitive and hyphen-insensitive (hyphens can be used in place of
    * underscores).  This allows for greater flexibility when specifying enum
    * types as command-line arguments.
    */
