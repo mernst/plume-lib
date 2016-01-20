@@ -39,7 +39,6 @@ import org.checkerframework.checker.signature.qual.*;
 
 // Files to test:
 // ArraysMDE.java
-// Assert.java
 // ClassFileVersion.java
 // CountingPrintWriter.java
 // Digest.java
