@@ -34,9 +34,9 @@ if [ $gnu ] ; then
   find_args="-noleaf"
 fi
 
-# compile the java files 
+# compile the java files
 scratch=`mktemp -d -t build_all_list_file.XXXXXX`
-$javac -d $scratch -sourcepath $sources $main 
+$javac -d $scratch -sourcepath $sources $main
 if [ $status ] ; then
   exit 1
 fi
@@ -53,7 +53,7 @@ for file in $files; do
   fi
 done
 cd ..
-    
+
 if [ $debug ]; then
   echo "scratch = $scratch"
 else

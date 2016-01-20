@@ -70,7 +70,7 @@ for my $file (@ARGV) {
     # type parameters may be nested:  Enum<E extends Enum<E>>.
     if (m/type parameter in/) {
       if ($debug) { print STDERR "Considering: $_"; }
-    }      
+    }
     while (s%&lt;((\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(\?|<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>)( extends (\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(<a [^>]*>[^ <]*</a>(&lt;\?(,\?)*&gt;)?|[^ ]+))?,?)+&gt;%%i) {
       # empty body
     }

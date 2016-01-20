@@ -117,28 +117,28 @@ uploaded=false
 # echo ""
 # echo -n "Attempt to upload release to Google Code? [y/n]: "
 # read answer
-# 
+#
 # ans=${answer:0:1}
 # if [[ ! ($ans = "y" || $ans = "Y") ]]; then
 #     done_release
 # fi
-# 
+#
 # if ! which googlecode_upload.py &> /dev/null; then
 #     echo "Could not find googlecode_upload.py in PATH."
 #     done_release
 # fi
-# 
+#
 # googlecode_upload.py \
 #     --summary "Plume-lib v$new release" \
 #     --project "plume-lib" \
 #     --labels "Type-Source" \
 #     "$release_tar"
-# 
+#
 # if [[ $? -ne 0 ]] ; then
 #     echo "Uploading to Google Code failed."
 #     done_release
 # fi
-# 
+#
 # uploaded=true
 # echo "Uploaded $release_tar to Google Code successfully."
 

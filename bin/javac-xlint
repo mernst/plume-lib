@@ -26,10 +26,10 @@
 # @SuppressWarnings("unchecked").  This is more portable and standard than
 # this script.  However:
 #  * it does not permit suppression per-line, only per declaration.
-#    (A way to get per-line suppression is to put the offending statement 
+#    (A way to get per-line suppression is to put the offending statement
 #    in a variable declaration, and then annotate the declaration.)
 #  * it does not permit suppression based on directory/package (I think)
-#  * it does not give a non-zero return status if non-suppressed warnings exist. 
+#  * it does not give a non-zero return status if non-suppressed warnings exist.
 
 # Regarding the warnings-as-errors feature of this script:  As of Java 6,
 # the -Werror flag has the same effect.
@@ -80,7 +80,7 @@ fi
 # while getopts "p:" Option
 # do
 #   case $Option in
-#     p ) 
+#     p )
 # #      echo "found p!"
 #       PRUNE_XLINT_ARGS=$OPTARG
 #   esac

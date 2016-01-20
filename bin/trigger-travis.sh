@@ -5,7 +5,7 @@
 #   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVISTOKEN [MESSAGE]
 
 # To use this script to trigger a dependent build in Travis, do two things:
-# 
+#
 # 1. Set an environment variable TRAVIS_ACCESS_TOKEN by navigating to
 #   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
 # Determine the value for TRAVIS_ACCESS_TOKEN via: travis login && travis token
@@ -15,7 +15,7 @@
 # This differs from the token available at https://travis-ci.org/profile .
 # The environment variable will be set when Travis runs the job,
 # but won't be visible to anyone browsing https://travis-ci.org/.
-# 
+#
 # 2. Add the following after_success block to your .travis.yml file,
 # where you replace OTHERGITHUB* by a specific downstream project,
 # but you leave $TRAVIS_ACCESS_TOKEN as literal text:
@@ -28,7 +28,7 @@
 #         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
 #         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 #       fi
-# 
+#
 # Note that Travis does not fail a job if an after_success command fails.
 # If you misspell a GitHub ID or project name, then this script will fail,
 # but Travis won't inform you of the mistake.  So, check the end of the

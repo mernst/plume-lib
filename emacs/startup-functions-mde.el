@@ -1425,7 +1425,7 @@ one in the source code."
 (defadvice sort-lines (before not-certain-files activate)
   "Don't sort lines in certain files."
   (if (member buffer-file-name
-	      (list 
+	      (list
 	       (expand-file-name "~/random/addresses.tex")
 	       (expand-file-name "~/private/to-do")
 	       (expand-file-name "~/to-do")
@@ -1930,7 +1930,7 @@ If called interactively, prompt for which index."
 ;; 	 (funcall
 ;; 	  (intern (format "ediff-%s-merge-internal" ediff-version-control-package))
 ;; 	  rev1 rev2 ancestor-rev startup-hooks merge-buffer-file)))
-;; 
+;;
 ;;      (defun ediff-revision (&optional file startup-hooks)
 ;;        "Run Ediff by comparing versions of a file.
 ;; The file is an optional FILE argument or the file entered at the prompt.

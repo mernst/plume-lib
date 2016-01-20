@@ -4,9 +4,9 @@
 ;; The default colors for font lock, and some other Emacs features, are too
 ;; bright and distracting.  This code lets you tone it down a bit.  Example
 ;; use:
-;; 
+;;
 ;; (require 'darken-lighten-face)
-;; 
+;;
 ;; (eval-after-load "font-lock"
 ;;   '(progn
 ;;      (darken-face-foreground 'font-lock-comment-face)
@@ -19,7 +19,7 @@
 ;;      ;; (darken-face-foreground 'font-lock-function-name-face)
 ;;      ;; Leave font-lock-warning-face as is; I want it bright.
 ;;      ))
-;; 
+;;
 ;; (eval-after-load "compile"
 ;;   '(darken-face-foreground 'compilation-warning)))
 ;;

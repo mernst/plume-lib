@@ -16,16 +16,16 @@
 (defun patch-buffer (buffer beg reverse)
   "Applies the context-diff patch around point to a specified buffer.
 With a prefix argument, this applies the reversed patch."
-  (interactive 
+  (interactive
    (save-excursion
      (end-of-line 1)
      (re-search-backward patch-start-regexp)
      (list (completing-read
 	    ;; damn, why can't read-buffer have an initial-input argument
 	    "Buffer to patch: "
-	    (mapcar (function (lambda (b) (cons (buffer-name b) b))) 
+	    (mapcar (function (lambda (b) (cons (buffer-name b) b)))
 		    (buffer-list))
-	    nil 
+	    nil
 	    t
 	    (let ((default (get-file-buffer
 			    (buffer-substring (match-beginning 1) (match-end 1)))))
@@ -45,10 +45,10 @@ With a prefix argument, this applies the reversed patch."
 	 (rname (expand-file-name (format "rpatch%d" n) patch-tmp-directory))
 	 (patch-buffer (current-buffer))
 	 (temp-buffer-show-function (function ignore)))
-    (while (or (file-exists-p iname) 
+    (while (or (file-exists-p iname)
 	       (file-exists-p oname)
 	       (file-exists-p rname))
-      (setq iname (concat iname "x") 
+      (setq iname (concat iname "x")
 	    oname (concat oname "x")
 	    rname (concat rname "x")))
     (unwind-protect

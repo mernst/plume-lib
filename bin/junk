@@ -130,7 +130,7 @@ foreach name ($JUNK_NAMES)
   if ("$name" != "") set namelist = ($namelist -o -name $name)
 end
 set namelist = ($namelist[2-])
-  
+
 if ("$namelist$filterlist" == "") then
   echo 'junk:  setting of environment variables yields empty filter.'
   exit(1)

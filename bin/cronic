@@ -12,8 +12,8 @@
 #   debugging. Cronic has no options, it simply executes its arguments.
 # Extended by Michael Ernst to add --expected-status and --permit-stderr flags.
 
-# Exit if a command exits with a non-zero status, and treat unset variables 
-# as an error. 
+# Exit if a command exits with a non-zero status, and treat unset variables
+# as an error.
 set -eu
 
 OUT=/tmp/cronic.out.$$
