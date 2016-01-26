@@ -344,7 +344,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @return  The previous value to which this key was mapped, or
      *          <code>null</code> if if there was no mapping for the key
      */
-    public V put(K key, V value) {
+    public V put(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ K key, V value) {
 	processQueue();
 	return hash.put(WeakKeyCreate(key, queue), value);
     }

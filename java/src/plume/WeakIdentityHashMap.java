@@ -441,7 +441,7 @@ public class WeakIdentityHashMap<K,V>
      *	       also indicate that the HashMap previously associated
      *	       <tt>null</tt> with the specified key.
      */
-    public /*@Nullable*/ V put(K key, V value) {
+    public /*@Nullable*/ V put(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ K key, V value) {
         @SuppressWarnings("unchecked")
         K k = (K) maskNull(key);
         int h = System.identityHashCode (k);
@@ -679,7 +679,7 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Special-case code for containsValue with null argument
      */
-    private boolean containsNullValue() {
+    private boolean containsNullValue(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
 	/*@Nullable*/ Entry<K,V>[] tab = getTable();
         for (int i = tab.length ; i-- > 0 ;)
             for (Entry e = tab[i] ; e != null ; e = e.next)

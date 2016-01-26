@@ -114,7 +114,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    **/
   /*@Pure*/
-  public int size() {
+  public int size(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return num_values;
   }
 
