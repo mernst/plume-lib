@@ -2084,7 +2084,7 @@ public final class UtilMDE {
    * @param from input stream
    * @param to output stream
    */
-  public static void streamCopy(java.io.InputStream from, java.io.OutputStream to) {
+  public static void streamCopy(InputStream from, OutputStream to) {
     byte[] buffer = new byte[1024];
     int bytes;
     try {
@@ -2095,7 +2095,7 @@ public final class UtilMDE {
         }
         to.write(buffer, 0, bytes);
       }
-    } catch (java.io.IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
       throw new Error(e);
     }
@@ -2105,7 +2105,7 @@ public final class UtilMDE {
    * @param is input stream to read
    * @return a String containing all the characters from the input stream
    **/
-  public static String streamString(java.io.InputStream is) {
+  public static String streamString(InputStream is) {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     streamCopy(is, baos);
     return baos.toString();
