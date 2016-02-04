@@ -72,7 +72,7 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
 
   @Override
   @SuppressWarnings({"interning", "not.deterministic.call"}) // getA is not @deterministic, but its value is checked, so this method is deterministic
-  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
     if (! (obj instanceof WeakIdentityPair<?, ?>)) {
       return false;
     }

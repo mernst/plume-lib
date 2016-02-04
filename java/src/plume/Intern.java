@@ -857,7 +857,7 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    /*@Pure*/ public boolean equals (/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals (/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;

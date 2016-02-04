@@ -181,7 +181,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 
         /* A WeakKey is equal to another WeakKey iff they both refer to objects
 	   that are, in turn, equal according to their own equals methods */
-	/*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakKey this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
+	/*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakKey this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
             if (o == null) return false; // never happens
 	    if (this == o) return true;
             // This test is illegal because WeakKey is a generic type,

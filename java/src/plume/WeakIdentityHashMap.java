@@ -276,7 +276,7 @@ public class WeakIdentityHashMap<K,V>
      */
     // not: "private static <K> K maskNull(K key)" because NULL_KEY isn't of type K.
     @SuppressWarnings("cast.unsafe")
-    /*@Pure*/ private static /*>>>@GuardSatisfied(1) @NonNull*/ Object maskNull(/*>>>@GuardSatisfied(1) @Nullable*/ Object key) {
+    /*@Pure*/ private static /*@GuardSatisfied(1)*/ /*@NonNull*/ Object maskNull(/*@GuardSatisfied(1)*/ /*@Nullable*/ Object key) {
         // OK to cast NULL_KEY.
         // This is needed so that the type of the return expression is @GuardSatisfied(1).
         // Otherwise it would be the LUB of @GuardedBy({}) and @GuardSatisfied(1), which is @GuardedByInaccessible.
@@ -296,7 +296,7 @@ public class WeakIdentityHashMap<K,V>
      * Check for equality of non-null reference x and possibly-null y.  Uses
      * identity equality.
      */
-    /*@Pure*/ static boolean eq(/*@GuardedByInaccessible*/ Object x, /*>>>@GuardedByInaccessible @Nullable*/ Object y) {
+    /*@Pure*/ static boolean eq(/*@GuardedByInaccessible*/ Object x, /*@GuardedByInaccessible*/ /*@Nullable*/ Object y) {
         return x == y;
     }
 
@@ -388,7 +388,7 @@ public class WeakIdentityHashMap<K,V>
      *          <tt>null</tt> if the map contains no mapping for this key.
      * @see #put(Object, Object)
      */
-    /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object key) {
+    /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
@@ -410,7 +410,7 @@ public class WeakIdentityHashMap<K,V>
      * @return  <tt>true</tt> if there is a mapping for <tt>key</tt>;
      *          <tt>false</tt> otherwise
      */
-    /*@Pure*/ public boolean containsKey(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object key) {
+    /*@Pure*/ public boolean containsKey(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object key) {
         return getEntry(key) != null;
     }
 
@@ -418,7 +418,7 @@ public class WeakIdentityHashMap<K,V>
      * Returns the entry associated with the specified key in the HashMap.
      * Returns null if the HashMap contains no mapping for this key.
      */
-    /*@SideEffectFree*/ /*@Nullable*/ Entry<K,V> getEntry(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object key) {
+    /*@SideEffectFree*/ /*@Nullable*/ Entry<K,V> getEntry(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
@@ -664,7 +664,7 @@ public class WeakIdentityHashMap<K,V>
      * @return <tt>true</tt> if this map maps one or more keys to the
      *         specified value.
      */
-    /*@Pure*/ public boolean containsValue(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object value) {
+    /*@Pure*/ public boolean containsValue(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object value) {
 	if (value==null)
             return containsNullValue();
 
@@ -724,7 +724,7 @@ public class WeakIdentityHashMap<K,V>
         }
 
         @SuppressWarnings("purity") // side effects on local state
-        /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Entry<K,V> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
+        /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Entry<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
             Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -871,7 +871,7 @@ public class WeakIdentityHashMap<K,V>
             return WeakIdentityHashMap.this.size();
         }
 
-        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied KeySet this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied KeySet this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
             return containsKey(o);
         }
 
@@ -930,7 +930,7 @@ public class WeakIdentityHashMap<K,V>
             return WeakIdentityHashMap.this.size();
         }
 
-        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied Values this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied Values this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
             return containsValue(o);
         }
 
@@ -976,7 +976,7 @@ public class WeakIdentityHashMap<K,V>
             return new EntryIterator();
         }
 
-        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied EntrySet this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied EntrySet this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
             Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -1041,7 +1041,7 @@ public class WeakIdentityHashMap<K,V>
             return oldValue;
         }
 
-  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object o) {
+  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
             return false;
             Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -1058,7 +1058,7 @@ public class WeakIdentityHashMap<K,V>
             return key + "=" + value;
         }
 
-        private static boolean eq(/*>>>@GuardSatisfied @Nullable*/ Object o1, /*>>>@GuardSatisfied @Nullable*/ Object o2) {
+        private static boolean eq(/*@GuardSatisfied*/ /*@Nullable*/ Object o1, /*@GuardSatisfied*/ /*@Nullable*/ Object o2) {
             return (o1 == null ? o2 == null : o1.equals(o2));
         }
     }

@@ -45,7 +45,7 @@ public class Triple<T1,T2,T3> {
   }
 
   @SuppressWarnings("interning") // equality testing optimization
-  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Triple<T1,T2,T3> this,*/ /*>>>@GuardSatisfied @Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Triple<T1,T2,T3> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
     if (obj instanceof Triple<?,?,?>) {
       @SuppressWarnings("unchecked")
       Triple<T1,T2,T3> other = (Triple<T1,T2,T3>) obj;

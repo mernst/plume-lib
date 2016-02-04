@@ -573,7 +573,7 @@ public class MultiVersionControl {
 
     @Override
     @SuppressWarnings("interning")
-    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Checkout this,*/ /*>>>@GuardSatisfied @Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Checkout this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (! (other instanceof Checkout)) {
         return false;
       }
