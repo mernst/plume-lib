@@ -36,7 +36,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     this.delimiter = delimiter;
   }
 
-  private void appendDelimiter() {
+  private void appendDelimiter(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     if (empty) {
       empty = false;
     } else {

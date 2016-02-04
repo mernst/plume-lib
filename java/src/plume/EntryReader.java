@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */
@@ -270,7 +271,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /** A dummy Reader to be used when null is not acceptable. */
   private static class DummyReader extends Reader {
     @Override
-    public void close() {
+    public void close(/*>>>@GuardSatisfied DummyReader this*/) {
       // No error, because closing is OK if it appears in try-with-resources.
       // Later maybe create two versions (with and without exception here).
     }
