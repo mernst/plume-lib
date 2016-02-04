@@ -49,6 +49,7 @@ Brian Burg http://brrian.org/
 Brian Demsky http://demsky.eecs.uci.edu/
 # Brock Pytlik http://www.cs.brown.edu/people/bpytlik/
 Brown University http://www.brown.edu/
+Calvin Loncaric https://homes.cs.washington.edu/~loncaric/
 Carlos Pacheco http://people.csail.mit.edu/cpacheco/
 Christoph Csallner http://ranger.uta.edu/~csallner/
 Colin S. Gordon https://www.cs.drexel.edu/~csgordon/
@@ -72,18 +73,19 @@ Dilsun Kirli http://www.cs.cmu.edu/~dilsun/
 Dilsun Kn0131rln0131 http://www.cs.cmu.edu/~dilsun/
 Discrete Mathematics http://www.journals.elsevier.com/discrete-mathematics/
 Doug Woos http://www.dougwoos.com/
+E. James Whitehead, Jr. https://users.soe.ucsc.edu/~ejw/
+E. James Whitehead, Jr. https://users.soe.ucsc.edu/~ejw/
 ECOOP '98 http://ecoop98.vub.ac.be/
 ECOOP 2004 http://www.ifi.uio.no/ecoop2004/
 ECOOP 2008 https://ecoop08.cs.ucy.ac.cy/
 Edward X. Wu http://www.edwardxwu.com/
-ESEC/FSE 2003 http://esecfse.cs.helsinki.fi/
-ESEC/FSE 2007 http://www.idt.mdh.se/esec-fse-2007/
 # Broken as of 9/14/2015, still broken 10/19/2015
 # Elizabeth L. Wilmer http://www.oberlin.edu/math/faculty/wilmer.html
 Elwyn Berlekamp https://math.berkeley.edu/~berlek/
-E. James Whitehead, Jr. https://users.soe.ucsc.edu/~ejw/
-E. James Whitehead, Jr. https://users.soe.ucsc.edu/~ejw/
+Emina Torlak https://homes.cs.washington.edu/~emina/
 Erik Poll http://www.cs.ru.nl/~erikpoll/
+ESEC/FSE 2003 http://esecfse.cs.helsinki.fi/
+ESEC/FSE 2007 http://www.idt.mdh.se/esec-fse-2007/
 Fausto Spoto http://profs.sci.univr.it/~spoto/
 # Feihui Li http://www.cse.psu.edu/~feli/
 # Broken, and Yashwant K. Malaiya <malaiya@cs.colostate.edu> hasn't fixed it:
@@ -115,6 +117,7 @@ ICSM 2001 http://www.dsi.unifi.it/icsm2001/
 ICSM 2004 http://www.cs.iit.edu/~icsm2004/
 IEEE Transactions on Software Engineering http://www.computer.org/web/tse
 IJCAI-97 http://www.ijcai.org/past/ijcai-97/
+Irfan Ul Haq http://software.imdea.org/people/irfanul.haq/
 ISSTA 2000 http://www.ics.uci.edu/~irus/issta/
 ISSTA 2002 http://labse.isti.cnr.it/ISSTA2002/
 ISSTA 2004 http://cse.unl.edu/~grother/issta2004/
@@ -131,6 +134,7 @@ Joe Kiniry http://www.itu.dk/~josr/
 Johan �stlund http://user.it.uu.se/~johos902/
 Jonathan Bachrach http://people.csail.mit.edu/jrb/
 Jonathan E. Cook http://www.cs.nmsu.edu/~jcook/
+Juan Caballero https://software.imdea.org/~juanca/
 Julian Dolby http://researcher.watson.ibm.com/researcher/view.php?person=us-dolby
 Justin Mazzola Paluska http://www.mit.edu/~jmp/
 # Karl Koscher http://homes.cs.washington.edu/~supersat/
@@ -152,6 +156,7 @@ Marcelo d'Amorim http://www.cin.ufpe.br/~damorim/
 Martin Rinard http://people.csail.mit.edu/rinard/
 #Deceased: Mary Jean Harrold http://www.cc.gatech.edu/~harrold/
 Mary Shaw http://spoke.compose.cs.cmu.edu/shaweb/
+Massimo Merro http://profs.sci.univr.it/~merro/
 Mauro PezzÃ¨ http://www.lta.disco.unimib.it/homepage/Mauro.Pezze/Mauro.index.htm
 #Don't use "MIT" because it is a substring of other strings
 # MIT http://web.mit.edu/
@@ -166,6 +171,7 @@ Michael D. Ernst http://homes.cs.washington.edu/~mernst/
 Michael Ernst http://homes.cs.washington.edu/~mernst/
 # Michael Harder http://web.mit.edu/mharder/www/
 Microsoft Research http://research.microsoft.com/en-us/
+Mohsen Vakilian http://web.engr.illinois.edu/~mvakili2/
 # MSR 2007 http://msr.uwaterloo.ca/msr2007/
 # M-TOOS 2006 http://research.microsoft.com/conferences/mtoos06/
 Nancy Lynch http://people.csail.mit.edu/lynch/
@@ -178,7 +184,8 @@ OOPSLA 2008 http://www.oopsla.org/oopsla2008/
 Orna Raz http://www-2.cs.cmu.edu/~ornar/
 PASTE'04 http://www.st.cs.uni-saarland.de/paste/
 PASTE 2005 http://homes.cs.washington.edu/~mernst/meetings/paste2005/
-# Paul Pham http://homes.cs.washington.edu/~ppham/
+# Paul Pham (no homepage as of 2/2016) http://homes.cs.washington.edu/~ppham/
+Paulo Barros http://www.cin.ufpe.br/~pbsf/
 Pavel Panchekha https://pavpanchekha.com/
 Peter M�ller http://www.pm.inf.ethz.ch/
 Philip J. Guo http://www.pgbovine.net/
@@ -211,8 +218,10 @@ Sri Hari Krishna Narayanan http://www.mcs.anl.gov/~snarayan/
 Stelios Sidiroglou http://people.csail.mit.edu/stelios/
 Stephen J. Garland http://people.csail.mit.edu/garland/
 Stephen McCamant http://people.csail.mit.edu/smcc/
+Steve Anton https://www.linkedin.com/in/steve-anton-944aa36b
 Steven A. Wolfman http://www.cs.ubc.ca/~wolf/
 Steven P. Reiss http://cs.brown.edu/~spr/
+Stuart Pernsteiner http://homes.cs.washington.edu/~spernste/
 Sunghun Kim http://www.cse.ust.hk/~hunkim/
 Tao Xie http://people.engr.ncsu.edu/txie/
 Thomas Ball http://research.microsoft.com/en-us/people/tball/
