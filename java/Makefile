@@ -10,9 +10,13 @@ PLUME_DIR_DEFAULT := $(realpath $(dir $(lastword $(MAKEFILE_LIST)))..)
 PLUME_DIR ?= ${PLUME_DIR_DEFAULT}
 
 ifndef JAVA_HOME
-  java_cmd := $(shell which java)
-  # /bin//java happens when the PATH element ended in a /
-  JAVA_HOME := $(subst /bin//java,,$(subst /bin/java,,$(java_cmd)))
+  ifeq ($(UNAME_S),Darwin)
+    JAVA_HOME := $(shell /usr/libexec/java_home)
+  else
+    java_cmd := $(shell which java)
+    # /bin//java happens when the PATH element ended in a /
+    JAVA_HOME := $(subst /bin//java,,$(subst /bin/java,,$(java_cmd)))
+  endif
   I_set_JAVA_HOME := true
 endif
 
