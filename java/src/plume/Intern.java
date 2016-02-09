@@ -158,7 +158,7 @@ public final class Intern {
    * Hasher object which hashes and compares long[] objects according
    * to their contents.
    * @see Hasher
-   * @see java.util.Arrays#equals (long[], long[])
+   * @see java.util.Arrays#equals(long[], long[])
    **/
   private static final class LongArrayHasher implements Hasher {
     @Override
@@ -857,7 +857,7 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    /*@Pure*/ public boolean equals (/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
@@ -867,7 +867,7 @@ public final class Intern {
       }
     }
 
-    /*@Pure*/ public boolean equals (/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
+    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
       return ((this.seq == other.seq)
               && this.start == other.start
               && this.end == other.end);

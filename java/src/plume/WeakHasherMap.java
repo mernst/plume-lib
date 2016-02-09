@@ -305,9 +305,10 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @param   key   The key whose presence in this map is to be tested
      */
     /*@Pure*/ public boolean containsKey(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ /*@GuardSatisfied*/ Object key) {
-        @SuppressWarnings({"unchecked", "lock:cast.unsafe"}) // It is OK to cast @GuardSatisfied into @GuardedBy({}) in this case because the
-        // key returned by WeakKeyCreate never leaks to the caller of this method, and is only used by hash.containsKey which is @Pure.
+        // It is OK to cast @GuardSatisfied into @GuardedBy({}) in this case because the key returned by WeakKeyCreate
+        // never leaks to the caller of this method, and is only used by hash.containsKey which is @Pure.
         // Hence the @GuardSatisfied qualifier on 'key' is respected even in the call to hash.containsKey.
+        @SuppressWarnings({"unchecked", "lock:cast.unsafe"})
         K kkey = (K) key;
 	return hash.containsKey(WeakKeyCreate(kkey));
     }
@@ -323,9 +324,10 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @param  key  The key whose associated value, if any, is to be returned
      */
     /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakHasherMap<K,V> this,*/ /*@GuardSatisfied*/ Object key) {  // type of argument is Object, not K
-        @SuppressWarnings({"unchecked", "lock:cast.unsafe"}) // It is OK to cast @GuardSatisfied into @GuardedBy({}) in this case because the
-        // key returned by WeakKeyCreate never leaks to the caller of this method, and is only used by hash.get which is @Pure.
+        // It is OK to cast @GuardSatisfied into @GuardedBy({}) in this case because the key returned by WeakKeyCreate
+        // never leaks to the caller of this method, and is only used by hash.get which is @Pure.
         // Hence the @GuardSatisfied qualifier on 'key' is respected even in the call to hash.get.
+        @SuppressWarnings({"unchecked", "lock:cast.unsafe"})
         K kkey = (K) key;
 	return hash.get(WeakKeyCreate(kkey));
     }

@@ -301,7 +301,7 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /** Return the hash code for x **/
-    /*@Pure*/ static int hasher (/*@GuardSatisfied*/ Object x) {
+    /*@Pure*/ static int hasher(/*@GuardSatisfied*/ Object x) {
         return System.identityHashCode (x);
     }
 
