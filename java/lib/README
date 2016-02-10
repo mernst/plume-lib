@@ -3,7 +3,10 @@ order to make plume-lib self-contained.  (They do make it large, though.)
 
 Most libraries are standard, downloaded from their respective webpages.
 
-Two are nonstandard:
+checker-qual.jar is from the Checker Framework 1.9.11:
+https://github.com/typetools/checker-framework/releases
+
+Two libraries are nonstandard:
 
 BCEL (bcel.jar)
 - Java class file reader/writer

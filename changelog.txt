@@ -34,6 +34,7 @@ Removed deprecated classes and methods:
   UtilMDE.joinLines(List<String>, String)
   UtilMDE.backTrace()
   UtilMDE.human_readable(long)
+Added checker-qual.jar file so that plume.jar can be used standalone.
 
 plume-lib 1.0.8, released January 12, 2016
 Plume-lib includes a newer version of BCEL.
