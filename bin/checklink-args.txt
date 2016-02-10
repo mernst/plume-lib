@@ -84,6 +84,7 @@
 # This URL requires CSAIL credentials
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 #--suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
+--suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90	
 --suppress-broken 404:http://webhostingrating.net/libs/daikon-faq-be/
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles
 --suppress-broken 404:http://www.juliasoft.com/users
@@ -104,6 +105,7 @@
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
+--suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://junit.org/	
