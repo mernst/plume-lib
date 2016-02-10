@@ -39,7 +39,7 @@ plume-lib 1.0.8, released January 12, 2016
 Plume-lib includes a newer version of BCEL.
 If you receive an error such as the following:
     "BCEL must be in the classpath.  Normally it is found in daikon.jar."
-Then the problem is most likely that your classpath contains a previous
+then the problem is most likely that your classpath contains a previous
 version of daikon.jar or plume.jar.
 
 plume-lib 1.0.7, released January 1, 2016
