@@ -79,7 +79,7 @@ import org.checkerframework.dataflow.qual.Pure;
  * </ul>
  * <tt>[+]</tt> marked option can be specified multiple times
  * <!-- end options doc -->
- **/
+ */
 public final class ICalAvailable {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -127,7 +127,7 @@ public final class ICalAvailable {
    * Time zone as an Olson timezone ID, e.g.: America/New_York.
    * Available times are printed in this time zone.  It defaults to the
    * system time zone.
-   **/
+   */
   // don't need "e.g.: America/New_York" in message:  the default is an example
   @Option(value="<timezone> time zone, e.g.: America/New_York", noDocDefault=true)
   public static String timezone1 = TimeZone.getDefault().getID();
@@ -413,7 +413,7 @@ public final class ICalAvailable {
    * Creates a new DateTime with date taken from the first argument and
    * time taken from the second argument.
    * @return the merged DateTime
-   **/
+   */
   @SuppressWarnings("deprecation") // for iCal4j
   static DateTime mergeDateAndTime(DateTime date, DateTime time) {
     if (! date.getTimeZone().equals(time.getTimeZone())) {
@@ -509,7 +509,7 @@ public final class ICalAvailable {
    * Parses a date when formatted in several common formats.
    * @return a Date read from the given string
    * @see dateFormats
-   **/
+   */
   static java.util.Date parseDate(String strDate) throws ParseException {
     if (Pattern.matches("^[0-9][0-9]?/[0-9][0-9]?$", date)) {
       @SuppressWarnings("deprecation") // for iCal4j

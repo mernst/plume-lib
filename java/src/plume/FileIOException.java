@@ -21,7 +21,7 @@ import org.checkerframework.dataflow.qual.*;
  * This class extends IOException by also reporting a file name and line
  * number at which the exception occurred.  It requires use of a
  * {@link LineNumberReader}.
- **/
+ */
 public class FileIOException extends IOException {
   static final long serialVersionUID = 20050923L;
 

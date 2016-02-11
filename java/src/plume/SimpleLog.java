@@ -19,7 +19,7 @@ import org.checkerframework.checker.nullness.qual.*;
  *   <li>Can provide a backtrace (optionally provide a backtrace at every output), and
  *   <li>Can add newlines where appropriate, if variable line_oriented is set.
  * </ul>
- **/
+ */
 
 public final class SimpleLog {
 

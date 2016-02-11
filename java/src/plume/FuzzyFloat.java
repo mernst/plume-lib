@@ -24,7 +24,7 @@ import org.checkerframework.dataflow.qual.*;
  * Note that zero is never equal to a non-zero number using this method. <p>
  *
  * Two NaN floats are not considered equal (consistent with the == operator).
- **/
+ */
 
 public class FuzzyFloat {
 
@@ -193,7 +193,7 @@ public class FuzzyFloat {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public int indexOf(double[] a, double elt) {
     for (int i=0; i<a.length; i++) {
       if (eq(elt, a[i])) {
@@ -214,7 +214,7 @@ public class FuzzyFloat {
    *    or -1 if no such subarray is found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public int indexOf(double[] a, double[] sub) {
 
     int a_index_max = a.length - sub.length;

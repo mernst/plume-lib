@@ -12,7 +12,7 @@ import org.checkerframework.dataflow.qual.*;
  * LimitedSizeSet stores up to some maximum number of unique
  * values, at which point its rep is nulled, in order to save space.
  * @param <T> the type of elements in the set
- **/
+ */
 public class LimitedSizeSet<T> implements Serializable, Cloneable {
   // We are Serializable, so we specify a version to allow changes to
   // method signatures without breaking serialization.  If you add or
@@ -110,7 +110,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * the number of elements that have been inserted in the set, or
    * max_size(), whichever is less.
    * @return a number that is a lower bound on the number of elements added to the set
-   **/
+   */
   /*@Pure*/
   public int size() {
     return num_values;
@@ -121,7 +121,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
    * @return maximum capacity of the set representation
-   **/
+   */
   public int max_size() {
     if (values == null) {
       return num_values;
@@ -162,7 +162,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @param max_values the maximum size for the returned LimitedSizeSet
    * @param slist a list of LimitedSizeSet, whose elements will be merged
    * @return a LimitedSizeSet that merges the elements of slist
-   **/
+   */
   public static <T> LimitedSizeSet<T> merge(int max_values, List<LimitedSizeSet<? extends T>> slist) {
     LimitedSizeSet<T> result = new LimitedSizeSet<T>(max_values);
     for (LimitedSizeSet<? extends T> s : slist) {

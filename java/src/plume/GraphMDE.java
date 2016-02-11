@@ -58,7 +58,7 @@ public final class GraphMDE {
    * @param <T> type of the graph nodes
    * @param predecessors a graph, represented as a predecessor map
    * @return a map from each node to a list of its pre-dominators
-   **/
+   */
   public static
   <T> Map<T,List<T>> dominators(Map<T,List</*@KeyFor("#1")*/ T>> predecessors) {
 

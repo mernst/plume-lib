@@ -87,7 +87,7 @@ public final class UtilMDE {
    * @param b the second BitSet to intersect
    * @param i the cardinality bound
    * @return true iff size(a intersect b) &ge; i
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
     // Here are three implementation strategies to determine the
@@ -121,7 +121,7 @@ public final class UtilMDE {
    * @param c the third BitSet to intersect
    * @param i the cardinality bound
    * @return true iff size(a intersect b intersect c) &ge; i
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
@@ -146,7 +146,7 @@ public final class UtilMDE {
    * @param a the first BitSet to intersect
    * @param b the second BitSet to intersect
    * @return size(a intersect b)
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b) {
     BitSet intersection = (BitSet) a.clone();
@@ -159,7 +159,7 @@ public final class UtilMDE {
    * @param b the second BitSet to intersect
    * @param c the third BitSet to intersect
    * @return size(a intersect b intersect c)
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (BitSet)
   /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
     BitSet intersection = (BitSet) a.clone();
@@ -216,7 +216,7 @@ public final class UtilMDE {
    * @return an InputStream for filename
    * @throws IOException if there is trouble reading the file
    * @throws FileNotFoundException if the file is not found
-   **/
+   */
   public static InputStreamReader fileReader(String filename) throws FileNotFoundException, IOException {
     // return fileReader(filename, "ISO-8859-1");
     return fileReader(new File(filename), null);
@@ -235,7 +235,7 @@ public final class UtilMDE {
    * @return an InputStreamReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static InputStreamReader fileReader(File file) throws FileNotFoundException, IOException {
     return fileReader(file, null);
   }
@@ -255,7 +255,7 @@ public final class UtilMDE {
    * @return an InputStreamReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static InputStreamReader fileReader(File file, /*@Nullable*/ String charsetName) throws FileNotFoundException, IOException {
     InputStream in = new FileInputStream(file);
     InputStreamReader file_reader;
@@ -280,7 +280,7 @@ public final class UtilMDE {
    * @return a BufferedReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static BufferedReader bufferedFileReader(String filename) throws FileNotFoundException, IOException {
     return bufferedFileReader(new File(filename));
   }
@@ -298,7 +298,7 @@ public final class UtilMDE {
    * @return a BufferedReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static BufferedReader bufferedFileReader(File file) throws FileNotFoundException, IOException {
     return(bufferedFileReader(file, null));
   }
@@ -317,7 +317,7 @@ public final class UtilMDE {
    * @return a BufferedReader for filename
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static BufferedReader bufferedFileReader(String filename, /*@Nullable*/ String charsetName) throws FileNotFoundException, IOException {
     return bufferedFileReader(new File(filename), charsetName);
   }
@@ -336,7 +336,7 @@ public final class UtilMDE {
    * @return a BufferedReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static BufferedReader bufferedFileReader(File file, /*@Nullable*/ String charsetName) throws FileNotFoundException, IOException {
     Reader file_reader = fileReader(file, charsetName);
     return new BufferedReader(file_reader);
@@ -356,7 +356,7 @@ public final class UtilMDE {
    * @return a LineNumberReader for filename
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static LineNumberReader lineNumberFileReader(String filename) throws FileNotFoundException, IOException {
     return lineNumberFileReader(new File(filename));
   }
@@ -374,7 +374,7 @@ public final class UtilMDE {
    * @return a LineNumberReader for file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static LineNumberReader lineNumberFileReader(File file) throws FileNotFoundException, IOException {
     Reader file_reader;
     if (file.getName().endsWith(".gz")) {
@@ -403,7 +403,7 @@ public final class UtilMDE {
    * @param filename the possibly-compressed file to write
    * @return a BufferedWriter for filename
    * @throws IOException if there is trouble writing the file
-   **/
+   */
   public static BufferedWriter bufferedFileWriter(String filename) throws IOException {
     return bufferedFileWriter(filename, false);
   }
@@ -422,7 +422,7 @@ public final class UtilMDE {
    * of the file instead of the beginning.
    * @return a BufferedWriter for filename
    * @throws IOException if there is trouble writing the file
-   **/
+   */
   // Question:  should this be rewritten as a wrapper around bufferedFileOutputStream?
   public static BufferedWriter bufferedFileWriter(String filename, boolean append) throws IOException {
     Writer file_writer;
@@ -448,7 +448,7 @@ public final class UtilMDE {
    * of the file instead of the beginning.
    * @return a BufferedOutputStream for filename
    * @throws IOException if there is trouble writing the file
-   **/
+   */
   public static BufferedOutputStream bufferedFileOutputStream(String filename, boolean append) throws IOException {
     OutputStream os = new FileOutputStream(filename, append);
     if (filename.endsWith(".gz")) {
@@ -522,7 +522,7 @@ public final class UtilMDE {
    * @param className name of the class
    * @return Class corresponding to className
    * @throws ClassNotFoundException if the class is not found
-   **/
+   */
   // The annotation encourages proper use, even though this can take a
   // fully-qualified name (only for a non-array).
   public static Class<?> classForName(/*@ClassGetName*/ String className) throws ClassNotFoundException {
@@ -567,7 +567,7 @@ public final class UtilMDE {
    * or "int" to "I".
    * @param classname name of the class, in binary class name format
    * @return name of the class, in field descriptor format
-   **/
+   */
   @SuppressWarnings("signature") // conversion routine
   public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(/*@BinaryName*/ String classname) {
     int dims = 0;
@@ -634,7 +634,7 @@ public final class UtilMDE {
    * to "([Ljava/lang/Integer;I[[Ljava/lang/Integer;)".
    * @param arglist an argument list, in Java format
    * @return argument list, in JVML format
-   **/
+   */
   public static String arglistToJvm(String arglist) {
     if (! (arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -672,7 +672,7 @@ public final class UtilMDE {
    * or "I" to "int".
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
-   **/
+   */
   @SuppressWarnings("signature") // conversion routine
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
@@ -704,7 +704,7 @@ public final class UtilMDE {
    * to "(java.lang.Integer[], int, java.lang.Integer[][])".
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
-   **/
+   */
   public static String arglistFromJvm(String arglist) {
     if (! (arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -746,7 +746,7 @@ public final class UtilMDE {
    * This static nested class has no purpose but to define defineClassFromFile.
    * ClassLoader.defineClass is protected, so I subclass ClassLoader in
    * order to call defineClass.
-   **/
+   */
   private static class PromiscuousLoader extends ClassLoader {
     /**
      * Converts the bytes in a file into an instance of
@@ -787,7 +787,7 @@ public final class UtilMDE {
    * @return a Java Object corresponding to the Class defined in the .class file
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   // Also throws UnsupportedClassVersionError and some other exceptions.
   public static Class<?> defineClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
     return thePromiscuousLoader.defineClassFromFile(className, pathname);
@@ -827,7 +827,7 @@ public final class UtilMDE {
    * @param filename file whose size to count
    * @return number of lines in filename
    * @throws IOException if there is trouble reading the file
-   **/
+   */
   public static long count_lines(String filename) throws IOException {
     long count = 0;
     try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
@@ -943,7 +943,7 @@ public final class UtilMDE {
    *  if the file can be created.
    * @param file the file to create and write
    * @return true iff the file can be created and written
-   **/
+   */
   public static boolean canCreateAndWrite(File file) {
     if (file.exists()) {
       return file.canWrite();
@@ -995,7 +995,7 @@ public final class UtilMDE {
    *  SecurityManager.checkWrite(java.lang.String) method does not allow a
    *  file to be created
    * @see java.io.File#createTempFile(String, String, File)
-   **/
+   */
   public static File createTempDir(String prefix, String suffix)
     throws IOException {
     String fs = File.separator;
@@ -1136,7 +1136,7 @@ public final class UtilMDE {
    * @param o the object to write
    * @param file the file to which to write the object
    * @throws IOException if there is trouble writing the file
-   **/
+   */
   public static void writeObject(Object o, File file) throws IOException {
     // 8192 is the buffer size in BufferedReader
     OutputStream bytes =
@@ -1156,7 +1156,7 @@ public final class UtilMDE {
    * @return the object read from the file
    * @throws IOException if there is trouble reading the file
    * @throws ClassNotFoundException if the object's class cannot be found
-   **/
+   */
   public static Object readObject(File file) throws
       IOException, ClassNotFoundException {
     // 8192 is the buffer size in BufferedReader
@@ -1489,7 +1489,7 @@ public final class UtilMDE {
    * An Iterator that returns first the elements returned by its first
    * argument, then the elements returned by its second argument.
    * Like MergedIterator, but specialized for the case of two arguments.
-   **/
+   */
   public static final class MergedIterator2<T> implements Iterator<T> {
     Iterator<T> itor1, itor2;
     public MergedIterator2(Iterator<T> itor1_, Iterator<T> itor2_) {
@@ -1517,7 +1517,7 @@ public final class UtilMDE {
    * An Iterator that returns the elements in each of its argument
    * Iterators, in turn.  The argument is an Iterator of Iterators.
    * Like MergedIterator2, but generalized to arbitrary number of iterators.
-   **/
+   */
   public static final class MergedIterator<T> implements Iterator<T> {
     Iterator<Iterator<T>> itorOfItors;
     public MergedIterator(Iterator<Iterator<T>> itorOfItors) {
@@ -1589,7 +1589,7 @@ public final class UtilMDE {
    * Returns an iterator just like its argument, except that the first and
    * last elements are removed.  They can be accessed via the getFirst and
    * getLast methods.
-   **/
+   */
   @SuppressWarnings("assignment.type.incompatible") // problems in DFF branch
   public static final class RemoveFirstAndLastIterator<T> implements Iterator<T> {
     Iterator<T> itor;
@@ -1657,7 +1657,7 @@ public final class UtilMDE {
    * @param itor elements to be randomly selected from
    * @param num_elts number of elements to select
    * @return list of num_elts elements from itor
-   **/
+   */
   public static <T> List<T> randomElements(Iterator<T> itor, int num_elts) {
     return randomElements(itor, num_elts, r);
   }
@@ -1673,7 +1673,7 @@ public final class UtilMDE {
    * @param num_elts number of elements to select
    * @param random the Random instance to use to make selections
    * @return list of num_elts elements from itor
-   **/
+   */
   public static <T> List<T> randomElements(Iterator<T> itor, int num_elts, Random random) {
     // The elements are chosen with the following probabilities,
     // where n == num_elts:
@@ -1722,7 +1722,7 @@ public final class UtilMDE {
    * @param count how much to increment the value by
    * @return the old value, before it was incremented
    * @throws Error if the key is in the Map but maps to a non-Integer.
-   **/
+   */
   public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
     Integer old = m.get(key);
     int new_total;
@@ -1924,7 +1924,7 @@ public final class UtilMDE {
    * @param p Properties object in which to look up the property
    * @param key name of the property to look up
    * @return true iff the property has value "true", "yes", or "1"
-   **/
+   */
   @SuppressWarnings("purity")   // does not depend on object identity
   /*@Pure*/ public static boolean propertyIsTrue(Properties p, String key) {
     String pvalue = p.getProperty(key);
@@ -1944,7 +1944,7 @@ public final class UtilMDE {
    * @return the previous value of the property
    * @see Properties#getProperty
    * @see Properties#setProperty
-   **/
+   */
   public static /*@Nullable*/ String appendProperty(Properties p, String key, String value) {
     return (String)p.setProperty(key, p.getProperty(key, "") + value);
   }
@@ -1957,7 +1957,7 @@ public final class UtilMDE {
    * @param key name of the property to look up
    * @param value value to set the property to, if it is not already set
    * @return the previous value of the property
-   **/
+   */
   public static /*@Nullable*/ String setDefaultMaybe(Properties p, String key, String value) {
     String currentValue = p.getProperty(key);
     if (currentValue == null) {
@@ -2062,7 +2062,7 @@ public final class UtilMDE {
    * @param set a set in which to look up the value
    * @param key the value to look up in the set
    * @return the object in this set that is equal to key, or null
-   **/
+   */
   public static /*@Nullable*/ Object getFromSet(Set<?> set, Object key) {
     if (key == null) {
       return null;
@@ -2104,7 +2104,7 @@ public final class UtilMDE {
   /** Return a String containing all the characters from the input stream.
    * @param is input stream to read
    * @return a String containing all the characters from the input stream
-   **/
+   */
   public static String streamString(InputStream is) {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     streamCopy(is, baos);
@@ -2123,7 +2123,7 @@ public final class UtilMDE {
    * @param oldStr the substring to replace
    * @param newStr the replacement
    * @return target with all instances of oldStr replaced by newStr
-   **/
+   */
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) {
       throw new IllegalArgumentException();
@@ -2150,7 +2150,7 @@ public final class UtilMDE {
    * @param s the string to split
    * @param delim delimiter to split the string on
    * @return array of length at least 1, containing s split on delimiter
-   **/
+   */
   public static String[] split(String s, char delim) {
     ArrayList<String> result_list = new ArrayList<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
@@ -2172,7 +2172,7 @@ public final class UtilMDE {
    * @param s the string to split
    * @param delim delimiter to split the string on
    * @return array of length at least 1, containing s split on delimiter
-   **/
+   */
   public static String[] split(String s, String delim) {
     int delimlen = delim.length();
     if (delimlen == 0) {
@@ -2198,7 +2198,7 @@ public final class UtilMDE {
    * @see #split(String s, char delim)
    * @param s the string to split
    * @return an array of Strings, one for each line in the argument
-   **/
+   */
   public static String[] splitLines(String s) {
     return s.split("\r\n?|\n\r?", -1);
   }
@@ -2210,7 +2210,7 @@ public final class UtilMDE {
    * @param a array of values to concatenate
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter between
-   **/
+   */
   public static String join(Object[] a, String delim) {
     if (a.length == 0) {
       return "";
@@ -2231,7 +2231,7 @@ public final class UtilMDE {
    * @see plume.ArraysMDE#toString(int[])
    * @param a array of values to concatenate
    * @return the concatenation of the string representations of the values, each on its own line
-   **/
+   */
   public static String joinLines(Object... a) {
     return join(a, lineSep);
   }
@@ -2243,7 +2243,7 @@ public final class UtilMDE {
    * @param v list of values to concatenate
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter between
-   **/
+   */
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) {
       return "";
@@ -2265,7 +2265,7 @@ public final class UtilMDE {
    * @see java.util.AbstractCollection#toString()
    * @param v list of values to concatenate
    * @return the concatenation of the string representations of the values, each on its own line
-   **/
+   */
   public static String joinLines(List<String> v) {
     return join(v, lineSep);
   }
@@ -2278,7 +2278,7 @@ public final class UtilMDE {
    * Java string literal denoting the original string.
    * @param orig string to quote
    * @return quoted version of orig
-   **/
+   */
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen right before this position.
@@ -2348,7 +2348,7 @@ public final class UtilMDE {
    * printable ASCII.  Returns a new string.
    * @param orig string to quote
    * @return quoted version of orig
-   **/
+   */
   public static String escapeNonASCII(String orig) {
     StringBuffer sb = new StringBuffer();
     int orig_len = orig.length();
@@ -2364,7 +2364,7 @@ public final class UtilMDE {
    * result is sure to be printable ASCII. Not particularly optimized.
    * @param c character to quote
    * @return quoted version of c
-   **/
+   */
   private static String escapeNonASCII(char c) {
     if (c == '"') {
       return "\\\"";
@@ -2401,7 +2401,7 @@ public final class UtilMDE {
    * escapeNonJava(). Previously known as unquote().
    * @param orig string to quoto
    * @return quoted version of orig
-   **/
+   */
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
@@ -2499,7 +2499,7 @@ public final class UtilMDE {
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace abutting
    * @return version of arg, with whitespace abutting delimiter removed
-   **/
+   */
   public static String removeWhitespaceAround(String arg, String delimiter) {
     arg = removeWhitespaceBefore(arg, delimiter);
     arg = removeWhitespaceAfter(arg, delimiter);
@@ -2510,7 +2510,7 @@ public final class UtilMDE {
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
-   **/
+   */
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
     int delim_len = delimiter.length();
@@ -2538,7 +2538,7 @@ public final class UtilMDE {
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace before
    * @return version of arg, with whitespace before delimiter removed
-   **/
+   */
   public static String removeWhitespaceBefore(String arg, String delimiter) {
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
     // String orig = arg;
@@ -2663,7 +2663,7 @@ public final class UtilMDE {
    * @param s string to search in
    * @param ch character to search for
    * @return number of times the character appears in the string
-   **/
+   */
   public static int count(String s, int ch) {
     int result = 0;
     int pos = s.indexOf(ch);
@@ -2678,7 +2678,7 @@ public final class UtilMDE {
    * @param s string to search in
    * @param sub string to search for
    * @return number of times the substring appears in the string
-   **/
+   */
   public static int count(String s, String sub) {
     int result = 0;
     int pos = s.indexOf(sub);
@@ -2705,7 +2705,7 @@ public final class UtilMDE {
    * @param delim the delimiters
    * @param returnDelims flag indicating whether to return the delimiters as tokens.
    * @return vector of strings resulting from tokenization
-   **/
+   */
   public static Vector<Object> tokens(String str, String delim, boolean returnDelims) {
     return makeVector(new StringTokenizer(str, delim, returnDelims));
   }
@@ -2716,7 +2716,7 @@ public final class UtilMDE {
    * @param str a string to be parsed
    * @param delim the delimiters
    * @return vector of strings resulting from tokenization
-   **/
+   */
   public static Vector<Object> tokens(String str, String delim) {
     return makeVector(new StringTokenizer(str, delim));
   }
@@ -2726,7 +2726,7 @@ public final class UtilMDE {
    * {@link java.util.StringTokenizer#StringTokenizer(String)} with the given arguments.
    * @param str a string to be parsed
    * @return vector of strings resulting from tokenization
-   **/
+   */
   public static Vector<Object> tokens(String str) {
     return makeVector(new StringTokenizer(str));
   }
@@ -2742,7 +2742,7 @@ public final class UtilMDE {
    * To see a backtrace at the the current location, do "backtrace(new Throwable())".
    * @param t the Throwable to obtain a backtrace of
    * @return a String representation of the backtrace of the given Throwable
-  **/
+  */
   public static String backTrace(Throwable t) {
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
@@ -2764,7 +2764,7 @@ public final class UtilMDE {
    * @param <T> type of elements of the list
    * @param l a list to sort
    * @param c a sorted version of the list
-   **/
+   */
   public static <T> List<T> sortList(List<T> l, Comparator<? super T> c) {
     List<T> result = new ArrayList<T>(l);
     Collections.sort(result, c);
@@ -2780,7 +2780,7 @@ public final class UtilMDE {
    * @param <T> type of elements of the list
    * @param l a list to remove duplicates from
    * @return a copy of the list with duplicates removed
-   **/
+   */
   public static <T> List<T> removeDuplicates(List<T> l) {
     HashSet<T> hs = new LinkedHashSet<T>(l);
     List<T> result = new ArrayList<T>(hs);
@@ -2999,7 +2999,7 @@ public final class UtilMDE {
    * is java.lang.String, String will be returned.
    * @param qualified_name the qualified name of a class
    * @return the simple unqualified name of the class
-   **/
+   */
   public static String unqualified_name(String qualified_name) {
 
     int offset = qualified_name.lastIndexOf('.');
@@ -3015,7 +3015,7 @@ public final class UtilMDE {
    * is java.lang.String, String will be returned.
    * @param cls a class
    * @return the simple unqualified name of the class
-   **/
+   */
   public static String unqualified_name(Class<?> cls) {
 
     return (unqualified_name(cls.getName()));

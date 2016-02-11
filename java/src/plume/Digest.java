@@ -26,7 +26,7 @@ public final class Digest {
    * @param md the MessageDigest
    * @return the message digest
    * @throws IOException if there is a problem reading the file
-   **/
+   */
   public static byte[] getFileDigest(String filename, MessageDigest md)
        throws IOException {
     // Make sure there is nothing left behind in the MessageDigest
@@ -62,7 +62,7 @@ public final class Digest {
    * like Base 64 encoding is more compact, but harder to encode.
    * @param bytes the bytes to convert to a String
    * @return a String representation of the input bytes
-   **/
+   */
   public static String hexEncode(byte[] bytes) {
     StringBuffer s = new StringBuffer(bytes.length * 2);
     for (int i = 0; i < bytes.length; i++) {
@@ -79,7 +79,7 @@ public final class Digest {
    * This method is the reverse of {@link #hexEncode(byte[])}.
    * @param s the String to convert to an array of bytes
    * @return the bytes equivalent to the input String
-   **/
+   */
   public static byte[] hexDecode(String s) throws IllegalArgumentException {
     try {
       int len = s.length();

@@ -221,7 +221,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param filename the file name
    * @throws UnsupportedEncodingException if the charset encoding is not supported
    * @see #EntryReader(InputStream,String,String,String)
-   **/
+   */
   public EntryReader(InputStream in, String charsetName, String filename) throws UnsupportedEncodingException {
     this (in, charsetName, filename, null, null);
   }
@@ -377,7 +377,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param file the file to read
    * @throws IOException if there is a problem reading the file
    * @see #EntryReader(File,String,String)
-   **/
+   */
   public EntryReader(File file) throws IOException {
     this (file, null, null);
   }
@@ -387,7 +387,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param charsetName the character set to use
    * @throws IOException if there is a problem reading the file
    * @see #EntryReader(File,String,String)
-   **/
+   */
   public EntryReader(File file, String charsetName) throws IOException {
     this (UtilMDE.fileInputStream(file),
           charsetName, file.toString(), null, null);
@@ -515,7 +515,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * one can never be created after it is exhausted.
    *
    * @return a line-by-line interator for this file
-   **/
+   */
   @Override
   public Iterator<String> iterator() {
     return this;
@@ -526,7 +526,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * are turned into errors (because the definition of hasNext() in Iterator
    * doesn't throw any exceptions).
    * @return whether there is another line to read
-   **/
+   */
   @Override
   public boolean hasNext() {
     if (pushback_line != null) {
@@ -552,7 +552,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Return the next line in the multi-file.
    * @return the next line in the multi-file
    * Throws NoSuchElementException at end of file.
-   **/
+   */
   @Override
   public String next() {
     try {
@@ -709,7 +709,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Return the current line number in the current file.
    * @return the current line number
-   **/
+   */
   @Override
   public int getLineNumber() {
     FlnReader ri = readers.peek();
@@ -800,7 +800,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Simple usage example.
    * @param args command-line arguments: filename [comment_re [include_re]]
    * @throws IOException if there is a problem reading a file
-   **/
+   */
   public static void main(String[] args) throws IOException {
 
     if (args.length < 1 || args.length > 3) {

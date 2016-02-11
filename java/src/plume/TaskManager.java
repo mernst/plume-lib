@@ -259,7 +259,7 @@ public class TaskManager {
   /** initializes a task manager with all of the tasks in filenames.
    * @param filenames list of files to read tasks from
    * @throws IOException if there is trouble reading a file
-   **/
+   */
   public TaskManager(String[] filenames) throws IOException {
 
     // Read in each specified task file
@@ -381,7 +381,7 @@ public class TaskManager {
 
   /** Adds the specified task to the end of the task list.
    * @param task the task to be queued on the task list
-   **/
+   */
   public void add(Task task) {
     tasks.add(task);
   }
@@ -391,7 +391,7 @@ public class TaskManager {
    * All tasks match a responsible value of null.
    * @param responsible name of the responsible party, or null; search for tasks assigned to responsible
    * @return a TaskManger with only those tasks assigned to responsible
-   **/
+   */
   public TaskManager responsible_match(/*@Nullable*/ String responsible) {
 
     TaskManager tm = new TaskManager();
@@ -409,7 +409,7 @@ public class TaskManager {
   /** Create a new TaskManger with only those tasks in milestone.
    * @param milestone milestone to search for
    * @return TaskManger with only the tasks in the given milestone
-   **/
+   */
   public TaskManager milestone_match(/*@Nullable*/ String milestone) {
 
     TaskManager tm = new TaskManager();
@@ -429,7 +429,7 @@ public class TaskManager {
   /**
    * Create a new TaskManger with only completed tasks.
    * @return a new TaskManger with only completed tasks
-   **/
+   */
   public TaskManager completed_only() {
 
     TaskManager tm = new TaskManager();
@@ -446,7 +446,7 @@ public class TaskManager {
   /**
    * Create a new TaskManger with only open tasks.
    * @return a new TaskManger with only completed tasks
-   **/
+   */
   public TaskManager open_only() {
 
     TaskManager tm = new TaskManager();

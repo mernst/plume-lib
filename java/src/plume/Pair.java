@@ -10,7 +10,7 @@ import org.checkerframework.dataflow.qual.*;
  * type-safely holds two objects of possibly-different types.
  * @param <T1> the type of the first element of the pair
  * @param <T2> the type of the second element of the pair
- **/
+ */
 public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Object> {
   /** The first element of the pair. */
   public T1 a;
@@ -32,7 +32,7 @@ public class Pair<T1 extends /*@Nullable*/ Object,T2 extends /*@Nullable*/ Objec
    * @param a first argument
    * @param b second argument
    * @return a pair of the values (a, b)
-   **/
+   */
   public static <A extends /*@Nullable*/ Object, B extends /*@Nullable*/ Object> Pair<A, B> of(A a, B b) {
     return new Pair<A, B>(a, b);
   }

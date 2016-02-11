@@ -21,7 +21,7 @@ import org.checkerframework.dataflow.qual.*;
  *
  * Java builds in interning for Strings, but not for other objects.  The
  * methods in this class extend interning to all Java objects.
- **/
+ */
 public final class Intern {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -40,7 +40,7 @@ public final class Intern {
    * @param a the array whose elements to intern in place
    * @return an interned version of a
    * @see String#intern
-   **/
+   */
   @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
   public static /*@Interned*/ String[] internStrings(String[] a) {
     for (int i=0; i<a.length; i++) {
@@ -61,7 +61,7 @@ public final class Intern {
    * objects equal to itself).
    * @param value the value to test for interning
    * @return true iff value is interned
-   **/
+   */
   @SuppressWarnings("interning") // interning implementation
   /*@Pure*/ public static boolean isInterned(/*@Nullable*/ Object value) {
     if (value == null) {
@@ -101,7 +101,7 @@ public final class Intern {
    * Hasher object which hashes and compares Integers.
    * This is the obvious implementation that uses intValue() for the hashCode.
    * @see Hasher
-   **/
+   */
   private static final class IntegerHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -118,7 +118,7 @@ public final class Intern {
    * Hasher object which hashes and compares Longs.
    * This is the obvious implementation that uses intValue() for the hashCode.
    * @see Hasher
-   **/
+   */
   private static final class LongHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -136,7 +136,7 @@ public final class Intern {
    * to their contents.
    * @see Hasher
    * @see java.util.Arrays#equals(int[], int[])
-   **/
+   */
   private static final class IntArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -158,7 +158,7 @@ public final class Intern {
    * to their contents.
    * @see Hasher
    * @see java.util.Arrays#equals (long[], long[])
-   **/
+   */
   private static final class LongArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -182,7 +182,7 @@ public final class Intern {
   /**
    * Hasher object which hashes and compares Doubles.
    * @see Hasher
-   **/
+   */
   private static final class DoubleHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -202,7 +202,7 @@ public final class Intern {
    * to their contents.
    * @see Hasher
    * @see java.util.Arrays#equals(Object[],Object[])
-   **/
+   */
   private static final class DoubleArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -241,7 +241,7 @@ public final class Intern {
    * to their contents.
    * @see Hasher
    * java.util.Arrays.equals
-   **/
+   */
   private static final class StringArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -264,7 +264,7 @@ public final class Intern {
    * to their contents.
    * @see Hasher
    * @see java.util.Arrays#equals(Object[], Object[])
-   **/
+   */
   private static final class ObjectArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -410,7 +410,7 @@ public final class Intern {
    * Return a canonical representation for the Integer.
    * @param a an Integer to canonicalize
    * @return a canonical representation for the Integer
-   **/
+   */
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Intern.valueOf is intended to promise
   // the same).  This does not currently take advantage of that.
@@ -451,7 +451,7 @@ public final class Intern {
    * Return a canonical representation for the Long.
    * @param a the value to intern
    * @return a canonical representation for the Long
-   **/
+   */
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Long.valueOf is intended to promise
   // the same).  This could take advantage of that.
@@ -498,7 +498,7 @@ public final class Intern {
    * Arrays are compared according to their elements.
    * @param a the array to canonicalize
    * @return a canonical representation for the int[] array
-   **/
+   */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/ public static int /*@Interned*/ [] intern(int[] a) {
     // Throwable stack = new Throwable("debug traceback");
@@ -522,7 +522,7 @@ public final class Intern {
    * Arrays are compared according to their elements.
    * @param a the array to canonicalize
    * @return a canonical representation for the long[] array
-   **/
+   */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/ public static long /*@Interned*/ [] intern(long[] a) {
     //System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
@@ -543,7 +543,7 @@ public final class Intern {
    * Return a canonical representation for the Double.
    * @param a the Double to canonicalize
    * @return a canonical representation for the Double
-   **/
+   */
   // TODO: JLS 5.1.7 requires that the boxing conversion interns integer
   // values between -128 and 127 (and Double.valueOf is intended to promise
   // the same).  This could take advantage of that.
@@ -598,7 +598,7 @@ public final class Intern {
    * Arrays are compared according to their elements.
    * @param a the array to canonicalize
    * @return a canonical representation for the double[] array
-   **/
+   */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/ public static double /*@Interned*/ [] intern(double[] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
@@ -620,7 +620,7 @@ public final class Intern {
    * they are compared using their equals() methods.
    * @param a the array to canonicalize
    * @return a canonical representation for the String[] array
-   **/
+   */
   @SuppressWarnings({"interning", // interns its argument
       "purity",
       "cast"}) // cast is redundant (except in JSR 308)
@@ -652,7 +652,7 @@ public final class Intern {
    * they are compared using their equals() methods.
    * @param a the array to canonicalize
    * @return a canonical representation for the Object[] array
-   **/
+   */
   @SuppressWarnings({"interning", // interns its argument
       "purity",
       "cast"}) // cast is redundant (except in JSR 308)
@@ -680,7 +680,7 @@ public final class Intern {
    * interned.
    * @param a an Object to canonicalize
    * @return a canonical version of a
-   **/
+   */
   @SuppressWarnings("purity")   // defensive coding: throw exception when argument is invalid
   /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
     if (a == null) {
@@ -729,7 +729,7 @@ public final class Intern {
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
-   **/
+   */
   public static int /*@Interned*/ [] internSubsequence(int /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<int /*@Interned*/ []> sai = new SequenceAndIndices<int /*@Interned*/ []>(seq, start, end);
@@ -750,7 +750,7 @@ public final class Intern {
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
-   **/
+   */
   public static long /*@Interned*/ [] internSubsequence(long /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<long /*@Interned*/ []> sai = new SequenceAndIndices<long /*@Interned*/ []>(seq, start, end);
@@ -771,7 +771,7 @@ public final class Intern {
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
-   **/
+   */
   public static double /*@Interned*/ [] internSubsequence(double /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<double /*@Interned*/ []> sai = new SequenceAndIndices<double /*@Interned*/ []>(seq, start, end);
@@ -792,7 +792,7 @@ public final class Intern {
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
-   **/
+   */
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(/*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> sai = new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(seq, start, end);
@@ -816,7 +816,7 @@ public final class Intern {
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned.
    * @see #internSubsequence(int[], int, int)
-   **/
+   */
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(/*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> sai = new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(seq, start, end);
@@ -839,7 +839,7 @@ public final class Intern {
    * end indices, to represent a subsequence.  Requires that the
    * sequence be interned.  Used for interning the repeated finding
    * of subsequences on the same sequence.
-   **/
+   */
   private static final class SequenceAndIndices<T extends /*@Interned*/ Object> {
     public T seq;
     public int start;
@@ -847,7 +847,7 @@ public final class Intern {
 
     /**
      * @param seq An interned array
-     **/
+     */
     public SequenceAndIndices(T seq, int start, int end) {
       this.seq = seq;
       this.start = start;
@@ -887,7 +887,7 @@ public final class Intern {
    * Hasher object which hashes and compares String[] objects according
    * to their contents.
    * @see Hasher
-   **/
+   */
   private static final class SequenceAndIndicesHasher<T extends /*@Interned*/ Object> implements Hasher {
     public boolean equals(Object a1, Object a2) {
       @SuppressWarnings("unchecked")

@@ -24,7 +24,7 @@ import org.checkerframework.checker.nullness.qual.*;
  * the .class/.jar files that require JDK 6 or later, in this or any
  * subdirectory, run
  *   <pre>  find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6</pre>
- **/
+ */
 public final class ClassFileVersion {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -32,7 +32,7 @@ public final class ClassFileVersion {
     throw new Error("do not instantiate");
   }
 
-  /** Only report versions that are at least this large. **/
+  /** Only report versions that are at least this large. */
   static double minversion = 0;
 
   /** Main method for the ClassFileVersion program.

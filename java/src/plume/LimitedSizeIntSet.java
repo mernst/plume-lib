@@ -16,7 +16,7 @@ import org.checkerframework.dataflow.qual.*;
  * it does not autobox the int values, so it takes less memory.
  *
  * @see LimitedSizeSet
- **/
+ */
 // Consider adding:
 //  * @deprecated Use LimitedSizeSet instead
 // @Deprecated
@@ -111,7 +111,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * the number of elements that have been inserted in the set, or
    * max_size(), whichever is less.
    * @return a number that is a lower bound on the number of elements added to the set
-   **/
+   */
   /*@Pure*/
   public int size() {
     return num_values;
@@ -122,7 +122,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
    * @return maximum capacity of the set representation
-   **/
+   */
   public int max_size() {
     if (values == null) {
       return num_values;
@@ -158,7 +158,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @param max_values the maximum size for the returned LimitedSizeIntSet
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
    * @return a LimitedSizeIntSet that merges the elements of slist
-   **/
+   */
   public static LimitedSizeIntSet merge(int max_values, List<LimitedSizeIntSet> slist) {
     LimitedSizeIntSet result = new LimitedSizeIntSet(max_values);
     for (LimitedSizeIntSet s : slist) {

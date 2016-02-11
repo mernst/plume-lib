@@ -230,7 +230,7 @@ import org.checkerframework.dataflow.qual.*;
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  * @see plume.OptionsDoclet
- **/
+ */
 public class Options {
 
   /** The system-dependent line separator. */
@@ -426,7 +426,7 @@ public class Options {
      * <tt>-s --long=&lt;type&gt;</tt>
      * <strong>or</strong> (if use_single_dash is true)
      * <tt>-s -long=&lt;type&gt;</tt> .
-     **/
+     */
     public String synopsis() {
       String prefix = use_single_dash ? "-" : "--";
       String name = prefix + long_name;
@@ -510,7 +510,7 @@ public class Options {
   /**
    * Whether to parse options after a non-option command-line argument.
    * @see #parse_options_after_arg(boolean)
-   **/
+   */
   private boolean parse_options_after_arg = true;
 
   /** All of the argument options as a single string. */
@@ -577,7 +577,7 @@ public class Options {
    * <p>
    * This variable is public so that clients can reset it (useful for
    * masquerading as another program, based on parsed options).
-   **/
+   */
   public /*@Nullable*/ String usage_synopsis = null;
 
   // Debug loggers
@@ -1055,7 +1055,7 @@ public class Options {
    * The message is printed in addition to (not replacing) the usage synopsis.
    * @param ps where to print usage information
    * @param msg message to print before usage information
-   **/
+   */
   public void print_usage(PrintStream ps, String msg) {
     ps.println(msg);
     print_usage(ps);
@@ -1065,7 +1065,7 @@ public class Options {
    * Prints, to standard output, a message followed by usage information.
    * The message is printed in addition to (not replacing) the usage synopsis.
    * @param msg messag. to print before usage information
-   **/
+   */
   public void print_usage(String msg) {
     print_usage(System.out, msg);
   }

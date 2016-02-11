@@ -122,7 +122,7 @@ import org.checkerframework.checker.regex.qual.*;
  *   </li>
  * </ul>
  * <!-- end options doc -->
- **/
+ */
 public final class Lookup {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -494,7 +494,7 @@ public final class Lookup {
   /** Returns the first line of entry.
    * @param entry the entry whose first line to return
    * @return the first line of entry
-   **/
+   */
   public static String first_line(String entry) {
 
     int ii = entry.indexOf(lineSep);

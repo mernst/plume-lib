@@ -14,7 +14,7 @@ The correct way to build the system is to run 'make'.
    * The result contains no duplicates and is in order.
    * @param nums numbers to be excluded
    * @return the set: [min(nums)..max(nums)] - nums
-   **/
+   */
   public static INT[] missing_numbers(INT[] nums) {
     { // avoid modifying parameter
       INT[] nums_copy = new INT[nums.length];
@@ -57,7 +57,7 @@ The correct way to build the system is to run 'make'.
    * If boolean add_ends is set, then the bracketing endpoints are also
    * returned; otherwise, all returned values are between the minimum and
    * maximum of the original values.
-   **/
+   */
   static final class MissingNumbersIteratorINT implements Iterator<INTEGER> {
     // Exactly one of nums and nums_itor is non-null.
     INT /*@MonotonicNonNull*/ [] nums;
@@ -168,7 +168,7 @@ The correct way to build the system is to run 'make'.
    * input array has 0 length.
    * @param nums the list of operands
    * @return a (remainder, modulus) pair that fails to match elements of nums
-   **/
+   */
   public static INT /*@Nullable*/ [] nonmodulus_strict(INT[] nums) {
     // This implementation is particularly inefficient; find a better way to
     // compute this.  Perhaps obtain the new modulus numbers incrementally
@@ -214,7 +214,7 @@ The correct way to build the system is to run 'make'.
    * m) but all missing numbers in their range are.
    * @param nums the list of operands
    * @return a (remainder, modulus) pair that fails to match elements of nums
-   **/
+   */
   public static INT /*@Nullable*/ [] nonmodulus_strict_INT(Iterator<INTEGER> nums) {
     return nonmodulus_strict_INT_internal(new MissingNumbersIteratorINT(nums, true));
   }
@@ -247,7 +247,7 @@ The correct way to build the system is to run 'make'.
    * range of the input numbers (else null is returned).
    * @param nums the list of operands
    * @return a (remainder, modulus) pair that fails to match elements of nums
-   **/
+   */
   // This seems to give too many false positives (or maybe my probability
   // model was wrong); use nonmodulus_strict instead.
   public static INT /*@Nullable*/ [] nonmodulus_nonstrict(INT[] nums) {

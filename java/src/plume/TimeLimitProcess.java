@@ -43,7 +43,7 @@ import org.checkerframework.checker.nullness.qual.*;
  * ...
  * </li>
  * </ul>
- **/
+ */
 
 public class TimeLimitProcess extends Process {
 
@@ -63,7 +63,7 @@ public class TimeLimitProcess extends Process {
    * milliseconds.
    * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
-   **/
+   */
   public TimeLimitProcess(Process p, long timeLimit) {
     this(p, timeLimit, false);
   }
@@ -133,7 +133,7 @@ public class TimeLimitProcess extends Process {
   /**
    * Kills the subprocess.
    * @see Process#destroy()
-   **/
+   */
   public void destroy() {
     p.destroy();
   }
@@ -222,7 +222,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * @return true if the process if finished, false otherwise
-   **/
+   */
   public boolean finished() {
     try {
       // Process.exitValue() throws an exception if the process is not
@@ -236,7 +236,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * This TimerTask destroys the process that is passed to it.
-   **/
+   */
   private static class TPTimerTask extends TimerTask {
     TimeLimitProcess tp;
     long timeLimit;

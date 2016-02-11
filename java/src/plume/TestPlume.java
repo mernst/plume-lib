@@ -2318,7 +2318,7 @@ public final class TestPlume extends TestCase {
    * Tests whether CountingPrintWriter
    * counts the bytes printed, written for
    * different types (boolean, int, float etc.).
-   **/
+   */
   public static void testCountingPrintWriter() {
     CountingPrintWriter c1 = new CountingPrintWriter(new CharArrayWriter());
     c1.print("a");
@@ -2350,7 +2350,7 @@ public final class TestPlume extends TestCase {
   /**
    * Test the intering of subsequences as triples of the original
    * sequence, the start and the end indices.
-   **/
+   */
   public static void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a2 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});

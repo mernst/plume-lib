@@ -21,7 +21,7 @@ import org.checkerframework.framework.qual.PolyAll;
 /**
  * Utilities for manipulating arrays and collections.
  * This complements {@link java.util.Arrays} and {@link java.util.Collections}.
- **/
+ */
 @SuppressWarnings("interning")  // to do later
 public final class ArraysMDE {
   /** This class is a collecton of methods; it does not represent anything. */
@@ -40,7 +40,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static int min(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(int[])");
@@ -57,7 +57,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static long min(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(long[])");
@@ -74,7 +74,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static double min(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(double[])");
@@ -91,7 +91,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static Integer min(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Integer[])");
@@ -112,7 +112,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static Long min(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Long[])");
@@ -133,7 +133,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static Double min(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Double[])");
@@ -154,7 +154,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static int max(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(int[])");
@@ -171,7 +171,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static long max(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(long[])");
@@ -188,7 +188,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static double max(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(double[])");
@@ -205,7 +205,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static Integer max(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Integer[])");
@@ -226,7 +226,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static Long max(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Long[])");
@@ -247,7 +247,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static Double max(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Double[])");
@@ -268,7 +268,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static int [] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
@@ -288,7 +288,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static long [] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
@@ -308,7 +308,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static int element_range(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(int[])");
@@ -322,7 +322,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
-   **/
+   */
   public static long element_range(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(long[])");
@@ -402,7 +402,7 @@ public final class ArraysMDE {
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the array.
    * @see java.util.List#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt) {
     if (elt == null) {
       return indexOfEq(a, elt);
@@ -427,7 +427,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the array.
    * @see java.util.List#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
@@ -449,7 +449,7 @@ public final class ArraysMDE {
    * @return the first index whose element is equal to the specified element,
    *    or -1 if no such element is found in the list.
    * @see java.util.List#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt) {
     return a.indexOf(elt);
   }
@@ -465,7 +465,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the list.
    * @see java.util.List#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
@@ -486,7 +486,7 @@ public final class ArraysMDE {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(/*@PolyAll*/ Object[] a, /*@Nullable*/ Object elt) {
     for (int i=0; i<a.length; i++) {
       if (elt == a[i]) {
@@ -507,7 +507,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(/*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
     for (int i=minindex; i<indexlimit; i++) {
       if (elt == a[i]) {
@@ -525,7 +525,7 @@ public final class ArraysMDE {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt) {
     for (int i=0; i<a.size(); i++) {
       if (elt == a.get(i)) {
@@ -546,7 +546,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in that section of the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
     for (int i=minindex; i<indexlimit; i++) {
       if (elt == a.get(i)) {
@@ -563,7 +563,7 @@ public final class ArraysMDE {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(int[] a, int elt) {
     for (int i=0; i<a.length; i++) {
       if (elt == a[i]) {
@@ -580,7 +580,7 @@ public final class ArraysMDE {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(long[] a, long elt) {
     for (int i=0; i<a.length; i++) {
       if (elt == a[i]) {
@@ -600,7 +600,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(int[] a, int elt, int minindex, int indexlimit) {
     for (int i=minindex; i<indexlimit; i++) {
       if (elt == a[i]) {
@@ -620,7 +620,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(long[] a, long elt, int minindex, int indexlimit) {
     for (int i=minindex; i<indexlimit; i++) {
       if (elt == a[i]) {
@@ -637,7 +637,7 @@ public final class ArraysMDE {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(boolean[] a, boolean elt) {
     for (int i=0; i<a.length; i++) {
       if (elt == a[i]) {
@@ -654,7 +654,7 @@ public final class ArraysMDE {
    * @return the first index containing the specified element,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(double[] a, double elt) {
     for (int i=0; i<a.length; i++) {
       if (elt == a[i]) {
@@ -674,7 +674,7 @@ public final class ArraysMDE {
    *    such that minindex &le; i &lt; indexlimit,
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
-   **/
+   */
   /*@Pure*/ public static int indexOf(boolean[] a, boolean elt, int minindex, int indexlimit) {
     for (int i=minindex; i<indexlimit; i++) {
       if (elt == a[i]) {
@@ -704,7 +704,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(Object[] a, Object[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -724,7 +724,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(Object[] a, Object[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -744,7 +744,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(List<?> a, Object[] sub) {
     int a_index_max = a.size() - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -764,7 +764,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(List<?> a, Object[] sub) {
     int a_index_max = a.size() - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -784,7 +784,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(Object[] a, List<?> sub) {
     int a_index_max = a.length - sub.size() + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -804,7 +804,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(Object[] a, List<?> sub) {
     int a_index_max = a.length - sub.size() + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -824,7 +824,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(List<?> a, List<?> sub) {
     int a_index_max = a.size() - sub.size() + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -844,7 +844,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the list.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOfEq(List<?> a, List<?> sub) {
     int a_index_max = a.size() - sub.size() + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -863,7 +863,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(int[] a, int[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -882,7 +882,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(double[] a, double[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -902,7 +902,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(long[] a, long[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -921,7 +921,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array.
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
-   **/
+   */
   /*@Pure*/ public static int indexOf(boolean[] a, boolean[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
@@ -959,7 +959,7 @@ public final class ArraysMDE {
    * @param length the number of elements to include (not an end index,
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
-   **/
+   */
   /*@SideEffectFree*/ public static /*@PolyAll*/ Object[] subarray(/*@PolyAll*/ Object[] a, int startindex, int length) {
     /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -975,7 +975,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a sublist of the given list
-   **/
+   */
   /*@SideEffectFree*/ public static <T> List<T> subarray(List<T> a, int startindex, int length) {
     return a.subList(startindex, startindex+length);
   }
@@ -988,7 +988,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static /*@PolyAll*/ String[] subarray(/*@PolyAll*/ String[] a, int startindex, int length) {
     /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1003,7 +1003,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static byte[] subarray(byte[] a, int startindex, int length) {
     byte[] result = new byte[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1018,7 +1018,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static boolean[] subarray(boolean[] a, int startindex, int length) {
     boolean[] result = new boolean[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1033,7 +1033,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static char[] subarray(char[] a, int startindex, int length) {
     char[] result = new char[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1048,7 +1048,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static double[] subarray(double[] a, int startindex, int length) {
     double[] result = new double[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1063,7 +1063,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static float[] subarray(float[] a, int startindex, int length) {
     float[] result = new float[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1078,7 +1078,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static int[] subarray(int[] a, int startindex, int length) {
     int[] result = new int[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1093,7 +1093,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static long[] subarray(long[] a, int startindex, int length) {
     long[] result = new long[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1108,7 +1108,7 @@ public final class ArraysMDE {
    *        to avoid confusion over whether it would be the last included
    *        index or the first non-included index)
    * @return a subarray of the given array
-   **/
+   */
   /*@SideEffectFree*/ public static short[] subarray(short[] a, int startindex, int length) {
     short[] result = new short[length];
     System.arraycopy(a, startindex, result, 0, length);
@@ -1129,7 +1129,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(Object[] a, Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1153,7 +1153,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarrayEq(Object[] a, Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1177,7 +1177,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
@@ -1201,7 +1201,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarrayEq(Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
@@ -1225,7 +1225,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(List<?> a, Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
@@ -1249,7 +1249,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarrayEq(List<?> a, Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
@@ -1273,7 +1273,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
@@ -1297,7 +1297,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
@@ -1320,7 +1320,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1343,7 +1343,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1366,7 +1366,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1389,7 +1389,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
-   **/
+   */
   /*@Pure*/ public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1433,7 +1433,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static <T> T[] concat(T /*@Nullable*/ [] a, T /*@Nullable*/ [] b) {
     if (a == null) {
       if (b != null) {
@@ -1466,7 +1466,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static <T> T[] concat(T /*@Nullable*/ [] a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -1502,7 +1502,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static <T> T[] concat(/*@Nullable*/ List<T> a, T /*@Nullable*/ [] b) {
     if (a == null) {
       if (b != null) {
@@ -1538,7 +1538,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static <T> T[] concat(/*@Nullable*/ List<T> a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -1604,7 +1604,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static byte[] concat(byte /*@Nullable*/ [] a, byte /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1633,7 +1633,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static boolean[] concat(boolean /*@Nullable*/ [] a, boolean /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1662,7 +1662,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static char[] concat(char /*@Nullable*/ [] a, char /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1692,7 +1692,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static double[] concat(double /*@Nullable*/ [] a, double /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1721,7 +1721,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static float[] concat(float /*@Nullable*/ [] a, float /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1750,7 +1750,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static int[] concat(int /*@Nullable*/ [] a, int /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1779,7 +1779,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static long[] concat(long /*@Nullable*/ [] a, long /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1808,7 +1808,7 @@ public final class ArraysMDE {
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static short[] concat(short /*@Nullable*/ [] a, short /*@Nullable*/ [] b) {
     if (a == null) {
       if (b == null) {
@@ -1844,7 +1844,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   /*@SideEffectFree*/ public static String toString(/*PolyAll*/ Object /*@Nullable*/ [] a) {
     return toString(a, false);
   }
@@ -1856,7 +1856,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array, with the elements quoted
    * @see java.util.Vector#toString
-   **/
+   */
   /*@SideEffectFree*/ public static String toStringQuoted(Object /*@Nullable*/ [] a) {
     return toString(a, true);
   }
@@ -1869,7 +1869,7 @@ public final class ArraysMDE {
    * @param quoted whether to quote the array elements
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(Object /*@Nullable*/ [] a, boolean quoted) {
     if (a == null) {
@@ -1901,7 +1901,7 @@ public final class ArraysMDE {
    * @param a a list
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   /*@SideEffectFree*/ public static String toString(/*@Nullable*/ List<?> a) {
     return toString(a, false);
   }
@@ -1912,7 +1912,7 @@ public final class ArraysMDE {
    * @param a a list
    * @return a string representation of the array, with the elements quoted
    * @see java.util.Vector#toString
-   **/
+   */
   /*@SideEffectFree*/ public static String toStringQuoted(/*@Nullable*/ List<?> a) {
     return toString(a, true);
   }
@@ -1924,7 +1924,7 @@ public final class ArraysMDE {
    * @param quoted whether to quote the array elements that are Java strings
    * @return a string representation of the list
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(/*@Nullable*/ List<?> a, boolean quoted) {
     if (a == null) {
@@ -1956,7 +1956,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(int[] a) {
     if (a == null) {
@@ -1981,7 +1981,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(long[] a) {
     if (a == null) {
@@ -2006,7 +2006,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(double[] a) {
     if (a == null) {
@@ -2031,7 +2031,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(float[] a) {
     if (a == null) {
@@ -2056,7 +2056,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
   /*@SideEffectFree*/ public static String toString(boolean[] a) {
     if (a == null) {
@@ -2436,7 +2436,7 @@ public final class ArraysMDE {
    * @param a an array, representing a function
    * @return true iff all elements of a are in [0..a.length) and a
    * contains no duplicates.
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (array)
   /*@Pure*/ public static boolean fn_is_permutation(int[] a) {
     // In the common case we expect to succeed, so use as few loops as possible
@@ -2455,7 +2455,7 @@ public final class ArraysMDE {
    * Return true iff the array does not contain -1.
    * @param a an array, representing a function
    * @return true iff no element of a maps to -1
-   **/
+   */
   /*@Pure*/ public static boolean fn_is_total(int[] a) {
     return indexOf(a, -1) == -1; // not found
   }
@@ -2464,7 +2464,7 @@ public final class ArraysMDE {
    * Return an array [0..lenth).
    * @param length the length of the result
    * @return fresh array that is the identity function of the given length
-   **/
+   */
   public static int[] fn_identity(int length) {
     int[] result = new int[length];
     for (int i=0; i < length; i++) {
@@ -2478,7 +2478,7 @@ public final class ArraysMDE {
    * @param a the input permutation
    * @return fresh array which is the inverse of the given permutation.
    * @see #fn_is_permutation(int[])
-   **/
+   */
   public static int[] fn_inverse_permutation(int[] a) {
     return fn_inverse(a, a.length);
   }
@@ -2489,7 +2489,7 @@ public final class ArraysMDE {
    * @param arange length of the argument's range and the result's domain
    * @return function from [0..arange) to [0..a.length) that is the inverse of a
    * @exception UnsupportedOperationException when the function is not invertible
-   **/
+   */
   public static int[] fn_inverse(int[] a, int arange) {
     int[] result = new int[arange];
     Arrays.fill(result, -1);
@@ -2512,7 +2512,7 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the
    * composition of a and b
-   **/
+   */
   public static int[] fn_compose(int[] a, int[] b) {
     int[] result = new int[a.length];
     for (int i=0; i < a.length; i++) {
@@ -2541,7 +2541,7 @@ public final class ArraysMDE {
    * @param smaller first set to test
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean isSubset(long[] smaller, long[] bigger) {
     Set<Long> setBigger = new HashSet<Long>();
@@ -2571,7 +2571,7 @@ public final class ArraysMDE {
    * @param smaller first set to test
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean isSubset(double[] smaller, double[] bigger) {
     Set<Double> setBigger = new HashSet<Double>();
@@ -2600,7 +2600,7 @@ public final class ArraysMDE {
    * @param smaller first set to test
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
-   **/
+   */
   @SuppressWarnings("purity")   // side effect to local state (HashSet)
   /*@Pure*/ public static boolean isSubset(String[] smaller, String[] bigger) {
     Set<String> setBigger = new HashSet<String>();
@@ -2631,7 +2631,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
-   **/
+   */
   public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2667,7 +2667,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
-   **/
+   */
   public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2701,7 +2701,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
-   **/
+   */
   public static final class DoubleArrayComparatorLexical implements Comparator<double[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2736,7 +2736,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * Strings).
-   **/
+   */
   public static final class StringArrayComparatorLexical implements Comparator<String[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2780,7 +2780,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
-   **/
+   */
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>> implements Comparator<T[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2829,7 +2829,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
-   **/
+   */
   public static final class ObjectArrayComparatorLexical implements Comparator<Object[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2878,7 +2878,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
-   **/
+   */
   public static final class IntArrayComparatorLengthFirst implements Comparator<int[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2915,7 +2915,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * numbers).
-   **/
+   */
   public static final class LongArrayComparatorLengthFirst implements Comparator<long[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -2952,7 +2952,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
-   **/
+   */
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>> implements Comparator<T[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -3004,7 +3004,7 @@ public final class ArraysMDE {
    * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
    * equal according to <tt>equals()</tt> (but do contain identical
    * objects).
-   **/
+   */
   public static final class ObjectArrayComparatorLengthFirst implements Comparator<Object[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -3058,7 +3058,7 @@ public final class ArraysMDE {
    * Return true if a contains null.
    * @param a an array
    * @return true iff some element of a is null (false if a is zero-sized)
-   **/
+   */
   /*@Pure*/ public static boolean any_null(Object[] a) {
     if (a.length == 0) {
       return false;
@@ -3071,7 +3071,7 @@ public final class ArraysMDE {
    * Return true if all elements of a are null.
    * @param a an array
    * @return true iff all elements of a are null (unspecified result if a is zero-sized)
-   **/
+   */
   /*@Pure*/ public static boolean all_null(Object[] a) {
     for (int i=0; i<a.length; i++) {
       if (! (a[i] == null)) {
@@ -3085,7 +3085,7 @@ public final class ArraysMDE {
    * Return true if a contains null.
    * @param a an array
    * @return true iff some element of a is null (false if a is zero-sized)
-   **/
+   */
   /*@Pure*/ public static boolean any_null(List<?> a) {
     if (a.size() == 0) {
       return false;
@@ -3098,7 +3098,7 @@ public final class ArraysMDE {
    * Return true if all elements of a are null.
    * @param a an array
    * @return true iff all elements of a are null (unspecified result if a is zero-sized)
-   **/
+   */
   /*@Pure*/ public static boolean all_null(List<?> a) {
     for (int i=0; i<a.size(); i++) {
       if (! (a.get(i) == null)) {

@@ -19,7 +19,7 @@ import org.checkerframework.checker.regex.qual.*;
  * that compiles Java source files.
  * It invokes a user-specified external command, such as <tt>javac</tt> or
  * <tt>jikes</tt>.
- **/
+ */
 public final class FileCompiler {
 
   /** The Runtime of the JVM. */
@@ -27,7 +27,7 @@ public final class FileCompiler {
   /**
    * Matches the names of Java source files.
    * Match group 1 is the complete filename.
-   **/
+   */
   static /*@Regex(1)*/ Pattern java_filename_pattern;
   /** External command used to compile Java files. **/
   private String compiler;
@@ -58,7 +58,7 @@ public final class FileCompiler {
   /**
    * Creates a new FileCompiler.  Equivalent to FileCompiler("javac", 6000).
    * @see #FileCompiler(String, long)
-   **/
+   */
   public FileCompiler() {
     this("javac", 6000);
   }
@@ -68,7 +68,7 @@ public final class FileCompiler {
    * @param compiler A command that runs a Java compiler; for instance, it
    * could be the full path name or whatever is used on the commandline.
    * @param timeLimit The maximum permitted compilation time, in msec.
-   **/
+   */
   public FileCompiler(String compiler, long timeLimit) {
     this.compiler = compiler;
     this.timeLimit = timeLimit;
@@ -136,7 +136,7 @@ public final class FileCompiler {
    * @param filenames the paths of the java source to be compiled as Strings.
    * @return The process that executed the external compile command.
    * @throws Error if an empty list of filenames is provided.
-   **/
+   */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
 

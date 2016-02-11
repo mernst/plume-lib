@@ -17,7 +17,7 @@ import org.checkerframework.dataflow.qual.*;
  * the possibility of calling the wrong version of append.  Also, I don't
  * (yet) want to override all the methods; this simpler version seems
  * sufficient for the time being.
- **/
+ */
 public class StringBuilderDelimited implements Appendable, CharSequence {
 
   /** The StringBuilder to which this delegates work. */

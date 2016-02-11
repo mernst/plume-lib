@@ -11,7 +11,7 @@ import org.checkerframework.dataflow.qual.*;
  * @param <T1> the type of the first element of the triple
  * @param <T2> the type of the second element of the triple
  * @param <T3> the type of the third element of the triple
- **/
+ */
 public class Triple<T1,T2,T3> {
   public T1 a;
   public T2 b;
@@ -31,7 +31,7 @@ public class Triple<T1,T2,T3> {
    * @param b second argument
    * @param c third argument
    * @return a triple of the values (a, b, c)
-   **/
+   */
   public static <A, B, C> Triple<A, B, C> of(A a, B b, C c) {
     return new Triple<A, B, C>(a, b, c);
   }
