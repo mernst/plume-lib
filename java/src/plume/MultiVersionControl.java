@@ -14,6 +14,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -797,6 +799,12 @@ public class MultiVersionControl {
       System.err.printf("childdirs is null (permission or other I/O problem?) for %s%n", dir.toString());
       return;
     }
+    Arrays.sort(childdirs, new Comparator<File>() {
+        @Override
+        public int compare(File o1, File o2) {
+          return o1.getName().compareTo(o2.getName());
+        }
+      });
     for (File childdir : childdirs) {
       findCheckouts(childdir, checkouts, ignoreDirs);
     }
