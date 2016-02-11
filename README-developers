@@ -8,12 +8,11 @@ To make a plume-lib release and upload it to GitHub:
 
 1. Commit or stash any changes in your copy of the plume-lib repository.
 
-2. For each .jar file in plume-lib/java/lib/, if a more recent version is
-available, replace the out-of-date one.  Update file names in files
-plume-lib/java/.classpath and (in 2 places) plume-lib/java/Makefile .
-(Question: where did I obtain, or how did I make, svnkit-1.8.10-complete.jar?)
+2. For each .jar file in java/lib/, if a more recent version is available,
+replace the out-of-date one.  Update file names in files java/.classpath and
+(in 2 places) java/Makefile .  For checker-qual.jar, update java/lib/README .
 
-3. Browse to each URL in plume-lib/bin/checklink-args.txt and remove any
+3. Browse to each URL in bin/checklink-args.txt and remove any
 that are not valid.
 Something like this could work (to avoid doing all of the URLs in one go,
 which might overpower your browser):
@@ -33,15 +32,15 @@ which might overpower your browser):
 4. Ensure that the main documentation at index.html in the gh-pages branch
 documents any new files.  To find new files, do something like
 
-    git diff --name-status v1.0.7 | grep '^A'
+    git diff --name-status v1.0.8 | grep '^A'
 
 5. Update changelog.txt.  To help writing the text, run a command such as:
 
-    git log --name-status
+    git log --name-status v1.0.8..HEAD
 
 to view the changes since the last release, or something like
 
-    git diff v1.0.7..HEAD
+    git diff v1.0.8..HEAD
 
 to see the changes.
 
@@ -52,7 +51,7 @@ to see the changes.
 7. Ensure that Travis and Jenkins jobs pass:  at least
 plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
 
-8. Run the make-plume-release script located in plume-lib/bin:
+8. Run the make-plume-release script located in bin:
 
     export JAVAC=$CHECKERFRAMEWORK/checker/bin-devel/javac
     bin/make-plume-release x.y.z
