@@ -30,17 +30,18 @@ which might overpower your browser):
   (browse-url-checklink "[^0-6]")
 
 4. Ensure that the main documentation at index.html in the gh-pages branch
-documents any new files.  To find new files, do something like
+documents any new files.  To find new files, do
 
-    git diff --name-status v1.0.8 | grep '^A'
+    git diff --name-status v`cat VERSION` | grep '^A'
 
-5. Update changelog.txt.  To help writing the text, run a command such as:
+5. Update changelog.txt and then VERSION.
+To help writing the changelog text, run a command such as:
 
-    git log --name-status v1.0.8..HEAD
+    git log --name-status v`cat VERSION`..HEAD
 
 to view the changes since the last release, or something like
 
-    git diff v1.0.8..HEAD
+    git diff v`cat VERSION`..HEAD
 
 to see the changes.
 
@@ -48,15 +49,27 @@ to see the changes.
 
     git push
 
-7. Ensure that Travis and Jenkins jobs pass:  at least
-plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
+7. Wait about 2.5 hours and ensure that Travis and Jenkins jobs pass:
+at least plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
+The following commands will open the URLs in your browser.
+
+    xdg-open https://travis-ci.org/mernst/plume-lib
+    xdg-open https://travis-ci.org/typetools/plume-lib-typecheck
+    xdg-open https://travis-ci.org/codespecs/daikon
+    xdg-open https://travis-ci.org/typetools/daikon-typecheck-nullness
+    xdg-open https://travis-ci.org/typetools/daikon-typecheck-regex
+    xdg-open https://travis-ci.org/typetools/daikon-typecheck-signature
+    xdg-open https://travis-ci.org/typetools/daikon-typecheck-interning
+    xdg-open https://travis-ci.org/typetools/daikon-typecheck-formatter
+    xdg-open http://tern.cs.washington.edu:8080/job/plume-lib/
+    xdg-open http://tern.cs.washington.edu:8080/job/daikon/
+    xdg-open http://tern.cs.washington.edu:8080/job/daikon-typecheck/
+    xdg-open http://tern.cs.washington.edu:8080/job/plume-lib-typecheck/
 
 8. Run the make-plume-release script located in bin:
 
     export JAVAC=$CHECKERFRAMEWORK/checker/bin-devel/javac
-    bin/make-plume-release x.y.z
-
-where x.y.z is the intended new version number of the release.
+    bin/make-plume-release `cat VERSION`
 
 The script requires that $JAVAC or 'javac' point to the JSR 308 compiler.
 If this is the case, then the release is built and the test cases are run.  The
