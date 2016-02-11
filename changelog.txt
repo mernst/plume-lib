@@ -3,7 +3,7 @@ However, the recommended way to use the latest version of plume-lib is
 by cloning its repository; run:
   git clone https://github.com/mernst/plume-lib.git
 
-plume-lib 1.0.9, released ??
+plume-lib 1.0.9, released February 10, 2016
 Removed deprecated classes and methods:
   Assert
   BCELUtil.type_to_classname(Type)
