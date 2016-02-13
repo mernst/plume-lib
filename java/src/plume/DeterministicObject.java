@@ -25,7 +25,7 @@ public class DeterministicObject {
   static int counter = 0;
 
   /** The unique ID for this object. */
-  final int id = counter++;
+  final int uid = counter++;
 
   /** Create a DeterministicObject. */
   public DeterministicObject() {
@@ -33,7 +33,7 @@ public class DeterministicObject {
 
   @Override
   public int hashCode() {
-    return id;
+    return uid;
   }
 
 }
