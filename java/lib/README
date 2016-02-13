@@ -20,7 +20,7 @@ BCEL (bcel.jar)
     git pull https://github.com/codespecs/commons-bcel.git
     git push
     mvn verify
-    mv target/bcel-java7-SNAPSHOT.jar ..
+    mv target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
     cd ..
     rm -rf commons-bcel
 
