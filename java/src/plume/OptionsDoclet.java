@@ -592,7 +592,7 @@ public class OptionsDoclet {
           continue;
         }
 
-        b.append("  <li id=\"optiongroup:" + gi.name.replace(" ", "-") + "\">" + gi.name);
+        b.append("  <li id=\"optiongroup:" + gi.name.replace(" ", "-").replace("/", "-") + "\">" + gi.name);
         b.append("    <ul>");
         b.append(optionListToHtml(gi.optionList, 6));
         b.append("    </ul>");
