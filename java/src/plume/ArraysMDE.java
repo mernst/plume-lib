@@ -5,8 +5,10 @@ package plume;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -705,7 +707,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
-  /*@Pure*/ public static int indexOf(Object[] a, Object[] sub) {
+  /*@Pure*/ public static int indexOf(/*@PolyAll*/ Object[] a, Object[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
       if (isSubarray(a, sub, i)) {
@@ -725,7 +727,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
-  /*@Pure*/ public static int indexOfEq(Object[] a, Object[] sub) {
+  // The signature on this method is unnecessarily strict because it
+  // requires that the component types be identical.  The signature should
+  // be indexOfEq(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
+  // @PolyAll qualifier does not yet take an argument.
+  /*@Pure*/ public static int indexOfEq(/*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub) {
     int a_index_max = a.length - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
       if (isSubarrayEq(a, sub, i)) {
@@ -745,7 +751,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
-  /*@Pure*/ public static int indexOf(List<?> a, Object[] sub) {
+  /*@Pure*/ public static int indexOf(List<?> a, /*@PolyAll*/ Object[] sub) {
     int a_index_max = a.size() - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
       if (isSubarray(a, sub, i)) {
@@ -765,7 +771,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
-  /*@Pure*/ public static int indexOfEq(List<?> a, Object[] sub) {
+  /*@Pure*/ public static int indexOfEq(List<?> a, /*@PolyAll*/ Object[] sub) {
     int a_index_max = a.size() - sub.length + 1;
     for (int i=0; i<=a_index_max; i++) {
       if (isSubarrayEq(a, sub, i)) {
@@ -785,7 +791,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
-  /*@Pure*/ public static int indexOf(Object[] a, List<?> sub) {
+  /*@Pure*/ public static int indexOf(/*@PolyAll*/ Object[] a, List<?> sub) {
     int a_index_max = a.length - sub.size() + 1;
     for (int i=0; i<=a_index_max; i++) {
       if (isSubarray(a, sub, i)) {
@@ -805,7 +811,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
-  /*@Pure*/ public static int indexOfEq(Object[] a, List<?> sub) {
+  /*@Pure*/ public static int indexOfEq(/*@PolyAll*/ Object[] a, List<?> sub) {
     int a_index_max = a.length - sub.size() + 1;
     for (int i=0; i<=a_index_max; i++) {
       if (isSubarrayEq(a, sub, i)) {
@@ -1130,7 +1136,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    */
-  /*@Pure*/ public static boolean isSubarray(Object[] a, Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarray(/*@PolyNull*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1154,7 +1160,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    */
-  /*@Pure*/ public static boolean isSubarrayEq(Object[] a, Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarrayEq(/*@PolyNull*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1178,7 +1184,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    */
-  /*@Pure*/ public static boolean isSubarray(Object[] a, List<?> sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarray(/*@PolyNull*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1202,7 +1208,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    */
-  /*@Pure*/ public static boolean isSubarrayEq(Object[] a, List<?> sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarrayEq(/*@PolyNull*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1226,14 +1232,14 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    */
-  /*@Pure*/ public static boolean isSubarray(List<?> a, Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarray(List<?> a, /*@PolyNull*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
       return false;
     }
     for (int i=0; i<sub_len; i++) {
-      if (! sub[i].equals(a.get(a_offset+i))) {
+      if (! Objects.equals(sub[i], a.get(a_offset+i))) {
         return false;
       }
     }
@@ -1250,7 +1256,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    */
-  /*@Pure*/ public static boolean isSubarrayEq(List<?> a, Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarrayEq(List<?> a, /*@PolyNull*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1845,7 +1851,7 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    */
-  /*@SideEffectFree*/ public static String toString(/*PolyAll*/ Object /*@Nullable*/ [] a) {
+  /*@SideEffectFree*/ public static String toString(/*@PolyAll*/ Object /*@Nullable*/ [] a) {
     return toString(a, false);
   }
 
@@ -1857,7 +1863,7 @@ public final class ArraysMDE {
    * @return a string representation of the array, with the elements quoted
    * @see java.util.Vector#toString
    */
-  /*@SideEffectFree*/ public static String toStringQuoted(Object /*@Nullable*/ [] a) {
+  /*@SideEffectFree*/ public static String toStringQuoted(/*@PolyAll*/ Object /*@Nullable*/ [] a) {
     return toString(a, true);
   }
 
@@ -1871,7 +1877,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(Object /*@Nullable*/ [] a, boolean quoted) {
+  /*@SideEffectFree*/ public static String toString(/*@PolyAll*/ Object /*@Nullable*/ [] a, boolean quoted) {
     if (a == null) {
       return "null";
     }
@@ -1881,9 +1887,10 @@ public final class ArraysMDE {
       sb.append(a[0]);
       for (int i=1; i<a.length; i++) {
         sb.append(", ");
-        if (quoted) {
+        if (quoted && a[i] instanceof String) {
+          String elt = (String)a[i];
           sb.append('\"');
-          sb.append(UtilMDE.escapeNonJava((String)a[i]));
+          sb.append(UtilMDE.escapeNonJava(elt));
           sb.append('\"');
         } else {
           sb.append(a[i]);
@@ -1894,55 +1901,55 @@ public final class ArraysMDE {
     return sb.toString();
   }
 
-  // Why don't the next 3 classes take an arbitrary collection?
   /**
-   * Return a string representation of the array.
+   * Return a string representation of the collection.
    * The representation is patterned after that of java.util.Vector.
-   * @param a a list
-   * @return a string representation of the array
+   * @param a a collection
+   * @return a string representation of the collection
    * @see java.util.Vector#toString
    */
-  /*@SideEffectFree*/ public static String toString(/*@Nullable*/ List<?> a) {
+  /*@SideEffectFree*/ public static String toString(/*@Nullable*/ Collection<?> a) {
     return toString(a, false);
   }
 
   /**
-   * Return a string representation of the array.
+   * Return a string representation of the collection.
    * The representation is patterned after that of java.util.Vector.
-   * @param a a list
-   * @return a string representation of the array, with the elements quoted
+   * @param a a collection
+   * @return a string representation of the collection, with the elements quoted
    * @see java.util.Vector#toString
    */
-  /*@SideEffectFree*/ public static String toStringQuoted(/*@Nullable*/ List<?> a) {
+  /*@SideEffectFree*/ public static String toStringQuoted(/*@Nullable*/ Collection<?> a) {
     return toString(a, true);
   }
 
   /**
-   * Return a string representation of the array.
+   * Return a string representation of the collection.
    * The representation is patterned after that of java.util.Vector.
-   * @param a a list
-   * @param quoted whether to quote the array elements that are Java strings
+   * @param a a collection
+   * @param quoted whether to quote the collection elements that are Java strings
    * @return a string representation of the list
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(/*@Nullable*/ List<?> a, boolean quoted) {
+  /*@SideEffectFree*/ public static String toString(/*@Nullable*/ Collection<?> a, boolean quoted) {
     if (a == null) {
       return "null";
     }
     StringBuffer sb = new StringBuffer();
     sb.append("[");
     if (a.size() > 0) {
-      sb.append(a.get(0));
-      for (int i=1; i<a.size(); i++) {
+      Iterator<?> itor = a.iterator();
+      sb.append(itor.next());
+      while (itor.hasNext()) {
         sb.append(", ");
-        Object elt = a.get(i);
+        Object elt = itor.next();
         if (quoted && elt instanceof String) {
           sb.append('\"');
           sb.append(UtilMDE.escapeNonJava((String)elt));
           sb.append('\"');
         } else {
-          sb.append(a.get(i));
+          sb.append(elt);
         }
       }
     }
@@ -1958,7 +1965,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(int[] a) {
+  /*@SideEffectFree*/ public static String toString(int /*@Nullable*/ [] a) {
     if (a == null) {
       return "null";
     }
@@ -1983,7 +1990,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(long[] a) {
+  /*@SideEffectFree*/ public static String toString(long /*@Nullable*/ [] a) {
     if (a == null) {
       return "null";
     }
@@ -2008,7 +2015,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(double[] a) {
+  /*@SideEffectFree*/ public static String toString(double /*@Nullable*/ [] a) {
     if (a == null) {
       return "null";
     }
@@ -2033,7 +2040,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(float[] a) {
+  /*@SideEffectFree*/ public static String toString(float /*@Nullable*/ [] a) {
     if (a == null) {
       return "null";
     }
@@ -2058,7 +2065,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#toString
    */
   @SuppressWarnings("purity")   // side effect to local state (string creation)
-  /*@SideEffectFree*/ public static String toString(boolean[] a) {
+  /*@SideEffectFree*/ public static String toString(boolean /*@Nullable*/ [] a) {
     if (a == null) {
       return "null";
     }
@@ -2675,7 +2682,9 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
     public int compare(long[] a1, long[] a2) {
@@ -2709,7 +2718,9 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
     public int compare(double[] a1, double[] a2) {
@@ -2744,10 +2755,17 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
-    public int compare(String[] a1, String[] a2) {
+    @SuppressWarnings("override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    // The signature on this method is unnecessarily strict because it
+    // requires that the component types be identical.  The signature should
+    // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
+    // @PolyAll qualifier does not yet take an argument.
+    public int compare(/*@PolyAll*/ String[] a1, /*@PolyAll*/ String[] a2) {
       if (a1 == a2) {
         return 0;
       }
@@ -2788,10 +2806,17 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
-    public int compare(T[] a1, T[] a2) {
+    @SuppressWarnings("override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    // The signature on this method is unnecessarily strict because it
+    // requires that the component types be identical.  The signature should
+    // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
+    // @PolyAll qualifier does not yet take an argument.
+    public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
       }
@@ -2837,10 +2862,17 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
-    public int compare(Object[] a1, Object[] a2) {
+    @SuppressWarnings("override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    // The signature on this method is unnecessarily strict because it
+    // requires that the component types be identical.  The signature should
+    // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
+    // @PolyAll qualifier does not yet take an argument.
+    public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
       }
@@ -2886,7 +2918,9 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
     public int compare(int[] a1, int[] a2) {
@@ -2923,7 +2957,9 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
     public int compare(long[] a1, long[] a2) {
@@ -2960,10 +2996,17 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
-    public int compare(T[] a1, T[] a2) {
+    @SuppressWarnings("override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    // The signature on this method is unnecessarily strict because it
+    // requires that the component types be identical.  The signature should
+    // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
+    // @PolyAll qualifier does not yet take an argument.
+    public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
       }
@@ -3012,10 +3055,17 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending on whether the first argument is less than, equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending
+     * on whether the first argument is less than, equal to, or greater
+     * than the second argument
      */
     /*@Pure*/
-    public int compare(Object[] a1, Object[] a2) {
+    @SuppressWarnings("override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    // The signature on this method is unnecessarily strict because it
+    // requires that the component types be identical.  The signature should
+    // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
+    // @PolyAll qualifier does not yet take an argument.
+    public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
       }
@@ -3059,7 +3109,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff some element of a is null (false if a is zero-sized)
    */
-  /*@Pure*/ public static boolean any_null(Object[] a) {
+  /*@Pure*/ public static boolean any_null(/*@PolyAll*/ Object[] a) {
     if (a.length == 0) {
       return false;
     }
@@ -3072,7 +3122,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff all elements of a are null (unspecified result if a is zero-sized)
    */
-  /*@Pure*/ public static boolean all_null(Object[] a) {
+  /*@Pure*/ public static boolean all_null(/*@PolyAll*/ Object[] a) {
     for (int i=0; i<a.length; i++) {
       if (! (a[i] == null)) {
         return false;
