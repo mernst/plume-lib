@@ -3074,7 +3074,7 @@ public final class TestPlume extends TestCase {
   private static /*@Nullable*/ Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
 
   @SuppressWarnings({"keyfor","nullness"})
-  @EnsuresNonNull({"preds1", "succs1"})
+  /*@EnsuresNonNull({"preds1", "succs1"})*/
   private static void initializePreds1AndSucc1() {
     if (preds1 != null) {
       return;
