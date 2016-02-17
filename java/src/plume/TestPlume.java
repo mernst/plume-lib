@@ -56,7 +56,7 @@ import org.checkerframework.checker.signature.qual.*;
 // WeakHasherMap.java
 
 /** Test code for the plume package. */
-@SuppressWarnings({"nullness","interning"}) // interning is due to apparent bugs, nullness because this is test code not worth checking
+@SuppressWarnings({"interning"}) // interning is due to apparent bugs
 public final class TestPlume extends TestCase {
 
   // If true, do 100 instead of 100000 iterations when testing randomElements.
@@ -312,7 +312,9 @@ public final class TestPlume extends TestCase {
       Integer[] f = new Integer[] { a[7], a[8], a[9] };
       Integer[] g = new Integer[] { a[7], new Integer(8), a[9] };
       Integer[] h = new Integer[] { a[7], a[8], a[9], new Integer(10) };
+      @SuppressWarnings("nullness") // accommodates poor annotation on indexOf(Object[], Object[])
       Integer[] i = new Integer[] { a[7], a[8], null, a[9], new Integer(10) };
+      @SuppressWarnings("nullness") // accommodates poor annotation on indexOf(Object[], Object[])
       Integer[] j = new Integer[] { a[8], null, a[9] };
       Integer[] c2 = new Integer[] { new Integer(0), new Integer(1), new Integer(2) };
       Integer[] d2 = new Integer[] { new Integer(1), new Integer(2) };
@@ -519,7 +521,7 @@ public final class TestPlume extends TestCase {
       ArraysMDE.fn_inverse(new int[] { 0, 0, 2, 3 }, 4);
       throw new Error();
     } catch (UnsupportedOperationException e) {
-      assert e.getMessage().equals("Not invertible");
+      assert e.getMessage() != null && e.getMessage().equals("Not invertible");
     }
     assert_arrays_equals(ArraysMDE.fn_inverse(
                             new int[] { 5 }, 6),
@@ -786,7 +788,7 @@ public final class TestPlume extends TestCase {
 
     // public static final class ComparableArrayComparatorLexical implements Comparator
     // public static final class ComparableArrayComparatorLengthFirst implements Comparator
-{
+    {
       Comparator<String[]> cacl = new ArraysMDE.ComparableArrayComparatorLexical<String>();
       Comparator<String[]> caclf = new ArraysMDE.ComparableArrayComparatorLengthFirst<String>();
       String[] a0 = new String[] { };
@@ -797,6 +799,7 @@ public final class TestPlume extends TestCase {
       String[] a5 = new String[] { "0","1","2","3","4" };
       String[] a6 = new String[] { "0","1","5","3","4" };
       String[] a7 = new String[] { "1","2","3","4" };
+      @SuppressWarnings("nullness") // accommodates poor annotation on ComparableArrayComparatorLexical.compare() and ComparableArrayComparatorLengthFirst.compare()
       String[] a8 = new String[] { "0","1",null,"3","4" };
 
       assert cacl.compare(a0, a1) == 0;
@@ -869,9 +872,11 @@ public final class TestPlume extends TestCase {
       assert ArraysMDE.any_null(new Object[] { null, o, o }) == true;
       assert ArraysMDE.any_null(new Object[][] { }) == false;
       assert ArraysMDE.any_null(new Object[][] { null }) == true;
-      assert ArraysMDE.any_null(new Object[][] { new Object[] { null } }) == false;
-      assert ArraysMDE.any_null(new Object[][] { new Object[] { null }, null }) == true;
-      assert ArraysMDE.any_null(new Object[][] { new Object[] { null }, new Object[] { o } }) == false;
+      // Extraneous @Nullable on the following lines are due to CF issue #599:
+      // https://github.com/typetools/checker-framework/issues/599
+      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] { new Object[] { null } }) == false;
+      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] { new Object[] { null }, null }) == true;
+      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] { new Object[] { null }, new Object[] { o } }) == false;
     }
 
     // public static boolean all_null(Object[] a)
@@ -889,9 +894,9 @@ public final class TestPlume extends TestCase {
       assert ArraysMDE.all_null(new Object[][] { }) == true;
       assert ArraysMDE.all_null(new Object[][] { null }) == true;
       assert ArraysMDE.all_null(new Object[][] { null, null }) == true;
-      assert ArraysMDE.all_null(new Object[][] { new Object[] { null } }) == false;
-      assert ArraysMDE.all_null(new Object[][] { new Object[] { null }, null }) == false;
-      assert ArraysMDE.all_null(new Object[][] { new Object[] { null }, new Object[] { o } }) == false;
+      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] { new Object[] { null } }) == false;
+      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] { new Object[] { null }, null }) == false;
+      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] { new Object[] { null }, new Object[] { o } }) == false;
     }
 
   }
@@ -971,7 +976,9 @@ public final class TestPlume extends TestCase {
           throw new Error();
         }
         for (int i=10; i<arrays.length; i++) {
-          arrays[i] = null;
+          @SuppressWarnings("nullness")
+          int /*@NonNull*/ [] reset_value = null;
+          arrays[i] = reset_value;
         }
         System.gc();
         if (Intern.numIntArrays() != size2) {
@@ -1303,7 +1310,7 @@ public final class TestPlume extends TestCase {
 
     class TestModulus {
       // javadoc won't let this be static
-      void check(int[] nums, int[] goal_rm) {
+      void check(int[] nums, int /*@Nullable*/ [] goal_rm) {
         int[] rm = MathMDE.modulus(nums);
         if (!Arrays.equals(rm, goal_rm)) {
           throw new Error("Expected (r,m)=" + ArraysMDE.toString(goal_rm)
@@ -1327,7 +1334,7 @@ public final class TestPlume extends TestCase {
       }
 
       // javadoc won't let this be static
-      void check(Iterator<Integer> itor, int[] goal_rm) {
+      void check(Iterator<Integer> itor, int /*@Nullable*/ [] goal_rm) {
         // There would be no point to this:  it's testing
         // int_iterator_array, not the iterator version!
         // return check(int_iterator_array(itor), goal_rm);
@@ -1335,7 +1342,7 @@ public final class TestPlume extends TestCase {
       }
 
       // javadoc won't let this be static
-      void check_iterator(int[] nums, int[] goal_rm) {
+      void check_iterator(int[] nums, int /*@Nullable*/ [] goal_rm) {
         check(int_array_iterator(nums), goal_rm);
       }
     }
@@ -1364,19 +1371,19 @@ public final class TestPlume extends TestCase {
 
     class TestNonModulus {
       // javadoc won't let this be static
-      void check_strict(int[] nums, int[] goal_rm) {
+      void check_strict(int[] nums, int /*@Nullable*/ [] goal_rm) {
         check(nums, goal_rm, true);
         Iterator<Integer> itor = int_array_iterator(nums);
         assert_arrays_equals(MathMDE.nonmodulus_strict_int(itor), goal_rm);
       }
 
       // javadoc won't let this be static
-      void check_nonstrict(int[] nums, int[] goal_rm) {
+      void check_nonstrict(int[] nums, int /*@Nullable*/ [] goal_rm) {
         check(nums, goal_rm, false);
       }
 
       // javadoc won't let this be static
-      void check(int[] nums, int[] goal_rm, boolean strict) {
+      void check(int[] nums, int /*@Nullable*/ [] goal_rm, boolean strict) {
         int[] rm;
         if (strict) {
           rm = MathMDE.nonmodulus_strict(nums);
@@ -1461,7 +1468,7 @@ public final class TestPlume extends TestCase {
   public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
-      Pair<Integer,Integer> pair = opi.next();
+      Pair</*@Nullable*/ Integer,/*@Nullable*/ Integer> pair = opi.next();
       // System.out.println("Iterator: <" + pair.a + "," + pair.b + ">, array: <" + ints[pairno][0] + "," + ints[pairno][1] + ">");
       assert (pair.a == null) || (pair.a.intValue() == ints[pairno][0]);
       assert (pair.b == null) || (pair.b.intValue() == ints[pairno][1]);
@@ -2774,7 +2781,7 @@ public final class TestPlume extends TestCase {
     @Option ("list of doubles")
       public List<Double> ld = new ArrayList<Double>();
     @Option ("list with no default")
-      public List<String> ls;
+      public /*@Nullable*/ List<String> ls;
   }
 
   /**
@@ -2796,7 +2803,7 @@ public final class TestPlume extends TestCase {
                                  });
     assert t.lp.get(0).toString().equals("foo");
     assert t.lp.get(1).toString().equals("bar");
-    assert t.integer_reference.intValue() == 24;
+    assert t.integer_reference != null && t.integer_reference.intValue() == 24;
     assert t.temperature == 37.8;
     assert t.bool == false;
     assert t.ld.get(0).doubleValue() == 34.6;
@@ -2832,6 +2839,7 @@ public final class TestPlume extends TestCase {
     // Test list with no default
     args = options.parse(new String[] {"--ls", "hello", "--ls", "world"});
     assert args.length == 0;
+    assert t.ls != null : "@AssumeAssertion(nullness)";
     assert t.ls.size() == 2;
     assert t.ls.get(0).equals("hello");
     assert t.ls.get(1).equals("world");
@@ -2956,14 +2964,16 @@ public final class TestPlume extends TestCase {
     try {
       Options options = new Options("test", TestOptionGroups1.class);
     } catch (Error e) {
-      assert e.getMessage().indexOf("missing @OptionGroup annotation on the first @Option-annotated field") > -1;
+      assert e.getMessage() != null
+        && e.getMessage().indexOf("missing @OptionGroup annotation on the first @Option-annotated field") > -1;
     }
 
     try {
       Options options = new Options("test", TestOptionGroups2.class,
                                             TestOptionGroups1.class);
     } catch (Error e) {
-      assert e.getMessage().indexOf("missing @OptionGroup annotation in field") > -1;
+      assert e.getMessage() != null
+        && e.getMessage().indexOf("missing @OptionGroup annotation in field") > -1;
     }
 
     Options options = new Options("test", TestOptionGroups2.class);
@@ -2999,10 +3009,10 @@ public final class TestPlume extends TestCase {
     enum Compressor { RLE, SMART_RLE, HUFFMAN }
 
     @Option("Set the first compression pass")
-    public static Compressor firstPass;
+    public static /*@Nullable*/ Compressor firstPass;
 
     @Option("Set the second compression pass")
-    public static Compressor secondPass;
+    public static /*@Nullable*/ Compressor secondPass;
   }
 
   public static void testOptionsEnums() throws ArgException {
@@ -3060,10 +3070,11 @@ public final class TestPlume extends TestCase {
 
 
   // Figure 1 from http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
-  private static Map<Integer, List</*@KeyFor("preds1")*/ Integer>> preds1;
-  private static Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
+  private static /*@Nullable*/ Map<Integer, List</*@KeyFor("preds1")*/ Integer>> preds1;
+  private static /*@Nullable*/ Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
 
-  @SuppressWarnings("keyfor")
+  @SuppressWarnings({"keyfor","nullness"})
+  @EnsuresNonNull({"preds1", "succs1"})
   private static void initializePreds1AndSucc1() {
     if (preds1 != null) {
       return;
@@ -3086,6 +3097,7 @@ public final class TestPlume extends TestCase {
     succs1.get(6).add(4);    preds1.get(4).add(6);
   }
 
+  @SuppressWarnings("nullness")
   public static void testGraphMDE() {
 
     initializePreds1AndSucc1();
