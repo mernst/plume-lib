@@ -184,7 +184,7 @@ public final class BCELUtil {
    * @param classname the class to test
    * @return true iff the class is part of the JDK (rt.jar)
    */
-  public static boolean in_jdk(String classname) {
+  public static boolean in_jdk(/*@BinaryNameForNonArray*/ String classname) {
     return classname.startsWith("java.") || classname.startsWith("com.")
       || classname.startsWith("javax.") || classname.startsWith("org.")
       || classname.startsWith("sun.") || classname.startsWith("sunw.");
