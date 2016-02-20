@@ -177,7 +177,7 @@ public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
 
-  private static /*@Format({})*/ String usage = "Provided by Options doclet:%n"
+  private final static /*@Format({})*/ String USAGE = "Provided by Options doclet:%n"
     + "-docfile <file>        Specify file into which options documentation is inserted%n"
     + "-outfile <file>        Specify destination for resulting output%n"
     + "-i                     Edit the docfile in-place%n"
@@ -186,7 +186,7 @@ public class OptionsDoclet {
     + "-singledash            Use single dashes for long options (see plume.Options)%n"
     + "See the OptionsDoclet documentation for more details.%n";
 
-  private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times";
+  private static final String LIST_HELP = "<tt>[+]</tt> marked option can be specified multiple times";
 
 
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
@@ -288,7 +288,7 @@ public class OptionsDoclet {
    */
   public static int optionLength(String option) {
     if (option.equals("-help")) {
-      System.out.printf(usage);
+      System.out.printf(USAGE);
       return 1;
     }
     if (option.equals("-i")
@@ -603,7 +603,7 @@ public class OptionsDoclet {
 
     for (Options.OptionInfo oi : options.getOptions()) {
       if (oi.list != null && !oi.unpublicized) {
-        b.append(list_help);
+        b.append(LIST_HELP);
         break;
       }
     }

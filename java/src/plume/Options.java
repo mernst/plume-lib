@@ -554,11 +554,11 @@ public class Options {
   /**
    * String describing "[+]" (copied from Mercurial).
    */
-  private static String list_help = "[+] marked option can be specified multiple times";
+  private static final String LIST_HELP = "[+] marked option can be specified multiple times";
 
   /**
-   * Whether printing the usage message should print list_help.  The default is
-   * to print list_help if the usage message contains an option that accepts a
+   * Whether printing the usage message should print LIST_HELP.  The default is
+   * to print LIST_HELP if the usage message contains an option that accepts a
    * list as a parameter.
    */
   private boolean print_list_help = false;
@@ -1036,7 +1036,7 @@ public class Options {
     ps.println(usage());
     if (print_list_help) {
       ps.println();
-      ps.println(list_help);
+      ps.println(LIST_HELP);
     }
   }
 

@@ -32,7 +32,7 @@ public final class SimpleLog {
   /** The current indentation string. */
   public String indent_str = "";
   /** Indentation string for one level of indentation. */
-  public String indent_str_one_level = "  ";
+  public final String INDENT_STR_ONE_LEVEL = "  ";
 
   /** Always provide a backtrace (traceback) when calling log. */
   public boolean always_traceback = false;
@@ -146,7 +146,7 @@ public final class SimpleLog {
 
   public void indent() {
     if (enabled) {
-      indent_str += indent_str_one_level;
+      indent_str += INDENT_STR_ONE_LEVEL;
       push_start_time();
     }
   }
@@ -187,7 +187,7 @@ public final class SimpleLog {
 
   public void exdent() {
     if (enabled) {
-      indent_str = indent_str.substring(0, indent_str.length()-indent_str_one_level.length());
+      indent_str = indent_str.substring(0, indent_str.length()-INDENT_STR_ONE_LEVEL.length());
       pop_start_time();
     }
   }
