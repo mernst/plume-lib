@@ -1136,7 +1136,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    */
-  /*@Pure*/ public static boolean isSubarray(/*@PolyNull*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarray(/*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1160,7 +1160,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    */
-  /*@Pure*/ public static boolean isSubarrayEq(/*@PolyNull*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1184,7 +1184,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    */
-  /*@Pure*/ public static boolean isSubarray(/*@PolyNull*/ Object[] a, List<?> sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarray(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1208,7 +1208,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    */
-  /*@Pure*/ public static boolean isSubarrayEq(/*@PolyNull*/ Object[] a, List<?> sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1232,7 +1232,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if no such element is found in the array.
    */
-  /*@Pure*/ public static boolean isSubarray(List<?> a, /*@PolyNull*/ Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarray(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1256,7 +1256,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array,
    *    or -1 if the element is not found in the array.
    */
-  /*@Pure*/ public static boolean isSubarrayEq(List<?> a, /*@PolyNull*/ Object[] sub, int a_offset) {
+  /*@Pure*/ public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
