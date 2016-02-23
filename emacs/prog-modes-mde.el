@@ -118,6 +118,18 @@ This is good for modes like Perl, where the parser can get confused."
     ;; (setq dtrt-indent-min-indent-superiority-double 40.0) ; default 100.0
     ))
 
+(if (not (locate-library "yaml-mode"))
+    (message "Could not find yaml-mode")
+  (progn
+    (require 'yaml-mode)
+    (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+    (add-hook 'yaml-mode-hook
+      '(lambda ()
+        (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+	(make-local-variable 'inleft-string)
+	(setq inleft-string "# ")))
+    ))
+
 ;; (require 'guess-offset)
 ;; ;; Eliminated in favor of http://www.emacswiki.org/elisp/guess-offset.el
 ;; ;; also see (less relevant) http://cc-mode.sourceforge.net/src/cc-guess.el
