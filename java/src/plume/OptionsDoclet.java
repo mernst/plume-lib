@@ -673,9 +673,14 @@ public class OptionsDoclet {
       f.format("%s", jdoc);
     } else {
       String default_str = "default " + oi.default_str;
-      // The default string must be HTML escaped since it comes from a string
+      // The default string must be HTML-escaped since it comes from a string
       // rather than a Javadoc comment.
-      f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml4(default_str));
+      String suffix = "";
+      if (jdoc.endsWith("</p>")) {
+        suffix = "</p>";
+        jdoc = jdoc.substring(0, jdoc.length()-suffix.length());
+      }
+      f.format("%s [%s]%s", jdoc, StringEscapeUtils.escapeHtml4(default_str), suffix);
     }
     if (oi.base_type.isEnum()) {
       b.append("<ul>");
