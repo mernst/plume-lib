@@ -181,7 +181,8 @@ public final class BCELUtil {
   }
 
   /** Returns whether or not the class is part of the JDK (rt.jar).
-   * @param classname the class to test, in the format of Class.getName()
+   * @param classname the class to test, in the format of Class.getName();
+   *   the class should not be an array
    * @return true iff the class is part of the JDK (rt.jar)
    */
   public static boolean in_jdk(/*@ClassGetName*/ String classname) {
@@ -191,11 +192,13 @@ public final class BCELUtil {
   }
 
   /** Returns whether or not the class is part of the JDK (rt.jar).
-   * @param classname the class to test, in field descriptor format
+   * @param classname the class to test, in internal form
    * @return true iff the class is part of the JDK (rt.jar)
    */
-  public static boolean in_jdk_fielddescriptor(/*@FieldDescriptor*/ String classname) {
-    return in_jdk(UtilMDE.fieldDescriptorToClassGetName(classname));
+  public static boolean in_jdk_internalform(/*@InternalForm*/ String classname) {
+    return classname.startsWith("java/") || classname.startsWith("com/")
+      || classname.startsWith("javax/") || classname.startsWith("org/")
+      || classname.startsWith("sun/") || classname.startsWith("sunw/");
   }
 
   /**
