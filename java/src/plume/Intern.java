@@ -1,6 +1,7 @@
 package plume;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /*>>>
@@ -135,21 +136,16 @@ public final class Intern {
    * Hasher object which hashes and compares int[] objects according
    * to their contents.
    * @see Hasher
-   * @see java.util.Arrays#equals(int[], int[])
+   * @see Arrays#equals(int[], int[])
    */
   private static final class IntArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
-      return java.util.Arrays.equals((int[])a1, (int[])a2);
+      return Arrays.equals((int[])a1, (int[])a2);
     }
     @Override
     public int hashCode(Object o) {
-      int[] a = (int[])o;
-      int result = 0;
-      for (int i=0; i<a.length; i++) {
-        result = result * FACTOR + a[i];
-      }
-      return result;
+      return Arrays.hashCode((int[])o);
     }
   }
 
@@ -157,21 +153,16 @@ public final class Intern {
    * Hasher object which hashes and compares long[] objects according
    * to their contents.
    * @see Hasher
-   * @see java.util.Arrays#equals (long[], long[])
+   * @see Arrays#equals (long[], long[])
    */
   private static final class LongArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
-      return java.util.Arrays.equals((long[])a1, (long[])a2);
+      return Arrays.equals((long[])a1, (long[])a2);
     }
     @Override
     public int hashCode(Object o) {
-      long[] a = (long[])o;
-      long result = 0;
-      for (int i=0; i<a.length; i++) {
-        result = result * FACTOR + a[i];
-      }
-      return (int) (result % Integer.MAX_VALUE);
+      return Arrays.hashCode((long[])o);
     }
   }
 
@@ -191,9 +182,7 @@ public final class Intern {
     @Override
     public int hashCode(Object o) {
       Double d = (Double) o;
-      // Could add "... % Integer.MAX_VALUE" here; is that good to do?
-      long result = Math.round(d.doubleValue() * DOUBLE_FACTOR);
-      return (int) (result % Integer.MAX_VALUE);
+      return d.hashCode();
     }
   }
 
@@ -201,14 +190,14 @@ public final class Intern {
    * Hasher object which hashes and compares double[] objects according
    * to their contents.
    * @see Hasher
-   * @see java.util.Arrays#equals(Object[],Object[])
+   * @see Arrays#equals(Object[],Object[])
    */
   private static final class DoubleArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
-      // "java.util.Arrays.equals" considers +0.0 != -0.0.
+      // "Arrays.equals" considers +0.0 != -0.0.
       // Also, it gives inconsistent results (on different JVMs/classpaths?).
-      // return java.util.Arrays.equals((double[])a1, (double[])a2);
+      // return Arrays.equals((double[])a1, (double[])a2);
       double[] da1 = (double[])a1;
       double[] da2 = (double[])a2;
       if (da1.length != da2.length) {
@@ -225,6 +214,8 @@ public final class Intern {
     @Override
     public int hashCode(Object o) {
       double[] a = (double[])o;
+      // Not Arrays.hashCode(a), for consistency with equals method
+      // immediately above.
       double running = 0;
       for (int i=0; i<a.length; i++) {
         double elt = (Double.isNaN(a[i]) ? 0.0 : a[i]);
@@ -240,22 +231,16 @@ public final class Intern {
    * Hasher object which hashes and compares String[] objects according
    * to their contents.
    * @see Hasher
-   * java.util.Arrays.equals
+   * Arrays.equals
    */
   private static final class StringArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
-      return java.util.Arrays.equals((String[])a1, (String[])a2);
+      return Arrays.equals((String[])a1, (String[])a2);
     }
     @Override
     public int hashCode(Object o) {
-      String[] a = (String[])o;
-      int result = 0;
-      for (int i=0; i<a.length; i++) {
-        int a_hashcode = (a[i] == null) ? 0 : a[i].hashCode();
-        result = result * FACTOR + a_hashcode;
-      }
-      return result;
+      return Arrays.hashCode((String[])o);
     }
   }
 
@@ -263,23 +248,16 @@ public final class Intern {
    * Hasher object which hashes and compares Object[] objects according
    * to their contents.
    * @see Hasher
-   * @see java.util.Arrays#equals(Object[], Object[])
+   * @see Arrays#equals(Object[], Object[])
    */
   private static final class ObjectArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
-      return java.util.Arrays.equals((/*@Nullable*/ Object[])a1, (/*@Nullable*/ Object[])a2);
+      return Arrays.equals((/*@Nullable*/ Object[])a1, (/*@Nullable*/ Object[])a2);
     }
     @Override
     public int hashCode(Object o) {
-      /*@Nullable*/ Object[] a = (/*@Nullable*/ Object[])o;
-      int result = 0;
-      for (int i=0; i<a.length; i++) {
-        Object elt = a[i];
-        int elt_hashcode = (elt == null) ? 0 : elt.hashCode();
-        result = result * FACTOR + elt_hashcode;
-      }
-      return result;
+      return Arrays.hashCode((Object[])o);
     }
   }
 
@@ -909,7 +887,7 @@ public final class Intern {
 
   /// Interning arrays:  old implmentation.
   /// The problem with this is that it doesn't release keys.
-  // // I can also use java.util.Arrays.equals() to compare two arrays of base
+  // // I can also use Arrays.equals() to compare two arrays of base
   // // or Object type; but that doesn't do ordering.  (It does properly deal
   // // with the possibility that the argument is null, which this doesn't
   // // right now.  I may want to err in this implementation if the arguments
@@ -1006,7 +984,7 @@ public final class Intern {
   //     this.a = a;
   //   }
   //   boolean equals(IntArrayWrapper other) {
-  //     return java.util.Arrays.equals(a, other.a);
+  //     return Arrays.equals(a, other.a);
   //   }
   //   static final int FACTOR = 23;
   //   public int hashCode() {
@@ -1024,7 +1002,7 @@ public final class Intern {
   //     this.a = a;
   //   }
   //   boolean equals(ObjectArrayWrapper other) {
-  //     return java.util.Arrays.equals(a, other.a);
+  //     return Arrays.equals(a, other.a);
   //   }
   //   static final int FACTOR = 23;
   //   // Alternately, just xor all the element hash codes.
