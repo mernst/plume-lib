@@ -603,7 +603,7 @@ public class WeakIdentityHashMap<K,V>
         if (!(o instanceof Map.Entry))
             return null;
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
-        Map.Entry entry = (Map.Entry)o;
+        Map.Entry<K,V> entry = (Map.Entry<K,V>)o;
         Object k = maskNull(entry.getKey());
         int h = hasher (k);
         int i = indexFor(h, tab.length);
@@ -721,7 +721,7 @@ public class WeakIdentityHashMap<K,V>
         /*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
-            Map.Entry e = (Map.Entry)o;
+            Map.Entry<K,V> e = (Map.Entry<K,V>)o;
             Object k1 = getKey();
             Object k2 = e.getKey();
             if (eq (k1, k2)) {
@@ -973,7 +973,7 @@ public class WeakIdentityHashMap<K,V>
         /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
-            Map.Entry e = (Map.Entry)o;
+            Map.Entry<K,V> e = (Map.Entry<K,V>)o;
             Object k = e.getKey();
             Entry candidate = getEntry(k);
             return candidate != null && candidate.equals(e);
@@ -1038,7 +1038,7 @@ public class WeakIdentityHashMap<K,V>
         /*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
             return false;
-            Map.Entry e = (Map.Entry)o;
+            Map.Entry<K,V> e = (Map.Entry<K,V>)o;
             return WeakIdentityHashMap.eq(key, e.getKey())
                 && eq(value, e.getValue());
         }
