@@ -67,7 +67,13 @@ import org.checkerframework.checker.signature.qual.*;
  *
  * <li> <b>-outfile</b> <i>file</i> The destination for the output (the default
  * is standard out).  If both <code>-outfile</code> and <code>-docfile</code>
- * are specified, they must be different.
+ * are specified, they must be different. When <code>-d</code> is used, the
+ * output is written to a file with the given name relative to that destination
+ * directory.
+ *
+ * <li> <b>-d</b> <i>directory</i> The destination directory for the output file.
+ * Only used if <code>-outfile</code> is used, in which case, the file is
+ * written in this directory. Otherwise, this option is ignored.
  *
  * <li> <b>-i</b> Specifies that the docfile should be edited in-place.  This
  * option can only be used if the <code>-docfile</code> option is used, and
@@ -180,6 +186,7 @@ public class OptionsDoclet {
   private final static /*@Format({})*/ String USAGE = "Provided by Options doclet:%n"
     + "-docfile <file>        Specify file into which options documentation is inserted%n"
     + "-outfile <file>        Specify destination for resulting output%n"
+    + "-d <directory>         Destination directory for -outfile%n"
     + "-i                     Edit the docfile in-place%n"
     + "-format javadoc        Format output as a Javadoc comment%n"
     + "-classdoc              Include 'main' class documentation in output%n"
@@ -194,6 +201,7 @@ public class OptionsDoclet {
 
   private /*@Nullable*/ File docFile = null;
   private /*@Nullable*/ File outFile = null;
+
   /** If true, then edit docFile in place (and docFile is non-null). */
   private boolean inPlace = false;
   /** If true, then output format is Javadoc. */
@@ -298,7 +306,8 @@ public class OptionsDoclet {
     }
     if (option.equals("-docfile")
         || option.equals("-outfile")
-        || option.equals("-format")) {
+        || option.equals("-format")
+        || option.equals("-d")) {
       return 2;
     }
     return 0;
@@ -318,6 +327,7 @@ public class OptionsDoclet {
                                      DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
+    boolean hasDestDir = false;
     boolean hasFormat = false;
     boolean inPlace = false;
     String docFile = null;
@@ -368,6 +378,13 @@ public class OptionsDoclet {
         }
         hasFormat = true;
       }
+      if (opt.equals("-d")) {
+        if (hasDestDir) {
+          reporter.printError("-d specified twice");
+          return false;
+        }
+        hasDestDir = true;
+      }
     }
     if (docFile != null && outFile != null && outFile.equals(docFile)) {
       reporter.printError("docfile must be different from outfile");
@@ -386,13 +403,17 @@ public class OptionsDoclet {
    * @param options the command-line options to parse
    */
   public void setOptions(String[][] options) {
+    String outFilename = null;
+    File destDir = null;
     for (int oi = 0; oi < options.length; oi++) {
       String[] os = options[oi];
       String opt = os[0].toLowerCase();
       if (opt.equals("-docfile")) {
         this.docFile = new File(os[1]);
+      } else if (opt.equals("-d")) {
+        destDir = new File(os[1]);
       } else if (opt.equals("-outfile")) {
-        this.outFile = new File(os[1]);
+        outFilename = os[1];
       } else if (opt.equals("-i")) {
         this.inPlace = true;
       } else if (opt.equals("-format")) {
@@ -403,6 +424,13 @@ public class OptionsDoclet {
         this.includeClassDoc = true;
       } else if (opt.equals("-singledash")) {
           setUseSingleDash(true);
+      }
+    }
+    if (outFilename != null) {
+      if (destDir != null) {
+        this.outFile = new File(destDir, outFilename);
+      } else {
+        this.outFile = new File(outFilename);
       }
     }
   }
