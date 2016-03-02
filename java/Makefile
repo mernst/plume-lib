@@ -9,6 +9,7 @@ PLUME_DIR_DEFAULT := $(realpath $(dir $(lastword $(MAKEFILE_LIST)))..)
 
 PLUME_DIR ?= ${PLUME_DIR_DEFAULT}
 
+UNAME_S := $(shell uname -s)
 ifndef JAVA_HOME
   ifeq ($(UNAME_S),Darwin)
     JAVA_HOME := $(shell /usr/libexec/java_home)
@@ -20,10 +21,8 @@ ifndef JAVA_HOME
   I_set_JAVA_HOME := true
 endif
 
-
 TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 
-UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
   READLINK_F := readlink
 else
