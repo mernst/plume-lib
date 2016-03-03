@@ -1649,7 +1649,7 @@ public final class UtilMDE {
 
 
   /**
-   * Return an List containing num_elts randomly chosen
+   * Return a List containing num_elts randomly chosen
    * elements from the iterator, or all the elements of the iterator if
    * there are fewer.  It examines every element of the iterator, but does
    * not keep them all in memory.
@@ -1664,7 +1664,7 @@ public final class UtilMDE {
   private static Random r = new Random();
 
   /**
-   * Return an List containing num_elts randomly chosen
+   * Return a List containing num_elts randomly chosen
    * elements from the iterator, or all the elements of the iterator if
    * there are fewer.  It examines every element of the iterator, but does
    * not keep them all in memory.
@@ -2995,12 +2995,28 @@ public final class UtilMDE {
 
   /**
    * Returns the simple unqualified class name that corresponds to the
-   * specified fully qualified name.  For example if qualified name
+   * specified fully qualified name.  For example, if qualified_name
    * is java.lang.String, String will be returned.
-   * @param qualified_name the qualified name of a class
+   * @deprecated use {@link #fullyQualifiedNameToSimpleName} instead.
+   * @param qualified_name the fully-qualified name of a class
    * @return the simple unqualified name of the class
    */
-  public static String unqualified_name(String qualified_name) {
+  @Deprecated
+  public static /*@ClassGetSimpleName*/ String unqualified_name(/*@FullyQualifiedName*/ String qualified_name) {
+    return fullyQualifiedNameToSimpleName(qualified_name);
+  }
+
+  /**
+   * Returns the simple unqualified class name that corresponds to the
+   * specified fully qualified name.  For example, if qualified_name
+   * is java.lang.String, String will be returned.
+   * @param qualified_name the fully-qualified name of a class
+   * @return the simple unqualified name of the class
+   */
+  // TODO: does not follow the specification for inner classes (where the
+  // type name should be empty), but I think this is more informative anyway.
+  @SuppressWarnings("signature") // string conversion
+  public static /*@ClassGetSimpleName*/ String fullyQualifiedNameToSimpleName(/*@FullyQualifiedName*/ String qualified_name) {
 
     int offset = qualified_name.lastIndexOf('.');
     if (offset == -1) {
@@ -3013,12 +3029,15 @@ public final class UtilMDE {
    * Returns the simple unqualified class name that corresponds to the
    * specified class.  For example if qualified name of the class
    * is java.lang.String, String will be returned.
+   *
+   * @deprecated use {@link Class#getSimpleName()} instead.
+   *
    * @param cls a class
    * @return the simple unqualified name of the class
    */
-  public static String unqualified_name(Class<?> cls) {
-
-    return (unqualified_name(cls.getName()));
+  @Deprecated
+  public static /*@ClassGetSimpleName*/ String unqualified_name(Class<?> cls) {
+    return cls.getSimpleName();
   }
 
 
