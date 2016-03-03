@@ -181,6 +181,10 @@ compile: compile_without_testing test
 
 compile_without_testing:  .class-files-timestamp
 
+nocheckers: compile-nocheckers
+compile-nocheckers:
+	(unset JSR308; unset CHECKERFRAMEWORK; ${MAKE})
+
 # Don't do this.  We want to create .class-files-timestamp after the
 # compilation succeeds.  So, no targets for .class files in this Makefile.
 # ${ALL_CLASS_FILES}: .class-files-timestamp
