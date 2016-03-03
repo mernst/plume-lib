@@ -1741,7 +1741,7 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.arglistFromJvm("([Ljava/lang/Integer;I[[Ljava/lang/Integer;)").equals("(java.lang.Integer[], int, java.lang.Integer[][])");
 
     // More tests for type representation conversions.
-    // Table from Signature Checker.
+    // Table from Signature Checker manual.
     testTypeStrings("int", "int", "int", "I");
     testTypeStrings("int[][]", "int[][]", "[[I", "[[I");
     testTypeStrings("MyClass", "MyClass", "MyClass", "LMyClass;", true);
@@ -1955,9 +1955,15 @@ public final class TestPlume extends TestCase {
       }
     }
 
+    // public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
+    // public static <K,V> String mapToString(Map<K,V> m) {
+    // public static <K,V> void mapToString(Appendable sb, Map<K,V> m, String linePrefix) {
+    // public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m) {
+    // public static <K,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
+
 
     // public static Method methodForName(String methodname) throws ClassNotFoundException
-//
+    //
     // essentially I am just testing whether the return is erroneous
     try {
       assert null != UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String, java.lang.String, java.lang.Class[])");
@@ -2148,6 +2154,9 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.nplural(0, "fund").equals("0 funds");
     assert UtilMDE.nplural(1, "fund").equals("1 fund");
     assert UtilMDE.nplural(2, "fund").equals("2 funds");
+    assert UtilMDE.nplural(0, "f-stop").equals("0 f-stops");
+    assert UtilMDE.nplural(1, "f-stop").equals("1 f-stop");
+    assert UtilMDE.nplural(2, "f-stop").equals("2 f-stops");
 
     // public static String rpad(String s, int length)
     // public static String rpad(int num, int length)
@@ -2157,7 +2166,7 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.rpad("abcd", 5).equals("abcd ");
     assert UtilMDE.rpad("abcde", 5).equals("abcde");
     assert UtilMDE.rpad("abcdef", 5).equals("abcde");
-    assert UtilMDE.rpad("abcdefghij", 5).equals("abcde");
+    assert UtilMDE.rpad("abcde ghij", 5).equals("abcde");
     assert UtilMDE.rpad(10, 5).equals("10   ");
     assert UtilMDE.rpad(3.14, 5).equals("3.14 ");
 
@@ -2172,7 +2181,7 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.count("abcde", 'e') == 1;
     assert UtilMDE.count("abcde", 'z') == 0;
     assert UtilMDE.count("abacadaea", 'a') == 5;
-    assert UtilMDE.count("aaadaea", 'a') == 5;
+    assert UtilMDE.count("aaa aea", 'a') == 5;
     assert UtilMDE.count("daeaaa", 'a') == 4;
 
     // This will be easy to write tests for, when I get around to it.
@@ -2338,11 +2347,11 @@ public final class TestPlume extends TestCase {
     c1.print(1.00);
     assert c1.getNumberOfPrintedBytes() == 9;
     c1.write("a");
-    c1.write("a");
+    c1.write("-");
     assert c1.getNumberOfPrintedBytes() == 9;
     assert c1.getNumberOfWrittenBytes() == 22;
     assert c1.getNumberOfPrintedChars() == 9;
-    c1.println("foo");
+    c1.println("a b");
     String lineSep = System.getProperty("line.separator");
     int ls_len = lineSep.length();
     assert c1.getNumberOfPrintedBytes() == (12 + ls_len);
@@ -2751,10 +2760,10 @@ public final class TestPlume extends TestCase {
 
   }
 
-  public static void test_unqualified_name() {
+  public static void test_fullyQualifiedNameToSimpleName() {
 
-    assert UtilMDE.unqualified_name("java.lang.String").equals("String");
-    assert UtilMDE.unqualified_name("String").equals("String");
+    assert UtilMDE.fullyQualifiedNameToSimpleName("java.lang.String").equals("String");
+    assert UtilMDE.fullyQualifiedNameToSimpleName("String").equals("String");
 
   }
 

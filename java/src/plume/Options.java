@@ -611,7 +611,7 @@ public class Options {
    * The names of all the
    * options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
-   * @param usage_synopsis A synopsis of how to call your program
+   * @param usage_synopsis a synopsis of how to call your program
    * @param args the classes whose options to process
    */
   public Options(String usage_synopsis, /*@UnknownInitialization*/ /*@Raw*/ Object... args) {
@@ -1421,7 +1421,7 @@ public class Options {
     } else if (type.isEnum()) {
       return ("enum");
     } else {
-      return UtilMDE.unqualified_name(type.getName()).toLowerCase();
+      return type.getSimpleName().toLowerCase();
     }
   }
 
