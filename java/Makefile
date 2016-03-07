@@ -450,6 +450,7 @@ LOOKUP_JAR_CLASSES = \
 # Example 2:
 #	make TOOLS_JAR=$JDK6/lib/tools.jar clean plume.jar lookup.jar
 lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
+	echo "Make lookup.jar"
 	-rm -rf jar-contents
 	mkdir jar-contents
 	mkdir jar-contents/plume
@@ -458,6 +459,7 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
 	(cd jar-contents; "${JAR}" cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
 	rm -rf jar-contents
+	echo "Done making lookup.jar"
 
 install-lookup: $(pag)/software/pkg/lookup.jar
 $(pag)/software/pkg/lookup.jar: lookup.jar
