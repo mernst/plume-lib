@@ -296,7 +296,7 @@ public class WeakIdentityHashMap<K,V>
      * Check for equality of non-null reference x and possibly-null y.  Uses
      * identity equality.
      */
-    /*@Pure*/ static boolean eq(/*@GuardedByInaccessible*/ Object x, /*@GuardedByInaccessible*/ /*@Nullable*/ Object y) {
+    /*@Pure*/ static boolean eq(/*@GuardedByUnknown*/ Object x, /*@GuardedByUnknown*/ /*@Nullable*/ Object y) {
         return x == y;
     }
 
