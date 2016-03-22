@@ -71,6 +71,7 @@
 --suppress-broken 403:http://www.cs.washington.edu/orgs/student-affairs/gsc/jobs/
 --suppress-broken 403:http://www.dwheeler.com/sloccount/
 --suppress-broken 403:http://www.kivancmuslu.com/
+--suppress-broken 403:http://www.pm.inf.ethz.ch/
 --suppress-broken 403:http://www.seattletimes.com/	
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
@@ -105,8 +106,8 @@
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
+--suppress-broken 416:http://www.switchboard.com/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
---suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://junit.org/	
@@ -114,6 +115,7 @@
 --suppress-broken 500:http://kevinjsullivan.org/
 # Broken as of 5/31/2015
 # --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/
+--suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:http://www.eclipse.org/
 --suppress-broken 500:http://www.eclipse.org/documentation/
 --suppress-broken 500:http://www.eclipse.org/downloads/
@@ -136,6 +138,7 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a6.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
+--suppress-broken 500:https://pag.csail.mit.edu/pag/	
 --suppress-broken 500:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 500:https://weblogs.java.net/blog/forax/archive/2008/05/javac_invokedyn_1.html
 # https://web.mit.edu/21.guide/www requires a client certificate
