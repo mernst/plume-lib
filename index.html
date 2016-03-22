@@ -290,15 +290,6 @@ Eliminates empty entries from <tt>cvs log</tt> output.
 <h2 id="Searching_and_replacing">Searching and replacing</h2>
 
 <dl>
-<dt>search</dt>
-<dd>
-  Jeffrey Friedl's search program combines <tt>find</tt> and <tt>grep</tt>
-  -- more or less do a 'grep' on a whole directory tree, but is more
-  efficient, uses Perl regular expressions, and is much more powerful.
-  This version fixes a tiny bug or two.  For full documentation, see its
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/search.manpage">manpage</a>.
-</dd>
-
 <dt>Lookup</dt>
 <dd>
   Lookup searches a set of files, much like grep does.  However, Lookup
@@ -319,6 +310,18 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   under the current directory).  The timestamp on each file is updated only
   if the replacement is performed.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/preplace">Documentation</a> at top of file.
+</dd>
+
+<dt>search</dt>
+<dd>
+  Jeffrey Friedl's search program combines <tt>find</tt> and <tt>grep</tt>
+  -- more or less do a 'grep' on a whole directory tree, but is more
+  efficient, uses Perl regular expressions, and is much more powerful.
+  This version fixes a tiny bug or two.  For full documentation, see its
+  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/search.manpage">manpage</a>.
+  <br/>
+  However, I recommend using <a href="http://geoff.greer.fm/ag/">ag</a>
+  instead of <tt>search</tt>.
 </dd>
 </dl>
 
