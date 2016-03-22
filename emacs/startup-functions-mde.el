@@ -417,33 +417,36 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 ;; (setq ack-default-flags "-i")
 
 
-;; In general, use the "ack" program instead.  But, it doesn't search
-;; compressed files and has other problems, so fall back to "search" on
-;; occasion.
+;; To install: 
+(add-to-list 'load-path "/path/to/ag.el")
+(require 'ag)
 
-;; For the "search" Perl program; was called "search"
-;; Fixes submitted to jfriedl@omron.co.jp 8/31/97
-(defun sgrep (what dir)
-  "Run search with all grep goodies.
-Find WHAT in any file in or under DIR."
-  (interactive "sSearch for: \nDSearch under: ")
-  (if (equal "" what)
-      (error "Empty string passed as argument to sgrep"))
-  (let ((default-directory (file-name-as-directory dir)))
-    ;;not necessary any more? (require 'compile)
-    (let* ((quoted-what (if (string-match "^'.*'$" what)
-			   what
-			 (if (string-match "'" what)
-			     (concat "\"" what "\"")
-			   (concat "'" what "'"))))
-	   (command (concat "search -i -n "
-                            (if (string-match "^-" what) "-e " "")
-			    quoted-what)))
-      ;; Old version
-      ;; (compile-internal command
-      ;;                   "No more search hits" "grep" nil grep-regexp-alist)
-      (compilation-start command 'grep-mode)
-      )))
+;; ;; In general, use the "ack" program instead.  But, it doesn't search
+;; ;; compressed files and has other problems, so fall back to "search" on
+;; ;; occasion.
+;; ;; For the "search" Perl program; the Emacs function was called `search'.
+;; ;; Fixes submitted to jfriedl@omron.co.jp 8/31/97
+;; (defun sgrep (what dir)
+;;   "Run search with all grep goodies.
+;; Find WHAT in any file in or under DIR."
+;;   (interactive "sSearch for: \nDSearch under: ")
+;;   (if (equal "" what)
+;;       (error "Empty string passed as argument to sgrep"))
+;;   (let ((default-directory (file-name-as-directory dir)))
+;;     ;;not necessary any more? (require 'compile)
+;;     (let* ((quoted-what (if (string-match "^'.*'$" what)
+;; 			   what
+;; 			 (if (string-match "'" what)
+;; 			     (concat "\"" what "\"")
+;; 			   (concat "'" what "'"))))
+;; 	   (command (concat "search -i -n "
+;;                             (if (string-match "^-" what) "-e " "")
+;; 			    quoted-what)))
+;;       ;; Old version
+;;       ;; (compile-internal command
+;;       ;;                   "No more search hits" "grep" nil grep-regexp-alist)
+;;       (compilation-start command 'grep-mode)
+;;       )))
 
 (defun strip-line-numbers ()
   "Remove line numbers from error messages in current buffer, for easier comparison."
