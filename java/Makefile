@@ -262,6 +262,8 @@ javadoc: .javadoc-timestamp
 	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
 	rm -f ical4j.properties
+	cp -pf ../bin/plume-lib-favicon.png api
+	cd api && ../../bin/add-favicon . plume-lib-favicon.png
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
