@@ -418,8 +418,7 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 
 
 ;; To install: 
-(add-to-list 'load-path "/path/to/ag.el")
-(require 'ag)
+(require 'ag nil 'noerror)
 
 ;; ;; In general, use the "ack" program instead.  But, it doesn't search
 ;; ;; compressed files and has other problems, so fall back to "search" on
