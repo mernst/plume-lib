@@ -115,11 +115,11 @@
 --suppress-broken 500:http://kevinjsullivan.org/
 # Broken as of 5/31/2015
 # --suppress-broken 500:http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline2d/
---suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:http://www.eclipse.org/
 --suppress-broken 500:http://www.eclipse.org/documentation/
 --suppress-broken 500:http://www.eclipse.org/downloads/
 --suppress-broken 500:http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/junosr2	
+--suppress-broken 500:http://www.edwardxwu.com/	
 --suppress-broken 500:http://www.icse-conferences.org/2001/
 --suppress-broken 500:http://www.icse-conferences.org/2003/
 --suppress-broken 500:http://www.icse-conferences.org/2004/
@@ -138,6 +138,7 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a6.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
+--suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:https://pag.csail.mit.edu/pag/	
 --suppress-broken 500:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 500:https://weblogs.java.net/blog/forax/archive/2008/05/javac_invokedyn_1.html
