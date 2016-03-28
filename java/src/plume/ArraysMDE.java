@@ -1574,32 +1574,32 @@ public final class ArraysMDE {
     }
   }
 
-// Subsumed by generic version?
-//   /**
-//    * Return an array that contains all the elements of both argument
-//    * arrays, in order.
-//    * Returns a new array unless one argument is null, in which case
-//    * it returns the other array.
-//    **/
-//   public static /*@PolyInterned*/ String[] concat(/*@PolyInterned*/ String /*@Nullable*/ [] a, /*@PolyInterned*/ String /*@Nullable*/ [] b) {
-//     if (a == null) {
-//       if (b == null) {
-//         return new String[0];
-//       } else {
-//         return b;
-//       }
-//     } else {
-//       if (b == null) {
-//         return a;
-//       } else {
-//         String[] result = new String[a.length + b.length];
-//
-//         System.arraycopy(a, 0, result, 0, a.length);
-//         System.arraycopy(b, 0, result, a.length, b.length);
-//         return result;
-//       }
-//     }
-//   }
+// Note: PolyAll is not quite right.  Need to review.
+  /**
+   * Return an array that contains all the elements of both argument
+   * arrays, in order.
+   * Returns a new array unless one argument is null, in which case
+   * it returns the other array.
+   **/
+  public static /*@PolyAll*/ String[] concat(/*@PolyAll*/ String /*@Nullable*/ [] a, /*@PolyAll*/ String /*@Nullable*/ [] b) {
+    if (a == null) {
+      if (b == null) {
+        return new String[0];
+      } else {
+        return b;
+      }
+    } else {
+      if (b == null) {
+        return a;
+      } else {
+        String[] result = new String[a.length + b.length];
+
+        System.arraycopy(a, 0, result, 0, a.length);
+        System.arraycopy(b, 0, result, a.length, b.length);
+        return result;
+      }
+    }
+  }
 
 
   /**
