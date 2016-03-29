@@ -1970,7 +1970,7 @@ Use as a hook, like so:
 ;; For html5validator
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("^\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 1 2 3)
+	 (cons '("^\\(WARNING:html5validator.validator:\\)?\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 2 3 4)
 	       compilation-error-regexp-alist)))
 
 ;; I suspect this regexp is extremely inefficient, and I don't understand it.
