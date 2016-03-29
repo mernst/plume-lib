@@ -417,8 +417,9 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 ;; (setq ack-default-flags "-i")
 
 
-;; To install: 
 (require 'ag nil 'noerror)
+(setq ag-regexp-default t)
+
 
 ;; ;; In general, use the "ack" program instead.  But, it doesn't search
 ;; ;; compressed files and has other problems, so fall back to "search" on
