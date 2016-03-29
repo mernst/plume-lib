@@ -1945,11 +1945,12 @@ Use as a hook, like so:
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (delete 'omake compilation-error-regexp-alist)))
-;; ... but an equally serious problem is maven, which is very slow on long
-;; lines, such as those created when buildign the Daikon manual.
-(eval-after-load "compile"
-  '(setq compilation-error-regexp-alist
-	 (delete 'maven compilation-error-regexp-alist)))
+;; experimentally re-enable, 3/29/2016
+;; ;; ... but an equally serious problem is maven, which is very slow on long
+;; ;; lines, such as those created when building the Daikon manual.
+;; (eval-after-load "compile"
+;;   '(setq compilation-error-regexp-alist
+;; 	 (delete 'maven compilation-error-regexp-alist)))
 
 ;; What language is this for??
 (eval-after-load "compile"
@@ -1962,12 +1963,15 @@ Use as a hook, like so:
 	 (cons '("^Line \\([0-9]+\\) of \"\\([^\"]*\\)\"" 2 1)
 	       compilation-error-regexp-alist)))
 ;; For linkchecker
-;; This doesn't seem to work in a *compilation* buffer, but I can click it.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (cons '("^Parent URL file:\\(.*\\), line \\([0-9]+\\)" 1 2)
 	       compilation-error-regexp-alist)))
-
+;; For html5validator
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (cons '("^\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 1 2 3)
+	       compilation-error-regexp-alist)))
 
 ;; I suspect this regexp is extremely inefficient, and I don't understand it.
 ;; ;; ant output, such as
