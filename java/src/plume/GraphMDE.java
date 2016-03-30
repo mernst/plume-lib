@@ -143,6 +143,7 @@ public final class GraphMDE {
 
   /**
    * Print a representation of the graph to ps, indented by intent spaces.
+   * @param <T> the type of nodes of the graph
    * @param graph the graph to print
    * @param ps the PrintStream to which to print the graph
    * @param indent the number of spaces by which to indent the printed representation

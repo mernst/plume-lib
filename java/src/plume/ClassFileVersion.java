@@ -37,8 +37,9 @@ public final class ClassFileVersion {
 
   /** Main method for the ClassFileVersion program.
    * @param args command-line arguments
+   * @throws IOException if a file cannot be read
    */
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws IOException {
     if (args.length == 0) {
       System.out.println("Supplied no arguments.");
       System.out.println("Usage: java ClassFileVersion [-min JDKVER] <.class or .jar files>");

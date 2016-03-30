@@ -42,6 +42,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Option {
   /** String that describes the option.
+   * @return a string that describes this option
    * @see Option
    */
   String value();

@@ -1580,6 +1580,9 @@ public final class ArraysMDE {
    * arrays, in order.
    * Returns a new array unless one argument is null, in which case
    * it returns the other array.
+   * @param a the first array to concatenate
+   * @param b the second array to concatenate
+   * @return an array that concatenates the arguments
    **/
   public static /*@PolyAll*/ String[] concat(/*@PolyAll*/ String /*@Nullable*/ [] a, /*@PolyAll*/ String /*@Nullable*/ [] b) {
     if (a == null) {

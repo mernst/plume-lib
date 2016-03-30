@@ -355,6 +355,7 @@ public final class Intern {
    * Interns a String.
    * Delegates to the builtin String.intern() method.
    * Provided for completeness.
+   * @param a the string to intern
    * @return an interned version of the argument
    */
   /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
@@ -368,6 +369,7 @@ public final class Intern {
   /**
    * Interns a long.
    * A no-op.  Provided for completeness.
+   * @param l the long to intern
    * @return an interned version of the argument
    */
   /*@Pure*/ public static long intern(long l) {
@@ -377,10 +379,11 @@ public final class Intern {
   /**
    * Interns a double
    * A no-op.  Provided for completeness.
+   * @param d the double to intern
    * @return an interned version of the argument
    */
-  /*@Pure*/ public static double intern(double l) {
-    return l;
+  /*@Pure*/ public static double intern(double d) {
+    return d;
   }
 
   /**

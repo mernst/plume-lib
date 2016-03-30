@@ -47,8 +47,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface OptionGroup {
-  /** Name of this option group. */
+  /**
+   * Name of this option group.
+   * @return the name of this option group
+   */
   String value();
-  /** Whether this option group is unpublicized. */
+  /**
+   * Whether this option group is unpublicized.
+   * @return true if this option group is unpublicized, false if it is publicized
+   */
   boolean unpublicized() default false;
 }

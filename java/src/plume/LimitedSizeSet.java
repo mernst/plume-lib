@@ -29,7 +29,10 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   /** The number of active elements (equivalently, the first unused index). */
   int num_values;
 
-  /** Create a new LimitedSizeSet that can hold max_values values. */
+  /**
+   * Create a new LimitedSizeSet that can hold max_values values.
+   * @param max_values the maximum number of values this set will be able to hold
+   */
   public LimitedSizeSet(int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
