@@ -414,7 +414,7 @@ public class MultiVersionControl {
   }
 
   // OptionsDoclet requires a nullary constructor (but a private one is OK).
-  /*@SuppressWarnings("nullness")*/ // initialization warning in unused constructor
+  @SuppressWarnings("nullness") // initialization warning in unused constructor
   private MultiVersionControl() {
   }
 
