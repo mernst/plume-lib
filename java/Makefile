@@ -124,6 +124,9 @@ JAVA_FILES ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | s
 JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
+# Files whose style we can automatically check
+JAVA_FILES_FOR_STYLE ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort))
+
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
 # # On cygwin, translate the classpath and sourcepath to windows format.
@@ -509,15 +512,18 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 checkstyle:
 # This invocation works on Ubuntu.
-# Need to ignore files we don't edit: Fmt.java TextFile.java WeakHasherMap.java WeakIdentityHashMap.java
-	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES}
+	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
+
+reindent:
+	java -jar ~/java/google-java-format/core/target/google-java-format-0.1-SNAPSHOT-all-deps.jar --replace ${JAVA_FILES_FOR_STYLE}
+	${CHECKERFRAMEWORK}/checker/bin/fixup-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 
 ###########################################################################
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists
+.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists checkstyle reindent
 
 
 # Existence of this rule means that a target is deleted if has just changed
