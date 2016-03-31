@@ -134,12 +134,11 @@ public class StrTok {
 
     // Other tokens are delimiters
     if (ttype > 0) {
-      String s = "" + (char)ttype;
+      String s = "" + (char) ttype;
       return (s.intern());
     }
 
-    throw new RuntimeException("Unexpected return " + ttype
-                               + " from StreamTokenizer");
+    throw new RuntimeException("Unexpected return " + ttype + " from StreamTokenizer");
   }
 
   /**
@@ -190,7 +189,8 @@ public class StrTok {
    * @see ErrorHandler
    */
   /*@EnsuresNonNull("this.errorHandler")*/
-  public void set_error_handler(/*>>>@UnknownInitialization @Raw StrTok this,*/ ErrorHandler errorHandler) {
+  public void set_error_handler(
+      /*>>>@UnknownInitialization @Raw StrTok this,*/ ErrorHandler errorHandler) {
     this.errorHandler = errorHandler;
   }
 
@@ -225,6 +225,4 @@ public class StrTok {
     assert t != null : "@AssumeAssertion(nullness): dependent: because of isWord check";
     return t;
   }
-
-
 }

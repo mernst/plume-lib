@@ -28,12 +28,10 @@ public class DeterministicObject {
   final int uid = counter++;
 
   /** Create a DeterministicObject. */
-  public DeterministicObject() {
-  }
+  public DeterministicObject() {}
 
   @Override
   public int hashCode() {
     return uid;
   }
-
 }

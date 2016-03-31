@@ -157,7 +157,7 @@ public final class RegexUtil {
    * @param groups number of groups expected
    * @return true iff s is a regular expression with groups groups
    */
-  @SuppressWarnings({"regex","deterministic"})    // RegexUtil; for purity, catches an exception
+  @SuppressWarnings({"regex", "deterministic"}) // RegexUtil; for purity, catches an exception
   /*@Pure*/
   // No @EnsuresQualifierIf annotation because this method is special-cased
   // in RegexTransfer.
@@ -178,7 +178,10 @@ public final class RegexUtil {
    * @param c char to check for being a regular expression
    * @return true iff c is a regular expression
    */
-  @SuppressWarnings({"regex", "purity.not.deterministic.call"})    // RegexUtil; temp value used in pure method is equal up to equals but not up to ==
+  @SuppressWarnings({
+    "regex",
+    "purity.not.deterministic.call"
+  }) // RegexUtil; temp value used in pure method is equal up to equals but not up to ==
   /*@Pure*/
   /*@EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)*/
   public static boolean isRegex(final char c) {
@@ -192,7 +195,7 @@ public final class RegexUtil {
    * @param s string to check for being a regular expression
    * @return null, or a string describing why the argument is not a regex.
    */
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s) {
     return regexError(s, 0);
@@ -206,7 +209,7 @@ public final class RegexUtil {
    * @param groups number of groups expected
    * @return null, or a string describing why the argument is not a regex.
    */
-  @SuppressWarnings({"regex","not.sef"})    // RegexUtil;
+  @SuppressWarnings({"regex", "not.sef"}) // RegexUtil;
   /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s, int groups) {
     try {
@@ -228,7 +231,7 @@ public final class RegexUtil {
    * @param s string to check for being a regular expression
    * @return null, or a PatternSyntaxException describing why the argument is not a regex.
    */
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
   public static /*@Nullable*/ PatternSyntaxException regexException(String s) {
     return regexException(s, 0);
@@ -242,7 +245,7 @@ public final class RegexUtil {
    * @param groups number of groups expected
    * @return null, or a PatternSyntaxException describing why the argument is not a regex.
    */
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
   public static /*@Nullable*/ PatternSyntaxException regexException(String s, int groups) {
     try {
@@ -281,7 +284,7 @@ public final class RegexUtil {
    * @return its argument
    * @throws Error if argument is not a regex
    */
-  @SuppressWarnings("regex")    // RegexUtil
+  @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
   // The return type annotation is irrelevant; it is special-cased by
   // RegexAnnotatedTypeFactory.
@@ -307,8 +310,13 @@ public final class RegexUtil {
    */
   /*@SideEffectFree*/
   private static String regexErrorMessage(String s, int expectedGroups, int actualGroups) {
-    return "regex \"" + s + "\" has " + actualGroups + " groups, but "
-      + expectedGroups + " groups are needed.";
+    return "regex \""
+        + s
+        + "\" has "
+        + actualGroups
+        + " groups, but "
+        + expectedGroups
+        + " groups are needed.";
   }
 
   /**
@@ -316,7 +324,7 @@ public final class RegexUtil {
    * @param p pattern whose groups to count
    * @return the count of groups in the argument
    */
-  @SuppressWarnings("purity")     // does not depend on object identity
+  @SuppressWarnings("purity") // does not depend on object identity
   /*@Pure*/
   private static int getGroupCount(Pattern p) {
     return p.matcher("").groupCount();

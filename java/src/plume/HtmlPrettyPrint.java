@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-
 /**
  * Pretty-prints an HTML file, after converting it to valid XML.
  * To use:  <pre>java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
@@ -22,7 +21,6 @@ public final class HtmlPrettyPrint {
   private HtmlPrettyPrint() {
     throw new Error("do not instantiate");
   }
-
 
   /** Entry point for the HtmlPrettyPrint program.
    * @param args command-line arguments
@@ -59,5 +57,4 @@ public final class HtmlPrettyPrint {
       }
     }
   }
-
 }

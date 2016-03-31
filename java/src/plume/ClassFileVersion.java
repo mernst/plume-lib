@@ -47,8 +47,7 @@ public final class ClassFileVersion {
     }
 
     // Process and remove "-min JDKVER" command-line argument, if present.
-    if ((args.length >= 2)
-        && (args[0].equals("-min"))) {
+    if ((args.length >= 2) && (args[0].equals("-min"))) {
       minversion = Double.parseDouble(args[1]);
       if (minversion == 1.6) {
         minversion = 6;
@@ -61,7 +60,7 @@ public final class ClassFileVersion {
     // System.out.println("newargs: " + java.util.Arrays.toString(args));
 
     for (String filename : args) {
-      if (! new File(filename).exists()) {
+      if (!new File(filename).exists()) {
         System.out.println(filename + " does not exist!");
         continue;
       }
@@ -72,7 +71,7 @@ public final class ClassFileVersion {
         }
       } else if (filename.endsWith(".jar")) {
         JarFile jarFile = new JarFile(filename);
-        for (Enumeration<JarEntry> e = jarFile.entries(); e.hasMoreElements();) {
+        for (Enumeration<JarEntry> e = jarFile.entries(); e.hasMoreElements(); ) {
           JarEntry entry = e.nextElement();
           String entryName = entry.getName();
           // Should really process recursively included jar files...
@@ -103,15 +102,20 @@ public final class ClassFileVersion {
       double jdkVersion = versions[2];
 
       if (jdkVersion >= minversion) {
-        System.out.println(filename + " class file version is "
-                           + (int)major + "." + (int)minor + ", requires JDK "
-                           + ((jdkVersion == (int)jdkVersion)
-                              ? Integer.toString((int)jdkVersion) : Double.toString(jdkVersion))
-                           + " or later");
+        System.out.println(
+            filename
+                + " class file version is "
+                + (int) major
+                + "."
+                + (int) minor
+                + ", requires JDK "
+                + ((jdkVersion == (int) jdkVersion)
+                    ? Integer.toString((int) jdkVersion)
+                    : Double.toString(jdkVersion))
+                + " or later");
       }
     }
   }
-
 
   /**
    * Return an array of the major vernios, minor version, and JDK version
@@ -133,9 +137,9 @@ public final class ClassFileVersion {
       double jdkVersion;
 
       if (major < 48) {
-        jdkVersion = 1.3;          // really 1.3.1
+        jdkVersion = 1.3; // really 1.3.1
       } else if (major == 48) {
-        jdkVersion = 1.4;          // really 1.4.2
+        jdkVersion = 1.4; // really 1.4.2
       } else if (major == 49) {
         jdkVersion = 1.5;
       } else if (major == 50) {
@@ -144,11 +148,9 @@ public final class ClassFileVersion {
         jdkVersion = 7;
       }
 
-      return new double[] { major, minor, jdkVersion };
+      return new double[] {major, minor, jdkVersion};
     } catch (IOException e) {
       return null;
     }
-
   }
-
 }

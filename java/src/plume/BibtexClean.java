@@ -38,7 +38,8 @@ public final class BibtexClean {
   }
 
   /** Regex for the end of a BibTeX entry. */
-  private static Pattern entry_end = Pattern.compile("^[ \t]*(?i)(year[ \t]*=[ \t]*[12][0-9][0-9][0-9][ \t]*)?[)}]");
+  private static Pattern entry_end =
+      Pattern.compile("^[ \t]*(?i)(year[ \t]*=[ \t]*[12][0-9][0-9][0-9][ \t]*)?[)}]");
   /** Regex for a BibTeX string definition. */
   private static Pattern stringDef = Pattern.compile("^@(?i)string(\\{.*\\}|\\(.*\\))$");
 
@@ -48,8 +49,9 @@ public final class BibtexClean {
   public static void main(String[] args) {
     for (String filename : args) {
       File in = new File(filename);
-      try (PrintWriter out = new PrintWriter(UtilMDE.bufferedFileWriter(in.getName())); // in current directory
-           EntryReader er = new EntryReader(filename)) {
+      try (PrintWriter out =
+              new PrintWriter(UtilMDE.bufferedFileWriter(in.getName())); // in current directory
+          EntryReader er = new EntryReader(filename)) {
         for (String line : er) {
           if (line.equals("") || line.startsWith("%")) {
             out.println(line);
@@ -63,8 +65,8 @@ public final class BibtexClean {
                 if (entry_end.matcher(line).lookingAt()) {
                   break;
                 } else if (line.equals("")) {
-                  System.err.printf("%s:%d: unterminated entry%n",
-                                    er.getFileName(), er.getLineNumber());
+                  System.err.printf(
+                      "%s:%d: unterminated entry%n", er.getFileName(), er.getLineNumber());
                   break;
                 }
               }
@@ -77,5 +79,4 @@ public final class BibtexClean {
       }
     }
   }
-
 }

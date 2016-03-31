@@ -10,11 +10,11 @@ import org.checkerframework.checker.nullness.qual.*;
  * @param <CLASS> the type of equivalence classes (classification buckets)
  * @see MultiRandSelector
  */
-public interface Partitioner<ELEMENT extends /*@Nullable*/ Object,CLASS extends /*@Nullable*/ Object> {
+public interface Partitioner<
+    ELEMENT extends /*@Nullable*/ Object, CLASS extends /*@Nullable*/ Object> {
 
   /** @param obj the Object to be assigned to a bucket
    *  @return A key representing the bucket containing obj
    */
   CLASS assignToBucket(ELEMENT obj);
-
 }

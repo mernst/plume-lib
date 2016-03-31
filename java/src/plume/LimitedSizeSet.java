@@ -74,19 +74,21 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       // disjoint.  There might be anywhere from max(size(), s.size()) to
       // (size() + s.size()) elements in the resulting set.
       if (s.size() > values_length) {
-        num_values = values_length+1;
+        num_values = values_length + 1;
         values = null;
         return;
       } else {
-        throw new Error("Arg is rep-nulled, so we don't know its values and can't add them to this.");
+        throw new Error(
+            "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
+    for (int i = 0; i < s.size(); i++) {
+      assert s.values != null
+          : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
       assert s.values[i] != null : "@AssumeAssertion(nullness): used portion of array";
       add(s.values[i]);
       if (repNulled()) {
-        return;                 // optimization, not necessary for correctness
+        return; // optimization, not necessary for correctness
       }
     }
   }
@@ -97,7 +99,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     if (values == null) {
       throw new UnsupportedOperationException();
     }
-    for (int i=0; i < num_values; i++) {
+    for (int i = 0; i < num_values; i++) {
       @SuppressWarnings("nullness") // object invariant: used portion of array
       T value = values[i];
       if (value == elt || (value != null && value.equals(elt))) {
@@ -106,7 +108,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
     return false;
   }
-
 
   /**
    * A lower bound on the number of elements in the set.  Returns either
@@ -139,7 +140,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     return values == null;
   }
 
-  @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
+  @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   public LimitedSizeSet<T> clone() {
     LimitedSizeSet<T> result;
@@ -156,7 +157,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     return result;
   }
 
-
   /**
    * Merges a list of LimitedSizeSet&lt;T&gt; objects into a single object that
    * represents the values seen by the entire list.  Returns the new
@@ -166,7 +166,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @param slist a list of LimitedSizeSet, whose elements will be merged
    * @return a LimitedSizeSet that merges the elements of slist
    */
-  public static <T> LimitedSizeSet<T> merge(int max_values, List<LimitedSizeSet<? extends T>> slist) {
+  public static <T> LimitedSizeSet<T> merge(
+      int max_values, List<LimitedSizeSet<? extends T>> slist) {
     LimitedSizeSet<T> result = new LimitedSizeSet<T>(max_values);
     for (LimitedSizeSet<? extends T> s : slist) {
       result.addAll(s);
@@ -176,9 +177,10 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
   /*@SideEffectFree*/ public String toString() {
-    return ("[size=" + size() + "; "
-            + ((values == null) ? "null" : ArraysMDE.toString(values))
-            + "]");
+    return ("[size="
+        + size()
+        + "; "
+        + ((values == null) ? "null" : ArraysMDE.toString(values))
+        + "]");
   }
-
 }

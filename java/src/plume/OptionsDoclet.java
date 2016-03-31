@@ -183,18 +183,19 @@ public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
 
-  private final static /*@Format({})*/ String USAGE = "Provided by Options doclet:%n"
-    + "-docfile <file>        Specify file into which options documentation is inserted%n"
-    + "-outfile <file>        Specify destination for resulting output%n"
-    + "-d <directory>         Destination directory for -outfile%n"
-    + "-i                     Edit the docfile in-place%n"
-    + "-format javadoc        Format output as a Javadoc comment%n"
-    + "-classdoc              Include 'main' class documentation in output%n"
-    + "-singledash            Use single dashes for long options (see plume.Options)%n"
-    + "See the OptionsDoclet documentation for more details.%n";
+  private final static /*@Format({})*/ String USAGE =
+      "Provided by Options doclet:%n"
+          + "-docfile <file>        Specify file into which options documentation is inserted%n"
+          + "-outfile <file>        Specify destination for resulting output%n"
+          + "-d <directory>         Destination directory for -outfile%n"
+          + "-i                     Edit the docfile in-place%n"
+          + "-format javadoc        Format output as a Javadoc comment%n"
+          + "-classdoc              Include 'main' class documentation in output%n"
+          + "-singledash            Use single dashes for long options (see plume.Options)%n"
+          + "See the OptionsDoclet documentation for more details.%n";
 
-  private static final String LIST_HELP = "<tt>[+]</tt> marked option can be specified multiple times";
-
+  private static final String LIST_HELP =
+      "<tt>[+]</tt> marked option can be specified multiple times";
 
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
   private String endDelim = "<!-- end options doc -->";
@@ -299,9 +300,7 @@ public class OptionsDoclet {
       System.out.printf(USAGE);
       return 1;
     }
-    if (option.equals("-i")
-        || option.equals("-classdoc")
-        || option.equals("-singledash")) {
+    if (option.equals("-i") || option.equals("-classdoc") || option.equals("-singledash")) {
       return 1;
     }
     if (option.equals("-docfile")
@@ -323,8 +322,7 @@ public class OptionsDoclet {
    * @return true iff the command-line options are valid
    * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
-  public static boolean validOptions(String[][] options,
-                                     DocErrorReporter reporter) {
+  public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
     boolean hasDestDir = false;
@@ -423,7 +421,7 @@ public class OptionsDoclet {
       } else if (opt.equals("-classdoc")) {
         this.includeClassDoc = true;
       } else if (opt.equals("-singledash")) {
-          setUseSingleDash(true);
+        setUseSingleDash(true);
       }
     }
     if (outFilename != null) {
@@ -441,8 +439,7 @@ public class OptionsDoclet {
    */
   private static boolean needsInstantiation(Class<?> clazz) {
     for (Field f : clazz.getDeclaredFields()) {
-      if (f.isAnnotationPresent(Option.class)
-          && !Modifier.isStatic(f.getModifiers())) {
+      if (f.isAnnotationPresent(Option.class) && !Modifier.isStatic(f.getModifiers())) {
         return true;
       }
     }
@@ -462,7 +459,8 @@ public class OptionsDoclet {
     if (outFile != null) {
       out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
     } else if (inPlace) {
-      assert docFile != null : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
+      assert docFile != null
+          : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
       out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
     } else {
       out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -620,7 +618,11 @@ public class OptionsDoclet {
           continue;
         }
 
-        b.append("  <li id=\"optiongroup:" + gi.name.replace(" ", "-").replace("/", "-") + "\">" + gi.name);
+        b.append(
+            "  <li id=\"optiongroup:"
+                + gi.name.replace(" ", "-").replace("/", "-")
+                + "\">"
+                + gi.name);
         b.append("    <ul>");
         b.append(optionListToHtml(gi.optionList, 6));
         b.append("    </ul>");
@@ -706,13 +708,14 @@ public class OptionsDoclet {
       String suffix = "";
       if (jdoc.endsWith("</p>")) {
         suffix = "</p>";
-        jdoc = jdoc.substring(0, jdoc.length()-suffix.length());
+        jdoc = jdoc.substring(0, jdoc.length() - suffix.length());
       }
       f.format("%s [%s]%s", jdoc, StringEscapeUtils.escapeHtml4(default_str), suffix);
     }
     if (oi.base_type.isEnum()) {
       b.append("<ul>");
-      assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
+      assert oi.enum_jdoc != null
+          : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
         b.append("<li><b>").append(entry.getKey()).append("</b>");
         if (entry.getValue().length() != 0) {

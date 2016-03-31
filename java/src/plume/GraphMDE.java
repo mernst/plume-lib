@@ -23,7 +23,6 @@ public final class GraphMDE {
     throw new Error("do not instantiate");
   }
 
-
   // Algorithms for computing dominators:
   //
   // Wikipedia:
@@ -59,21 +58,19 @@ public final class GraphMDE {
    * @param predecessors a graph, represented as a predecessor map
    * @return a map from each node to a list of its pre-dominators
    */
-  public static
-  <T> Map<T,List<T>> dominators(Map<T,List</*@KeyFor("#1")*/ T>> predecessors) {
+  public static <T> Map<T, List<T>> dominators(Map<T, List</*@KeyFor("#1")*/ T>> predecessors) {
 
     // Map</*@KeyFor({"preds","dom"})*/ T,List</*@KeyFor({"preds","dom"})*/ T>> dom = new HashMap</*@KeyFor({"preds","dom"})*/ T,List</*@KeyFor({"preds","dom"})*/ T>>();
-    Map<T,List<T>> dom = new HashMap<T,List<T>>();
+    Map<T, List<T>> dom = new HashMap<T, List<T>>();
 
     @SuppressWarnings("keyfor") // every element of pred's value will be a key for dom
-    Map<T,List</*@KeyFor({"dom"})*/ T>> preds = predecessors;
+    Map<T, List</*@KeyFor({"dom"})*/ T>> preds = predecessors;
 
     List<T> nodes = new ArrayList<T>(preds.keySet());
 
     // Compute roots & non-roots, for convenience
     List</*@KeyFor({"preds","dom"})*/ T> roots = new ArrayList<T>();
     List</*@KeyFor({"preds","dom"})*/ T> non_roots = new ArrayList<T>();
-
 
     // Initialize result:  for roots just the root, otherwise everything
     for (T node : preds.keySet()) {
@@ -119,10 +116,11 @@ public final class GraphMDE {
             new_doms.retainAll(dom_of_pred);
           }
         }
-        assert new_doms != null : "@AssumeAssertion(nullness): the loop was entered at least once because this is a non-root, which has at least one predecessor";
+        assert new_doms != null
+            : "@AssumeAssertion(nullness): the loop was entered at least once because this is a non-root, which has at least one predecessor";
         new_doms.add(node);
         assert dom.containsKey(node);
-        if (! dom.get(node).equals(new_doms)) {
+        if (!dom.get(node).equals(new_doms)) {
           dom.put(node, new_doms);
           changed = true;
         }
@@ -148,10 +146,9 @@ public final class GraphMDE {
    * @param ps the PrintStream to which to print the graph
    * @param indent the number of spaces by which to indent the printed representation
    */
-  public static
-  <T> void print(Map<T,List<T>> graph, PrintStream ps, int indent) {
+  public static <T> void print(Map<T, List<T>> graph, PrintStream ps, int indent) {
     String indentString = "";
-    for (int i=0; i<indent; i++) {
+    for (int i = 0; i < indent; i++) {
       indentString += " ";
     }
     for (T node : graph.keySet()) {
@@ -161,5 +158,4 @@ public final class GraphMDE {
       }
     }
   }
-
 }
