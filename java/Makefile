@@ -406,7 +406,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
+# Do not include junit.jar in plume.jar; JUnit is needed only for testing
+#	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
