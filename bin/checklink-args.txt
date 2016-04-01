@@ -88,6 +88,7 @@
 --suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90	
 --suppress-broken 404:http://webhostingrating.net/libs/daikon-faq-be/
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles
+--suppress-broken 404:http://www.juliasoft.com/
 --suppress-broken 404:http://www.juliasoft.com/users
 --suppress-broken 404:https://www.google.com/calendar/embed?mode=WEEK&src=mernst%40cs.washington.edu&ctz=America/Los_Angeles
 --suppress-broken 405:http://aws.amazon.com/datasets
@@ -166,6 +167,7 @@
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for
 
+--suppress-fragment https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A
 --suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-dev
 --suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-dev/topics
 --suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-discuss
