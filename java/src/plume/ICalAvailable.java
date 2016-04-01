@@ -50,7 +50,7 @@ import org.checkerframework.dataflow.qual.Pure;
  * Given one or more calendars in <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>, produces a textual summary
  * of available times.
  * This is useful for sending someone a list of acceptable times for a meeting.
- * Also see the <tt>ical-available</tt> Emacs function, which inserts the
+ * Also see the <code>ical-available</code> Emacs function, which inserts the
  * output of this program.
  *
  * The command-line options are as follows:
@@ -60,7 +60,7 @@ import org.checkerframework.dataflow.qual.Pure;
  *  first date to summarize [default today]</li>
  *   <li id="option:days"><b>--days=</b><i>int</i>.
  *  number of calendar days to summarize [default 8]</li>
- *   <li id="option:iCal-URL"><b>--iCal-URL=</b><i>url</i> <tt>[+]</tt>.
+ *   <li id="option:iCal-URL"><b>--iCal-URL=</b><i>url</i> <code>[+]</code>.
  *  For a Google calendar:  go to settings, then click on the green "ICAL"
  *  icon for the "private address".</li>
  *   <li id="option:business-hours"><b>--business-hours=</b><i>string</i>.
@@ -76,7 +76,7 @@ import org.checkerframework.dataflow.qual.Pure;
  *   <li id="option:debug"><b>--debug=</b><i>boolean</i>.
  *  enable debugging output [default false]</li>
  * </ul>
- * <tt>[+]</tt> marked option can be specified multiple times
+ * <code>[+]</code> marked option can be specified multiple times
  * <!-- end options doc -->
  */
 public final class ICalAvailable {

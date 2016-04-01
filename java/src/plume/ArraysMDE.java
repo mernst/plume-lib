@@ -2637,8 +2637,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * numbers).
    */
   public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
@@ -2673,8 +2673,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * numbers).
    */
   public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
@@ -2709,8 +2709,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * numbers).
    */
   public static final class DoubleArrayComparatorLexical
@@ -2747,8 +2747,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * Strings).
    */
   public static final class StringArrayComparatorLexical
@@ -2800,8 +2800,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * objects).
    */
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>>
@@ -2858,8 +2858,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * objects).
    */
   public static final class ObjectArrayComparatorLexical
@@ -2916,8 +2916,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * numbers).
    */
   public static final class IntArrayComparatorLengthFirst
@@ -2956,8 +2956,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * numbers).
    */
   public static final class LongArrayComparatorLengthFirst
@@ -2996,8 +2996,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * objects).
    */
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>>
@@ -3057,8 +3057,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <tt>equals()</tt>.  That is, it may return 0 if the arrays are not
-   * equal according to <tt>equals()</tt> (but do contain identical
+   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
+   * equal according to <code>equals()</code> (but do contain identical
    * objects).
    */
   public static final class ObjectArrayComparatorLengthFirst

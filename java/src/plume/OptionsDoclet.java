@@ -117,7 +117,7 @@ import org.checkerframework.checker.signature.qual.*;
  * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java</pre>
  * <p>
  *
- * For a more extensive example, see file <tt>java/Makefile</tt> in
+ * For a more extensive example, see file <code>java/Makefile</code> in
  * plume-lib itself.
  * <p>
  *
@@ -166,7 +166,7 @@ import org.checkerframework.checker.signature.qual.*;
  * <code>@Unpublicized</code> options are not included in the output at all. <p>
  *
  * <b>Troubleshooting</b> <p>
- * If you get an error such as "<tt>ARGH! @Option</tt>", then you are using a
+ * If you get an error such as "<code>ARGH! @Option</code>", then you are using a
  * buggy version of gjdoc, the GNU Classpath implementation of Javadoc.
  * To avoid the problem, upgrade or use a different Javadoc implementation.
  *
@@ -195,7 +195,7 @@ public class OptionsDoclet {
           + "See the OptionsDoclet documentation for more details.%n";
 
   private static final String LIST_HELP =
-      "<tt>[+]</tt> marked option can be specified multiple times";
+      "<code>[+]</code> marked option can be specified multiple times";
 
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
   private String endDelim = "<!-- end options doc -->";
@@ -695,7 +695,7 @@ public class OptionsDoclet {
     String prefix = getUseSingleDash() ? "-" : "--";
     f.format("<b>%s%s=</b><i>%s</i>", prefix, oi.long_name, oi.type_name);
     if (oi.list != null) {
-      b.append(" <tt>[+]</tt>");
+      b.append(" <code>[+]</code>");
     }
     f.format(".%n ");
     String jdoc = ((oi.jdoc == null) ? "" : oi.jdoc);

@@ -63,7 +63,7 @@ import org.checkerframework.dataflow.qual.*;
  *                but not pushed, or have shelved/stashed changes.
  *   list      -- List the checkouts/clones that this program is aware of.
  * </pre>
- * (The <tt>commit</tt> action is not supported, because that is not
+ * (The <code>commit</code> action is not supported, because that is not
  * something that should be done in an automated way -- it needs a user-
  * written commit message.)<p>
  *
@@ -80,10 +80,10 @@ import org.checkerframework.dataflow.qual.*;
  *  User home directory</li>
  *   <li id="option:checkouts"><b>--checkouts=</b><i>string</i>.
  *  File with list of checkouts.  Set it to /dev/null to suppress reading.
- *  Defaults to <tt>$HOME/.mvc-checkouts</tt>. [default ~/.mvc-checkouts]</li>
- *   <li id="option:dir"><b>--dir=</b><i>string</i> <tt>[+]</tt>.
+ *  Defaults to <code>$HOME/.mvc-checkouts</code>. [default ~/.mvc-checkouts]</li>
+ *   <li id="option:dir"><b>--dir=</b><i>string</i> <code>[+]</code>.
  *  Directory under which to search for checkouts; default=home dir</li>
- *   <li id="option:ignore-dir"><b>--ignore-dir=</b><i>string</i> <tt>[+]</tt>.
+ *   <li id="option:ignore-dir"><b>--ignore-dir=</b><i>string</i> <code>[+]</code>.
  *  Directory under which to NOT search for checkouts</li>
  *   <li id="option:search"><b>--search=</b><i>boolean</i>.
  *  Search for all checkouts, not just those listed in a file [default false]</li>
@@ -111,13 +111,13 @@ import org.checkerframework.dataflow.qual.*;
  *  Path to the svn program [default svn]</li>
  *   <li id="option:insecure"><b>--insecure=</b><i>boolean</i>.
  *  Pass --insecure argument to hg (and likewise for other programs) [default false]</li>
- *   <li id="option:cvs-arg"><b>--cvs-arg=</b><i>string</i> <tt>[+]</tt>.
+ *   <li id="option:cvs-arg"><b>--cvs-arg=</b><i>string</i> <code>[+]</code>.
  *  Extra argument to pass to the cvs program</li>
- *   <li id="option:git-arg"><b>--git-arg=</b><i>string</i> <tt>[+]</tt>.
+ *   <li id="option:git-arg"><b>--git-arg=</b><i>string</i> <code>[+]</code>.
  *  Extra argument to pass  to the git program</li>
- *   <li id="option:hg-arg"><b>--hg-arg=</b><i>string</i> <tt>[+]</tt>.
+ *   <li id="option:hg-arg"><b>--hg-arg=</b><i>string</i> <code>[+]</code>.
  *  Extra argument to pass  to the hg program</li>
- *   <li id="option:svn-arg"><b>--svn-arg=</b><i>string</i> <tt>[+]</tt>.
+ *   <li id="option:svn-arg"><b>--svn-arg=</b><i>string</i> <code>[+]</code>.
  *  Extra argument to pass  to the svn program</li>
  *   <li id="option:debug"><b>--debug=</b><i>boolean</i>.
  *  Print debugging output [default false]</li>
@@ -126,22 +126,22 @@ import org.checkerframework.dataflow.qual.*;
  *   <li id="option:debug-process-output"><b>--debug-process-output=</b><i>boolean</i>.
  *  Lightweight debugging of 'replacers' that filter command output [default false]</li>
  * </ul>
- * <tt>[+]</tt> marked option can be specified multiple times
+ * <code>[+]</code> marked option can be specified multiple times
  * <!-- end options doc -->
  * <p>
  *
- * <b>File format for <tt>.mvc-checkouts</tt> file</b><p>
+ * <b>File format for <code>.mvc-checkouts</code> file</b><p>
  *
  * The remainder of this document describes the file format for the
- * <tt>.mvc-checkouts</tt> file.<p>
+ * <code>.mvc-checkouts</code> file.<p>
  *
  * (Note:  because mvc can search for all checkouts in your directory, you
- * don't need a <tt>.mvc-checkouts</tt> file.  Using a
- * <tt>.mvc-checkouts</tt> file makes the program faster because it does not
+ * don't need a <code>.mvc-checkouts</code> file.  Using a
+ * <code>.mvc-checkouts</code> file makes the program faster because it does not
  * have to search all of your directories.  It also permits you to
  * process only a certain set of checkouts.)<p>
  *
- * The <tt>.mvc-checkouts</tt> file contains a list of <em>sections</em>.
+ * The <code>.mvc-checkouts</code> file contains a list of <em>sections</em>.
  * Each section names either a root from which a sub-part (e.g., a module
  * or a subdirectory) will be checked out, or a repository all of which
  * will be checked out.
@@ -251,7 +251,7 @@ public class MultiVersionControl {
 
   /**
    * File with list of checkouts.  Set it to /dev/null to suppress reading.
-   * Defaults to <tt>$HOME/.mvc-checkouts</tt>.
+   * Defaults to <code>$HOME/.mvc-checkouts</code>.
    */
   @Option("File with list of checkouts.  Set it to /dev/null to suppress reading.")
   public String checkouts = "~/.mvc-checkouts";

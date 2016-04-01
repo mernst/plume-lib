@@ -38,7 +38,7 @@ import org.checkerframework.dataflow.qual.*;
  * The Options class:
  * <ul>
  *   <li>parses command-line options and sets fields in your program accordingly,</li>
- *   <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
+ *   <li>creates usage messages (such as printed by a <code>--help</code> option), and</li>
  *   <li>creates documentation suitable for a manual or manpage.</li>
  * </ul>
  * Thus, the programmer is freed from writing duplicative, boilerplate code
@@ -80,8 +80,8 @@ import org.checkerframework.dataflow.qual.*;
  *    }
  *  }</pre>
  * A user may invoke the program using the command-line arguments
- * <tt>-o</tt>, <tt>--outfile</tt>, <tt>-i</tt>, <tt>--ignore-case</tt>,
- * and <tt>--temperature</tt>. <p>
+ * <code>-o</code>, <code>--outfile</code>, <code>-i</code>, <code>--ignore-case</code>,
+ * and <code>--temperature</code>. <p>
  *
  * The call to {@link #parse_or_usage} sets fields in object myInstance,
  * and sets static fields in class MyUtilityClass.  It returns the original
@@ -105,7 +105,7 @@ import org.checkerframework.dataflow.qual.*;
  * All arguments that start with '-' are processed as options.  To
  * terminate option processing at the first non-option argument, see {@link
  * #parse_options_after_arg(boolean)}.  Also, the special option '--'
- * terminates option processing; method <tt>parse_or_usage</tt> returns
+ * terminates option processing; method <code>parse_or_usage</code> returns
  * all subsequent arguments (along with any preceding non-option arguments)
  * without scanning them for options. <p>
  *
@@ -212,7 +212,7 @@ import org.checkerframework.dataflow.qual.*;
  *
  *  <li> Not all primitive types are supported.
  *
- *  <li> Types without a constructor that takes a single <tt>String</tt>
+ *  <li> Types without a constructor that takes a single <code>String</code>
  *  argument are not supported.
  *
  *  <li> The "--no-long" option to turn off a boolean option named "long"
@@ -436,9 +436,9 @@ public class Options {
 
     /**
      * Returns a short synopsis of the option in the form
-     * <tt>-s --long=&lt;type&gt;</tt>
+     * <code>-s --long=&lt;type&gt;</code>
      * <strong>or</strong> (if use_single_dash is true)
-     * <tt>-s -long=&lt;type&gt;</tt> .
+     * <code>-s -long=&lt;type&gt;</code> .
      */
     public String synopsis() {
       String prefix = use_single_dash ? "-" : "--";
@@ -927,8 +927,8 @@ public class Options {
    * single and double quotes, then calls {@link #parse(String[])}.
    * <p>
    * {@link #parse(String[])} is usually a better method to call.  This one
-   * is appropriate when the <tt>String[]</tt> version of the arguments is
-   * not available &mdash; for example, for the <tt>premain</tt> method of
+   * is appropriate when the <code>String[]</code> version of the arguments is
+   * not available &mdash; for example, for the <code>premain</code> method of
    * a Java agent.
    *
    * @param args the command line to parse
@@ -1012,8 +1012,8 @@ public class Options {
    * {@link #parse_or_usage(String[])}.
    * <p>
    * {@link #parse(String[])} is usually a better method to call.  This one
-   * is appropriate when the <tt>String[]</tt> version of the arguments is
-   * not available &mdash; for example, for the <tt>premain</tt> method of
+   * is appropriate when the <code>String[]</code> version of the arguments is
+   * not available &mdash; for example, for the <code>premain</code> method of
    * a Java agent.
    *
    * @param args the command line to parse
