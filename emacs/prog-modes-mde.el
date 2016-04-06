@@ -28,6 +28,18 @@ This is good for modes like Perl, where the parser can get confused."
 (setq compilation-scroll-output 'first-error)
 
 
+;; To debug slowness in parsing compilation errors (due to inefficient
+;; regexes in compilation-error-regexp-alist), edit
+;; `compilation-parse-errors' to add these to the body
+;;    (message "%s compilation-parse-errors: working on %s" (current-time-string))
+;;    (message "%s compilation-parse-errors: working on %s" (current-time-string) item)
+;;    (message "%s compilation-parse-errors: done with %s" (current-time-string) item)
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (delete 'maven compilation-error-regexp-alist)))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Key maps
 ;;;
@@ -1945,12 +1957,12 @@ Use as a hook, like so:
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (delete 'omake compilation-error-regexp-alist)))
-;; experimentally re-enable, 3/29/2016
-;; ;; ... but an equally serious problem is maven, which is very slow on long
-;; ;; lines, such as those created when building the Daikon manual.
-;; (eval-after-load "compile"
-;;   '(setq compilation-error-regexp-alist
-;; 	 (delete 'maven compilation-error-regexp-alist)))
+;; ... but an equally serious problem is maven, which is very slow on long
+;; lines, such as those created when building the Daikon manual.
+;; (I tried re-enabling this in March 2016 and it still made Emacs unusable.)
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (delete 'maven compilation-error-regexp-alist)))
 
 ;; What language is this for??
 (eval-after-load "compile"
@@ -1988,7 +2000,7 @@ Use as a hook, like so:
 
 ;; jdb output, such as
 ;; "  [4] daikon.VarInfo$1GuardingVisitor.visitSlice (VarInfo.java:1,690)"
-;; Notice the comma!!  Yuck...   [Does that actually mean lien 1690?]
+;; Notice the comma!!  Yuck...   [Does that actually mean line 1690?]
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (cons (list
