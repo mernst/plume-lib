@@ -160,7 +160,12 @@ endif
 
 JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker
 
-## For testing invariant arrays, replace the above by:
+## For testing a single checker, replace the above by:
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
+## For testing a single file:
+# JAVA_FILES =  .../RegexUtil.java
+
+## For testing invariant arrays, add "-AinvariantArrays" like so:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AinvariantArrays -processor org.checkerframework.checker.regex.RegexChecker
 
 ## For testing -AsafeDefaultsForUnannotatedBytecode, uncomment:
