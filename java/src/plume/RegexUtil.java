@@ -3,7 +3,6 @@
 package plume;
 
 import org.checkerframework.checker.regex.qual.Regex;
-import org.checkerframework.framework.qual.EnsuresQualifierIf;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -12,6 +11,7 @@ import java.util.regex.PatternSyntaxException;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.framework.qual.EnsuresQualifierIf;
 */
 
 /**
