@@ -54,18 +54,17 @@ import org.checkerframework.dataflow.qual.*;
  * you might want to clone or check them all out.  This program does any
  * of those tasks.  In particular, it accepts these arguments:
  * <pre>
- *   checkout  -- Check out (clone) all repositories.
- *   clone     -- Same as checkout.
- *   update    -- Update all checkouts.  For a distributed version control
- *                system such as Git or Mercurial, also does a pull.
- *   pull      -- Same as update.
+ *   clone     -- Clone (check out) all repositories.
+ *   checkout  -- Same as clone
+ *   pull      -- Pull and update all clones.
+ *   update    -- Same as update.
  *   status    -- Show files that are changed but not committed, or committed
  *                but not pushed, or have shelved/stashed changes.
- *   list      -- List the checkouts/clones that this program is aware of.
+ *   list      -- List the clones/checkouts that this program is aware of.
  * </pre>
  * (The <code>commit</code> action is not supported, because that is not
- * something that should be done in an automated way -- it needs a user-
- * written commit message.)<p>
+ * something that should be done in an automated way -- it needs a
+ * user-written commit message.)<p>
  *
  * You can specify the set of checkouts/clones for the program to manage, or
  * it can search your directory structure to find all of your checkouts, or
@@ -343,15 +342,15 @@ public class MultiVersionControl {
   public boolean debug_process_output = false;
 
   static enum Action {
-    CHECKOUT,
+    CLONE,
     STATUS,
-    UPDATE,
+    PULL,
     LIST
   };
   // Shorter variants
-  private static Action CHECKOUT = Action.CHECKOUT;
+  private static Action CLONE = Action.CLONE;
   private static Action STATUS = Action.STATUS;
-  private static Action UPDATE = Action.UPDATE;
+  private static Action PULL = Action.PULL;
   private static Action LIST = Action.LIST;
 
   private Action action;
@@ -442,17 +441,17 @@ public class MultiVersionControl {
     }
     String action_string = remaining_args[0];
     if ("checkout".startsWith(action_string)) {
-      action = CHECKOUT;
+      action = CLONE;
     } else if ("clone".startsWith(action_string)) {
-      action = CHECKOUT;
+      action = CLONE;
     } else if ("list".startsWith(action_string)) {
       action = LIST;
     } else if ("pull".startsWith(action_string)) {
-      action = UPDATE;
+      action = PULL;
     } else if ("status".startsWith(action_string)) {
       action = STATUS;
     } else if ("update".startsWith(action_string)) {
-      action = UPDATE;
+      action = PULL;
     } else {
       options.print_usage("Unrecognized action \"%s\"", action_string);
       System.exit(1);
@@ -466,7 +465,7 @@ public class MultiVersionControl {
       dir.add(home);
     }
 
-    if (action == CHECKOUT) {
+    if (action == CLONE) {
       search = false;
       show = true;
       // Checkouts can be much slower than other operations.
@@ -1076,7 +1075,7 @@ public class MultiVersionControl {
     // I can't just use the InputStream directly, because if the process is
     // killed because of a timeout, the stream is inaccessible.
 
-    CHECKOUTLOOP:
+    CLONELOOP:
     for (Checkout c : checkouts) {
       if (debug) {
         System.out.println(c);
@@ -1157,13 +1156,13 @@ public class MultiVersionControl {
       switch (action) {
         case LIST:
           System.out.println(c);
-          continue CHECKOUTLOOP;
-        case CHECKOUT:
+          continue CLONELOOP;
+        case CLONE:
           pb.directory(dir.getParentFile());
           String dirbase = dir.getName();
           if (c.repository == null) {
             System.out.printf("Skipping checkout with unknown repository:%n  %s%n", dir);
-            continue CHECKOUTLOOP;
+            continue CLONELOOP;
           }
           switch (c.repoType) {
             case BZR:
@@ -1367,7 +1366,7 @@ public class MultiVersionControl {
               assert false;
           }
           break;
-        case UPDATE:
+        case PULL:
           switch (c.repoType) {
             case BZR:
               System.out.println("bzr handling not yet implemented: skipping " + c.directory);
@@ -1408,6 +1407,7 @@ public class MultiVersionControl {
               replacers.add(new Replacer("(^|\\n)([ACDMRU]\t)", "$1$2" + dir + "/"));
               pb.command(git_executable, "pull", "-q");
               addArgs(pb, git_arg);
+              pb2.command(git_executable, "fetch", "-p"); // prune branches; alternately can do "git remote prune origin"; "git gc" does not do this.
               break;
             case HG:
               replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
@@ -1445,7 +1445,7 @@ public class MultiVersionControl {
         System.out.println(dir + ":");
       }
       if (dir.exists()) {
-        if (action == CHECKOUT && !redo_existing && !quiet) {
+        if (action == CLONE && !redo_existing && !quiet) {
           System.out.println("Skipping checkout (dir already exists): " + dir);
           continue;
         }
@@ -1459,7 +1459,7 @@ public class MultiVersionControl {
           continue;
         }
         switch (action) {
-          case CHECKOUT:
+          case CLONE:
             if (!parent.exists()) {
               if (show) {
                 if (!dry_run) {
@@ -1480,11 +1480,11 @@ public class MultiVersionControl {
             }
             break;
           case STATUS:
-          case UPDATE:
+          case PULL:
             if (!quiet) {
               System.out.println("Cannot find directory: " + dir);
             }
-            continue CHECKOUTLOOP;
+            continue CLONELOOP;
           case LIST:
           default:
             assert false;
