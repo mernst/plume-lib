@@ -256,7 +256,7 @@
 --suppress-redirect http://checkerframework.org/->http://types.cs.washington.edu/checker-framework/
 # Don't redirect http://checker-framework.org/ because we shouldn't even be using it; it exists to catch typos.
 # --suppress-redirect http://checker-framework.org/->http://types.cs.washington.edu/checker-framework/
---suppress-redirect http://defects4j.org/->http://homes.cs.washington.edu/~rjust/defects4j/
+--suppress-redirect http://defects4j.org/->https://github.com/rjust/defects4j
 --suppress-redirect http://doi.ieeecomputersociety.org/10.1109/TSE.2006.90->http://www.computer.org/csdl/trans/ts/2006/09/e0718-abs.html
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
 --suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://link.springer.com/article/10.1007%2Fs10515-006-0002-0	
