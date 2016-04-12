@@ -4,6 +4,10 @@
 # Usage:
 #   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
 
+# Ordinarily, a new Travis job is triggered when a commit is pushed to a
+# GitHub repository.  The trigger-travis.sh script provides a programmatic
+# way to trigger a new Travis job.
+
 # To use this script to trigger a dependent build in Travis, do two things:
 #
 # 1. Set an environment variable TRAVIS_ACCESS_TOKEN by navigating to
