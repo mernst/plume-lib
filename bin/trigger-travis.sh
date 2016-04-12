@@ -8,13 +8,17 @@
 #
 # 1. Set an environment variable TRAVIS_ACCESS_TOKEN by navigating to
 #   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
-# Determine the value for TRAVIS_ACCESS_TOKEN via: travis login && travis token
-# (You may need to first do:
+# The TRAVIS_ACCESS_TOKEN environment variable will be set when Travis runs
+# the job, but won't be visible to anyone browsing https://travis-ci.org/.
+# The value for TRAVIS_ACCESS_TOKEN is the text after "Your access token is "
+# in the ouput of these commands:
+#   travis login && travis token
+# (If the travis program isn't installed, do so with one of these two commands:
+#    gem install travis
 #    sudo apt-get install ruby-dev && sudo gem install travis
 # Don't do "sudo apt-get install travis" which installs a trajectory analyzer.)
-# This differs from the token available at https://travis-ci.org/profile .
-# The environment variable will be set when Travis runs the job,
-# but won't be visible to anyone browsing https://travis-ci.org/.
+# Note that the travis access token output by `travis token` differs from the
+# travis token available at https://travis-ci.org/profile .
 #
 # 2. Add the following after_success block to your .travis.yml file,
 # where you replace OTHERGITHUB* by a specific downstream project,
