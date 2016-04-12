@@ -1905,6 +1905,7 @@ Use as a hook, like so:
 	 (let ((dir (match-string 2 default-directory)))
 	   (if (equal dir "src")
 	       (setq dir "all"))
+	   (setq dir (replace-regexp-in-string "_" "-" dir))
 	   (make-local-variable 'compile-command)
 	   (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
 ;; 	((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
