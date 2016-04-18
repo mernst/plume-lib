@@ -85,6 +85,7 @@
 # This URL requires CSAIL credentials
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 #--suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
+--suppress-broken 404:https://calendar.google.com/calendar/embed?src=mernst%40cs.washington.edu&title=Michael%20Ernst&mode=WEEK
 --suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90	
 --suppress-broken 404:http://webhostingrating.net/libs/daikon-faq-be/
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles
