@@ -1407,7 +1407,8 @@ public class MultiVersionControl {
               replacers.add(new Replacer("(^|\\n)([ACDMRU]\t)", "$1$2" + dir + "/"));
               pb.command(git_executable, "pull", "-q");
               addArgs(pb, git_arg);
-              pb2.command(git_executable, "fetch", "-p"); // prune branches; alternately can do "git remote prune origin"; "git gc" does not do this.
+              // prune branches; alternately can do "git remote prune origin"; "git gc" does not do this.
+              pb2.command(git_executable, "fetch", "-p");
               break;
             case HG:
               replacers.add(new Replacer("(^|\\n)([?!AMR] ) +", "$1$2 " + dir + "/"));
