@@ -87,6 +87,7 @@ are governed by a different license.  See file <a href="https://raw.githubuserco
           <li><a href="#Compilation">Compilation</a></li>
           <li><a href="#Dependences">Dependences</a></li>
           <li><a href="#.class_file_processing">.class file processing</a></li>
+          <li><a href="#indentation-and-formatting">Indentation and formatting</a></li>
         </ul></li>
       <li><a href="#Scheduling">Scheduling</a></li>
       <li><a href="#Email">Email</a></li>
@@ -610,6 +611,35 @@ This contains no documentation, so don't include it in this README file.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/classfile_check_version">Documentation</a> at top of file.
 </dd>
 </dl>
+
+
+<h3 id="indentation-and-formatting">Indentation and formatting</h3>
+
+<dl>
+<dt>fixup-google-java-format.py</dt>
+<dd>
+  The
+  <a href="https://github.com/google/google-java-format">google-java-format</a>
+  program reformats Java source code, but it creates poor formatting for
+  annotations in comments.  This script performs small changes in place to
+  improve formatting of annotations in comments.
+  If called with no arguments, it reads from and writes to standard output.
+  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py">Documentation</a>
+  at top of file.
+</dd>
+
+<dt>check-google-java-format.py</dt>
+<dd>
+  Given <code>.java</code> file names on the command line, reports any that
+  would be reformatted by the google-java-format program, and returns
+  non-zero status if there were any.
+  If called with no arguments, it reads from standard output.
+  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/check-google-java-format.py">Documentation</a>
+  at top of file.
+</dd>
+</dl>
+
+
 
 
 <h2 id="Scheduling">Scheduling</h2>
