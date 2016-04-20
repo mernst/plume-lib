@@ -3,4 +3,5 @@
 # This file will be used as .git/hooks/pre-commit.
 # However, it should be edited as bin/plume-lib.pre-commit.
 
+make -C java check-format
 make all-but-emacs
