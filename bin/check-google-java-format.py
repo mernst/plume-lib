@@ -44,6 +44,8 @@ def process_file(infile_name, orig_file):
     """Check formatting while reading from infile_name,
     which is a formatted version of orig_file."""
 
+    global exit_code
+
     result = subprocess.call([fixup_py, infile_name])
     if result != 0:
         cleanup()
