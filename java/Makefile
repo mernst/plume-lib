@@ -171,8 +171,8 @@ JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing
 ## For testing -AsafeDefaultsForUnannotatedBytecode, uncomment:
 # JAVACHECK_EXTRA_ARGS ?= -AsafeDefaultsForUnannotatedBytecode -AprintErrorStack -classpath ${CHECKERFRAMEWORK}/checker/lib/java-getopt-1.0.14-annotated.jar:${CLASSPATH}
 
-# JAVACHECK has to be a single file name.
-JAVACHECK = ${CHECKERFRAMEWORK}/checker/bin/javac
+# JAVACHECK has to be a single file name, because it's checked for existence.
+JAVACHECK ?= ${CHECKERFRAMEWORK}/checker/bin/javac
 JAVACHECK_COMMAND = ${JAVACHECK} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} ${JAVACHECK_ARGS} ${JAVACHECK_EXTRA_ARGS}
 
 ## ... end pluggable typechecking
@@ -190,7 +190,7 @@ compile_without_testing:  .class-files-timestamp
 
 nocheckers: compile-nocheckers
 compile-nocheckers:
-	(unset JSR308; unset CHECKERFRAMEWORK; ${MAKE})
+	(unset JSR308; unset CHECKERFRAMEWORK; unset JAVACHECK; ${MAKE})
 
 # Don't do this.  We want to create .class-files-timestamp after the
 # compilation succeeds.  So, no targets for .class files in this Makefile.
@@ -200,6 +200,7 @@ compile-nocheckers:
 # The timestamp file indicates when the files were last compiled.
 .class-files-timestamp: ${JAVA_AND_CPP_FILES}
 	${MAKE} tools_jar_exists
+	${MAKE} check-format
 ifneq ("$(wildcard $(JAVACHECK))","")
 	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
 else
