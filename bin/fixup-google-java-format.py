@@ -16,7 +16,7 @@ import sys
 # on their own line.
 # (To generate this list, search for occurrences of "@Target("
 # and remove those that contain "TYPE_USE" or "{}".)
-declarationAnnotations = {
+declarationAnnotations = set([
     "/*@GetConstructor*/",
     "/*@NewInstance*/",
     "/*@Invoke*/",
@@ -98,7 +98,7 @@ declarationAnnotations = {
     "/*@MultiMethodTaintingParam*/",
     "/*@ClassTaintingParam*/",
     "/*@MultiClassTaintingParam*/",
-}
+])
 
 debug = False
 

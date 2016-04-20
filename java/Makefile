@@ -201,7 +201,6 @@ compile-nocheckers:
 # The timestamp file indicates when the files were last compiled.
 .class-files-timestamp: ${JAVA_AND_CPP_FILES}
 	${MAKE} tools_jar_exists
-	${MAKE} check-format
 ifneq ("$(wildcard $(JAVACHECK))","")
 	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
 else
