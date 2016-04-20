@@ -4,10 +4,11 @@
 # to the Google Java style (as enforced by the google-java-format program).
 # If any files would be affected by running google-java-format, this script
 # prints their names and returns a non-zero status.
-# If called with no arguments, it reads from standard output.
+# If called with no arguments, it reads from standard input.
 
 import os
 import re
+import shutil
 import sys
 import tempfile
 import filecmp
@@ -18,7 +19,7 @@ debug = False
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Rather than calling out to the shell, it would be better to
-# call directly in Python
+# call directly in Python.
 fixup_py = os.path.join(script_dir, "fixup-google-java-format.py")
 
 gjf_jar_name = "google-java-format-1.0-all-deps.jar"
@@ -39,33 +40,51 @@ defult_tmp_dir = tempfile._get_default_tempdir()
 
 exit_code = 0
 
-def check_file(infile_name):
-    """Fix up formatting while reading from infile_name and writing to outfile."""
+def process_file(infile_name, orig_file):
+    """Check formatting while reading from infile_name,
+    which is a formatted version of orig_file."""
 
-    temp_name = next(tempfile._get_candidate_names())
-
-    with open(temp_name,'w') as outfile:
-        result = subprocess.call(["java", "-jar", gjf_jar_path, infile_name],
-                                 stdout=outfile)
-        if result != 0:
-            sys.exit(result)
-    result = subprocess.call([fixup_py, temp_name])
+    result = subprocess.call([fixup_py, infile_name])
     if result != 0:
+        cleanup()
         sys.exit(result)
-    if not filecmp.cmp(infile_name, temp_name):
+    if not filecmp.cmp(infile_name, orig_file):
         # TODO: gives temporary file name if reading from stdin
-        print "Improper formatting:", infile_name
+        print "Improper formatting:", orig_file
         exit_code = 1
+    
 
-if len(sys.argv) == 1:
+temp_dir = tempfile.mkdtemp(prefix='check-google-java-format-')
+
+def temporary_file_name():
+    return os.path.join(temp_dir, next(tempfile._get_candidate_names()))
+
+def cleanup():
+    shutil.rmtree(temp_dir)
+
+
+files = sys.argv[1:]
+if len(files) == 0:
     content = sys.stdin.read()
-    fname = next(tempfile._get_candidate_names())
+    fname = temporary_file_name() + ".java"
     with open(fname,'w') as outfile:
         print >>outfile, content
-    check_file(fname)
-    os.remove(fname)
-else:
-    for fname in sys.argv[1:]:
-        check_file(fname)
+    files = [fname]
+
+temps = []
+for fname in files:
+    ftemp = temporary_file_name() + ".java"
+    shutil.copyfile(fname, ftemp)
+    temps.append(ftemp)
+
+result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace"] + temps)
+if result != 0:
+    cleanup()
+    sys.exit(result)
+
+for i in range(len(files)):
+    process_file(temps[i], files[i])
+       
+cleanup()
 
 sys.exit(exit_code)

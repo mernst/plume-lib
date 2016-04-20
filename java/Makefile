@@ -109,7 +109,7 @@ endif
 
 # A user can add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-classfile -Werror -bootclasspath "${JAVA_HOME}/jre/lib/rt.jar" ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
@@ -520,9 +520,11 @@ checkstyle:
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
 
-reindent:
-	java -jar ~/java/google-java-format/core/target/google-java-format-0.1-SNAPSHOT-all-deps.jar --replace ${JAVA_FILES_FOR_STYLE}
-	${CHECKERFRAMEWORK}/checker/bin/fixup-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+reformat:
+	../bin/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+
+check-format:
+	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 
 ###########################################################################
