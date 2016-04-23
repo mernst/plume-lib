@@ -33,24 +33,12 @@ if not os.path.isfile(fixup_py):
     urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
 
 
-def process_file(infile_name):
-    """Fix up formatting while reading from infile_name and writing to outfile."""
-
-    result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", infile_name])
-    if result != 0:
-        sys.exit(result)
-    result = subprocess.call([fixup_py, infile_name])
-    if result != 0:
-        sys.exit(result)
-
-
-
 files = sys.argv[1:]
 if len(files) == 0:
     print "run-google-java-format.py expects 1 or more filenames as arguments"
     sys.exit(1)
 
-result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace"] + files)
+result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imports=also"] + files)
 if result != 0:
     sys.exit(result)
 result = subprocess.call([fixup_py] + files)
