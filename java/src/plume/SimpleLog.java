@@ -1,7 +1,7 @@
 package plume;
 
-import java.util.Stack;
 import java.io.PrintStream;
+import java.util.Stack;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;

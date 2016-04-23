@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.Formatter;
 import java.util.Iterator;
-
 import org.apache.commons.bcel6.Const;
 import org.apache.commons.bcel6.classfile.Attribute;
 import org.apache.commons.bcel6.classfile.Code;
@@ -13,8 +12,9 @@ import org.apache.commons.bcel6.classfile.ConstantClass;
 import org.apache.commons.bcel6.classfile.ConstantPool;
 import org.apache.commons.bcel6.classfile.ConstantUtf8;
 import org.apache.commons.bcel6.classfile.Field;
-import org.apache.commons.bcel6.classfile.Method;
 import org.apache.commons.bcel6.classfile.JavaClass;
+import org.apache.commons.bcel6.classfile.Method;
+import org.apache.commons.bcel6.generic.ArrayType;
 import org.apache.commons.bcel6.generic.ClassGen;
 import org.apache.commons.bcel6.generic.CodeExceptionGen;
 import org.apache.commons.bcel6.generic.ConstantPoolGen;
@@ -25,9 +25,8 @@ import org.apache.commons.bcel6.generic.LineNumberGen;
 import org.apache.commons.bcel6.generic.LocalVariableGen;
 import org.apache.commons.bcel6.generic.MethodGen;
 import org.apache.commons.bcel6.generic.ObjectType;
-import org.apache.commons.bcel6.generic.ArrayType;
-import org.apache.commons.bcel6.generic.Type;
 import org.apache.commons.bcel6.generic.RETURN;
+import org.apache.commons.bcel6.generic.Type;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;

@@ -2,7 +2,6 @@ package plume;
 
 import java.io.File;
 import java.io.IOException;
-
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.ParsingException;

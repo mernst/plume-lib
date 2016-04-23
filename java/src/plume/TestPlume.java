@@ -24,7 +24,6 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Pattern;
-
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
