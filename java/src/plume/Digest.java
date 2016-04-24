@@ -27,14 +27,12 @@ public final class Digest {
    * @return the message digest
    * @throws IOException if there is a problem reading the file
    */
-  public static byte[] getFileDigest(String filename, MessageDigest md)
-       throws IOException {
+  public static byte[] getFileDigest(String filename, MessageDigest md) throws IOException {
     // Make sure there is nothing left behind in the MessageDigest
     md.reset();
 
     // Create a stream to read from the file and compute the digest
-    DigestInputStream in =
-      new DigestInputStream(new FileInputStream(filename),md);
+    DigestInputStream in = new DigestInputStream(new FileInputStream(filename), md);
 
     // Read to the end of the file, discarding everything we read. {
     // The DigestInputStream automatically passes all the bytes read to
@@ -53,8 +51,9 @@ public final class Digest {
   private static byte[] buffer = new byte[4096];
 
   /** This array is used to convert from bytes to hexadecimal numbers. */
-  private static final char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7',
-                                 '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+  private static final char[] digits = {
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+  };
 
   /**
    * A convenience method to convert an array of bytes to a String.  We do
@@ -83,9 +82,9 @@ public final class Digest {
   public static byte[] hexDecode(String s) throws IllegalArgumentException {
     try {
       int len = s.length();
-      byte[] r = new byte[len/2];
+      byte[] r = new byte[len / 2];
       for (int i = 0; i < r.length; i++) {
-        int digit1 = s.charAt(i*2), digit2 = s.charAt(i*2 + 1);
+        int digit1 = s.charAt(i * 2), digit2 = s.charAt(i * 2 + 1);
         if ((digit1 >= '0') && (digit1 <= '9')) {
           digit1 -= '0';
         } else if ((digit1 >= 'a') && (digit1 <= 'f')) {
@@ -96,12 +95,11 @@ public final class Digest {
         } else if ((digit2 >= 'a') && (digit2 <= 'f')) {
           digit2 -= 'a' - 10;
         }
-        r[i] = (byte)((digit1 << 4) + digit2);
+        r[i] = (byte) ((digit1 << 4) + digit2);
       }
       return r;
     } catch (Exception e) {
       throw new IllegalArgumentException("hexDecode(): invalid input");
     }
   }
-
 }

@@ -23,10 +23,10 @@ import java.lang.annotation.Target;
  *       specific than its Java type (e.g., '&lt;filename&gt;' if the variable's
  *       type is String).  The less-than and greater-than symbols are required.
  *   <li>'description' is a short (one-line) description of the option
- *       suitable for a usage message.  By convention. it does not end with
+ *       suitable for a usage message.  By convention, it does not end with
  *       a period.  The field's Javadoc comment should contain a longer
  *       description appropriate for a manual or manpage.  The Javadoc
- *       comment often repeats something similar to the @Option
+ *       comment often repeats something similar to the <code>@Option</code>
  *       description.
  * </ul>
  * <p>
@@ -42,6 +42,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Option {
   /** String that describes the option.
+   * @return a string that describes this option
    * @see Option
    */
   String value();

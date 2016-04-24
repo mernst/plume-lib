@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.Formatter;
 import java.util.Iterator;
-
 import org.apache.commons.bcel6.Const;
 import org.apache.commons.bcel6.classfile.Attribute;
 import org.apache.commons.bcel6.classfile.Code;
@@ -13,8 +12,9 @@ import org.apache.commons.bcel6.classfile.ConstantClass;
 import org.apache.commons.bcel6.classfile.ConstantPool;
 import org.apache.commons.bcel6.classfile.ConstantUtf8;
 import org.apache.commons.bcel6.classfile.Field;
-import org.apache.commons.bcel6.classfile.Method;
 import org.apache.commons.bcel6.classfile.JavaClass;
+import org.apache.commons.bcel6.classfile.Method;
+import org.apache.commons.bcel6.generic.ArrayType;
 import org.apache.commons.bcel6.generic.ClassGen;
 import org.apache.commons.bcel6.generic.CodeExceptionGen;
 import org.apache.commons.bcel6.generic.ConstantPoolGen;
@@ -25,15 +25,13 @@ import org.apache.commons.bcel6.generic.LineNumberGen;
 import org.apache.commons.bcel6.generic.LocalVariableGen;
 import org.apache.commons.bcel6.generic.MethodGen;
 import org.apache.commons.bcel6.generic.ObjectType;
-import org.apache.commons.bcel6.generic.ArrayType;
-import org.apache.commons.bcel6.generic.Type;
 import org.apache.commons.bcel6.generic.RETURN;
+import org.apache.commons.bcel6.generic.Type;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
-
 
 /**
  * Static utility methods for working with BCEL.
@@ -186,9 +184,12 @@ public final class BCELUtil {
    * @return true iff the class is part of the JDK (rt.jar)
    */
   public static boolean in_jdk(/*@ClassGetName*/ String classname) {
-    return classname.startsWith("java.") || classname.startsWith("com.")
-      || classname.startsWith("javax.") || classname.startsWith("org.")
-      || classname.startsWith("sun.") || classname.startsWith("sunw.");
+    return classname.startsWith("java.")
+        || classname.startsWith("com.")
+        || classname.startsWith("javax.")
+        || classname.startsWith("org.")
+        || classname.startsWith("sun.")
+        || classname.startsWith("sunw.");
   }
 
   /** Returns whether or not the class is part of the JDK (rt.jar).
@@ -196,9 +197,12 @@ public final class BCELUtil {
    * @return true iff the class is part of the JDK (rt.jar)
    */
   public static boolean in_jdk_internalform(/*@InternalForm*/ String classname) {
-    return classname.startsWith("java/") || classname.startsWith("com/")
-      || classname.startsWith("javax/") || classname.startsWith("org/")
-      || classname.startsWith("sun/") || classname.startsWith("sunw/");
+    return classname.startsWith("java/")
+        || classname.startsWith("com/")
+        || classname.startsWith("javax/")
+        || classname.startsWith("org/")
+        || classname.startsWith("sun/")
+        || classname.startsWith("sunw/");
   }
 
   /**
@@ -224,7 +228,7 @@ public final class BCELUtil {
     }
 
     try {
-      mgen.toString();         // ensure it can be formatted without exceptions
+      mgen.toString(); // ensure it can be formatted without exceptions
       mgen.getLineNumberTable(mgen.getConstantPool());
 
       InstructionList ilist = mgen.getInstructionList();
@@ -233,20 +237,21 @@ public final class BCELUtil {
       }
       CodeExceptionGen[] exceptionHandlers = mgen.getExceptionHandlers();
       for (CodeExceptionGen gen : exceptionHandlers) {
-        assert ilist.contains(gen.getStartPC()) : "exception handler " + gen
-            + " has been forgotten in " + mgen.getClassName() + "."
-            + mgen.getName();
+        assert ilist.contains(gen.getStartPC())
+            : "exception handler "
+                + gen
+                + " has been forgotten in "
+                + mgen.getClassName()
+                + "."
+                + mgen.getName();
       }
-      MethodGen nmg = new MethodGen(mgen.getMethod(), mgen.getClassName(), mgen
-          .getConstantPool());
+      MethodGen nmg = new MethodGen(mgen.getMethod(), mgen.getClassName(), mgen.getConstantPool());
       nmg.getLineNumberTable(mgen.getConstantPool());
     } catch (Throwable t) {
-      System.out.printf("failure in method %s.%s%n", mgen.getClassName(), mgen
-          .getName());
+      System.out.printf("failure in method %s.%s%n", mgen.getClassName(), mgen.getName());
       t.printStackTrace();
       throw new Error(t);
     }
-
   }
 
   /**
@@ -272,11 +277,14 @@ public final class BCELUtil {
       t.fillInStackTrace();
       StackTraceElement[] ste = t.getStackTrace();
       StackTraceElement caller = ste[1];
-      System.out.printf("%s.%s (%s line %d)", caller.getClassName(),
-        caller.getMethodName(), caller.getFileName(), caller.getLineNumber());
+      System.out.printf(
+          "%s.%s (%s line %d)",
+          caller.getClassName(),
+          caller.getMethodName(),
+          caller.getFileName(),
+          caller.getLineNumber());
       for (int ii = 2; ii < ste.length; ii++) {
-        System.out.printf(" [%s line %d]",
-                          ste[ii].getFileName(), ste[ii].getLineNumber());
+        System.out.printf(" [%s line %d]", ste[ii].getFileName(), ste[ii].getLineNumber());
       }
       System.out.printf("%n");
       dump_methods(gen);
@@ -339,8 +347,7 @@ public final class BCELUtil {
       PrintStream p = new PrintStream(path);
 
       // Print the class, super class and interfaces
-      p.printf("class %s extends %s%n", jc.getClassName(), jc
-          .getSuperclassName());
+      p.printf("class %s extends %s%n", jc.getClassName(), jc.getSuperclassName());
       String[] inames = jc.getInterfaceNames();
       if ((inames != null) && (inames.length > 0)) {
         p.printf("   ");
@@ -390,13 +397,13 @@ public final class BCELUtil {
 
   // TODO: write Javadoc
   @SuppressWarnings("rawtypes")
-  public static String instruction_descr(InstructionList il,
-      ConstantPoolGen pool) {
+  public static String instruction_descr(InstructionList il, ConstantPoolGen pool) {
 
     StringBuilder out = new StringBuilder();
     // not generic because BCEL is not generic
-    for (Iterator i = il.iterator(); i.hasNext();) {
-      @SuppressWarnings("nullness") // BCEL's InstructionList is raw (non-generic) but contains only non-null elements
+    for (Iterator i = il.iterator(); i.hasNext(); ) {
+      @SuppressWarnings(
+          "nullness") // BCEL's InstructionList is raw (non-generic) but contains only non-null elements
       /*@NonNull*/ InstructionHandle handle = (InstructionHandle) i.next();
       out.append(handle.getInstruction().toString(pool.getConstantPool()) + "\n");
     }
@@ -453,8 +460,7 @@ public final class BCELUtil {
 
     // Add a local for the instance variable (this)
     if (!mg.isStatic()) {
-      mg.addLocalVariable("this", new ObjectType(mg.getClassName()), null,
-              null);
+      mg.addLocalVariable("this", new ObjectType(mg.getClassName()), null, null);
     }
 
     // Add a local for each parameter
@@ -506,8 +512,7 @@ public final class BCELUtil {
    * @param pool the constant pool
    * @return true iff the attribute is a local variable type table
    */
-  public static boolean is_local_variable_type_table(Attribute a,
-                                                      ConstantPoolGen pool) {
+  public static boolean is_local_variable_type_table(Attribute a, ConstantPoolGen pool) {
     return (get_attribute_name(a, pool).equals("LocalVariableTypeTable"));
   }
 
@@ -533,8 +538,10 @@ public final class BCELUtil {
    */
   public static boolean is_main(MethodGen mg) {
     Type[] arg_types = mg.getArgumentTypes();
-    return (mg.isStatic() && mg.getName().equals("main")
-            && (arg_types.length == 1) && arg_types[0].equals(string_array));
+    return (mg.isStatic()
+        && mg.getName().equals("main")
+        && (arg_types.length == 1)
+        && arg_types[0].equals(string_array));
   }
 
   /**
@@ -571,13 +578,12 @@ public final class BCELUtil {
    * @return the array (or a new one), with new_type at the end
    */
   public static Type[] add_type(Type[] types, Type new_type) {
-      Type[] new_types = new Type[types.length + 1];
-      System.arraycopy(types, 0, new_types, 0, types.length);
-      new_types[types.length] = new_type;
-      Type[] new_types_cast = new_types;
-      return (new_types_cast);
+    Type[] new_types = new Type[types.length + 1];
+    System.arraycopy(types, 0, new_types, 0, types.length);
+    new_types[types.length] = new_type;
+    Type[] new_types_cast = new_types;
+    return (new_types_cast);
   }
-
 
   /**
    * Returns a type array with new_type inserted at the beginning.
@@ -586,11 +592,11 @@ public final class BCELUtil {
    * @return the array (or a new one), with new_type at the beginning
    */
   public static Type[] insert_type(Type new_type, Type[] types) {
-      Type[] new_types = new Type[types.length + 1];
-      System.arraycopy(types, 0, new_types, 1, types.length);
-      new_types[0] = new_type;
-      Type[] new_types_cast = new_types;
-      return (new_types_cast);
+    Type[] new_types = new Type[types.length + 1];
+    System.arraycopy(types, 0, new_types, 1, types.length);
+    new_types[0] = new_type;
+    Type[] new_types_cast = new_types;
+    return (new_types_cast);
   }
 
   /**
@@ -603,7 +609,7 @@ public final class BCELUtil {
     // Get the array depth (if any)
     int array_depth = 0;
     while (classname.endsWith("[]")) {
-      classname = classname.substring(0, classname.length()-2);
+      classname = classname.substring(0, classname.length() - 2);
       array_depth++;
     }
     classname = classname.intern();
@@ -637,5 +643,4 @@ public final class BCELUtil {
 
     return t;
   }
-
 }

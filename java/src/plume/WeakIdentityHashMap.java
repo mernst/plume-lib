@@ -42,69 +42,69 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <hr>
  *
- * A hashtable-based <tt>Map</tt> implementation with <em>weak
- * keys</em>.  An entry in a <tt>WeakIdentityHashMap</tt> will
+ * A hashtable-based <code>Map</code> implementation with <em>weak
+ * keys</em>.  An entry in a <code>WeakIdentityHashMap</code> will
  * automatically be removed when its key is no longer in ordinary use.
  * More precisely, the presence of a mapping for a given key will not
  * prevent the key from being discarded by the garbage collector, that
  * is, made finalizable, finalized, and then reclaimed.  When a key
  * has been discarded its entry is effectively removed from the map,
- * so this class behaves somewhat differently than other <tt>Map</tt>
+ * so this class behaves somewhat differently than other <code>Map</code>
  * implementations.
  *
  * <p> Both null values and the null key are supported. This class has
- * performance characteristics similar to those of the <tt>HashMap</tt>
+ * performance characteristics similar to those of the <code>HashMap</code>
  * class, and has the same efficiency parameters of <em>initial capacity</em>
  * and <em>load factor</em>.
  *
  * <p> Like most collection classes, this class is not synchronized.  A
- * synchronized <tt>WeakIdentityHashMap</tt> may be constructed using the
- * <tt>Collections.synchronizedMap</tt> method.
+ * synchronized <code>WeakIdentityHashMap</code> may be constructed using the
+ * <code>Collections.synchronizedMap</code> method.
  *
- * <p> The behavior of the <tt>WeakIdentityHashMap</tt> class depends
+ * <p> The behavior of the <code>WeakIdentityHashMap</code> class depends
  * in part upon the actions of the garbage collector, so several
- * familiar (though not required) <tt>Map</tt> invariants do not hold
+ * familiar (though not required) <code>Map</code> invariants do not hold
  * for this class.  Because the garbage collector may discard keys at
- * any time, a <tt>WeakIdentityHashMap</tt> may behave as though an
+ * any time, a <code>WeakIdentityHashMap</code> may behave as though an
  * unknown thread is silently removing entries.  In particular, even
- * if you synchronize on a <tt>WeakIdentityHashMap</tt> instance and
+ * if you synchronize on a <code>WeakIdentityHashMap</code> instance and
  * invoke none of its mutator methods, it is possible for the
- * <tt>size</tt> method to return smaller values over time, for the
- * <tt>isEmpty</tt> method to return <tt>false</tt> and then
- * <tt>true</tt>, for the <tt>containsKey</tt> method to return
- * <tt>true</tt> and later <tt>false</tt> for a given key, for the
- * <tt>get</tt> method to return a value for a given key but later
- * return <tt>null</tt>, for the <tt>put</tt> method to return
- * <tt>null</tt> and the <tt>remove</tt> method to return
- * <tt>false</tt> for a key that previously appeared to be in the map,
+ * <code>size</code> method to return smaller values over time, for the
+ * <code>isEmpty</code> method to return <code>false</code> and then
+ * <code>true</code>, for the <code>containsKey</code> method to return
+ * <code>true</code> and later <code>false</code> for a given key, for the
+ * <code>get</code> method to return a value for a given key but later
+ * return <code>null</code>, for the <code>put</code> method to return
+ * <code>null</code> and the <code>remove</code> method to return
+ * <code>false</code> for a key that previously appeared to be in the map,
  * and for successive examinations of the key set, the value set, and
  * the entry set to yield successively smaller numbers of elements.
  *
- * <p> Each key object in a <tt>WeakIdentityHashMap</tt> is stored
+ * <p> Each key object in a <code>WeakIdentityHashMap</code> is stored
  * indirectly as the referent of a weak reference.  Therefore a key
  * will automatically be removed only after the weak references to it,
  * both inside and outside of the map, have been cleared by the
  * garbage collector.
  *
  * <p> <strong>Implementation note:</strong> The value objects in a
- * <tt>WeakIdentityHashMap</tt> are held by ordinary strong
+ * <code>WeakIdentityHashMap</code> are held by ordinary strong
  * references.  Thus care should be taken to ensure that value objects
  * do not strongly refer to their own keys, either directly or
  * indirectly, since that will prevent the keys from being discarded.
  * Note that a value object may refer indirectly to its key via the
- * <tt>WeakIdentityHashMap</tt> itself; that is, a value object may
+ * <code>WeakIdentityHashMap</code> itself; that is, a value object may
  * strongly refer to some other key object whose associated value
  * object, in turn, strongly refers to the key of the first value
  * object.  One way to deal with this is to wrap values themselves
- * within <tt>WeakReferences</tt> before inserting, as in:
- * <tt>m.put(key, new WeakReference(value))</tt>, and then unwrapping
- * upon each <tt>get</tt>.
+ * within <code>WeakReferences</code> before inserting, as in:
+ * <code>m.put(key, new WeakReference(value))</code>, and then unwrapping
+ * upon each <code>get</code>.
  *
  * <p>The iterators returned by all of this class's "collection view methods"
  * are <i>fail-fast</i>: if the map is structurally modified at any time after
  * the iterator is created, in any way except through the iterator's own
- * <tt>remove</tt> or <tt>add</tt> methods, the iterator will throw a
- * <tt>ConcurrentModificationException</tt>.  Thus, in the face of concurrent
+ * <code>remove</code> or <code>add</code> methods, the iterator will throw a
+ * <code>ConcurrentModificationException</code>.  Thus, in the face of concurrent
  * modification, the iterator fails quickly and cleanly, rather than risking
  * arbitrary, non-deterministic behavior at an undetermined time in the
  * future.
@@ -112,7 +112,7 @@ import org.checkerframework.dataflow.qual.*;
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
  * as it is, generally speaking, impossible to make any hard guarantees in the
  * presence of unsynchronized concurrent modification.  Fail-fast iterators
- * throw <tt>ConcurrentModificationException</tt> on a best-effort basis.
+ * throw <code>ConcurrentModificationException</code> on a best-effort basis.
  * Therefore, it would be wrong to write a program that depended on this
  * exception for its correctness:  <i>the fail-fast behavior of iterators
  * should be used only to detect bugs.</i>
@@ -186,13 +186,13 @@ public class WeakIdentityHashMap<K,V>
     private volatile int modCount;
 
     /**
-     * Constructs a new, empty <tt>WeakIdentityHashMap</tt> with the
+     * Constructs a new, empty <code>WeakIdentityHashMap</code> with the
      * given initial capacity and the given load factor.
      *
      * @param  initialCapacity The initial capacity of the
-     *      <tt>WeakIdentityHashMap</tt>
+     *      <code>WeakIdentityHashMap</code>
      * @param  loadFactor      The load factor of the
-     *      <tt>WeakIdentityHashMap</tt>
+     *      <code>WeakIdentityHashMap</code>
      * @throws IllegalArgumentException  If the initial capacity is negative,
      *      or if the load factor is nonpositive.
      */
@@ -217,12 +217,12 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /**
-     * Constructs a new, empty <tt>WeakIdentityHashMap</tt> with the
+     * Constructs a new, empty <code>WeakIdentityHashMap</code> with the
      * given initial capacity and the default load factor, which is
-     * <tt>0.75</tt>.
+     * <code>0.75</code>.
      *
      * @param  initialCapacity The initial capacity of the
-     *      <tt>WeakIdentityHashMap</tt>
+     *      <code>WeakIdentityHashMap</code>
      * @throws IllegalArgumentException  If the initial capacity is negative.
      */
     public WeakIdentityHashMap(int initialCapacity) {
@@ -230,7 +230,7 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /**
-     * Constructs a new, empty <tt>WeakIdentityHashMap</tt> with the
+     * Constructs a new, empty <code>WeakIdentityHashMap</code> with the
      * default initial capacity (16) and the default load factor
      * (0.75).
      */
@@ -243,11 +243,11 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /**
-     * Constructs a new <tt>WeakIdentityHashMap</tt> with the same
-     * mappings as the specified <tt>Map</tt>.  The
-     * <tt>WeakIdentityHashMap</tt> is created with default load
-     * factor, which is <tt>0.75</tt> and an initial capacity
-     * sufficient to hold the mappings in the specified <tt>Map</tt>.
+     * Constructs a new <code>WeakIdentityHashMap</code> with the same
+     * mappings as the specified <code>Map</code>.  The
+     * <code>WeakIdentityHashMap</code> is created with default load
+     * factor, which is <code>0.75</code> and an initial capacity
+     * sufficient to hold the mappings in the specified <code>Map</code>.
      *
      * @param   t the map whose mappings are to be placed in this map.
      * @throws  NullPointerException if the specified map is null.
@@ -359,7 +359,7 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /**
-     * Returns <tt>true</tt> if this map contains no key-value mappings.
+     * Returns <code>true</code> if this map contains no key-value mappings.
      * This result is a snapshot, and may not reflect unprocessed
      * entries that will be removed before next attempted access
      * because they are no longer referenced.
@@ -370,16 +370,16 @@ public class WeakIdentityHashMap<K,V>
 
     /**
      * Returns the value to which the specified key is mapped in this weak
-     * hash map, or <tt>null</tt> if the map contains no mapping for
-     * this key.  A return value of <tt>null</tt> does not <i>necessarily</i>
+     * hash map, or <code>null</code> if the map contains no mapping for
+     * this key.  A return value of <code>null</code> does not <i>necessarily</i>
      * indicate that the map contains no mapping for the key; it is also
-     * possible that the map explicitly maps the key to <tt>null</tt>. The
-     * <tt>containsKey</tt> method may be used to distinguish these two
+     * possible that the map explicitly maps the key to <code>null</code>. The
+     * <code>containsKey</code> method may be used to distinguish these two
      * cases.
      *
      * @param   key the key whose associated value is to be returned.
      * @return  the value to which this map maps the specified key, or
-     *          <tt>null</tt> if the map contains no mapping for this key.
+     *          <code>null</code> if the map contains no mapping for this key.
      * @see #put(Object, Object)
      */
     /*@Pure*/ public /*@Nullable*/ V get(/*@Nullable*/ Object key) {
@@ -397,12 +397,12 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /**
-     * Returns <tt>true</tt> if this map contains a mapping for the
+     * Returns <code>true</code> if this map contains a mapping for the
      * specified key.
      *
      * @param   key   The key whose presence in this map is to be tested
-     * @return  <tt>true</tt> if there is a mapping for <tt>key</tt>;
-     *          <tt>false</tt> otherwise
+     * @return  <code>true</code> if there is a mapping for <code>key</code>;
+     *          <code>false</code> otherwise
      */
     /*@Pure*/ public boolean containsKey(/*@Nullable*/ Object key) {
         return getEntry(key) != null;
@@ -430,10 +430,10 @@ public class WeakIdentityHashMap<K,V>
      *
      * @param key key with which the specified value is to be associated.
      * @param value value to be associated with the specified key.
-     * @return previous value associated with specified key, or <tt>null</tt>
-     *	       if there was no mapping for key.  A <tt>null</tt> return can
+     * @return previous value associated with specified key, or <code>null</code>
+     *	       if there was no mapping for key.  A <code>null</code> return can
      *	       also indicate that the HashMap previously associated
-     *	       <tt>null</tt> with the specified key.
+     *	       <code>null</code> with the specified key.
      */
     public /*@Nullable*/ V put(K key, V value) {
         @SuppressWarnings("unchecked")
@@ -565,9 +565,9 @@ public class WeakIdentityHashMap<K,V>
      * Removes the mapping for this key from this map if present.
      *
      * @param key key whose mapping is to be removed from the map.
-     * @return previous value associated with specified key, or <tt>null</tt>
-     *	       if there was no mapping for key.  A <tt>null</tt> return can
-     *	       also indicate that the map previously associated <tt>null</tt>
+     * @return previous value associated with specified key, or <code>null</code>
+     *	       if there was no mapping for key.  A <code>null</code> return can
+     *	       also indicate that the map previously associated <code>null</code>
      *	       with the specified key.
      */
     public /*@Nullable*/ V remove(Object key) {
@@ -651,11 +651,11 @@ public class WeakIdentityHashMap<K,V>
    }
 
     /**
-     * Returns <tt>true</tt> if this map maps one or more keys to the
+     * Returns <code>true</code> if this map maps one or more keys to the
      * specified value.
      *
      * @param value value whose presence in this map is to be tested.
-     * @return <tt>true</tt> if this map maps one or more keys to the
+     * @return <code>true</code> if this map maps one or more keys to the
      *         specified value.
      */
     /*@Pure*/ public boolean containsValue(/*@Nullable*/ Object value) {
@@ -844,10 +844,10 @@ public class WeakIdentityHashMap<K,V>
      * Returns a set view of the keys contained in this map.  The set is
      * backed by the map, so changes to the map are reflected in the set, and
      * vice-versa.  The set supports element removal, which removes the
-     * corresponding mapping from this map, via the <tt>Iterator.remove</tt>,
-     * <tt>Set.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt>, and
-     * <tt>clear</tt> operations.  It does not support the <tt>add</tt> or
-     * <tt>addAll</tt> operations.
+     * corresponding mapping from this map, via the <code>Iterator.remove</code>,
+     * <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and
+     * <code>clear</code> operations.  It does not support the <code>add</code> or
+     * <code>addAll</code> operations.
      *
      * @return a set view of the keys contained in this map.
      */
@@ -904,9 +904,9 @@ public class WeakIdentityHashMap<K,V>
      * collection is backed by the map, so changes to the map are reflected in
      * the collection, and vice-versa.  The collection supports element
      * removal, which removes the corresponding mapping from this map, via the
-     * <tt>Iterator.remove</tt>, <tt>Collection.remove</tt>,
-     * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt> operations.
-     * It does not support the <tt>add</tt> or <tt>addAll</tt> operations.
+     * <code>Iterator.remove</code>, <code>Collection.remove</code>,
+     * <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations.
+     * It does not support the <code>add</code> or <code>addAll</code> operations.
      *
      * @return a collection view of the values contained in this map.
      */
@@ -949,13 +949,13 @@ public class WeakIdentityHashMap<K,V>
 
     /**
      * Returns a collection view of the mappings contained in this map.  Each
-     * element in the returned collection is a <tt>Map.Entry</tt>.  The
+     * element in the returned collection is a <code>Map.Entry</code>.  The
      * collection is backed by the map, so changes to the map are reflected in
      * the collection, and vice-versa.  The collection supports element
      * removal, which removes the corresponding mapping from the map, via the
-     * <tt>Iterator.remove</tt>, <tt>Collection.remove</tt>,
-     * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt> operations.
-     * It does not support the <tt>add</tt> or <tt>addAll</tt> operations.
+     * <code>Iterator.remove</code>, <code>Collection.remove</code>,
+     * <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations.
+     * It does not support the <code>add</code> or <code>addAll</code> operations.
      *
      * @return a collection view of the mappings contained in this map.
      * @see java.util.Map.Entry

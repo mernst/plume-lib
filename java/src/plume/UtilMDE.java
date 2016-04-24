@@ -88,7 +88,7 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b) &ge; i
    */
-  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
@@ -101,10 +101,10 @@ public final class UtilMDE {
     // 3. iterate through both sets with nextSetBit()
 
     int size = Math.min(a.length(), b.length());
-    if (size > 10*i) {
+    if (size > 10 * i) {
       // The size is more than 10 times the limit.  So first try processing
       // just a subset of the bits (4 times the limit).
-      BitSet intersection = a.get(0, 4*i);
+      BitSet intersection = a.get(0, 4 * i);
       intersection.and(b);
       if (intersection.cardinality() >= i) {
         return true;
@@ -122,17 +122,18 @@ public final class UtilMDE {
    * @param i the cardinality bound
    * @return true iff size(a intersect b intersect c) &ge; i
    */
-  @SuppressWarnings("purity")   // side effect to local state (BitSet)
-  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
+  @SuppressWarnings("purity") // side effect to local state (BitSet)
+  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(
+      BitSet a, BitSet b, BitSet c, int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
     int size = Math.min(a.length(), b.length());
     size = Math.min(size, c.length());
-    if (size > 10*i) {
+    if (size > 10 * i) {
       // The size is more than 10 times the limit.  So first try processing
       // just a subset of the bits (4 times the limit).
-      BitSet intersection = a.get(0, 4*i);
+      BitSet intersection = a.get(0, 4 * i);
       intersection.and(b);
       intersection.and(c);
       if (intersection.cardinality() >= i) {
@@ -147,7 +148,7 @@ public final class UtilMDE {
    * @param b the second BitSet to intersect
    * @return size(a intersect b)
    */
-  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
@@ -160,7 +161,7 @@ public final class UtilMDE {
    * @param c the third BitSet to intersect
    * @return size(a intersect b intersect c)
    */
-  @SuppressWarnings("purity")   // side effect to local state (BitSet)
+  @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
@@ -168,11 +169,9 @@ public final class UtilMDE {
     return intersection.cardinality();
   }
 
-
   ///////////////////////////////////////////////////////////////////////////
   /// BufferedFileReader
   ///
-
 
   // Convenience methods for creating InputStreams, Readers, BufferedReaders, and LineNumberReaders.
 
@@ -217,7 +216,8 @@ public final class UtilMDE {
    * @throws IOException if there is trouble reading the file
    * @throws FileNotFoundException if the file is not found
    */
-  public static InputStreamReader fileReader(String filename) throws FileNotFoundException, IOException {
+  public static InputStreamReader fileReader(String filename)
+      throws FileNotFoundException, IOException {
     // return fileReader(filename, "ISO-8859-1");
     return fileReader(new File(filename), null);
   }
@@ -240,7 +240,6 @@ public final class UtilMDE {
     return fileReader(file, null);
   }
 
-
   /**
    * Returns a Reader for the file, accounting for the possibility
    * that the file is compressed.
@@ -256,7 +255,8 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static InputStreamReader fileReader(File file, /*@Nullable*/ String charsetName) throws FileNotFoundException, IOException {
+  public static InputStreamReader fileReader(File file, /*@Nullable*/ String charsetName)
+      throws FileNotFoundException, IOException {
     InputStream in = new FileInputStream(file);
     InputStreamReader file_reader;
     if (charsetName == null) {
@@ -281,7 +281,8 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static BufferedReader bufferedFileReader(String filename) throws FileNotFoundException, IOException {
+  public static BufferedReader bufferedFileReader(String filename)
+      throws FileNotFoundException, IOException {
     return bufferedFileReader(new File(filename));
   }
 
@@ -299,8 +300,9 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static BufferedReader bufferedFileReader(File file) throws FileNotFoundException, IOException {
-    return(bufferedFileReader(file, null));
+  public static BufferedReader bufferedFileReader(File file)
+      throws FileNotFoundException, IOException {
+    return (bufferedFileReader(file, null));
   }
 
   /**
@@ -318,7 +320,8 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static BufferedReader bufferedFileReader(String filename, /*@Nullable*/ String charsetName) throws FileNotFoundException, IOException {
+  public static BufferedReader bufferedFileReader(String filename, /*@Nullable*/ String charsetName)
+      throws FileNotFoundException, IOException {
     return bufferedFileReader(new File(filename), charsetName);
   }
 
@@ -337,11 +340,11 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static BufferedReader bufferedFileReader(File file, /*@Nullable*/ String charsetName) throws FileNotFoundException, IOException {
+  public static BufferedReader bufferedFileReader(File file, /*@Nullable*/ String charsetName)
+      throws FileNotFoundException, IOException {
     Reader file_reader = fileReader(file, charsetName);
     return new BufferedReader(file_reader);
   }
-
 
   /**
    * Returns a LineNumberReader for the file, accounting for the possibility
@@ -357,7 +360,8 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static LineNumberReader lineNumberFileReader(String filename) throws FileNotFoundException, IOException {
+  public static LineNumberReader lineNumberFileReader(String filename)
+      throws FileNotFoundException, IOException {
     return lineNumberFileReader(new File(filename));
   }
 
@@ -375,18 +379,18 @@ public final class UtilMDE {
    * @throws FileNotFoundException if the file cannot be found
    * @throws IOException if there is trouble reading the file
    */
-  public static LineNumberReader lineNumberFileReader(File file) throws FileNotFoundException, IOException {
+  public static LineNumberReader lineNumberFileReader(File file)
+      throws FileNotFoundException, IOException {
     Reader file_reader;
     if (file.getName().endsWith(".gz")) {
       try {
-        file_reader = new InputStreamReader(new GZIPInputStream(new FileInputStream(file)),
-                                            "ISO-8859-1");
+        file_reader =
+            new InputStreamReader(new GZIPInputStream(new FileInputStream(file)), "ISO-8859-1");
       } catch (IOException e) {
         throw new IOException("Problem while reading " + file, e);
       }
     } else {
-      file_reader = new InputStreamReader(new FileInputStream(file),
-                                          "ISO-8859-1");
+      file_reader = new InputStreamReader(new FileInputStream(file), "ISO-8859-1");
     }
     return new LineNumberReader(file_reader);
   }
@@ -424,10 +428,12 @@ public final class UtilMDE {
    * @throws IOException if there is trouble writing the file
    */
   // Question:  should this be rewritten as a wrapper around bufferedFileOutputStream?
-  public static BufferedWriter bufferedFileWriter(String filename, boolean append) throws IOException {
+  public static BufferedWriter bufferedFileWriter(String filename, boolean append)
+      throws IOException {
     Writer file_writer;
     if (filename.endsWith(".gz")) {
-      file_writer = new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(filename, append)));
+      file_writer =
+          new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(filename, append)));
     } else {
       file_writer = new FileWriter(filename, append);
     }
@@ -449,14 +455,14 @@ public final class UtilMDE {
    * @return a BufferedOutputStream for filename
    * @throws IOException if there is trouble writing the file
    */
-  public static BufferedOutputStream bufferedFileOutputStream(String filename, boolean append) throws IOException {
+  public static BufferedOutputStream bufferedFileOutputStream(String filename, boolean append)
+      throws IOException {
     OutputStream os = new FileOutputStream(filename, append);
     if (filename.endsWith(".gz")) {
       os = new GZIPOutputStream(os);
     }
     return new BufferedOutputStream(os);
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Class
@@ -478,8 +484,7 @@ public final class UtilMDE {
     // Handle superclasses
     Class<?> parent = sub.getSuperclass();
     // If parent == null, sub == Object
-    if ((parent != null)
-        && (parent == sup || isSubtype(parent, sup))) {
+    if ((parent != null) && (parent == sup || isSubtype(parent, sup))) {
       return true;
     }
 
@@ -493,8 +498,8 @@ public final class UtilMDE {
     return false;
   }
 
+  private static HashMap<String, Class<?>> primitiveClasses = new HashMap<String, Class<?>>(8);
 
-  private static HashMap<String,Class<?>> primitiveClasses = new HashMap<String,Class<?>>(8);
   static {
     primitiveClasses.put("boolean", Boolean.TYPE);
     primitiveClasses.put("byte", Byte.TYPE);
@@ -525,7 +530,8 @@ public final class UtilMDE {
    */
   // The annotation encourages proper use, even though this can take a
   // fully-qualified name (only for a non-array).
-  public static Class<?> classForName(/*@ClassGetName*/ String className) throws ClassNotFoundException {
+  public static Class<?> classForName(
+      /*@ClassGetName*/ String className) throws ClassNotFoundException {
     Class<?> result = primitiveClasses.get(className);
     if (result != null) {
       return result;
@@ -538,8 +544,8 @@ public final class UtilMDE {
           throw e;
         }
         @SuppressWarnings("signature") // checked below & exception is handled
-        /*@ClassGetName*/ String inner_name = className.substring(0, pos) + "$"
-          + className.substring(pos+1);
+        /*@ClassGetName*/ String inner_name =
+            className.substring(0, pos) + "$" + className.substring(pos + 1);
         try {
           return Class.forName(inner_name);
         } catch (ClassNotFoundException ee) {
@@ -549,7 +555,10 @@ public final class UtilMDE {
     }
   }
 
-  private static HashMap</*@SourceNameForNonArray*/ String,/*@FieldDescriptor*/ String> primitiveClassesJvm = new HashMap</*@SourceNameForNonArray*/ String,/*@FieldDescriptor*/ String>(8);
+  private static HashMap</*@SourceNameForNonArray*/ String, /*@FieldDescriptor*/ String>
+      primitiveClassesJvm =
+          new HashMap</*@SourceNameForNonArray*/ String, /*@FieldDescriptor*/ String>(8);
+
   static {
     primitiveClassesJvm.put("boolean", "Z");
     primitiveClassesJvm.put("byte", "B");
@@ -569,18 +578,19 @@ public final class UtilMDE {
    * @return name of the class, in field descriptor format
    */
   @SuppressWarnings("signature") // conversion routine
-  public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(/*@BinaryName*/ String classname) {
+  public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(
+      /*@BinaryName*/ String classname) {
     int dims = 0;
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, sans_array.length()-2);
+      sans_array = sans_array.substring(0, sans_array.length() - 2);
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
       result = "L" + sans_array + ";";
     }
-    for (int i=0; i<dims; i++) {
+    for (int i = 0; i < dims; i++) {
       result = "[" + result;
     }
     return result.replace('.', '/');
@@ -593,7 +603,8 @@ public final class UtilMDE {
    * @return name of the type, in field descriptor format
    * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
    */
-  public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(String primitive_name) {
+  public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(
+      String primitive_name) {
     String result = primitiveClassesJvm.get(primitive_name);
     if (result == null) {
       throw new IllegalArgumentException("Not the name of a primitive type: " + primitive_name);
@@ -619,14 +630,14 @@ public final class UtilMDE {
    * @return the class name, in Class.getName format
    */
   @SuppressWarnings("signature") // conversion routine
-  public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(/*FieldDescriptor*/ String fd) {
+  public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(
+      /*FieldDescriptor*/ String fd) {
     if (fd.startsWith("[")) {
       return fd.replace('/', '.');
     } else {
       return fieldDescriptorToBinaryName(fd);
     }
   }
-
 
   /**
    * Convert a fully-qualified argument list from Java format to JVML format.
@@ -636,13 +647,12 @@ public final class UtilMDE {
    * @return argument list, in JVML format
    */
   public static String arglistToJvm(String arglist) {
-    if (! (arglist.startsWith("(") && arglist.endsWith(")"))) {
+    if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
-    String comma_sep_args = arglist.substring(1, arglist.length()-1);
-    StringTokenizer args_tokenizer
-      = new StringTokenizer(comma_sep_args, ",", false);
+    String comma_sep_args = arglist.substring(1, arglist.length() - 1);
+    StringTokenizer args_tokenizer = new StringTokenizer(comma_sep_args, ",", false);
     while (args_tokenizer.hasMoreTokens()) {
       @SuppressWarnings("signature") // substring
       /*@BinaryName*/ String arg = args_tokenizer.nextToken().trim();
@@ -653,7 +663,8 @@ public final class UtilMDE {
     return result;
   }
 
-  private static HashMap<String,String> primitiveClassesFromJvm = new HashMap<String,String>(8);
+  private static HashMap<String, String> primitiveClassesFromJvm = new HashMap<String, String>(8);
+
   static {
     primitiveClassesFromJvm.put("Z", "boolean");
     primitiveClassesFromJvm.put("B", "byte");
@@ -692,7 +703,7 @@ public final class UtilMDE {
         throw new Error("Malformed base class: " + classname);
       }
     }
-    for (int i=0; i<dims; i++) {
+    for (int i = 0; i < dims; i++) {
       result += "[]";
     }
     return result.replace('/', '.');
@@ -706,12 +717,12 @@ public final class UtilMDE {
    * @return argument list, in Java format
    */
   public static String arglistFromJvm(String arglist) {
-    if (! (arglist.startsWith("(") && arglist.endsWith(")"))) {
+    if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
     int pos = 1;
-    while (pos < arglist.length()-1) {
+    while (pos < arglist.length() - 1) {
       if (pos > 1) {
         result += ", ";
       }
@@ -722,21 +733,20 @@ public final class UtilMDE {
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
         int semi_pos = arglist.indexOf(";", nonarray_pos);
-        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos+1));
+        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
         pos = semi_pos + 1;
       } else {
-        String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos+1));
+        String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos + 1));
         if (maybe == null) {
           // return null;
           throw new Error("Malformed arglist: " + arglist);
         }
         result += maybe;
-        pos = nonarray_pos+1;
+        pos = nonarray_pos + 1;
       }
     }
     return result + ")";
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// ClassLoader
@@ -755,17 +765,20 @@ public final class UtilMDE {
      * @see ClassLoader#defineClass(String,byte[],int,int)
      * @param className The expected binary name of the class to define, or null if not known
      * @param pathname The file from which to load the class
-     * @return The <tt>Class</tt> object that was created
+     * @return The <code>Class</code> object that was created
      */
-    public Class<?> defineClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
+    public Class<?> defineClassFromFile(
+        /*@BinaryName*/ String className, String pathname)
+        throws FileNotFoundException, IOException {
       FileInputStream fi = new FileInputStream(pathname);
       int numbytes = fi.available();
       byte[] classBytes = new byte[numbytes];
       int bytesRead = fi.read(classBytes);
       fi.close();
       if (bytesRead < numbytes) {
-        throw new Error(String.format("Expected to read %d bytes from %s, got %d",
-                                      numbytes, pathname, bytesRead));
+        throw new Error(
+            String.format(
+                "Expected to read %d bytes from %s, got %d", numbytes, pathname, bytesRead));
       }
       Class<?> return_class = defineClass(className, classBytes, 0, numbytes);
       resolveClass(return_class); // link the class
@@ -789,10 +802,10 @@ public final class UtilMDE {
    * @throws IOException if there is trouble reading the file
    */
   // Also throws UnsupportedClassVersionError and some other exceptions.
-  public static Class<?> defineClassFromFile(/*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
+  public static Class<?> defineClassFromFile(
+      /*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
     return thePromiscuousLoader.defineClassFromFile(className, pathname);
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Classpath
@@ -806,7 +819,7 @@ public final class UtilMDE {
     // If the dir isn't on CLASSPATH, add it.
     String pathSep = System.getProperty("path.separator");
     // what is the point of the "replace()" call?
-    String cp = System.getProperty("java.class.path",".").replace('\\', '/');
+    String cp = System.getProperty("java.class.path", ".").replace('\\', '/');
     StringTokenizer tokenizer = new StringTokenizer(cp, pathSep, false);
     boolean found = false;
     while (tokenizer.hasMoreTokens() && !found) {
@@ -817,11 +830,9 @@ public final class UtilMDE {
     }
   }
 
-
   ///////////////////////////////////////////////////////////////////////////
   /// File
   ///
-
 
   /** Count the number of lines in the specified file.
    * @param filename file whose size to count
@@ -872,16 +883,13 @@ public final class UtilMDE {
           // This can happen only if the last line is not terminated.
         }
       }
-      if ((dos > mac && dos > unix)
-          || (lineSep.equals("\r\n") && dos >= unix && dos >= mac)) {
+      if ((dos > mac && dos > unix) || (lineSep.equals("\r\n") && dos >= unix && dos >= mac)) {
         return "\r\n";
       }
-      if ((mac > dos && mac > unix)
-          || (lineSep.equals("\r") && mac >= dos && mac >= unix)) {
+      if ((mac > dos && mac > unix) || (lineSep.equals("\r") && mac >= dos && mac >= unix)) {
         return "\r";
       }
-      if ((unix > dos && unix > mac)
-          || (lineSep.equals("\n") && unix >= dos && unix >= mac)) {
+      if ((unix > dos && unix > mac) || (lineSep.equals("\n") && unix >= dos && unix >= mac)) {
         return "\n";
       }
       // The two non-preferred line endings are tied and have more votes than
@@ -890,8 +898,6 @@ public final class UtilMDE {
       return lineSep;
     }
   }
-
-
 
   /**
    * Return true iff files have the same contents.
@@ -910,10 +916,10 @@ public final class UtilMDE {
    * @param trimLines if true, call String.trim on each line before comparing
    * @return true iff the files have the same contents
    */
-  @SuppressWarnings("purity")   // reads files, side effects local state
+  @SuppressWarnings("purity") // reads files, side effects local state
   /*@Pure*/ public static boolean equalFiles(String file1, String file2, boolean trimLines) {
     try (LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
-         LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2);) {
+        LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2); ) {
       String line1 = reader1.readLine();
       String line2 = reader2.readLine();
       while (line1 != null && line2 != null) {
@@ -921,7 +927,7 @@ public final class UtilMDE {
           line1 = line1.trim();
           line2 = line2.trim();
         }
-        if (! (line1.equals(line2))) {
+        if (!(line1.equals(line2))) {
           return false;
         }
         line1 = reader1.readLine();
@@ -935,7 +941,6 @@ public final class UtilMDE {
       throw new RuntimeException(e);
     }
   }
-
 
   /**
    * Returns true
@@ -970,7 +975,6 @@ public final class UtilMDE {
     // }
   }
 
-
   ///
   /// Directories
   ///
@@ -996,14 +1000,12 @@ public final class UtilMDE {
    *  file to be created
    * @see java.io.File#createTempFile(String, String, File)
    */
-  public static File createTempDir(String prefix, String suffix)
-    throws IOException {
+  public static File createTempDir(String prefix, String suffix) throws IOException {
     String fs = File.separator;
-    String path = System.getProperty("java.io.tmpdir") + fs
-      + System.getProperty("user.name") + fs;
+    String path = System.getProperty("java.io.tmpdir") + fs + System.getProperty("user.name") + fs;
     File pathFile = new File(path);
-    if (! pathFile.isDirectory()) {
-      if (! pathFile.mkdirs()) {
+    if (!pathFile.isDirectory()) {
+      if (!pathFile.mkdirs()) {
         throw new IOException("Could not create directory: " + pathFile);
       }
     }
@@ -1011,7 +1013,7 @@ public final class UtilMDE {
     File tmpfile = File.createTempFile(prefix + "_", "_", pathFile);
     String tmpDirPath = tmpfile.getPath() + suffix;
     File tmpDir = new File(tmpDirPath);
-    if (! tmpDir.mkdirs()) {
+    if (!tmpDir.mkdirs()) {
       throw new IOException("Could not create directory: " + tmpDir);
     }
     // Now that we have created our directory, we should get rid
@@ -1019,7 +1021,6 @@ public final class UtilMDE {
     tmpfile.delete();
     return tmpDir;
   }
-
 
   /**
    * Deletes the directory at dirName and all its files.
@@ -1046,7 +1047,6 @@ public final class UtilMDE {
     return dir.delete();
   }
 
-
   ///
   /// File names (aka filenames)
   ///
@@ -1060,17 +1060,19 @@ public final class UtilMDE {
   public static final class WildcardFilter implements FilenameFilter {
     String prefix;
     String suffix;
+
     public WildcardFilter(String filename) {
       int astloc = filename.indexOf("*");
       if (astloc == -1) {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
-      suffix = filename.substring(astloc+1);
+      suffix = filename.substring(astloc + 1);
       if (filename.indexOf("*") != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
       }
     }
+
     public boolean accept(File dir, String name) {
       return name.startsWith(prefix) && name.endsWith(suffix);
     }
@@ -1108,7 +1110,6 @@ public final class UtilMDE {
     }
   }
 
-
   /**
    * Return a string version of the name that can be used in Java source.
    * On Windows, the file will return a backslash separated string.  Since
@@ -1139,8 +1140,7 @@ public final class UtilMDE {
    */
   public static void writeObject(Object o, File file) throws IOException {
     // 8192 is the buffer size in BufferedReader
-    OutputStream bytes =
-      new BufferedOutputStream(new FileOutputStream(file), 8192);
+    OutputStream bytes = new BufferedOutputStream(new FileOutputStream(file), 8192);
     if (file.getName().endsWith(".gz")) {
       bytes = new GZIPOutputStream(bytes);
     }
@@ -1149,7 +1149,6 @@ public final class UtilMDE {
     objs.close();
   }
 
-
   /**
    * Reads an Object from a File.
    * @param file the file from which to read
@@ -1157,11 +1156,9 @@ public final class UtilMDE {
    * @throws IOException if there is trouble reading the file
    * @throws ClassNotFoundException if the object's class cannot be found
    */
-  public static Object readObject(File file) throws
-      IOException, ClassNotFoundException {
+  public static Object readObject(File file) throws IOException, ClassNotFoundException {
     // 8192 is the buffer size in BufferedReader
-    InputStream istream =
-      new BufferedInputStream(new FileInputStream(file), 8192);
+    InputStream istream = new BufferedInputStream(new FileInputStream(file), 8192);
     if (file.getName().endsWith(".gz")) {
       try {
         istream = new GZIPInputStream(istream);
@@ -1236,7 +1233,6 @@ public final class UtilMDE {
       throw new Error("Unexpected error in writeFile(" + file + ")", e);
     }
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Hashing
@@ -1321,7 +1317,6 @@ public final class UtilMDE {
   public static int hash(double /*@Nullable*/ [] a, double /*@Nullable*/ [] b) {
     return hash(hash(a), hash(b));
   }
-
 
   /// Don't define hash with int args; use the long versions instead.
 
@@ -1445,7 +1440,6 @@ public final class UtilMDE {
     return hash(result);
   }
 
-
   ///////////////////////////////////////////////////////////////////////////
   /// Iterator
   ///
@@ -1456,15 +1450,19 @@ public final class UtilMDE {
   /** Converts an Enumeration into an Iterator. */
   public static final class EnumerationIterator<T> implements Iterator<T> {
     Enumeration<T> e;
+
     public EnumerationIterator(Enumeration<T> e) {
       this.e = e;
     }
+
     public boolean hasNext() {
       return e.hasMoreElements();
     }
+
     public T next() {
       return e.nextElement();
     }
+
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1473,12 +1471,15 @@ public final class UtilMDE {
   /** Converts an Iterator into an Enumeration. */
   public static final class IteratorEnumeration<T> implements Enumeration<T> {
     Iterator<T> itor;
+
     public IteratorEnumeration(Iterator<T> itor) {
       this.itor = itor;
     }
+
     public boolean hasMoreElements() {
       return itor.hasNext();
     }
+
     public T nextElement() {
       return itor.next();
     }
@@ -1492,12 +1493,16 @@ public final class UtilMDE {
    */
   public static final class MergedIterator2<T> implements Iterator<T> {
     Iterator<T> itor1, itor2;
+
     public MergedIterator2(Iterator<T> itor1_, Iterator<T> itor2_) {
-      this.itor1 = itor1_; this.itor2 = itor2_;
+      this.itor1 = itor1_;
+      this.itor2 = itor2_;
     }
+
     public boolean hasNext() {
       return (itor1.hasNext() || itor2.hasNext());
     }
+
     public T next() {
       if (itor1.hasNext()) {
         return itor1.next();
@@ -1507,6 +1512,7 @@ public final class UtilMDE {
         throw new NoSuchElementException();
       }
     }
+
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1520,6 +1526,7 @@ public final class UtilMDE {
    */
   public static final class MergedIterator<T> implements Iterator<T> {
     Iterator<Iterator<T>> itorOfItors;
+
     public MergedIterator(Iterator<Iterator<T>> itorOfItors) {
       this.itorOfItors = itorOfItors;
     }
@@ -1535,7 +1542,7 @@ public final class UtilMDE {
     }
 
     public T next() {
-      hasNext();                // for side effect
+      hasNext(); // for side effect
       return current.next();
     }
 
@@ -1551,7 +1558,8 @@ public final class UtilMDE {
     Filter<T> filter;
 
     public FilteredIterator(Iterator<T> itor, Filter<T> filter) {
-      this.itor = itor; this.filter = filter;
+      this.itor = itor;
+      this.filter = filter;
     }
 
     @SuppressWarnings("unchecked")
@@ -1597,6 +1605,7 @@ public final class UtilMDE {
     // /*@Nullable*/ T nothing = (/*@Nullable*/ T) null;
     @SuppressWarnings("unchecked")
     T nothing = (T) new Object();
+
     T first = nothing;
     T current = nothing;
 
@@ -1615,7 +1624,7 @@ public final class UtilMDE {
     }
 
     public T next() {
-      if (! itor.hasNext()) {
+      if (!itor.hasNext()) {
         throw new NoSuchElementException();
       }
       T tmp = current;
@@ -1647,7 +1656,6 @@ public final class UtilMDE {
     }
   }
 
-
   /**
    * Return a List containing num_elts randomly chosen
    * elements from the iterator, or all the elements of the iterator if
@@ -1661,6 +1669,7 @@ public final class UtilMDE {
   public static <T> List<T> randomElements(Iterator<T> itor, int num_elts) {
     return randomElements(itor, num_elts, r);
   }
+
   private static Random r = new Random();
 
   /**
@@ -1686,7 +1695,6 @@ public final class UtilMDE {
     }
     return rs.getValues();
 
-
     /*
     ArrayList<T> result = new ArrayList<T>(num_elts);
     int i=1;
@@ -1706,7 +1714,6 @@ public final class UtilMDE {
     */
   }
 
-
   ///////////////////////////////////////////////////////////////////////////
   /// Map
   ///
@@ -1723,7 +1730,7 @@ public final class UtilMDE {
    * @return the old value, before it was incremented
    * @throws Error if the key is in the Map but maps to a non-Integer.
    */
-  public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
+  public static <T> /*@Nullable*/ Integer incrementMap(Map<T, Integer> m, T key, int count) {
     Integer old = m.get(key);
     int new_total;
     if (old == null) {
@@ -1740,7 +1747,7 @@ public final class UtilMDE {
    * @param m map to be converted to a string
    * @return a multi-line string representation of m
    */
-  public static <K,V> String mapToString(Map<K,V> m) {
+  public static <K, V> String mapToString(Map<K, V> m) {
     StringBuilder sb = new StringBuilder();
     mapToString(sb, m, "");
     return sb.toString();
@@ -1755,7 +1762,7 @@ public final class UtilMDE {
    * @param m map to be converted to a string
    * @param linePrefix prefix to write at the beginning of each line
    */
-  public static <K,V> void mapToString(Appendable sb, Map<K,V> m, String linePrefix) {
+  public static <K, V> void mapToString(Appendable sb, Map<K, V> m, String linePrefix) {
     try {
       for (Map.Entry<K, V> entry : m.entrySet()) {
         sb.append(linePrefix);
@@ -1775,7 +1782,8 @@ public final class UtilMDE {
    * @param m a map whose keyset will be sorted
    * @return a sorted version of m.keySet()
    */
-  public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m) {
+  public static <K extends Comparable<? super K>, V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(
+      Map<K, V> m) {
     ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K>(m.keySet());
     Collections.sort(theKeys);
     return theKeys;
@@ -1788,12 +1796,12 @@ public final class UtilMDE {
    * @param comparator the Comparator to use for sorting
    * @return a sorted version of m.keySet()
    */
-  public static <K,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
+  public static <K, V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(
+      Map<K, V> m, Comparator<K> comparator) {
     ArrayList</*@KeyFor("#1")*/ K> theKeys = new ArrayList</*@KeyFor("#1")*/ K>(m.keySet());
     Collections.sort(theKeys, comparator);
     return theKeys;
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Method
@@ -1805,7 +1813,7 @@ public final class UtilMDE {
    * type. Example keys include: "java.lang.String, java.lang.String,
    * java.lang.Class[]" and "int,int".
    */
-  static HashMap<String,Class<?>[]> args_seen = new HashMap<String,Class<?>[]>();
+  static HashMap<String, Class<?>[]> args_seen = new HashMap<String, Class<?>[]>();
 
   /**
    * Given a method signature, return the method.
@@ -1821,24 +1829,34 @@ public final class UtilMDE {
    * @throws NoSuchMethodException if the method is not found
    */
   public static Method methodForName(String method)
-    throws ClassNotFoundException, NoSuchMethodException, SecurityException {
+      throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
     int oparenpos = method.indexOf('(');
     int dotpos = method.lastIndexOf('.', oparenpos);
     int cparenpos = method.indexOf(')', oparenpos);
     if ((dotpos == -1) || (oparenpos == -1) || (cparenpos == -1)) {
-      throw new Error("malformed method name should contain a period, open paren, and close paren: " + method + " <<" + dotpos + "," + oparenpos + "," + cparenpos + ">>");
+      throw new Error(
+          "malformed method name should contain a period, open paren, and close paren: "
+              + method
+              + " <<"
+              + dotpos
+              + ","
+              + oparenpos
+              + ","
+              + cparenpos
+              + ">>");
     }
-    for (int i=cparenpos+1; i<method.length(); i++) {
-      if (! Character.isWhitespace(method.charAt(i))) {
-        throw new Error("malformed method name should contain only whitespace following close paren");
+    for (int i = cparenpos + 1; i < method.length(); i++) {
+      if (!Character.isWhitespace(method.charAt(i))) {
+        throw new Error(
+            "malformed method name should contain only whitespace following close paren");
       }
     }
 
     @SuppressWarnings("signature") // throws exception if class does not exist
-    /*@BinaryNameForNonArray*/ String classname = method.substring(0,dotpos);
-    String methodname = method.substring(dotpos+1, oparenpos);
-    String all_argnames = method.substring(oparenpos+1, cparenpos).trim();
+    /*@BinaryNameForNonArray*/ String classname = method.substring(0, dotpos);
+    String methodname = method.substring(dotpos + 1, oparenpos);
+    String all_argnames = method.substring(oparenpos + 1, cparenpos).trim();
     Class<?>[] argclasses = args_seen.get(all_argnames);
     if (argclasses == null) {
       String[] argnames;
@@ -1849,7 +1867,7 @@ public final class UtilMDE {
       }
 
       /*@MonotonicNonNull*/ Class<?>[] argclasses_tmp = new Class<?>[argnames.length];
-      for (int i=0; i<argnames.length; i++) {
+      for (int i = 0; i < argnames.length; i++) {
         String bnArgname = argnames[i].trim();
         /*@ClassGetName*/ String cgnArgname = binaryNameToClassGetName(bnArgname);
         argclasses_tmp[i] = classForName(cgnArgname);
@@ -1870,15 +1888,14 @@ public final class UtilMDE {
    * @throws ClassNotFoundException if the class is not found
    * @throws NoSuchMethodException if the method is not found
    */
-  public static Method methodForName(/*@BinaryNameForNonArray*/ String classname, String methodname, Class<?>[] params)
-    throws ClassNotFoundException, NoSuchMethodException, SecurityException {
+  public static Method methodForName(
+      /*@BinaryNameForNonArray*/ String classname, String methodname, Class<?>[] params)
+      throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
     Class<?> c = Class.forName(classname);
     Method m = c.getDeclaredMethod(methodname, params);
     return m;
   }
-
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// ProcessBuilder
@@ -1905,14 +1922,14 @@ public final class UtilMDE {
     // TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
     try {
       Process p = pb.start();
-      @SuppressWarnings("nullness") // input stream is non-null because we didn't redirect the input stream
+      @SuppressWarnings(
+          "nullness") // input stream is non-null because we didn't redirect the input stream
       String output = UtilMDE.streamString(p.getInputStream());
       return output;
     } catch (IOException e) {
       return "IOException: " + e.getMessage();
     }
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Properties
@@ -1925,7 +1942,7 @@ public final class UtilMDE {
    * @param key name of the property to look up
    * @return true iff the property has value "true", "yes", or "1"
    */
-  @SuppressWarnings("purity")   // does not depend on object identity
+  @SuppressWarnings("purity") // does not depend on object identity
   /*@Pure*/ public static boolean propertyIsTrue(Properties p, String key) {
     String pvalue = p.getProperty(key);
     if (pvalue == null) {
@@ -1946,7 +1963,7 @@ public final class UtilMDE {
    * @see Properties#setProperty
    */
   public static /*@Nullable*/ String appendProperty(Properties p, String key, String value) {
-    return (String)p.setProperty(key, p.getProperty(key, "") + value);
+    return (String) p.setProperty(key, p.getProperty(key, "") + value);
   }
 
   /**
@@ -1966,13 +1983,11 @@ public final class UtilMDE {
     return currentValue;
   }
 
-
   ///////////////////////////////////////////////////////////////////////////
   /// Regexp (regular expression)
   ///
 
   // See RegexUtil class.
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Reflection
@@ -1994,7 +2009,7 @@ public final class UtilMDE {
    * @throws NoSuchFieldException if the field does not exist in the object
    */
   public static void setFinalField(Object o, String fieldName, /*@Nullable*/ Object value)
-    throws NoSuchFieldException {
+      throws NoSuchFieldException {
     Class<?> c = o.getClass();
     while (c != Object.class) { // Class is interned
       // System.out.printf ("Setting field %s in %s%n", fieldName, c);
@@ -2027,7 +2042,7 @@ public final class UtilMDE {
    * @throws NoSuchFieldException if the field does not exist in the object
    */
   public static /*@Nullable*/ Object getPrivateField(Object o, String fieldName)
-    throws NoSuchFieldException {
+      throws NoSuchFieldException {
     Class<?> c = o.getClass();
     while (c != Object.class) { // Class is interned
       // System.out.printf ("Setting field %s in %s%n", fieldName, c);
@@ -2049,7 +2064,6 @@ public final class UtilMDE {
     }
     throw new NoSuchFieldException(fieldName);
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Set
@@ -2074,7 +2088,6 @@ public final class UtilMDE {
     }
     return null;
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Stream
@@ -2110,7 +2123,6 @@ public final class UtilMDE {
     streamCopy(is, baos);
     return baos.toString();
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// String
@@ -2155,10 +2167,11 @@ public final class UtilMDE {
     ArrayList<String> result_list = new ArrayList<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
-      s = s.substring(delimpos+1);
+      s = s.substring(delimpos + 1);
     }
     result_list.add(s);
-    @SuppressWarnings("nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
+    @SuppressWarnings(
+        "nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2181,10 +2194,11 @@ public final class UtilMDE {
     Vector<String> result_list = new Vector<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
-      s = s.substring(delimpos+delimlen);
+      s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
-    @SuppressWarnings("nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
+    @SuppressWarnings(
+        "nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2219,7 +2233,7 @@ public final class UtilMDE {
       return String.valueOf(a[0]);
     }
     StringBuffer sb = new StringBuffer(String.valueOf(a[0]));
-    for (int i=1; i<a.length; i++) {
+    for (int i = 1; i < a.length; i++) {
       sb.append(delim).append(a[i]);
     }
     return sb.toString();
@@ -2253,7 +2267,7 @@ public final class UtilMDE {
     }
     // This should perhaps use an iterator rather than get(), for efficiency.
     StringBuffer sb = new StringBuffer(Objects.toString(v.get(0)));
-    for (int i=1; i<v.size(); i++) {
+    for (int i = 1; i < v.size(); i++) {
       sb.append(delim).append(v.get(i));
     }
     return sb.toString();
@@ -2284,33 +2298,33 @@ public final class UtilMDE {
     // The previous escape character was seen right before this position.
     int post_esc = 0;
     int orig_len = orig.length();
-    for (int i=0; i<orig_len; i++) {
+    for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);
       switch (c) {
-      case '\"':
-      case '\\':
-        if (post_esc < i) {
-          sb.append(orig.substring(post_esc, i));
-        }
-        sb.append('\\');
-        post_esc = i;
-        break;
-      case '\n':                // not lineSep
-        if (post_esc < i) {
-          sb.append(orig.substring(post_esc, i));
-        }
-        sb.append("\\n");       // not lineSep
-        post_esc = i+1;
-        break;
-      case '\r':
-        if (post_esc < i) {
-          sb.append(orig.substring(post_esc, i));
-        }
-        sb.append("\\r");
-        post_esc = i+1;
-        break;
-      default:
-        // Nothing to do: i gets incremented
+        case '\"':
+        case '\\':
+          if (post_esc < i) {
+            sb.append(orig.substring(post_esc, i));
+          }
+          sb.append('\\');
+          post_esc = i;
+          break;
+        case '\n': // not lineSep
+          if (post_esc < i) {
+            sb.append(orig.substring(post_esc, i));
+          }
+          sb.append("\\n"); // not lineSep
+          post_esc = i + 1;
+          break;
+        case '\r':
+          if (post_esc < i) {
+            sb.append(orig.substring(post_esc, i));
+          }
+          sb.append("\\r");
+          post_esc = i + 1;
+          break;
+        default:
+          // Nothing to do: i gets incremented
       }
     }
     if (sb.length() == 0) {
@@ -2329,16 +2343,16 @@ public final class UtilMDE {
   public static String escapeNonJava(Character ch) {
     char c = ch.charValue();
     switch (c) {
-    case '\"':
-      return "\\\"";
-    case '\\':
-      return "\\\\";
-    case '\n':                  // not lineSep
-      return "\\n";             // not lineSep
-    case '\r':
-      return "\\r";
-    default:
-      return new String(new char[] { c });
+      case '\"':
+        return "\\\"";
+      case '\\':
+        return "\\\\";
+      case '\n': // not lineSep
+        return "\\n"; // not lineSep
+      case '\r':
+        return "\\r";
+      default:
+        return new String(new char[] {c});
     }
   }
 
@@ -2352,7 +2366,7 @@ public final class UtilMDE {
   public static String escapeNonASCII(String orig) {
     StringBuffer sb = new StringBuffer();
     int orig_len = orig.length();
-    for (int i=0; i<orig_len; i++) {
+    for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);
       sb.append(escapeNonASCII(c));
     }
@@ -2370,14 +2384,14 @@ public final class UtilMDE {
       return "\\\"";
     } else if (c == '\\') {
       return "\\\\";
-    } else if (c == '\n') {     // not lineSep
-      return "\\n";             // not lineSep
+    } else if (c == '\n') { // not lineSep
+      return "\\n"; // not lineSep
     } else if (c == '\r') {
       return "\\r";
     } else if (c == '\t') {
       return "\\t";
     } else if (c >= ' ' && c <= '~') {
-      return new String(new char[] { c });
+      return new String(new char[] {c});
     } else if (c < 256) {
       String octal = Integer.toOctalString(c);
       while (octal.length() < 3) {
@@ -2408,52 +2422,60 @@ public final class UtilMDE {
     int post_esc = 0;
     int this_esc = orig.indexOf('\\');
     while (this_esc != -1) {
-      if (this_esc == orig.length()-1) {
-        sb.append(orig.substring(post_esc, this_esc+1));
-        post_esc = this_esc+1;
+      if (this_esc == orig.length() - 1) {
+        sb.append(orig.substring(post_esc, this_esc + 1));
+        post_esc = this_esc + 1;
         break;
       }
-      switch (orig.charAt(this_esc+1)) {
-      case 'n':
-        sb.append(orig.substring(post_esc, this_esc));
-        sb.append('\n');        // not lineSep
-        post_esc = this_esc+2;
-        break;
-      case 'r':
-        sb.append(orig.substring(post_esc, this_esc));
-        sb.append('\r');
-        post_esc = this_esc+2;
-        break;
-      case '\\':
-        // This is not in the default case because the search would find
-        // the quoted backslash.  Here we incluce the first backslash in
-        // the output, but not the first.
-        sb.append(orig.substring(post_esc, this_esc+1));
-        post_esc = this_esc+2;
-        break;
+      switch (orig.charAt(this_esc + 1)) {
+        case 'n':
+          sb.append(orig.substring(post_esc, this_esc));
+          sb.append('\n'); // not lineSep
+          post_esc = this_esc + 2;
+          break;
+        case 'r':
+          sb.append(orig.substring(post_esc, this_esc));
+          sb.append('\r');
+          post_esc = this_esc + 2;
+          break;
+        case '\\':
+          // This is not in the default case because the search would find
+          // the quoted backslash.  Here we incluce the first backslash in
+          // the output, but not the first.
+          sb.append(orig.substring(post_esc, this_esc + 1));
+          post_esc = this_esc + 2;
+          break;
 
-      case '0': case '1': case '2': case '3': case '4':
-      case '5': case '6': case '7': case '8': case '9':
-        sb.append(orig.substring(post_esc, this_esc));
-        char octal_char = 0;
-        int ii = this_esc+1;
-        while (ii < orig.length()) {
-          char ch = orig.charAt(ii++);
-          if ((ch < '0') || (ch > '8')) {
-            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+          sb.append(orig.substring(post_esc, this_esc));
+          char octal_char = 0;
+          int ii = this_esc + 1;
+          while (ii < orig.length()) {
+            char ch = orig.charAt(ii++);
+            if ((ch < '0') || (ch > '8')) {
+              break;
+            }
+            octal_char = (char) ((octal_char * 8) + Character.digit(ch, 8));
           }
-          octal_char = (char) ((octal_char * 8)+ Character.digit(ch, 8));
-        }
-        sb.append(octal_char);
-        post_esc = ii-1;
-        break;
+          sb.append(octal_char);
+          post_esc = ii - 1;
+          break;
 
-      default:
-        // In the default case, retain the character following the backslash,
-        // but discard the backslash itself.  "\*" is just a one-character string.
-        sb.append(orig.substring(post_esc, this_esc));
-        post_esc = this_esc+1;
-        break;
+        default:
+          // In the default case, retain the character following the backslash,
+          // but discard the backslash itself.  "\*" is just a one-character string.
+          sb.append(orig.substring(post_esc, this_esc));
+          post_esc = this_esc + 1;
+          break;
       }
       this_esc = orig.indexOf('\\', post_esc);
     }
@@ -2494,7 +2516,6 @@ public final class UtilMDE {
   // // assert(UtilMDE.trimWhitespace("").equals(""));
   // // assert(UtilMDE.trimWhitespace("   ").equals(""));
 
-
   /** Remove all whitespace before or after instances of delimiter.
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace abutting
@@ -2516,9 +2537,8 @@ public final class UtilMDE {
     int delim_len = delimiter.length();
     int delim_index = arg.indexOf(delimiter);
     while (delim_index > -1) {
-      int non_ws_index = delim_index+delim_len;
-      while ((non_ws_index < arg.length())
-             && (Character.isWhitespace(arg.charAt(non_ws_index)))) {
+      int non_ws_index = delim_index + delim_len;
+      while ((non_ws_index < arg.length()) && (Character.isWhitespace(arg.charAt(non_ws_index)))) {
         non_ws_index++;
       }
       // if (non_ws_index == arg.length()) {
@@ -2526,10 +2546,10 @@ public final class UtilMDE {
       // } else {
       //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " + non_ws_index + " in: " + arg);
       // }
-      if (non_ws_index != delim_index+delim_len) {
+      if (non_ws_index != delim_index + delim_len) {
         arg = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
       }
-      delim_index = arg.indexOf(delimiter, delim_index+1);
+      delim_index = arg.indexOf(delimiter, delim_index + 1);
     }
     return arg;
   }
@@ -2544,9 +2564,8 @@ public final class UtilMDE {
     // String orig = arg;
     int delim_index = arg.indexOf(delimiter);
     while (delim_index > -1) {
-      int non_ws_index = delim_index-1;
-      while ((non_ws_index >= 0)
-             && (Character.isWhitespace(arg.charAt(non_ws_index)))) {
+      int non_ws_index = delim_index - 1;
+      while ((non_ws_index >= 0) && (Character.isWhitespace(arg.charAt(non_ws_index)))) {
         non_ws_index--;
       }
       // if (non_ws_index == -1) {
@@ -2554,14 +2573,13 @@ public final class UtilMDE {
       // } else {
       //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " + non_ws_index + " in: " + arg);
       // }
-      if (non_ws_index != delim_index-1) {
+      if (non_ws_index != delim_index - 1) {
         arg = arg.substring(0, non_ws_index + 1) + arg.substring(delim_index);
       }
-      delim_index = arg.indexOf(delimiter, non_ws_index+2);
+      delim_index = arg.indexOf(delimiter, non_ws_index + 2);
     }
     return arg;
   }
-
 
   /**
    * Return either "n <em>noun</em>" or "n <em>noun</em>s" depending on n.
@@ -2573,14 +2591,15 @@ public final class UtilMDE {
   public static String nplural(int n, String noun) {
     if (n == 1) {
       return n + " " + noun;
-    } else if (noun.endsWith("ch") || noun.endsWith("s")
-               || noun.endsWith("sh") || noun.endsWith("x")) {
+    } else if (noun.endsWith("ch")
+        || noun.endsWith("s")
+        || noun.endsWith("sh")
+        || noun.endsWith("x")) {
       return n + " " + noun + "es";
     } else {
       return n + " " + noun + "s";
     }
   }
-
 
   /**
    * Returns a string of the specified length, truncated if necessary,
@@ -2669,7 +2688,7 @@ public final class UtilMDE {
     int pos = s.indexOf(ch);
     while (pos > -1) {
       result++;
-      pos = s.indexOf(ch, pos+1);
+      pos = s.indexOf(ch, pos + 1);
     }
     return result;
   }
@@ -2684,11 +2703,10 @@ public final class UtilMDE {
     int pos = s.indexOf(sub);
     while (pos > -1) {
       result++;
-      pos = s.indexOf(sub, pos+1);
+      pos = s.indexOf(sub, pos + 1);
     }
     return result;
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// StringTokenizer
@@ -2731,8 +2749,6 @@ public final class UtilMDE {
     return makeVector(new StringTokenizer(str));
   }
 
-
-
   ///////////////////////////////////////////////////////////////////////////
   /// Throwable
   ///
@@ -2742,7 +2758,7 @@ public final class UtilMDE {
    * To see a backtrace at the the current location, do "backtrace(new Throwable())".
    * @param t the Throwable to obtain a backtrace of
    * @return a String representation of the backtrace of the given Throwable
-  */
+   */
   public static String backTrace(Throwable t) {
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
@@ -2751,7 +2767,6 @@ public final class UtilMDE {
     String result = sw.toString();
     return result;
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Collections
@@ -2771,7 +2786,6 @@ public final class UtilMDE {
     return result;
   }
 
-
   // This should perhaps be named withoutDuplicates to emphasize that
   // it does not side-effect its argument.
   /**
@@ -2787,12 +2801,11 @@ public final class UtilMDE {
     return result;
   }
 
-
   /**
    * All calls to deepEquals that are currently underway.
    */
-  private static HashSet<WeakIdentityPair<Object, Object>> deepEqualsUnderway
-    = new HashSet<WeakIdentityPair<Object, Object>>();
+  private static HashSet<WeakIdentityPair<Object, Object>> deepEqualsUnderway =
+      new HashSet<WeakIdentityPair<Object, Object>>();
 
   /**
    * Determines deep equality for the elements.
@@ -2806,7 +2819,7 @@ public final class UtilMDE {
    * @param o2 second value to comare
    * @return true iff o1 and o2 are deeply equal
    */
-  @SuppressWarnings("purity")   // side effect to static field deepEqualsUnderway
+  @SuppressWarnings("purity") // side effect to static field deepEqualsUnderway
   /*@Pure*/ public static boolean deepEquals(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
@@ -2843,8 +2856,7 @@ public final class UtilMDE {
     }
 
     @SuppressWarnings("purity") // creates local state
-    WeakIdentityPair<Object, Object> mypair
-      = new WeakIdentityPair<Object, Object>(o1, o2);
+    WeakIdentityPair<Object, Object> mypair = new WeakIdentityPair<Object, Object>(o1, o2);
     if (deepEqualsUnderway.contains(mypair)) {
       return true;
     }
@@ -2861,10 +2873,10 @@ public final class UtilMDE {
       }
       try {
         deepEqualsUnderway.add(mypair);
-        for (int i=0; i<l1.size(); i++) {
+        for (int i = 0; i < l1.size(); i++) {
           Object e1 = l1.get(i);
           Object e2 = l2.get(i);
-          if (! deepEquals(e1, e2)) {
+          if (!deepEquals(e1, e2)) {
             return false;
           }
         }
@@ -2877,8 +2889,6 @@ public final class UtilMDE {
 
     return o1.equals(o2);
   }
-
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Vector
@@ -2899,7 +2909,6 @@ public final class UtilMDE {
 
   // Rather than writing something like VectorToStringArray, use
   //   v.toArray(new String[0])
-
 
   /**
    * Returns a list of lists of each combination (with repetition, but
@@ -2936,7 +2945,7 @@ public final class UtilMDE {
         simple.add(objs.get(i));
         results.add(simple);
       } else {
-        List<List<T>> combos = create_combinations(dims-1, i, objs);
+        List<List<T>> combos = create_combinations(dims - 1, i, objs);
         for (List<T> lt : combos) {
           List<T> simple = new ArrayList<T>();
           simple.add(objs.get(i));
@@ -2980,7 +2989,7 @@ public final class UtilMDE {
     }
 
     for (int i = start; i <= cnt; i++) {
-      ArrayList<ArrayList<Integer>> combos = create_combinations(arity-1, i, cnt);
+      ArrayList<ArrayList<Integer>> combos = create_combinations(arity - 1, i, cnt);
       for (ArrayList<Integer> li : combos) {
         ArrayList<Integer> simple = new ArrayList<Integer>();
         simple.add(new Integer(i));
@@ -2990,7 +2999,6 @@ public final class UtilMDE {
     }
 
     return (results);
-
   }
 
   /**
@@ -3002,7 +3010,8 @@ public final class UtilMDE {
    * @return the simple unqualified name of the class
    */
   @Deprecated
-  public static /*@ClassGetSimpleName*/ String unqualified_name(/*@FullyQualifiedName*/ String qualified_name) {
+  public static /*@ClassGetSimpleName*/ String unqualified_name(
+      /*@FullyQualifiedName*/ String qualified_name) {
     return fullyQualifiedNameToSimpleName(qualified_name);
   }
 
@@ -3016,13 +3025,14 @@ public final class UtilMDE {
   // TODO: does not follow the specification for inner classes (where the
   // type name should be empty), but I think this is more informative anyway.
   @SuppressWarnings("signature") // string conversion
-  public static /*@ClassGetSimpleName*/ String fullyQualifiedNameToSimpleName(/*@FullyQualifiedName*/ String qualified_name) {
+  public static /*@ClassGetSimpleName*/ String fullyQualifiedNameToSimpleName(
+      /*@FullyQualifiedName*/ String qualified_name) {
 
     int offset = qualified_name.lastIndexOf('.');
     if (offset == -1) {
       return (qualified_name);
     }
-    return (qualified_name.substring(offset+1));
+    return (qualified_name.substring(offset + 1));
   }
 
   /**
@@ -3039,7 +3049,6 @@ public final class UtilMDE {
   public static /*@ClassGetSimpleName*/ String unqualified_name(Class<?> cls) {
     return cls.getSimpleName();
   }
-
 
   /**
    * Convert a number into an abbreviation such as "5.00K" for 5000 or
@@ -3078,5 +3087,4 @@ public final class UtilMDE {
     String result = String.format("%,1." + precision + "f" + mag, dval);
     return result;
   }
-
 }

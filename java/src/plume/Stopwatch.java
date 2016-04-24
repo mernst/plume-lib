@@ -7,7 +7,6 @@ import org.checkerframework.checker.initialization.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
-
 /**
  * A simple class for recording elapsed time.
  */
@@ -39,7 +38,7 @@ public final class Stopwatch {
     elapsedMillis = 0;
   }
 
-  public void start(/*>>> @UnknownInitialization @Raw Stopwatch this*/) {
+  public void start(/*>>> @UnknownInitialization @Raw Stopwatch this*/ ) {
     if (startTime != 0) {
       throw new Error("Stopwatch is not stopped");
     }
@@ -97,5 +96,4 @@ public final class Stopwatch {
     }
     return Stopwatch.timeFormat[digits].format(runningMillis / 1000.0) + "s";
   }
-
 }

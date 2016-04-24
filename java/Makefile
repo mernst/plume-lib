@@ -109,6 +109,7 @@ endif
 
 # A user can add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
+## Temporarily removed, because there are a lot of warnings that we need to fix:  -Werror
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
@@ -123,6 +124,9 @@ AUTO_GENERATED_FILES := \
 JAVA_FILES ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | sort) ${AUTO_GENERATED_FILES})
 JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
+
+# Files whose style we can automatically check
+JAVA_FILES_FOR_STYLE ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort))
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -139,7 +143,7 @@ JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 ## Pluggable typechecking
 
 # To avoid pluggable typechecking, do
-# (unset JSR308; unset CHECKERFRAMEWORK; make)
+#   make nocheckers
 
 ifdef JSR308
   CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
@@ -157,14 +161,19 @@ endif
 
 JAVACHECK_ARGS ?= -source 8 -target 8 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker
 
-## For testing invariant arrays, replace the above by:
+## For testing a single checker, replace the above by:
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
+## For testing a single file, this doesn't quite work:
+# JAVA_FILES = src/plume/RegexUtil.java
+
+## For testing invariant arrays, add "-AinvariantArrays" like so:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AinvariantArrays -processor org.checkerframework.checker.regex.RegexChecker
 
 ## For testing -AsafeDefaultsForUnannotatedBytecode, uncomment:
 # JAVACHECK_EXTRA_ARGS ?= -AsafeDefaultsForUnannotatedBytecode -AprintErrorStack -classpath ${CHECKERFRAMEWORK}/checker/lib/java-getopt-1.0.14-annotated.jar:${CLASSPATH}
 
-# JAVACHECK has to be a single file name.
-JAVACHECK = ${CHECKERFRAMEWORK}/checker/bin/javac
+# JAVACHECK has to be a single file name, because it's checked for existence.
+JAVACHECK ?= ${CHECKERFRAMEWORK}/checker/bin/javac
 JAVACHECK_COMMAND = ${JAVACHECK} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} ${JAVACHECK_ARGS} ${JAVACHECK_EXTRA_ARGS}
 
 ## ... end pluggable typechecking
@@ -182,7 +191,7 @@ compile_without_testing:  .class-files-timestamp
 
 nocheckers: compile-nocheckers
 compile-nocheckers:
-	(unset JSR308; unset CHECKERFRAMEWORK; ${MAKE})
+	(unset JSR308; unset CHECKERFRAMEWORK; unset JAVACHECK; ${MAKE})
 
 # Don't do this.  We want to create .class-files-timestamp after the
 # compilation succeeds.  So, no targets for .class files in this Makefile.
@@ -262,6 +271,8 @@ javadoc: .javadoc-timestamp
 	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
 	rm -f ical4j.properties
+	cp -pf ../bin/plume-lib-favicon.png api
+	cd api && ../../bin/add-favicon . plume-lib-favicon.png
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
@@ -401,7 +412,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
+# Do not include junit.jar in plume.jar; JUnit is needed only for testing
+#	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
@@ -507,15 +519,20 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 
 checkstyle:
 # This invocation works on Ubuntu.
-# Need to ignore files we don't edit: Fmt.java TextFile.java WeakHasherMap.java WeakIdentityHashMap.java
-	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES}
+	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
+
+reformat:
+	../bin/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+
+check-format:
+	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 
 ###########################################################################
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists
+.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists checkstyle reindent
 
 
 # Existence of this rule means that a target is deleted if has just changed

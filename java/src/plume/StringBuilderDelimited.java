@@ -88,5 +88,4 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   /*@SideEffectFree*/ public String toString() {
     return delegate.toString();
   }
-
 }

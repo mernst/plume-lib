@@ -33,7 +33,8 @@ import org.checkerframework.checker.nullness.qual.*;
  * @param <T> the element type of the component iterator; this OrderedPairIterator has elements of type Pair&lt;T,T&gt;
  */
 // T need not extend Comparable<T>, because a comparator can be passed in.
-public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullable*/ T,/*@Nullable*/ T>> {
+public class OrderedPairIterator<T>
+    implements java.util.Iterator<Pair</*@Nullable*/ T, /*@Nullable*/ T>> {
 
   Iterator<T> itor1, itor2;
   /*@Nullable*/ T next1, next2;
@@ -47,18 +48,19 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
     setnext1();
     setnext2();
   }
+
   public OrderedPairIterator(Iterator<T> itor1, Iterator<T> itor2, Comparator<T> comparator) {
     this(itor1, itor2);
     this.comparator = comparator;
   }
   /** Set the next1 variable. */
   /*@RequiresNonNull("itor1")*/
-  private void setnext1(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
+  private void setnext1(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/ ) {
     next1 = itor1.hasNext() ? itor1.next() : null;
   }
   /** Set the next2 variable. */
   /*@RequiresNonNull("itor2")*/
-  private void setnext2(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
+  private void setnext2(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/ ) {
     next2 = itor2.hasNext() ? itor2.next() : null;
   }
   // Have the caller do this directly, probably.
@@ -70,27 +72,30 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
     return ((next1 != null) || (next2 != null));
   }
   /** Return an element of the first iterator, paired with null. */
-  private Pair</*@Nullable*/ T,/*@Nullable*/ T> return1() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, (/*@Nullable*/ T)null);
+  private Pair</*@Nullable*/ T, /*@Nullable*/ T> return1() {
+    Pair</*@Nullable*/ T, /*@Nullable*/ T> result =
+        Pair.</*@Nullable*/ T, /*@Nullable*/ T>of(next1, (/*@Nullable*/ T) null);
     setnext1();
     return result;
   }
   /** Return a pair of null and an element of the second iterator. */
-  private Pair</*@Nullable*/ T,/*@Nullable*/ T> return2() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of((/*@Nullable*/ T)null, next2);
+  private Pair</*@Nullable*/ T, /*@Nullable*/ T> return2() {
+    Pair</*@Nullable*/ T, /*@Nullable*/ T> result =
+        Pair.</*@Nullable*/ T, /*@Nullable*/ T>of((/*@Nullable*/ T) null, next2);
     setnext2();
     return result;
   }
   /** Return a pair containing an element from each iterator. */
-  private Pair</*@Nullable*/ T,/*@Nullable*/ T> returnboth() {
-    Pair</*@Nullable*/ T,/*@Nullable*/ T> result = Pair.</*@Nullable*/ T,/*@Nullable*/ T>of(next1, next2);
+  private Pair</*@Nullable*/ T, /*@Nullable*/ T> returnboth() {
+    Pair</*@Nullable*/ T, /*@Nullable*/ T> result =
+        Pair.</*@Nullable*/ T, /*@Nullable*/ T>of(next1, next2);
     setnext1();
     setnext2();
     return result;
   }
 
   @Override
-  public Pair</*@Nullable*/ T,/*@Nullable*/ T> next() {
+  public Pair</*@Nullable*/ T, /*@Nullable*/ T> next() {
     if (next1 == null) {
       if (next2 == null) {
         throw new NoSuchElementException();
@@ -106,7 +111,7 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
         try {
           if (comparator == null) {
             @SuppressWarnings("unchecked")
-              Comparable</*@NonNull*/ T> cble1 = (Comparable</*@NonNull*/ T>)next1;
+            Comparable</*@NonNull*/ T> cble1 = (Comparable</*@NonNull*/ T>) next1;
             comparison = cble1.compareTo(next2);
           } else {
             comparison = comparator.compare(next1, next2);
@@ -133,6 +138,7 @@ public class OrderedPairIterator<T> implements java.util.Iterator<Pair</*@Nullab
       }
     }
   }
+
   @Override
   public void remove() {
     throw new UnsupportedOperationException();

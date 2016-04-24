@@ -25,7 +25,6 @@ import org.checkerframework.dataflow.qual.*;
  *
  * Two NaN floats are not considered equal (consistent with the == operator).
  */
-
 public class FuzzyFloat {
 
   /** Minimum ratio between two floats that will act as equal. */
@@ -43,8 +42,7 @@ public class FuzzyFloat {
   /**
    * Creates a FuzzyFloat with the default rel_diff value of .0001.
    */
-  public FuzzyFloat() {
-  }
+  public FuzzyFloat() {}
 
   /**
    * Creates a FuzzyFloat.
@@ -121,7 +119,7 @@ public class FuzzyFloat {
       }
     }
 
-    double ratio = d1/d2;
+    double ratio = d1 / d2;
     return ((ratio >= min_ratio) && (ratio <= max_ratio));
   }
 
@@ -195,7 +193,7 @@ public class FuzzyFloat {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public int indexOf(double[] a, double elt) {
-    for (int i=0; i<a.length; i++) {
+    for (int i = 0; i < a.length; i++) {
       if (eq(elt, a[i])) {
         return i;
       }
@@ -219,9 +217,10 @@ public class FuzzyFloat {
 
     int a_index_max = a.length - sub.length;
 
-    outer: for (int i = 0; i <= a_index_max; i++) {
+    outer:
+    for (int i = 0; i <= a_index_max; i++) {
       for (int j = 0; j < sub.length; j++) {
-        if (ne(a[i+j], sub[j])) {
+        if (ne(a[i + j], sub[j])) {
           continue outer;
         }
       }
@@ -242,7 +241,7 @@ public class FuzzyFloat {
    * @param a2 the first value to compare
    * @return true if a1 and a2 are set equivalent, false otherwise
    */
-  @SuppressWarnings("purity")   // side effect to local state (arrays)
+  @SuppressWarnings("purity") // side effect to local state (arrays)
   /*@Pure*/ public boolean isElemMatch(double[] a1, double[] a2) {
 
     //don't change our parameters
@@ -254,7 +253,8 @@ public class FuzzyFloat {
 
     // look for elements of a2 in a1
     int start = 0;
-    outer1: for (int i = 0; i < a2.length; i++) {
+    outer1:
+    for (int i = 0; i < a2.length; i++) {
       double val = a2[i];
       for (int j = start; j < a1.length; j++) {
         if (eq(val, a1[j])) {
@@ -272,7 +272,8 @@ public class FuzzyFloat {
 
     // look for elements of a1 in a2
     start = 0;
-    outer2: for (int i = 0; i < a1.length; i++) {
+    outer2:
+    for (int i = 0; i < a1.length; i++) {
       double val = a1[i];
       for (int j = start; j < a2.length; j++) {
         if (eq(val, a2[j])) {
@@ -291,40 +292,37 @@ public class FuzzyFloat {
     return (true);
   }
 
-    // Slightly more efficient method that will miss some matches
-//     int i = 0;
-//     int j = 0;
-//     while (i < a1.length && j < a2.length) {
-//       if (ne (a1[i], a2[j])) {
-//         System.out.println ("isElemMatch: " + a1[i] + " " + a2[j]);
-//         return (false);
-//       }
-//       double val = a1[i];
-//       i++;
-//       while ((i < a1.length) && (eq (a1[i], val))) {
-//         i++;
-//       }
-//       j++;
-//       while ((j < a2.length) && (eq (a2[j], val))) {
-//         j++;
-//       }
-//     }
+  // Slightly more efficient method that will miss some matches
+  //     int i = 0;
+  //     int j = 0;
+  //     while (i < a1.length && j < a2.length) {
+  //       if (ne (a1[i], a2[j])) {
+  //         System.out.println ("isElemMatch: " + a1[i] + " " + a2[j]);
+  //         return (false);
+  //       }
+  //       double val = a1[i];
+  //       i++;
+  //       while ((i < a1.length) && (eq (a1[i], val))) {
+  //         i++;
+  //       }
+  //       j++;
+  //       while ((j < a2.length) && (eq (a2[j], val))) {
+  //         j++;
+  //       }
+  //     }
 
-//     // if there are any elements left, then they don't match.
-//     if ((i != a1.length) || (j != a2.length)) {
-//       System.out.println ("isElemMatch: " + i + " " + j);
-//       return (false);
-//     }
+  //     // if there are any elements left, then they don't match.
+  //     if ((i != a1.length) || (j != a2.length)) {
+  //       System.out.println ("isElemMatch: " + i + " " + j);
+  //       return (false);
+  //     }
 
-//     return (true);
-//     }
-
-
+  //     return (true);
+  //     }
 
   /**
    * Lexically compares two double arrays.
    */
-
   public class DoubleArrayComparatorLexical implements Comparator<double[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -340,7 +338,7 @@ public class FuzzyFloat {
         return 0;
       }
       int len = Math.min(a1.length, a2.length);
-      for (int i=0; i<len; i++) {
+      for (int i = 0; i < len; i++) {
         if (ne(a1[i], a2[i])) {
           return ((a1[i] > a2[i]) ? 1 : -1);
         }
@@ -362,8 +360,7 @@ public class FuzzyFloat {
    * @return true if smaller is a subset (each element of smaller is
    * also a element of bigger) of bigger, false otherwise
    */
-
-  @SuppressWarnings("purity")   // side effect to local state (arrays)
+  @SuppressWarnings("purity") // side effect to local state (arrays)
   /*@Pure*/ public boolean isSubset(double[] smaller, double[] bigger) {
 
     //don't change our parameters
@@ -375,7 +372,8 @@ public class FuzzyFloat {
 
     // look for elements of smaller in bigger
     int start = 0;
-    outer1: for (int i = 0; i < smaller.length; i++) {
+    outer1:
+    for (int i = 0; i < smaller.length; i++) {
       double val = smaller[i];
       for (int j = start; j < bigger.length; j++) {
         if (eq(val, bigger[j])) {
@@ -391,5 +389,4 @@ public class FuzzyFloat {
 
     return (true);
   }
-
 }

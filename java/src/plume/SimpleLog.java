@@ -1,7 +1,7 @@
 package plume;
 
-import java.util.Stack;
 import java.io.PrintStream;
+import java.util.Stack;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
@@ -20,7 +20,6 @@ import org.checkerframework.checker.nullness.qual.*;
  *   <li>Can add newlines where appropriate, if variable line_oriented is set.
  * </ul>
  */
-
 public final class SimpleLog {
 
   /** If false, do no output. */
@@ -47,8 +46,6 @@ public final class SimpleLog {
 
   public Stack<Long> start_times = new Stack<Long>();
 
-
-
   public SimpleLog(boolean enabled, boolean always_traceback) {
     this.enabled = enabled;
     this.always_traceback = always_traceback;
@@ -56,22 +53,21 @@ public final class SimpleLog {
   }
 
   public SimpleLog(boolean enabled) {
-    this (enabled, false);
+    this(enabled, false);
   }
 
   public SimpleLog() {
-    this (true);
+    this(true);
   }
 
   public SimpleLog(String filename, boolean enabled) {
-    this (enabled);
+    this(enabled);
     try {
       logfile = new PrintStream(filename);
     } catch (Exception e) {
       throw new RuntimeException("Can't open " + filename, e);
     }
   }
-
 
   public boolean enabled() {
     return enabled;
@@ -84,7 +80,8 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
+  @SuppressWarnings(
+      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void log(String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
@@ -95,7 +92,6 @@ public final class SimpleLog {
         tb();
       }
     }
-
   }
 
   /** Log a message, and provide a backtrace (traceback, or tb).
@@ -103,7 +99,8 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
+  @SuppressWarnings(
+      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void log_tb(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log(format, args);
@@ -139,7 +136,6 @@ public final class SimpleLog {
     return format + "%n";
   }
 
-
   ///////////////////////////////////////////////////////////////////////////
   /// Indentation
   ///
@@ -152,7 +148,8 @@ public final class SimpleLog {
   }
 
   /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
+  @SuppressWarnings(
+      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void indent(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log(format, args);
@@ -177,7 +174,8 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
+  @SuppressWarnings(
+      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void clear(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       clear();
@@ -187,7 +185,7 @@ public final class SimpleLog {
 
   public void exdent() {
     if (enabled) {
-      indent_str = indent_str.substring(0, indent_str.length()-INDENT_STR_ONE_LEVEL.length());
+      indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
       pop_start_time();
     }
   }
@@ -197,7 +195,8 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
+  @SuppressWarnings(
+      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void exdent_time(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       // This puts the time inside, not outside, the indentation.
@@ -205,7 +204,6 @@ public final class SimpleLog {
       exdent();
     }
   }
-
 
   ///////////////////////////////////////////////////////////////////////////
   /// Timing
@@ -221,14 +219,15 @@ public final class SimpleLog {
 
   /** Push a new start time onto the stack. */
   /*@RequiresNonNull("start_times")*/
-  public void push_start_time(/*>>> @UnknownInitialization(SimpleLog.class) @Raw(SimpleLog.class) SimpleLog this*/) {
+  public void push_start_time(
+      /*>>> @UnknownInitialization(SimpleLog.class) @Raw(SimpleLog.class) SimpleLog this*/ ) {
     if (enabled) {
       start_times.push(System.currentTimeMillis());
     }
   }
 
   public void pop_start_time() {
-      start_times.pop();
+    start_times.pop();
   }
 
   /**
@@ -239,7 +238,8 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings("formatter") // call to format method is correct because of @FormatMethod annotation
+  @SuppressWarnings(
+      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void log_time(String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
@@ -250,7 +250,7 @@ public final class SimpleLog {
       long elapsed = System.currentTimeMillis() - start_time.longValue();
       logfile.print(indent_str);
       if (elapsed > 1000) {
-        logfile.printf("[%,f secs] ", elapsed/1000.0);
+        logfile.printf("[%,f secs] ", elapsed / 1000.0);
       } else {
         logfile.print("[" + elapsed + " ms] ");
       }

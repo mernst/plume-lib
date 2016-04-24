@@ -71,6 +71,7 @@
 --suppress-broken 403:http://www.cs.washington.edu/orgs/student-affairs/gsc/jobs/
 --suppress-broken 403:http://www.dwheeler.com/sloccount/
 --suppress-broken 403:http://www.kivancmuslu.com/
+--suppress-broken 403:http://www.pm.inf.ethz.ch/
 --suppress-broken 403:http://www.seattletimes.com/	
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
@@ -84,9 +85,11 @@
 # This URL requires CSAIL credentials
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
 #--suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
+--suppress-broken 404:https://calendar.google.com/calendar/embed?src=mernst%40cs.washington.edu&title=Michael%20Ernst&mode=WEEK
 --suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90	
 --suppress-broken 404:http://webhostingrating.net/libs/daikon-faq-be/
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles
+--suppress-broken 404:http://www.juliasoft.com/
 --suppress-broken 404:http://www.juliasoft.com/users
 --suppress-broken 404:https://www.google.com/calendar/embed?mode=WEEK&src=mernst%40cs.washington.edu&ctz=America/Los_Angeles
 --suppress-broken 405:http://aws.amazon.com/datasets
@@ -105,8 +108,8 @@
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
+--suppress-broken 416:http://www.switchboard.com/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
---suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.jdt.doc.user/gettingStarted/qs-with-j2se50.htm
 --suppress-broken 500:http://jcp.org/en/jsr/detail?id=308
 --suppress-broken 500:http://junit.org/	
@@ -118,6 +121,7 @@
 --suppress-broken 500:http://www.eclipse.org/documentation/
 --suppress-broken 500:http://www.eclipse.org/downloads/
 --suppress-broken 500:http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/junosr2	
+--suppress-broken 500:http://www.edwardxwu.com/	
 --suppress-broken 500:http://www.icse-conferences.org/2001/
 --suppress-broken 500:http://www.icse-conferences.org/2003/
 --suppress-broken 500:http://www.icse-conferences.org/2004/
@@ -136,6 +140,8 @@
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a6.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a7.html
 --suppress-broken 500:https://gradeit.cs.washington.edu/uwcse14x/public/140/13wi/homework/turnin/a8.html
+--suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
+--suppress-broken 500:https://pag.csail.mit.edu/pag/	
 --suppress-broken 500:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 500:https://weblogs.java.net/blog/forax/archive/2008/05/javac_invokedyn_1.html
 # https://web.mit.edu/21.guide/www requires a client certificate
@@ -162,6 +168,13 @@
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for
 
+--suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
+--suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
+--suppress-fragment http://www.washington.edu/maps/#!/low
+--suppress-fragment http://www.washington.edu/maps/#!/cdh
+--suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
+--suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
+--suppress-fragment https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A
 --suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-dev
 --suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-dev/topics
 --suppress-fragment https://groups.google.com/forum/#!forum/checker-framework-discuss
@@ -169,13 +182,9 @@
 --suppress-fragment https://groups.google.com/forum/#!forum/daikon-announce
 --suppress-fragment https://groups.google.com/forum/#!forum/daikon-discuss
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
---suppress-fragment https://groups.google.com/forum/#!overview
---suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
---suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
---suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
---suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&appId=124498177728201
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr308-discuss
+--suppress-fragment https://groups.google.com/forum/#!overview
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
 --suppress-fragment https://htmlpreview.github.io/?https://bitbucket.org/typetools/jsr308-langtools/raw/tip/doc/README-jsr308.html#reporting-bugs
 
@@ -248,7 +257,7 @@
 --suppress-redirect http://checkerframework.org/->http://types.cs.washington.edu/checker-framework/
 # Don't redirect http://checker-framework.org/ because we shouldn't even be using it; it exists to catch typos.
 # --suppress-redirect http://checker-framework.org/->http://types.cs.washington.edu/checker-framework/
---suppress-redirect http://defects4j.org/->http://homes.cs.washington.edu/~rjust/defects4j/
+--suppress-redirect http://defects4j.org/->https://github.com/rjust/defects4j
 --suppress-redirect http://doi.ieeecomputersociety.org/10.1109/TSE.2006.90->http://www.computer.org/csdl/trans/ts/2006/09/e0718-abs.html
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
 --suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://link.springer.com/article/10.1007%2Fs10515-006-0002-0	

@@ -25,6 +25,8 @@ Adam Kie&#0380;un http://people.csail.mit.edu/akiezun/
 # Adrian Birka http://web.mit.edu/adbirka/www/
 ## Alan had his webpages removed as of August 2014.
 # Alan Donovan http://people.csail.mit.edu/adonovan/
+Alberto Goffi http://www.people.usi.ch/goffia/
+Alessandra Gorla http://software.imdea.org/~alessandra.gorla/
 Alessandro Orso http://www.cc.gatech.edu/~orso/
 Alex Groce http://www-2.cs.cmu.edu/~agroce/
 Alex Potanin http://homepages.mcs.vuw.ac.nz/~alex/
@@ -38,10 +40,9 @@ Arvind Krishnamurthy http://www.cs.washington.edu/people/faculty/arvind/
 ASE 2003 http://ase.cs.uni-essen.de/ase/past/ase2003/index.htm
 ASE 2005 http://ase.cs.uni-essen.de/ase/past/ase2005/
 ASE 2006 http://ase.cs.uni-essen.de/ase/past/ase2006/
-# Broken as of 11/2013:
-# ASE 2007 http://www.cse.msu.edu/ase2007/
+# Broken as of 11/2013: ASE 2007 http://www.cse.msu.edu/ase2007/
 Barbara Ryder http://people.cs.vt.edu/~ryder/
-Ben Tribelhorn http://www.seattleu.edu/scieng/faculty/tribelhorn-ben/
+Ben Tribelhorn http://www.bentribelhorn.com/
 # Benjamin Morse http://web.mit.edu/scruffy/www/
 Bill Howe http://homes.cs.washington.edu/~billhowe/
 # Bjarne Steensgaard http://research.microsoft.com/~rusa/
@@ -79,9 +80,9 @@ E. James Whitehead,Â Jr. https://users.soe.ucsc.edu/~ejw/
 ECOOP '98 http://ecoop98.vub.ac.be/
 ECOOP 2004 http://www.ifi.uio.no/ecoop2004/
 ECOOP 2008 https://ecoop08.cs.ucy.ac.cy/
-Edward X. Wu http://www.edwardxwu.com/
-# Broken as of 9/14/2015, still broken 10/19/2015
-# Elizabeth L. Wilmer http://www.oberlin.edu/math/faculty/wilmer.html
+# Webpage works, but link checker gives 500 error that I can't figure out how to resolve:
+# Edward X. Wu https://www.edwardxwu.com/
+Elizabeth L. Wilmer https://new.oberlin.edu/arts-and-sciences/departments/mathematics/faculty_detail.dot?id=21297
 Elwyn Berlekamp https://math.berkeley.edu/~berlek/
 Emina Torlak https://homes.cs.washington.edu/~emina/
 Erik Poll http://www.cs.ru.nl/~erikpoll/
@@ -135,6 +136,7 @@ Joe Kiniry http://www.itu.dk/~josr/
 Johan Östlund http://user.it.uu.se/~johos902/
 Jonathan Bachrach http://people.csail.mit.edu/jrb/
 Jonathan E. Cook http://www.cs.nmsu.edu/~jcook/
+Jonathan Jacky http://staff.washington.edu/jon/
 Juan Caballero https://software.imdea.org/~juanca/
 Julian Dolby http://researcher.watson.ibm.com/researcher/view.php?person=us-dolby
 Justin Mazzola Paluska http://www.mit.edu/~jmp/
@@ -158,7 +160,7 @@ Martin Rinard http://people.csail.mit.edu/rinard/
 #Deceased: Mary Jean Harrold http://www.cc.gatech.edu/~harrold/
 Mary Shaw http://spoke.compose.cs.cmu.edu/shaweb/
 Massimo Merro http://profs.sci.univr.it/~merro/
-Mauro PezzÃƒÂ¨ http://www.lta.disco.unimib.it/homepage/Mauro.Pezze/Mauro.index.htm
+Mauro Pezzè http://www.inf.usi.ch/faculty/pezze/
 #Don't use "MIT" because it is a substring of other strings
 # MIT http://web.mit.edu/
 MIT Computer Science & Artificial Intelligence Laboratory http://www.csail.mit.edu/
@@ -200,7 +202,7 @@ PLDI 2008 http://pldi2008.cs.ucr.edu/
 Ravi Bhoraskar http://ravi.bhoraskar.com/
 Raymond Cheng https://raymondcheng.net/
 Reid Holmes http://www.cs.ubc.ca/~rtholmes/
-René Just http://homes.cs.washington.edu/~rjust/
+René Just https://people.cs.umass.edu/~rjust/
 # Empty as of 11/2002 and 2/2014: Roger F. Crew http://www-cs-students.stanford.edu/~crew/
 Ruth Anderson http://homes.cs.washington.edu/~rea/
 # RV'01 http://ase.arc.nasa.gov/rv/
