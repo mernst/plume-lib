@@ -113,6 +113,8 @@ endif
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
+CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} -proc:only
+
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
 # Leading "./" is for consistency with output of "find", so that names are
@@ -201,11 +203,7 @@ compile-nocheckers:
 # The timestamp file indicates when the files were last compiled.
 .class-files-timestamp: ${JAVA_AND_CPP_FILES}
 	${MAKE} tools_jar_exists
-ifneq ("$(wildcard $(JAVACHECK))","")
-	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
-else
 	${JAVAC_COMMAND} ${JAVA_FILES} 2>&1
-endif
 	touch .class-files-timestamp
 
 # Remove most generated files, but not jar files which are desired in the release.
@@ -517,6 +515,9 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
+typecheck checkers check-types:
+	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
+
 checkstyle:
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
@@ -527,12 +528,14 @@ reformat:
 check-format:
 	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
+.PHONY: typecheck checkers check-types checkstyle reformat check-format
+
 
 ###########################################################################
 ### Makefile bookkeeping
 ###
 
-.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists checkstyle reindent
+.PHONY: default all compile_without_testing jar clean very_clean release_clean tags test run-chicory javadoc showvars doc api task-manager install-task-manager install-lookup optionsdoc checkenv tools_jar_exists
 
 
 # Existence of this rule means that a target is deleted if has just changed
