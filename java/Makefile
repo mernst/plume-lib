@@ -144,9 +144,6 @@ JAVA_FILES_FOR_STYLE ?= $(sort $(shell find src -name '*.java' -print | grep -v 
 
 ## Pluggable typechecking
 
-# To avoid pluggable typechecking, do
-#   make nocheckers
-
 ifdef JSR308
   CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
 endif
@@ -190,10 +187,6 @@ all: jar javadoc
 compile: compile_without_testing test
 
 compile_without_testing:  .class-files-timestamp
-
-nocheckers: compile-nocheckers
-compile-nocheckers:
-	(unset JSR308; unset CHECKERFRAMEWORK; unset JAVACHECK; ${MAKE})
 
 # Don't do this.  We want to create .class-files-timestamp after the
 # compilation succeeds.  So, no targets for .class files in this Makefile.
@@ -515,17 +508,17 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
-typecheck checkers check-types:
+typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
 	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
 
-checkstyle:
+checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
 
-reformat:
+reformat: ${JAVA_AND_CPP_FILES}
 	../bin/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
-check-format:
+check-format: ${JAVA_AND_CPP_FILES}
 	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format
