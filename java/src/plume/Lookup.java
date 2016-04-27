@@ -60,47 +60,62 @@ import org.checkerframework.checker.regex.qual.*;
  * <ul>
  *   <li id="optiongroup:Getting-help">Getting help
  *     <ul>
- *       <li id="option:help"><b>-h</b> <b>--help=</b><i>boolean</i>. Show detailed help information and exit. [default false]</li>
- *       <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information [default false]</li>
+ *       <li id="option:help"><b>-h</b> <b>--help=</b><i>boolean</i>.
+ *  Show detailed help information and exit. [default false]</li>
+ *       <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>.
+ *  Print progress information [default false]</li>
  *     </ul>
  *   </li>
  *   <li id="optiongroup:Where-to-search">Where to search
  *     <ul>
- *       <li id="option:entry-file"><b>-f</b> <b>--entry-file=</b><i>string</i>. Specify the colon-separated search list for the file that contains
+ *       <li id="option:entry-file"><b>-f</b> <b>--entry-file=</b><i>string</i>.
+ *  Specify the colon-separated search list for the file that contains
  *  information to be searched.  Only the first file found is used, though
  *  it may itself contain include directives. [default ~/lookup/root]</li>
- *       <li id="option:search-body"><b>-b</b> <b>--search-body=</b><i>boolean</i>. Search the body of long entries in addition to the entry's
+ *       <li id="option:search-body"><b>-b</b> <b>--search-body=</b><i>boolean</i>.
+ *  Search the body of long entries in addition to the entry's
  *  description.  The bodies of short entries are always searched. [default false]</li>
  *     </ul>
  *   </li>
  *   <li id="optiongroup:What-to-search-for">What to search for
  *     <ul>
- *       <li id="option:regular-expressions"><b>-e</b> <b>--regular-expressions=</b><i>boolean</i>. Specifies that keywords are regular expressions.  If false, keywords
+ *       <li id="option:regular-expressions"><b>-e</b> <b>--regular-expressions=</b><i>boolean</i>.
+ *  Specifies that keywords are regular expressions.  If false, keywords
  *  are text matches. [default false]</li>
- *       <li id="option:case-sensitive"><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>. If true, keywords matching is case sensistive.  By default, both
+ *       <li id="option:case-sensitive"><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>.
+ *  If true, keywords matching is case sensistive.  By default, both
  *  regular expressions and text keywords are case-insensitive. [default false]</li>
- *       <li id="option:word-match"><b>-w</b> <b>--word-match=</b><i>boolean</i>. If true, match a text keyword only as a separate word, not as a
+ *       <li id="option:word-match"><b>-w</b> <b>--word-match=</b><i>boolean</i>.
+ *  If true, match a text keyword only as a separate word, not as a
  *  substring of a word.  This option is ignored if
  *  regular_expressions is true. [default false]</li>
  *     </ul>
  *   </li>
  *   <li id="optiongroup:How-to-print-matches">How to print matches
  *     <ul>
- *       <li id="option:print-all"><b>-a</b> <b>--print-all=</b><i>boolean</i>. By default, if multiple entries are matched, only a synopsis
+ *       <li id="option:print-all"><b>-a</b> <b>--print-all=</b><i>boolean</i>.
+ *  By default, if multiple entries are matched, only a synopsis
  *  of each entry is printed.  If 'print_all' is selected then
  *  the body of each matching entry is printed. [default false]</li>
- *       <li id="option:item-num"><b>-i</b> <b>--item-num=</b><i>integer</i>. Specifies which item to print when there are multiple matches.</li>
- *       <li id="option:show-location"><b>-l</b> <b>--show-location=</b><i>boolean</i>. If true, show the filename/line number of each matching entry
+ *       <li id="option:item-num"><b>-i</b> <b>--item-num=</b><i>integer</i>.
+ *  Specifies which item to print when there are multiple matches.</li>
+ *       <li id="option:show-location"><b>-l</b> <b>--show-location=</b><i>boolean</i>.
+ *  If true, show the filename/line number of each matching entry
  *  in the output. [default false]</li>
  *     </ul>
  *   </li>
  *   <li id="optiongroup:Customizing-format-of-files-to-be-searched">Customizing format of files to be searched
  *     <ul>
- *       <li id="option:entry-start-re"><b>--entry-start-re=</b><i>regex</i>. Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
- *       <li id="option:entry-stop-re"><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the end of a long entry [default ^&lt;entry]</li>
- *       <li id="option:description-re"><b>--description-re=</b><i>regex</i>. Regex that finds an entry's description (for long entries)</li>
- *       <li id="option:comment-re"><b>--comment-re=</b><i>string</i>. Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
- *       <li id="option:include-re"><b>--include-re=</b><i>string</i>. Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
+ *       <li id="option:entry-start-re"><b>--entry-start-re=</b><i>regex</i>.
+ *  Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
+ *       <li id="option:entry-stop-re"><b>--entry-stop-re=</b><i>regex</i>.
+ *  Regex that denotes the end of a long entry [default ^&lt;entry]</li>
+ *       <li id="option:description-re"><b>--description-re=</b><i>regex</i>.
+ *  Regex that finds an entry's description (for long entries)</li>
+ *       <li id="option:comment-re"><b>--comment-re=</b><i>string</i>.
+ *  Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
+ *       <li id="option:include-re"><b>--include-re=</b><i>string</i>.
+ *  Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
  *     </ul>
  *   </li>
  * </ul>
