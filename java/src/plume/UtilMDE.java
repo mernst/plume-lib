@@ -555,9 +555,9 @@ public final class UtilMDE {
     }
   }
 
-  private static HashMap</*@SourceNameForNonArray*/ String, /*@FieldDescriptor*/ String>
+  private static HashMap</*@SourceNameForNonArrayNonInner*/ String, /*@FieldDescriptor*/ String>
       primitiveClassesJvm =
-          new HashMap</*@SourceNameForNonArray*/ String, /*@FieldDescriptor*/ String>(8);
+          new HashMap</*@SourceNameForNonArrayNonInner*/ String, /*@FieldDescriptor*/ String>(8);
 
   static {
     primitiveClassesJvm.put("boolean", "Z");
