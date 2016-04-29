@@ -275,11 +275,13 @@ public class WeakIdentityHashMap<K,V>
      * Use NULL_KEY for key if it is null.
      */
     // not: "private static <K> K maskNull(K key)" because NULL_KEY isn't of type K.
-    @SuppressWarnings("cast.unsafe")
+    @SuppressWarnings({"cast.unsafe", "lock:guardsatisfied.location.disallowed"})
     /*@Pure*/ private static /*@GuardSatisfied(1)*/ /*@NonNull*/ Object maskNull(/*@GuardSatisfied(1)*/ /*@Nullable*/ Object key) {
         // OK to cast NULL_KEY.
         // This is needed so that the type of the return expression is @GuardSatisfied(1).
         // Otherwise it would be the LUB of @GuardedBy({}) and @GuardSatisfied(1), which is @GuardedByInaccessible.
+        // A lock:guardsatisfied.location.disallowed error is issued (and suppressed).
+        // This is because @GuardSatisfied is normally not allowed on casts.
         return (key == null ? /*>>>(@GuardSatisfied(1) Object)*/ NULL_KEY : key);
     }
 
