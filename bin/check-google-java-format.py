@@ -7,6 +7,16 @@
 # this script prints their names and returns a non-zero status.
 # If called with no arguments, it reads from standard input.
 
+# Here are example targets you might put in a Makefile; integration with
+# other build systhems is similar.
+# 
+# reformat:
+# 	@../plume-lib/bin/run-google-java-format.py ${JAVA_FILES_FOR_FORMAT}
+# 
+# check-format:
+# 	@../plume-lib/bin/check-google-java-format.py ${JAVA_FILES_FOR_FORMAT} || echo "Try running:  make reformat"
+
+
 import os
 import re
 import shutil
