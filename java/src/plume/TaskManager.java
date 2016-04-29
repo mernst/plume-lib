@@ -24,21 +24,21 @@ import org.checkerframework.dataflow.qual.*;
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  * <ul>
  *   <li id="option:responsible"><b>-r</b> <b>--responsible=</b><i>string</i>.
- *  Include only those tasks assigned to the specified person</li>
+ *    Include only those tasks assigned to the specified person</li>
  *   <li id="option:milestone"><b>-m</b> <b>--milestone=</b><i>string</i>.
- *  Include only those tasks required for the specified milestone</li>
+ *    Include only those tasks required for the specified milestone</li>
  *   <li id="option:completed"><b>-c</b> <b>--completed=</b><i>boolean</i>.
- *  Include only completed tasks [default false]</li>
+ *    Include only completed tasks [default false]</li>
  *   <li id="option:open"><b>-o</b> <b>--open=</b><i>boolean</i>.
- *  Include only open tasks [default false]</li>
+ *    Include only open tasks [default false]</li>
  *   <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>.
- *  Print progress information [default false]</li>
+ *    Print progress information [default false]</li>
  *   <li id="option:format"><b>-f</b> <b>--format=</b><i>enum</i>.
- *  Specify output format [default short_ascii]<ul><li><b>short_ascii</b></li><li><b>short_html</b></li><li><b>milestone_html</b></li></ul></li>
+ *    Specify output format [default short_ascii]<ul><li><b>short_ascii</b></li><li><b>short_html</b></li><li><b>milestone_html</b></li></ul></li>
  *   <li id="option:comment-re"><b>--comment-re=</b><i>string</i>.
- *  Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
+ *    Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
  *   <li id="option:include-re"><b>--include-re=</b><i>string</i>.
- *  Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
+ *    Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
  * </ul>
  * <!-- end options doc -->
  */
