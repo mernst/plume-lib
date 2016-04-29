@@ -29,15 +29,13 @@ public class DeterministicObject {
   static int counter = 0;
 
   /** The unique ID for this object. */
-  final int id = counter++;
+  final int uid = counter++;
 
   /** Create a DeterministicObject. */
-  public DeterministicObject() {
-  }
+  public DeterministicObject() {}
 
   @Override
   public int hashCode(/*>>>@GuardSatisfied DeterministicObject this*/) {
-    return id;
+    return uid;
   }
-
 }

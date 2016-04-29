@@ -26,8 +26,8 @@ for line in open(auxfile):
         label_line[m.group(1)] = m.group(2)
 # print label_line
 
-# match is a match for lineref_re
 def replace_line(match):
+    """argument match is a match for lineref_re"""
     label = match.group(2)
     return match.group(1) + label_line[label] + match.group(4)
 

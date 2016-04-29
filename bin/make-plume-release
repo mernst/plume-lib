@@ -104,8 +104,9 @@ done_release() {
     if ! $uploaded; then
         echo "* Make a new release on GitHub:"
         echo "   * browse to https://github.com/mernst/plume-lib/releases/new"
+        echo "   * tag is: v$new"
         echo "   * Name is: plume-lib version $new"
-        echo "   * description from changelog, with line breaks fixed"
+        echo "   * description from changelog.txt, with line breaks fixed"
         echo "   * attach $release_tar"
     fi
     exit 0

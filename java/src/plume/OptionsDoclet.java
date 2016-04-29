@@ -8,6 +8,13 @@
 
 package plume;
 
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.Doc;
+import com.sun.javadoc.DocErrorReporter;
+import com.sun.javadoc.FieldDoc;
+import com.sun.javadoc.RootDoc;
+import com.sun.javadoc.SeeTag;
+import com.sun.javadoc.Tag;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,17 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.Doc;
-import com.sun.javadoc.DocErrorReporter;
-import com.sun.javadoc.FieldDoc;
-import com.sun.javadoc.RootDoc;
-import com.sun.javadoc.SeeTag;
-import com.sun.javadoc.Tag;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
@@ -67,7 +65,13 @@ import org.checkerframework.checker.signature.qual.*;
  *
  * <li> <b>-outfile</b> <i>file</i> The destination for the output (the default
  * is standard out).  If both <code>-outfile</code> and <code>-docfile</code>
- * are specified, they must be different.
+ * are specified, they must be different. When <code>-d</code> is used, the
+ * output is written to a file with the given name relative to that destination
+ * directory.
+ *
+ * <li> <b>-d</b> <i>directory</i> The destination directory for the output file.
+ * Only used if <code>-outfile</code> is used, in which case, the file is
+ * written in this directory. Otherwise, this option is ignored.
  *
  * <li> <b>-i</b> Specifies that the docfile should be edited in-place.  This
  * option can only be used if the <code>-docfile</code> option is used, and
@@ -111,7 +115,7 @@ import org.checkerframework.checker.signature.qual.*;
  * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java</pre>
  * <p>
  *
- * For a more extensive example, see file <tt>java/Makefile</tt> in
+ * For a more extensive example, see file <code>java/Makefile</code> in
  * plume-lib itself.
  * <p>
  *
@@ -160,7 +164,7 @@ import org.checkerframework.checker.signature.qual.*;
  * <code>@Unpublicized</code> options are not included in the output at all. <p>
  *
  * <b>Troubleshooting</b> <p>
- * If you get an error such as "<tt>ARGH! @Option</tt>", then you are using a
+ * If you get an error such as "<code>ARGH! @Option</code>", then you are using a
  * buggy version of gjdoc, the GNU Classpath implementation of Javadoc.
  * To avoid the problem, upgrade or use a different Javadoc implementation.
  *
@@ -177,23 +181,26 @@ public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
 
-  private static /*@Format({})*/ String usage = "Provided by Options doclet:%n"
-    + "-docfile <file>        Specify file into which options documentation is inserted%n"
-    + "-outfile <file>        Specify destination for resulting output%n"
-    + "-i                     Edit the docfile in-place%n"
-    + "-format javadoc        Format output as a Javadoc comment%n"
-    + "-classdoc              Include 'main' class documentation in output%n"
-    + "-singledash            Use single dashes for long options (see plume.Options)%n"
-    + "See the OptionsDoclet documentation for more details.%n";
+  private final static /*@Format({})*/ String USAGE =
+      "Provided by Options doclet:%n"
+          + "-docfile <file>        Specify file into which options documentation is inserted%n"
+          + "-outfile <file>        Specify destination for resulting output%n"
+          + "-d <directory>         Destination directory for -outfile%n"
+          + "-i                     Edit the docfile in-place%n"
+          + "-format javadoc        Format output as a Javadoc comment%n"
+          + "-classdoc              Include 'main' class documentation in output%n"
+          + "-singledash            Use single dashes for long options (see plume.Options)%n"
+          + "See the OptionsDoclet documentation for more details.%n";
 
-  private static String list_help = "<tt>[+]</tt> marked option can be specified multiple times";
-
+  private static final String LIST_HELP =
+      "<code>[+]</code> marked option can be specified multiple times";
 
   private String startDelim = "<!-- start options doc (DO NOT EDIT BY HAND) -->";
   private String endDelim = "<!-- end options doc -->";
 
   private /*@Nullable*/ File docFile = null;
   private /*@Nullable*/ File outFile = null;
+
   /** If true, then edit docFile in place (and docFile is non-null). */
   private boolean inPlace = false;
   /** If true, then output format is Javadoc. */
@@ -288,17 +295,16 @@ public class OptionsDoclet {
    */
   public static int optionLength(String option) {
     if (option.equals("-help")) {
-      System.out.printf(usage);
+      System.out.printf(USAGE);
       return 1;
     }
-    if (option.equals("-i")
-        || option.equals("-classdoc")
-        || option.equals("-singledash")) {
+    if (option.equals("-i") || option.equals("-classdoc") || option.equals("-singledash")) {
       return 1;
     }
     if (option.equals("-docfile")
         || option.equals("-outfile")
-        || option.equals("-format")) {
+        || option.equals("-format")
+        || option.equals("-d")) {
       return 2;
     }
     return 0;
@@ -314,10 +320,10 @@ public class OptionsDoclet {
    * @return true iff the command-line options are valid
    * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
-  public static boolean validOptions(String[][] options,
-                                     DocErrorReporter reporter) {
+  public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
+    boolean hasDestDir = false;
     boolean hasFormat = false;
     boolean inPlace = false;
     String docFile = null;
@@ -368,6 +374,13 @@ public class OptionsDoclet {
         }
         hasFormat = true;
       }
+      if (opt.equals("-d")) {
+        if (hasDestDir) {
+          reporter.printError("-d specified twice");
+          return false;
+        }
+        hasDestDir = true;
+      }
     }
     if (docFile != null && outFile != null && outFile.equals(docFile)) {
       reporter.printError("docfile must be different from outfile");
@@ -386,13 +399,17 @@ public class OptionsDoclet {
    * @param options the command-line options to parse
    */
   public void setOptions(String[][] options) {
+    String outFilename = null;
+    File destDir = null;
     for (int oi = 0; oi < options.length; oi++) {
       String[] os = options[oi];
       String opt = os[0].toLowerCase();
       if (opt.equals("-docfile")) {
         this.docFile = new File(os[1]);
+      } else if (opt.equals("-d")) {
+        destDir = new File(os[1]);
       } else if (opt.equals("-outfile")) {
-        this.outFile = new File(os[1]);
+        outFilename = os[1];
       } else if (opt.equals("-i")) {
         this.inPlace = true;
       } else if (opt.equals("-format")) {
@@ -402,7 +419,14 @@ public class OptionsDoclet {
       } else if (opt.equals("-classdoc")) {
         this.includeClassDoc = true;
       } else if (opt.equals("-singledash")) {
-          setUseSingleDash(true);
+        setUseSingleDash(true);
+      }
+    }
+    if (outFilename != null) {
+      if (destDir != null) {
+        this.outFile = new File(destDir, outFilename);
+      } else {
+        this.outFile = new File(outFilename);
       }
     }
   }
@@ -413,8 +437,7 @@ public class OptionsDoclet {
    */
   private static boolean needsInstantiation(Class<?> clazz) {
     for (Field f : clazz.getDeclaredFields()) {
-      if (f.isAnnotationPresent(Option.class)
-          && !Modifier.isStatic(f.getModifiers())) {
+      if (f.isAnnotationPresent(Option.class) && !Modifier.isStatic(f.getModifiers())) {
         return true;
       }
     }
@@ -434,7 +457,8 @@ public class OptionsDoclet {
     if (outFile != null) {
       out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
     } else if (inPlace) {
-      assert docFile != null : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
+      assert docFile != null
+          : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
       out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
     } else {
       out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -592,7 +616,11 @@ public class OptionsDoclet {
           continue;
         }
 
-        b.append("  <li id=\"optiongroup:" + gi.name.replace(" ", "-") + "\">" + gi.name);
+        b.append(
+            "  <li id=\"optiongroup:"
+                + gi.name.replace(" ", "-").replace("/", "-")
+                + "\">"
+                + gi.name);
         b.append("    <ul>");
         b.append(optionListToHtml(gi.optionList, 6));
         b.append("    </ul>");
@@ -603,7 +631,7 @@ public class OptionsDoclet {
 
     for (Options.OptionInfo oi : options.getOptions()) {
       if (oi.list != null && !oi.unpublicized) {
-        b.append(list_help);
+        b.append(LIST_HELP);
         break;
       }
     }
@@ -665,7 +693,7 @@ public class OptionsDoclet {
     String prefix = getUseSingleDash() ? "-" : "--";
     f.format("<b>%s%s=</b><i>%s</i>", prefix, oi.long_name, oi.type_name);
     if (oi.list != null) {
-      b.append(" <tt>[+]</tt>");
+      b.append(" <code>[+]</code>");
     }
     f.format(".%n ");
     String jdoc = ((oi.jdoc == null) ? "" : oi.jdoc);
@@ -673,13 +701,19 @@ public class OptionsDoclet {
       f.format("%s", jdoc);
     } else {
       String default_str = "default " + oi.default_str;
-      // The default string must be HTML escaped since it comes from a string
+      // The default string must be HTML-escaped since it comes from a string
       // rather than a Javadoc comment.
-      f.format("%s [%s]", jdoc, StringEscapeUtils.escapeHtml4(default_str));
+      String suffix = "";
+      if (jdoc.endsWith("</p>")) {
+        suffix = "</p>";
+        jdoc = jdoc.substring(0, jdoc.length() - suffix.length());
+      }
+      f.format("%s [%s]%s", jdoc, StringEscapeUtils.escapeHtml4(default_str), suffix);
     }
     if (oi.base_type.isEnum()) {
       b.append("<ul>");
-      assert oi.enum_jdoc != null : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
+      assert oi.enum_jdoc != null
+          : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
         b.append("<li><b>").append(entry.getKey()).append("</b>");
         if (entry.getValue().length() != 0) {

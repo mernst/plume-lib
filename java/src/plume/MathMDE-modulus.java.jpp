@@ -27,7 +27,7 @@ The correct way to build the system is to run 'make'.
    * Also, return null if the array is less than 3 elements long.
    * @param nums array of operands
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m)
-   **/
+   */
   public static INT /*@Nullable*/ [] modulus(INT[] nums) {
     if (nums.length < 3) {
       return null;
@@ -54,7 +54,7 @@ The correct way to build the system is to run 'make'.
    * @param itor iterator of operands
    * @return an array of two integers (r,m) such that each number in itor is equal to r (mod m)
    * @see #modulus(INT[])
-   **/
+   */
   public static INT /*@Nullable*/ [] modulus_INT(Iterator<INTEGER> itor) {
     if (!itor.hasNext()) {
       return null;
@@ -108,7 +108,7 @@ The correct way to build the system is to run 'make'.
    * @param nums array of operands
    * @param nonstrict_ends whether endpoints are NOT subject to the strict density requirement
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m)
-   **/
+   */
   public static INT /*@Nullable*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
     int first_index = 0;
     int last_index = nums.length-1;
@@ -156,7 +156,7 @@ The correct way to build the system is to run 'make'.
    * @param nonstrict_ends whether endpoints are NOT subject to the strict density requirement
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m)
    * @see #modulus_strict(int[], boolean)
-   **/
+   */
   public static INT /*@Nullable*/ [] modulus_strict_INT(Iterator<INTEGER> itor, boolean nonstrict_ends) {
     if (!itor.hasNext()) {
       return null;

@@ -1,8 +1,8 @@
 package plume;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -43,8 +43,7 @@ import org.checkerframework.checker.nullness.qual.*;
  * ...
  * </li>
  * </ul>
- **/
-
+ */
 public class TimeLimitProcess extends Process {
 
   private Process p;
@@ -63,7 +62,7 @@ public class TimeLimitProcess extends Process {
    * milliseconds.
    * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
-   **/
+   */
   public TimeLimitProcess(Process p, long timeLimit) {
     this(p, timeLimit, false);
   }
@@ -85,10 +84,13 @@ public class TimeLimitProcess extends Process {
     timer = new Timer(true);
     this.timeLimit = timeLimit;
     if (debug) {
-      System.out.printf("new timelimit process, timeLimit=%s, cacheStdout=%s%n",
-                        timeLimit, cacheStdout);
+      System.out.printf(
+          "new timelimit process, timeLimit=%s, cacheStdout=%s%n", timeLimit, cacheStdout);
     }
-    @SuppressWarnings({"rawness","initialization"}) // tptt won't do anything with this until this is fully initialized; can FBC avoid the @SuppressWarnings?
+    @SuppressWarnings({
+      "rawness",
+      "initialization"
+    }) // tptt won't do anything with this until this is fully initialized; can FBC avoid the @SuppressWarnings?
     /*@Initialized*/ TPTimerTask tptt = new TPTimerTask(this, timeLimit);
     timer.schedule(tptt, timeLimit);
     if (cacheStdout) {
@@ -97,7 +99,6 @@ public class TimeLimitProcess extends Process {
       new StdoutStreamReaderThread().start();
       new StderrStreamReaderThread().start();
     }
-
   }
 
   /**
@@ -129,11 +130,10 @@ public class TimeLimitProcess extends Process {
   //   return cached_stdout.toString();
   // }
 
-
   /**
    * Kills the subprocess.
    * @see Process#destroy()
-   **/
+   */
   public void destroy() {
     p.destroy();
   }
@@ -200,7 +200,6 @@ public class TimeLimitProcess extends Process {
     }
   }
 
-
   /**
    * Gets the output stream connected to the input of the subprocess.
    * @return the output stream
@@ -222,7 +221,7 @@ public class TimeLimitProcess extends Process {
 
   /**
    * @return true if the process if finished, false otherwise
-   **/
+   */
   public boolean finished() {
     try {
       // Process.exitValue() throws an exception if the process is not
@@ -236,14 +235,16 @@ public class TimeLimitProcess extends Process {
 
   /**
    * This TimerTask destroys the process that is passed to it.
-   **/
+   */
   private static class TPTimerTask extends TimerTask {
     TimeLimitProcess tp;
     long timeLimit;
+
     public TPTimerTask(TimeLimitProcess tp, long timeLimit) {
       this.tp = tp;
       this.timeLimit = timeLimit;
     }
+
     public void run() {
       // If exitValue is queried while the process is still running,
       // the IllegalThreadStateException will be thrown.  If that
@@ -260,8 +261,8 @@ public class TimeLimitProcess extends Process {
         tp.p.destroy();
         tp.timed_out = true;
         if (debug) {
-          System.out.println("Terminated process after timelimit of "
-                             + timeLimit + " msecs expired");
+          System.out.println(
+              "Terminated process after timelimit of " + timeLimit + " msecs expired");
           System.out.println();
         }
       }
@@ -273,7 +274,8 @@ public class TimeLimitProcess extends Process {
   // attempt failed.
 
   private class StdoutStreamReaderThread extends Thread {
-    @SuppressWarnings("nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
+    @SuppressWarnings(
+        "nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
     /*@RequiresNonNull("cached_stdout")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
@@ -287,7 +289,8 @@ public class TimeLimitProcess extends Process {
   }
 
   private class StderrStreamReaderThread extends Thread {
-    @SuppressWarnings("nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
+    @SuppressWarnings(
+        "nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
     /*@RequiresNonNull("cached_stderr")*/
     public void run() {
       // This thread will block as the process produces output.  That's OK,
@@ -299,5 +302,4 @@ public class TimeLimitProcess extends Process {
       }
     }
   }
-
 }

@@ -7,7 +7,7 @@ all-but-emacs: bin java git-hooks
 # installed.
 all: all-but-emacs emacs
 
-# Run tests
+# Default target in bin/ runs tests
 .PHONY: bin
 bin:
 	${MAKE} -C bin

@@ -13,7 +13,7 @@ package plume;
  *     boolean equals(Object o, Object o2) { return o.equals(o2); }
  *   }
  * </pre>
- **/
+ */
 public interface Hasher {
 
   /**
@@ -30,6 +30,6 @@ public interface Hasher {
    * @param o1 the first value to test for equality
    * @param o2 the second value to test for equality
    * @return whether o1 equals o2
-   **/
+   */
   boolean equals(Object o1, Object o2);
 }

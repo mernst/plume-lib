@@ -8,7 +8,6 @@ import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
-
 /**
  * Immutable pair class:
  * type-safely holds two objects of possibly-different types.
@@ -16,8 +15,8 @@ import org.checkerframework.dataflow.qual.*;
  * Differs from Pair in the following ways:  is immutable, cannot hold
  * null, holds its elements with weak pointers, and its equals() method
  * uses object equality to compare its elements.
- **/
-public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
+ */
+public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
 
   final private WeakReference<T1> a;
   final private WeakReference<T2> b;
@@ -27,8 +26,8 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
 
   public WeakIdentityPair(T1 a, T2 b) {
     if (a == null || b == null) {
-      throw new IllegalArgumentException(String.format(
-              "WeakIdentityPair cannot hold null: %s %s", a, b));
+      throw new IllegalArgumentException(
+          String.format("WeakIdentityPair cannot hold null: %s %s", a, b));
     }
     this.a = new WeakReference<T1>(a);
     this.b = new WeakReference<T2>(b);
@@ -71,9 +70,12 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
   }
 
   @Override
-  @SuppressWarnings({"interning", "not.deterministic.call"}) // getA is not @deterministic, but its value is checked, so this method is deterministic
+  @SuppressWarnings({
+    "interning",
+    "not.deterministic.call"
+  }) // getA is not @deterministic, but its value is checked, so this method is deterministic
   /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
-    if (! (obj instanceof WeakIdentityPair<?, ?>)) {
+    if (!(obj instanceof WeakIdentityPair<?, ?>)) {
       return false;
     }
     // generics are not checked at run time!
@@ -95,11 +97,9 @@ public class WeakIdentityPair<T1 extends Object,T2 extends Object> {
     return a == oa && b == ob;
   }
 
-
   @Override
   /*@Pure*/
   public int hashCode(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/) {
     return hashCode;
   }
-
 }

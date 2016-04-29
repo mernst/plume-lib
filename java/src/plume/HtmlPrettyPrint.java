@@ -2,7 +2,6 @@ package plume;
 
 import java.io.File;
 import java.io.IOException;
-
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.ParsingException;
@@ -10,7 +9,6 @@ import nu.xom.Serializer;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
 
 /**
  * Pretty-prints an HTML file, after converting it to valid XML.
@@ -22,7 +20,6 @@ public final class HtmlPrettyPrint {
   private HtmlPrettyPrint() {
     throw new Error("do not instantiate");
   }
-
 
   /** Entry point for the HtmlPrettyPrint program.
    * @param args command-line arguments
@@ -59,5 +56,4 @@ public final class HtmlPrettyPrint {
       }
     }
   }
-
 }

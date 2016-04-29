@@ -17,9 +17,9 @@ import org.checkerframework.checker.regex.qual.*;
 /**
  * This class has method {@link #compileFiles(List)}
  * that compiles Java source files.
- * It invokes a user-specified external command, such as <tt>javac</tt> or
- * <tt>jikes</tt>.
- **/
+ * It invokes a user-specified external command, such as <code>javac</code> or
+ * <code>jikes</code>.
+ */
 public final class FileCompiler {
 
   /** The Runtime of the JVM. */
@@ -27,7 +27,7 @@ public final class FileCompiler {
   /**
    * Matches the names of Java source files.
    * Match group 1 is the complete filename.
-   **/
+   */
   static /*@Regex(1)*/ Pattern java_filename_pattern;
   /** External command used to compile Java files. **/
   private String compiler;
@@ -36,17 +36,18 @@ public final class FileCompiler {
 
   static {
     try {
-      @SuppressWarnings("regex") // output of escapeNonJava() can appear in a character class in a regex
+      @SuppressWarnings(
+          "regex") // output of escapeNonJava() can appear in a character class in a regex
       /*@Regex(1)*/ String java_filename_re
-      // A javac error message may consist of several lines of output.
-      // The filename will be found at the beginning of the first line,
-      // the additional lines of information will all be indented.
-      // (?m) turns on MULTILINE mode so the first "^" matches the
-      // start of each error line output by javac. The blank space after
-      // the second "^" is intentional; together with the first "^", this
-      // says a filename can only be found at the start of a non-indented
-      // line as noted above.
-        = "(?m)^([^ ]+?\\.java)";
+          // A javac error message may consist of several lines of output.
+          // The filename will be found at the beginning of the first line,
+          // the additional lines of information will all be indented.
+          // (?m) turns on MULTILINE mode so the first "^" matches the
+          // start of each error line output by javac. The blank space after
+          // the second "^" is intentional; together with the first "^", this
+          // says a filename can only be found at the start of a non-indented
+          // line as noted above.
+          = "(?m)^([^ ]+?\\.java)";
       java_filename_pattern = Pattern.compile(java_filename_re);
     } catch (PatternSyntaxException me) {
       me.printStackTrace();
@@ -54,11 +55,10 @@ public final class FileCompiler {
     }
   }
 
-
   /**
    * Creates a new FileCompiler.  Equivalent to FileCompiler("javac", 6000).
    * @see #FileCompiler(String, long)
-   **/
+   */
   public FileCompiler() {
     this("javac", 6000);
   }
@@ -68,7 +68,7 @@ public final class FileCompiler {
    * @param compiler A command that runs a Java compiler; for instance, it
    * could be the full path name or whatever is used on the commandline.
    * @param timeLimit The maximum permitted compilation time, in msec.
-   **/
+   */
   public FileCompiler(String compiler, long timeLimit) {
     this.compiler = compiler;
     this.timeLimit = timeLimit;
@@ -99,8 +99,7 @@ public final class FileCompiler {
       compile_output = UtilMDE.streamString(p.getInputStream());
       System.out.println("Unexpected exception while compiling " + e);
       if (p.timed_out()) {
-        System.out.println("Compile timed out after " + p.timeout_msecs()
-                            + " msecs");
+        System.out.println("Compile timed out after " + p.timeout_msecs() + " msecs");
       }
       // System.out.println ("Compile errors: " + compile_errors);
       // System.out.println ("Compile output: " + compile_output);
@@ -123,20 +122,20 @@ public final class FileCompiler {
     return compile_errors;
   }
 
-//   /**
-//    * @param filename the path of the Java source to be compiled
-//    **/
-//   private TimeLimitProcess compile_source(String filename) throws IOException {
-//     String command = compiler + " " + filename;
-//     // System.out.println ("\nexecuting compile command: " + command);
-//     return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
-//   }
+  //   /**
+  //    * @param filename the path of the Java source to be compiled
+  //    **/
+  //   private TimeLimitProcess compile_source(String filename) throws IOException {
+  //     String command = compiler + " " + filename;
+  //     // System.out.println ("\nexecuting compile command: " + command);
+  //     return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
+  //   }
 
   /**
    * @param filenames the paths of the java source to be compiled as Strings.
    * @return The process that executed the external compile command.
    * @throws Error if an empty list of filenames is provided.
-   **/
+   */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
 
@@ -164,13 +163,15 @@ public final class FileCompiler {
    * @param errorString the error string that indicates which files
    *   could not be compiled
    */
-  private void recompile_without_errors(List<String> fileNames, String errorString) throws IOException {
+  private void recompile_without_errors(List<String> fileNames, String errorString)
+      throws IOException {
     // search the error string and extract the files with errors.
     if (errorString != null) {
       HashSet<String> errorClasses = new HashSet<String>();
       Matcher m = java_filename_pattern.matcher(errorString);
       while (m.find()) {
-        @SuppressWarnings("nullness") // Regex Checker imprecision:  find() guarantees that group 1 exists in regexp
+        @SuppressWarnings(
+            "nullness") // Regex Checker imprecision:  find() guarantees that group 1 exists in regexp
         /*@NonNull*/ String sansExtension = m.group(1);
         errorClasses.add(sansExtension);
       }
@@ -180,8 +181,8 @@ public final class FileCompiler {
       for (String sourceFileName : fileNames) {
         sourceFileName = sourceFileName.trim();
         String classFilePath = getClassFilePath(sourceFileName);
-        if (! fileExists(classFilePath)) {
-          if (! errorClasses.contains(sourceFileName)) {
+        if (!fileExists(classFilePath)) {
+          if (!errorClasses.contains(sourceFileName)) {
             retry.add(sourceFileName);
             filenames += " " + sourceFileName;
           }
@@ -194,8 +195,7 @@ public final class FileCompiler {
         try {
           tp.waitFor();
         } catch (InterruptedException e) {
-          System.out.println("Compile of " + filenames + " interrupted: "
-                              + e);
+          System.out.println("Compile of " + filenames + " interrupted: " + e);
         }
       }
     }
@@ -210,9 +210,8 @@ public final class FileCompiler {
   private static String getClassFilePath(String sourceFilePath) {
     int index = sourceFilePath.lastIndexOf('.');
     if (index == -1) {
-      throw new IllegalArgumentException("sourceFilePath: "
-                                         + sourceFilePath
-                                         + " must end with an extention.");
+      throw new IllegalArgumentException(
+          "sourceFilePath: " + sourceFilePath + " must end with an extention.");
     }
     return sourceFilePath.substring(0, index) + ".class";
   }
@@ -224,5 +223,4 @@ public final class FileCompiler {
   private static boolean fileExists(String pathName) {
     return (new File(pathName)).exists();
   }
-
 }

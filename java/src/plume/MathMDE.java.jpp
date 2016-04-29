@@ -336,7 +336,7 @@ public final class MathMDE {
    * @param expt the exponent
    * @return base to the expt power
    * @see Math#pow(double, double)
-   **/
+   */
   public static int pow(int base, int expt) throws ArithmeticException {
     return pow_fast(base, expt);
   }
@@ -348,7 +348,7 @@ public final class MathMDE {
    * @param expt the exponent
    * @return base to the expt power
    * @see Math#pow(double, double)
-   **/
+   */
   public static long pow(long base, long expt) throws ArithmeticException {
     return pow_fast(base, expt);
   }

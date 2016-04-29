@@ -3,16 +3,26 @@ order to make plume-lib self-contained.  (They do make it large, though.)
 
 Most libraries are standard, downloaded from their respective webpages.
 
-Two are nonstandard:
+checker-qual.jar is from the Checker Framework:
+https://github.com/typetools/checker-framework/releases
 
-BCEL 5.2+ (bcel.jar)
-- java class file reader/writer
-- many local changes to support StackMaps and Java8
-- detailed history in history-bcel.txt (in the repo)
-- Mercurial repository: /projects/swlab1/bcel/bcel-java7
-- to build: mvn verify
-- result is target/bcel-java7-SNAPSHOT.jar
-- copy to this directory and rename bcel.jar
+Two libraries are nonstandard:
+
+BCEL (bcel.jar)
+- Java class file reader/writer
+- Git repository: https://github.com/typetools/commons-bcel.git
+- contains type annotations compared to upstream repository at
+  https://github.com/codespecs/commons-bcel, which contains a bug fix compared
+  to its upstream repository at https://github.com/apache/commons-bcel
+- to build:
+    git clone https://github.com/typetools/commons-bcel.git
+    cd commons-bcel
+    git pull https://github.com/codespecs/commons-bcel.git
+    git push
+    mvn verify
+    mv target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
+    cd ..
+    rm -rf commons-bcel
 
 svnkit-1.8.10-complete.jar: for use by MultiVersionControl program
 To create the file, I ran the following commands:

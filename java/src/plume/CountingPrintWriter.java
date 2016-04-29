@@ -8,7 +8,6 @@ import java.io.Writer;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
-
 // This solution only works for PrintWriter.
 // The class really ought to be reimplemented as a wrapper around an
 // arbitrary Writer.
@@ -21,7 +20,6 @@ import org.checkerframework.checker.nullness.qual.*;
  * inquire as to whether any errors have occurred by invoking
  * checkError(). </p>
  */
-
 public class CountingPrintWriter extends PrintWriter {
 
   // Field variables
@@ -62,14 +60,13 @@ public class CountingPrintWriter extends PrintWriter {
    * @param out An output stream
    * @param autoFlush A boolean; if true, the println() methods will flush the output buffer
    */
-  public CountingPrintWriter(OutputStream out, boolean autoFlush)  {
+  public CountingPrintWriter(OutputStream out, boolean autoFlush) {
     super(out, autoFlush);
     writtenBytes = 0;
     printedBytes = 0;
     printedChars = 0;
     writtenChars = 0;
   }
-
 
   /** Create a new PrintWriter, without automatic line flushing.
    *  @param out a Writer
@@ -88,7 +85,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param autoFlush A boolean; if true, the println() methods will flush the output buffer
    */
   public CountingPrintWriter(Writer out, boolean autoFlush) {
-    super(out,autoFlush);
+    super(out, autoFlush);
     writtenBytes = 0;
     printedBytes = 0;
     printedChars = 0;
@@ -165,7 +162,6 @@ public class CountingPrintWriter extends PrintWriter {
   // All these methods increment the byte and char
   // count, and call their super method.
 
-
   // It seems to me that in PrintWriter all 'print' methods convert
   // their input argument to String and call print(String s) on
   // that. However, I could not reach the source code of PrintWriter,
@@ -225,9 +221,8 @@ public class CountingPrintWriter extends PrintWriter {
    * @param s the char[] to be printed
    */
   public void print(char[] s) {
-    for (int i=0; i < s.length; i++) {
+    for (int i = 0; i < s.length; i++) {
       printedBytes += countBytes(s[i]);
-
     }
     printedChars += s.length;
     super.print(s);
@@ -246,7 +241,6 @@ public class CountingPrintWriter extends PrintWriter {
     printedChars += s.length();
     super.print(d);
   }
-
 
   /**
    * Print a floating-point number. The string produced by
@@ -356,14 +350,13 @@ public class CountingPrintWriter extends PrintWriter {
     println();
   }
 
-
   /**
    * Write an array of characters. This method cannot be inherited
    * from the Writer class because it must suppress I/O exceptions.
    * @param buf the char[] to be printed
    */
   public void write(char[] buf) {
-    for (int i=0; i < buf.length; i++) {
+    for (int i = 0; i < buf.length; i++) {
       writtenBytes += countBytes(buf[i]);
     }
     writtenChars += buf.length;
@@ -378,11 +371,11 @@ public class CountingPrintWriter extends PrintWriter {
    * @param len Number of characters to write
    */
   public void write(char[] buf, int off, int len) {
-    for (int i=off; i < off+len; i++) {
+    for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);
     }
     writtenChars += len;
-    super.write(buf,off,len);
+    super.write(buf, off, len);
   }
 
   /**
@@ -395,7 +388,6 @@ public class CountingPrintWriter extends PrintWriter {
     super.write(s);
   }
 
-
   /**
    * Write a portion of a string.
    *
@@ -404,9 +396,8 @@ public class CountingPrintWriter extends PrintWriter {
    * @param len Number of characters to write
    */
   public void write(String s, int off, int len) {
-    writtenBytes += countBytes(s.substring(off,len));
+    writtenBytes += countBytes(s.substring(off, len));
     writtenChars += len;
-    super.write(s,off,len);
+    super.write(s, off, len);
   }
-
 }

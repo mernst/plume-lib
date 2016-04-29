@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="java/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="java/lib/bcel.jar"/>
+	<classpathentry kind="lib" path="java/lib/checker-qual.jar"/>
 	<classpathentry kind="lib" path="java/lib/backport-util-concurrent-3.1.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-io-2.4.jar"/>

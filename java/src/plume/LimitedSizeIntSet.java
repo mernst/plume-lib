@@ -17,7 +17,7 @@ import org.checkerframework.dataflow.qual.*;
  * it does not autobox the int values, so it takes less memory.
  *
  * @see LimitedSizeSet
- **/
+ */
 // Consider adding:
 //  * @deprecated Use LimitedSizeSet instead
 // @Deprecated
@@ -37,7 +37,10 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   /** The number of active elements (equivalently, the first unused index). */
   int num_values;
 
-  /** Create a new LimitedSizeIntSet that can hold max_values values. */
+  /**
+   * Create a new LimitedSizeIntSet that can hold max_values values.
+   * @param max_values the maximum number of values this set will be able to hold
+   */
   public LimitedSizeIntSet(int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
@@ -77,18 +80,20 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
       // disjoint.  There might be anywhere from max(size(), s.size()) to
       // (size() + s.size()) elements in the resulting set.
       if (s.size() > values_length) {
-        num_values = values_length+1;
+        num_values = values_length + 1;
         values = null;
         return;
       } else {
-        throw new Error("Arg is rep-nulled, so we don't know its values and can't add them to this.");
+        throw new Error(
+            "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    for (int i=0; i<s.size(); i++) {
-      assert s.values != null : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
+    for (int i = 0; i < s.size(); i++) {
+      assert s.values != null
+          : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
       add(s.values[i]);
       if (repNulled()) {
-        return;                 // optimization, not necessary for correctness
+        return; // optimization, not necessary for correctness
       }
     }
   }
@@ -99,7 +104,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     if (values == null) {
       throw new UnsupportedOperationException();
     }
-    for (int i=0; i < num_values; i++) {
+    for (int i = 0; i < num_values; i++) {
       if (values[i] == elt) {
         return true;
       }
@@ -112,7 +117,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * the number of elements that have been inserted in the set, or
    * max_size(), whichever is less.
    * @return a number that is a lower bound on the number of elements added to the set
-   **/
+   */
   /*@Pure*/
   public int size(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return num_values;
@@ -123,7 +128,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
    * @return maximum capacity of the set representation
-   **/
+   */
   public int max_size() {
     if (values == null) {
       return num_values;
@@ -138,7 +143,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     return values == null;
   }
 
-  @SuppressWarnings("sideeffectfree")   // side effect to local state (clone)
+  @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/ public LimitedSizeIntSet clone(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
@@ -159,7 +164,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @param max_values the maximum size for the returned LimitedSizeIntSet
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
    * @return a LimitedSizeIntSet that merges the elements of slist
-   **/
+   */
   public static LimitedSizeIntSet merge(int max_values, List<LimitedSizeIntSet> slist) {
     LimitedSizeIntSet result = new LimitedSizeIntSet(max_values);
     for (LimitedSizeIntSet s : slist) {
@@ -169,9 +174,10 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
-    return ("[size=" + size() + "; "
-            + ((values == null) ? "null" : ArraysMDE.toString(values))
-            + "]");
+    return ("[size="
+        + size()
+        + "; "
+        + ((values == null) ? "null" : ArraysMDE.toString(values))
+        + "]");
   }
-
 }

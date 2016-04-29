@@ -1,20 +1,34 @@
 #!/bin/sh -f
 
 # Trigger a new Travis-CI job.
+# Ordinarily, a new Travis job is triggered when a commit is pushed to a
+# GitHub repository.  The trigger-travis.sh script provides a programmatic
+# way to trigger a new Travis job.
+
 # Usage:
 #   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
+# or
+#   trigger-travis.sh GITHUBID GITHUBPROJECT `cat ~/private/.travis-access-token` [MESSAGE]
+#
+# where TRAVIS_ACCESS_TOKEN is, or ~/private/.travis-access-token contains,
+# the Travis access token.  Your Travis access token is the text after
+# "Your access token is " in the ouput of these commands:
+#   travis login && travis token
+# (If the travis program isn't installed, do so with one of these two commands:
+#    gem install travis
+#    sudo apt-get install ruby-dev && sudo gem install travis
+# Don't do "sudo apt-get install travis" which installs a trajectory analyzer.)
+# Note that the Travis access token output by `travis token` differs from the
+# Travis token available at https://travis-ci.org/profile .
+# If you store it in in a file, make sure the file is not readable by others,
+# for example by running:  chmod og-rwx ~/private
 
 # To use this script to trigger a dependent build in Travis, do two things:
 #
 # 1. Set an environment variable TRAVIS_ACCESS_TOKEN by navigating to
 #   https://travis-ci.org/MYGITHUBID/MYGITHUBPROJECT/settings
-# Determine the value for TRAVIS_ACCESS_TOKEN via: travis login && travis token
-# (You may need to first do:
-#    sudo apt-get install ruby-dev && sudo gem install travis
-# Don't do "sudo apt-get install travis" which installs a trajectory analyzer.)
-# This differs from the token available at https://travis-ci.org/profile .
-# The environment variable will be set when Travis runs the job,
-# but won't be visible to anyone browsing https://travis-ci.org/.
+# The TRAVIS_ACCESS_TOKEN environment variable will be set when Travis runs
+# the job, but won't be visible to anyone browsing https://travis-ci.org/.
 #
 # 2. Add the following after_success block to your .travis.yml file,
 # where you replace OTHERGITHUB* by a specific downstream project,

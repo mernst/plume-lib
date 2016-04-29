@@ -28,6 +28,18 @@ This is good for modes like Perl, where the parser can get confused."
 (setq compilation-scroll-output 'first-error)
 
 
+;; To debug slowness in parsing compilation errors (due to inefficient
+;; regexes in compilation-error-regexp-alist), edit
+;; `compilation-parse-errors' to add these to the body
+;;    (message "%s compilation-parse-errors: working on %s" (current-time-string))
+;;    (message "%s compilation-parse-errors: working on %s" (current-time-string) item)
+;;    (message "%s compilation-parse-errors: done with %s" (current-time-string) item)
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (delete 'maven compilation-error-regexp-alist)))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Key maps
 ;;;
@@ -116,6 +128,18 @@ This is good for modes like Perl, where the parser can get confused."
     (setq dtrt-indent-min-indent-superiority 50.0) ; default 100.0
     (setq dtrt-indent-max-merge-deviation 30.0) ; default 20.0; 40.0 didn't work for me
     ;; (setq dtrt-indent-min-indent-superiority-double 40.0) ; default 100.0
+    ))
+
+(if (not (locate-library "yaml-mode"))
+    (message "Could not find yaml-mode")
+  (progn
+    (require 'yaml-mode)
+    (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+    (add-hook 'yaml-mode-hook
+      '(lambda ()
+        (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+	(make-local-variable 'inleft-string)
+	(setq inleft-string "# ")))
     ))
 
 ;; (require 'guess-offset)
@@ -1816,7 +1840,9 @@ in this directory or some superdirectory."
 	     (setq compile-command "ant -e -find build.xml "))
 	    ((file-readable-p "build.gradle")
 	     (make-local-variable 'compile-command)
-	     (setq compile-command "gradle "))
+	     (if (file-readable-p "gradlew")
+		 (setq compile-command "./gradlew ")
+	       (setq compile-command "gradle ")))
 	    ((file-readable-p "pom.xml")
 	     (make-local-variable 'compile-command)
 	     (setq compile-command "mvn ")))))
@@ -1879,6 +1905,7 @@ Use as a hook, like so:
 	 (let ((dir (match-string 2 default-directory)))
 	   (if (equal dir "src")
 	       (setq dir "all"))
+	   (setq dir (replace-regexp-in-string "_" "-" dir))
 	   (make-local-variable 'compile-command)
 	   (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
 ;; 	((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
@@ -1932,7 +1959,8 @@ Use as a hook, like so:
   '(setq compilation-error-regexp-alist
 	 (delete 'omake compilation-error-regexp-alist)))
 ;; ... but an equally serious problem is maven, which is very slow on long
-;; lines, such as those created when buildign the Daikon manual.
+;; lines, such as those created when building the Daikon manual.
+;; (I tried re-enabling this in March 2016 and it still made Emacs unusable.)
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (delete 'maven compilation-error-regexp-alist)))
@@ -1948,12 +1976,15 @@ Use as a hook, like so:
 	 (cons '("^Line \\([0-9]+\\) of \"\\([^\"]*\\)\"" 2 1)
 	       compilation-error-regexp-alist)))
 ;; For linkchecker
-;; This doesn't seem to work in a *compilation* buffer, but I can click it.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (cons '("^Parent URL file:\\(.*\\), line \\([0-9]+\\)" 1 2)
 	       compilation-error-regexp-alist)))
-
+;; For html5validator
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+	 (cons '("^\\(?::validate\\)?\\(?:WARNING:html5validator.validator:\\)?\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 1 2 3)
+	       compilation-error-regexp-alist)))
 
 ;; I suspect this regexp is extremely inefficient, and I don't understand it.
 ;; ;; ant output, such as
@@ -1970,7 +2001,7 @@ Use as a hook, like so:
 
 ;; jdb output, such as
 ;; "  [4] daikon.VarInfo$1GuardingVisitor.visitSlice (VarInfo.java:1,690)"
-;; Notice the comma!!  Yuck...   [Does that actually mean lien 1690?]
+;; Notice the comma!!  Yuck...   [Does that actually mean line 1690?]
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
 	 (cons (list

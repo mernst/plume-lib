@@ -417,33 +417,36 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 ;; (setq ack-default-flags "-i")
 
 
-;; In general, use the "ack" program instead.  But, it doesn't search
-;; compressed files and has other problems, so fall back to "search" on
-;; occasion.
+(require 'ag nil 'noerror)
+(setq ag-regexp-default t)
 
-;; For the "search" Perl program; was called "search"
-;; Fixes submitted to jfriedl@omron.co.jp 8/31/97
-(defun sgrep (what dir)
-  "Run search with all grep goodies.
-Find WHAT in any file in or under DIR."
-  (interactive "sSearch for: \nDSearch under: ")
-  (if (equal "" what)
-      (error "Empty string passed as argument to sgrep"))
-  (let ((default-directory (file-name-as-directory dir)))
-    ;;not necessary any more? (require 'compile)
-    (let* ((quoted-what (if (string-match "^'.*'$" what)
-			   what
-			 (if (string-match "'" what)
-			     (concat "\"" what "\"")
-			   (concat "'" what "'"))))
-	   (command (concat "search -i -n "
-                            (if (string-match "^-" what) "-e " "")
-			    quoted-what)))
-      ;; Old version
-      ;; (compile-internal command
-      ;;                   "No more search hits" "grep" nil grep-regexp-alist)
-      (compilation-start command 'grep-mode)
-      )))
+
+;; ;; In general, use the "ack" program instead.  But, it doesn't search
+;; ;; compressed files and has other problems, so fall back to "search" on
+;; ;; occasion.
+;; ;; For the "search" Perl program; the Emacs function was called `search'.
+;; ;; Fixes submitted to jfriedl@omron.co.jp 8/31/97
+;; (defun sgrep (what dir)
+;;   "Run search with all grep goodies.
+;; Find WHAT in any file in or under DIR."
+;;   (interactive "sSearch for: \nDSearch under: ")
+;;   (if (equal "" what)
+;;       (error "Empty string passed as argument to sgrep"))
+;;   (let ((default-directory (file-name-as-directory dir)))
+;;     ;;not necessary any more? (require 'compile)
+;;     (let* ((quoted-what (if (string-match "^'.*'$" what)
+;; 			   what
+;; 			 (if (string-match "'" what)
+;; 			     (concat "\"" what "\"")
+;; 			   (concat "'" what "'"))))
+;; 	   (command (concat "search -i -n "
+;;                             (if (string-match "^-" what) "-e " "")
+;; 			    quoted-what)))
+;;       ;; Old version
+;;       ;; (compile-internal command
+;;       ;;                   "No more search hits" "grep" nil grep-regexp-alist)
+;;       (compilation-start command 'grep-mode)
+;;       )))
 
 (defun strip-line-numbers ()
   "Remove line numbers from error messages in current buffer, for easier comparison."
@@ -901,6 +904,27 @@ Not guaranteed to work in all cases."
   (set-input-method "spanish-postfix"))
 
 
+(defun offer-to-change-if-read-only ()
+  (if buffer-read-only
+      (progn
+	(if (y-or-n-p "Buffer is read-only.  Make buffer modifiable? ")
+	    (setq buffer-read-only nil))))
+  (barf-if-buffer-read-only))
+
+
+(defadvice flush-lines (before make-buffer-modifiable activate)
+  (interactive
+   (progn
+     (offer-to-change-if-read-only)
+     (keep-lines-read-args "Flush lines containing match for regexp"))))
+
+(defadvice keep-lines (before make-buffer-modifiable activate)
+  (interactive
+   (progn
+     (offer-to-change-if-read-only)
+     (keep-lines-read-args "Keep lines containing match for regexp"))))
+
+
 ;; The defaliases and defun are copied verbatim from flush-lines, then
 ;; replace each instance of "(forward-line 0)" by "(backward-paragraph)"
 ;; and then "line" by "paragraph".  Not well tested.  One known bug:
@@ -947,7 +971,7 @@ a previously found match."
 
   (interactive
    (progn
-     (barf-if-buffer-read-only)
+     (offer-to-change-if-read-only)
      (keep-lines-read-args "Keep paragraphs (containing match for regexp)")))
   (if rstart
       (progn
@@ -1019,7 +1043,7 @@ starting on the same paragraph at which another match ended is ignored."
 
   (interactive
    (progn
-     (barf-if-buffer-read-only)
+     (offer-to-change-if-read-only)
      (keep-lines-read-args "Flush paragraphs containing match for regexp")))
   (if rstart
       (progn

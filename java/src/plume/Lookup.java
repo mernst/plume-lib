@@ -2,7 +2,6 @@ package plume;
 
 import static plume.EntryReader.Entry;
 
-// import com.sun.javadoc.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,12 +16,11 @@ import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */
 
-
 /**
- * Lookup searches a set of files, much like <tt>grep</tt> does.  However,
+ * Lookup searches a set of files, much like <code>grep</code> does.  However,
  * Lookup searches by entry (by default, paragraphs) rather than by line,
  * respects comments (ignores matches within them), respects
- * <tt>\include</tt> directives (searches the named file), and has other
+ * <code>\include</code> directives (searches the named file), and has other
  * features. <p>
  *
  * Each search criterion is a keyword or regular expression.  Lookup
@@ -122,7 +120,7 @@ import org.checkerframework.checker.regex.qual.*;
  *   </li>
  * </ul>
  * <!-- end options doc -->
- **/
+ */
 public final class Lookup {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -132,10 +130,10 @@ public final class Lookup {
 
   /** Show detailed help information and exit. */
   @OptionGroup("Getting help")
-  @Option ("-h Show detailed help information")
+  @Option("-h Show detailed help information")
   public static boolean help = false;
 
-  @Option ("-v Print progress information")
+  @Option("-v Print progress information")
   public static boolean verbose = false;
 
   // This uses only the first file because the default search path might be
@@ -149,14 +147,15 @@ public final class Lookup {
    * it may itself contain include directives.
    */
   @OptionGroup("Where to search")
-  @Option ("-f Specify the colon-separated search list of files of information; may only be supplied once")
+  @Option(
+      "-f Specify the colon-separated search list of files of information; may only be supplied once")
   public static String entry_file = "~/lookup/root";
 
   /**
    * Search the body of long entries in addition to the entry's
    * description.  The bodies of short entries are always searched.
    */
-  @Option ("-b Search body of long entries for matches")
+  @Option("-b Search body of long entries for matches")
   public static boolean search_body = false;
 
   /**
@@ -164,14 +163,14 @@ public final class Lookup {
    * are text matches.
    */
   @OptionGroup("What to search for")
-  @Option ("-e Keywords are regular expressions")
+  @Option("-e Keywords are regular expressions")
   public static boolean regular_expressions = false;
 
   /**
    * If true, keywords matching is case sensistive.  By default, both
    * regular expressions and text keywords are case-insensitive.
    */
-  @Option ("-c Keywords are case sensistive")
+  @Option("-c Keywords are case sensistive")
   public static boolean case_sensitive = false;
 
   /**
@@ -179,7 +178,7 @@ public final class Lookup {
    * substring of a word.  This option is ignored if
    * regular_expressions is true.
    */
-  @Option ("-w Only match text keywords against complete words")
+  @Option("-w Only match text keywords against complete words")
   public static boolean word_match = false;
 
   /**
@@ -188,45 +187,44 @@ public final class Lookup {
    * the body of each matching entry is printed.
    */
   @OptionGroup("How to print matches")
-  @Option ("-a Print the entire entry for each match")
+  @Option("-a Print the entire entry for each match")
   public static boolean print_all = false;
 
   /**
    * Specifies which item to print when there are multiple matches.
    */
-  @Option ("-i Choose a specific item when there are multiple matches")
+  @Option("-i Choose a specific item when there are multiple matches")
   public static /*@Nullable*/ Integer item_num;
 
   /**
    * If true, show the filename/line number of each matching entry
    * in the output.
    */
-  @Option ("-l Show the location of each matching entry")
+  @Option("-l Show the location of each matching entry")
   public static boolean show_location = false;
 
   @OptionGroup("Customizing format of files to be searched")
-  @Option ("Regex that denotes the start of a long entry")
+  @Option("Regex that denotes the start of a long entry")
   public static /*@Regex(1)*/ Pattern entry_start_re = Pattern.compile("^>entry *()");
 
-  @Option ("Regex that denotes the end of a long entry")
+  @Option("Regex that denotes the end of a long entry")
   public static Pattern entry_stop_re = Pattern.compile("^<entry");
 
-  @Option ("Regex that finds an entry's description (for long entries)")
+  @Option("Regex that finds an entry's description (for long entries)")
   public static /*@Nullable*/ Pattern description_re = null;
 
   // If "", gets set to null immediately after option processing.
-  @Option ("Regex that matches an entire comment (not just a comment start)")
+  @Option("Regex that matches an entire comment (not just a comment start)")
   public static /*@Nullable*/ /*@Regex*/ String comment_re = "^%.*";
 
-  @Option ("Regex that matches an include directive; group 1 is the file name")
+  @Option("Regex that matches an include directive; group 1 is the file name")
   public static /*@Regex(1)*/ String include_re = "\\\\include\\{(.*)\\}";
 
   /** Platform-specific line separator. */
   private static final String lineSep = System.getProperty("line.separator");
 
   /** One line synopsis of usage. */
-  private static String usage_string
-    = "lookup [options] <keyword> ...";
+  private static String usage_string = "lookup [options] <keyword> ...";
 
   /**
    * Look for the specified keywords in the file(s) and print
@@ -311,8 +309,7 @@ public final class Lookup {
       while (entry != null) {
         entry_cnt++;
         if (verbose && ((entry_cnt % 1000) == 0)) {
-          System.out.printf("%d matches in %d entries\r",
-                             matching_entries.size(), entry_cnt);
+          System.out.printf("%d matches in %d entries\r", matching_entries.size(), entry_cnt);
         }
         int matchcount = 0;
         for (String keyword : keywords) {
@@ -329,7 +326,7 @@ public final class Lookup {
               flags = 0;
             }
 
-            if (! RegexUtil.isRegex(keyword)) {
+            if (!RegexUtil.isRegex(keyword)) {
               System.out.println("Error: not a regex: " + keyword);
               System.exit(254);
             }
@@ -357,9 +354,11 @@ public final class Lookup {
         entry = reader.get_entry();
       }
     } catch (FileNotFoundException e) {
-      System.out.printf("Error: Can't read %s at line %d in file %s%n",
-                         e.getMessage(), reader.getLineNumber(),
-                         reader.getFileName());
+      System.out.printf(
+          "Error: Can't read %s at line %d in file %s%n",
+          e.getMessage(),
+          reader.getLineNumber(),
+          reader.getFileName());
       System.exit(254);
     }
 
@@ -374,7 +373,7 @@ public final class Lookup {
       System.out.print(e.body);
     } else { // there must be multiple matches
       if (item_num != null) {
-        Entry e = matching_entries.get(item_num-1);
+        Entry e = matching_entries.get(item_num - 1);
         if (show_location) {
           System.out.printf("%s:%d:%n", e.filename, e.line_number);
         }
@@ -382,33 +381,29 @@ public final class Lookup {
       } else {
         int i = 0;
         if (print_all) {
-          System.out.printf("%d matches found (separated by dashes "
-                              +"below)%n", matching_entries.size());
+          System.out.printf(
+              "%d matches found (separated by dashes below)%n", matching_entries.size());
         } else {
-          System.out.printf("%d matches found. Use -i to print a "
-                             + "specific match or -a to see them all%n",
-                             matching_entries.size());
+          System.out.printf(
+              "%d matches found. Use -i to print a specific match or -a to see them all%n",
+              matching_entries.size());
         }
 
         for (Entry e : matching_entries) {
           i++;
           if (print_all) {
             if (show_location) {
-              System.out.printf("%n-------------------------%n%s:%d:%n",
-                                 e.filename, e.line_number);
+              System.out.printf("%n-------------------------%n%s:%d:%n", e.filename, e.line_number);
             } else {
               System.out.printf("%n-------------------------%n");
             }
             System.out.print(e.body);
           } else {
             if (show_location) {
-              System.out.printf("  -i=%d %s:%d: %s%n", i, e.filename,
-                                 e.line_number, e.first_line);
+              System.out.printf("  -i=%d %s:%d: %s%n", i, e.filename, e.line_number, e.first_line);
             } else {
-              System.out.printf("  -i=%d %s%n", i,
-                                 e.get_description(description_re));
+              System.out.printf("  -i=%d %s%n", i, e.get_description(description_re));
             }
-
           }
         }
       }
@@ -450,17 +445,19 @@ public final class Lookup {
 
         StringBuilder body = new StringBuilder();
         // Read until we find the termination of the entry
-        while ((line != null) && !line.startsWith(">entry")
-               && !line.equals("<entry")
-               && current_filename.equals(reader.getFileName())) {
-          body.append(line); body.append(lineSep);
+        while ((line != null)
+            && !line.startsWith(">entry")
+            && !line.equals("<entry")
+            && current_filename.equals(reader.getFileName())) {
+          body.append(line);
+          body.append(lineSep);
           line = reader.readLine();
         }
 
         // If this entry was terminated by the start of the next one,
         // put that line back
-        if ((line != null) && (line.startsWith(">entry")
-                           || !current_filename.equals(reader.getFileName()))) {
+        if ((line != null)
+            && (line.startsWith(">entry") || !current_filename.equals(reader.getFileName()))) {
           reader.putback(line);
         }
 
@@ -473,7 +470,8 @@ public final class Lookup {
         StringBuilder body = new StringBuilder();
         // Read until we find another blank line
         while ((line != null) && (line.trim().length() != 0)) {
-          body.append(line); body.append(lineSep);
+          body.append(line);
+          body.append(lineSep);
           line = reader.readLine();
         }
 
@@ -483,9 +481,11 @@ public final class Lookup {
       return (entry);
 
     } catch (FileNotFoundException e) {
-      System.out.printf("Error: Can't read %s at line %d in file %s%n",
-                         e.getMessage(), reader.getLineNumber(),
-                         reader.getFileName());
+      System.out.printf(
+          "Error: Can't read %s at line %d in file %s%n",
+          e.getMessage(),
+          reader.getLineNumber(),
+          reader.getFileName());
       System.exit(254);
       return (null);
     }
@@ -494,7 +494,7 @@ public final class Lookup {
   /** Returns the first line of entry.
    * @param entry the entry whose first line to return
    * @return the first line of entry
-   **/
+   */
   public static String first_line(String entry) {
 
     int ii = entry.indexOf(lineSep);

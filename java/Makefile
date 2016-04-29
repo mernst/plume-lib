@@ -9,17 +9,20 @@ PLUME_DIR_DEFAULT := $(realpath $(dir $(lastword $(MAKEFILE_LIST)))..)
 
 PLUME_DIR ?= ${PLUME_DIR_DEFAULT}
 
+UNAME_S := $(shell uname -s)
 ifndef JAVA_HOME
-  java_cmd := $(shell which java)
-  # /bin//java happens when the PATH element ended in a /
-  JAVA_HOME := $(subst /bin//java,,$(subst /bin/java,,$(java_cmd)))
+  ifeq ($(UNAME_S),Darwin)
+    JAVA_HOME := $(shell /usr/libexec/java_home)
+  else
+    java_cmd := $(shell which java)
+    # /bin//java happens when the PATH element ended in a /
+    JAVA_HOME := $(subst /bin//java,,$(subst /bin/java,,$(java_cmd)))
+  endif
   I_set_JAVA_HOME := true
 endif
 
-
 TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
 
-UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
   READLINK_F := readlink
 else
@@ -66,7 +69,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/checker-qual.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -106,8 +109,11 @@ endif
 
 # A user can add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 ${JAVAC_TARGET_FLAGS}
+## Temporarily removed, because there are a lot of warnings that we need to fix:  -Werror
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+
+CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} -proc:only
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
@@ -120,6 +126,9 @@ AUTO_GENERATED_FILES := \
 JAVA_FILES ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | sort) ${AUTO_GENERATED_FILES})
 JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
+
+# Files whose style we can automatically check
+JAVA_FILES_FOR_STYLE ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort))
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -134,9 +143,6 @@ JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 # endif
 
 ## Pluggable typechecking
-
-# To avoid pluggable typechecking, do
-# (unset JSR308; unset CHECKERFRAMEWORK; make)
 
 ifdef JSR308
   CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
@@ -156,16 +162,21 @@ endif
 # and -AsuggestPureMethods are fixed, they can be run on plume-lib and Daikon and this
 # can be removed. This warning is issued by the Lock Checker when a method calls another
 # method with a weaker side effect guarantee.
-JAVACHECK_ARGS = -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker
+JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker
 
-## For testing invariant arrays, replace the above by:
-# JAVACHECK_ARGS = -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AinvariantArrays -processor org.checkerframework.checker.regex.RegexChecker
+## For testing a single checker, replace the above by:
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
+## For testing a single file, this doesn't quite work:
+# JAVA_FILES = src/plume/RegexUtil.java
+
+## For testing invariant arrays, add "-AinvariantArrays" like so:
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AinvariantArrays -processor org.checkerframework.checker.regex.RegexChecker
 
 ## For testing -AsafeDefaultsForUnannotatedBytecode, uncomment:
 # JAVACHECK_EXTRA_ARGS ?= -AsafeDefaultsForUnannotatedBytecode -AprintErrorStack -classpath ${CHECKERFRAMEWORK}/checker/lib/java-getopt-1.0.14-annotated.jar:${CLASSPATH}
 
-# JAVACHECK has to be a single file name.
-JAVACHECK = ${CHECKERFRAMEWORK}/checker/bin/javac
+# JAVACHECK has to be a single file name, because it's checked for existence.
+JAVACHECK ?= ${CHECKERFRAMEWORK}/checker/bin/javac
 JAVACHECK_COMMAND = ${JAVACHECK} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} ${JAVACHECK_ARGS} ${JAVACHECK_EXTRA_ARGS}
 
 ## ... end pluggable typechecking
@@ -189,11 +200,7 @@ compile_without_testing:  .class-files-timestamp
 # The timestamp file indicates when the files were last compiled.
 .class-files-timestamp: ${JAVA_AND_CPP_FILES}
 	${MAKE} tools_jar_exists
-ifneq ("$(wildcard $(JAVACHECK))","")
-	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
-else
 	${JAVAC_COMMAND} ${JAVA_FILES} 2>&1
-endif
 	touch .class-files-timestamp
 
 # Remove most generated files, but not jar files which are desired in the release.
@@ -259,6 +266,8 @@ javadoc: .javadoc-timestamp
 	touch ical4j.properties
 	${JAVADOC} -d api ${JAVA_FILES}
 	rm -f ical4j.properties
+	cp -pf ../bin/plume-lib-favicon.png api
+	cd api && ../../bin/add-favicon . plume-lib-favicon.png
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
@@ -389,6 +398,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/checker-qual.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.4.jar)
 # ical4j 1.0.6 requrires the legacy library commons-lang-2.6.jar
@@ -397,7 +407,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
+# Do not include junit.jar in plume.jar; JUnit is needed only for testing
+#	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
@@ -446,6 +457,7 @@ LOOKUP_JAR_CLASSES = \
 # Example 2:
 #	make TOOLS_JAR=$JDK6/lib/tools.jar clean plume.jar lookup.jar
 lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
+	echo "Make lookup.jar"
 	-rm -rf jar-contents
 	mkdir jar-contents
 	mkdir jar-contents/plume
@@ -454,6 +466,7 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
 	(cd jar-contents; "${JAR}" cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
 	rm -rf jar-contents
+	echo "Done making lookup.jar"
 
 install-lookup: $(pag)/software/pkg/lookup.jar
 $(pag)/software/pkg/lookup.jar: lookup.jar
@@ -499,10 +512,20 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
-checkstyle:
+typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
+	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
+
+checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
-# Need to ignore files we don't edit: Fmt.java TextFile.java WeakHasherMap.java WeakIdentityHashMap.java
-	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES}
+	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
+
+reformat: ${JAVA_AND_CPP_FILES}
+	../bin/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+
+check-format: ${JAVA_AND_CPP_FILES}
+	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+
+.PHONY: typecheck checkers check-types checkstyle reformat check-format
 
 
 ###########################################################################

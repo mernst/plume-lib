@@ -22,7 +22,7 @@ import java.util.Iterator;
  *    ...
  *  }
  * </pre>
-
+ *
  * The {@code IterableIterator} class lets you write this more compactly:
  * <pre>
  *  for (String element : new IterableIterator(myObject.backwardIterator())) {
@@ -51,18 +51,21 @@ import java.util.Iterator;
  * @param <T> the element type of the IterableIterator
  */
 public class IterableIterator<T> implements Iterable<T> {
-    /** The Iterator that this is a wrapper around. */
-    private Iterator<T> iter;
+  /** The Iterator that this is a wrapper around. */
+  private Iterator<T> iter;
 
-    /** Create an IterableIterator. */
-    public IterableIterator(Iterator<T> iter) {
-        this.iter = iter;
-    }
+  /**
+   * Create an IterableIterator.
+   * @param iter the iterator to wrap.
+   * */
+  public IterableIterator(Iterator<T> iter) {
+    this.iter = iter;
+  }
 
-    /** Return the iterator.
-     * @return the iterator
-     */
-    public Iterator<T> iterator() {
-        return iter;
-    }
+  /** Return the iterator.
+   * @return the iterator
+   */
+  public Iterator<T> iterator() {
+    return iter;
+  }
 }

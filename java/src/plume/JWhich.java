@@ -40,7 +40,6 @@ import java.util.StringTokenizer;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
-
 // PROBLEM:  The "java" binary places rt.jar at the front of the
 // bootclasspath, and this program will find a class there even if the
 // class appears at the beginning of the real classpath.
@@ -70,7 +69,6 @@ import org.checkerframework.checker.nullness.qual.*;
  * @author <a href="mailto:mike@clarkware.com">Mike Clark</a>
  * @author <a href="http://www.clarkware.com">Clarkware Consulting, Inc.</a>
  */
-
 public final class JWhich {
 
   private static /*@MonotonicNonNull*/ String CLASSPATH;
@@ -96,8 +94,7 @@ public final class JWhich {
     if (classUrl == null) {
       System.out.println("\nClass '" + className + "' not found.");
     } else {
-      System.out.println("\nClass '" + className
-                         + "' found in \n'" + classUrl.getFile() + "'");
+      System.out.println("\nClass '" + className + "' found in \n'" + classUrl.getFile() + "'");
     }
 
     validate();
@@ -135,23 +132,23 @@ public final class JWhich {
   /*@EnsuresNonNull("CLASSPATH")*/
   public static void validate() {
 
-    StringTokenizer tokenizer =
-      new StringTokenizer(getClasspath(), File.pathSeparator);
+    StringTokenizer tokenizer = new StringTokenizer(getClasspath(), File.pathSeparator);
 
     while (tokenizer.hasMoreTokens()) {
       String element = tokenizer.nextToken();
       File f = new File(element);
 
       if (!f.exists()) {
-        System.out.println("\nClasspath element '"
-                           + element + "' " + "does not exist.");
+        System.out.println("\nClasspath element '" + element + "' does not exist.");
       } else if ((!f.isDirectory())
-                 && (!element.toLowerCase().endsWith(".jar"))
-                 && (!element.toLowerCase().endsWith(".zip"))) {
+          && (!element.toLowerCase().endsWith(".jar"))
+          && (!element.toLowerCase().endsWith(".zip"))) {
 
-        System.out.println("\nClasspath element '" + element + "' "
-          + "is not a directory, .jar file, or .zip file.");
-
+        System.out.println(
+            "\nClasspath element '"
+                + element
+                + "' "
+                + "is not a directory, .jar file, or .zip file.");
       }
     }
   }
@@ -161,8 +158,7 @@ public final class JWhich {
   public static void printClasspath() {
 
     System.out.println("\nClasspath:");
-    StringTokenizer tokenizer =
-      new StringTokenizer(getClasspath(), File.pathSeparator);
+    StringTokenizer tokenizer = new StringTokenizer(getClasspath(), File.pathSeparator);
     while (tokenizer.hasMoreTokens()) {
       System.out.println(tokenizer.nextToken());
     }
