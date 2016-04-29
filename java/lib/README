@@ -14,13 +14,17 @@ BCEL (bcel.jar)
 - contains type annotations compared to upstream repository at
   https://github.com/codespecs/commons-bcel, which contains a bug fix compared
   to its upstream repository at https://github.com/apache/commons-bcel
-- to build:
+- to build (must be done using JDK 7, not JDK 8):
     git clone https://github.com/typetools/commons-bcel.git
     cd commons-bcel
     git pull https://github.com/codespecs/commons-bcel.git
+    # Resolve any conflicts, and also update lines in pom.xml such as
+    #    <version>1.9.13</version>
+    # to the current CF release.  Alternately, use the current Checker
+    # Framework from the version control repository [HOW?].
     git push
     mvn verify
-    mv target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
+    cp -p target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
     cd ..
     rm -rf commons-bcel
 
