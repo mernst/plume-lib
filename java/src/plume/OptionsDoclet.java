@@ -668,7 +668,7 @@ public class OptionsDoclet {
         continue;
       }
       StringBuilder bb = new StringBuilder();
-      String optHtml = optionToHtml(oi);
+      String optHtml = optionToHtml(oi, padding);
       bb.append(StringUtils.repeat(" ", padding));
       bb.append("<li id=\"option:" + oi.long_name + "\">").append(optHtml).append("</li>");
       b.append(bb);
@@ -681,7 +681,7 @@ public class OptionsDoclet {
    * @param oi the option to describe
    * @return HTML describing oi
    */
-  public String optionToHtml(Options.OptionInfo oi) {
+  public String optionToHtml(Options.OptionInfo oi, int padding) {
     StringBuilder b = new StringBuilder();
     Formatter f = new Formatter(b);
     if (oi.short_name != null) {
@@ -696,6 +696,8 @@ public class OptionsDoclet {
       b.append(" <code>[+]</code>");
     }
     f.format(".%n ");
+    f.format("%s", StringUtils.repeat(" ", padding));
+    
     String jdoc = ((oi.jdoc == null) ? "" : oi.jdoc);
     if (oi.no_doc_default || oi.default_str == null) {
       f.format("%s", jdoc);
