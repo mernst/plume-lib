@@ -123,7 +123,7 @@ public final class RegexUtil {
      */
     @Override
     /*@Pure*/
-    public String getMessage(/*>>>@GuardSatisfied CheckedPatternSyntaxException this*/) {
+    public String getMessage(/*>>>@GuardSatisfied CheckedPatternSyntaxException this*/ ) {
       return pse.getMessage();
     }
 

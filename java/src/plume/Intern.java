@@ -942,7 +942,9 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals(
+        /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
+        /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
@@ -952,16 +954,18 @@ public final class Intern {
       }
     }
 
-    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied SequenceAndIndices<T> this,*/ /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
+    /*@Pure*/ public boolean equals(
+        /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
+        /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
       return ((this.seq == other.seq) && this.start == other.start && this.end == other.end);
     }
 
-    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
+    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/ ) {
       return seq.hashCode() + start * 30 - end * 2;
     }
 
     // For debugging
-    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
+    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/ ) {
       return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
     }
   }

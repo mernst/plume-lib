@@ -582,7 +582,9 @@ public class MultiVersionControl {
 
     @Override
     @SuppressWarnings("interning")
-    /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Checkout this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
+    /*@Pure*/ public boolean equals(
+        /*>>>@GuardSatisfied Checkout this,*/
+        /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (!(other instanceof Checkout)) {
         return false;
       }
@@ -594,7 +596,7 @@ public class MultiVersionControl {
     }
 
     @Override
-    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Checkout this*/) {
+    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Checkout this*/ ) {
       return (repoType.hashCode()
           + directory.hashCode()
           + (repository == null ? 0 : repository.hashCode())
@@ -602,7 +604,7 @@ public class MultiVersionControl {
     }
 
     @Override
-    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Checkout this*/) {
+    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Checkout this*/ ) {
       return repoType + " " + directory + " " + repository + " " + module;
     }
   }

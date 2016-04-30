@@ -37,12 +37,14 @@ public class Triple<T1, T2, T3> {
     return new Triple<A, B, C>(a, b, c);
   }
 
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Triple<T1,T2,T3> this*/) {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Triple<T1,T2,T3> this*/ ) {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + "," + String.valueOf(c) + ">";
   }
 
   @SuppressWarnings("interning") // equality testing optimization
-  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Triple<T1,T2,T3> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(
+      /*>>>@GuardSatisfied Triple<T1,T2,T3> this,*/
+      /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
     if (obj instanceof Triple<?, ?, ?>) {
       @SuppressWarnings("unchecked")
       Triple<T1, T2, T3> other = (Triple<T1, T2, T3>) obj;
@@ -56,7 +58,7 @@ public class Triple<T1, T2, T3> {
   }
 
   // See coment at Pair.hashCode.
-  /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Triple<T1,T2,T3> this*/) {
+  /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Triple<T1,T2,T3> this*/ ) {
     return (((a == null) ? 0 : a.hashCode())
         + ((b == null) ? 0 : b.hashCode())
         + ((c == null) ? 0 : c.hashCode()));

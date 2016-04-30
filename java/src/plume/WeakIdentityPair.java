@@ -53,19 +53,21 @@ public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
   /** Return the first element of the pair, or null if it has been garbage-collected.
    * @return the first element of the pail, or null if it has been garbage-collected
    */
-  /*@SideEffectFree*/ public /*@Nullable*/ T1 getA(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/) {
+  /*@SideEffectFree*/ public /*@Nullable*/ T1 getA(
+      /*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/ ) {
     return a.get();
   }
 
   /** Return the second element of the pair, or null if it has been garbage-collected.
    * @return the second element of the pair, or null if it has been garbage-collected
    */
-  /*@SideEffectFree*/ public /*@Nullable*/ T2 getB(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/) {
+  /*@SideEffectFree*/ public /*@Nullable*/ T2 getB(
+      /*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/ ) {
     return b.get();
   }
 
   @Override
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/) {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/ ) {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 
@@ -74,7 +76,9 @@ public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
     "interning",
     "not.deterministic.call"
   }) // getA is not @deterministic, but its value is checked, so this method is deterministic
-  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(
+      /*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this,*/
+      /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
     if (!(obj instanceof WeakIdentityPair<?, ?>)) {
       return false;
     }
@@ -99,7 +103,7 @@ public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
 
   @Override
   /*@Pure*/
-  public int hashCode(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/) {
+  public int hashCode(/*>>>@GuardSatisfied WeakIdentityPair<T1,T2> this*/ ) {
     return hashCode;
   }
 }
