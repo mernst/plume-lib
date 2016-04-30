@@ -512,8 +512,11 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
+# This compiles the code as well as does pluggable type-checking
 typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
+	${MAKE} tools_jar_exists
 	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
+	touch .class-files-timestamp
 
 checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
