@@ -1056,19 +1056,21 @@ public final class Intern {
 
   // public static int[] internIntArray(int[] a) {
   //   boolean added = internedIntArrays.add(a);
-  //   if (added)
+  //   if (added) {
   //     return a;
-  //   else
+  //   } else {
   //     return (int[])internedIntArrays.tailSet(a).first();
+  //   }
   // }
 
   // // All the elements should already themselves be interned
   // public static Object[] internObjectArray(Object[] a) {
   //   boolean added = internedObjectArrays.add(a);
-  //   if (added)
+  //   if (added) {
   //     return a;
-  //   else
+  //   } else {
   //     return (Object[])internedObjectArrays.tailSet(a).first();
+  //   }
   // }
 
   ///////////////////////////////////////////////////////////////////////////
