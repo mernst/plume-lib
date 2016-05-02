@@ -23,7 +23,6 @@ import java.lang.ref.WeakReference;
 import java.lang.ref.ReferenceQueue;
 
 /*>>>
-import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -130,8 +129,7 @@ import org.checkerframework.dataflow.qual.*;
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
  */
-@SuppressWarnings({"unchecked", "rawtypes", "nullness", "keyfor", "interning", "regex", "purity"}) // old, non-typesafe Sun code, not worth annotating or checking
-// Annotated for lock checking as an experiment in annotating non-typesafe code.
+@SuppressWarnings({"unchecked", "rawtypes", "keyfor", "interning", "lock", "nullness", "purity", "regex"}) // old, non-typesafe Sun code, not worth annotating or checking
 public class WeakIdentityHashMap<K,V>
     extends AbstractMap<K,V>
     implements Map<K,V> {
@@ -275,14 +273,8 @@ public class WeakIdentityHashMap<K,V>
      * Use NULL_KEY for key if it is null.
      */
     // not: "private static <K> K maskNull(K key)" because NULL_KEY isn't of type K.
-    @SuppressWarnings({"cast.unsafe", "lock:guardsatisfied.location.disallowed"})
-    /*@Pure*/ private static /*@GuardSatisfied(1)*/ /*@NonNull*/ Object maskNull(/*@GuardSatisfied(1)*/ /*@Nullable*/ Object key) {
-        // OK to cast NULL_KEY.
-        // This is needed so that the type of the return expression is @GuardSatisfied(1).
-        // Otherwise it would be the LUB of @GuardedBy({}) and @GuardSatisfied(1), which is @GuardedByInaccessible.
-        // A lock:guardsatisfied.location.disallowed error is issued (and suppressed).
-        // This is because @GuardSatisfied is normally not allowed on casts.
-        return (key == null ? /*>>>(@GuardSatisfied(1) Object)*/ NULL_KEY : key);
+    /*@Pure*/ private static /*@NonNull*/ Object maskNull(/*@Nullable*/ Object key) {
+        return (key == null ? NULL_KEY : key);
     }
 
     /**
@@ -298,12 +290,12 @@ public class WeakIdentityHashMap<K,V>
      * Check for equality of non-null reference x and possibly-null y.  Uses
      * identity equality.
      */
-    /*@Pure*/ static boolean eq(/*@GuardedByUnknown*/ Object x, /*@GuardedByUnknown*/ /*@Nullable*/ Object y) {
+    /*@Pure*/ static boolean eq(Object x, /*@Nullable*/ Object y) {
         return x == y;
     }
 
     /** Return the hash code for x **/
-    /*@Pure*/ static int hasher(/*@GuardSatisfied*/ Object x) {
+    /*@Pure*/ static int hasher (Object x) {
         return System.identityHashCode (x);
     }
 
@@ -318,7 +310,7 @@ public class WeakIdentityHashMap<K,V>
      * Expunge stale entries from the table.
      */
     @SuppressWarnings("purity") // actually has side effects due to weak pointers
-    /*@SideEffectFree*/ private void expungeStaleEntries(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@SideEffectFree*/ private void expungeStaleEntries() {
 	Entry<K,V> e;
         // These types look wrong to me.
         while ( (e = (Entry<K,V>) queue.poll()) != null) { // unchecked cast
@@ -348,7 +340,7 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Return the table after first expunging stale entries
      */
-    /*@Pure*/ private /*@Nullable*/ Entry<K,V>[] getTable(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@Pure*/ private /*@Nullable*/ Entry<K,V>[] getTable() {
         expungeStaleEntries();
         return table;
     }
@@ -359,7 +351,7 @@ public class WeakIdentityHashMap<K,V>
      * entries that will be removed before next attempted access
      * because they are no longer referenced.
      */
-    /*@Pure*/ public int size(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@Pure*/ public int size() {
         if (size == 0)
             return 0;
         expungeStaleEntries();
@@ -372,7 +364,7 @@ public class WeakIdentityHashMap<K,V>
      * entries that will be removed before next attempted access
      * because they are no longer referenced.
      */
-    /*@Pure*/ public boolean isEmpty(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@Pure*/ public boolean isEmpty() {
         return size() == 0;
     }
 
@@ -390,7 +382,7 @@ public class WeakIdentityHashMap<K,V>
      *          <code>null</code> if the map contains no mapping for this key.
      * @see #put(Object, Object)
      */
-    /*@Pure*/ public /*@Nullable*/ V get(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object key) {
+    /*@Pure*/ public /*@Nullable*/ V get(/*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
@@ -412,7 +404,7 @@ public class WeakIdentityHashMap<K,V>
      * @return  <code>true</code> if there is a mapping for <code>key</code>;
      *          <code>false</code> otherwise
      */
-    /*@Pure*/ public boolean containsKey(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object key) {
+    /*@Pure*/ public boolean containsKey(/*@Nullable*/ Object key) {
         return getEntry(key) != null;
     }
 
@@ -420,7 +412,7 @@ public class WeakIdentityHashMap<K,V>
      * Returns the entry associated with the specified key in the HashMap.
      * Returns null if the HashMap contains no mapping for this key.
      */
-    /*@SideEffectFree*/ /*@Nullable*/ Entry<K,V> getEntry(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object key) {
+    /*@SideEffectFree*/ /*@Nullable*/ Entry<K,V> getEntry(/*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
@@ -443,7 +435,7 @@ public class WeakIdentityHashMap<K,V>
      *	       also indicate that the HashMap previously associated
      *	       <code>null</code> with the specified key.
      */
-    public /*@Nullable*/ V put(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ K key, V value) {
+    public /*@Nullable*/ V put(K key, V value) {
         @SuppressWarnings("unchecked")
         K k = (K) maskNull(key);
         int h = System.identityHashCode (k);
@@ -481,7 +473,7 @@ public class WeakIdentityHashMap<K,V>
      *        capacity is MAXIMUM_CAPACITY (in which case value
      *        is irrelevant).
      */
-    void resize(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ int newCapacity) {
+    void resize(int newCapacity) {
         /*@Nullable*/ Entry<K,V>[] oldTable = getTable();
         int oldCapacity = oldTable.length;
         if (oldCapacity == MAXIMUM_CAPACITY) {
@@ -509,7 +501,7 @@ public class WeakIdentityHashMap<K,V>
     }
 
     /** Transfer all entries from src to dest tables */
-    private void transfer(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@Nullable*/ Entry<K,V>[] src, /*@Nullable*/ Entry<K,V>[] dest) {
+    private void transfer(/*@Nullable*/ Entry<K,V>[] src, /*@Nullable*/ Entry<K,V>[] dest) {
         for (int j = 0; j < src.length; ++j) {
             Entry<K,V> e = src[j];
             src[j] = null;          // Help GC (?)
@@ -666,7 +658,7 @@ public class WeakIdentityHashMap<K,V>
      * @return <code>true</code> if this map maps one or more keys to the
      *         specified value.
      */
-    /*@Pure*/ public boolean containsValue(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object value) {
+    /*@Pure*/ public boolean containsValue(/*@Nullable*/ Object value) {
 	if (value==null)
             return containsNullValue();
 
@@ -681,7 +673,7 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Special-case code for containsValue with null argument
      */
-    private boolean containsNullValue(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    private boolean containsNullValue() {
 	/*@Nullable*/ Entry<K,V>[] tab = getTable();
         for (int i = tab.length ; i-- > 0 ;)
             for (Entry e = tab[i] ; e != null ; e = e.next)
@@ -711,11 +703,11 @@ public class WeakIdentityHashMap<K,V>
             this.next  = next;
         }
 
-        /*@Pure*/ public K getKey(/*>>>@GuardSatisfied Entry<K,V> this*/) {
+        /*@Pure*/ public K getKey() {
             return WeakIdentityHashMap.<K>unmaskNull(get());
         }
 
-        /*@Pure*/ public V getValue(/*>>>@GuardSatisfied Entry<K,V> this*/) {
+        /*@Pure*/ public V getValue() {
             return value;
         }
 
@@ -726,7 +718,7 @@ public class WeakIdentityHashMap<K,V>
         }
 
         @SuppressWarnings("purity") // side effects on local state
-        /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied Entry<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
             Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -742,14 +734,14 @@ public class WeakIdentityHashMap<K,V>
         }
 
         @SuppressWarnings("purity") // side effects on local state
-        /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Entry<K,V> this*/) {
+        /*@Pure*/ public int hashCode() {
             Object k = getKey();
             Object v = getValue();
             return  ((k==null ? 0 : hasher (k)) ^
                      (v==null ? 0 : v.hashCode()));
         }
 
-        /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Entry<K,V> this*/) {
+        /*@SideEffectFree*/ public String toString() {
             return getKey() + "=" + getValue();
         }
     }
@@ -859,7 +851,7 @@ public class WeakIdentityHashMap<K,V>
      *
      * @return a set view of the keys contained in this map.
      */
-    /*@SideEffectFree*/ public Set<K> keySet(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@SideEffectFree*/ public Set<K> keySet() {
         Set<K> ks = our_keySet;
         return (ks != null ? ks : (our_keySet = new KeySet()));
     }
@@ -869,11 +861,11 @@ public class WeakIdentityHashMap<K,V>
             return new KeyIterator();
         }
 
-        /*@Pure*/ public int size(/*>>>@GuardSatisfied KeySet this*/) {
+        /*@Pure*/ public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
-        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied KeySet this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             return containsKey(o);
         }
 
@@ -918,7 +910,7 @@ public class WeakIdentityHashMap<K,V>
      *
      * @return a collection view of the values contained in this map.
      */
-    /*@SideEffectFree*/ public Collection<V> values(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@SideEffectFree*/ public Collection<V> values() {
         Collection<V> vs = our_values;
         return (vs != null ?  vs : (our_values = new Values()));
     }
@@ -928,11 +920,11 @@ public class WeakIdentityHashMap<K,V>
             return new ValueIterator();
         }
 
-        /*@Pure*/ public int size(/*>>>@GuardSatisfied Values this*/) {
+        /*@Pure*/ public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
-        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied Values this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             return containsValue(o);
         }
 
@@ -968,7 +960,7 @@ public class WeakIdentityHashMap<K,V>
      * @return a collection view of the mappings contained in this map.
      * @see java.util.Map.Entry
      */
-    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet(/*>>>@GuardSatisfied WeakIdentityHashMap<K,V> this*/) {
+    /*@SideEffectFree*/ public Set<Map.Entry<K,V>> entrySet() {
         Set<Map.Entry<K,V>> es = entrySet;
         return (es != null ? es : (entrySet = new EntrySet()));
     }
@@ -978,7 +970,7 @@ public class WeakIdentityHashMap<K,V>
             return new EntryIterator();
         }
 
-        /*@Pure*/ public boolean contains(/*>>>@GuardSatisfied EntrySet this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean contains(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
             Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -991,7 +983,7 @@ public class WeakIdentityHashMap<K,V>
             return removeMapping(o) != null;
         }
 
-        /*@Pure*/ public int size(/*>>>@GuardSatisfied EntrySet this*/) {
+        /*@Pure*/ public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
@@ -1029,11 +1021,11 @@ public class WeakIdentityHashMap<K,V>
                 this.value = e.getValue();
         }
 
-        /*@Pure*/ public K getKey(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this*/) {
+        /*@Pure*/ public K getKey() {
             return key;
         }
 
-        /*@Pure*/ public V getValue(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this*/) {
+        /*@Pure*/ public V getValue() {
             return value;
         }
 
@@ -1043,7 +1035,7 @@ public class WeakIdentityHashMap<K,V>
             return oldValue;
         }
 
-  /*@Pure*/ public boolean equals(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this,*/ /*@GuardSatisfied*/ /*@Nullable*/ Object o) {
+        /*@Pure*/ public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
             return false;
             Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -1051,16 +1043,16 @@ public class WeakIdentityHashMap<K,V>
                 && eq(value, e.getValue());
         }
 
-        /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this*/) {
+        /*@Pure*/ public int hashCode() {
             return ((key   == null)   ? 0 :   key.hashCode()) ^
                ((value == null)   ? 0 : value.hashCode());
         }
 
-        /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied OurSimpleEntry<K,V> this*/) {
+        /*@SideEffectFree*/ public String toString() {
             return key + "=" + value;
         }
 
-        private static boolean eq(/*@GuardSatisfied*/ /*@Nullable*/ Object o1, /*@GuardSatisfied*/ /*@Nullable*/ Object o2) {
+        private static boolean eq(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
             return (o1 == null ? o2 == null : o1.equals(o2));
         }
     }
