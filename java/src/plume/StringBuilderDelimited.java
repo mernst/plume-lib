@@ -36,7 +36,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     this.delimiter = delimiter;
   }
 
-  private void appendDelimiter(/*>>>@GuardSatisfied StringBuilderDelimited this*/ ) {
+  private void appendDelimiter(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     if (empty) {
       empty = false;
     } else {
@@ -78,7 +78,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.charAt(index);
   }
 
-  /*@Pure*/ public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/ ) {
+  /*@Pure*/ public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
 
@@ -86,7 +86,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.subSequence(start, end);
   }
 
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied StringBuilderDelimited this*/ ) {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.toString();
   }
 }

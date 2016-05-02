@@ -119,7 +119,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
-  public int size(/*>>>@GuardSatisfied LimitedSizeIntSet this*/ ) {
+  public int size(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return num_values;
   }
 
@@ -145,7 +145,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/ public LimitedSizeIntSet clone(
-      /*>>>@GuardSatisfied LimitedSizeIntSet this*/ ) {
+      /*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
       result = (LimitedSizeIntSet) super.clone();
@@ -174,7 +174,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     return result;
   }
 
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/ ) {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return ("[size="
         + size()
         + "; "

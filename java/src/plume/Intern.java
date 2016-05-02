@@ -960,12 +960,12 @@ public final class Intern {
       return ((this.seq == other.seq) && this.start == other.start && this.end == other.end);
     }
 
-    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/ ) {
+    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return seq.hashCode() + start * 30 - end * 2;
     }
 
     // For debugging
-    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/ ) {
+    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
     }
   }

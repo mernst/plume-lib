@@ -459,7 +459,7 @@ public class Options {
      * @return a one-line description of the option
      */
     @Override
-    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied OptionInfo this*/ ) {
+    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied OptionInfo this*/) {
       String prefix = use_single_dash ? "-" : "--";
       String short_name_str = "";
       if (short_name != null) {
@@ -1505,7 +1505,7 @@ public class Options {
    */
   @Override
   @SuppressWarnings("purity") // side effect to local state (string creation)
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Options this*/ ) {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Options this*/) {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
     for (OptionInfo oi : options) {

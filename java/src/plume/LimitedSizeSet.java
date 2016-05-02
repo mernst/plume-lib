@@ -117,7 +117,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
-  public int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/ ) {
+  public int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return num_values;
   }
 
@@ -143,7 +143,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
-  public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/ ) {
+  public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
       @SuppressWarnings("unchecked")
@@ -177,7 +177,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/ ) {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return ("[size="
         + size()
         + "; "
