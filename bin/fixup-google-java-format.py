@@ -106,7 +106,7 @@ debug = False
 # Space is inserted between.
 abuttingannoRegex = re.compile(r"(/\*@[A-Za-z0-9_]+\*/)(\[\]|/\*@[A-Za-z0-9_]+\*/)")
 # Voodoo annotation with extra space after
-voodootrailingspaceRegex = re.compile(r"(\(/\*>>> ?@.*\bthis\*/) (\))")
+voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 
 # An annotation at the end of its line.
 # The annotation will be moved to the beginning of the following line.
