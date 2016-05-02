@@ -2500,10 +2500,11 @@ public final class UtilMDE {
   //     return "";
   //   while (Character.isWhitespace(s.charAt(last_non_ws)))
   //     last_non_ws--;
-  //   if ((first_non_ws == 0) && (last_non_ws == len))
+  //   if ((first_non_ws == 0) && (last_non_ws == len)) {
   //     return s;
-  //   else
+  //   } else {
   //     return s.substring(first_non_ws, last_non_ws+1);
+  //   }
   // }
   // // // Testing:
   // // assert(UtilMDE.trimWhitespace("foo").equals("foo"));
