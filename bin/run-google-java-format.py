@@ -32,6 +32,10 @@ else:
 if not os.path.isfile(fixup_py):
     urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
 
+if debug:
+    print "script_dir: " + script_dir
+    print "fixup_py: " + fixup_py
+    print "gjf_jar_path: " + gjf_jar_path
 
 files = sys.argv[1:]
 if len(files) == 0:

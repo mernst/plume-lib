@@ -1194,6 +1194,7 @@ REGEXP should not match the empty string."
     (while (setq start (string-match regexp target (1+ start)))
       (setq count (1+ count)))
     count))
+;; Testing:  (how-many-in-string "(" "((()())()())")
 
 (defun how-many-substring-overlapping (substring target)
   "Return number of matches for SUBSTRING in TARGET, including overlapping ones."

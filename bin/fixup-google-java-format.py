@@ -106,7 +106,7 @@ debug = False
 # Space is inserted between.
 abuttingannoRegex = re.compile(r"(/\*@[A-Za-z0-9_]+\*/)(\[\]|/\*@[A-Za-z0-9_]+\*/)")
 # Voodoo annotation with extra space after
-vodootrailingspaceRegex = re.compile(r"(\(/\*>>> @.*\bthis\*/) (\))")
+voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 
 # An annotation at the end of its line.
 # The annotation will be moved to the beginning of the following line.
@@ -124,7 +124,7 @@ def fixup_loop(infile, outfile):
     """Fix up formatting while reading from infile and writing to outfile."""
     prev = ""           # previous line
     for line in infile:
-        line = vodootrailingspaceRegex.sub(r"\1\2", line)
+        line = voodootrailingspaceRegex.sub(r"\1\2", line)
         m = re.search(abuttingannoRegex, line)
         while m:
             if debug: print "found abutting", line

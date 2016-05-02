@@ -101,7 +101,8 @@ This is good for modes like Perl, where the parser can get confused."
   ;; Tab width
   (let ((buf-file-name (buffer-file-name (current-buffer))))
     (if (and buf-file-name
-	     (string-match "/\\(frikqcc\\)/" buf-file-name))
+	     ;; (string-match "/\\(frikqcc\\)/" buf-file-name)
+	     )
 	(progn
 	  (setq tab-width 2)
 	  (make-local-variable 'tab-stop-list)
@@ -423,35 +424,36 @@ With prefix arg, goes to end of class; otherwise to end of method."
 (defun mde-java-mode-hook ()
   "Michael Ernst's Java mode hook."
   (eval-when-compile (require 'cc-mode)) ; defines java-mode
-  (mde-c-mode-hook)
-  (make-local-variable 'inleft-string)
-  (setq inleft-string "// ")
-  (setq paragraph-start (concat " */* *<p>\\|" paragraph-separate))
-  (setq paragraph-separate (concat ".*<p>\\|" paragraph-separate))
-  (define-key java-mode-map "\C-hf" 'javadoc-lookup)
-  (make-local-variable 'write-contents-hooks)
-  ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
-  ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
-  (if (and (buffer-file-name (current-buffer))
-	   (not (string-match "\.jpp$" (buffer-file-name (current-buffer)))))
-      (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry))
-  (add-hook 'write-contents-hooks 'check-for-string-equality)
-  (java-set-compile-command)
+  (save-match-data
+    (mde-c-mode-hook)
+    (make-local-variable 'inleft-string)
+    (setq inleft-string "// ")
+    (setq paragraph-start (concat " */* *<p>\\|" paragraph-separate))
+    (setq paragraph-separate (concat ".*<p>\\|" paragraph-separate))
+    (define-key java-mode-map "\C-hf" 'javadoc-lookup)
+    (make-local-variable 'write-contents-hooks)
+    ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
+    ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
+    (if (and (buffer-file-name (current-buffer))
+	     (not (string-match "\.jpp$" (buffer-file-name (current-buffer)))))
+	(add-hook 'write-contents-hooks 'check-parens-ignore-on-retry))
+    (add-hook 'write-contents-hooks 'check-for-string-equality)
+    (java-set-compile-command)
 
-  ;; This is orthogonal to dtrt-indent.el, which doesn't set tab-width.
-  ;; Really, it shouldn't be necessary:  tabs do not belong in source code files.
-  ;; Tab width
-  (let ((buf-file-name (buffer-file-name (current-buffer))))
-    ;; Dubious, gud: Craig Kaplan
-    ;; joie: Geoff Cohen
-    (if (and buf-file-name
-             (string-match "/\\(Dubious\\|gud\\|joie\\|junit\\)/\\|/joie-" buf-file-name))
-        (progn
-          (setq tab-width 2)
-          (make-local-variable 'tab-stop-list)
-          (set-tab-stop-list-width 2)
-          (setq indent-tabs-mode t))))
-  )
+    ;; This is orthogonal to dtrt-indent.el, which doesn't set tab-width.
+    ;; Really, it shouldn't be necessary:  tabs do not belong in source code files.
+    ;; Tab width
+    (let ((buf-file-name (buffer-file-name (current-buffer))))
+      ;; Dubious, gud: Craig Kaplan
+      ;; joie: Geoff Cohen
+      (if (and buf-file-name
+	       (string-match "/\\(Dubious\\|gud\\|joie\\|junit\\)/\\|/joie-" buf-file-name))
+	  (progn
+	    (setq tab-width 2)
+	    (make-local-variable 'tab-stop-list)
+	    (set-tab-stop-list-width 2)
+	    (setq indent-tabs-mode t))))
+    ))
 
 (add-hook 'java-mode-hook 'mde-java-mode-hook)
 
@@ -556,6 +558,88 @@ This is disabled on lines with a comment containing the string \"interned\"."
   (tags-query-replace "\\b\\(for (.*[^;];\\)\\([^ \t\n;]\\)" "\\1 \\2" nil nil)
   (tags-query-replace "\\b\\(throws.*[a-z]\\){" "\\1 {" nil nil)
   )
+
+
+(defun add-curly-braces ()
+  "Add curly braces around body of if/for statements whose body is a single
+statement.  Does replacement in any file in a currently-visited tags table."
+  (interactive)
+  ;; To find if/for statements that don't have a curly brace:
+  ;; (tags-search "^ *\\b\\(if\\|for\\) (.*) .*[^{\n]$")
+
+  ;; Could also find if/for statements that don't end with an open curly or
+  ;; a semicolon, which suggests that the body is a single statement that
+  ;; is broken across lines.
+
+  ;; Find if/for statements that end with a close paren, which suggests the
+  ;; body is on the next line.  Also else statements that end a line.
+  (let ((tags-regex
+	 "^ *\\(}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)$"))
+    (tags-search tags-regex)
+    (message "match-data after tags-search: %s" (match-data))
+    (while t
+      ;; Are tags-search and tags-loop-continue guaranteed to leave the
+      ;; match-data set??  Do looking-at to re-set match-data.
+      (beginning-of-line)
+      (if (not (looking-at tags-regex))
+	  (error "This can't happen"))
+
+      (goto-char (match-beginning 2))
+      (let ((line (buffer-substring (point) (save-excursion (end-of-line) (point)))))
+	(if (and (= (how-many-in-string "(" line) (how-many-in-string ")" line))
+		 (= 0 (how-many-in-string "{" line))
+		 (= 0 (how-many-in-string "//" line))
+		 (let ((leading-spaces (progn (string-match "^ *" line)
+					      (match-string 0 line))))
+		   (and (looking-at (concat leading-spaces "[^ \n].*\n"
+					    leading-spaces "[ ]"))
+			(not (looking-at (concat leading-spaces "[^ \n].*\n"
+						 leading-spaces "[ ]*\\(for\\|if\\|try\\)\\b"))))))
+	    ;; Parens are balanced on the if/for line, and the next line is
+	    ;; indented more.
+	    (progn
+	      (cond ((looking-at " *\\(if\\|for\\)")
+		     (forward-sexp 2))
+		    ((looking-at " *\\(}? else\\)")
+		     (goto-char (match-end 0)))
+		    (t
+		     (error "This can't happen")))
+	      (insert " \{")
+	      (re-search-forward ";\\( *//.*\\)?$")
+	      (while (looking-back "^[^;\n]*//[^\n]*$")
+		(re-search-forward ";\\( *//.*\\)?$"))
+	      (if (looking-at "\n *\\(else\\)")
+		  (progn
+		    (goto-char (match-beginning 1))
+		    (insert "} "))
+		(progn
+		  (newline-and-indent)
+		  (insert "}")
+		  (c-indent-line-or-region))))
+	  (next-line)))
+      (tags-loop-continue))))
+
+
+(defun examine-and-cleanup-curly-braces ()
+  "Investigate Java code that does not use curly braces for compound statements.
+Works over the currently-visited tags table."
+  (interactive)
+  
+  ;; Clean up formatting of curly braces.
+  ;; For example, don't put curly braces before if or else on their own line.
+  (tags-query-replace "^\\( *\\)}\n *else" "\\1} else")
+  (tags-query-replace "\\([{;]\\) *}\n\\( *\\)else" "\\1\n\\2} else")
+  (tags-query-replace "}\n *else" "} else")
+  (tags-query-replace " else\n *{" " else {")
+  (tags-search "\\(if (.*\\|else\\)\n *{")
+  (tags-search "[^/] else [^i{/]")
+  (tags-search "[^/] else { [^/\n]")
+
+
+  (tags-search "[^/] else\\( *//.*\\)?\n")
+  (tags-search "^ *\\(}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\n *[^ \n&|]")
+)
+    
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
