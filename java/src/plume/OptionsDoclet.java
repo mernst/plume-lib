@@ -697,7 +697,7 @@ public class OptionsDoclet {
     }
     f.format(".%n ");
     f.format("%s", StringUtils.repeat(" ", padding));
-    
+
     String jdoc = ((oi.jdoc == null) ? "" : oi.jdoc);
     if (oi.no_doc_default || oi.default_str == null) {
       f.format("%s", jdoc);
