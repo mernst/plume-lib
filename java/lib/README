@@ -21,10 +21,10 @@ BCEL (bcel.jar)
     # Now, resolve any conflicts before running the next command.
     git push
     # The below command uses the the current Checker Framework from the
-    # version control repository.  To use a released version of the
-    # Checker Framework, update lines in pom.xml such as
-    #    <version>1.9.13</version>
-    # and instead run:  mvn clean verify
+    # version control repository.  To use the latest released version of the
+    # Checker Framework, instead run:
+    #   mvn versions:use-latest-versions -Dincludes="org.checkerframework:*"
+    #   mvn clean verify
     mvn clean verify -P checkeframework-local
     \cp -pf target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
     cd ..
