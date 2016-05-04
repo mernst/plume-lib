@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */
@@ -271,7 +272,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /** A dummy Reader to be used when null is not acceptable. */
   private static class DummyReader extends Reader {
     @Override
-    public void close() {
+    public void close(/*>>>@GuardSatisfied DummyReader this*/) {
       // No error, because closing is OK if it appears in try-with-resources.
       // Later maybe create two versions (with and without exception here).
     }
@@ -521,14 +522,14 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Return a line-by-line interator for this file.
+   * Return a line-by-line iterator for this file.
    * <p>
    *
    * <b>Warning:</b> This does not return a fresh iterator each time.  The
    * iterator is a singleton, the same one is returned each time, and a new
    * one can never be created after it is exhausted.
    *
-   * @return a line-by-line interator for this file
+   * @return a line-by-line iterator for this file
    */
   @Override
   public Iterator<String> iterator() {
