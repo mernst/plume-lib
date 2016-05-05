@@ -109,7 +109,7 @@ endif
 
 # A user can add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-options -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
@@ -159,15 +159,15 @@ endif
 # and -AsuggestPureMethods are fixed, they can be run on plume-lib and Daikon and this
 # can be removed. This warning is issued by the Lock Checker when a method calls another
 # method with a weaker side effect guarantee.
-JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker
+JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker
 
 ## For testing a single checker, replace the above by:
-# JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
 ## For testing a single file, this doesn't quite work:
 # JAVA_FILES = src/plume/RegexUtil.java
 
 ## For testing invariant arrays, add "-AinvariantArrays" like so:
-# JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AinvariantArrays -processor org.checkerframework.checker.regex.RegexChecker
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AinvariantArrays -processor org.checkerframework.checker.regex.RegexChecker
 
 ## For testing -AsafeDefaultsForUnannotatedBytecode, uncomment:
 # JAVACHECK_EXTRA_ARGS ?= -AsafeDefaultsForUnannotatedBytecode -AprintErrorStack -classpath ${CHECKERFRAMEWORK}/checker/lib/java-getopt-1.0.14-annotated.jar:${CLASSPATH}
