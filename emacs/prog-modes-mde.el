@@ -643,27 +643,34 @@ Works over the currently-visited tags table."
 
 (defun downcase-previous-character ()
   "Downcase the character before point."
-  (let ((prev-char (char-before (point))))
-    (delete-backward-char 1)
-    (insert (downcase prev-char))))
+  (let* ((prev-char (char-before (point)))
+	 (replacement (downcase prev-char)))
+    (if (not (equal prev-char replacement))
+	(progn
+	  (delete-backward-char 1)
+	  (insert (downcase prev-char))))))
 
 ;; Be sure to check the changes; occasionally, the first word of a Javadoc
 ;; comment is a proper noun.
-(defun improve-param-style ()
-  "Improve style for Javadoc @param, for files in the current TAGS tables."
+(defun improve-javadoc-style ()
+  "Improve style for Javadoc @param and @return, for files in the current TAGS tables."
   (interactive)
   ;; "End the phrase with a period only if another phrase or sentence follows it."
   ;; Do it twice because matches may overlap.
-  (tags-replace "\\(@param +[A-Za-z0-9_]+\\ +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@param +[A-Za-z0-9_]+\\ +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  ;; Use proper capitalization for descriptive text.
+  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  ;; Start descriptive text with lowercase letter.
   (let ((case-fold-search nil))
     ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
     ;; seem to work with tags-query-replace, so call downcase-previous-character.
-    (tags-search "\\(@param +[A-Za-z0-9_]+\\ +\\(\n +\* +\\)?\\)\\([A-Z]\\)")
+    ;; We only do so if the capital letter is at the beginning of a word
+    ;; whose other characters are lowercase.
+    (tags-search "\\(?:@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+    (goto-char (match-end 1))
     (downcase-previous-character)
     (while t
       (tags-loop-continue)
+      (goto-char (match-end 1))
       (downcase-previous-character)))
   ;; PROBLEM: the final tags-loop-continue terminates the whole function so
   ;; nothing here or beyond will be executed.
