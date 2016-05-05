@@ -109,11 +109,8 @@ endif
 
 # A user can add flags like "-source 5" or "-target 5" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
-## Temporarily removed, because there are a lot of warnings that we need to fix:  -Werror
-JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
+JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
-
-CHECKER_JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} -proc:only
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
@@ -178,6 +175,11 @@ JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing
 # JAVACHECK has to be a single file name, because it's checked for existence.
 JAVACHECK ?= ${CHECKERFRAMEWORK}/checker/bin/javac
 JAVACHECK_COMMAND = ${JAVACHECK} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS} ${JAVACHECK_ARGS} ${JAVACHECK_EXTRA_ARGS}
+
+# A user may set this in Makefile.user or on the command line
+ifneq ("$(ALWAYS_CHECK_TYPES)","")
+  JAVAC_COMMAND=${JAVACHECK_COMMAND}
+endif
 
 ## ... end pluggable typechecking
 
@@ -512,11 +514,11 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
-# This compiles the code as well as does pluggable type-checking
+# This compiles the code as well as does pluggable type-checking.
 typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
-	${MAKE} tools_jar_exists
-	${JAVACHECK_COMMAND} ${JAVA_FILES} 2>&1
-	touch .class-files-timestamp
+	\rm -f .class-files-timestamp
+# Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
+	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}"
 
 checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.

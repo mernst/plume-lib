@@ -77,7 +77,7 @@ fi
 
 echo "[3/6] Building plume-lib."
 export JAVAC_TARGET_FLAGS="-target 7"
-make -C "$release/java" all
+make -C "$release/java" check-types all
 if [[ $? -ne 0 ]]; then
     echo "Error building plume-lib."
     exit 1;
