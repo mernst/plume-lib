@@ -647,9 +647,15 @@ Works over the currently-visited tags table."
     (delete-backward-char 1)
     (insert (downcase prev-char))))
 
+;; Be sure to check the changes; occasionally, the first word of a Javadoc
+;; comment is a proper noun.
 (defun improve-param-style ()
   "Improve style for Javadoc @param, for files in the current TAGS tables."
   (interactive)
+  ;; "End the phrase with a period only if another phrase or sentence follows it."
+  ;; Do it twice because matches may overlap.
+  (tags-replace "\\(@param +[A-Za-z0-9_]+\\ +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@param +[A-Za-z0-9_]+\\ +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
   ;; Use proper capitalization for descriptive text.
   (let ((case-fold-search nil))
     ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
@@ -659,8 +665,8 @@ Works over the currently-visited tags table."
     (while t
       (tags-loop-continue)
       (downcase-previous-character)))
-  ;; "End the phrase with a period only if another phrase or sentence follows it."
-  (tags-replace "\\(@param +[A-Za-z0-9_]+\\ +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  ;; PROBLEM: the final tags-loop-continue terminates the whole function so
+  ;; nothing here or beyond will be executed.
   )
    
 
