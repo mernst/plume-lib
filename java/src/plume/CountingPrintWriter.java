@@ -41,7 +41,7 @@ public class CountingPrintWriter extends PrintWriter {
    * the necessary intermediate OutputStreamWriter, which will convert
    * characters into bytes using the default character encoding.
    *
-   * @param out An output stream
+   * @param out an output stream
    */
   public CountingPrintWriter(OutputStream out) {
     super(out);
@@ -57,8 +57,8 @@ public class CountingPrintWriter extends PrintWriter {
    * OutputStreamWriter, which will convert characters into bytes
    * using the default character encoding.
    *
-   * @param out An output stream
-   * @param autoFlush A boolean; if true, the println() methods will flush the output buffer
+   * @param out an output stream
+   * @param autoFlush if true, the println() methods will flush the output buffer
    */
   public CountingPrintWriter(OutputStream out, boolean autoFlush) {
     super(out, autoFlush);
@@ -81,8 +81,8 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Create a new PrintWriter, without automatic line flushing.
-   * @param out A writer
-   * @param autoFlush A boolean; if true, the println() methods will flush the output buffer
+   * @param out a writer
+   * @param autoFlush if true, the println() methods will flush the output buffer
    */
   public CountingPrintWriter(Writer out, boolean autoFlush) {
     super(out, autoFlush);
@@ -98,7 +98,7 @@ public class CountingPrintWriter extends PrintWriter {
    * Returns the number of bytes contained in a string.
    * If s is null, returns -1
    * @return bytes in the string, or null
-   * @param s A String
+   * @param s the String for which to count bytes
    */
   public int countBytes(String s) {
     if (s == null) {
@@ -367,8 +367,8 @@ public class CountingPrintWriter extends PrintWriter {
    * Write a portion of a character array.
    *
    * @param buf character array
-   * @param off Offset from which to start writing characters
-   * @param len Number of characters to write
+   * @param off offset from which to start writing characters
+   * @param len number of characters to write
    */
   public void write(char[] buf, int off, int len) {
     for (int i = off; i < off + len; i++) {
@@ -392,8 +392,8 @@ public class CountingPrintWriter extends PrintWriter {
    * Write a portion of a string.
    *
    * @param s string to be printed
-   * @param off Offset from which to start writing characters
-   * @param len Number of characters to write
+   * @param off offset from which to start writing characters
+   * @param len number of characters to write
    */
   public void write(String s, int off, int len) {
     writtenBytes += countBytes(s.substring(off, len));

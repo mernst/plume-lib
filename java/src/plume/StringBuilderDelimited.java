@@ -30,7 +30,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
 
   /** Create a new StringBuilderDelimited.
    * @param delimiter the delimiter to be put between strings that are
-   * appended to this.
+   * appended to this
    */
   public StringBuilderDelimited(String delimiter) {
     this.delimiter = delimiter;

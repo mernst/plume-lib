@@ -423,7 +423,7 @@ public final class UtilMDE {
    * gzipped files) after the first gzipped file.
    * @param filename the possibly-compressed file to write
    * @param append if true, the resulting BufferedWriter appends to the end
-   * of the file instead of the beginning.
+   * of the file instead of the beginning
    * @return a BufferedWriter for filename
    * @throws IOException if there is trouble writing the file
    */
@@ -451,7 +451,7 @@ public final class UtilMDE {
    * gzipped files) after the first gzipped file.
    * @param filename the possibly-compressed file to write
    * @param append if true, the resulting BufferedOutputStream appends to the end
-   * of the file instead of the beginning.
+   * of the file instead of the beginning
    * @return a BufferedOutputStream for filename
    * @throws IOException if there is trouble writing the file
    */
@@ -763,8 +763,8 @@ public final class UtilMDE {
      * class Class, and also resolves (links) the class.
      * Delegates the real work to defineClass.
      * @see ClassLoader#defineClass(String,byte[],int,int)
-     * @param className The expected binary name of the class to define, or null if not known
-     * @param pathname The file from which to load the class
+     * @param className the expected binary name of the class to define, or null if not known
+     * @param pathname the file from which to load the class
      * @return The <code>Class</code> object that was created
      */
     public Class<?> defineClassFromFile(
@@ -986,9 +986,9 @@ public final class UtilMDE {
    * directory: temporaryFileDirectory/myUserName/myPrefix_someString_suffix.
    * someString is internally generated to ensure no temporary files of the
    * same name are generated.
-   * @param prefix The prefix string to be used in generating the file's
+   * @param prefix the prefix string to be used in generating the file's
    *  name; must be at least three characters long
-   * @param suffix The suffix string to be used in generating the file's
+   * @param suffix the suffix string to be used in generating the file's
    *  name; may be null, in which case the suffix ".tmp" will be used Returns:
    *  An abstract pathname denoting a newly-created empty file
    * @return a File representing the newly-created temporary directory
@@ -2722,7 +2722,7 @@ public final class UtilMDE {
    * (probably due to backward-compatibility).
    * @param str a string to be parsed
    * @param delim the delimiters
-   * @param returnDelims flag indicating whether to return the delimiters as tokens.
+   * @param returnDelims flag indicating whether to return the delimiters as tokens
    * @return vector of strings resulting from tokenization
    */
   public static Vector<Object> tokens(String str, String delim, boolean returnDelims) {

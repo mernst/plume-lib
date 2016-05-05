@@ -197,11 +197,11 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @throws UnsupportedEncodingException if the charset encoding is not supported
    * @param in source from which to read entries
    * @param charsetName the character set to use
-   * @param filename Non-null file name for stream being read
-   * @param comment_re_string Regular expression that matches comments.
+   * @param filename non-null file name for stream being read
+   * @param comment_re_string regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored.
-   * @param include_re_string Regular expression that matches include directives.
+   * @param include_re_string regular expression that matches include directives.
    *                      The expression should define one group that contains
    *                      the include file name.
    * @see #EntryReader(InputStream,String,String,String)
@@ -234,11 +234,11 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Create a EntryReader.
    *
    *    @param in source from which to read entries
-   *    @param filename Non-null file name for stream being read
-   *    @param comment_re_string Regular expression that matches comments.
+   *    @param filename non-null file name for stream being read
+   *    @param comment_re_string regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored.
-   *    @param include_re_string Regular expression that matches include directives.
+   *    @param include_re_string regular expression that matches include directives.
    *                      The expression should define one group that contains
    *                      the include file name.
    */
@@ -328,10 +328,10 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *
    *    @param reader source from which to read entries
    *    @param filename file name corresponding to reader, for use in error messages
-   *    @param comment_re_string Regular expression that matches comments.
+   *    @param comment_re_string regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored
-   *    @param include_re_string Regular expression that matches include directives.
+   *    @param include_re_string regular expression that matches include directives.
    *                      The expression should define one group that contains
    *                      the include file name
    */
@@ -369,11 +369,11 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create an EntryReader.
    *
-   *    @param file       Initial file to read.
-   *    @param comment_re Regular expression that matches comments.
+   *    @param file       initial file to read
+   *    @param comment_re regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored.
-   *    @param include_re Regular expression that matches include directives.
+   *    @param include_re regular expression that matches include directives.
    *                      The expression should define one group that contains
    *                      the include file name.
    * @throws IOException if there is a problem reading the file
@@ -410,11 +410,11 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a new EntryReader starting with the specified file.
    *
-   *    @param filename   Initial file to read.
-   *    @param comment_re Regular expression that matches comments.
+   *    @param filename   initial file to read
+   *    @param comment_re regular expression that matches comments.
    *                      Any text that matches comment_re is removed.
    *                      A line that is entirely a comment is ignored.
-   *    @param include_re Regular expression that matches include directives.
+   *    @param include_re regular expression that matches include directives.
    *                      The expression should define one group that contains
    *                      the include file name.
    *

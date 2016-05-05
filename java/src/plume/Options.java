@@ -597,7 +597,7 @@ public class Options {
 
   /**
    * Enable or disable debug logging.
-   * @param enabled whether to enable or disable logging.
+   * @param enabled whether to enable or disable logging
    */
   public void enableDebugLogging(boolean enabled) {
     debug_options.enabled = enabled;
@@ -1120,7 +1120,7 @@ public class Options {
    * Return the String containing the usage message for command-line options.
    *
    * @return the command-line usage message
-   * @param group_names The list of option groups to include in the usage
+   * @param group_names the list of option groups to include in the usage
    * message.  If empty and option groups are being used, will return usage
    * for all option groups that are not unpublicized.  If empty and option
    * groups are not being used, will return usage for all options that are
@@ -1134,9 +1134,9 @@ public class Options {
    * Returns the String containing the usage message for command-line options.
    *
    * @return the command-line usage message
-   * @param include_unpublicized If true, treat all unpublicized options
+   * @param include_unpublicized if true, treat all unpublicized options
    * and option groups as publicized
-   * @param group_names The list of option groups to include in the usage
+   * @param group_names the list of option groups to include in the usage
    * message.  If empty and option groups are being used, will return usage
    * for all option groups that are not unpublicized.  If empty and option
    * groups are not being used, will return usage for all options that are
@@ -1473,7 +1473,7 @@ public class Options {
    * it never contains duplicates, and it contains every known option even
    * if the option was not specified on the command line.
    *
-   * @param include_unpublicized  If true, treat all unpublicized options
+   * @param include_unpublicized  if true, treat all unpublicized options
    * and option groups as publicized
    * @return options, similarly to supplied on the command line
    */

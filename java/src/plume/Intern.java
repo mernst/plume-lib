@@ -932,7 +932,7 @@ public final class Intern {
     public int end;
 
     /**
-     * @param seq An interned array
+     * @param seq an interned array
      */
     public SequenceAndIndices(T seq, int start, int end) {
       this.seq = seq;

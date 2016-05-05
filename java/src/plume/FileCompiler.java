@@ -65,9 +65,9 @@ public final class FileCompiler {
 
   /**
    * Creates a new FileCompiler.
-   * @param compiler A command that runs a Java compiler; for instance, it
-   * could be the full path name or whatever is used on the commandline.
-   * @param timeLimit The maximum permitted compilation time, in msec.
+   * @param compiler a command that runs a Java compiler; for instance, it
+   * could be the full path name or whatever is used on the commandline
+   * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String compiler, long timeLimit) {
     this.compiler = compiler;
@@ -132,7 +132,7 @@ public final class FileCompiler {
   //   }
 
   /**
-   * @param filenames the paths of the java source to be compiled as Strings.
+   * @param filenames the paths of the Java source to be compiled as Strings
    * @return The process that executed the external compile command.
    * @throws Error if an empty list of filenames is provided.
    */

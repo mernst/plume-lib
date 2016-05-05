@@ -84,7 +84,7 @@ public final class JWhich {
    * containing the specified class name, as prescribed
    * by the class path.
    *
-   * @param className Name of the class.
+   * @param className name of the class
    */
   /*@EnsuresNonNull("CLASSPATH")*/
   public static void which(String className) {
@@ -106,7 +106,7 @@ public final class JWhich {
    * Returns the URL of the resource denoted by the specified
    * class name, as prescribed by the class path.
    *
-   * @param className Name of the class.
+   * @param className name of the class
    * @return Class URL, or null of the class was not found.
    */
   public static /*@Nullable*/ URL findClass(final String className) {

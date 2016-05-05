@@ -79,7 +79,7 @@ public final class BCELUtil {
   }
 
   /** Return a string representation of the access flags of method m.
-   * @param m the method whose access flags to retrieve.
+   * @param m the method whose access flags to retrieve
    * @return a string representation of the access flags of method m
    */
   static String get_access_flags(Method m) {

@@ -72,7 +72,7 @@ public class RandomSelector<T> {
   private boolean coin_toss_mode = false;
   private double keep_probability = -1.0;
 
-  /** @param num_elts The number of elements intended to be selected
+  /** @param num_elts the number of elements intended to be selected
    * from the input elements
    *
    * Sets 'number_to_take' = num_elts
@@ -81,9 +81,9 @@ public class RandomSelector<T> {
     this(num_elts, new Random());
   }
 
-  /** @param num_elts The number of elements intended to be selected
-   * from the input elements.
-   * @param r The seed to give for random number generation.
+  /** @param num_elts the number of elements intended to be selected
+   * from the input elements
+   * @param r the seed to give for random number generation.
    *
    * Sets 'number_to_take' = num_elts
    */
@@ -94,9 +94,9 @@ public class RandomSelector<T> {
     generator = r;
   }
 
-  /** @param keep_probability The probability that each element is
-   * selected from the oncoming Iteration.
-   * @param r The seed to give for random number generation.
+  /** @param keep_probability the probability that each element is
+   * selected from the oncoming Iteration
+   * @param r the seed to give for random number generation
    */
   public RandomSelector(double keep_probability, Random r) {
     values = new ArrayList<T>();

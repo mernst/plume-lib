@@ -199,7 +199,7 @@ public class StrTok {
    * not match, calls the current error handling routine (see
    * {@link #set_error_handler(StrTok.ErrorHandler) set_error_handler()}).
    * If it does match, just returns.
-   * @param tok String to check next token against
+   * @param tok string to check next token against
    */
   public void need(String tok) {
 

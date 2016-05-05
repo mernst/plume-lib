@@ -42,7 +42,7 @@ public class MultiRandSelector<T> {
 
   /** @param num_elts the number of elements to select from each bucket
    *  @param eq partioner that determines how to partition the objects from
-   *  the iteration.
+   *  the iteration
    */
   public MultiRandSelector(int num_elts, Partitioner<T, T> eq) {
     this(num_elts, new Random(), eq);

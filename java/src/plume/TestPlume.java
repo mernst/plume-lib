@@ -1596,7 +1596,7 @@ public final class TestPlume extends TestCase {
    */
   public static class PrintOneIntPerTimePeriod {
     /**
-     * @param args  how many to print; how many milliseconds between each.
+     * @param args  how many to print; how many milliseconds between each
      */
     public static void main(String[] args) {
       assert args.length == 2;
