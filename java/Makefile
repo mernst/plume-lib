@@ -155,7 +155,11 @@ endif
 # Note that pluggable type-checking requires checker.jar (not just
 # checker-qual.jar) on the classpath.
 
-JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker
+# -AsuppressWarnings=lock:method.guarantee.violated is temporary. Once the Purity Checker
+# and -AsuggestPureMethods are fixed, they can be run on plume-lib and Daikon and this
+# can be removed. This warning is issued by the Lock Checker when a method calls another
+# method with a weaker side effect guarantee.
+JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker
 
 ## For testing a single checker, replace the above by:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker

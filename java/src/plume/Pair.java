@@ -1,6 +1,7 @@
 package plume;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -39,13 +40,15 @@ public class Pair<T1 extends /*@Nullable*/ Object, T2 extends /*@Nullable*/ Obje
   }
 
   @Override
-  /*@SideEffectFree*/ public String toString() {
+  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied Pair<T1,T2> this*/) {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + ">";
   }
 
   @Override
   @SuppressWarnings("interning") // equality testing optimization
-  /*@Pure*/ public boolean equals(/*@Nullable*/ Object obj) {
+  /*@Pure*/ public boolean equals(
+      /*>>>@GuardSatisfied Pair<T1,T2> this,*/
+      /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
     if (!(obj instanceof Pair<?, ?>)) {
       return false;
     }
@@ -60,7 +63,7 @@ public class Pair<T1 extends /*@Nullable*/ Object, T2 extends /*@Nullable*/ Obje
   // (And if they aren't final, it's a bit odd to be calling hashCode.)
   // But then the class would not be useful for mutable pairs.
   @Override
-  /*@Pure*/ public int hashCode() {
+  /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied Pair<T1,T2> this*/) {
     return (((a == null) ? 0 : a.hashCode()) + ((b == null) ? 0 : b.hashCode()));
   }
 }
