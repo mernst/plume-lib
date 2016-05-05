@@ -161,7 +161,8 @@ is easier than clicking on the error."
 				 (setq dir (replace-match "/" t t dir)))
 			       (require 'dired)
 			       (let ((dir-plus-file (concat dir file))
-				     (java-dirs (split-string (getenv "CLASSPATH") ":"))
+				     (java-dirs (and (getenv "CLASSPATH")
+						     (split-string (getenv "CLASSPATH") ":")))
 				     (result nil))
 				 (while java-dirs
 				   (if (file-directory-p (car java-dirs))
