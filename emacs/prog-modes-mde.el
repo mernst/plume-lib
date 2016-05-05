@@ -638,8 +638,29 @@ Works over the currently-visited tags table."
 
   (tags-search "[^/] else\\( *//.*\\)?\n")
   (tags-search "^ *\\(}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\n *[^ \n&|]")
-)
-    
+  )
+
+
+(defun downcase-previous-character ()
+  "Downcase the character before point."
+  (let ((prev-char (char-before (point))))
+    (delete-backward-char 1)
+    (insert (downcase prev-char))))
+
+(defun improve-param-style ()
+  "Improve style for Javadoc @param, for files in the current TAGS tables."
+  (interactive)
+  ;; Use proper capitalization for descriptive text.
+  (let ((case-fold-search nil))
+    (tags-search "\\(@param +[A-Za-z0-9_]+\\ +\\(\n +\* +\\)?\\)\\([A-Z]\\)")
+    (downcase-previous-character)
+    (while t
+      (tags-loop-continue)
+      (downcase-previous-character)))
+  ;; "End the phrase with a period only if another phrase or sentence follows it."
+  (tags-replace "\\(@param +[A-Za-z0-9_]+\\ +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  )
+   
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
