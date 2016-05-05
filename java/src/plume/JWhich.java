@@ -107,7 +107,7 @@ public final class JWhich {
    * class name, as prescribed by the class path.
    *
    * @param className name of the class
-   * @return Class URL, or null of the class was not found.
+   * @return Class URL, or null of the class was not found
    */
   public static /*@Nullable*/ URL findClass(final String className) {
     return JWhich.class.getResource(asResourceName(className));

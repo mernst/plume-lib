@@ -797,7 +797,7 @@ public final class Intern {
    * @param seq the sequence whose subsequence should be interned
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
-   * @return a subsequence of seq from start to end that is interned.
+   * @return a subsequence of seq from start to end that is interned
    */
   public static int /*@Interned*/ [] internSubsequence(int /*@Interned*/ [] seq, int start, int end) {
     assert Intern.isInterned(seq);
@@ -818,7 +818,7 @@ public final class Intern {
    * @param seq the sequence whose subsequence should be interned
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
-   * @return a subsequence of seq from start to end that is interned.
+   * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
   public static long /*@Interned*/ [] internSubsequence(
@@ -841,7 +841,7 @@ public final class Intern {
    * @param seq the sequence whose subsequence should be interned
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
-   * @return a subsequence of seq from start to end that is interned.
+   * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
   public static double /*@Interned*/ [] internSubsequence(
@@ -864,7 +864,7 @@ public final class Intern {
    * @param seq the sequence whose subsequence should be interned
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
-   * @return a subsequence of seq from start to end that is interned.
+   * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(
@@ -894,7 +894,7 @@ public final class Intern {
    * @param seq the sequence whose subsequence should be interned
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
-   * @return a subsequence of seq from start to end that is interned.
+   * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(

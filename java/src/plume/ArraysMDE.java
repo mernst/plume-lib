@@ -400,7 +400,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param elt the element to search for
    * @return the first index whose element is equal to the specified element,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt) {
@@ -425,7 +425,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the array.
+   *    or -1 if the element is not found in that section of the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static <T> int indexOf(
@@ -448,7 +448,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param elt the element to search for
    * @return the first index whose element is equal to the specified element,
-   *    or -1 if no such element is found in the list.
+   *    or -1 if no such element is found in the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(
@@ -465,7 +465,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the list.
+   *    or -1 if the element is not found in that section of the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(
@@ -490,7 +490,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param elt the element to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOfEq(/*@PolyAll*/ Object[] a, /*@Nullable*/ Object elt) {
@@ -511,7 +511,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the array.
+   *    or -1 if the element is not found in that section of the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOfEq(
@@ -530,7 +530,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param elt the element to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the list.
+   *    or -1 if the element is not found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOfEq(
@@ -552,7 +552,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the list.
+   *    or -1 if the element is not found in that section of the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOfEq(
@@ -573,7 +573,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param elt the element to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(int[] a, int elt) {
@@ -590,7 +590,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param elt the element to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(long[] a, long elt) {
@@ -610,7 +610,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(int[] a, int elt, int minindex, int indexlimit) {
@@ -630,7 +630,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(long[] a, long elt, int minindex, int indexlimit) {
@@ -647,7 +647,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param elt the element to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(boolean[] a, boolean elt) {
@@ -664,7 +664,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param elt the element to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(double[] a, double elt) {
@@ -684,7 +684,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
    *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/ public static int indexOf(boolean[] a, boolean elt, int minindex, int indexlimit) {
@@ -711,7 +711,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -731,7 +731,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -755,7 +755,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first list,
-   *    or -1 if no such element is found in the list.
+   *    or -1 if no such element is found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -775,7 +775,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first list,
-   *    or -1 if the element is not found in the list.
+   *    or -1 if the element is not found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -795,7 +795,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first array,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -815,7 +815,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -835,7 +835,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first list,
-   *    or -1 if no such element is found in the list.
+   *    or -1 if no such element is found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -855,7 +855,7 @@ public final class ArraysMDE {
    * @param a a list
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first list,
-   *    or -1 if the element is not found in the list.
+   *    or -1 if the element is not found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -874,7 +874,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -893,7 +893,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -912,7 +912,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -931,7 +931,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -1140,7 +1140,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    */
   /*@Pure*/ public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
@@ -1165,7 +1165,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, int a_offset) {
@@ -1190,7 +1190,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    */
   /*@Pure*/ public static boolean isSubarray(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1214,7 +1214,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1238,7 +1238,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    */
   /*@Pure*/ public static boolean isSubarray(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1262,7 +1262,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1286,7 +1286,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array.
+   *    or -1 if no such element is found in the array
    */
   /*@Pure*/ public static boolean isSubarray(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1310,7 +1310,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1333,7 +1333,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1356,7 +1356,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1379,7 +1379,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1402,7 +1402,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
    * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array.
+   *    or -1 if the element is not found in the array
    */
   /*@Pure*/ public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -2487,7 +2487,7 @@ public final class ArraysMDE {
   /**
    * Requires that fn_is_permutation(a) holds.
    * @param a the input permutation
-   * @return fresh array which is the inverse of the given permutation.
+   * @return fresh array which is the inverse of the given permutation
    * @see #fn_is_permutation(int[])
    */
   public static int[] fn_inverse_permutation(int[] a) {

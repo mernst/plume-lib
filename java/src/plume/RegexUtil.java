@@ -192,7 +192,7 @@ public final class RegexUtil {
    * expression. Otherwise returns a string describing why the argument is
    * not a regex.
    * @param s string to check for being a regular expression
-   * @return null, or a string describing why the argument is not a regex.
+   * @return null, or a string describing why the argument is not a regex
    */
   @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
@@ -206,7 +206,7 @@ public final class RegexUtil {
    * a string describing why the argument is not a regex.
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
-   * @return null, or a string describing why the argument is not a regex.
+   * @return null, or a string describing why the argument is not a regex
    */
   @SuppressWarnings({"regex", "not.sef"}) // RegexUtil;
   /*@SideEffectFree*/
@@ -228,7 +228,7 @@ public final class RegexUtil {
    * expression. Otherwise returns a PatternSyntaxException describing
    * why the argument is not a regex.
    * @param s string to check for being a regular expression
-   * @return null, or a PatternSyntaxException describing why the argument is not a regex.
+   * @return null, or a PatternSyntaxException describing why the argument is not a regex
    */
   @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
@@ -242,7 +242,7 @@ public final class RegexUtil {
    * PatternSyntaxException describing why the argument is not a regex.
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
-   * @return null, or a PatternSyntaxException describing why the argument is not a regex.
+   * @return null, or a PatternSyntaxException describing why the argument is not a regex
    */
   @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/

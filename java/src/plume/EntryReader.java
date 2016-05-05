@@ -566,7 +566,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Return the next line in the multi-file.
    * @return the next line in the multi-file
-   * Throws NoSuchElementException at end of file.
+   * Throws NoSuchElementException at end of file
    */
   @Override
   public String next() {
