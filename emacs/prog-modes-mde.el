@@ -652,6 +652,8 @@ Works over the currently-visited tags table."
   (interactive)
   ;; Use proper capitalization for descriptive text.
   (let ((case-fold-search nil))
+    ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
+    ;; seem to work with tags-query-replace, so call downcase-previous-character.
     (tags-search "\\(@param +[A-Za-z0-9_]+\\ +\\(\n +\* +\\)?\\)\\([A-Z]\\)")
     (downcase-previous-character)
     (while t
