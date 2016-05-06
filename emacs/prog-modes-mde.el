@@ -659,6 +659,7 @@ Works over the currently-visited tags table."
   ;; Do it twice because matches may overlap.
   (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
   (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
   ;; Start descriptive text with lowercase letter.
   (let ((case-fold-search nil))
     ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
