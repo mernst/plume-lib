@@ -98,7 +98,7 @@ public final class RegexUtil {
     /**
      * Retrieves the description of the error.
      *
-     * @return The description of the error
+     * @return the description of the error
      */
     public String getDescription() {
       return pse.getDescription();
@@ -107,7 +107,7 @@ public final class RegexUtil {
     /**
      * Retrieves the error index.
      *
-     * @return The approximate index in the pattern of the error, or {@code -1}
+     * @return the approximate index in the pattern of the error, or {@code -1}
      *         if the index is not known
      */
     public int getIndex() {
@@ -119,7 +119,7 @@ public final class RegexUtil {
      * error and its index, the erroneous regular-expression pattern, and a
      * visual indication of the error index within the pattern.
      *
-     * @return The full detail message
+     * @return the full detail message
      */
     @Override
     /*@Pure*/
@@ -130,7 +130,7 @@ public final class RegexUtil {
     /**
      * Retrieves the erroneous regular-expression pattern.
      *
-     * @return The erroneous pattern
+     * @return the erroneous pattern
      */
     public String getPattern() {
       return pse.getPattern();

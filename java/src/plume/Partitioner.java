@@ -14,7 +14,7 @@ public interface Partitioner<
     ELEMENT extends /*@Nullable*/ Object, CLASS extends /*@Nullable*/ Object> {
 
   /** @param obj the Object to be assigned to a bucket
-   *  @return A key representing the bucket containing obj
+   *  @return a key representing the bucket containing obj
    */
   CLASS assignToBucket(ELEMENT obj);
 }

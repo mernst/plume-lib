@@ -525,7 +525,7 @@ public final class UtilMDE {
    * for arrays.  This method uses the same rules, but additionally handles
    * primitive types and, for non-arrays, fully-qualified names.
    * @param className name of the class
-   * @return Class corresponding to className
+   * @return the Class corresponding to className
    * @throws ClassNotFoundException if the class is not found
    */
   // The annotation encourages proper use, even though this can take a
@@ -765,7 +765,7 @@ public final class UtilMDE {
      * @see ClassLoader#defineClass(String,byte[],int,int)
      * @param className the expected binary name of the class to define, or null if not known
      * @param pathname the file from which to load the class
-     * @return The <code>Class</code> object that was created
+     * @return the <code>Class</code> object that was created
      */
     public Class<?> defineClassFromFile(
         /*@BinaryName*/ String className, String pathname)
@@ -1758,7 +1758,7 @@ public final class UtilMDE {
    * (e.g., a StringBuilder).
    * @param <K> type of map keys
    * @param <V> type of map values
-   * @param sb Appendable (such as StringBuilder) to which to write a multi-line string representation of m
+   * @param sb an Appendable (such as StringBuilder) to which to write a multi-line string representation of m
    * @param m map to be converted to a string
    * @param linePrefix prefix to write at the beginning of each line
    */
@@ -1938,7 +1938,7 @@ public final class UtilMDE {
   /**
    * Determines whether a property has value "true", "yes", or "1".
    * @see Properties#getProperty
-   * @param p Properties object in which to look up the property
+   * @param p a Properties object in which to look up the property
    * @param key name of the property to look up
    * @return true iff the property has value "true", "yes", or "1"
    */
@@ -1955,7 +1955,7 @@ public final class UtilMDE {
   /**
    * Set the property to its previous value concatenated to the given value.
    * Return the previous value.
-   * @param p Properties object in which to look up the property
+   * @param p a Properties object in which to look up the property
    * @param key name of the property to look up
    * @param value value to concatenate to the previous value of the property
    * @return the previous value of the property
@@ -1970,7 +1970,7 @@ public final class UtilMDE {
    * Set the property only if it was not previously set.
    * @see Properties#getProperty
    * @see Properties#setProperty
-   * @param p Properties object in which to look up the property
+   * @param p a Properties object in which to look up the property
    * @param key name of the property to look up
    * @param value value to set the property to, if it is not already set
    * @return the previous value of the property

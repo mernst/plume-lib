@@ -189,9 +189,9 @@ public class WeakIdentityHashMap<K,V>
      * Constructs a new, empty <code>WeakIdentityHashMap</code> with the
      * given initial capacity and the given load factor.
      *
-     * @param  initialCapacity The initial capacity of the
+     * @param  initialCapacity the initial capacity of the
      *      <code>WeakIdentityHashMap</code>
-     * @param  loadFactor      The load factor of the
+     * @param  loadFactor      the load factor of the
      *      <code>WeakIdentityHashMap</code>
      * @throws IllegalArgumentException  If the initial capacity is negative,
      *      or if the load factor is nonpositive.
@@ -221,7 +221,7 @@ public class WeakIdentityHashMap<K,V>
      * given initial capacity and the default load factor, which is
      * <code>0.75</code>.
      *
-     * @param  initialCapacity The initial capacity of the
+     * @param  initialCapacity the initial capacity of the
      *      <code>WeakIdentityHashMap</code>
      * @throws IllegalArgumentException  If the initial capacity is negative.
      */
@@ -400,7 +400,7 @@ public class WeakIdentityHashMap<K,V>
      * Returns <code>true</code> if this map contains a mapping for the
      * specified key.
      *
-     * @param   key   The key whose presence in this map is to be tested
+     * @param   key   the key whose presence in this map is to be tested
      * @return  <code>true</code> if there is a mapping for <code>key</code>;
      *          <code>false</code> otherwise
      */

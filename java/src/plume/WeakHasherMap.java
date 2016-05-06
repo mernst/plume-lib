@@ -227,10 +227,10 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * Constructs a new, empty <code>WeakHashMap</code> with the given
      * initial capacity and the given load factor.
      *
-     * @param  initialCapacity  The initial capacity of the
+     * @param  initialCapacity  the initial capacity of the
      *                          <code>WeakHashMap</code>
      *
-     * @param  loadFactor       The load factor of the <code>WeakHashMap</code>
+     * @param  loadFactor       the load factor of the <code>WeakHashMap</code>
      *
      * @throws IllegalArgumentException  If the initial capacity is less than
      *                                   zero, or if the load factor is
@@ -245,7 +245,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * initial capacity and the default load factor, which is
      * <code>0.75</code>.
      *
-     * @param  initialCapacity  The initial capacity of the
+     * @param  initialCapacity  the initial capacity of the
      *                          <code>WeakHashMap</code>
      *
      * @throws IllegalArgumentException  If the initial capacity is less than
@@ -299,7 +299,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * Returns <code>true</code> if this map contains a mapping for the
      * specified key.
      *
-     * @param   key   The key whose presence in this map is to be tested
+     * @param   key   the key whose presence in this map is to be tested
      */
     /*@Pure*/ public boolean containsKey(Object key) {
         @SuppressWarnings("unchecked")
@@ -315,7 +315,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * If this map does not contain a value for this key, then return
      * <code>null</code>.
      *
-     * @param  key  The key whose associated value, if any, is to be returned
+     * @param  key  the key whose associated value, if any, is to be returned
      */
     /*@Pure*/ public /*@Nullable*/ V get(Object key) {  // type of argument is Object, not K
         @SuppressWarnings("unchecked")
@@ -329,12 +329,12 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * <code>key</code> then that mapping is replaced and the previous value is
      * returned.
      *
-     * @param  key    The key that is to be mapped to the given
+     * @param  key    the key that is to be mapped to the given
      *                <code>value</code>
-     * @param  value  The value to which the given <code>key</code> is to be
+     * @param  value  the value to which the given <code>key</code> is to be
      *                mapped
      *
-     * @return  The previous value to which this key was mapped, or
+     * @return  the previous value to which this key was mapped, or
      *          <code>null</code> if if there was no mapping for the key
      */
     public V put(K key, V value) {
@@ -346,9 +346,9 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * Removes the mapping for the given <code>key</code> from this map, if
      * present.
      *
-     * @param  key  The key whose mapping is to be removed
+     * @param  key  the key whose mapping is to be removed
      *
-     * @return  The value to which this key was mapped, or <code>null</code> if
+     * @return  the value to which this key was mapped, or <code>null</code> if
      *          there was no mapping for the key
      */
     public V remove(Object key) { // type of argument is Object, not K

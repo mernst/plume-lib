@@ -76,7 +76,7 @@ public final class Stopwatch {
   /**
    * Stops the watch, calculates the elapsed time, restarts the watch,
    * and returns the elapsed time.
-   * @return String representing elapsed time
+   * @return a String representing the elapsed time
    */
   public String stop_start() {
     stop();

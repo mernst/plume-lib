@@ -736,7 +736,7 @@ public class OptionsDoclet {
    * This is only a temporary solution.  Ideally, @link/@see tags would be
    * converted to HTML links that point to actual documentation.
    *
-   * @param doc Javadoc comment to convert to HTML
+   * @param doc a Javadoc comment to convert to HTML
    * @return HTML version of doc
    */
   public static String javadocToHtml(Doc doc) {

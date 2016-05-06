@@ -133,7 +133,7 @@ public final class FileCompiler {
 
   /**
    * @param filenames the paths of the Java source to be compiled as Strings
-   * @return The process that executed the external compile command
+   * @return the process that executed the external compile command
    * @throws Error if an empty list of filenames is provided.
    */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
