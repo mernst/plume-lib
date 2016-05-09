@@ -1475,12 +1475,35 @@ one in the source code."
   (interactive "sArguments to rolo: ")
   ;; This doesn't work for remote Emacses started directly via ssh.
   ;; (But expanding the alias doesn't work in that circumstance either.)
-  (shell-command (concat "rolo " string)))
+  (shell-command (concat "rolo " (quote-for-shell-command string))))
+
+(defun quote-for-shell-command (arguments)
+  ;; Should split arguments then call quote-word-for-shell-command on each,
+  ;; but only if the string contains zero or one single-quote and zero or
+  ;; one double-quote character.
+  ;; The reason is to respect any quotation marks that the user inserted
+  ;; intentionally.
+  arguments
+  )
+
+;; 
+(defun quote-word-for-shell-command (string)
+  (cond ((and (string-match "'" string)
+	   (not (string-match "\"" string)))
+	 (setq string (concat "\"" string "\"")))
+	((and (string-match "\"" string)
+	      (not (string-match "\'" string)))
+	 (setq string (concat "'" string "'")))
+	((and (string-match "\"" string)
+	      (not (string-match "\'" string)))
+	 (error (concat "cannot quote argument for shell command because string contains both single and double quotes: " string)))
+	(t
+	 string)))
 
 (defun quotefind (string)
   "Find quotations matching words in STRING."
   (interactive "sArguments to quotefind: ")
-  (shell-command (concat "quotefind " string)))
+  (shell-command (concat "quotefind " (quote-for-shell-command string))))
 
 ;; Advise shell-command-on-region rather than shell-command, because this
 ;; single advice gets both.
@@ -1500,7 +1523,7 @@ command, so it is convenient to have that buffer displayed."
 	  (user-input (read-string (format "Arguments to bibfind (default %s): "
 					   default))))
      (list (if (string= user-input "") default user-input))))
-  (shell-command (concat "bibfind " string)))
+  (shell-command (concat "bibfind " (quote-for-shell-command string))))
 
 
 (defun bib-show-properties ()
