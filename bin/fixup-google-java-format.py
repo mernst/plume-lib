@@ -108,10 +108,14 @@ abuttingannoRegex = re.compile(r"(/\*@[A-Za-z0-9_]+\*/)(\[\]|/\*@[A-Za-z0-9_]+\*
 # Voodoo annotation with extra space after
 voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 
-# An annotation at the end of its line.
+# An annotation at the end of its line (in capturing group 2).
+# Also matches an annotation like /*offset = */ that should appear right
+# before the argument it documents.
 # The annotation will be moved to the beginning of the following line.
-trailingannoRegex = re.compile(r"^(.*?)[ \t]*(/\*@[A-Za-z0-9_]+\*/)$")
+trailingannoRegex = re.compile(r"^(.*?)[ \t]*(/\*(@[A-Za-z0-9_]+| *[A-Za-z0-9_]+ *= *)\*/)$")
+
 whitespaceRegex = re.compile(r"^([ \t]*).*$")
+
 emptylineRegex = re.compile(r"^[ \t]*$")
 
 def insert_after_whitespace(insertion, s):
@@ -124,12 +128,16 @@ def fixup_loop(infile, outfile):
     """Fix up formatting while reading from infile and writing to outfile."""
     prev = ""           # previous line
     for line in infile:
+        # Handle trailing space after a voodoo comment
         line = voodootrailingspaceRegex.sub(r"\1\2", line)
+        # Handle abutting annotations in comments
         m = re.search(abuttingannoRegex, line)
         while m:
             if debug: print "found abutting", line
             line = line[0:m.end(1)] + " " + line[m.start(2):]
             m = re.search(abuttingannoRegex, line)
+        # Handle annotations at end of line that should be at beginning of
+        # next line.
         m = re.search(trailingannoRegex, prev)
         while m:
             anno = m.group(2)
