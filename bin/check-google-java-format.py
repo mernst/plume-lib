@@ -9,11 +9,13 @@
 
 # Here are example targets you might put in a Makefile; integration with
 # other build systhems is similar.
-# 
+#
 # reformat:
+# 	@wget -N https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py
 # 	@../plume-lib/bin/run-google-java-format.py ${JAVA_FILES_FOR_FORMAT}
-# 
+#
 # check-format:
+# 	@wget -N https://raw.githubusercontent.com/mernst/plume-lib/master/bin/check-google-java-format.py
 # 	@../plume-lib/bin/check-google-java-format.py ${JAVA_FILES_FOR_FORMAT} || (echo "Try running:  make reformat" && false)
 
 
