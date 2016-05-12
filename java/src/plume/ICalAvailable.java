@@ -46,7 +46,7 @@ import org.checkerframework.dataflow.qual.Pure;
 // TODO:  Fix "Problem:  any all-day events will be treated as UTC." (see below)
 
 /**
- * Given one or more calendars in <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>, produces a textual summary
+ * Given one or more calendars in <a href="https://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>, produces a textual summary
  * of available times.
  * This is useful for sending someone a list of acceptable times for a meeting.
  * Also see the <code>ical-available</code> Emacs function, which inserts the

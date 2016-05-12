@@ -291,7 +291,7 @@ public class OptionsDoclet {
    *
    * @param option the command-line option
    * @return the number of command-line arguments needed when using the option
-   * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
+   * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static int optionLength(String option) {
     if (option.equals("-help")) {
@@ -318,7 +318,7 @@ public class OptionsDoclet {
    * @param options the command-line options to be checked
    * @param reporter where to report errors
    * @return true iff the command-line options are valid
-   * @see <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
+   * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
   public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
