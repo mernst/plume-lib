@@ -557,6 +557,13 @@ This is disabled on lines with a comment containing the string \"interned\"."
   (tags-query-replace "\\b\\(for (.*;\\)\\([^[:space:]\n].*;\\)\\([^[:space:]\n]\\)" "\\1 \\2 \\3" nil nil)
   (tags-query-replace "\\b\\(for (.*[^;];\\)\\([^ \t\n;]\\)" "\\1 \\2" nil nil)
   (tags-query-replace "\\b\\(throws.*[a-z]\\){" "\\1 {" nil nil)
+  ;; avoid matching "else if"; should search for it separately.
+  (tags-query-replace "} else \\([^\ni][^\n{]*;\\)$" "} else { \\1 }" nil nil)
+
+  (tags-replace "return (\\(-?[][A-Za-z0-9_.]+\\));$" "return \\1;" nil nil)
+  (tags-replace "return (\\(\\\"[^\\\"]*\\\"\\));$" "return \\1;" nil nil)
+  ;; This isn't fruitful; the two tags-replace forms above handle all cases.
+  ;; (tags-query-replace "return (\\([^()\n]*\\));$" "return \\1;" nil nil)
   )
 
 
