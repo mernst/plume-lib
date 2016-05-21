@@ -638,6 +638,7 @@ Works over the currently-visited tags table."
   (tags-query-replace "\\([{;]\\) *}\n\\( *\\)else" "\\1\n\\2} else")
   (tags-query-replace "}\n *else" "} else")
   (tags-query-replace " else\n *{" " else {")
+  (tags-query-replace "\\( *\\)\\(.*) \\|else \\)\\(return\\b[^;\n]*;\\)$" "\\1\\2{\n\\1  \\3\n\\1}")
   (tags-search "\\(if (.*\\|else\\)\n *{")
   (tags-search "[^/] else [^i{/]")
   (tags-search "[^/] else { [^/\n]")
