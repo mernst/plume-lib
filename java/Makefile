@@ -246,7 +246,7 @@ test: .test-timestamp
 .test-timestamp: .class-files-timestamp
 # CLASSPATH is set in this file; it is not an external dependency
 ifdef USE_CODECOV
-	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.6.jar='excludes=plume.OrderedPairIterator' plume.TestPlume
+	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.6.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec plume.TestPlume
 else
 	set JAVA_COMPILER=NONE; ${JAVA} plume.TestPlume
 endif
