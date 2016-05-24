@@ -13,6 +13,7 @@ java/.test-timestamp
 java/Makefile.user
 java/api
 java/ical4j.properties
+java/jacoco.exec
 java/lookup.html
 java/lookup.jar
 java/lookup.txt
