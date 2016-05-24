@@ -14,7 +14,7 @@ notifications:
     - mernst@cs.washington.edu
 
 after_success:
-  - (cd java && bash <(curl -s https://codecov.io/bash))
+  - bash <(curl -s https://codecov.io/bash)
   - |
       if [[ ($TRAVIS_BRANCH == master) &&
             ($TRAVIS_PULL_REQUEST == false) &&
