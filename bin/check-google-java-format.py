@@ -18,6 +18,7 @@
 # 	@wget -N https://raw.githubusercontent.com/mernst/plume-lib/master/bin/check-google-java-format.py
 # 	@../plume-lib/bin/check-google-java-format.py ${JAVA_FILES_FOR_FORMAT} || (echo "Try running:  make reformat" && false)
 
+from __future__ import print_function
 
 import os
 import re
@@ -50,7 +51,7 @@ if len(files) == 0:
     content = sys.stdin.read()
     fname = temporary_file_name() + ".java"
     with open(fname,'w') as outfile:
-        print >>outfile, content
+        print(content, file=outfile)
     files = [fname]
 
 temps = []
