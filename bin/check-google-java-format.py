@@ -70,7 +70,7 @@ exit_code = 0
 for i in range(len(files)):
     if not filecmp.cmp(files[i], temps[i]):
         # TODO: gives temporary file name if reading from stdin
-        print "Improper formatting:", files[i]
+        print("Improper formatting:", files[i])
         exit_code = 1
 
 cleanup()
