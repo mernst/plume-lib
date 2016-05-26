@@ -63,7 +63,8 @@ public final class Intern {
    * @return true iff value is interned
    */
   @SuppressWarnings("interning") // interning implementation
-  /*@Pure*/ public static boolean isInterned(/*@Nullable*/ Object value) {
+  /*@Pure*/
+  public static boolean isInterned(/*@Nullable*/ Object value) {
     if (value == null) {
       // nothing to do
       return true;
@@ -437,7 +438,8 @@ public final class Intern {
    * @param a the string to intern
    * @return an interned version of the argument
    */
-  /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
+  /*@Pure*/
+  public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
     // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
     if (a == null) {
       return null;
@@ -451,7 +453,8 @@ public final class Intern {
    * @param l the long to intern
    * @return an interned version of the argument
    */
-  /*@Pure*/ public static long intern(long l) {
+  /*@Pure*/
+  public static long intern(long l) {
     return l;
   }
 
@@ -461,7 +464,8 @@ public final class Intern {
    * @param d the double to intern
    * @return an interned version of the argument
    */
-  /*@Pure*/ public static double intern(double d) {
+  /*@Pure*/
+  public static double intern(double d) {
     return d;
   }
 
@@ -475,7 +479,8 @@ public final class Intern {
   // values between -128 and 127 (and Intern.valueOf is intended to promise
   // the same).  This does not currently take advantage of that.
   @SuppressWarnings({"interning", "purity"}) // interning implementation
-  /*@Pure*/ public static /*@Interned*/ Integer intern(Integer a) {
+  /*@Pure*/
+  public static /*@Interned*/ Integer intern(Integer a) {
     WeakReference</*@Interned*/ Integer> lookup = internedIntegers.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -515,7 +520,8 @@ public final class Intern {
   // values between -128 and 127 (and Long.valueOf is intended to promise
   // the same).  This could take advantage of that.
   @SuppressWarnings({"interning", "purity"})
-  /*@Pure*/ public static /*@Interned*/ Long intern(Long a) {
+  /*@Pure*/
+  public static /*@Interned*/ Long intern(Long a) {
     WeakReference</*@Interned*/ Long> lookup = internedLongs.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -558,7 +564,8 @@ public final class Intern {
    * @return a canonical representation for the int[] array
    */
   @SuppressWarnings({"interning", "purity"})
-  /*@Pure*/ public static int /*@Interned*/ [] intern(int[] a) {
+  /*@Pure*/
+  public static int /*@Interned*/ [] intern(int[] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
@@ -582,7 +589,8 @@ public final class Intern {
    * @return a canonical representation for the long[] array
    */
   @SuppressWarnings({"interning", "purity"})
-  /*@Pure*/ public static long /*@Interned*/ [] intern(long[] a) {
+  /*@Pure*/
+  public static long /*@Interned*/ [] intern(long[] a) {
     //System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
@@ -606,7 +614,8 @@ public final class Intern {
   // values between -128 and 127 (and Double.valueOf is intended to promise
   // the same).  This could take advantage of that.
   @SuppressWarnings({"interning", "purity"})
-  /*@Pure*/ public static /*@Interned*/ Double intern(Double a) {
+  /*@Pure*/
+  public static /*@Interned*/ Double intern(Double a) {
     // Double.NaN == Double.Nan  always evaluates to false.
     if (a.isNaN()) {
       return internedDoubleNaN;
@@ -657,7 +666,8 @@ public final class Intern {
    * @return a canonical representation for the double[] array
    */
   @SuppressWarnings({"interning", "purity"})
-  /*@Pure*/ public static double /*@Interned*/ [] intern(double[] a) {
+  /*@Pure*/
+  public static double /*@Interned*/ [] intern(double[] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
     if (lookup != null) {
       return lookup.get();
@@ -683,7 +693,8 @@ public final class Intern {
     "purity",
     "cast"
   }) // cast is redundant (except in JSR 308)
-  /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(
+  /*@Pure*/
+  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(
       /*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
@@ -721,7 +732,8 @@ public final class Intern {
     "purity",
     "cast"
   }) // cast is redundant (except in JSR 308)
-  /*@Pure*/ public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(
+  /*@Pure*/
+  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(
       /*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings(
         "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
@@ -751,7 +763,8 @@ public final class Intern {
    * @return a canonical version of a
    */
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
-  /*@Pure*/ public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
+  /*@Pure*/
+  public static /*@Interned*/ /*@PolyNull*/ Object intern(/*@PolyNull*/ Object a) {
     if (a == null) {
       return null;
     } else if (a instanceof String) {
@@ -942,7 +955,8 @@ public final class Intern {
     }
 
     @SuppressWarnings("unchecked")
-    /*@Pure*/ public boolean equals(
+    /*@Pure*/
+    public boolean equals(
         /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
         /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
@@ -954,18 +968,21 @@ public final class Intern {
       }
     }
 
-    /*@Pure*/ public boolean equals(
+    /*@Pure*/
+    public boolean equals(
         /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
         /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
       return ((this.seq == other.seq) && this.start == other.start && this.end == other.end);
     }
 
-    /*@Pure*/ public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
+    /*@Pure*/
+    public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return seq.hashCode() + start * 30 - end * 2;
     }
 
     // For debugging
-    /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
+    /*@SideEffectFree*/
+    public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
     }
   }
@@ -1008,7 +1025,8 @@ public final class Intern {
   // // That is, it may return 0 if the arrays are not equal (but do contain
   // // identical numbers).
   // static final class IntArrayComparator implements Comparator, Serializable {
-  //   /*@Pure*/ public int compare(Object o1, Object o2) {
+  //   /*@Pure*/
+  //   public int compare(Object o1, Object o2) {
   //     if (o1 == o2)
   //       return 0;
   //     int[] a1 = (int[])o1;
@@ -1030,7 +1048,8 @@ public final class Intern {
   // // That is, it may return 0 if the arrays are not equal (but do contain
   // // identical objects).
   // static final class ObjectArrayComparator implements Comparator, Serializable {
-  //   /*@Pure*/ public int compare(Object o1, Object o2) {
+  //   /*@Pure*/
+  //   public int compare(Object o1, Object o2) {
   //     if (o1 == o2)
   //       return 0;
   //     Object[] a1 = (Object[])o1;

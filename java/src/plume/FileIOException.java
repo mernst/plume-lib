@@ -198,7 +198,8 @@ public class FileIOException extends IOException {
   /// Utility and helper methods
   ///
 
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied FileIOException this*/) {
+  /*@SideEffectFree*/
+  public String toString(/*>>>@GuardSatisfied FileIOException this*/) {
     String result = super.toString();
     if (fileName != null) {
       result += " in file " + fileName;

@@ -171,14 +171,16 @@ public class StrTok {
   /** Returns true if the current token is a word (identifier).
    * @return true iff the current token is a word (identifier)
    */
-  /*@Pure*/ public boolean isWord() {
+  /*@Pure*/
+  public boolean isWord() {
     return (stok.ttype == StreamTokenizer.TT_WORD);
   }
 
   /** Returns true if the current token is a quoted string.
    * @return true iff the current token is a quoted string
    */
-  /*@Pure*/ public boolean isQString() {
+  /*@Pure*/
+  public boolean isQString() {
     return ((stok.sval != null) && (stok.ttype > 0));
   }
 

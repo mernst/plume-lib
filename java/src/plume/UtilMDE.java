@@ -89,7 +89,8 @@ public final class UtilMDE {
    * @return true iff size(a intersect b) &ge; i
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
-  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
+  /*@Pure*/
+  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
     // 1. a.clone().and(b).cardinality()
@@ -123,8 +124,8 @@ public final class UtilMDE {
    * @return true iff size(a intersect b intersect c) &ge; i
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
-  /*@Pure*/ public static boolean intersectionCardinalityAtLeast(
-      BitSet a, BitSet b, BitSet c, int i) {
+  /*@Pure*/
+  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -149,7 +150,8 @@ public final class UtilMDE {
    * @return size(a intersect b)
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
-  /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b) {
+  /*@Pure*/
+  public static int intersectionCardinality(BitSet a, BitSet b) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
     return intersection.cardinality();
@@ -162,7 +164,8 @@ public final class UtilMDE {
    * @return size(a intersect b intersect c)
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
-  /*@Pure*/ public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
+  /*@Pure*/
+  public static int intersectionCardinality(BitSet a, BitSet b, BitSet c) {
     BitSet intersection = (BitSet) a.clone();
     intersection.and(b);
     intersection.and(c);
@@ -476,7 +479,8 @@ public final class UtilMDE {
    * @param sup class to test for being a supertype
    * @return true iff sub is a subtype of sup
    */
-  /*@Pure*/ public static boolean isSubtype(Class<?> sub, Class<?> sup) {
+  /*@Pure*/
+  public static boolean isSubtype(Class<?> sub, Class<?> sup) {
     if (sub == sup) {
       return true;
     }
@@ -905,7 +909,8 @@ public final class UtilMDE {
    * @param file2 second file to compare
    * @return true iff the files have the same contents
    */
-  /*@Pure*/ public static boolean equalFiles(String file1, String file2) {
+  /*@Pure*/
+  public static boolean equalFiles(String file1, String file2) {
     return equalFiles(file1, file2, false);
   }
 
@@ -917,7 +922,8 @@ public final class UtilMDE {
    * @return true iff the files have the same contents
    */
   @SuppressWarnings("purity") // reads files, side effects local state
-  /*@Pure*/ public static boolean equalFiles(String file1, String file2, boolean trimLines) {
+  /*@Pure*/
+  public static boolean equalFiles(String file1, String file2, boolean trimLines) {
     try (LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
         LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2); ) {
       String line1 = reader1.readLine();
@@ -1943,7 +1949,8 @@ public final class UtilMDE {
    * @return true iff the property has value "true", "yes", or "1"
    */
   @SuppressWarnings("purity") // does not depend on object identity
-  /*@Pure*/ public static boolean propertyIsTrue(Properties p, String key) {
+  /*@Pure*/
+  public static boolean propertyIsTrue(Properties p, String key) {
     String pvalue = p.getProperty(key);
     if (pvalue == null) {
       return false;
@@ -2665,7 +2672,8 @@ public final class UtilMDE {
   public static class NullableStringComparator implements Comparator<String>, Serializable {
     static final long serialVersionUID = 20150812L;
 
-    /*@Pure*/ public int compare(String s1, String s2) {
+    /*@Pure*/
+    public int compare(String s1, String s2) {
       if (s1 == null && s2 == null) {
         return 0;
       }
@@ -2821,7 +2829,8 @@ public final class UtilMDE {
    * @return true iff o1 and o2 are deeply equal
    */
   @SuppressWarnings("purity") // side effect to static field deepEqualsUnderway
-  /*@Pure*/ public static boolean deepEquals(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
+  /*@Pure*/
+  public static boolean deepEquals(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
     @SuppressWarnings("interning")
     boolean sameObject = (o1 == o2);
     if (sameObject) {

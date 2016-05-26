@@ -177,7 +177,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
-  /*@SideEffectFree*/ public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+  /*@SideEffectFree*/
+  public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return ("[size="
         + size()
         + "; "
