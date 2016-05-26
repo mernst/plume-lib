@@ -45,6 +45,8 @@ if len(files) == 0:
 result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imports=also"] + files)
 if result != 0:
     sys.exit(result)
+if files == ["--help"]:
+    sys.exit(0)
 result = subprocess.call([fixup_py] + files)
 if result != 0:
     sys.exit(result)
