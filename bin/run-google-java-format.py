@@ -50,3 +50,32 @@ if files == ["--help"]:
 result = subprocess.call([fixup_py] + files)
 if result != 0:
     sys.exit(result)
+
+
+###########################################################################
+### end of script
+###
+
+# If you reformat your codebase, then that may be disruptive to people who
+# have changes in their own branches/clones/forks.  (But, once you settle
+# on consistent formatting, that will never be a problem again.)
+
+# Here are some notes about a possible way to deal with upstream
+# reformatting, which have not yet been tested by fire:
+
+# For the person doing the reformatting:
+#  * Tag the commit before the whitespace change as "before reformatting".
+#  * Run "ant reformat" or the equivalent command.
+#  * Run a tool that seaches the diffs for hunks that are *shorter* than
+#    they were before.  These are possibly places where an if/for/while whose
+#    body was a single statement that has gotten sucked up onto the if/for/while
+#    loop.  Or, just run a tool that searches the diffs for if/for/while with
+#    body on the same line.  Add curly braces to get the body back on its own
+#    line. 
+#  * Tag the commit that does the whitespace change as "reformatting".
+# 
+# For a client to merge the massive upstream changes:
+#  * Merge in the commit before the reformatting into your branch.
+#  * Merge in the reformatting commit, preferring all your own changes.
+#  * Run "ant reformat" or the equivalent command.
+#  * Commit your changes.
