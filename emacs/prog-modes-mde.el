@@ -685,6 +685,10 @@ Works over the currently-visited tags table."
   ;; nothing here or beyond will be executed.
   )
    
+(defun declaration-annotations-to-their-own-line ()
+  "Move commented declaration annotations to their own line, for files in the current TAGS tables."
+  (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
