@@ -6,6 +6,7 @@
 # If any files would be affected by running run-google-java-format.py,
 # this script prints their names and returns a non-zero status.
 # If called with no arguments, it reads from standard input.
+# You could invoke this program, for example, in a git pre-commit hook.
 
 # Here are example targets you might put in a Makefile; integration with
 # other build systhems is similar.
