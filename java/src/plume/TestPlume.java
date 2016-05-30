@@ -1335,11 +1335,15 @@ public final class TestPlume extends TestCase {
     testModulus.check(new int[] {3, 11, 43, 51}, new int[] {3, 8});
     testModulus.check(new int[] {3, 11, 47, 55}, new int[] {3, 4});
     testModulus.check(new int[] {2383, 4015, -81, 463, -689}, new int[] {15, 32});
+    testModulus.check(new int[] {}, null);
+    testModulus.check(new int[] {1}, null);
     testModulus.check(new int[] {3, 7}, null);
     testModulus.check(new int[] {2, 3, 5, 7}, null);
     testModulus.check(new int[] {2, 19, 101}, null);
     testModulus.check(new int[] {5, 5, 5, 5, 5}, null);
 
+    testModulus.check_iterator(new int[] {}, null);
+    testModulus.check_iterator(new int[] {1}, null);
     testModulus.check_iterator(new int[] {3, 7, 47, 51}, new int[] {3, 4});
     testModulus.check_iterator(new int[] {3, 11, 43, 51}, new int[] {3, 8});
     testModulus.check_iterator(new int[] {3, 11, 47, 55}, new int[] {3, 4});
