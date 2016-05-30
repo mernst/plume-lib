@@ -143,12 +143,12 @@ public final class FileCompiler {
       throw new Error("no files to compile were provided");
     }
 
-    String to_compile = filenames.get(0);
-    for (int i = 1; i < num_files; i++) {
-      to_compile += (" " + filenames.get(i));
+    String[] command = new String[num_files + 1];
+    command[0] = compiler;
+    for (int i = 0; i < num_files; i++) {
+      command[i+1] = filenames.get(i);
     }
 
-    String command = compiler + " " + to_compile;
     // System.out.println ("\nexecuting compile command: " + command);
     return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
   }
