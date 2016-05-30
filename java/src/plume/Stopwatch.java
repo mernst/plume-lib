@@ -65,7 +65,7 @@ public final class Stopwatch {
     return elapsedMillis / 1000.0;
   }
 
-  private static DecimalFormat[] timeFormat = {
+  private static final DecimalFormat[] timeFormat = {
     new DecimalFormat("#.#"),
     new DecimalFormat("#.#"),
     new DecimalFormat("#.#"),
