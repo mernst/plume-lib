@@ -98,7 +98,8 @@ import org.checkerframework.checker.regex.qual.*;
  *  of each entry is printed.  If 'print_all' is selected then
  *  the body of each matching entry is printed. [default false]</li>
  *       <li id="option:item-num"><b>-i</b> <b>--item-num=</b><i>integer</i>.
- *        Specifies which item to print when there are multiple matches.</li>
+ *        Specifies which item to print when there are multiple matches.
+ *  The index is 1-based; that is, it starts counting at 1.</li>
  *       <li id="option:show-location"><b>-l</b> <b>--show-location=</b><i>boolean</i>.
  *        If true, show the filename/line number of each matching entry
  *  in the output. [default false]</li>
@@ -192,8 +193,9 @@ public final class Lookup {
 
   /**
    * Specifies which item to print when there are multiple matches.
+   * The index is 1-based; that is, it starts counting at 1.
    */
-  @Option("-i Choose a specific item when there are multiple matches")
+  @Option("-i Choose a specific item when there are multiple matches; index is 1-based")
   public static /*@Nullable*/ Integer item_num;
 
   /**
@@ -373,6 +375,15 @@ public final class Lookup {
       System.out.print(e.body);
     } else { // there must be multiple matches
       if (item_num != null) {
+        if (item_num < 1) {
+          System.out.printf("Illegal --item-num %d, should be positive%n", item_num);
+          System.exit(1);
+        }
+        if (item_num > matching_entries.size()) {
+          System.out.printf(
+              "Illegal --item-num %d, should be <= %d%n", item_num, matching_entries.size());
+          System.exit(1);
+        }
         Entry e = matching_entries.get(item_num - 1);
         if (show_location) {
           System.out.printf("%s:%d:%n", e.filename, e.line_number);
