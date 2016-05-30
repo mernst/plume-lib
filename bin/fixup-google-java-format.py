@@ -117,6 +117,9 @@ voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 # Also matches an annotation like /*offset = */ that should appear right
 # before the argument it documents.
 # The annotation will be moved to the beginning of the following line.
+# TODO: should also match non-commented annotations.
+# TODO: should search in classpath to determine whether annotation is a type
+# annotation, and only move it to the beginning of the following line if so.
 trailingannoRegex = re.compile(r"^(.*?)[ \t]*(/\*(@[A-Za-z0-9_().\"]+| *[A-Za-z0-9_]+ *= *)\*/)$")
 
 whitespaceRegex = re.compile(r"^([ \t]*).*$")
@@ -144,7 +147,9 @@ def fixup_loop(infile, outfile):
         # Handle annotations at end of line that should be at beginning of
         # next line.
         m = re.search(trailingannoRegex, prev)
+        if debug: print("trailing?", m, prev, line)
         while m:
+            if debug: print("found trailing", prev, line)
             anno = m.group(2)
             if base_annotation(anno) in declarationAnnotations:
                 break
