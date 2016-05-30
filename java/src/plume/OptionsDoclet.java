@@ -315,7 +315,7 @@ public class OptionsDoclet {
    * Returns true if the option usage is valid, and false otherwise.  This
    * method is automatically invoked.
    *
-   * @param options the command-line options to be checked
+   * @param options the command-line options to be checked: an array of 1- or 2-element arrays
    * @param reporter where to report errors
    * @return true iff the command-line options are valid
    * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
@@ -396,7 +396,7 @@ public class OptionsDoclet {
   /**
    * Set the options for this class based on command-line arguments given by
    * RootDoc.options().
-   * @param options the command-line options to parse
+   * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
   public void setOptions(String[][] options) {
     String outFilename = null;
@@ -601,7 +601,7 @@ public class OptionsDoclet {
   public String optionsToHtml() {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
-    if (includeClassDoc) {
+    if (includeClassDoc && root.classes().length > 0) {
       b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
       b.append("<p>Command line options:</p>");
     }

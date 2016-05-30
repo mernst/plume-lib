@@ -8,11 +8,12 @@ The correct way to build the system is to run 'make'.
 
 
   /**
-   * Return an array containing all the numbers <b>not</b> in its argument array
+   * Return an array containing all the numbers <b>not</b> in its argument
+   * array (which must be non-empty)
    * but in the argument's range; that is, bigger than its argument's
    * minimum value and smaller than its argument's maximum value.
    * The result contains no duplicates and is in order.
-   * @param nums numbers to be excluded
+   * @param nums numbers to be excluded; length &gt; 0
    * @return the set: [min(nums)..max(nums)] - nums
    */
   public static INT[] missing_numbers(INT[] nums) {
@@ -51,6 +52,7 @@ The correct way to build the system is to run 'make'.
 
   /**
    * This iterator returns all the numbers *not* in its argument array
+   * (which must be non-empty)
    * but in the argument's range; that is, bigger than its argument's
    * minimum value and smaller than its argument's maximum value.
    * The result contains no duplicates and is in order.
@@ -68,6 +70,12 @@ The correct way to build the system is to run 'make'.
     int current_index;
     boolean add_ends;
 
+    /**
+     * An iterator over all the numbers <b>not</b> in its original argument
+     * array, but within its range.
+     * @param nums a non-empty array
+     * @param add_ends if true, include the bracketing endpoints
+     */
     MissingNumbersIteratorINT(INT[] nums, boolean add_ends) {
       this.add_ends = add_ends;
       { // avoid modifying parameter
@@ -200,6 +208,7 @@ The correct way to build the system is to run 'make'.
     return result;
   }
 
+  /** The first argument is an array containing two elements. */
   private static boolean check_first_and_last_nonmodulus(INT[] rm, UtilMDE.RemoveFirstAndLastIterator<INTEGER> rfali) {
     INT r = rm[0];
     INT m = rm[1];
