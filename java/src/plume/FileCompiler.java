@@ -146,7 +146,7 @@ public final class FileCompiler {
     String[] command = new String[num_files + 1];
     command[0] = compiler;
     for (int i = 0; i < num_files; i++) {
-      command[i+1] = filenames.get(i);
+      command[i + 1] = filenames.get(i);
     }
 
     // System.out.println ("\nexecuting compile command: " + command);
