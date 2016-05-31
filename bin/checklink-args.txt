@@ -74,6 +74,7 @@
 --suppress-broken 403:http://www.kivancmuslu.com/
 --suppress-broken 403:http://www.pm.inf.ethz.ch/
 --suppress-broken 403:http://www.seattletimes.com/	
+--suppress-broken 403:http://www.seattleweekly.com/
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://ugradnews.cs.washington.edu/category/research/
