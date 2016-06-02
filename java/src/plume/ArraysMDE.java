@@ -2572,9 +2572,11 @@ public final class ArraysMDE {
 
   /**
    * Return the inverse of the given function, which is represented as an array.
-   * @param a an array representing a function from [0..a.length) to [0..arange)
+   * @param a an array representing a function from [0..a.length) to [0..arange);
+   *  each element of a is between 0 and arange inclusive
    * @param arange length of the argument's range and the result's domain
    * @return function from [0..arange) to [0..a.length) that is the inverse of a
+   * @throws IllegalArgumentException if a value of a is outside of arange
    * @exception UnsupportedOperationException when the function is not invertible
    */
   public static int[] fn_inverse(int[] a, int arange) {
@@ -2582,9 +2584,13 @@ public final class ArraysMDE {
     Arrays.fill(result, -1);
     for (int i = 0; i < a.length; i++) {
       int ai = a[i];
+      if (ai < -1 || ai >= arange) {
+        throw new IllegalArgumentException(String.format("Bad range value: a[%d]=%d", i, ai));
+      }
       if (ai != -1) {
         if (result[ai] != -1) {
-          throw new UnsupportedOperationException("Not invertible");
+          throw new UnsupportedOperationException(
+              String.format("Not invertible; a[%d]=%d and a[%d]=%d", result[ai], ai, i, ai));
         }
         result[ai] = i;
       }
