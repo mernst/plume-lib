@@ -69,7 +69,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/checker-qual.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/checker-qual.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -145,10 +145,10 @@ ifdef JSR308
   CHECKERFRAMEWORK ?= ${JSR308}/checker-framework
 endif
 ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/dist/checker.jar)" "${CHECKERFRAMEWORK}/checker/dist/checker.jar"
-  CLASSPATH := ${CHECKERFRAMEWORK}/checker/dist/checker.jar:${CLASSPATH}
   ifeq "$(wildcard ${CHECKERFRAMEWORK}/checker/build)" "${CHECKERFRAMEWORK}/checker/build"
-    CLASSPATH := ${CHECKERFRAMEWORK}/checker/build:${CLASSPATH}
+    CLASSPATH := ${CLASSPATH}:${CHECKERFRAMEWORK}/checker/build
   endif
+  CLASSPATH := ${CLASSPATH}:${CHECKERFRAMEWORK}/checker/dist/checker.jar
   JAVAC_COMMAND = ${CHECKERFRAMEWORK}/checker/bin/javac ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 endif
 
@@ -246,9 +246,9 @@ test: .test-timestamp
 .test-timestamp: .class-files-timestamp
 # CLASSPATH is set in this file; it is not an external dependency
 ifdef USE_CODECOV
-	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.6.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec plume.TestPlume
+	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.6.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 else
-	set JAVA_COMPILER=NONE; ${JAVA} plume.TestPlume
+	set JAVA_COMPILER=NONE; ${JAVA} -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 endif
 	touch .test-timestamp
 
@@ -415,6 +415,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
 # Do not include junit.jar in plume.jar; JUnit is needed only for testing
+#	(cd jar-contents; "${JAR}" xf ../lib/hamcrest-core-1.3.jar)
 #	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)

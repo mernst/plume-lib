@@ -1,5 +1,7 @@
 package plume;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 import static plume.Options.ArgException;
 
 import java.io.ByteArrayInputStream;
@@ -24,9 +26,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Pattern;
-import junit.framework.TestCase;
-import junit.framework.TestResult;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -57,30 +57,12 @@ import org.checkerframework.checker.signature.qual.*;
 
 /** Test code for the plume package. */
 @SuppressWarnings({"interning"}) // interning is due to apparent bugs
-public final class TestPlume extends TestCase {
+public final class TestPlume {
 
   // If true, do 100 instead of 100000 iterations when testing randomElements.
   // This saves only a little time.  However, it is significant when running
   // under instrumentation such as that of Chicory.
   static boolean short_run = false;
-
-  public static void main(String[] args) {
-    if ((args.length > 0) && args[0].equals("--shortrun")) {
-      short_run = true;
-    }
-    TestResult tr = junit.textui.TestRunner.run(new TestSuite(TestPlume.class));
-    if (tr.errorCount() > 0 || tr.failureCount() > 0) {
-      System.exit(1);
-    }
-  }
-
-  public static void mainFake(String[] args) {
-    testTimeLimitProcess();
-  }
-
-  public TestPlume(String name) {
-    super(name);
-  }
 
   //   public static void main(String[] args) {
   //     testUtilMDE();
@@ -158,7 +140,8 @@ public final class TestPlume extends TestCase {
   /// Now the actual testing
   ///
 
-  public static void testArraysMDE() {
+  @Test
+  public void testArraysMDE() {
 
     // public static int min(int[] a)
     assert ArraysMDE.min(new int[] {1, 2, 3}) == 1;
@@ -502,14 +485,24 @@ public final class TestPlume extends TestCase {
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {1, 2, 3, 0}, 4), new int[] {3, 0, 1, 2});
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {3, 2, 1, 0}, 4), new int[] {3, 2, 1, 0});
     try {
-      ArraysMDE.fn_inverse(new int[] {0, 0, 2, 3}, 4);
+      ArraysMDE.fn_inverse(new int[] {1, 0, 3, 0}, 4);
       throw new Error();
     } catch (UnsupportedOperationException e) {
-      assert e.getMessage() != null && e.getMessage().equals("Not invertible");
+      assert e.getMessage() != null;
+      assertThat(e.getMessage(), is(equalTo("Not invertible; a[1]=0 and a[3]=0")));
     }
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {5}, 6), new int[] {-1, -1, -1, -1, -1, 0});
     assert_arrays_equals(
         ArraysMDE.fn_inverse(new int[] {1, 2, 3, 5}, 6), new int[] {-1, 0, 1, 2, -1, 3});
+
+    try {
+      assert_arrays_equals(
+          ArraysMDE.fn_inverse(new int[] {100, 101, 102, 103}, 4), new int[] {40, 41, 42, 43});
+      throw new Error();
+    } catch (IllegalArgumentException e) {
+      assert e.getMessage() != null;
+      assertThat(e.getMessage(), is(equalTo("Bad range value: a[0]=100")));
+    }
 
     // public static int[] fn_compose(int[] a, int[] b)
     assert_arrays_equals(
@@ -878,6 +871,7 @@ public final class TestPlume extends TestCase {
   }
 
   // This cannot be static because it instantiates an inner class.
+  @Test
   public void testHasher() {
 
     /// To check (maybe some of these are done already).
@@ -984,7 +978,8 @@ public final class TestPlume extends TestCase {
     intern.test(false);
   }
 
-  public static void testIntern() {
+  @Test
+  public void testIntern() {
     Integer i = Intern.internedInteger("1234");
     assert Intern.isInterned(i);
     assert i.intValue() == 1234;
@@ -1001,7 +996,8 @@ public final class TestPlume extends TestCase {
   }
 
   // Tests the method "Object intern(Object)" in Intern.java
-  public static void testInternObject() {
+  @Test
+  public void testInternObject() {
     Object nIntern = Intern.intern((/*@Nullable*/ Object) null);
     assert nIntern == null;
 
@@ -1160,7 +1156,8 @@ public final class TestPlume extends TestCase {
     assert s.contains(3);
   }
 
-  public static void testLimitedSizeSet() {
+  @Test
+  public void testLimitedSizeSet() {
     for (int i = 1; i < 10; i++) {
       lsis_test(i);
     }
@@ -1168,6 +1165,7 @@ public final class TestPlume extends TestCase {
   }
 
   // This cannot be static because it instantiates an inner class.
+  @Test
   public void testMathMDE() {
 
     // int negate(int a)
@@ -1418,7 +1416,8 @@ public final class TestPlume extends TestCase {
     testNonModulus.check_nonstrict(new int[] {1, 2, 3, 5, 6, 7, 9, 11, 12, 13, 14, 15, 22}, null);
   }
 
-  public static void testOrderedPairIterator() {
+  @Test
+  public void testOrderedPairIterator() {
     final int NULL = -2222;
 
     Vector<Integer> ones = new Vector<Integer>();
@@ -1577,6 +1576,7 @@ public final class TestPlume extends TestCase {
         });
   }
 
+  /** Throws an assertion unless the paired iterator contains the same values as the argument array. */
   public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
@@ -1601,7 +1601,7 @@ public final class TestPlume extends TestCase {
    */
   public static class PrintOneIntPerTimePeriod {
     /**
-     * @param args  how many to print; how many milliseconds between each
+     * @param args  two-element array containing:  how many to print; how many milliseconds between each
      */
     public static void main(String[] args) {
       assert args.length == 2;
@@ -1649,7 +1649,7 @@ public final class TestPlume extends TestCase {
     return Triple.of(result, out, err);
   }
 
-  private static void testPrintFive(
+  private static void checkPrintFive(
       int timePerNumber, int timeLimit, boolean cache_stdout, String out, String err) {
     Triple<Integer, String, String> results = printFive(timePerNumber, timeLimit, cache_stdout);
     if (!results.b.equals(out)) {
@@ -1665,14 +1665,15 @@ public final class TestPlume extends TestCase {
    * Try again when the load is lower.
    * (Better might be exponential backoff up to some limit.)
    */
-  public static void testTimeLimitProcess() {
-    // testPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
-    // testPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+  @Test
+  public void testTimeLimitProcess() {
+    // checkPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
+    // checkPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
 
     // These are too timing-dependent -- they sometimes succeed and
     // sometimes fail -- so leave them commented out.
-    // testPrintFive(2000, 1000, true, "out0 ", "err0 ");
-    // testPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
+    // checkPrintFive(2000, 1000, true, "out0 ", "err0 ");
+    // checkPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
 
     // This is expected to fail because of trying to read a closed stream.
     // printFive(3, false);
@@ -1690,6 +1691,7 @@ public final class TestPlume extends TestCase {
     return result;
   }
 
+  @Test
   public void testStringBuilderDelimited() {
     compareJoinAndSBD(new String[] {"foo", "bar", "baz"});
     compareJoinAndSBD(new String[] {"foo"});
@@ -1704,15 +1706,15 @@ public final class TestPlume extends TestCase {
     assert sbd.toString().equals(UtilMDE.join(strings, ","));
   }
 
-  private static void testTypeStrings(
+  private static void checkTypeStrings(
       /*@FullyQualifiedName*/ String fqn,
       /*@BinaryName*/ String bn,
       /*@ClassGetName*/ String cgn,
       /*@FieldDescriptor*/ String fd) {
-    testTypeStrings(fqn, bn, cgn, fd, false);
+    checkTypeStrings(fqn, bn, cgn, fd, false);
   }
 
-  private static void testTypeStrings(
+  private static void checkTypeStrings(
       /*@FullyQualifiedName*/ String fqn,
       /*@BinaryName*/ String bn,
       /*@ClassGetName*/ String cgn,
@@ -1733,6 +1735,7 @@ public final class TestPlume extends TestCase {
   }
 
   // This cannot be static because it instantiates an inner class.
+  @Test
   public void testUtilMDE() {
 
     // public static intersectionCardinalityAtLeast(BitSet a, BitSet b, int i)
@@ -1869,23 +1872,23 @@ public final class TestPlume extends TestCase {
 
     // More tests for type representation conversions.
     // Table from Signature Checker manual.
-    testTypeStrings("int", "int", "int", "I");
-    testTypeStrings("int[][]", "int[][]", "[[I", "[[I");
-    testTypeStrings("MyClass", "MyClass", "MyClass", "LMyClass;", true);
-    testTypeStrings("MyClass[]", "MyClass[]", "[LMyClass;", "[LMyClass;", true);
-    testTypeStrings(
+    checkTypeStrings("int", "int", "int", "I");
+    checkTypeStrings("int[][]", "int[][]", "[[I", "[[I");
+    checkTypeStrings("MyClass", "MyClass", "MyClass", "LMyClass;", true);
+    checkTypeStrings("MyClass[]", "MyClass[]", "[LMyClass;", "[LMyClass;", true);
+    checkTypeStrings(
         "java.lang.Integer", "java.lang.Integer", "java.lang.Integer", "Ljava/lang/Integer;");
-    testTypeStrings(
+    checkTypeStrings(
         "java.lang.Integer[]",
         "java.lang.Integer[]",
         "[Ljava.lang.Integer;",
         "[Ljava/lang/Integer;");
-    testTypeStrings(
+    checkTypeStrings(
         "java.lang.Byte.ByteCache",
         "java.lang.Byte$ByteCache",
         "java.lang.Byte$ByteCache",
         "Ljava/lang/Byte$ByteCache;");
-    testTypeStrings(
+    checkTypeStrings(
         "java.lang.Byte.ByteCache[]",
         "java.lang.Byte$ByteCache[]",
         "[Ljava.lang.Byte$ByteCache;",
@@ -2446,19 +2449,22 @@ public final class TestPlume extends TestCase {
     assert UtilMDE.abbreviateNumber(9876543210L).equals("9.88G");
   }
 
-  public static void testTestUtilMDE() {
+  @Test
+  public void testTestUtilMDE() {
     int[] a = new int[] {3, 4, 5};
     assert_arrays_equals(int_iterator_array(int_array_iterator(a)), a);
   }
 
-  public static void testWeakHasherMap() {}
+  @Test
+  public void testWeakHasherMap() {}
 
   /**
    * These tests could be much more thorough.  Basically all that is tested
    * is that identity is used rather than a normal hash.  The tests will
    * fail however, if WeakHashMap is swapped for WeakIdentityHashMap.
    */
-  public static void testWeakIdentityHashMap() {
+  @Test
+  public void testWeakIdentityHashMap() {
 
     String s1 = "one";
     String s2 = "two";
@@ -2497,7 +2503,8 @@ public final class TestPlume extends TestCase {
     assert m.get(s3a) == 3;
   }
 
-  public static void testClassFileVersion() {
+  @Test
+  public void testClassFileVersion() {
     // public static double [] versionNumbers(InputStream is)
     assert ClassFileVersion.versionNumbers(new ByteArrayInputStream(new byte[0])) == null;
   }
@@ -2507,7 +2514,8 @@ public final class TestPlume extends TestCase {
    * counts the bytes printed, written for
    * different types (boolean, int, float etc.).
    */
-  public static void testCountingPrintWriter() {
+  @Test
+  public void testCountingPrintWriter() {
     CountingPrintWriter c1 = new CountingPrintWriter(new CharArrayWriter());
     c1.print("a");
     assert c1.getNumberOfPrintedBytes() == 1;
@@ -2538,7 +2546,8 @@ public final class TestPlume extends TestCase {
    * Test the intering of subsequences as triples of the original
    * sequence, the start and the end indices.
    */
-  public static void testSequenceAndIndices() {
+  @Test
+  public void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a2 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a3 = Intern.intern(new int[] {2, 3, 4, 5, 6, 7});
@@ -2564,6 +2573,7 @@ public final class TestPlume extends TestCase {
   }
 
   // To do
+  // @Test
   // public static void testFileIOException() {
   // }
 
@@ -2571,7 +2581,8 @@ public final class TestPlume extends TestCase {
    * Test the comparison, indexof, and set equivalence calls in fuzzy
    * float.
    */
-  public static void testFuzzyFloat() {
+  @Test
+  public void testFuzzyFloat() {
 
     FuzzyFloat ff = new FuzzyFloat(0.0001);
     double offset = 0.00007;
@@ -2874,7 +2885,8 @@ public final class TestPlume extends TestCase {
   /**
    * Tests UtilMDE create_combinations routines.
    */
-  public static void test_create_combinations() {
+  @Test
+  public void test_create_combinations() {
 
     // public static List create_combinations (int dims, int start, List objs)
     Object a = new Object();
@@ -2927,7 +2939,8 @@ public final class TestPlume extends TestCase {
     assert combo4.contains(Arrays.asList(new Integer[] {i2, i2}));
   }
 
-  public static void test_fullyQualifiedNameToSimpleName() {
+  @Test
+  public void test_fullyQualifiedNameToSimpleName() {
 
     assert UtilMDE.fullyQualifiedNameToSimpleName("java.lang.String").equals("String");
     assert UtilMDE.fullyQualifiedNameToSimpleName("String").equals("String");
@@ -2972,7 +2985,8 @@ public final class TestPlume extends TestCase {
    * Test command line option parsing (Options).
    * @throws ArgException if there is an illegal argument
    */
-  public static void testOptions() throws ArgException {
+  @Test
+  public void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
     Options options = new Options("test", t);
@@ -3057,7 +3071,8 @@ public final class TestPlume extends TestCase {
    * Test option aliases (Options).
    * @throws ArgException if there is an illegal argument
    */
-  public static void testOptionsAliases() throws ArgException {
+  @Test
+  public void testOptionsAliases() throws ArgException {
     TestOptionsAliases t = new TestOptionsAliases();
     Options options = new Options("test", t);
 
@@ -3165,7 +3180,8 @@ public final class TestPlume extends TestCase {
    * Test option groups (Options).
    * @throws ArgException if there is an illegal argument
    */
-  public static void testOptionGroups() throws ArgException {
+  @Test
+  public void testOptionGroups() throws ArgException {
     // TODO: The following two exception tests are not adequate.  There must be
     // a better way to do these.
     try {
@@ -3227,7 +3243,8 @@ public final class TestPlume extends TestCase {
     public static /*@Nullable*/ Compressor secondPass;
   }
 
-  public static void testOptionsEnums() throws ArgException {
+  @Test
+  public void testOptionsEnums() throws ArgException {
     Options options = new Options("test", TestOptionsEnums.class);
 
     options.parse(new String[] {"--firstPass", "SMART_RLE"});
@@ -3250,7 +3267,8 @@ public final class TestPlume extends TestCase {
     assert TestOptionsEnums.secondPass == TestOptionsEnums.Compressor.HUFFMAN;
   }
 
-  public static void testOptionsEnumsFail() {
+  @Test
+  public void testOptionsEnumsFail() {
     Options options = new Options("test", TestOptionsEnums.class);
     try {
       // should fail: can not leave out _ or -
@@ -3260,7 +3278,8 @@ public final class TestPlume extends TestCase {
     }
   }
 
-  public static void testSplitLines() {
+  @Test
+  public void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
     String[] sa = UtilMDE.splitLines(str);
@@ -3318,7 +3337,8 @@ public final class TestPlume extends TestCase {
   }
 
   @SuppressWarnings("nullness")
-  public static void testGraphMDE() {
+  @Test
+  public void testGraphMDE() {
 
     initializePreds1AndSucc1();
 
