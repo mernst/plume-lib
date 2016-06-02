@@ -354,7 +354,7 @@ public final class ArraysMDE {
   public static int sum(int[][] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
-      for (int j = 0; j < a[0].length; j++) {
+      for (int j = 0; j < a[i].length; j++) {
         sum += a[i][j];
       }
     }
