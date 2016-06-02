@@ -1174,8 +1174,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(
@@ -1200,8 +1199,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
@@ -1251,8 +1249,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
@@ -1301,8 +1298,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
@@ -1351,8 +1347,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
@@ -1375,8 +1370,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
@@ -1399,8 +1393,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
@@ -1423,8 +1416,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
@@ -1447,8 +1439,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
