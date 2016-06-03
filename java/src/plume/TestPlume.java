@@ -1,7 +1,5 @@
 package plume;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
 import static plume.Options.ArgException;
 
 import java.io.ByteArrayInputStream;
@@ -488,8 +486,7 @@ public final class TestPlume {
       ArraysMDE.fn_inverse(new int[] {1, 0, 3, 0}, 4);
       throw new Error();
     } catch (UnsupportedOperationException e) {
-      assert e.getMessage() != null;
-      assertThat(e.getMessage(), is(equalTo("Not invertible; a[1]=0 and a[3]=0")));
+      assert e.getMessage() != null && e.getMessage().equals("Not invertible; a[1]=0 and a[3]=0");
     }
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {5}, 6), new int[] {-1, -1, -1, -1, -1, 0});
     assert_arrays_equals(
@@ -500,8 +497,7 @@ public final class TestPlume {
           ArraysMDE.fn_inverse(new int[] {100, 101, 102, 103}, 4), new int[] {40, 41, 42, 43});
       throw new Error();
     } catch (IllegalArgumentException e) {
-      assert e.getMessage() != null;
-      assertThat(e.getMessage(), is(equalTo("Bad range value: a[0]=100")));
+      assert e.getMessage() != null && e.getMessage().equals("Bad range value: a[0]=100");
     }
 
     // public static int[] fn_compose(int[] a, int[] b)
