@@ -1,7 +1,12 @@
-#!/usr/bin/perl -wT
+#!/usr/bin/env perl
 
-eval 'exec /usr/bin/perl -wT -S $0 ${1+"$@"}'
+eval 'exec /usr/bin/perl -T -S $0 ${1+"$@"}'
     if 0; # not running under some shell
+
+## Run under taint mode
+# warn 'Taint mode is '.(${^TAINT} ? 'on' : 'off'); # For debugging
+exec($^X,'-T',$0,@ARGV) unless ${^TAINT};
+
 #
 # W3C Link Checker
 # by Hugo Haas <hugo@w3.org>
@@ -26,6 +31,7 @@ eval 'exec /usr/bin/perl -wT -S $0 ${1+"$@"}'
 #       www-validator@w3.org (with 'checklink' in the subject)
 #       http://lists.w3.org/Archives/Public/www-validator/ (archives)
 
+use warnings;
 use strict;
 use 5.008;
 use English;
