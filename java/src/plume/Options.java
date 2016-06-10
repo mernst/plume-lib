@@ -785,7 +785,7 @@ public class Options {
   @SuppressWarnings({
       "initialization", // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
       "flowexpr.parse.error"}) // TODO: the call to JWhich.printClasspath() below issues this most
-                               // likely due to Checker Framework issue 763. Try switching the
+                               // likely due to Checker Framework issue 767. Try switching the
                                // build order between JWhich.java and Options.java
   private static <T extends Annotation> /*@Nullable*/ T safeGetAnnotation(
       Field f, Class<T> annotationClass) {
