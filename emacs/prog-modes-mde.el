@@ -660,7 +660,7 @@ Works over the currently-visited tags table."
 
 ;; Be sure to check the changes; occasionally, the first word of a Javadoc
 ;; comment is a proper noun.
-(defun improve-javadoc-style ()
+(defun improve-javadoc-tag-style ()
   "Improve style for Javadoc @param and @return, for files in the current TAGS tables."
   (interactive)
   ;; "End the phrase with a period only if another phrase or sentence follows it."
@@ -685,6 +685,30 @@ Works over the currently-visited tags table."
   ;; nothing here or beyond will be executed.
   )
    
+(defun improve-javadoc-code-style ()
+  "Improve style for inline code in Jadaco comments, for files in the current TAGS table."
+
+  ;; TODO: as I run these, I mad need to convert
+  ;;   <code>...</code>
+  ;; to
+  ;;   {@code ...}
+  ;; .  I don't yet have automation for just changing the ones I want --
+  ;; I did it in a hackish way the last time.
+
+  (tags-query-replace "&lt;--?&gt;" "&rarr;")
+  (tags-query-replace "&lt;--?" "&rarr;")
+  (tags-query-replace "--?&gt;" "&rarr;")
+  (tags-query-replace "&lt;==?&gt;" "&hArr;")
+  (tags-query-replace "&lt;==" "&hArr;")
+  (tags-query-replace "==?&gt;" "&rArr;")
+
+  (tags-query-replace "\\({@code[^}]?*\\)&lt;" "\\1<")
+  (tags-query-replace "\\({@code[^}]?*\\)&gt;" "\\1>")
+
+  (tags-query-replace "&lt;" "<")
+  (tags-query-replace "&gt;" ">")
+  )
+
 (defun declaration-annotations-to-their-own-line ()
   "Move commented declaration annotations to their own line, for files in the current TAGS tables."
   (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
