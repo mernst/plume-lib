@@ -423,7 +423,7 @@ public class MultiVersionControl {
     parseArgs(args);
   }
 
-  /*@RequiresNonNull("dir")*/
+  /*@RequiresNonNull({"dir","checkouts"})*/
   /*@EnsuresNonNull("action")*/
   public void parseArgs(
       /*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
