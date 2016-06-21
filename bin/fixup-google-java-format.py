@@ -9,6 +9,7 @@
 from __future__ import print_function
 
 import os
+import os.path
 import re
 import sys
 
@@ -21,89 +22,94 @@ def eprint(*args, **kwargs):
 # on their own line.
 # (To generate this list, search for occurrences of "@Target("
 # and remove those that contain "TYPE_USE" or "{}".)
-declarationAnnotations = set([
-    "@GetConstructor",
-    "@NewInstance",
-    "@Invoke",
-    "@GetClass",
-    "@GetMethod",
-    "@ForName",
-    "@ReportCreation",
-    "@ReportReadWrite",
-    "@ReportWrite",
-    "@ReportOverride",
-    "@ReportInherit",
-    "@ReportCall",
-    "@ReportUse",
-    "@StaticallyExecutable",
-    "@InheritedAnnotation",
-    "@FromByteCode",
-    "@PostconditionAnnotation",
-    "@RequiresQualifiers",
-    "@DefaultQualifier",
-    "@DefaultQualifierInHierarchyInUncheckedCode",
-    "@InvisibleQualifier",
-    "@TargetLocations",
-    "@RequiresQualifier",
-    "@ImplicitFor",
-    "@StubFiles",
-    "@EnsuresQualifiersIf",
-    "@EnsuresQualifier",
-    "@DefaultInUncheckedCodeFor",
-    "@AnnotatedFor",
-    "@PreconditionAnnotation",
-    "@ConditionalPostconditionAnnotation",
-    "@DefaultQualifiers",
-    "@FieldIsExpression",
-    "@FromStubFile",
-    "@Unused",
-    "@EnsuresQualifiers",
-    "@PolymorphicQualifier",
-    "@SubtypeOf",
-    "@DefaultQualifierInHierarchy",
-    "@DefaultFor",
-    "@EnsuresQualifierIf",
-    "@MonotonicQualifier",
-    "@Pure",
-    "@LockingFree",
-    "@TerminatesExecution",
-    "@Deterministic",
-    "@SideEffectFree",
-    "@SafeType",
-    "@SafeEffect",
-    "@UIType",
-    "@UIPackage",
-    "@PolyUIEffect",
-    "@PolyUIType",
-    "@UIEffect",
-    "@NotOnlyInitialized",
-    "@ClassRegexParam",
-    "@MethodRegexParam",
-    "@MultiMethodRegexParam",
-    "@Assignable",
-    "@I18nValidFormat",
-    "@I18nMakeFormat",
-    "@Assignable",
-    "@Assignable",
-    "@EnsuresLockHeldIf",
-    "@HoldingOnEntry",
-    "@EnsuresLockHeld",
-    "@Holding",
-    "@FormatMethod",
-    "@ReturnsFormat",
-    "@EnsuresNonNull",
-    "@Covariant",
-    "@EnsuresNonNullIf",
-    "@RequiresNonNull",
-    "@AssertNonNullIfNonNull",
-    "@UsesObjectEquals",
-    "@I18nChecksFormat",
-    "@MultiClassRegexParam",
-    "@MethodTaintingParam",
-    "@MultiMethodTaintingParam",
-    "@ClassTaintingParam",
-    "@MultiClassTaintingParam",
+declarationAnnotationsBuiltin = set([
+    "GetConstructor",
+    "NewInstance",
+    "Invoke",
+    "GetClass",
+    "GetMethod",
+    "ForName",
+    "ReportCreation",
+    "ReportReadWrite",
+    "ReportWrite",
+    "ReportOverride",
+    "ReportInherit",
+    "ReportCall",
+    "ReportUse",
+    "StaticallyExecutable",
+    "InheritedAnnotation",
+    "FromByteCode",
+    "PostconditionAnnotation",
+    "RequiresQualifiers",
+    "DefaultQualifier",
+    "DefaultQualifierInHierarchyInUncheckedCode",
+    "InvisibleQualifier",
+    "TargetLocations",
+    "RequiresQualifier",
+    "ImplicitFor",
+    "StubFiles",
+    "EnsuresQualifiersIf",
+    "EnsuresQualifier",
+    "DefaultInUncheckedCodeFor",
+    "AnnotatedFor",
+    "PreconditionAnnotation",
+    "ConditionalPostconditionAnnotation",
+    "DefaultQualifiers",
+    "FieldIsExpression",
+    "FromStubFile",
+    "Unused",
+    "EnsuresQualifiers",
+    "PolymorphicQualifier",
+    "SubtypeOf",
+    "DefaultQualifierInHierarchy",
+    "DefaultFor",
+    "EnsuresQualifierIf",
+    "MonotonicQualifier",
+    "Pure",
+    "LockingFree",
+    "TerminatesExecution",
+    "Deterministic",
+    "SideEffectFree",
+    "SafeType",
+    "SafeEffect",
+    "UIType",
+    "UIPackage",
+    "PolyUIEffect",
+    "PolyUIType",
+    "UIEffect",
+    "NotOnlyInitialized",
+    "ClassRegexParam",
+    "MethodRegexParam",
+    "MultiMethodRegexParam",
+    "Assignable",
+    "I18nValidFormat",
+    "I18nMakeFormat",
+    "Assignable",
+    "Assignable",
+    "EnsuresLockHeldIf",
+    "HoldingOnEntry",
+    "EnsuresLockHeld",
+    "Holding",
+    "FormatMethod",
+    "ReturnsFormat",
+    "EnsuresNonNull",
+    "Covariant",
+    "EnsuresNonNullIf",
+    "RequiresNonNull",
+    "AssertNonNullIfNonNull",
+    "UsesObjectEquals",
+    "I18nChecksFormat",
+    "MultiClassRegexParam",
+    "MethodTaintingParam",
+    "MultiMethodTaintingParam",
+    "ClassTaintingParam",
+    "MultiClassTaintingParam",
 ])
+
+if os.path.isfile(".declaration-annotations"):
+    execfile('execfile_example.py')
+else:
+    declarationAnnotations = declarationAnnotationsBuiltin
 
 debug = False
 
@@ -168,8 +174,8 @@ def fixup_loop(infile, outfile):
     outfile.write(prev)
 
 def base_annotation(annotation):
-    """Remove leading and trailing comment characters, spaces, and arguments.
-Example: base_annotation('/*@RequiresNonNull("FileIO.data_trace_state")*/' => '@RequiresNonNull'"""
+    """Remove leading and trailing comment characters, spaces, arguments, and at sign.
+Example: base_annotation('/*@RequiresNonNull("FileIO.data_trace_state")*/' => 'RequiresNonNull'"""
     if debug: print("base_annotation <=", annotation)
     if annotation.startswith("/*"):
         annotation = annotation[2:]
@@ -179,6 +185,8 @@ Example: base_annotation('/*@RequiresNonNull("FileIO.data_trace_state")*/' => '@
     if idx != -1:
         annotation = annotation[0:idx]
     annotation = annotation.strip()
+    if annotation.startswith("@"):
+        annotation = annotation[1:]
     if debug: print("base_annotation =>", annotation)
     return annotation
 
