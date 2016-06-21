@@ -4,8 +4,8 @@
 // Compile with:
 //   javac -g DeclarationAnnotations.java -cp $pl/java/lib/guava-19.0.jar
 // Run with:
-//   java -cp .:$pl/java/lib/guava-19.0.jar DeclarationAnnotations
-//   java -cp $pl/java/lib/guava-19.0.jar:$ch/dist/checker.jar:$ch/dist/javac.jar:${CLASSPATH}:. DeclarationAnnotations
+//   java -cp ..:$pl/java/lib/guava-19.0.jar plume.DeclarationAnnotations
+//   java -cp $pl/java/lib/guava-19.0.jar:$ch/dist/checker.jar:$ch/dist/javac.jar:${CLASSPATH}:.. plume.DeclarationAnnotations
 // However, the latter invocation is problematic because Guava contains
 // declaration versions of annotations such as @NonNull.  I don't want to
 // have to determine the package of each annotation, so I won't use this.
@@ -64,7 +64,8 @@ public class DeclarationAnnotations {
         Target t = (Target) anno;
         boolean isTypeAnnotation = false;
         for (ElementType et : t.value()) {
-          if (et == ElementType.TYPE_USE) {
+          // In Java 8, this can be "if (et == ElementType.TYPE_USE)".
+          if (et.name().equals("TYPE_USE")) {
             isTypeAnnotation = true;
             break;
           }
