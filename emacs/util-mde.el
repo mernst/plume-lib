@@ -921,6 +921,22 @@ When called non-interactively, requires two arguments, the region's beginning an
 	    (setq result (current-column))))
       result)))
 
+(defun line-lengths-histogram (beg end)
+  "Return a histogram of the lengths of lines in the region.
+The result is a hash table of the form ((len . count) ...)."
+  (let ((table (make-hash-table)))
+    (save-excursion
+      (goto-char (min beg end))
+      (if (< end beg) (setq end beg))
+      (end-of-line 1)
+      (let ((len (current-column)))
+	(puthash len (1+ (gethash len table 0)) table))
+      (while (< (point) end)
+	(end-of-line 2)
+	(let ((len (current-column)))
+	  (puthash len (1+ (gethash len table 0)) table))))
+    table))
+
 ;; Modified from insert-buffer.
 (defun buffer-contents (buffer)
   "Return the entire contents of BUFFER as a string.
