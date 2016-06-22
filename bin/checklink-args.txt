@@ -43,6 +43,7 @@
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
+# 303 errors may belong in the --suppress-redirect section rather than here
 --suppress-broken 303:http://dx.doi.org/10.1109/WODA.2007.3
 --suppress-broken 303:http://hdl.handle.net/2142/54893
 --suppress-broken 303:http://hdl.handle.net/2429/46122
@@ -274,9 +275,11 @@
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org:80/Xplore/errorpage.jsp?reload=true
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
---suppress-redirect http://homes.cs.washington.edu/~burg/->http://brrian.org/	
+--suppress-redirect http://hdl.handle.net/2142/54893->https://www.ideals.illinois.edu/handle/2142/54893
 --suppress-redirect http://hdl.handle.net/2429/46122->https://circle.ubc.ca/handle/2429/46122
+--suppress-redirect http://hdl.handle.net/2429/46122->https://open.library.ubc.ca/cIRcle/collections/facultyresearchandpublications/52383/items/1.0051021	
 --suppress-redirect http://hdl.handle.net/2429/46122->https://open.library.ubc.ca/cIRcle/collections/facultyresearchandpublications/8865/items/1.0051021
+--suppress-redirect http://homes.cs.washington.edu/~burg/->http://brrian.org/	
 --suppress-redirect http://ieeexplore.ieee.org/->http://ieeexplore.ieee.org/Xplore/home.jsp
 --suppress-redirect http://libraries.mit.edu/get/ieee->http://aeryn.mit.edu/emetrics/count.php?http://libproxy.mit.edu/login?url=http://ieeexplore.ieee.org/
 --suppress-redirect http://libraries.mit.edu/get/lncs->http://aeryn.mit.edu/emetrics/count.php?http://libproxy.mit.edu/login?url=http://www.springerlink.com/openurl.asp?genre=journal&issn=0302-9743
@@ -325,11 +328,10 @@
 --suppress-redirect http://www.verigames.com/login/google->https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=http%3A%2F%2Fwww.verigames.com%2Flogin%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&client_id=451230570634.apps.googleusercontent.com&type=web_server	
 --suppress-redirect http://www.weather.com/weather/local/USWA0395->http://xhtml.weather.com/xhtml/search
 --suppress-redirect http://yoav.zibin.googlepages.com/->http://www.google.com/gwt/n?source=pagecreator&u=http%3A%2F%2FYoav.Zibin.googlepages.com%2Fhome
+--suppress-redirect https://open.library.ubc.ca/handle/2429/46122->https://open.library.ubc.ca/cIRcle/collections/facultyresearchandpublications/52383/items/1.0051021
 --suppress-redirect https://sqlshare.escience.washington.edu/->https://sqlshare.escience.washington.edu/accounts/login/?next=/sqlshare/	
 --suppress-redirect https://tools.usps.com/go/ZipLookupAction!input.action->https://www.usps.com/root/global/server_responses/webtools-msg.htm	
 --suppress-redirect https://tree-api.dev.java.net/->https://www.dev.java.net/servlets/Login?cookieCheck=failed
---suppress-redirect http://hdl.handle.net/2142/54893->https://www.ideals.illinois.edu/handle/2142/54893
---suppress-redirect http://hdl.handle.net/2429/46122->https://circle.ubc.ca/handle/2429/46122
 
 --suppress-redirect-prefix http://cs.washington.edu/->http://www.cs.washington.edu/
 --suppress-redirect-prefix http://doi.acm.org/10.1145/->http://portal.acm.org/citation.cfm?doid=
