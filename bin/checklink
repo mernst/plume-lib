@@ -1259,7 +1259,7 @@ EOF
             }
         }
 # These next three ifs are to work around a performance issue.
-# The www.w3.org web site can be extreamly slow to respond; so
+# The www.w3.org web site can be extremely slow to respond; so
 # we redirect to local copies of the files.
 
         if ($abs_link_uri eq "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd") {
@@ -2411,14 +2411,16 @@ sub record_redirects (\%$)
         my $from = $prev->request()->url();
         my $to   = $response->request()->url();  # same on every loop iteration
         my $from_to = $from . '->' . $to;
+        # print STDERR "Redirect discovered: $from_to\n";
         my $match = grep { $_ eq $from_to } @{$Opts{Suppress_Redirect}};
 
-        # print STDERR "Result $match of redirect checking $from_to\n";
+        # print STDERR "Result $match of redirect checking\n";
+        # print STDERR "Redirect checking was against: @{$Opts{Suppress_Redirect}}\n";
         if ($match) { next; }
 
         $match = grep { $from_to =~ /$_/ } @{$Opts{Suppress_Redirect_Prefix}};
 
-        # print STDERR "Result $match of regexp checking $from_to\n";
+        # print STDERR "Result $match of redirect prefix checking\n";
         if ($match) { next; }
 
         my $c = $prev->code();
