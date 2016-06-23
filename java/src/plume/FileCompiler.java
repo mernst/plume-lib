@@ -30,7 +30,7 @@ public final class FileCompiler {
    */
   static /*@Regex(1)*/ Pattern java_filename_pattern;
   /** External command used to compile Java files. **/
-  private String compiler;
+  private ArrayList<String> compiler;
   /** Time limit for compilation jobs. */
   private long timeLimit;
 
@@ -64,14 +64,35 @@ public final class FileCompiler {
   }
 
   /**
-   * Creates a new FileCompiler.
+   * Creates a new FileCompiler. compiler is a ArrayList<String> where
+   * each member, in order, contains the compilation command.
+   * @param compiler a command that runs a Java compiler; for instance, it
+   * could be the full path name or whatever is used on the commandline
+   * @param timeLimit the maximum permitted compilation time, in msec
+   */
+  public FileCompiler(ArrayList<String> compiler, long timeLimit) {
+    this.compiler = compiler;
+    this.timeLimit = timeLimit;
+  }
+
+  /**
+   * Creates a new FileCompiler. compiler is a String that contains the
+   * compilation command, it is converted to an ArrayList<String> by
+   * splitting on blanks to convert into substrings.
    * @param compiler a command that runs a Java compiler; for instance, it
    * could be the full path name or whatever is used on the commandline
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String compiler, long timeLimit) {
-    this.compiler = compiler;
+    this.compiler = new ArrayList<String>();
     this.timeLimit = timeLimit;
+
+    String splits[] = compiler.split(" ");
+    for (int i = 0; i < splits.length; i++) {
+      if (splits[i].length() != 0) {
+        this.compiler.add(splits[i]);
+      }
+    }
   }
 
   /**
@@ -143,10 +164,16 @@ public final class FileCompiler {
       throw new Error("no files to compile were provided");
     }
 
-    String[] command = new String[num_files + 1];
-    command[0] = compiler;
+    int iarg = compiler.size();
+
+    if (iarg == 0) {
+      throw new Error("no compile command was provided");
+    }
+
+    String[] command = new String[num_files + iarg];
+    command = compiler.toArray(command);
     for (int i = 0; i < num_files; i++) {
-      command[i + 1] = filenames.get(i);
+      command[iarg++] = filenames.get(i);
     }
 
     // System.out.println ("\nexecuting compile command: " + command);
