@@ -33,8 +33,8 @@ else:
 
 if not os.path.isfile(fixup_py):
     urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
-    # Make fixup_py executable by the user
-    os.chmod(fixup_py, os.stat(fixup_py).st_mode | stat.S_IEXEC)
+    # Make fixup_py executable by the user, like "chmod +x"
+    os.chmod(fixup_py, os.stat(fixup_py).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 if debug:
     print("script_dir:", script_dir)
