@@ -22,7 +22,7 @@ def eprint(*args, **kwargs):
 # These are annotations that should not go on their own line.
 # They are type annotations: their @Target annotation contains "TYPE_USE".
 # To generate this list (last done on 2016-06-23):
-#   ag --file-search-regex 'src/org/checkerframework|checker/examples/units-extension' --files-with-matches '^@Target\b.*TYPE_USE' $cf | sed 's/.*\///' | sed 's/\(.*\)\.java/    "\1",/' | sort | uniq
+#   ag --file-search-regex 'src/org/checkerframework|checker/examples/units-extension' --files-with-matches '^@Target\b.*TYPE_USE' $cf | sed 's/.*\///' | awk '{print $1} END {print "NotNull.java"}' | sed 's/\(.*\)\.java/    "\1",/' | sort | uniq
 typeAnnotations = set([
     "A",
     "Acceleration",
@@ -126,6 +126,7 @@ typeAnnotations = set([
     "NonNullType",
     "NonRaw",
     "Normal",
+    "NotNull",
     "Nullable",
     "NullableType",
     "PolyAll",
