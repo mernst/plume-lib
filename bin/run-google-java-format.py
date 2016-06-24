@@ -90,6 +90,8 @@ if result != 0:
 #     gradle googleJavaFormat
 #  * Examine the diffs:
 #     git diff -w -b | grep -v '^[-+]import' | grep -v '^[-+]$'
+#    or
+#     git diff -w -b | grep -v '^[-+]import' | grep -v '^[-+]$' | grep -v '@TADescription' | grep -v '@interface' | grep -v '@Target' | grep -v '@Default' | grep -v '@ImplicitFor' | grep -v '@SuppressWarnings' | grep -v '@SubtypeOf'
 #    Run a tool that seaches the diffs for hunks that have fewer lines than
 #    they were before.  These are possibly places where an if/for/while whose
 #    body was a single statement that has gotten sucked up onto the if/for/while
