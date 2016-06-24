@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-# The google-java-format program reformats Java source code, but it creates
-# poor formatting for annotations in comments.
+# The google-java-format program (https://github.com/google/google-java-format)
+# reformats Java source code, but it creates poor formatting for annotations
+# in comments.
 # Run this script on files after running google-java-format, and it will perform
 # small changes in place to improve formatting of annotations in comments.
 # If called with no arguments, it reads from and writes to standard output.

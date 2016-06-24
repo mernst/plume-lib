@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
-# This script reformats each file supplied on the command line according
-# to the Google Java style (by calling out to the google-java-format program),
-# but with improvements to the formatting of annotations in comments.
+# This script reformats each file supplied on the command line according to
+# the Google Java style (by calling out to the google-java-format program,
+# https://github.com/google/google-java-format), but with improvements to
+# the formatting of annotations in comments.
 
 import os
 import re
@@ -65,14 +66,19 @@ if result != 0:
 
 # For the person doing the reformatting:
 #  * Tag the commit before the whitespace change as "before reformatting".
-#  * Run "ant reformat" or the equivalent command.
-#  * Run a tool that seaches the diffs for hunks that are *shorter* than
+#    git tag -a before-reformatting -m "Code before running google-java-format"
+#  * Reformat by running a command such as:
+#    make reformat
+#    ant reformat
+#    gradle googleJavaFormat
+#  * Run a tool that seaches the diffs for hunks that have fewer lines than
 #    they were before.  These are possibly places where an if/for/while whose
 #    body was a single statement that has gotten sucked up onto the if/for/while
 #    loop.  Or, just run a tool that searches the diffs for if/for/while with
 #    body on the same line.  Add curly braces to get the body back on its own
 #    line. 
-#  * Tag the commit that does the whitespace change as "reformatting".
+#  * Tag the commit that does the whitespace change as "after reformatting".
+#    git tag -a after-reformatting -m "Code after running google-java-format"
 # 
 # For a client to merge the massive upstream changes:
 #  * Merge in the commit before the reformatting into your branch.
