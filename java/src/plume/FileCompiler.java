@@ -160,6 +160,7 @@ public final class FileCompiler {
    */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
+
     if (num_files == 0) {
       throw new Error("no files to compile were provided");
     }
