@@ -57,8 +57,9 @@ result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imp
 #     print("Error when running google-java-format")
 #     sys.exit(result)
 
+# Remove command-line arguments
 files = [f for f in files if not f.startswith("--")]
-# Exit if no files were supplied (maybe "--help" was)
+# Exit if no files were supplied (maybe "--help" was supplied)
 if not files:
     sys.exit(0)
 
