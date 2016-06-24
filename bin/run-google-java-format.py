@@ -32,6 +32,9 @@ else:
     urllib.urlretrieve("https://github.com/google/google-java-format/releases/download/google-java-format-1.0/google-java-format-1.0-all-deps.jar", gjf_jar_path)
 
 if not os.path.isfile(fixup_py):
+    # TODO: should replace local file if remote it is more recent.
+    # Could use: http://stackoverflow.com/questions/31105606/downloading-files-based-on-timestamp-in-python
+    # or http://superuser.com/questions/1049202/curl-check-if-file-is-newer-and-instead-of-downloading-execute-a-bash-or-pyth
     urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
     # Make fixup_py executable by the user, like "chmod +x"
     os.chmod(fixup_py, os.stat(fixup_py).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
