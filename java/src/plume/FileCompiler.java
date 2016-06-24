@@ -64,7 +64,7 @@ public final class FileCompiler {
   }
 
   /**
-   * Creates a new FileCompiler. compiler is a ArrayList<String> where
+   * Creates a new FileCompiler. compiler is a ArrayList of String where
    * each member, in order, contains the compilation command.
    * @param compiler a command that runs a Java compiler; for instance, it
    * could be the full path name or whatever is used on the commandline
@@ -77,7 +77,7 @@ public final class FileCompiler {
 
   /**
    * Creates a new FileCompiler. compiler is a String that contains the
-   * compilation command, it is converted to an ArrayList<String> by
+   * compilation command, it is converted to an ArrayList of String by
    * splitting on blanks to convert into substrings.
    * @param compiler a command that runs a Java compiler; for instance, it
    * could be the full path name or whatever is used on the commandline
