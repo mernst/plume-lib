@@ -46,11 +46,13 @@ if len(files) == 0:
 
 result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imports=also"] + files)
 if result != 0:
+    print "Error when running google-java-format"
     sys.exit(result)
 if files == ["--help"]:
     sys.exit(0)
 result = subprocess.call([fixup_py] + files)
 if result != 0:
+    print "Error when running fixup-google-java-format.py"
     sys.exit(result)
 
 
@@ -67,12 +69,14 @@ if result != 0:
 
 # For the person doing the reformatting:
 #  * Tag the commit before the whitespace change as "before reformatting".
-#    git tag -a before-reformatting -m "Code before running google-java-format"
+#     git tag -a before-reformatting -m "Code before running google-java-format"
 #  * Reformat by running a command such as:
-#    make reformat
-#    ant reformat
-#    gradle googleJavaFormat
-#  * Run a tool that seaches the diffs for hunks that have fewer lines than
+#     make reformat
+#     ant reformat
+#     gradle googleJavaFormat
+#  * Examine the diffs:
+#     git diff -w -b | grep -v '^[-+]import' | grep -v '^[-+]$'
+#    Run a tool that seaches the diffs for hunks that have fewer lines than
 #    they were before.  These are possibly places where an if/for/while whose
 #    body was a single statement that has gotten sucked up onto the if/for/while
 #    loop.  Or, just run a tool that searches the diffs for if/for/while with
