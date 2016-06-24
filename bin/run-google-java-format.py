@@ -45,12 +45,14 @@ if len(files) == 0:
     sys.exit(1)
 
 result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imports=also"] + files)
-if result != 0:
-    print("Error when running google-java-format")
-    sys.exit(result)
+# Don't stop if there was an error, because google-java-format won't munge
+# files and we still want to run fixup-google-java-format.py.
+# if result != 0:
+#     print("Error when running google-java-format")
+#     sys.exit(result)
 if files == ["--help"]:
     sys.exit(0)
-print("Running fixup-google-java-format.py")
+if debug: print("Running fixup-google-java-format.py")
 result = subprocess.call([fixup_py] + files)
 if result != 0:
     print("Error when running fixup-google-java-format.py")
