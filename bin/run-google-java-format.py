@@ -14,6 +14,7 @@ import subprocess
 import urllib
 
 debug = False
+# debug = True
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Rather than calling out to the shell, it would be better to
