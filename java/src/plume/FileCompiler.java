@@ -29,8 +29,11 @@ public final class FileCompiler {
    * Match group 1 is the complete filename.
    */
   static /*@Regex(1)*/ Pattern java_filename_pattern;
-  /** External command used to compile Java files. **/
-  private ArrayList<String> compiler;
+  /**
+   * External command used to compile Java files, and command-line arguments.
+   * Guaranteed to be non-empty.
+   */
+  private String[] compiler;
   /** Time limit for compilation jobs. */
   private long timeLimit;
 
@@ -64,34 +67,32 @@ public final class FileCompiler {
   }
 
   /**
-   * Creates a new FileCompiler. compiler is a ArrayList of String where
-   * each member, in order, contains the compilation command.
-   * @param compiler a command that runs a Java compiler; for instance, it
-   * could be the full path name or whatever is used on the commandline
+   * Creates a new FileCompiler.
+   * Compared to {@link #FileCompiler(String,long)}, this constructor permits
+   * spaces and other special characters in the command and arguments.
+   * @param compiler a list of Strings representing a command that runs a
+   * Java compiler (it could be the full path name or whatever is used on
+   * the commandline), plus any command-line options.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(ArrayList<String> compiler, long timeLimit) {
-    this.compiler = compiler;
+    this.compiler = compiler.toArray(new String[0]);
     this.timeLimit = timeLimit;
   }
 
   /**
-   * Creates a new FileCompiler. compiler is a String that contains the
-   * compilation command, it is converted to an ArrayList of String by
-   * splitting on blanks to convert into substrings.
+   * Creates a new FileCompiler.
    * @param compiler a command that runs a Java compiler; for instance, it
-   * could be the full path name or whatever is used on the commandline
+   * could be the full path name or whatever is used on the commandline.
+   * It may contain command-line arguments, and is split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String compiler, long timeLimit) {
-    this.compiler = new ArrayList<String>();
+    this.compiler = compiler.trim().split(" +");
     this.timeLimit = timeLimit;
 
-    String splits[] = compiler.split(" ");
-    for (int i = 0; i < splits.length; i++) {
-      if (splits[i].length() != 0) {
-        this.compiler.add(splits[i]);
-      }
+    if (this.compiler.length == 0) {
+      throw new Error("no compile command was provided");
     }
   }
 
@@ -136,7 +137,7 @@ public final class FileCompiler {
     // javac tends to stop without completing the compilation if there
     // is an error in one of the files.  Remove all the erring files
     // and recompile only the good ones.
-    if (compiler.indexOf("javac") != -1) {
+    if (compiler[0].indexOf("javac") != -1) {
       recompile_without_errors(fileNames, compile_errors);
     }
 
@@ -159,19 +160,14 @@ public final class FileCompiler {
    */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
-
     if (num_files == 0) {
       throw new Error("no files to compile were provided");
     }
 
-    int iarg = compiler.size();
-
-    if (iarg == 0) {
-      throw new Error("no compile command was provided");
-    }
+    int iarg = compiler.length;
 
     String[] command = new String[num_files + iarg];
-    command = compiler.toArray(command);
+    System.arraycopy(compiler, 0, command, 0, iarg);
     for (int i = 0; i < num_files; i++) {
       command[iarg++] = filenames.get(i);
     }
