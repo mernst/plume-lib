@@ -213,7 +213,7 @@ voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 #    before the argument it documents.
 # The annotation will be moved to the beginning of the following line,
 # if it appears in typeAnnotations.
-trailingannoRegex = re.compile(r"^(.*?)[ \t]*(@[A-Za-z0-9_().\"#{}]+|/\*@[A-Za-z0-9_().\"#{}]+\*/|/\* *[A-Za-z0-9_]+ *= *\*/)$")
+trailingannoRegex = re.compile(r"^(.*?)[ \t]*(@[A-Za-z0-9_]+( *\([A-Za-z0-9_.\"#{}, ]*\))?|/\*@[A-Za-z0-9_]+( *\([A-Za-z0-9_.\"#{}, ]*\))?\*/|/\* *[A-Za-z0-9_]+ *= *\*/)$")
 
 whitespaceRegex = re.compile(r"^([ \t]*).*$")
 
