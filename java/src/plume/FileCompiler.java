@@ -165,12 +165,10 @@ public final class FileCompiler {
       throw new Error("no files to compile were provided");
     }
 
-    int iarg = compiler.length;
-
-    String[] command = new String[num_files + iarg];
-    System.arraycopy(compiler, 0, command, 0, iarg);
+    String[] command = new String[num_files + compiler.length];
+    System.arraycopy(compiler, 0, command, 0, compiler.length);
     for (int i = 0; i < num_files; i++) {
-      command[iarg++] = filenames.get(i);
+      command[i + compiler.length] = filenames.get(i);
     }
 
     // System.out.println ("\nexecuting compile command: " + command);
