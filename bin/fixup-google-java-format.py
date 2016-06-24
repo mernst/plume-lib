@@ -213,7 +213,9 @@ voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 #    before the argument it documents.
 # The annotation will be moved to the beginning of the following line,
 # if it appears in typeAnnotations.
-trailingannoRegex = re.compile(r"^(.*?)[ \t]*(@[A-Za-z0-9_]+( *\([A-Za-z0-9_.\"#{}, ]*\))?|/\*@[A-Za-z0-9_]+( *\([A-Za-z0-9_.\"#{}, ]*\))?\*/|/\* *[A-Za-z0-9_]+ *= *\*/)$")
+# The regex does not permit "()" within a string in an annotation, such as
+#   @GuardedBy("c1.getFieldPure2()")
+trailingannoRegex = re.compile(r"^(.*?)[ \t]*(@[A-Za-z0-9_.]+( *\([A-Za-z0-9_.\"#{}, ]*\))?|/\*@[A-Za-z0-9_.]+( *\([A-Za-z0-9_.\"#{}, ]*\))?\*/|/\* *[A-Za-z0-9_]+ *= *\*/)$")
 
 whitespaceRegex = re.compile(r"^([ \t]*).*$")
 
@@ -273,13 +275,23 @@ def base_annotation(annotation):
     """Remove leading and trailing comment characters, spaces, arguments, and at sign.
 Example: base_annotation('/*@RequiresNonNull("FileIO.data_trace_state")*/' => 'RequiresNonNull'"""
     if debug: print("base_annotation <=", annotation)
+
+    # Remove comments
     if annotation.startswith("/*"):
         annotation = annotation[2:]
     if annotation.endswith("*/"):
         annotation = annotation[:-2]
+
+    # Remove arguments
     idx = annotation.find('(')
     if idx != -1:
         annotation = annotation[0:idx]
+
+    # Remove package names
+    idx = annotation.rfind('.')
+    if idx != -1:
+        annotation = annotation[idx+1:]
+
     annotation = annotation.strip()
     if annotation.startswith("@"):
         annotation = annotation[1:]
