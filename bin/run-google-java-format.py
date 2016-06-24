@@ -5,12 +5,12 @@
 # https://github.com/google/google-java-format), but with improvements to
 # the formatting of annotations in comments.
 
+import filecmp
 import os
-import re
+import stat
+import subprocess
 import sys
 import tempfile
-import filecmp
-import subprocess
 import urllib
 
 debug = False
