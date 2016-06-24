@@ -540,8 +540,10 @@ This is disabled on lines with a comment containing the string \"interned\"."
   nil)
 
 
-;; This doesn't actually work:  the lines have to be executed one at a time,
+;; The individual lines in this function work, but the function doesn't:
+;; the lines have to be executed one at a time,
 ;; because `tags-query-replace' terminates by throwing an error.
+;; This is irrelevant if using a code formatter such as google-java-format.
 (defun tags-cleanup-java-whitespace ()
   "Clean up whitespace in Java code."
   (interactive)
