@@ -269,7 +269,7 @@ voodootrailingspaceRegex = re.compile(r"(/\*>>> ?@.*\bthis\*/) (\))")
 # if it appears in typeAnnotations.
 # The regex does not permit "()" within a string in an annotation, such as
 #   @GuardedBy("c1.getFieldPure2()")
-trailingannoRegex = re.compile(r"^(.*?)[ \t]*(@[A-Za-z0-9_.]+( *\([][{}A-Za-z0-9_.\"#, =$]*\))?|/\*@[A-Za-z0-9_.]+( *\([][{}A-Za-z0-9_.\"#, =$]*\))?\*/|/\* *[A-Za-z0-9_]+ *= *\*/)$")
+trailingannoRegex = re.compile(r"^(.*?)[ \t]*(@[A-Za-z0-9_.]+( *\([^)]*\))?|/\*@[A-Za-z0-9_.]+( *\([^)]*\))?\*/|/\* *[A-Za-z0-9_]+ *= *\*/)$")
 
 whitespaceRegex = re.compile(r"^([ \t]*).*$")
 
