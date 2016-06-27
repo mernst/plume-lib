@@ -963,6 +963,8 @@ public class Options {
           ii++;
         }
         if (ii < args.length()) {
+          // Encountered a non-whitespace character.
+          // Back up to process it on the next loop iteration.
           ii--;
         }
       } else { // must be part of current argument
