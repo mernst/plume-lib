@@ -1600,7 +1600,9 @@ public final class TestPlume {
      * @param args  two-element array containing:  how many to print; how many milliseconds between each
      */
     public static void main(String[] args) {
-      assert args.length == 2;
+      if (args.length != 2) {
+        System.err.println("Needs 2 arguments, got " + args.length);
+      }
       int limit = Integer.parseInt(args[0]);
       int period = Integer.parseInt(args[1]);
       for (int i = 0; i < limit; i++) {
@@ -2719,16 +2721,7 @@ public final class TestPlume {
 
       for (int j = 0; j < 10; j++) {
 
-        //start two arrays out exactly equal
-        for (int i = 0; i < f1.length; i++) {
-          f1[i] = j + i * 10;
-          f2[i] = j + i * 10;
-        }
-
-        //fill out the second half of f2 with dup of f1
-        for (int i = 10; i < f2.length; i++) {
-          f2[i] = j + (i - 10) * 10;
-        }
+        initialize_f1_and_f2(j, f1, f2);
 
         //make two elements off just a little
         f2[7] = f2[7] * (1 + offset);
@@ -2743,16 +2736,7 @@ public final class TestPlume {
       }
       for (int j = 0; j < 200; j++) {
 
-        //start two arrays out exactly equal
-        for (int i = 0; i < f1.length; i++) {
-          f1[i] = j + i * 10;
-          f2[i] = j + i * 10;
-        }
-
-        //fill out the second half of f2 with dup of f1
-        for (int i = 10; i < f2.length; i++) {
-          f2[i] = j + (i - 10) * 10;
-        }
+        initialize_f1_and_f2(j, f1, f2);
 
         //make two elements off just a little
         f2[7] = f2[7] * (1 + 2 * offset);
@@ -2875,6 +2859,22 @@ public final class TestPlume {
       assert ff.isSubset(a4, a1);
       assert ff.isSubset(a6, a1);
       assert !ff.isSubset(a1, a6);
+    }
+  }
+
+  /** Initialize f2 to be the same as two copies of f1 */
+  @SuppressWarnings("index") // length of f1 is exactly 10, length of f2 is exactly 20
+  void initialize_f1_and_f2(int j, double[] f1, double[] f2) {
+
+    //start two arrays out exactly equal
+    for (int i = 0; i < f1.length; i++) {
+      f1[i] = j + i * 10;
+      f2[i] = j + i * 10;
+    }
+
+    //fill out the second half of f2 with dup of f1
+    for (int i = 10; i < f2.length; i++) {
+      f2[i] = j + (i - 10) * 10;
     }
   }
 

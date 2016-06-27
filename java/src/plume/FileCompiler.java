@@ -70,14 +70,31 @@ public final class FileCompiler {
    * Creates a new FileCompiler.
    * Compared to {@link #FileCompiler(String,long)}, this constructor permits
    * spaces and other special characters in the command and arguments.
+   * @param compiler an array of Strings representing a command that runs a
+   * Java compiler (it could be the full path name or whatever is used on
+   * the commandline), plus any command-line options.
+   * @param timeLimit the maximum permitted compilation time, in msec
+   */
+  public FileCompiler(String[] compiler, long timeLimit) {
+    if (compiler.length == 0) {
+      throw new Error("no compile command was provided");
+    }
+
+    this.compiler = compiler;
+    this.timeLimit = timeLimit;
+  }
+
+  /**
+   * Creates a new FileCompiler.
+   * Compared to {@link #FileCompiler(String,long)}, this constructor permits
+   * spaces and other special characters in the command and arguments.
    * @param compiler a list of Strings representing a command that runs a
    * Java compiler (it could be the full path name or whatever is used on
    * the commandline), plus any command-line options.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(ArrayList<String> compiler, long timeLimit) {
-    this.compiler = compiler.toArray(new String[0]);
-    this.timeLimit = timeLimit;
+    this(compiler.toArray(new String[0]), timeLimit);
   }
 
   /**
@@ -88,12 +105,7 @@ public final class FileCompiler {
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String compiler, long timeLimit) {
-    this.compiler = compiler.trim().split(" +");
-    this.timeLimit = timeLimit;
-
-    if (this.compiler.length == 0) {
-      throw new Error("no compile command was provided");
-    }
+    this(compiler.trim().split(" +"), timeLimit);
   }
 
   /**
