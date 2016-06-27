@@ -1600,7 +1600,9 @@ public final class TestPlume {
      * @param args  two-element array containing:  how many to print; how many milliseconds between each
      */
     public static void main(String[] args) {
-      assert args.length == 2;
+      if (args.length != 2) {
+        System.err.println("Needs 2 arguments, got " + args.length);
+      }
       int limit = Integer.parseInt(args[0]);
       int period = Integer.parseInt(args[1]);
       for (int i = 0; i < limit; i++) {
