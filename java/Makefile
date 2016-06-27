@@ -163,7 +163,7 @@ JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -X
 
 ## For testing a single checker, replace the above by:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
-## For testing a single file, this doesn't quite work:
+## For testing a single file:
 # JAVA_FILES = src/plume/RegexUtil.java
 
 ## For testing invariant arrays, add "-AinvariantArrays" like so:

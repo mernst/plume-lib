@@ -2578,7 +2578,8 @@ public final class ArraysMDE {
       if (ai < -1 || ai >= arange) {
         throw new IllegalArgumentException(String.format("Bad range value: a[%d]=%d", i, ai));
       }
-      if (ai != -1) {
+      // ai is either -1 or a valid index
+      if (ai >= 0) {
         if (result[ai] != -1) {
           throw new UnsupportedOperationException(
               String.format("Not invertible; a[%d]=%d and a[%d]=%d", result[ai], ai, i, ai));

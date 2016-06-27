@@ -383,7 +383,8 @@ public class Options {
         List<Object> default_obj_as_list = (List<Object>) default_obj;
         this.list = default_obj_as_list;
         // System.out.printf ("list default = %s%n", list);
-        this.base_type = (Class<?>) pt.getActualTypeArguments()[0];
+        Type[] listTypeArgs = pt.getActualTypeArguments();
+        this.base_type = (Class<?>) (listTypeArgs.length == 0 ? Object.class : listTypeArgs[0]);
 
         // System.out.printf ("Param type for %s = %s%n", field, pt);
         // System.out.printf ("raw type = %s, type = %s%n", pt.getRawType(),
