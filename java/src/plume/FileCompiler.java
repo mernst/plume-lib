@@ -78,6 +78,10 @@ public final class FileCompiler {
   public FileCompiler(ArrayList<String> compiler, long timeLimit) {
     this.compiler = compiler.toArray(new String[0]);
     this.timeLimit = timeLimit;
+
+    if (this.compiler.length == 0) {
+      throw new Error("no compile command was provided");
+    }
   }
 
   /**
