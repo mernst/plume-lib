@@ -278,6 +278,8 @@ emptylineRegex = re.compile(r"^[ \t]*$")
 # Heuristic: matches if the line might be within a //, /*, or Javadoc comment.
 withinCommentRegex = re.compile(r"//|/\*(?!.*\/*/)|^[ \t]*\*[ \t]")
 
+startsWithCommentRegex = re.compile(r"^[ \t]*(//|/\*$|/\*[^@]|\*)")
+
 def insert_after_whitespace(insertion, s):
     """Return s, with insertion inserted after its leading whitespace."""
     m = re.match(whitespaceRegex, s)
@@ -286,7 +288,7 @@ def insert_after_whitespace(insertion, s):
 
 def fixup_loop(infile, outfile):
     """Fix up formatting while reading from infile and writing to outfile."""
-    prev = ""           # previous line
+    prev = ""           # previous line, which might end with a type annotation.
     for line in infile:
         # Handle trailing space after a voodoo comment
         line = voodootrailingspaceRegex.sub(r"\1\2", line)
@@ -296,10 +298,15 @@ def fixup_loop(infile, outfile):
             if debug: print("found abutting", line)
             line = line[0:m.end(1)] + " " + line[m.start(2):]
             m = re.search(abuttingannoRegex, line)
-        # Handle annotations at end of line that should be at beginning of
-        # next line.
-        m = re.search(trailingannoRegex, prev)
-        if debug: print("trailing? (pre-loop)", m, prev, line)
+        # Don't move an annotation to the start of a comment line
+        if (re.search(startsWithCommentRegex, line)):
+            m = None
+            if debug: print("Don't prepend to comment", prev, line)
+        else:
+            # Handle annotations at end of line that should be at beginning of
+            # next line.
+            m = re.search(trailingannoRegex, prev)
+            if debug: print("trailing? (pre-loop)", m, prev, line)
         while m:
             if debug: print("found trailing", prev, line)
             anno = m.group(2)
