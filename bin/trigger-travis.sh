@@ -10,9 +10,12 @@
 # or
 #   trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT `cat ~/private/.travis-access-token` [MESSAGE]
 #
+# where --pro means to use travis-ci.com instead of travis-ci.org, and
 # where TRAVIS_ACCESS_TOKEN is, or ~/private/.travis-access-token contains,
-# the Travis access token.  Your Travis access token is the text after
-# "Your access token is " in the ouput of these commands:
+# the Travis access token.
+# 
+# Your Travis access token is the text after "Your access token is " in
+# the ouput of these commands:
 #   travis login && travis token
 # (If the travis program isn't installed, do so with one of these two commands:
 #    gem install travis
@@ -46,7 +49,7 @@
 # Note that Travis does not fail a job if an after_success command fails.
 # If you misspell a GitHub ID or project name, then this script will fail,
 # but Travis won't inform you of the mistake.  So, check the end of the
-# Travis buid log the first time that a build succeeds.
+# Travis build log the first time that a build succeeds.
 
 # Here is an explanation of the conditional in the after_success block:
 #
