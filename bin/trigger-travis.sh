@@ -6,9 +6,9 @@
 # way to trigger a new Travis job.
 
 # Usage:
-#   trigger-travis.sh GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
+#   trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
 # or
-#   trigger-travis.sh GITHUBID GITHUBPROJECT `cat ~/private/.travis-access-token` [MESSAGE]
+#   trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT `cat ~/private/.travis-access-token` [MESSAGE]
 #
 # where TRAVIS_ACCESS_TOKEN is, or ~/private/.travis-access-token contains,
 # the Travis access token.  Your Travis access token is the text after
@@ -81,6 +81,13 @@
 # Parts of this script were originally taken from
 # http://docs.travis-ci.com/user/triggering-builds/
 
+if [ $1 eq --pro ] ; then
+  TRAVIS_URL=travis-ci.com
+  shift
+else
+  TRAVIS_URL=travis-ci.org
+fi
+
 USER=$1
 REPO=$2
 TOKEN=$3
@@ -110,7 +117,7 @@ curl -s -X POST \
   -H "Travis-API-Version: 3" \
   -H "Authorization: token ${TOKEN}" \
   -d "$body" \
-  https://api.travis-ci.org/repo/${USER}%2F${REPO}/requests \
+  https://api.${TRAVIS_URL}/repo/${USER}%2F${REPO}/requests \
  | tee /tmp/travis-request-output.$$.txt
 
 if grep -q '"@type": "error"' /tmp/travis-request-output.$$.txt; then
