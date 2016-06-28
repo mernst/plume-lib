@@ -590,8 +590,9 @@ statement.  Does replacement in any file in a currently-visited tags table."
       ;; Are tags-search and tags-loop-continue guaranteed to leave the
       ;; match-data set??  Do looking-at to re-set match-data.
       (beginning-of-line)
-      (if (not (looking-at tags-regex))
-	  (error "This can't happen"))
+      ;; Match might not have started at beginning of line
+      ;; (if (not (looking-at tags-regex))
+      ;;          (error "This can't happen"))
 
       (goto-char (match-beginning 2))
       (let ((line (buffer-substring (point) (save-excursion (end-of-line) (point)))))
