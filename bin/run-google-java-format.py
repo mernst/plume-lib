@@ -88,16 +88,16 @@ if result != 0:
 #     make reformat
 #     ant reformat
 #     gradle googleJavaFormat
-#  * Examine the diffs:
+#  * Examine the diffs to look for poor reformatting:
 #     git diff -w -b | grep -v '^[-+]import' | grep -v '^[-+]$'
 #    or
 #     git diff -w -b | grep -v '^[-+]import' | grep -v '^[-+]$' | grep -v '@TADescription' | grep -v '@interface' | grep -v '@Target' | grep -v '@Default' | grep -v '@ImplicitFor' | grep -v '@SuppressWarnings' | grep -v '@SubtypeOf' | grep -v '@Override' | grep -v '@Pure' | grep -v '@Deterministic' | grep -v '@SideEffectFree'
-#    Run a tool that seaches the diffs for hunks that have fewer lines than
-#    they were before.  These are possibly places where an if/for/while whose
-#    body was a single statement that has gotten sucked up onto the if/for/while
-#    loop.  Or, just run a tool that searches the diffs for if/for/while with
-#    body on the same line.  Add curly braces to get the body back on its own
-#    line. 
+#    A key example is a single statement that is the body of an if/for/while
+#    being moved onto the previous line with the boolean expression.
+#     * Search for occurrences of ") return " on + lines.
+#     * Search for occurrences of "+.*\(if\|while\|for\) (.*) [^{].
+#     * Search for hunks that have fewer + than - lines.
+#    Add curly braces to get the body back on its own line. 
 #  * Tag the commit that does the whitespace change as "after reformatting".
 #    git tag -a after-reformatting -m "Code after running google-java-format"
 # 
