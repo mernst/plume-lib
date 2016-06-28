@@ -87,6 +87,7 @@
 --suppress-broken 403:https://www.cs.washington.edu/login/pc
 # This URL requires CSAIL credentials
 --suppress-broken 403:https://www.csail.mit.edu/mrbs/
+--suppress-broken 403:https://www.mercurial-scm.org/wiki/NotifyExtension
 #--suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
 --suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90	
 --suppress-broken 404:http://types.cs.washington.edu/plume-lib/guide/collections/index.html
@@ -174,6 +175,7 @@
 --suppress-broken 503:https://blogs.oracle.com/darcy/entry/so_you_want_to_change
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/jsr_292_support_in_javac
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for
+--suppress-broken 503:https://www.expedia.com/
 --suppress-broken 503:https://www.microsoft.com/mspress/books/770.aspx
 
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22

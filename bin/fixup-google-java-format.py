@@ -278,7 +278,7 @@ emptylineRegex = re.compile(r"^[ \t]*$")
 # Heuristic: matches if the line might be within a //, /*, or Javadoc comment.
 withinCommentRegex = re.compile(r"//|/\*(?!.*\/*/)|^[ \t]*\*[ \t]")
 
-startsWithCommentRegex = re.compile(r"^[ \t]*(//|/\*$|/\*[^@]|\*)")
+startsWithCommentRegex = re.compile(r"^[ \t]*(//|/\*$|/\*[^@]|\*|void\b)")
 
 def insert_after_whitespace(insertion, s):
     """Return s, with insertion inserted after its leading whitespace."""
