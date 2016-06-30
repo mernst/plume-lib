@@ -84,7 +84,7 @@
 # Parts of this script were originally taken from
 # http://docs.travis-ci.com/user/triggering-builds/
 
-if [ $1 eq --pro ] ; then
+if [ "$1" eq "--pro" ] ; then
   TRAVIS_URL=travis-ci.com
   shift
 else
