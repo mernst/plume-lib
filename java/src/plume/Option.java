@@ -13,6 +13,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/*>>>
+import org.checkerframework.framework.qual.IgnoreInWholeProgramInference;
+*/
+
 /**
  * Indicates that the annotated field is set via command-line option.
  * Takes a single string argument that describes the option.  The string
@@ -38,6 +42,7 @@ import java.lang.annotation.Target;
  * @see plume.Unpublicized
  * @see plume.OptionsDoclet
  */
+/*@IgnoreInWholeProgramInference*/
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Option {
