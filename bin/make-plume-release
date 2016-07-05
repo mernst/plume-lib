@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Script that creates a plume-lib release.
+# It also adds tags to the repository.
 
-# If you just want to make plume.jar for your own use, then instead use:
+# If you just want to make plume.jar for your own use, then instead use one of:
 #   make jar
-# or alternately
-#   make JAVAC_TARGET_FLAGS="-target 5" jar
+#   make JAVAC_TARGET_FLAGS="-target 7" jar
+#   make JAVAC_TARGET_FLAGS="-target 7" ALWAYS_CHECK_TYPES=1 clean jar
 # You can also find a pre-built plume.jar in the plume-lib release, in a
 # file such as plume-lib-1.0.0/java/plume.jar .
 
@@ -45,7 +46,7 @@ if ! git log --branches --not --remotes &> /dev/null; then
     exit 1
 fi
 
-if [[ ! $(${JAVAC-"javac"} -version 2>&1) =~ "javac 1.8.0-jsr308" ]]; then
+if [[ ! $(${JAVAC-"javac"} -version 2>&1) =~ "jsr308" ]]; then
     echo "Please use the JSR 308 compiler to make a release."
     exit 1
 fi
@@ -77,7 +78,7 @@ fi
 
 echo "[3/6] Building plume-lib."
 export JAVAC_TARGET_FLAGS="-target 7"
-make -C "$release/java" check-types all
+make -C "$release/java" ALWAYS_CHECK_TYPES=1 all
 if [[ $? -ne 0 ]]; then
     echo "Error building plume-lib."
     exit 1;
