@@ -97,10 +97,15 @@ if result != 0:
 #     * Search for occurrences of ") return " on + lines.
 #     * Search for occurrences of "+.*\(if\|while\|for\) (.*) [^{].
 #     * Search for hunks that have fewer + than - lines.
-#    Add curly braces to get the body back on its own line. 
+#    Add curly braces to get the body back on its own line.
+#  * Run tests
+#  * Commit changes:
+#    git commit -m "Reformat code using google-java-format"
 #  * Tag the commit that does the whitespace change as "after reformatting".
 #    git tag -a after-reformatting -m "Code after running google-java-format"
-# 
+#  * Push both the commits and the tags:
+#    git push --tags
+#
 # For a client to merge the massive upstream changes:
 #  * Merge in the commit before the reformatting into your branch.
 #  * Merge in the reformatting commit, preferring all your own changes.
