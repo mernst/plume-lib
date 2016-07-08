@@ -9,7 +9,7 @@
 # You could invoke this program, for example, in a git pre-commit hook.
 
 # Here are example targets you might put in a Makefile; integration with
-# other build systhems is similar.
+# other build systems is similar.
 #
 # reformat:
 # 	@wget -N https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py
@@ -19,24 +19,45 @@
 # 	@wget -N https://raw.githubusercontent.com/mernst/plume-lib/master/bin/check-google-java-format.py
 # 	@../plume-lib/bin/check-google-java-format.py ${JAVA_FILES_FOR_FORMAT} || (echo "Try running:  make reformat" && false)
 
-from __future__ import print_function
 
+from __future__ import print_function
+from distutils import spawn
+import filecmp
 import os
 import re
 import shutil
+import stat
+import subprocess
 import sys
 import tempfile
-import filecmp
-import subprocess
 import urllib
 
 debug = False
+# debug = True
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 run_py = os.path.join(script_dir, "run-google-java-format.py")
-if not os.path.isfile(run_py):
-    urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py", run_py)
 
+# For some reason, the "git ls-files" must be run from the root.
+# (I can run "git ls-files" from the command line in any directory.)
+def under_git(dir, filename):
+    """Return true if filename in dir is under git control."""
+    if not spawn.find_executable("git"):
+        if debug:
+            print("no git executable found")
+        return False
+    FNULL = open(os.devnull, 'w')
+    p = subprocess.Popen(["git", "ls-files", filename, "--error-unmatch"], cwd=dir, stdout=FNULL, stderr=subprocess.STDOUT)
+    p.wait()
+    if debug:
+        print("p.returncode", p.returncode)
+    return p.returncode == 0
+
+# Don't replace local with remote if local is under version control.
+# It would be better to just test whether the remote is newer than local.
+if not under_git(script_dir+"/..", "bin/run-google-java-format.py"):
+    urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py", run_py)
+    os.chmod(run_py, os.stat(run_py).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 temp_dir = tempfile.mkdtemp(prefix='check-google-java-format-')
 
@@ -61,6 +82,7 @@ for fname in files:
     shutil.copyfile(fname, ftemp)
     temps.append(ftemp)
 
+if debug: print("Running run-google-java-format.py")
 # To save one process creation, could call directly in Python.
 result = subprocess.call([run_py] + temps)
 if result != 0:

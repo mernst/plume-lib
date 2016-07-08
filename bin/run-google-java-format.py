@@ -5,6 +5,8 @@
 # https://github.com/google/google-java-format), but with improvements to
 # the formatting of annotations in comments.
 
+from __future__ import print_function
+from distutils import spawn
 import filecmp
 import os
 import stat
@@ -22,7 +24,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 fixup_py = os.path.join(script_dir, "fixup-google-java-format.py")
 
 gjf_jar_name = "google-java-format-1.0-all-deps.jar"
-# Set gjf_jar_path
+# Set gjf_jar_path, or retrieve it if it doesn't appear locally
 if os.path.isfile(os.path.join(script_dir, gjf_jar_name)):
     gjf_jar_path = os.path.join(script_dir, gjf_jar_name)
 elif os.path.isfile(os.path.join(os.path.dirname(script_dir), "lib", gjf_jar_name)):
@@ -31,13 +33,25 @@ else:
     gjf_jar_path = os.path.join(script_dir, gjf_jar_name)
     urllib.urlretrieve("https://github.com/google/google-java-format/releases/download/google-java-format-1.0/google-java-format-1.0-all-deps.jar", gjf_jar_path)
 
-if not os.path.isfile(fixup_py):
-    # TODO: do all this in check-google-java-format.py, too.
-    # TODO: should replace local file if remote it is more recent, but don't fail if no network connection exists.
-    # Could use: http://stackoverflow.com/questions/31105606/downloading-files-based-on-timestamp-in-python
-    # or http://superuser.com/questions/1049202/curl-check-if-file-is-newer-and-instead-of-downloading-execute-a-bash-or-pyth
+# For some reason, the "git ls-files" must be run from the root.
+# (I can run "git ls-files" from the command line in any directory.)
+def under_git(dir, filename):
+    """Return true if filename in dir is under git control."""
+    if not spawn.find_executable("git"):
+        if debug:
+            print("no git executable found")
+        return False
+    FNULL = open(os.devnull, 'w')
+    p = subprocess.Popen(["git", "ls-files", filename, "--error-unmatch"], cwd=dir, stdout=FNULL, stderr=subprocess.STDOUT)
+    p.wait()
+    if debug:
+        print("p.returncode", p.returncode)
+    return p.returncode == 0
+
+# Don't replace local with remote if local is under version control.
+# It would be better to just test whether the remote is newer than local.
+if not under_git(script_dir+"/..", "bin/fixup-google-java-format.py"):
     urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
-    # Make fixup_py executable by the user, like "chmod +x"
     os.chmod(fixup_py, os.stat(fixup_py).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 if debug:
