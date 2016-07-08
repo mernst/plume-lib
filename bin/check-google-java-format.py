@@ -54,7 +54,8 @@ def under_git(dir, filename):
     return p.returncode == 0
 
 # Don't replace local with remote if local is under version control.
-# It would be better to just test whether the remote is newer than local.
+# It would be better to just test whether the remote is newer than local,
+# But raw GitHub URLs don't have the necessary last-modified information.
 if not under_git(script_dir+"/..", "bin/run-google-java-format.py"):
     urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py", run_py)
     os.chmod(run_py, os.stat(run_py).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
