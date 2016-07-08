@@ -77,14 +77,18 @@ if len(files) == 0:
     files = [fname]
 
 temps = []
+cmdlineargs = []
 for fname in files:
-    ftemp = temporary_file_name() + ".java"
-    shutil.copyfile(fname, ftemp)
-    temps.append(ftemp)
+    if fname.startswith("-"):
+        cmdlineargs.append(fname)
+    else:
+        ftemp = temporary_file_name() + ".java"
+        shutil.copyfile(fname, ftemp)
+        temps.append(ftemp)
 
 if debug: print("Running run-google-java-format.py")
 # To save one process creation, could call directly in Python.
-result = subprocess.call([run_py] + temps)
+result = subprocess.call([run_py] + cmdlineargs + temps)
 if result != 0:
     cleanup()
     sys.exit(result)
