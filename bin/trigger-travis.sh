@@ -69,11 +69,16 @@
 # "after_success:" block is run only for the first configuration.  By
 # default an after_success: block is run for every build in the matrix, but
 # you really want it to run once if all the builds in the matrix succeed.
-# For a workaround, see https://github.com/dmakhno/travis_after_all , but I
-# couldn't get its permissions to work and don't know why.  The given test
-# is a hack, because the downstream job is triggered even if some job other
-# than the first one fails.  However, the given test is simple and it is
-# usually adequate.
+# A way to run only if all builds succeeded is in
+# https://github.com/dmakhno/travis_after_all , but I couldn't get its
+# permissions to work and don't know why.  Running if the first job
+# succeeds is simple and it is usually adequate, even though the downstream
+# job is triggered even if some job other than the first one fails.
+
+# TODO: enable the script to clone a particular branch rather than master.
+# This would require a way to know the relationships among branches in
+# different GitHub projects.  It's easier to run all your tests within a
+# single Travis job, if they fit within Travis's 50-minute time limit.
 
 # An alternative to this script would be to install the Travis command-line
 # client and then run:
