@@ -440,6 +440,19 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (add-hook 'write-contents-hooks 'check-for-string-equality)
     (java-set-compile-command)
 
+    (subword-mode t)     ; handle CamelCase
+    ;; (hs-minor-mode 1) ; hide/show code and comment blocks
+
+    ;; Fill column
+    (let ((buf-file-name (buffer-file-name (current-buffer))))
+      (if (and buf-file-name
+	       (string-match "/checker-framework\\|/randoop\\|/daikon" buf-file-name))
+	  (progn
+	    ;; Google Java style sets fill column to 100
+	    (setq fill-column 100)
+	    (fci-mode t)		; show fill-column indicator
+	    )))
+
     ;; This is orthogonal to dtrt-indent.el, which doesn't set tab-width.
     ;; Really, it shouldn't be necessary:  tabs do not belong in source code files.
     ;; Tab width
