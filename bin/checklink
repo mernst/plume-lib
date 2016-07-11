@@ -51,6 +51,8 @@ use lib map { /(.*)/ }
 
 # -----------------------------------------------------------------------------
 
+use File::Spec;
+
 package W3C::UserAgent;
 
 use LWP::RobotUA 1.19 qw();
@@ -1263,16 +1265,16 @@ EOF
 # we redirect to local copies of the files.
 
         if ($abs_link_uri eq "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd") {
-          $abs_link_uri = URI->new("file://" . dirname(readlink(__FILE__)) . "/../etc/xhtml1-transitional.dtd");
+          $abs_link_uri = URI->new("file://" . dirname(File::Spec->rel2abs( __FILE__ )) . "/../etc/xhtml1-transitional.dtd");
         }
         if ($abs_link_uri eq "http://www.w3.org/TR/html4/frameset.dtd") {
-          $abs_link_uri = URI->new("file://" . dirname(readlink(__FILE__)) . "/../etc/frameset.dtd");
+          $abs_link_uri = URI->new("file://" . dirname(File::Spec->rel2abs( __FILE__ )) . "/../etc/frameset.dtd");
         }
         if ($abs_link_uri eq "http://www.w3.org/TR/html4/loose.dtd") {
-          $abs_link_uri = URI->new("file://" . dirname(readlink(__FILE__)) . "/../etc/loose.dtd");
+          $abs_link_uri = URI->new("file://" . dirname(File::Spec->rel2abs( __FILE__ )) . "/../etc/loose.dtd");
         }
         if ($abs_link_uri eq "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd") {
-          $abs_link_uri = URI->new("file://" . dirname(readlink(__FILE__)) . "/../etc/xhtml-rdfa-1.dtd");
+          $abs_link_uri = URI->new("file://" . dirname(File::Spec->rel2abs( __FILE__ )) . "/../etc/xhtml-rdfa-1.dtd");
         }
         # printf("FILE %s \n", $abs_link_uri);
 
