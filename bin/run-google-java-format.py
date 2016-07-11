@@ -130,5 +130,6 @@ if result != 0:
 #      git merge after-reformatting -s recursive -X ours
 #  * Run "ant reformat" or the equivalent command.
 #  * Commit your changes.
-#  * Verify that only the formatting changes where ignored
+#  * Verify that this contains only changes you made (that is, the formatting
+#    dchanges were ignored):
 #      git diff after-reformatting...HEAD
