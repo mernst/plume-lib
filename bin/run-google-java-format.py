@@ -131,5 +131,5 @@ if result != 0:
 #  * Run "ant reformat" or the equivalent command.
 #  * Commit your changes.
 #  * Verify that this contains only changes you made (that is, the formatting
-#    dchanges were ignored):
+#    changes were ignored):
 #      git diff after-reformatting...HEAD
