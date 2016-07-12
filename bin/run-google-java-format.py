@@ -122,7 +122,14 @@ if result != 0:
 #    git push --tags
 #
 # For a client to merge the massive upstream changes:
+#  Assuming before-reformatting is the last commit before reformatting
+#  and after-reformatting the reformatting commit:
 #  * Merge in the commit before the reformatting into your branch.
+#     git merge before-reformatting
 #  * Merge in the reformatting commit, preferring all your own changes.
+#      git merge after-reformatting -s recursive -X ours
 #  * Run "ant reformat" or the equivalent command.
 #  * Commit your changes.
+#  * Verify that this contains only changes you made (that is, the formatting
+#    changes were ignored):
+#      git diff after-reformatting...HEAD
