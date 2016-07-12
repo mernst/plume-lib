@@ -2,7 +2,7 @@
 # html-update-toc
 # Update (in place) table of contents for an HTML document.
 # Michael Ernst <mernst@cs.washington.edu>
-# Time-stamp: <2010-07-31 20:44:14 mernst>
+# Time-stamp: <2016-07-12 08:07:23 mernst>
 
 # This script edits a HTML file in place to modify an existing table of
 # contents.  The contents start (and end, respectively) with "<!-- start
@@ -144,5 +144,5 @@ FILELOOP: for my $file (@ARGV) {
 
   }
   # It's not clear whether this is a helpful warning or is annoying.
-  print STDERR "No table of contents found in $file\n";
+  print STDERR "No table of contents found in first 10 paragraphs of $file\n";
 }
