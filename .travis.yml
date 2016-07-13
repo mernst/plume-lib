@@ -1,6 +1,6 @@
 language: java
 
-script: make USE_CODECOV=1
+script: make USE_CODECOV=1 all-but-emacs check
 
 sudo: false
 
