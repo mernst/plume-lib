@@ -5,4 +5,4 @@ test:
 	${MAKE} -C sort-directory-order-test test
 
 check-python:
-	@pylint --disable=line-too-long,superfluous-parens,invalid-name,too-many-branches,multiple-statements --output-format=parseable ${PYTHON_PROGRAMS}
+	@pylint --disable=line-too-long,superfluous-parens,invalid-name,too-many-branches,multiple-statements --output-format=parseable --reports=no ${PYTHON_PROGRAMS}
