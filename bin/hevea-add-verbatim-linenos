@@ -1,9 +1,10 @@
 #! /usr/bin/env python
 
-# Given a file produced by Hevea that contains "??" in place of line
-# references, replace those by actual line numbers, read from an aux file.
+"""Given a file produced by Hevea that contains "??" in place of line
+references, replace those by actual line numbers, read from an aux file.
 
-# Invoke like:  hevea-add-verbatim-linenos mydoc.aux mydoc.html > mydoc-fixed.html
+Invoke like:  hevea-add-verbatim-linenos mydoc.aux mydoc.html > mydoc-fixed.html
+"""
 
 # This is a bit of a hack.  The problem is that Hevea doesn't support the
 # fancyvrb LaTeX package.

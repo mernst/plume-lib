@@ -31,6 +31,10 @@ git-hooks: .git/hooks/pre-commit .git/hooks/post-merge
 emacs:
 	${MAKE} -C emacs
 
+check:
+	${MAKE} -C bin check-python
+	${MAKE} -C java check-format
+
 # Remove files that should not appear in the release.
 # Don't run this unless making a release!  And don't run it in your main clone!
 # It removes files that appear in the version control system.

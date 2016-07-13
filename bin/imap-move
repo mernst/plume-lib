@@ -1,60 +1,72 @@
 #!/usr/bin/env python
 
-## This script moves all IMAP messages from one folder to another.
-## It is currently hard-coded for Gmail.
-## Invoke it like this:
-##   imap-move imap-server username password-file src_folder_name dest_folder_name
-## The password-file is the name of a file that contains the password.
-## The reason for this is to prevent the password from being visible in the
-## list of currently-running commands.
+"""
+This script moves all IMAP messages from one folder to another.
+It is currently hard-coded for Gmail.
+Invoke it like this:
+  imap-move imap-server username password-file src_folder_name dest_folder_name
+The password-file is the name of a file that contains the password.
+The reason for this is to prevent the password from being visible in the
+list of currently-running commands.
+"""
+
+import imaplib
+import getpass
+import re
+import sys
+pattern_uid = re.compile(r'\d+ \(UID (?P<uid>\d+)\)')
 
 
-import imaplib, getpass, re, sys
-pattern_uid = re.compile('\d+ \(UID (?P<uid>\d+)\)')
-
-
-def connect(email, password=None):
+def connect(email, imap_server, password=None):
+    """Login to IMAP server"""
     # imap = imaplib.IMAP4_SSL("imap.gmail.com", 993)
     # imap = imaplib.IMAP4_SSL("imap.gmail.com")
     imap = imaplib.IMAP4_SSL(imap_server)
-    if password == None:
+    if password is None:
         password = getpass.getpass("Enter your password: ")
     imap.login(email, password)
     return imap
 
 def disconnect(imap):
+    """Logout from IMAP server"""
     imap.logout()
 
 def parse_uid(data):
+    """Extract UID field from string"""
     match = pattern_uid.match(data)
     return match.group('uid')
 
-if __name__ == '__main__':
+def main():
+    """Main routine"""
     if len(sys.argv) != 6:
         print "imap-move requires 5 arguments, got ", len(sys.argv)-1
         sys.exit(2)
 
-    (program_name, imap_server, username, password_file, src_folder_name, dest_folder_name) = sys.argv
+    (_, imap_server, username, password_file, src_folder_name, dest_folder_name) = sys.argv
     password = open(password_file).read().rstrip()
     print "password: ", password
 
-    imap = connect(username, password)
+    imap = connect(username, imap_server, password)
     # imap.select(mailbox = src_folder_name, readonly = False)
     imap.select(src_folder_name)
 
-    resp, items = imap.search(None, 'All')
+    _, items = imap.search(None, 'All')
     email_ids = items[0].split()
 
     for email_id in email_ids:
 
-        resp, data = imap.fetch(email_id, "(UID)")
+        _, data = imap.fetch(email_id, "(UID)")
         msg_uid = parse_uid(data[0])
         print "msg_uid: ", msg_uid
 
         result = imap.uid('COPY', msg_uid, dest_folder_name)
         if result[0] == 'OK':
-            mov, data = imap.uid('STORE', msg_uid, '+FLAGS', '(\Deleted)')
+            _, data = imap.uid('STORE', msg_uid, '+FLAGS', r'(\Deleted)')
 
     imap.expunge()
 
     disconnect(imap)
+
+
+if __name__ == '__main__':
+    main()
