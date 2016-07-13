@@ -1,5 +1,9 @@
 language: java
 
+before_install:
+  - pip install --user pylint
+  - npm install --save-dev travis-after-all
+
 script: make USE_CODECOV=1 all-but-emacs check
 
 sudo: false
@@ -9,13 +13,33 @@ jdk:
 #  - oraclejdk7
   - openjdk7
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -v -d
+# after_success:
+#   - bash <(curl -s https://codecov.io/bash) -v -d
+#   - |
+#       if [[ ($TRAVIS_BRANCH == master) &&
+#             ($TRAVIS_PULL_REQUEST == false) &&
+#             ( (! $TRAVIS_JOB_NUMBER == *.*) || ($TRAVIS_JOB_NUMBER == *.1) ) ]] ; then
+#         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+#         sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
+#         sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+#       fi
+
+after_script:
   - |
-      if [[ ($TRAVIS_BRANCH == master) &&
-            ($TRAVIS_PULL_REQUEST == false) &&
-            ( (! $TRAVIS_JOB_NUMBER == *.*) || ($TRAVIS_JOB_NUMBER == *.1) ) ]] ; then
-        curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-        sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
-        sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+      declare exitCode;
+      $(npm bin)/travis-after-all
+      exitCode=$?
+
+      if [ $exitCode -eq 0 ]; then
+        # Here goes the code that needs to be executed if the build succeeded
+        if [[ ($TRAVIS_BRANCH == master) &&
+              ($TRAVIS_PULL_REQUEST == false) ]] ; then
+          curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+          sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
+          sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+        fi
+      fi
+
+      if [ $exitCode -eq 1 ]; then
+        # Here goes the code that needs to be executed if the build failed
       fi

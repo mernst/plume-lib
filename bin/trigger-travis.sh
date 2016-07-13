@@ -33,17 +33,27 @@
 # The TRAVIS_ACCESS_TOKEN environment variable will be set when Travis runs
 # the job, but won't be visible to anyone browsing https://travis-ci.org/.
 #
-# 2. Add the following after_success block to your .travis.yml file,
+# 2. Add the following after_script block to your .travis.yml file,
 # where you replace OTHERGITHUB* by a specific downstream project,
 # but you leave $TRAVIS_ACCESS_TOKEN as literal text:
 #
-# after_success:
+# after_script:
 #   - |
-#       if [[ ($TRAVIS_BRANCH == master) &&
-#             ($TRAVIS_PULL_REQUEST == false) &&
-#             ( (! $TRAVIS_JOB_NUMBER == *.*) || ($TRAVIS_JOB_NUMBER == *.1) ) ]] ; then
-#         curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#         sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
+#       declare exitCode;
+#       $(npm bin)/travis-after-all
+#       exitCode=$?
+# 
+#       if [ $exitCode -eq 0 ]; then
+#         # Here goes the code that needs to be executed if the build succeeded
+#         if [[ ($TRAVIS_BRANCH == master) &&
+#               ($TRAVIS_PULL_REQUEST == false) ]] ; then
+#           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+#           sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
+#         fi
+#       fi
+# 
+#       if [ $exitCode -eq 1 ]; then
+#         # Here goes the code that needs to be executed if the build failed
 #       fi
 #
 # Note that Travis does not fail a job if an after_success command fails.
@@ -66,14 +76,12 @@
 # defines a build matrix
 # (https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix)
 # that runs the same job using different configurations, then the
-# "after_success:" block is run only for the first configuration.  By
-# default an after_success: block is run for every build in the matrix, but
-# you really want it to run once if all the builds in the matrix succeed.
-# A way to run only if all builds succeeded is in
-# https://github.com/dmakhno/travis_after_all , but I couldn't get its
-# permissions to work and don't know why.  Running if the first job
-# succeeds is simple and it is usually adequate, even though the downstream
-# job is triggered even if some job other than the first one fails.
+# "after_success:" block is run only for the first configuration.
+# By default an after_success: block is run for every build in the matrix,
+# but you really want it to run once if all the builds in the matrix
+# succeed.  Running if the first job succeeds is simple and it is usually
+# adequate, even though the downstream job is triggered even if some job
+# other than the first one fails.
 
 # TODO: enable the script to clone a particular branch rather than master.
 # This would require a way to know the relationships among branches in
