@@ -126,6 +126,9 @@ if result != 0:
 #  and after-reformatting is the reformatting commit:
 #  * Merge in the commit before the reformatting into your branch.
 #      git merge before-reformatting
+#    Or, if you have "myremote" configured as remote, run these commands:
+#      git fetch myremote after-reformatting:after-reformatting
+#      git fetch myremote before-reformatting:before-reformatting
 #  * Resolve any conflicts, run tests, and commit your changes.
 #  * Merge in the reformatting commit, preferring all your own changes.
 #      git merge after-reformatting -s recursive -X ours
