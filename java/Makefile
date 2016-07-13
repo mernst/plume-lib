@@ -527,6 +527,7 @@ typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
 # Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
 	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}"
 
+# I have not found this tool very useful.
 checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
