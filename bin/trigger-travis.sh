@@ -33,10 +33,13 @@
 # The TRAVIS_ACCESS_TOKEN environment variable will be set when Travis runs
 # the job, but won't be visible to anyone browsing https://travis-ci.org/.
 #
-# 2. Add the following after_script block to your .travis.yml file,
-# where you replace OTHERGITHUB* by a specific downstream project,
-# but you leave $TRAVIS_ACCESS_TOKEN as literal text:
+# 2. Add the following before_install and after_script block to your
+# .travis.yml file, where you replace OTHERGITHUB* by a specific downstream
+# project, but you leave $TRAVIS_ACCESS_TOKEN as literal text:
 #
+# before_install:
+#   - npm install --save-dev travis-after-all
+# 
 # after_script:
 #   - |
 #       declare exitCode;
