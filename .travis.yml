@@ -1,4 +1,4 @@
-language: generic
+language: java
 
 before_install:
   - pip install --user pylint
