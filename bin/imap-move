@@ -42,7 +42,7 @@ def main():
         print "imap-move requires 5 arguments, got ", len(sys.argv)-1
         sys.exit(2)
 
-    (_, imap_server, username, password_file, src_folder_name, dest_folder_name) = sys.argv
+    (_, imap_server, username, password_file, src_folder_name, dest_folder_name) = sys.argv # pylint: disable=unbalanced-tuple-unpacking
     password = open(password_file).read().rstrip()
     print "password: ", password
 

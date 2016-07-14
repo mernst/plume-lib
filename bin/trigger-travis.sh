@@ -43,17 +43,12 @@
 #       $(npm bin)/travis-after-all
 #       exitCode=$?
 # 
-#       if [ $exitCode -eq 0 ]; then
-#         # Here goes the code that needs to be executed if the build succeeded
+#       if [ "$exitCode" -eq 0 ]; then
 #         if [[ ($TRAVIS_BRANCH == master) &&
 #               ($TRAVIS_PULL_REQUEST == false) ]] ; then
 #           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
 #           sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 #         fi
-#       fi
-# 
-#       if [ $exitCode -eq 1 ]; then
-#         # Here goes the code that needs to be executed if the build failed
 #       fi
 #
 # Note that Travis does not fail a job if an after_success command fails.
