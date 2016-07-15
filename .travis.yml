@@ -1,17 +1,17 @@
 language: java
 
+jdk:
+  - oraclejdk8
+#  - oraclejdk7
+  - openjdk7
+
+sudo: false
+
 before_install:
   - pip install --user pylint
   - npm install --save-dev travis-after-all
 
 script: make USE_CODECOV=1 all-but-emacs check
-
-sudo: false
-
-jdk:
-  - oraclejdk8
-#  - oraclejdk7
-  - openjdk7
 
 after_script:
   - |
