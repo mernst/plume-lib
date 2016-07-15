@@ -13,7 +13,7 @@
 # where --pro means to use travis-ci.com instead of travis-ci.org, and
 # where TRAVIS_ACCESS_TOKEN is, or ~/private/.travis-access-token contains,
 # the Travis access token.
-# 
+#
 # Your Travis access token is the text after "Your access token is " in
 # the ouput of these commands:
 #   travis login && travis token
@@ -39,13 +39,13 @@
 #
 # before_install:
 #   - npm install --save-dev travis-after-all
-# 
+#
 # after_script:
 #   - |
 #       declare exitCode;
 #       $(npm bin)/travis-after-all
 #       exitCode=$?
-# 
+#
 #       if [ "$exitCode" -eq 0 ]; then
 #         if [[ ($TRAVIS_BRANCH == master) &&
 #               ($TRAVIS_PULL_REQUEST == false) ]] ; then
@@ -53,6 +53,9 @@
 #           sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 #         fi
 #       fi
+#
+# Your .travis.yml file must not use `language: generic` because then
+# npm won't be installed.
 #
 # Note that Travis does not fail a job if an after_success command fails.
 # If you misspell a GitHub ID or project name, then this script will fail,
