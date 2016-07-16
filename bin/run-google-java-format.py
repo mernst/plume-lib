@@ -24,6 +24,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 fixup_py = os.path.join(script_dir, "fixup-google-java-format.py")
 
 gjf_jar_name = "google-java-format-1.0-all-deps.jar"
+# gjf_jar_name = "google-java-format-1.1-SNAPSHOT-all-deps.jar"
 # Set gjf_jar_path, or retrieve it if it doesn't appear locally
 if os.path.isfile(os.path.join(script_dir, gjf_jar_name)):
     gjf_jar_path = os.path.join(script_dir, gjf_jar_name)
@@ -32,6 +33,7 @@ elif os.path.isfile(os.path.join(os.path.dirname(script_dir), "lib", gjf_jar_nam
 else:
     gjf_jar_path = os.path.join(script_dir, gjf_jar_name)
     urllib.urlretrieve("https://github.com/google/google-java-format/releases/download/google-java-format-1.0/google-java-format-1.0-all-deps.jar", gjf_jar_path)
+    # urllib.urlretrieve("http://types.cs.washington.edu/" + gjf_jar_name, gjf_jar_path)
 
 # For some reason, the "git ls-files" must be run from the root.
 # (I can run "git ls-files" from the command line in any directory.)
@@ -66,6 +68,7 @@ if len(files) == 0:
     sys.exit(1)
 
 result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imports=also"] + files)
+# result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace"] + files)
 # Don't stop if there was an error, because google-java-format won't munge
 # files and we still want to run fixup-google-java-format.py.
 # if result != 0:
