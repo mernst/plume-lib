@@ -440,7 +440,7 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (add-hook 'write-contents-hooks 'check-for-string-equality)
     (java-set-compile-command)
 
-    (subword-mode t)     ; handle CamelCase
+    ;; (subword-mode t)     ; handle CamelCase
     ;; (hs-minor-mode 1) ; hide/show code and comment blocks
 
     ;; Fill column
