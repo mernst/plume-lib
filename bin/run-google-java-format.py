@@ -54,7 +54,14 @@ def under_git(dir, filename):
 # It would be better to just test whether the remote is newer than local,
 # But raw GitHub URLs don't have the necessary last-modified information.
 if not under_git(script_dir+"/..", "bin/fixup-google-java-format.py"):
-    urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
+    try:
+        urllib.urlretrieve("https://raw.githubusercontent.com/mernst/plume-lib/master/bin/fixup-google-java-format.py", fixup_py)
+    except:
+        if os.path.exists(fixup_py):
+            print("Couldn't retrieve fixup-google-java-format.py; using cached version")
+        else:
+            print("Couldn't retrieve fixup-google-java-format.py")
+            sys.exit(1)
     os.chmod(fixup_py, os.stat(fixup_py).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 if debug:
