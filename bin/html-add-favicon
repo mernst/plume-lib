@@ -25,8 +25,10 @@ if (scalar(@ARGV) < 2) {
 
 my $ico_file = shift(@ARGV);
 if ($ico_file !~ /\.png$/) {
-  die "Only handles .png files";
+  die "Only handles .png icon files";
 }
+
+my $plbin = dirname(__FILE__);
 
 for my $arg (@ARGV) {
 
@@ -40,6 +42,6 @@ for my $arg (@ARGV) {
   my $headtext = "<link rel=\"icon\" type=\"image/png\" href=\"$linkdir$ico_file\" />";
 
   # This is ugly, but it handles two capitalizations of "</head>".
-  `preplace '(<link rel="icon"[^>]*>\n)?</head>' '$headtext\n</head>' $arg`;
-  `preplace '(<link rel="icon"[^>]*>\n)?</HEAD>' '$headtext\n</HEAD>' $arg`;
+  `$plbin/preplace '(<link rel="icon"[^>]*>\n)?</head>' '$headtext\n</head>' $arg`;
+  `$plbin/preplace '(<link rel="icon"[^>]*>\n)?</HEAD>' '$headtext\n</HEAD>' $arg`;
 }
