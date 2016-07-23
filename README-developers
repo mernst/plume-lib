@@ -53,17 +53,13 @@ at least plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
 The following commands will open the URLs in your browser.
 
     xdg-open https://travis-ci.org/mernst/plume-lib
-    xdg-open https://travis-ci.org/typetools/plume-lib-typecheck
     xdg-open https://travis-ci.org/codespecs/daikon
-    xdg-open https://travis-ci.org/typetools/daikon-typecheck-nullness
-    xdg-open https://travis-ci.org/typetools/daikon-typecheck-regex
-    xdg-open https://travis-ci.org/typetools/daikon-typecheck-signature
-    xdg-open https://travis-ci.org/typetools/daikon-typecheck-interning
-    xdg-open https://travis-ci.org/typetools/daikon-typecheck-formatter
+    xdg-open https://travis-ci.org/typetools/plume-lib-typecheck
+    xdg-open https://travis-ci.org/typetools/daikon-typecheck
     xdg-open http://tern.cs.washington.edu:8080/job/plume-lib/
     xdg-open http://tern.cs.washington.edu:8080/job/daikon/
-    xdg-open http://tern.cs.washington.edu:8080/job/daikon-typecheck/
     xdg-open http://tern.cs.washington.edu:8080/job/plume-lib-typecheck/
+    xdg-open http://tern.cs.washington.edu:8080/job/daikon-typecheck/
 
 8. Run the make-plume-release script located in bin:
 
