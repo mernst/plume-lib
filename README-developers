@@ -34,16 +34,15 @@ documents any new files.  To find new files, do
 
     git diff --name-status v`cat VERSION` | grep '^A'
 
-5. Update changelog.txt and then VERSION.
-To help writing the changelog text, run a command such as:
+5. Update changelog.txt and VERSION.
+To help writing the changelog text, see the log and/or diffs, using one of:
 
     git log --name-status v`cat VERSION`..HEAD
+    git diff v`cat VERSION`...HEAD
 
-to view the changes since the last release, or something like
-
-    git diff v`cat VERSION`..HEAD
-
-to see the changes.
+Also view the diffs to file index.html in the gh-pages branch.
+(It doesn't have version tags, so this isn't entirely trivial; I should write
+up the instructions here.)
 
 6. Commit and push the changes in your copy of the plume-lib repository.
 
@@ -72,8 +71,8 @@ The following commands will open the URLs in your browser.
     bin/make-plume-release `cat VERSION`
 
 The script requires that $JAVAC or 'javac' point to the JSR 308 compiler.
-If this is the case, then the release is built and the test cases are run.  The
-release should be Java 5 compatible.
+If this is the case, then the release is built and the test cases are run.
+The release will be compatible with Java 7.
 
 9. Push the new Git tag created by the script to the repository:
 
