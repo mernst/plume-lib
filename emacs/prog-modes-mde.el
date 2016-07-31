@@ -582,6 +582,11 @@ This is disabled on lines with a comment containing the string \"interned\"."
   )
 
 
+;; TODO BUG: This fails if a file was not already read into a buffer,
+;; perhaps because reading a file into a buffer changes the match-data.
+;; So, before running this do: (tags-search "\\`\\(.\\|\n\\)")
+;; TODO: Handle adding curly braces when an if or for has a body consisting
+;; of a single statement, on the same line as the if or for.
 (defun add-curly-braces ()
   "Add curly braces around body of if/for statements whose body is a single
 statement.  Does replacement in any file in a currently-visited tags table."
@@ -596,10 +601,17 @@ statement.  Does replacement in any file in a currently-visited tags table."
   ;; Find if/for statements that end with a close paren, which suggests the
   ;; body is on the next line.  Also else statements that end a line.
   (let ((tags-regex
-	 "^ *\\(}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)$"))
+	 "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
     (tags-search tags-regex)
     (message "match-data after tags-search: %s" (match-data))
     (while t
+      (let ((start-of-if (match-beginning 1)))
+      (message "match-data at top of loop: %s" (match-data))
+      ;; (message "Before and after point:\n %s\n %s"
+      ;;          (buffer-substring (max (- (point) 45) (point-min))
+      ;;                            (point))
+      ;;          (buffer-substring (point)
+      ;;                            (min (+ (point) 45) (point-max))))
       ;; Are tags-search and tags-loop-continue guaranteed to leave the
       ;; match-data set??  Do looking-at to re-set match-data.
       (beginning-of-line)
@@ -607,32 +619,50 @@ statement.  Does replacement in any file in a currently-visited tags table."
       ;; (if (not (looking-at tags-regex))
       ;;          (error "This can't happen"))
 
-      (goto-char (match-beginning 2))
-      (let ((line (buffer-substring (point) (save-excursion (end-of-line) (point)))))
+      ;; (message "Looking at (2): %s"
+      ;;          (buffer-substring (point)
+      ;;                            (min (+ (point) 45) (point-max))))
+      ;; (message "1 %s" (match-data))
+      (goto-char (match-beginning 1))
+      ;; (message "Looking at (3): %s"
+      ;;          (buffer-substring (point)
+      ;;                            (min (+ (point) 45) (point-max))))
+      (let* ((line (buffer-substring (point) (save-excursion (end-of-line) (point))))
+	     (semicolon-terminated (equal ";" (substring line -1))))
 	(if (and (= (how-many-in-string "(" line) (how-many-in-string ")" line))
 		 (= 0 (how-many-in-string "{" line))
 		 (= 0 (how-many-in-string "//" line))
 		 (let ((leading-spaces (progn (string-match "^ *" line)
 					      (match-string 0 line))))
-		   (and (looking-at (concat leading-spaces "[^ \n].*\n"
-					    leading-spaces "[ ]"))
-			(not (looking-at (concat leading-spaces "[^ \n].*\n"
-						 leading-spaces "[ ]*\\(for\\|if\\|try\\)\\b"))))))
-	    ;; Parens are balanced on the if/for line, and the next line is
-	    ;; indented more.
+		   (if semicolon-terminated
+		       (looking-at (concat leading-spaces "[^ \n].*\n+"
+					   leading-spaces "[^ ]"))
+		     (and (looking-at (concat leading-spaces "[^ \n].*\n"
+					      leading-spaces "[ ]"))
+			  (not (looking-at (concat leading-spaces "[^ \n].*\n"
+						   leading-spaces "[ ]*\\(for\\|if\\|try\\)\\b")))))))
+	    ;; Parens are balanced on the if/for line, and either:
+	    ;;  * line ends with ";" and next line is equally indented, or
+	    ;;  * line does not end with ";" and next line is indented more.
 	    (progn
 	      (cond ((looking-at " *\\(if\\|for\\)")
 		     (forward-sexp 2))
 		    ((looking-at " *\\(}? else\\)")
+		     ;; (message "2 %s" (match-data))
 		     (goto-char (match-end 0)))
 		    (t
-		     (error "This can't happen")))
+		     (error "This can't happen.  Looking at: %s"
+			    (buffer-substring (point)
+					      (min (+ (point) 45) (point-max))))))
 	      (insert " \{")
+	      (if semicolon-terminated
+		  (newline-and-indent))
 	      (re-search-forward ";\\( *//.*\\)?$")
 	      (while (looking-back "^[^;\n]*//[^\n]*$")
 		(re-search-forward ";\\( *//.*\\)?$"))
 	      (if (looking-at "\n *\\(else\\)")
 		  (progn
+		    ;; (message "3 %s" (match-data))
 		    (goto-char (match-beginning 1))
 		    (insert "} "))
 		(progn
@@ -640,7 +670,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
 		  (insert "}")
 		  (c-indent-line-or-region))))
 	  (next-line)))
-      (tags-loop-continue))))
+      (tags-loop-continue)))))
 
 
 (defun examine-and-cleanup-curly-braces ()
@@ -2005,7 +2035,7 @@ in this directory or some superdirectory."
 	     (make-local-variable 'compile-command)
 	     (setq compile-command "ant -e "))
 	    ((let ((buildfile (file-in-super-directory
-			      "build.xml" default-directory)))
+			       "build.xml" default-directory)))
 	       (and buildfile
 		    ;; hack to account for mysterious directory named build.xml
 		    (not (file-directory-p buildfile))))
@@ -2016,6 +2046,11 @@ in this directory or some superdirectory."
 	     (if (file-readable-p "gradlew")
 		 (setq compile-command "./gradlew ")
 	       (setq compile-command "gradle ")))
+	    ((file-in-super-directory "build.gradle" default-directory)
+	     (let ((buildfile (file-in-super-directory
+			       "build.gradle" default-directory)))
+	       (make-local-variable 'compile-command)
+	       (setq compile-command (concat "gradle -b " buildfile " build"))))
 	    ((file-readable-p "pom.xml")
 	     (make-local-variable 'compile-command)
 	     (setq compile-command "mvn ")))))
