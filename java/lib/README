@@ -25,7 +25,7 @@ BCEL (bcel.jar)
     # Checker Framework, instead run:
     #   mvn versions:use-latest-versions -Dincludes="org.checkerframework:*"
     #   mvn clean verify
-    mvn clean verify -P checkeframework-local
+    mvn clean verify -P checkerframework-local
     \cp -pf target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
     cd ..
     rm -rf commons-bcel

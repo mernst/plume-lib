@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
-import java.util.*;
+import java.util.Set;
 
 // Do I need to be able to add other files, such as the Checker Framework?
 

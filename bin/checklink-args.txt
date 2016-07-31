@@ -259,6 +259,18 @@
 --suppress-fragment http://plse.cs.washington.edu/staging-daikon/download/doc/developer/Variable-declarations.html#Variable-declarations
 --suppress-fragment http://plse.cs.washington.edu/staging-daikon/download/doc/developer/Version-control-repository.html#Version-control-repository
 
+# This next group of suppress-fragments are required because "javadoc -private"
+# makes links to non-existent constructors for nested classes.  Remove them when
+# when this bug is fixed: https://bugs.openjdk.java.net/browse/CODETOOLS-7901742
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/util/ProgressDisplay.Mode.html#Mode--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/util/ReversibleMultiMap.Ops.html#Ops--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/main/GenInputsAbstract.ClassLiteral#ClassLiteralsMode--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/main/GenInputsAbstract.BehaviorType#BehaviorType--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/contract/PrimValue.PrintMode.html#PrintMode--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/util/RandoopSecurityManager.Status.#Status--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/types/Match.html#Match--
+--suppress-fragment https://randoop.github.io/randoop/api/randoop/util/RunnerThread.NextCallMustBe.ht#NextCallMustBe--
+
 # These are redirects, where I prefer to use the first, more canonical
 # URL rather than the one it redirects to.
 --suppress-redirect http://2006.ecoop.org/->http://www.emn.fr/x-info/ecoop2006/
