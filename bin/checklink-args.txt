@@ -53,6 +53,7 @@
 --suppress-broken 401:https://developer.apple.com/search/index.php?q=java
 --suppress-broken 403:http://www.darpa.mil/	
 --suppress-broken 403:http://gradle.org/
+--suppress-broken 403:https://gradle.org/
 --suppress-broken 403:http://homes.cs.washington.edu/~mernst/uw-only/research/potential-research-projects.html
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
 --suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
