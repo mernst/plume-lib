@@ -53,6 +53,7 @@
 --suppress-broken 401:https://developer.apple.com/search/index.php?q=java
 --suppress-broken 403:http://www.darpa.mil/	
 --suppress-broken 403:http://gradle.org/
+--suppress-broken 403:https://gradle.org/
 --suppress-broken 403:http://homes.cs.washington.edu/~mernst/uw-only/research/potential-research-projects.html
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
 --suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
@@ -180,6 +181,7 @@
 
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
+--suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Crandoop
 --suppress-fragment http://www.washington.edu/maps/#!/low
 --suppress-fragment http://www.washington.edu/maps/#!/cdh
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
@@ -194,6 +196,7 @@
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr308-discuss
+--suppress-fragment https://groups.google.com/forum/#!forum/randoop-discuss
 --suppress-fragment https://groups.google.com/forum/#!overview
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
 --suppress-fragment https://htmlpreview.github.io/?https://bitbucket.org/typetools/jsr308-langtools/raw/tip/doc/README-jsr308.html#reporting-bugs
