@@ -26,18 +26,17 @@ import java.lang.annotation.Target;
  *
  * For example, you must write
  * <pre>
- * /** comment for first option{@literal *}/
- *{@literal @}OptionGroup("the group")
- *{@literal @}Option("the first option")
- * public static int first_option = blah;</pre>
+ *  /** comment for first option{@literal *}/
+ * {@literal @}OptionGroup("the group")
+ * {@literal @}Option("the first option")
+ *  public static int first_option = blah;</pre>
  * instead of
  * <pre>
+ * {@literal @}OptionGroup("the group")
  *
- *{@literal @}OptionGroup("the group")
- *
- * /** comment for first option{@literal *}/
- *{@literal @}Option("the first option")
- * public static int first_option = blah;</pre>
+ *  /** comment for first option{@literal *}/
+ * {@literal @}Option("the first option")
+ *  public static int first_option = blah;</pre>
  *
  * @see plume.Options
  * @see plume.Option

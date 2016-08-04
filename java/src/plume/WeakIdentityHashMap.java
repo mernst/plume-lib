@@ -297,7 +297,7 @@ public class WeakIdentityHashMap<K,V>
         return x == y;
     }
 
-    /** Return the hash code for x **/
+    /** Return the hash code for x */
     /*@Pure*/
     static int hasher (Object x) {
         return System.identityHashCode (x);
@@ -1033,7 +1033,7 @@ public class WeakIdentityHashMap<K,V>
         }
     }
 
-    /** Version copied from Abstract Map because it is not public **/
+    /** Version copied from Abstract Map because it is not public */
     static class OurSimpleEntry<K,V> implements Map.Entry<K,V> {
         K key;
         V value;

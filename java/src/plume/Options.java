@@ -245,7 +245,7 @@ public class Options {
     //    /** Option annotation on the field. */
     //    Option option;
 
-    /** Object containing the field.  Null if the field is static. **/
+    /** Object containing the field.  Null if the field is static. */
     /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj;
 
     /** Short (one-character) argument name. */
@@ -291,7 +291,7 @@ public class Options {
      */
     boolean no_doc_default = false;
 
-    /** If the option is a list, this references that list. **/
+    /** If the option is a list, this references that list. */
     /*@MonotonicNonNull*/ List<Object> list = null;
 
     /** Constructor that takes one String for the type. */
@@ -530,7 +530,7 @@ public class Options {
   /** All of the argument options as a single string. */
   private String options_str = "";
 
-  /** First specified class.  Void stands for "not yet initialized". **/
+  /** First specified class.  Void stands for "not yet initialized". */
   private Class<?> main_class = Void.TYPE;
 
   /** List of all of the defined options. */

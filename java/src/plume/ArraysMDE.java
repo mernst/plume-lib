@@ -1628,7 +1628,7 @@ public final class ArraysMDE {
    * @param a the first array to concatenate
    * @param b the second array to concatenate
    * @return an array that concatenates the arguments
-   **/
+   */
   public static /*@PolyAll*/ String[] concat(
       /*@PolyAll*/ String /*@Nullable*/ [] a, /*@PolyAll*/ String /*@Nullable*/ [] b) {
     if (a == null) {

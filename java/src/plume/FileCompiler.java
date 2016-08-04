@@ -158,7 +158,7 @@ public final class FileCompiler {
 
   //   /**
   //    * @param filename the path of the Java source to be compiled
-  //    **/
+  //    */
   //   private TimeLimitProcess compile_source(String filename) throws IOException {
   //     String command = compiler + " " + filename;
   //     // System.out.println ("\nexecuting compile command: " + command);

@@ -15,7 +15,7 @@ public final class Stopwatch {
   long elapsedMillis = 0;
   long startTime = 0;
 
-  /** When created, the stopwatch is running by default. **/
+  /** When created, the stopwatch is running by default. */
   public Stopwatch() {
     this(true);
   }
