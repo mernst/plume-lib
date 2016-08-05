@@ -106,7 +106,16 @@ This is good for modes like Perl, where the parser can get confused."
 	(progn
 	  (setq tab-width 2)
 	  (make-local-variable 'tab-stop-list)
-	  (set-tab-stop-list-width 2))))
+	  (set-tab-stop-list-width 2)))
+    (if (and buf-file-name
+	     (or (string-match "/valgrind/fjalar/dwarf.c" buf-file-name)
+		 (string-match "/valgrind/fjalar/readelf.c" buf-file-name))
+	     )
+	(progn
+	  (setq tab-width 8)
+	  (make-local-variable 'tab-stop-list)
+	  (set-tab-stop-list-width 8)))
+    )
 
   (setq indent-tabs-mode nil)
 
