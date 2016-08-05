@@ -1,8 +1,10 @@
 #!/usr/bin/perl -wn
 
 # Print all lines that do not occur between the two specified regexps
-# (inclusive).  That is, print until the first regexp is matched; then do
-# not print until the second regexp is matched; then repeat.
+# That is, print until the first regexp is matched, but print the matching
+# line; then do not print until the second regexp is matched, but print the
+# matching line; then repeat.
+# If the first argument is --inclusive, then don't print the matching lines.
 # Does a case-insensitive match.
 
 # The patterns are the first two arguments.
@@ -12,20 +14,31 @@
 
 BEGIN {
   $outputting = 1;
+  $inclusive = 0;
   $startpattern = shift @ARGV;
+  if ($startpattern eq "--inclusive") {
+    $inclusive = 1;
+    $startpattern = shift @ARGV;
+  }
   $endpattern = shift @ARGV;
   # print STDERR "startpattern: $startpattern\n";
   # print STDERR "endpattern: $endpattern\n";
 }
 
 if ($outputting) {
-  print;
   if (/$startpattern/io) {
     $outputting = 0;
+    if (! $inclusive) {
+      print;
+    }
+  } else {
+    print;
   }
 } else {
   if (/$endpattern/io) {
     $outputting = 1;
-    print;
+    if (! $inclusive) {
+      print;
+    }
   }
 }
