@@ -98,6 +98,8 @@
 # Parts of this script were originally taken from
 # http://docs.travis-ci.com/user/triggering-builds/
 
+# TODO: take a --branch command-line argument.
+
 if [ "$#" -lt 3 ] || [ "$#" -ge 5 ]; then
   echo "Wrong number of arguments $# to trigger-travis.sh; run like:"
   echo " trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]" >&2
