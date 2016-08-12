@@ -39,7 +39,7 @@ import java.util.Iterator;
  * or there are multiple ways to iterate so it doesn't make sense to
  * reserve the iterator() method for just one of them, or it is desirable
  * to use an Iterator because it throws a ConcurrentModificationException
- * in case of errors, or for other reasons..  This class can be appropriate
+ * in case of errors, or for other reasons.  This class can be appropriate
  * in such circumstances.
  * <p>
  *
