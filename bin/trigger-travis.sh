@@ -6,9 +6,9 @@
 # way to trigger a new Travis job.
 
 # Usage:
-#   trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
-# or
-#   trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT `cat ~/private/.travis-access-token` [MESSAGE]
+#   trigger-travis.sh [--pro] [--branch BRANCH] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]
+# For example:
+#   trigger-travis.sh typetools checker-framework `cat ~/private/.travis-access-token` "Trigger for testing"
 #
 # where --pro means to use travis-ci.com instead of travis-ci.org, and
 # where TRAVIS_ACCESS_TOKEN is, or ~/private/.travis-access-token contains,
@@ -100,9 +100,9 @@
 
 # TODO: take a --branch command-line argument.
 
-if [ "$#" -lt 3 ] || [ "$#" -ge 5 ]; then
+if [ "$#" -lt 3 ] || [ "$#" -ge 7 ]; then
   echo "Wrong number of arguments $# to trigger-travis.sh; run like:"
-  echo " trigger-travis.sh [--pro] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]" >&2
+  echo " trigger-travis.sh [--pro] [--branch BRANCH] GITHUBID GITHUBPROJECT TRAVIS_ACCESS_TOKEN [MESSAGE]" >&2
   exit 1
 fi
 
@@ -111,6 +111,14 @@ if [ "$1" = "--pro" ] ; then
   shift
 else
   TRAVIS_URL=travis-ci.org
+fi
+
+if [ "$1" = "--branch" ] ; then
+  shift
+  BRANCH="$1"
+  shift
+else
+  BRANCH=master
 fi
 
 USER=$1
@@ -131,7 +139,7 @@ fi
 
 body="{
 \"request\": {
-  \"branch\":\"master\"
+  \"branch\":\"$BRANCH\"
   $MESSAGE
 }}"
 
