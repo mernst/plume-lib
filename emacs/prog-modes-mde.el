@@ -741,7 +741,7 @@ Works over the currently-visited tags table."
   )
    
 (defun improve-javadoc-code-style ()
-  "Improve style for inline code in Jadaco comments, for files in the current TAGS table."
+  "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
 
   ;; TODO: as I run these, I mad need to convert
   ;;   <code>...</code>
@@ -763,6 +763,12 @@ Works over the currently-visited tags table."
   (tags-query-replace "&lt;" "<")
   (tags-query-replace "&gt;" ">")
   )
+
+;; TODO: More Javadoc fixup, for /** and */ not on their own line when they should be:
+;; (tags-search "/\\*\\* [A-Z].*\n *\\*")
+;; (tags-search "/\\*\\*\\(\n[ \t]*\\*.*\\)+.*\\*/")
+
+
 
 (defun declaration-annotations-to-their-own-line ()
   "Move commented declaration annotations to their own line, for files in the current TAGS tables."
