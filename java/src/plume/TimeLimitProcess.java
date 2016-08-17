@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.apache.commons.io.IOUtils;
@@ -281,7 +282,7 @@ public class TimeLimitProcess extends Process {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
       try {
-        IOUtils.copy(p.getInputStream(), cached_stdout);
+        IOUtils.copy(p.getInputStream(), cached_stdout, Charset.defaultCharset());
       } catch (IOException e) {
         // assume the best
       }
@@ -296,7 +297,7 @@ public class TimeLimitProcess extends Process {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
       try {
-        IOUtils.copy(p.getErrorStream(), cached_stderr);
+        IOUtils.copy(p.getErrorStream(), cached_stderr, Charset.defaultCharset());
       } catch (IOException e) {
         // assume the best
       }
