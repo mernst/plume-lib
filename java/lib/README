@@ -3,7 +3,7 @@ order to make plume-lib self-contained.  (They do make it large, though.)
 
 Most libraries are standard, downloaded from their respective webpages:
 
-backport-util-concurrent-3.1.jar : I don't think this is needed any more
+backport-util-concurrent-3.1.jar : (used by ical4j) https://sourceforge.net/projects/backport-jsr166/files/backport-jsr166/
 bcel.jar : see below
 checker-qual-2.1.1.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
 commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
