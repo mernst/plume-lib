@@ -29,20 +29,16 @@ which might overpower your browser):
   (browse-url-checklink "6")
   (browse-url-checklink "[^0-6]")
 
-4. Ensure that file docs/index.html documents any new files.
+4. Ensure that file index.html documents any new files.
 To find new files, do
 
-    git diff --name-status v`cat docs/VERSION` | grep '^A'
+    git diff --name-status v`cat VERSION` | grep '^A'
 
 5. Update docs/changelog.txt and docs/VERSION.
 To help writing the changelog text, see the log and/or diffs, using one of:
 
-    git log --name-status v`cat docs/VERSION`..HEAD
-    git diff v`cat docs/VERSION`...HEAD
-
-Also view the diffs to file index.html in the gh-pages branch.
-(It doesn't have version tags, so this isn't entirely trivial; I should write
-up the instructions here.)
+    git log --name-status v`cat VERSION`..HEAD
+    git diff v`cat VERSION`...HEAD
 
 6. Commit and push the changes in your copy of the plume-lib repository.
 
