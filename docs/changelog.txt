@@ -5,7 +5,7 @@ by cloning its repository; run:
 
 ===========================================================================
 
-plume-lib 1.1.0, released July 23, 2016
+plume-lib 1.1.0, released August 17, 2016
 
 Programs run-google-java-format.py and check-google-java-format.py are
 wrappers for the google-java-format program.  That program creates poor
@@ -16,11 +16,16 @@ check-google-java-format.py wrapper reports any files that would be
 reformatted by run-google-java-format.py program, and returns non-zero
 status if there were any.
 
-Deprecated the search program in favor of ag.
+Deprecated the search program in favor of ag.  ag is faster.  A limitation
+of ag is that, contrary to its documentation, it does not search within
+archives such as .zip and .tar files.
 
 plume.jar no longer contains the contents of junit.jar.  JUnit is needed to
 run plume-lib's tests, but is not needed at run time.  This reduces the
 size of plume.jar and avoids conflicts with clients' assumptions about JUnit.
+
+Consolidated documentation into the docs/ subdirectory.  Previously, some
+was in the gh-pages branch some was in the root directory.
 
 ===========================================================================
 

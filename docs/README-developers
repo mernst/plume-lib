@@ -29,16 +29,16 @@ which might overpower your browser):
   (browse-url-checklink "6")
   (browse-url-checklink "[^0-6]")
 
-4. Ensure that the main documentation at index.html in the gh-pages branch
-documents any new files.  To find new files, do
+4. Ensure that file docs/index.html documents any new files.
+To find new files, do
 
-    git diff --name-status v`cat VERSION` | grep '^A'
+    git diff --name-status v`cat docs/VERSION` | grep '^A'
 
-5. Update changelog.txt and VERSION.
+5. Update docs/changelog.txt and docs/VERSION.
 To help writing the changelog text, see the log and/or diffs, using one of:
 
-    git log --name-status v`cat VERSION`..HEAD
-    git diff v`cat VERSION`...HEAD
+    git log --name-status v`cat docs/VERSION`..HEAD
+    git diff v`cat docs/VERSION`...HEAD
 
 Also view the diffs to file index.html in the gh-pages branch.
 (It doesn't have version tags, so this isn't entirely trivial; I should write
@@ -64,7 +64,7 @@ The following commands will open the URLs in your browser.
 8. Run the make-plume-release script located in bin:
 
     export JAVAC=$CHECKERFRAMEWORK/checker/bin-devel/javac
-    bin/make-plume-release `cat VERSION`
+    bin/make-plume-release `cat docs/VERSION`
 
 The script requires that $JAVAC or 'javac' point to the JSR 308 compiler.
 If this is the case, then the release is built and the test cases are run.
@@ -80,7 +80,7 @@ are repeated below, but you must replace x.y.z with the correct version number.
  * browse to https://github.com/mernst/plume-lib/releases/new
  * set tag to vx.y.z
  * Name is: plume-lib version x.y.z
- * description from changelog.txt, with line breaks fixed
+ * description from docs/changelog.txt, with hard line breaks removed
  * attach plume-lib-x.y.z.tar.gz
 
 11. Update the web version of the Javadoc.  On a machine connected to the UW

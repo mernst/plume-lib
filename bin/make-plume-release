@@ -107,7 +107,7 @@ done_release() {
         echo "   * browse to https://github.com/mernst/plume-lib/releases/new"
         echo "   * tag is: v$new"
         echo "   * Name is: plume-lib version $new"
-        echo "   * description from changelog.txt, with line breaks fixed"
+        echo "   * description from docs/changelog.txt, with hard line breaks removed"
         echo "   * attach $release_tar"
     fi
     exit 0
