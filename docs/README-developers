@@ -8,9 +8,9 @@ To make a plume-lib release and upload it to GitHub:
 
 1. Commit or stash any changes in your copy of the plume-lib repository.
 
-2. For each .jar file in java/lib/, if a more recent version is available,
-replace the out-of-date one.  Update file names in files java/.classpath and
-(in 2 places) java/Makefile .  For checker-qual.jar, update java/lib/README .
+2. Visit URLs in ../java/lib/README to determine if more recent .jar files
+for ../java/lib/ are available.  If so, replace the out-of-date one.
+Update file names in files java/.classpath and (in 2 places) java/Makefile .
 
 3. Browse to each URL in bin/checklink-args.txt and remove any
 that are not valid.

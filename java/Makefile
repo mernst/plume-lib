@@ -69,7 +69,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/checker-qual.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/checker-qual-2.1.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -246,7 +246,7 @@ test: .test-timestamp
 .test-timestamp: .class-files-timestamp
 # CLASSPATH is set in this file; it is not an external dependency
 ifdef USE_CODECOV
-	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.6.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
+	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.8.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 else
 	set JAVA_COMPILER=NONE; ${JAVA} -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 endif
@@ -405,9 +405,9 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/checker-qual.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
 # ical4j 1.0.6 requrires the legacy library commons-lang-2.6.jar
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.4.jar)
