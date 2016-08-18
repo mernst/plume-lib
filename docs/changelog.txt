@@ -25,7 +25,7 @@ run plume-lib's tests, but is not needed at run time.  This reduces the
 size of plume.jar and avoids conflicts with clients' assumptions about JUnit.
 
 Consolidated documentation into the docs/ subdirectory.  Previously, some
-was in the gh-pages branch some was in the root directory.
+was in the gh-pages branch and some was in the root directory.
 
 ===========================================================================
 
