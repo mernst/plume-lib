@@ -51,12 +51,19 @@ at least plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
 The following commands will open the URLs in your browser.
 
     xdg-open https://travis-ci.org/mernst/plume-lib
+    sleep 1
     xdg-open https://travis-ci.org/codespecs/daikon
-    xdg-open https://travis-ci.org/typetools/plume-lib-typecheck
-    xdg-open https://travis-ci.org/typetools/daikon-typecheck
+    sleep 1
+    xdg-open https://travis-ci.org/typetests/plume-lib-typecheck
+    sleep 1
+    xdg-open https://travis-ci.org/typetests/daikon-typecheck
+    sleep 1
     xdg-open http://tern.cs.washington.edu:8080/job/plume-lib/
+    sleep 1
     xdg-open http://tern.cs.washington.edu:8080/job/daikon/
+    sleep 1
     xdg-open http://tern.cs.washington.edu:8080/job/plume-lib-typecheck/
+    sleep 1
     xdg-open http://tern.cs.washington.edu:8080/job/daikon-typecheck/
 
 9. Run the make-plume-release script located in bin:
@@ -78,7 +85,7 @@ The exact steps are displayed at the end of the make-plume-release script. They
 are repeated below, but you must replace x.y.z with the correct version number.
  * browse to https://github.com/mernst/plume-lib/releases/new
  * set tag to vx.y.z
- * Name is: plume-lib version x.y.z
+ * Release title is: plume-lib version x.y.z
  * description from docs/changelog.txt, with hard line breaks removed
  * attach plume-lib-x.y.z.tar.gz
 

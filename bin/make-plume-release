@@ -106,9 +106,9 @@ done_release() {
         echo "* Make a new release on GitHub:"
         echo "   * browse to https://github.com/mernst/plume-lib/releases/new"
         echo "   * tag is: v$new"
-        echo "   * Name is: plume-lib version $new"
+        echo "   * Release title is: plume-lib version $new"
         echo "   * description from docs/changelog.txt, with hard line breaks removed"
-        echo "   * attach $release_tar"
+        echo "   * attach ${PWD}${release_tar}"
     fi
     exit 0
 }
