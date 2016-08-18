@@ -422,7 +422,8 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 ;; Some VCS ignore files (such as .gitignore) indicate generated files that
 ;; should be ignored, but others should be searched; ag's default of ignoring
 ;; everything mentioned in an ignore file is too extreme.
-(setq ag-arguments (cons "--skip-vcs-ignores" ag-arguments))
+(eval-after-load "ag"
+  '(setq ag-arguments (cons "--skip-vcs-ignores" ag-arguments)))
 
 
 ;; ;; In general, use the "ack" program instead.  But, it doesn't search
