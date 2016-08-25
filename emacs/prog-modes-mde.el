@@ -2062,10 +2062,16 @@ in this directory or some superdirectory."
 		 (setq compile-command "./gradlew ")
 	       (setq compile-command "gradle ")))
 	    ((file-in-super-directory "build.gradle" default-directory)
-	     (let ((buildfile (file-in-super-directory
-			       "build.gradle" default-directory)))
+	     (let* ((buildfile (file-in-super-directory
+			       "build.gradle" default-directory))
+		    (gradle-command
+		     (let ((gradlew (concat (file-name-directory buildfile)
+					    "gradlew")))
+		       (if (file-readable-p gradlew)
+			   gradlew
+			 "gradle"))))
 	       (make-local-variable 'compile-command)
-	       (setq compile-command (concat "gradle -b " buildfile " build"))))
+	       (setq compile-command (concat gradle-command " -b " buildfile " build"))))
 	    ((file-readable-p "pom.xml")
 	     (make-local-variable 'compile-command)
 	     (setq compile-command "mvn ")))))
