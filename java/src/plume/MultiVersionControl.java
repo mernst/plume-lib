@@ -1632,7 +1632,13 @@ public class MultiVersionControl {
       }
 
     } catch (IOException e) {
-      throw new Error(e);
+      String msg = e.toString();
+      if (msg.startsWith("java.io.IOException: Cannot run program \"")
+          && msg.endsWith(", No such file or directory")) {
+        System.err.println(msg.substring(21));
+      } else {
+        throw new Error(e);
+      }
     } catch (InterruptedException e) {
       throw new Error(e);
     }
