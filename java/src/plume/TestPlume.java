@@ -1572,7 +1572,12 @@ public final class TestPlume {
         });
   }
 
-  /** Throws an assertion unless the paired iterator contains the same values as the argument array. */
+  /**
+   * Throws an assertion unless the paired iterator contains the same values as the argument array.
+   * @param opi an iterator over pairs of integers
+   * @param ints an array of two-element arrays of integers
+   * @throws AssertionError iff the iterator returns the same values as the argument array contains
+   */
   public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
