@@ -35,6 +35,13 @@ check:
 	${MAKE} -C bin check-python
 	${MAKE} -C java check-format
 
+
+# Tags
+tags: TAGS
+TAGS:
+	cd java && $(MAKE) tags
+	etags --include=java/TAGS
+
 # Remove files that should not appear in the release.
 # Don't run this unless making a release!  And don't run it in your main clone!
 # It removes files that appear in the version control system.
