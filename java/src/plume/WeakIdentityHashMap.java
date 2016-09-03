@@ -129,7 +129,7 @@ import org.checkerframework.dataflow.qual.*;
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
  */
-@SuppressWarnings({"unchecked", "rawtypes", "keyfor", "interning", "lock", "nullness", "purity", "regex"}) // old, non-typesafe Sun code, not worth annotating or checking
+@SuppressWarnings({"unchecked", "rawtypes", "keyfor", "interning", "lock", "lowerbound", "nullness", "purity", "regex"}) // old, non-typesafe Sun code, not worth annotating or checking
 public class WeakIdentityHashMap<K,V>
     extends AbstractMap<K,V>
     implements Map<K,V> {

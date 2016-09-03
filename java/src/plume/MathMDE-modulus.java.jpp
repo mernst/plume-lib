@@ -11,7 +11,8 @@ The correct way to build the system is to run 'make'.
    * @param y modulus
    * @return x % y, where the result is constrained to be positive
    */
-  public static INT mod_positive(INT x, INT y) {
+  @SuppressWarnings("lowerbound") // result is positive because abs(non-zero) is positive
+  public static /*@Positive*/ INT mod_positive(INT x, INT y) {
     INT result = x % y;
     if (result < 0) {
       result += Math.abs(y);

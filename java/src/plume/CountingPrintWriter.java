@@ -6,6 +6,7 @@ import java.io.Writer;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.lowerbound.qual.*;
 */
 
 // This solution only works for PrintWriter.
@@ -370,7 +371,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
-  public void write(char[] buf, int off, int len) {
+  public void write(char[] buf, /*@NonNegative*/ int off, /*@NonNegative*/ int len) {
     for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);
     }

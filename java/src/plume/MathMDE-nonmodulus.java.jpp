@@ -67,7 +67,7 @@ The correct way to build the system is to run 'make'.
     INT current_nonmissing;
     INT current_missing;
     // Used only if nums != null.
-    int current_index;
+    /*@NonNegative*/ int current_index;
     boolean add_ends;
 
     /**
@@ -107,7 +107,9 @@ The correct way to build the system is to run 'make'.
         current_missing = current_nonmissing;
       }
       this.nums_itor = nums_itor;
-      current_index = Integer.MIN_VALUE;
+      @SuppressWarnings("lowerbound") // unused
+      /*@NonNegative*/ int unused = Integer.MIN_VALUE;
+      current_index = unused;
     }
 
     public boolean hasNext() {
