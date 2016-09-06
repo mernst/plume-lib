@@ -66,7 +66,7 @@ The correct way to build the system is to run 'make'.
     /*@MonotonicNonNull*/ Iterator<INTEGER> nums_itor;
     INT current_nonmissing;
     INT current_missing;
-    // Used only if nums != null.
+    // Used only if nums != null, in which case it is an index into nums.
     int current_index;
     boolean add_ends;
 
