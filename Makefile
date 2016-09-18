@@ -21,10 +21,10 @@ jar:
 
 .PHONY: git-hooks
 git-hooks: .git/hooks/pre-commit .git/hooks/post-merge
-.git/hooks/pre-commit: bin/plume-lib.pre-commit
-	cp -pf $< $@
+.git/hooks/pre-commit:
+	ln -s bin/plume-lib.pre-commit $@
 .git/hooks/post-merge: bin/plume-lib.post-merge
-	cp -pf $< $@
+	ln -s bin/plume-lib.post-merge $@
 
 # Compile Emacs Lisp files
 .PHONY: emacs
