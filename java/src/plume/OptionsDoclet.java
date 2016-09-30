@@ -679,6 +679,8 @@ public class OptionsDoclet {
   /**
    * Get the line of HTML describing an Option.
    * @param oi the option to describe
+   * @param padding the number of spaces to add at the begginning of the
+   *   detail line (after the line with the option itself)
    * @return HTML describing oi
    */
   public String optionToHtml(Options.OptionInfo oi, int padding) {
