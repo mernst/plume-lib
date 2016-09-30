@@ -139,6 +139,7 @@ typeAnnotations = set([
     "MethodVal",
     "MethodValBottom",
     "min",
+    "MinLen",
     "mm",
     "mm2",
     "mol",
