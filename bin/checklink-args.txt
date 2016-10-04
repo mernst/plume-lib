@@ -117,6 +117,7 @@
 --suppress-broken 406:http://www.artscrush.org/
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
+--suppress-broken 406:http://www.nwfolklife.org/festival/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 416:http://www.switchboard.com/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
@@ -292,6 +293,7 @@
 --suppress-redirect http://dx.doi.org/10.1109/2.59->http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=59&tag=1&tag=1&tag=1&tag=1&tag=1
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/Xplore/defdeny.jsp?url=http%3A%2F%2Fieeexplore.ieee.org%2FXplore%2Ferror.jsp&denyReason=-133&productsMatched=null&userType=inst	
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/document/4273458/?reload=true&arnumber=4273458	
+--suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/document/4273458/
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org:80/Xplore/errorpage.jsp?reload=true
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/
