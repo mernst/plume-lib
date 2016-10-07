@@ -185,9 +185,14 @@ public final class BCELUtil {
    */
   public static boolean in_jdk(/*@ClassGetName*/ String classname) {
     return classname.startsWith("java.")
-        || classname.startsWith("com.")
+        || classname.startsWith("com.oracle.")
+        || classname.startsWith("com.sun.")
         || classname.startsWith("javax.")
-        || classname.startsWith("org.")
+        || classname.startsWith("org.ietf.")
+        || classname.startsWith("org.jcp.")
+        || classname.startsWith("org.omg.")
+        || classname.startsWith("org.w3c.")
+        || classname.startsWith("org.xml.")
         || classname.startsWith("sun.")
         || classname.startsWith("sunw.");
   }
@@ -198,9 +203,14 @@ public final class BCELUtil {
    */
   public static boolean in_jdk_internalform(/*@InternalForm*/ String classname) {
     return classname.startsWith("java/")
-        || classname.startsWith("com/")
+        || classname.startsWith("com/oracle/")
+        || classname.startsWith("com/sun/")
         || classname.startsWith("javax/")
-        || classname.startsWith("org/")
+        || classname.startsWith("org/ietj/")
+        || classname.startsWith("org/jcp/")
+        || classname.startsWith("org/omg/")
+        || classname.startsWith("org/w3c/")
+        || classname.startsWith("org/xml/")
         || classname.startsWith("sun/")
         || classname.startsWith("sunw/");
   }
