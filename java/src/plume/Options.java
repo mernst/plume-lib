@@ -1259,8 +1259,8 @@ public class Options {
   }
 
   /**
-   * Set the specified option to the value specified in arg_value.  Throws
-   * an ArgException if there are any errors.
+   * Set the specified option to the value specified in arg_value.
+   @ throws ArgException if there are any errors.
    */
   private void set_arg(OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
       throws ArgException {
