@@ -181,7 +181,7 @@ public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
 
-  private final static /*@Format({})*/ String USAGE =
+  private static final /*@Format({})*/ String USAGE =
       "Provided by Options doclet:%n"
           + "-docfile <file>        Specify file into which options documentation is inserted%n"
           + "-outfile <file>        Specify destination for resulting output%n"

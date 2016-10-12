@@ -235,7 +235,7 @@ public final class Intern {
    * Hasher object which hashes and compares String[] objects according
    * to their contents.
    * @see Hasher
-   * Arrays.equals
+   * @see Arrays.equals
    */
   private static final class StringArrayHasher implements Hasher {
     @Override
