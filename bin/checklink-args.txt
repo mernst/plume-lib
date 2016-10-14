@@ -78,6 +78,7 @@
 --suppress-broken 403:http://www.seattletimes.com/	
 --suppress-broken 403:http://www.seattleweekly.com/
 --suppress-broken 403:http://www.topcoder.com/
+--suppress-broken 403:https://galois.com/team/joe-kiniry/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 403:https://wiki.gnome.org/Apps/Dia
