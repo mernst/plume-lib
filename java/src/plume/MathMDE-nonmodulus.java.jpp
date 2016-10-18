@@ -16,7 +16,7 @@ The correct way to build the system is to run 'make'.
    * @param nums numbers to be excluded; length &gt; 0
    * @return the set: [min(nums)..max(nums)] - nums
    */
-  public static INT[] missing_numbers(INT[] nums) {
+  public static INT[] missing_numbers(INT /*@MinLen(1)*/ [] nums) {
     { // avoid modifying parameter
       INT[] nums_copy = new INT[nums.length];
       System.arraycopy(nums, 0, nums_copy, 0, nums.length);

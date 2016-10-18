@@ -16,6 +16,7 @@ import java.util.Vector;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.PolyAll;
 */
@@ -430,7 +431,7 @@ public final class ArraysMDE {
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
+  public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, /*@NonNegative*/ int minindex, int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -473,7 +474,7 @@ public final class ArraysMDE {
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      int minindex,
+      /*@NonNegative*/ int minindex,
       int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
@@ -519,7 +520,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static int indexOfEq(
-      /*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
+      /*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, /*@NonNegative*/ int minindex, int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -563,7 +564,7 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      int minindex,
+      /*@NonNegative*/ int minindex,
       int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
@@ -621,7 +622,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(int[] a, int elt, int minindex, int indexlimit) {
+  public static int indexOf(int[] a, int elt, /*@NonNegative*/ int minindex, int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -642,7 +643,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(long[] a, long elt, int minindex, int indexlimit) {
+  public static int indexOf(long[] a, long elt, /*@NonNegative*/ int minindex, int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -699,7 +700,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(boolean[] a, boolean elt, int minindex, int indexlimit) {
+  public static int indexOf(boolean[] a, boolean elt, /*@NonNegative*/ int minindex, int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -1178,7 +1179,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(
-      /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
+      /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1203,7 +1204,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
-      /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, int a_offset) {
+      /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1228,7 +1229,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
-  public static boolean isSubarray(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
+  public static boolean isSubarray(/*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1252,7 +1253,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
+  public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1277,7 +1278,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
-  public static boolean isSubarray(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
+  public static boolean isSubarray(List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1301,7 +1302,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
+  public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1326,7 +1327,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
-  public static boolean isSubarray(List<?> a, List<?> sub, int a_offset) {
+  public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1350,7 +1351,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
+  public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
     if (a_len < sub_len) {
@@ -1373,7 +1374,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
+  public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1396,7 +1397,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
+  public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1419,7 +1420,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
+  public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -1442,7 +1443,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
+  public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
     if (a_len < sub_len) {
@@ -2598,7 +2599,7 @@ public final class ArraysMDE {
    * @return function from [0..a.length) to range R that is the
    * composition of a and b
    */
-  public static int[] fn_compose(int[] a, int[] b) {
+  public static int[] fn_compose(/*@NonNegative*/ int[] a, int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       int inner = a[i];

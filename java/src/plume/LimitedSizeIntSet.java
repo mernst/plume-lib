@@ -5,6 +5,7 @@ import java.util.List;
 
 /*>>>
 import org.checkerframework.checker.lock.qual.*;
+import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -35,7 +36,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    */
   protected int /*@Nullable*/ [] values;
   /** The number of active elements (equivalently, the first unused index). */
-  int num_values;
+  /*@NonNegative*/ int num_values;
 
   /**
    * Create a new LimitedSizeIntSet that can hold max_values values.
