@@ -38,15 +38,15 @@
 
 (defadvice buffer-menu (before set-some-buffers-unmodified activate)
   (set-some-buffers-unmodified "^\\(\\*\\|RMAIL-summary\\)"
-			       nil ; was '(ange-ftp-shell-mode webster-mode)
-			       (concat "^" (regexp-opt
-					    '("*mail"
-					      "*VM-mail*"
-					      "*post-news*"
-					      "*news on"
-					      "*followup to"
-					      "*reply to"
-					      "*cvs-commit-message*")))))
+                               nil ; was '(ange-ftp-shell-mode webster-mode)
+                               (concat "^" (regexp-opt
+                                            '("*mail"
+                                              "*VM-mail*"
+                                              "*post-news*"
+                                              "*news on"
+                                              "*followup to"
+                                              "*reply to"
+                                              "*cvs-commit-message*")))))
 
 (defun set-some-buffers-unmodified (name-regexp major-modes &optional exceptions-regexp exceptions-modes)
   "Clear the modification flag of certain buffers.
@@ -59,26 +59,26 @@ if that function is defined."
   (let ((blist (buffer-list)))
     (while blist
       (save-excursion
-	(set-buffer (car blist))
-	(setq blist (cdr blist))
-	;; Don't do the work unless the buffer is marked modified.
-	(if (buffer-modified-p)
-	    (progn
-	      (if (and (or (and name-regexp
-				(string-match name-regexp (buffer-name)))
-			   (memq major-mode major-modes))
-		       (not (or (and exceptions-regexp
-				     (string-match exceptions-regexp (buffer-name)))
-				(memq major-mode exceptions-modes))))
-		  (set-buffer-modified-p nil))
-	      ;; This special-casing is sort of cheating.  But hey, it works.
-	      ;; It's OK for this to be in the progn because adding a mark
-	      ;; will always flag the buffer modified; that is, even though
-	      ;; this code only changes the modification flag from t to
-	      ;; nil, it does the right thing.
-	      (if (eq major-mode 'dired-mode)
-		  (if (fboundp 'dired-pending-marks-p)
-		      (set-buffer-modified-p (dired-pending-marks-p))))))))))
+        (set-buffer (car blist))
+        (setq blist (cdr blist))
+        ;; Don't do the work unless the buffer is marked modified.
+        (if (buffer-modified-p)
+            (progn
+              (if (and (or (and name-regexp
+                                (string-match name-regexp (buffer-name)))
+                           (memq major-mode major-modes))
+                       (not (or (and exceptions-regexp
+                                     (string-match exceptions-regexp (buffer-name)))
+                                (memq major-mode exceptions-modes))))
+                  (set-buffer-modified-p nil))
+              ;; This special-casing is sort of cheating.  But hey, it works.
+              ;; It's OK for this to be in the progn because adding a mark
+              ;; will always flag the buffer modified; that is, even though
+              ;; this code only changes the modification flag from t to
+              ;; nil, it does the right thing.
+              (if (eq major-mode 'dired-mode)
+                  (if (fboundp 'dired-pending-marks-p)
+                      (set-buffer-modified-p (dired-pending-marks-p))))))))))
 
 
 ;;;
@@ -117,20 +117,20 @@ Here is an example setting:
   ;; In Emacs 19, I should use directory-abbrev-alist here.  (No, that's
   ;; already done for us.)
   (let ((repl-alist (cons (cons (getenv "HOME") "~")
-			  buffer-menu-replacement-alist))
-	from to)
+                          buffer-menu-replacement-alist))
+        from to)
     (while repl-alist
       (setq from (concat "[ \t\n]" (car (car repl-alist)))
-	    to (cdr (car repl-alist))
-	    repl-alist (cdr repl-alist))
+            to (cdr (car repl-alist))
+            repl-alist (cdr repl-alist))
       (goto-char (point-min))
       (while (re-search-forward from nil t)
-	;; This nonsense is because I don't want to throw off any groups
-	;; in buffer-menu-replacement-alist; I can't introduce a new
-	;; group before ones mentioned there.
-	(replace-match (concat (buffer-substring (match-beginning 0)
-						 (1+ (match-beginning 0)))
-			       to))))))
+        ;; This nonsense is because I don't want to throw off any groups
+        ;; in buffer-menu-replacement-alist; I can't introduce a new
+        ;; group before ones mentioned there.
+        (replace-match (concat (buffer-substring (match-beginning 0)
+                                                 (1+ (match-beginning 0)))
+                               to))))))
 
 ;;; This does not seem to be used.
 ;; ;; What I really want is an unsubstitute-in-file-name or
@@ -146,9 +146,9 @@ Here is an example setting:
 ;;   (let ((replacements buffer-menu-replacement-alist))
 ;;     (while replacements
 ;;       (let* ((pattern (concat "^" (car (car replacements))))
-;; 	     (replacement (cdr (car replacements))))
-;; 	(if (string-match pattern filename)
-;; 	    (setq filename (replace-match replacement nil nil filename))))
+;;           (replacement (cdr (car replacements))))
+;;      (if (string-match pattern filename)
+;;          (setq filename (replace-match replacement nil nil filename))))
 ;;       (setq replacements (cdr replacements))))
 ;;   filename)
 
@@ -160,38 +160,38 @@ Here is an example setting:
 ;; Made this a separate variable to avoid the mapconcat per invocation.
 (defvar Buffer-menu-kill-regexp
    (concat (regexp-opt
-	    ;; list of strings (buffer prefixes), NOT regular expressions.
-	    '("*Buffer List*"
-	      "*Directory*"		; for M-x revert-buffer
-	      "*Completions*"
-	      "*TeX background*"
-	      "*Definitions in: "
-	      "*info-perl*"
-	      "*ff-paths-locate*"
-	      "info dir"
-	      "sent reply to "
-	      "sent forward of "
-	      "sent resend of "
-	      ;; I think I don't need these
-	      ;; "*ispell*"
-	      ;; "*ispell choices*"
-	      ".newsrc-dribble"
-	      ".bbdb"
-	      " bbdb"
-	      ".type-break"
-	      "#.type-break#"
-	      ))
-	   ;; This is a list of regular expressions
-	   "\\|"
-	   (mapconcat (function identity)
-		      (list
-		       ;; AUCTeX output buffers (avoid *Webster Output*)
-		       "\\*[^w][^ ]* output\\*"
-		       ;; VM buffers, such as "INBOX Summary"
-		       ".* Summary"
-		       ".* Presentation"
-		       )
-		      "\\|"))
+            ;; list of strings (buffer prefixes), NOT regular expressions.
+            '("*Buffer List*"
+              "*Directory*"             ; for M-x revert-buffer
+              "*Completions*"
+              "*TeX background*"
+              "*Definitions in: "
+              "*info-perl*"
+              "*ff-paths-locate*"
+              "info dir"
+              "sent reply to "
+              "sent forward of "
+              "sent resend of "
+              ;; I think I don't need these
+              ;; "*ispell*"
+              ;; "*ispell choices*"
+              ".newsrc-dribble"
+              ".bbdb"
+              " bbdb"
+              ".type-break"
+              "#.type-break#"
+              ))
+           ;; This is a list of regular expressions
+           "\\|"
+           (mapconcat (function identity)
+                      (list
+                       ;; AUCTeX output buffers (avoid *Webster Output*)
+                       "\\*[^w][^ ]* output\\*"
+                       ;; VM buffers, such as "INBOX Summary"
+                       ".* Summary"
+                       ".* Presentation"
+                       )
+                      "\\|"))
   "Regular expression matching lines to kill from buffer listings.
 The regular expressions are implicitly anchored at the front.")
 
@@ -213,11 +213,11 @@ The regular expressions are implicitly anchored at the front.")
     (goto-char (point-min))
     (while (re-search-forward (concat "^...[ \"]\\(" regexp "\\)\"?") nil t)
       (progn
-	(beginning-of-line)
-	(delete-region (point) (progn (end-of-line) (point)))
-	(if (bobp)
-	    (delete-char 1)
-	  (delete-backward-char 1))))))
+        (beginning-of-line)
+        (delete-region (point) (progn (end-of-line) (point)))
+        (if (bobp)
+            (delete-char 1)
+          (delete-backward-char 1))))))
 
 ;;;
 ;;; Erase the read-only marks and the "current" mark
@@ -235,25 +235,25 @@ The regular expressions are implicitly anchored at the front.")
       ;; TODO: These two assertions are failing in Emacs 24.4.  Apparently it added a space before the C?
       (assert (= ?C (aref header-line-format 1)))
       (cond ((= ?R (aref header-line-format 2))
-	     (setq header-line-format
-		   (concat (substring header-line-format 0 1)
-			   " "		; 1 spaces instead of "CR"
-			   (substring header-line-format 3))))
-	    ((and (= ?  (aref header-line-format 2))
-		  (= ?R (aref header-line-format 3))
-		  (= ?  (aref header-line-format 4)))
-	     (setq header-line-format
-		   (concat (substring header-line-format 0 1)
-			   "  "		; 2 spaces instead of "C R "
-			   (substring header-line-format 5))))
-	    (t
-	     (assert nil nil "Bad header-line-format: %s" header-line-format)))
+             (setq header-line-format
+                   (concat (substring header-line-format 0 1)
+                           " "          ; 1 spaces instead of "CR"
+                           (substring header-line-format 3))))
+            ((and (= ?  (aref header-line-format 2))
+                  (= ?R (aref header-line-format 3))
+                  (= ?  (aref header-line-format 4)))
+             (setq header-line-format
+                   (concat (substring header-line-format 0 1)
+                           "  "         ; 2 spaces instead of "C R "
+                           (substring header-line-format 5))))
+            (t
+             (assert nil nil "Bad header-line-format: %s" header-line-format)))
       (while (not (eobp))
-	(assert (looking-at "[C .]"))
-	(replace-char-and-inherit " ")
-	(assert (looking-at "[R %]"))
-	(replace-char-and-inherit " ")
-	(forward-line 1)))))
+        (assert (looking-at "[C .]"))
+        (replace-char-and-inherit " ")
+        (assert (looking-at "[R %]"))
+        (replace-char-and-inherit " ")
+        (forward-line 1)))))
 
 
 (defun replace-char-and-inherit (newchar)
@@ -283,8 +283,8 @@ The regular expressions are implicitly anchored at the front.")
   (save-window-excursion
     (walk-windows
      (function (lambda (window)
-		 (if (equal "*Buffer List*" (buffer-name (window-buffer window)))
-		     (buffer-menu nil))))
+                 (if (equal "*Buffer List*" (buffer-name (window-buffer window)))
+                     (buffer-menu nil))))
      'no-minibuffer)))
 
 (defadvice save-some-buffers (before save-bbdb activate)
@@ -296,8 +296,8 @@ The regular expressions are implicitly anchored at the front.")
   "Like `save-buffer', but takes an argument."
   (if (and buf (buffer-modified-p buf))
       (save-excursion
-	(set-buffer buf)
-	(save-buffer))))
+        (set-buffer buf)
+        (save-buffer))))
 
 ;;;
 ;;; Put the cursor in the buffer menu
@@ -318,7 +318,7 @@ Place cursor on the first buffer line."
   (pop-to-buffer "*Buffer List*")
   (goto-char (point-min))
   (if (not (and (boundp 'Buffer-menu-use-header-line)
-		Buffer-menu-use-header-line))
+                Buffer-menu-use-header-line))
       ;; When using Buffer-menu-use-header-line, point-min is on first buffer
       (forward-line 2))
   (message

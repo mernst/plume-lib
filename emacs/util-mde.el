@@ -34,7 +34,7 @@
 (defmacro %-base-1 (x y)
   "Like %, but if (% x y) = 0, (%-base-1 x y) = y."
   `(let* ((y-value ,y)
-	    (result (% ,x y-value)))
+            (result (% ,x y-value)))
        (if (zerop result) y-value result)))
 (defalias 'mod-base-1 '%-base-1)
 
@@ -43,21 +43,21 @@
   (let ((result 1))
     (while (> y 0)
       (setq result (* x result)
-	    y (1- y)))
+            y (1- y)))
     result))
 
 ;; This checks the more likely divisors first.
 (defun primep (x)
   (or (= 2 x)
       (and (oddp x)
-	   (let ((limit (floor (sqrt x)))
-		 (divisor 3)
-		 (result t))
-	     (while (and result (<= divisor limit))
-	       (let ((div-result (/ x divisor)))
-		 (setq result (not (= x (* divisor div-result)))
-		       divisor (+ 2 divisor))))
-	     result))))
+           (let ((limit (floor (sqrt x)))
+                 (divisor 3)
+                 (result t))
+             (while (and result (<= divisor limit))
+               (let ((div-result (/ x divisor)))
+                 (setq result (not (= x (* divisor div-result)))
+                       divisor (+ 2 divisor))))
+             result))))
 ;; Testing
 ;; (and (primep 97) (primep 2) (primep 7) (not (or (primep 6) (primep 88))))
 
@@ -103,9 +103,9 @@ Good for passing to sort in order to sort strings by length."
 (defun starts-with (string prefix)
   "Return t if STRING starts with PREFIX."
   (let ((string-len (length string))
-	(prefix-len (length prefix)))
+        (prefix-len (length prefix)))
     (and (>= string-len prefix-len)
-	 (equal prefix (substring string 0 prefix-len)))))
+         (equal prefix (substring string 0 prefix-len)))))
 (defun test-starts-with ()
   "Test the `starts-with' routine."
   (assert (starts-with "a" "a"))
@@ -131,15 +131,15 @@ Good for passing to sort in order to sort strings by length."
 ;; side-effects will propagate back in any case.
 (defun string-substitute-substring-same-length (new old-regexp string)
   (let ((i 0)
-	j
-	max-j)
+        j
+        max-j)
     (while (setq i (string-match old-regexp string i))
       (setq j 0
-	    max-j (length new))
+            max-j (length new))
       (while (< j max-j)
-	(aset string i (aref new j))
-	(setq i (1+ i)
-	      j (1+ j))))))
+        (aset string i (aref new j))
+        (setq i (1+ i)
+              j (1+ j))))))
 
 
 ;;; Old version.
@@ -152,9 +152,9 @@ Good for passing to sort in order to sort strings by length."
 ;; (defun string-substitute-substring-general-case-1 (new old-regexp string)
 ;;   (if (string-match old-regexp string)
 ;;       (concat (substring string 0 (match-beginning 0))
-;; 	      new
-;; 	      (string-substitute-substring-general-case
-;; 	       new old-regexp (substring string (match-end 0))))
+;;            new
+;;            (string-substitute-substring-general-case
+;;             new old-regexp (substring string (match-end 0))))
 ;;     string))
 ;;
 ;; (defun string-substitute-substring-general-case (new old-regexp string)
@@ -188,18 +188,18 @@ Good for passing to sort in order to sort strings by length."
 (defun buffer-replace-regexps (regexps replacements)
   (while regexps
     (let ((regexp (car regexps))
-	  (replacement (car replacements)))
+          (replacement (car replacements)))
       (goto-char (point-min))
       (while (re-search-forward regexp nil t)
-	(replace-match replacement))
+        (replace-match replacement))
       (setq regexps (cdr regexps)
-	    replacements (cdr replacements)))))
+            replacements (cdr replacements)))))
 
 (defun join (strings separator)
   (let ((with-delims))
     (while strings
       (setq with-delims (cons separator (cons (car strings) with-delims))
-	    strings (cdr strings)))
+            strings (cdr strings)))
     (apply #'concat (nreverse (cdr with-delims)))))
 ;;; All these should return nil (rather than signalling an error).
 ;; (assert (equal (join '("foo" "bar") " ") "foo bar"))
@@ -216,10 +216,10 @@ Good for passing to sort in order to sort strings by length."
 (defun string->integer-default (string &optional default)
   "If STRING represents an integer, return it; otherwise return DEFAULT."
   (let ((result (condition-case nil
-		    (car (read-from-string string))
-		  (error nil))))
+                    (car (read-from-string string))
+                  (error nil))))
     (if (integerp result)
-	result
+        result
       default)))
 (defalias 'string->number-default 'string->integer-default)
 
@@ -262,7 +262,7 @@ See also `string->integer-default'."
 ;;   "Return t if string looks like the representation of an integer, nil otherwise."
 ;;   (let ((md (match-data)))
 ;;     (prog1
-;; 	(string-match "^[ 	]*-?[0-9]+" string)
+;;      (string-match "^[       ]*-?[0-9]+" string)
 ;;       (store-match-data md))))
 ;; (fset 'string-is-number-p-save-match
 ;;       (symbol-function 'string-is-integer-p-save-match))
@@ -280,8 +280,8 @@ See also `string->integer-default'."
 
 (defun symbol-append (&rest symbols)
   (intern (apply (function concat)
-		 (mapcar (function symbol-name)
-			 symbols))))
+                 (mapcar (function symbol-name)
+                         symbols))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -303,8 +303,8 @@ For instance, ((a b) (c) (d (e f) g))) => (a b c d (e f) g)."
   (let ((result '()))
     (while (and list (> n 0))
       (setq result (cons (car list) result)
-	    n (1- n)
-	    list (cdr list)))
+            n (1- n)
+            list (cdr list)))
     (nreverse result)))
 
 (defun string-assoc-ci (elt list)
@@ -315,9 +315,9 @@ The value is actually the element of LIST whose car is (`string-equal' to) ELT."
   (let (result)
     (while list
       (if (string-equal elt (downcase (cdr (car list))))
-	  (setq result (car list)
-		list nil)
-	(setq list (cdr list))))
+          (setq result (car list)
+                list nil)
+        (setq list (cdr list))))
     result))
 
 
@@ -331,14 +331,14 @@ The pattern is length elements long and occurs fully repeatcount times;
 after that, its first partial elements appear.  The length of LIST is
 \(+ (* length repeatcount) partial).  Tests are done with `equal'."
   (let* ((len (length list))
-	 (pattern-len 1)
-	 (max-pattern-len (/ len 2))
-	 result)
+         (pattern-len 1)
+         (max-pattern-len (/ len 2))
+         result)
     (while (<= pattern-len max-pattern-len)
       (if (repeated-pattern-p pattern-len list)
-	  (setq result (list pattern-len (/ len pattern-len) (% len pattern-len))
-		pattern-len len)
-	(setq pattern-len (+ pattern-len 1))))
+          (setq result (list pattern-len (/ len pattern-len) (% len pattern-len))
+                pattern-len len)
+        (setq pattern-len (+ pattern-len 1))))
     result))
 
 ;; It is *not* necessary to check the last (- (length list) pattern-length)
@@ -346,13 +346,13 @@ after that, its first partial elements appear.  The length of LIST is
 ;; match if this returns t.
 (defun repeated-pattern-p (pattern-length list)
   (let ((leader (nthcdr pattern-length list))
-	(result t))
+        (result t))
     (while leader
       (if (not (equal (car leader) (car list)))
-	  (setq result nil
-		leader nil)
-	(setq leader (cdr leader)
-	      list (cdr list))))
+          (setq result nil
+                leader nil)
+        (setq leader (cdr leader)
+              list (cdr list))))
     result))
 
 (defun random-nth (list)
@@ -387,7 +387,7 @@ FUN should be a funcallable object or nil.  Compare to `funcall-or-nil'."
   (if fun
       (apply fun args)
     (if args
-	(car args))))
+        (car args))))
 (put 'funcall-or-arg 'edebug-form-spec '(function &rest form))
 
 ;; was funcall-maybe-default
@@ -416,46 +416,46 @@ expecting different numbers of arguments in a uniform way.  Since this is a
 macro, don't supply something of the form (function foo) as its first argument;
 just supply foo itself."
   (let ((noargs (length args))
-	nocommon-args
-	common-vars
-	common-bindings
-	thisvar
-	(thisargno 0))
+        nocommon-args
+        common-vars
+        common-bindings
+        thisvar
+        (thisargno 0))
 
     (if (< noargs1 0) (setq noargs1 (- noargs)))
     (if (< noargs2 0) (setq noargs2 (- noargs)))
     (if (not (= (max noargs1 noargs2) noargs))
-	(progn
-	  (byte-compile-warn "`%s' was vararg-called with a maximum of %d arguments, but you supplied %d."
-			   func (max noargs1 noargs2) noargs)
-	  (setq args (firstn (max noargs1 noargs2) args))))
+        (progn
+          (byte-compile-warn "`%s' was vararg-called with a maximum of %d arguments, but you supplied %d."
+                           func (max noargs1 noargs2) noargs)
+          (setq args (firstn (max noargs1 noargs2) args))))
     (setq nocommon-args (min noargs1 noargs2))
     (if (= noargs1 noargs2)
-	;; aka `(,func ,@args)
-	(cons func args)
+        ;; aka `(,func ,@args)
+        (cons func args)
       (while (< thisargno nocommon-args)
-	(setq thisargno (1+ thisargno)
-	      thisvar (make-symbol (concat "vararg-common-"
-					   (int-to-string thisargno)))
-	      common-vars (cons thisvar common-vars)
-	      common-bindings (cons (list thisvar (car args)) common-bindings)
-	      args (cdr args)))
+        (setq thisargno (1+ thisargno)
+              thisvar (make-symbol (concat "vararg-common-"
+                                           (int-to-string thisargno)))
+              common-vars (cons thisvar common-vars)
+              common-bindings (cons (list thisvar (car args)) common-bindings)
+              args (cdr args)))
       (setq common-vars (nreverse common-vars)
-	    common-bindings (nreverse common-bindings))
+            common-bindings (nreverse common-bindings))
       `(let (, common-bindings)
-	   (condition-case err
-	       ;; Try calling it with first number of arguments.
-	       (,func (,@ common-vars)
-		(,@ (if (< nocommon-args noargs1) args)))
-	     (wrong-number-of-arguments
-	      ;; Call it with second number of arguments.
-	      (,func (,@ common-vars)
-	       (,@ (if (< nocommon-args noargs2) args))))
-	     (error
-	      ;; Otherwise resignal; "while t" makes this work under the
-	      ;; debugger (see, eg, the code for the "error" function).
-	      (while t
-		(signal (car err) (cdr err)))))))))
+           (condition-case err
+               ;; Try calling it with first number of arguments.
+               (,func (,@ common-vars)
+                (,@ (if (< nocommon-args noargs1) args)))
+             (wrong-number-of-arguments
+              ;; Call it with second number of arguments.
+              (,func (,@ common-vars)
+               (,@ (if (< nocommon-args noargs2) args))))
+             (error
+              ;; Otherwise resignal; "while t" makes this work under the
+              ;; debugger (see, eg, the code for the "error" function).
+              (while t
+                (signal (car err) (cdr err)))))))))
 
 ;; Test cases:
 ;; (macroexpand '(vararg-call foo 3 1 bar baz bum))
@@ -495,7 +495,7 @@ just supply foo itself."
     (erase-buffer)
     (insert-file-contents filename)
     (prog1
-	(buffer-substring (point-min) (point-max))
+        (buffer-substring (point-min) (point-max))
       (erase-buffer))))
 
 (defun locate-file-with-extensions (filename extensions)
@@ -504,13 +504,13 @@ or FILENAME's basename and ending with a string in EXTENSIONS, which is a list.
 EXTENSIONS may be nil, in which case FILENAME is searched for as is."
   (if extensions
       (let (result)
-	(while (and extensions (not result))
-	  (setq result (or (if-file-readable-p (concat filename (car extensions)))
-			   (if-file-readable-p (concat (file-name-sans-extension
-							filename)
-						       (car extensions))))
-		extensions (cdr extensions)))
-	result)
+        (while (and extensions (not result))
+          (setq result (or (if-file-readable-p (concat filename (car extensions)))
+                           (if-file-readable-p (concat (file-name-sans-extension
+                                                        filename)
+                                                       (car extensions))))
+                extensions (cdr extensions)))
+        result)
     (if-file-readable-p filename)))
 
 (defun locate-file-with-extensions-on-path (filename extensions path)
@@ -521,23 +521,23 @@ order after the current one; they may be relative directories.
 Nil means the current directory."
   (or (locate-file-with-extensions filename extensions)
       (let ((filename-directory (file-name-directory filename))
-	    (filename-nondirectory (file-name-nondirectory filename))
-	    result candidate-directory)
-	(while (and path (not result))
-	  (setq candidate-directory (if (car path)
-					(file-name-as-directory (car path))
-				      default-directory)
-		path (cdr path)
-		result (locate-file-with-extensions
-			;; This check is so we return something reasonable,
-			;; not because the code requires the simpler form.
-			(if (file-name-absolute-p candidate-directory)
-			    (concat candidate-directory filename-nondirectory)
-			  ;; This probably only works on Unix.
-			  (concat filename-directory candidate-directory
-				  filename-nondirectory))
-			extensions)))
-	result)))
+            (filename-nondirectory (file-name-nondirectory filename))
+            result candidate-directory)
+        (while (and path (not result))
+          (setq candidate-directory (if (car path)
+                                        (file-name-as-directory (car path))
+                                      default-directory)
+                path (cdr path)
+                result (locate-file-with-extensions
+                        ;; This check is so we return something reasonable,
+                        ;; not because the code requires the simpler form.
+                        (if (file-name-absolute-p candidate-directory)
+                            (concat candidate-directory filename-nondirectory)
+                          ;; This probably only works on Unix.
+                          (concat filename-directory candidate-directory
+                                  filename-nondirectory))
+                        extensions)))
+        result)))
 
 (defun locate-file-on-path (filename path)
   "Return the full path of a file named FILENAME located
@@ -565,8 +565,8 @@ or nil for the current directory."
 ;;    ;; Works for hard links.  If neither file exists, attributes are nil
 ;;    ;; and so trivially equal.
 ;;    (and (file-exists-p file1) (file-exists-p file2)
-;; 	(equal (file-attributes file1)
-;; 	       (file-attributes file2)))))
+;;      (equal (file-attributes file1)
+;;             (file-attributes file2)))))
 
 
 ;; Joe Wells <jbw@cs.bu.edu> points out some unpleasant interactions of the
@@ -631,13 +631,13 @@ otherwise like `with-output-to-temp-buffer' with the \"*Help*\" buffer.
 Ehelp is loaded if necessary.
 BODY is not a thunk (a function of no arguments) but simply a set of forms."
   `(if use-electric-help-p
-	 (progn
-	   (require 'ehelp)
-	   (with-electric-help
-	    (function (lambda ()
-			,@body))))
+         (progn
+           (require 'ehelp)
+           (with-electric-help
+            (function (lambda ()
+                        ,@body))))
        (with-output-to-temp-buffer "*Help*"
-	 ,@body)))
+         ,@body)))
 
 ;; Originally by Joe Wells <jbw@cs.bu.edu>
 (defun best-fit-message (text &optional buffer)
@@ -649,20 +649,20 @@ BODY is not a thunk (a function of no arguments) but simply a set of forms."
     (buffer-disable-undo (current-buffer))
     (insert text)
     (delete-region (point)
-		   (progn
-		     (skip-chars-backward " \t\n")
-		     (point)))
+                   (progn
+                     (skip-chars-backward " \t\n")
+                     (point)))
     (cond ((and (< (current-column) (frame-width))
-		(progn
-		  (beginning-of-line 1)
-		  (bobp)))
-	   ;; This can't be just buffer, even though that's non-nil,
-	   ;; because it might not be an existing buffer.
-	   (delete-windows-on (get-buffer-create buffer))
-	   (message "%s" (buffer-substring (point-min) (point-max))))
-	  (t
-	   (with-electric-help-maybe
-	    (princ text))))))
+                (progn
+                  (beginning-of-line 1)
+                  (bobp)))
+           ;; This can't be just buffer, even though that's non-nil,
+           ;; because it might not be an existing buffer.
+           (delete-windows-on (get-buffer-create buffer))
+           (message "%s" (buffer-substring (point-min) (point-max))))
+          (t
+           (with-electric-help-maybe
+            (princ text))))))
 
 ;; Originally by Roland B Roberts <ROBERTS@hahn.nsrl.rochester.edu>
 (defmacro silently (&rest body)
@@ -670,9 +670,9 @@ BODY is not a thunk (a function of no arguments) but simply a set of forms."
 This will not disable any messages from built-in C subroutines."
   `(let ((f (symbol-function 'message)))
        (unwind-protect
-	   (progn (fset 'message (symbol-function 'ignore))
-		  ,@body)
-	 (fset 'message f))))
+           (progn (fset 'message (symbol-function 'ignore))
+                  ,@body)
+         (fset 'message f))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -684,9 +684,9 @@ This will not disable any messages from built-in C subroutines."
 (defmacro point-after (&rest commands)
   "Return the value of point after executing the COMMANDS.  Doesn't move point."
   (cons 'save-excursion
-	(append
-	 commands
-	 '((point)))))
+        (append
+         commands
+         '((point)))))
 (put 'point-after 'edebug-form-spec '(&rest form))
 
 (defun forward-line-wrapping (arg)
@@ -695,11 +695,11 @@ it encounters the end."
   (interactive "p")
   (let ((to-go (forward-line arg)))
     (cond ((or (plusp to-go) (not (bolp)))
-	   (goto-char (point-min))
-	   (forward-line-wrapping to-go))
-	  ((minusp to-go)
-	   (goto-char (point-max))
-	   (forward-line-wrapping (1+ to-go))))))
+           (goto-char (point-min))
+           (forward-line-wrapping to-go))
+          ((minusp to-go)
+           (goto-char (point-max))
+           (forward-line-wrapping (1+ to-go))))))
 
 ;; Renamed from current-line to avoid conflict with an example function in
 ;; the Emacs Lisp manual.
@@ -726,12 +726,12 @@ Optional fifth argument OBJECT is the string or buffer containing the text."
       (setq prev-value (get-text-property start prop object))
       (setq next-change (next-single-property-change start prop object))
       (if (not next-change)
-	  (setq next-change end)
-	(setq next-change (min next-change end)))
+          (setq next-change end)
+        (setq next-change (min next-change end)))
       (if (eq prev-value old-value)
-	  (if new-value
-	      (put-text-property start next-change prop new-value object)
-	    (remove-text-properties start next-change '(prop 'ignore) object)))
+          (if new-value
+              (put-text-property start next-change prop new-value object)
+            (remove-text-properties start next-change '(prop 'ignore) object)))
       (setq start next-change))))
 
 ;; This could easily be made to use a real stack.
@@ -742,13 +742,13 @@ Optional fifth argument OBJECT is the string or buffer containing the text.
 Multiple uses of `push-text-property' without an intervening
 `pop-text-property' will not work; this does not actually use a stack."
   (let ((pushed-prop (intern (concat "pushed-" (symbol-name prop))))
-	prev-value next-change)
+        prev-value next-change)
     (while (< start end)
       (setq prev-value (get-text-property start prop object))
       (setq next-change (next-single-property-change start prop object))
       (if (not next-change)
-	  (setq next-change end)
-	(setq next-change (min next-change end)))
+          (setq next-change end)
+        (setq next-change (min next-change end)))
       (put-text-property start next-change pushed-prop prev-value object)
       (put-text-property start next-change prop value object)
       (setq start next-change))))
@@ -758,17 +758,17 @@ Multiple uses of `push-text-property' without an intervening
 restore a previous value of PROP which was modified via `pop-text-property'.
 Optional fourth argument OBJECT is the string or buffer containing the text."
   (let ((orig-start start)
-	(pushed-prop (intern (concat "pushed-" (symbol-name prop))))
-	pushed-value next-change)
+        (pushed-prop (intern (concat "pushed-" (symbol-name prop))))
+        pushed-value next-change)
     (while (< start end)
       (setq pushed-value (get-text-property start pushed-prop object))
       (setq next-change (next-single-property-change start prop object))
       (if (not next-change)
-	  (setq next-change end)
-	(setq next-change (min next-change end)))
+          (setq next-change end)
+        (setq next-change (min next-change end)))
       (if pushed-value
-	  (put-text-property start next-change prop pushed-value object)
-	(remove-text-properties start next-change (list prop 'ignore) object))
+          (put-text-property start next-change prop pushed-value object)
+        (remove-text-properties start next-change (list prop 'ignore) object))
       (setq start next-change))
   (remove-text-properties orig-start end (list pushed-prop 'ignore) object)))
 
@@ -778,15 +778,15 @@ That value should be a list; add each of NEW-ELTS to it.
 Optional OBJECT holds the text.
 The old property is returned."
   (let* ((old-list (get-text-property pos prop object))
-	 (new-list old-list))
+         (new-list old-list))
     (if (not (eq old-list t))
-	(progn
-	  (while new-elts
-	    (if (not (or (eq old-list t)
-			 (memq prop old-list)))
-		(setq new-list (cons (car new-elts) new-list)))
-	    (setq new-elts (cdr new-elts)))
-	  (put-text-property pos (1+ pos) prop new-list object)))
+        (progn
+          (while new-elts
+            (if (not (or (eq old-list t)
+                         (memq prop old-list)))
+                (setq new-list (cons (car new-elts) new-list)))
+            (setq new-elts (cdr new-elts)))
+          (put-text-property pos (1+ pos) prop new-list object)))
     old-list))
 
 (defun remove-list-text-properties (pos prop old-elts &optional object)
@@ -795,12 +795,12 @@ That value should be a list; remove each of OLD-ELTS from it.
 Optional OBJECT holds the text.
 The old property is returned."
   (let* ((old-list (get-text-property pos prop object))
-	 (new-list (if (eq t old-list)
-		       (error "get all properties")
-		     (copy-sequence old-list))))
+         (new-list (if (eq t old-list)
+                       (error "get all properties")
+                     (copy-sequence old-list))))
     (while old-elts
       (setq new-list (delq (car old-elts) new-list)
-	    old-elts (cdr old-elts)))
+            old-elts (cdr old-elts)))
     (put-text-property pos (1+ pos) prop new-list object)
     old-list))
 
@@ -821,32 +821,32 @@ The old property is returned."
 ;;   "Execute, in BUFFER, forms of BODY."
 ;;   ;; Need get-buffer-create because BUFFER might be a string.
 ;;   `(let ((target-buffer (get-buffer-create ,buffer))
-;; 	   (this-buffer (current-buffer)))
+;;         (this-buffer (current-buffer)))
 ;;        (if (eq target-buffer this-buffer)
-;; 	   (progn
-;; 	     ,@body)
-;; 	 ;; Can't use save-excursion here because we only want to save the
-;; 	 ;; current buffer, not its value for point.
-;; 	 ;; (The Emacs Lisp manual, section "Introduction to Buffer-Local
-;; 	 ;; Variables", says to use save-excursion for sanity, however.)
-;; 	 (unwind-protect
-;; 	     (progn
-;; 	       (set-buffer target-buffer)
-;; 	       (let* ((target-window (get-buffer-window target-buffer))
-;; 		      (track-window-point-p
-;; 		       (and (not (eq target-window (selected-window)))
-;; 			    (eq (window-point target-window) (point)))))
-;; 		 (prog1
-;; 		     (progn
-;; 		       ,@body)
-;; 		   (if (and track-window-point-p
-;; 			    ;; *** Do I need this check?
-;; 			    (eq (current-buffer) target-buffer)
-;; 			    (eq target-window (get-buffer-window target-buffer))
-;; 			    (not (eq target-window (selected-window))))
-;; 		       (set-window-point target-window (point))))))
-;; 	   (if (non-killed-buffer-p this-buffer)
-;; 	       (set-buffer this-buffer))))))
+;;         (progn
+;;           ,@body)
+;;       ;; Can't use save-excursion here because we only want to save the
+;;       ;; current buffer, not its value for point.
+;;       ;; (The Emacs Lisp manual, section "Introduction to Buffer-Local
+;;       ;; Variables", says to use save-excursion for sanity, however.)
+;;       (unwind-protect
+;;           (progn
+;;             (set-buffer target-buffer)
+;;             (let* ((target-window (get-buffer-window target-buffer))
+;;                    (track-window-point-p
+;;                     (and (not (eq target-window (selected-window)))
+;;                          (eq (window-point target-window) (point)))))
+;;               (prog1
+;;                   (progn
+;;                     ,@body)
+;;                 (if (and track-window-point-p
+;;                          ;; *** Do I need this check?
+;;                          (eq (current-buffer) target-buffer)
+;;                          (eq target-window (get-buffer-window target-buffer))
+;;                          (not (eq target-window (selected-window))))
+;;                     (set-window-point target-window (point))))))
+;;         (if (non-killed-buffer-p this-buffer)
+;;             (set-buffer this-buffer))))))
 ;; (put 'in-buffer 'lisp-indent-hook 1)
 ;; (put 'in-buffer 'edebug-form-spec '(&rest form))
 
@@ -873,8 +873,8 @@ The old property is returned."
 ;;   `(let ((this-buffer (current-buffer)))
 ;;        (set-buffer ,buffer)
 ;;        (unwind-protect
-;; 	   (progn ,@body)
-;; 	 (set-buffer this-buffer))))
+;;         (progn ,@body)
+;;       (set-buffer this-buffer))))
 
 
 ;; Similar tricks can be done with syntax-table and current-local-map.
@@ -882,16 +882,16 @@ The old property is returned."
 (defun copy-buffer-local-variables (buffer)
   "Copy the values of all of BUFFER's local variables into the current buffer."
   (let ((blv (with-current-buffer buffer (buffer-local-variables)))
-	pair symbol)
+        pair symbol)
     (while (consp blv)
       (setq pair (car blv))
       (setq symbol (car pair))
       (if (memq symbol '(0 buffer-undo-list)) ; 18.57 brain-damage!!!!!
-	  nil
-	(progn
-	  (if (not (and symbol (symbolp symbol))) (error "impossible"))
-	  (make-local-variable symbol)
-	  (set symbol (cdr pair))))
+          nil
+        (progn
+          (if (not (and symbol (symbolp symbol))) (error "impossible"))
+          (make-local-variable symbol)
+          (set symbol (cdr pair))))
       (setq blv (cdr blv)))))
 
 (defun non-killed-buffer-p (object)
@@ -916,9 +916,9 @@ When called non-interactively, requires two arguments, the region's beginning an
     (end-of-line 1)
     (let ((result (current-column)))
       (while (< (point) end)
-	(end-of-line 2)
-	(if (> (current-column) result)
-	    (setq result (current-column))))
+        (end-of-line 2)
+        (if (> (current-column) result)
+            (setq result (current-column))))
       result)))
 
 (defun line-lengths-histogram (beg end)
@@ -930,11 +930,11 @@ The result is a hash table of the form ((len . count) ...)."
       (if (< end beg) (setq end beg))
       (end-of-line 1)
       (let ((len (current-column)))
-	(puthash len (1+ (gethash len table 0)) table))
+        (puthash len (1+ (gethash len table 0)) table))
       (while (< (point) end)
-	(end-of-line 2)
-	(let ((len (current-column)))
-	  (puthash len (1+ (gethash len table 0)) table))))
+        (end-of-line 2)
+        (let ((len (current-column)))
+          (puthash len (1+ (gethash len table 0)) table))))
     table))
 
 ;; Modified from insert-buffer.
@@ -958,10 +958,10 @@ This is more useful than `with-curent-buffer' for window manipulation,
 as by `scroll-up'."
   `(let ((this-window (selected-window)))
        (unwind-protect
-	   (progn
-	     (select-window ,window)
-	     ,@body)
-	 (select-window this-window))))
+           (progn
+             (select-window ,window)
+             ,@body)
+         (select-window this-window))))
 (put 'in-window 'lisp-indent-hook 1)
 (put 'in-window 'edebug-form-spec '(&rest form))
 
@@ -994,13 +994,13 @@ as by `scroll-up'."
 (defun count-screen-lines-signed (start end)
   (let ((lines (count-screen-lines start end)))
     (if (< start end)
-	lines
+        lines
       (- lines))))
 
 (defun count-lines-signed (start end)
   (let ((lines (count-lines start end)))
     (if (< start end)
-	lines
+        lines
       (- lines))))
 
 (make-obsolete 'buffer-visible-p 'get-buffer-window)
@@ -1022,11 +1022,11 @@ as by `scroll-up'."
 ;; depending on  meta-flag."
 ;;   (if meta-flag
 ;;       (let ((first-char (aref keys 0)))
-;; 	(if (zerop (logand meta-bit first-char))
-;; 	    (progn
-;; 	      (aset keys 0 (logior meta-bit first-char))
-;; 	      keys)
-;; 	  (concat (list meta-prefix-char) keys)))
+;;      (if (zerop (logand meta-bit first-char))
+;;          (progn
+;;            (aset keys 0 (logior meta-bit first-char))
+;;            keys)
+;;        (concat (list meta-prefix-char) keys)))
 ;;     (concat (list meta-prefix-char) keys)))
 
 (defmacro meta-prefix-ify (keys)
@@ -1062,13 +1062,13 @@ as by `scroll-up'."
   "Like re-search-forward, but if regexp is nil, then return nil."
   `(let ((re ,regexp))
        (if re
-	   (re-search-forward re ,@args))))
+           (re-search-forward re ,@args))))
 (put 're-search-forward-maybe 'edebug-form-spec '(&rest form))
 
 (defun regexps->regexp (&rest regexps)
   (mapconcat (function identity)
-	     regexps
-	     "\\|"))
+             regexps
+             "\\|"))
 
 (defmacro re-search-forward-many (&rest regexps)
   "Like `re-search-forward', but search for any of REGEXPS.
@@ -1091,30 +1091,30 @@ No optional arguments are permitted."
 otherwise return nil.
 Point is left at the end of match MATCH-NO if it is specified."
   `(if (looking-at ,regexp)
-	 (goto-char (match-end (or (, match-no) 0)))))
+         (goto-char (match-end (or (, match-no) 0)))))
 
 (defmacro skip-regexp-forward-maybe (regexp &optional match-no)
   "Return nil if REGEXP is nil; otherwise like skip-regexp-forward."
   `(let ((re ,regexp))
        (if re
-	   (skip-regexp-forward re))))
+           (skip-regexp-forward re))))
 
 (defmacro skip-regexp-backward (regexp &optional match-no)
   "If point is after REGEXP, move past it and return point;
 otherwise return nil."
   `(let ((here (point)))
        (if (re-search-backward ,regexp nil t)
-	   (if (= here (match-end 0))
-	       t
-	     (progn
-	       (goto-char here)
-	       nil)))))
+           (if (= here (match-end 0))
+               t
+             (progn
+               (goto-char here)
+               nil)))))
 
 (defmacro skip-regexp-backward-maybe (regexp &optional match-no)
   "Return nil if REGEXP is nil; otherwise like skip-regexp-backward."
   `(let ((re ,regexp))
        (if re
-	   (skip-regexp-backward re))))
+           (skip-regexp-backward re))))
 
 ;;; Skipping strings
 
@@ -1125,17 +1125,17 @@ otherwise return nil."
 otherwise return nil."
   `(let ((s ,string))
        (if (empty-string-p s)
-	   t
-	 (if (search-forward s (+ (point) (length s)) t)
-	     (goto-char (match-end 0))))))
+           t
+         (if (search-forward s (+ (point) (length s)) t)
+             (goto-char (match-end 0))))))
 
 (defmacro skip-string-backward (string)
   "If point is after STRING, move back past it and return t;
 otherwise return nil."
   `(let ((s ,string))
        (if (empty-string-p s)
-	   t
-	 (search-backward s (- (point) (length s)) t))))
+           t
+         (search-backward s (- (point) (length s)) t))))
 
 ;;; Extracting matches
 
@@ -1148,15 +1148,15 @@ otherwise return nil."
 (defun show-match-data (&optional source)
   (interactive)
   (list (match-string-maybe 0 source)
-	(match-string-maybe 1 source)
-	(match-string-maybe 2 source)
-	(match-string-maybe 3 source)
-	(match-string-maybe 4 source)
-	(match-string-maybe 5 source)
-	(match-string-maybe 6 source)
-	(match-string-maybe 7 source)
-	(match-string-maybe 8 source)
-	(match-string-maybe 9 source)))
+        (match-string-maybe 1 source)
+        (match-string-maybe 2 source)
+        (match-string-maybe 3 source)
+        (match-string-maybe 4 source)
+        (match-string-maybe 5 source)
+        (match-string-maybe 6 source)
+        (match-string-maybe 7 source)
+        (match-string-maybe 8 source)
+        (match-string-maybe 9 source)))
 
 ;;; How-many
 
@@ -1206,7 +1206,7 @@ REGEXP should not match the empty string."
 (defun how-many-in-string (regexp target)
   "Return number of matches for REGEXP in TARGET."
   (let ((count 0)
-	(start -1))
+        (start -1))
     (while (setq start (string-match regexp target (1+ start)))
       (setq count (1+ count)))
     count))
@@ -1215,8 +1215,8 @@ REGEXP should not match the empty string."
 (defun how-many-substring-overlapping (substring target)
   "Return number of matches for SUBSTRING in TARGET, including overlapping ones."
   (let ((ss-regexp (regexp-quote substring))
-	(count 0)
-	(start -1))
+        (count 0)
+        (start -1))
     (while (setq start (string-match ss-regexp target (1+ start)))
       (setq count (1+ count)))
     count))
@@ -1230,13 +1230,13 @@ If optional arg COUNT is specified, return the COUNTth occurrance."
   (if (not count)
       (setq count 1))
   (let ((index 0)
-	(string-length (length string))
-	(result nil))
+        (string-length (length string))
+        (result nil))
     (while (and (< index string-length) (not result))
       (if (char-equal char (aref string index))
-	  (if (= count 1)
-	      (setq result index)
-	    (setq count (1- count))))
+          (if (= count 1)
+              (setq result index)
+            (setq count (1- count))))
       (setq index (1+ index)))
     result))
 
@@ -1246,13 +1246,13 @@ If optional arg COUNT is specified, return the COUNTth occurrance from the end."
   (if (not count)
       (setq count 1))
   (let ((index (1- (length string)))
-	(string-length )
-	(result nil))
+        (string-length )
+        (result nil))
     (while (and (> index -1) (not result))
       (if (char-equal char (aref string index))
-	  (if (= count 1)
-	      (setq result index)
-	    (setq count (1- count))))
+          (if (= count 1)
+              (setq result index)
+            (setq count (1- count))))
       (setq index (1- index)))
     result))
 
@@ -1284,15 +1284,15 @@ This function attempts to return a character that can be displayed in a single
 screen column."
   (save-excursion
     (let ((candidate ?\ )
-	  (result t))
+          (result t))
       (while (eq result t)
-	(goto-char (point-min))
-	(if (not (search-forward (char-to-string candidate) nil t))
-	    (setq result candidate)
-	  (progn
-	    (setq candidate (% (1+ candidate) 256))
-	    (if (eq candidate ?\ )
-		(setq result nil)))))
+        (goto-char (point-min))
+        (if (not (search-forward (char-to-string candidate) nil t))
+            (setq result candidate)
+          (progn
+            (setq candidate (% (1+ candidate) 256))
+            (if (eq candidate ?\ )
+                (setq result nil)))))
       result)))
 
 (defun unused-char-in-string (string)
@@ -1339,17 +1339,17 @@ return a list of replacements creating ambiguity."
 
   (if backward
       (setq substitutions (mapcar (function (lambda (sub-cons)
-				     (cons (cdr sub-cons) (car sub-cons))))
-				  (reverse substitutions))))
+                                     (cons (cdr sub-cons) (car sub-cons))))
+                                  (reverse substitutions))))
     ;;; Much too tricky, and modified the argument besides.
     ;; (let ((subs (reverse substitutions))
-    ;; 	    temp)
-    ;; 	(while subs
-    ;; 	  (setq temp (caar subs))
-    ;; 	  (setcar (car subs) (cdar subs))
-    ;; 	  (setcdr (car subs) temp)
-    ;; 	  (setq subs (cdr subs)))
-    ;; 	(setq substitutions (nreverse substitutions)))
+    ;;      temp)
+    ;;  (while subs
+    ;;    (setq temp (caar subs))
+    ;;    (setcar (car subs) (cdar subs))
+    ;;    (setcdr (car subs) temp)
+    ;;    (setq subs (cdr subs)))
+    ;;  (setq substitutions (nreverse substitutions)))
 
   ;; (message "buffer-substitute:  substitutions = %s" substitutions)
 
@@ -1390,23 +1390,23 @@ return a list of replacements creating ambiguity."
   (let (from-string to-string ambiguity ambiguities)
     (while substitutions
       (setq from-string (caar substitutions)
-	    to-string (cdar substitutions))
+            to-string (cdar substitutions))
       ;; (message "Substituting %s for %s." to-string from-string)
       (goto-char (point-min))
 
       (if (and check (search-forward to-string nil t))
-	  (progn
-	    (setq ambiguity (car substitutions))
-	    (goto-char (point-min))))
+          (progn
+            (setq ambiguity (car substitutions))
+            (goto-char (point-min))))
 
       (replace-string-noninteractive from-string to-string)
 
       ;; Don't complain if we didn't actually do any substitution.
       (if ambiguity
-	  (progn
-	    (if (not (= (point) (point-min)))
-		(setq ambiguities (cons ambiguity ambiguities)))
-	    (setq ambiguity nil)))
+          (progn
+            (if (not (= (point) (point-min)))
+                (setq ambiguities (cons ambiguity ambiguities)))
+            (setq ambiguity nil)))
 
       (setq substitutions (cdr substitutions)))
     ambiguities))
@@ -1443,10 +1443,10 @@ return a list of replacements creating ambiguity."
 (defun current-date ()
   "Return the current date, as a human-readable string."
   (let ((now (current-time-string)))
-    (concat (substring now 4 8)		; month
-	    (substring now 8 11)	; day
-	    (substring now 20)		; year
-	    )))
+    (concat (substring now 4 8)         ; month
+            (substring now 8 11)        ; day
+            (substring now 20)          ; year
+            )))
 ;; (current-date)
 
 
@@ -1469,10 +1469,10 @@ Uses the current tags table."
       (forward-sexp)
       (setq f (intern (buffer-substring fbegin (point))))
       (if (not (fboundp f))
-	  (error "%s not fboundp." f))
+          (error "%s not fboundp." f))
       (if (looking-at "\)")
-	  (tags-loop-continue)
-	(skip-chars-forward " \t\n")))))
+          (tags-loop-continue)
+        (skip-chars-forward " \t\n")))))
 
 ;;;
 ;;; Documentation strings
@@ -1491,27 +1491,27 @@ and end of the documentation string \(as buffer positions\)."
     (while t
       (setq begin nil)
       (cond ((skip-regexp-forward "un\\|macro\\|subst")
-	     (skip-regexp-forward "\\s *")
-	     (setq defname (point))
-	     (forward-sexp 1)
-	     (setq defname (buffer-substring defname (point)))
-	     (if (skip-regexp-forward " \(.*\)\n  \"")
-		 (setq begin (point))))
-	    ((skip-regexp-forward "var\\|const\\|localvar")
-	     (skip-regexp-forward "\\s *")
-	     (setq defname (point))
-	     (forward-sexp 1)
-	     (setq defname (buffer-substring defname (point)))
-	     (if (not (looking-at "\)"))
-		 (progn
-		   (forward-sexp 1)	; value
-		   (if (skip-regexp-forward "[ \t\n]*\"")
-		       (setq begin (point)))))))
+             (skip-regexp-forward "\\s *")
+             (setq defname (point))
+             (forward-sexp 1)
+             (setq defname (buffer-substring defname (point)))
+             (if (skip-regexp-forward " \(.*\)\n  \"")
+                 (setq begin (point))))
+            ((skip-regexp-forward "var\\|const\\|localvar")
+             (skip-regexp-forward "\\s *")
+             (setq defname (point))
+             (forward-sexp 1)
+             (setq defname (buffer-substring defname (point)))
+             (if (not (looking-at "\)"))
+                 (progn
+                   (forward-sexp 1)     ; value
+                   (if (skip-regexp-forward "[ \t\n]*\"")
+                       (setq begin (point)))))))
       (if begin
-	  (progn
-	    (looking-at non-quote-regexp)
-	    (setq end (match-end 0))
-	    (funcall function defname begin end)))
+          (progn
+            (looking-at non-quote-regexp)
+            (setq end (match-end 0))
+            (funcall function defname begin end)))
       (tags-loop-continue))))
 
 (defun princ-docstring-region (defname beg end)
@@ -1533,18 +1533,18 @@ Return t if a local-variables region was found; REGION-FUNCTION should act
 by side effect."
   (goto-char (point-max))
   (search-backward "\n\^L"
-		   (max (- (point-max) 3000) (point-min)) 'move)
+                   (max (- (point-max) 3000) (point-min)) 'move)
   (if (search-forward "Local Variables:" nil t)
       (progn
-	(beginning-of-line 1)
-	(funcall region-function (point) (point-max))
-	t)))
+        (beginning-of-line 1)
+        (funcall region-function (point) (point-max))
+        t)))
 
 (defun really-hack-local-variables ()
   "Call `hack-local-variables', ignoring variables that limit it."
   ;; Bah!  Hulk not impressed by puny attempts to thwart him!
   (let ((enable-local-eval t)
-	(enable-local-variables t))
+        (enable-local-variables t))
     (hack-local-variables)))
 
 
