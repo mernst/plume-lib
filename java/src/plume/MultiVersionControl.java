@@ -27,6 +27,7 @@ import org.tmatesoft.svn.core.wc.SVNWCClient;
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
 import org.checkerframework.checker.lock.qual.*;
+import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -657,7 +658,9 @@ public class MultiVersionControl {
           currentRootIsRepos = false;
           // If the CVSROOT is remote, try to make it local.
           if (currentRoot.startsWith(":ext:")) {
-            String[] rootWords = currentRoot.split(":");
+            @SuppressWarnings(
+                "minlen") // just checked that there is a colon (still fails if currentRoot is just ":ext:")
+            String /*@MinLen(1)*/[] rootWords = currentRoot.split(":");
             String possibleRoot = rootWords[rootWords.length - 1];
             if (new File(possibleRoot).isDirectory()) {
               currentRoot = possibleRoot;

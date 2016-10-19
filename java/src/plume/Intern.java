@@ -7,6 +7,7 @@ import java.util.Iterator;
 /*>>>
 import org.checkerframework.checker.interning.qual.*;
 import org.checkerframework.checker.lock.qual.*;
+import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -812,7 +813,10 @@ public final class Intern {
    * @param end the index of the end of the subsequence to be interned
    * @return a subsequence of seq from start to end that is interned
    */
-  public static int /*@Interned*/ [] internSubsequence(int /*@Interned*/ [] seq, int start, int end) {
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
+  public static int /*@Interned*/ [] internSubsequence(
+      int /*@Interned*/ [] seq, /*@NonNegative*/ int start, /*@NonNegative*/ int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<int /*@Interned*/ []> sai =
         new SequenceAndIndices<int /*@Interned*/ []>(seq, start, end);
@@ -820,6 +824,7 @@ public final class Intern {
     if (lookup != null) {
       return lookup.get();
     } else {
+      @SuppressWarnings("lowerbound") // end > start
       int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start);
       int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
       internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
@@ -834,8 +839,10 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
   public static long /*@Interned*/ [] internSubsequence(
-      long /*@Interned*/ [] seq, int start, int end) {
+      long /*@Interned*/ [] seq, /*@NonNegative*/ int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<long /*@Interned*/ []> sai =
         new SequenceAndIndices<long /*@Interned*/ []>(seq, start, end);
@@ -843,6 +850,7 @@ public final class Intern {
     if (lookup != null) {
       return lookup.get();
     } else {
+      @SuppressWarnings("lowerbound") // end > start
       long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
@@ -857,8 +865,10 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
   public static double /*@Interned*/ [] internSubsequence(
-      double /*@Interned*/ [] seq, int start, int end) {
+      double /*@Interned*/ [] seq, /*@NonNegative*/ int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<double /*@Interned*/ []> sai =
         new SequenceAndIndices<double /*@Interned*/ []>(seq, start, end);
@@ -866,6 +876,7 @@ public final class Intern {
     if (lookup != null) {
       return lookup.get();
     } else {
+      @SuppressWarnings("lowerbound") // end > start
       double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
@@ -880,8 +891,10 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(
-      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
+      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, /*@NonNegative*/ int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> sai =
         new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(seq, start, end);
@@ -891,6 +904,7 @@ public final class Intern {
     if (lookup != null) {
       return lookup.get();
     } else {
+      @SuppressWarnings("lowerbound") // end > start
       /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
@@ -910,8 +924,10 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  /*@Pure*/
+  @SuppressWarnings("purity") // interning logic
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(
-      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
+      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, /*@NonNegative*/ int start, int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> sai =
         new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(seq, start, end);
@@ -921,6 +937,7 @@ public final class Intern {
     if (lookup != null) {
       return lookup.get();
     } else {
+      @SuppressWarnings("lowerbound") // end > start
       /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
@@ -941,13 +958,13 @@ public final class Intern {
    */
   private static final class SequenceAndIndices<T extends /*@Interned*/ Object> {
     public T seq;
-    public int start;
+    public /*@NonNegative*/ int start;
     public int end;
 
     /**
      * @param seq an interned array
      */
-    public SequenceAndIndices(T seq, int start, int end) {
+    public SequenceAndIndices(T seq, /*@NonNegative*/ int start, int end) {
       this.seq = seq;
       this.start = start;
       this.end = end;

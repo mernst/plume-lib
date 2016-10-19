@@ -54,6 +54,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /*>>>
+import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
@@ -2941,7 +2942,8 @@ public final class UtilMDE {
    * @param objs list of elements to
    * @return list of lists of length dims, each of which combines elements from objs
    */
-  public static <T> List<List<T>> create_combinations(int dims, int start, List<T> objs) {
+  public static <T> List<List<T>> create_combinations(
+      int dims, /*@NonNegative*/ int start, List<T> objs) {
 
     if (dims < 1) {
       throw new IllegalArgumentException();
@@ -2988,7 +2990,8 @@ public final class UtilMDE {
    * @param cnt maximum element value
    * @return list of lists of length arity, each of which combines integers from start to cnt
    */
-  public static ArrayList<ArrayList<Integer>> create_combinations(int arity, int start, int cnt) {
+  public static ArrayList<ArrayList<Integer>> create_combinations(
+      int arity, /*@NonNegative*/ int start, int cnt) {
 
     ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
 
