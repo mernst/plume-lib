@@ -62,27 +62,27 @@ adjust `scheme-defform-regexp' to include named-lambda.")
 (defvar c-symbol-regexp "\\(\\w\\|:\\)+")
 (defvar c-type-and-symbol-regexp
   (concat c-type-regexp
-	  "\\("
-	  "\\s *"
-	  c-symbol-regexp
-	  "\\)?")
+          "\\("
+          "\\s *"
+          c-symbol-regexp
+          "\\)?")
   "Actually the type is optional.")
 (defvar c-args-regexp
   (concat "("
-	  "\\("
-	  c-type-and-symbol-regexp
-	  ",\\s *"
-	  "\\)"
-	  c-type-and-symbol-regexp
-	  ")"))
+          "\\("
+          c-type-and-symbol-regexp
+          ",\\s *"
+          "\\)"
+          c-type-and-symbol-regexp
+          ")"))
 
 (defvar c-definition-regexp
   (concat "^"
-	  c-type-and-symbol-regexp
-	  "\\("
-	  "\\s *"
-	  c-args-regexp
-	  "\\)?"))
+          c-type-and-symbol-regexp
+          "\\("
+          "\\s *"
+          c-args-regexp
+          "\\)?"))
 
 ;; not \\w+, as that omits "_.".
 (defvar java-word-regexp "\\b[A-Za-z0-9_]\\([A-Za-z0-9_.$<]*[A-Za-z0-9_]\\)?\\b>?")
@@ -91,40 +91,40 @@ adjust `scheme-defform-regexp' to include named-lambda.")
 ;; Like type-and-symbol; maybe just 1 symbol
 (defvar java-symbols-regexp
   (concat java-word-regexp square-brackets-regexp "*"
-	  "\\(\\s +" java-word-regexp square-brackets-regexp "*" "\\)*"
-	  ))
+          "\\(\\s +" java-word-regexp square-brackets-regexp "*" "\\)*"
+          ))
 (defvar java-args-regexp
   (concat "(\\s *"
-	  "\\("
-	  java-symbols-regexp
- 	  "\\("
- 	  "\\s *,\\s *"
- 	  java-symbols-regexp
- 	  "\\)*"
-	  "\\s *"
-	  "\\)?"
-	  ")"
-	  "[ \t]*\\($\\|[^ \t.]\\)"	; aviod "foo()" in "foo().bar();"
-	  ))
+          "\\("
+          java-symbols-regexp
+          "\\("
+          "\\s *,\\s *"
+          java-symbols-regexp
+          "\\)*"
+          "\\s *"
+          "\\)?"
+          ")"
+          "[ \t]*\\($\\|[^ \t.]\\)"     ; aviod "foo()" in "foo().bar();"
+          ))
 ;; Unfortunately, this doesn't get member variables, only methods.
 ;; I don't see how to get the member variables without catching too
 ;; many local variables.
 (defvar java-definition-regexp
   (concat "\\("
-	  "^[ \t]*"
-	  java-symbols-regexp
-	  "\\("
-	  "\\s *"
-	  java-args-regexp
-	  "\\)"
-	  "\\|"
-	  "^[ \t]*\\(\\(public\\|private\\|protected\\|final\\|abstract\\)\\b.*\\)?\\bclass\\b"
-	  "\\)"))
+          "^[ \t]*"
+          java-symbols-regexp
+          "\\("
+          "\\s *"
+          java-args-regexp
+          "\\)"
+          "\\|"
+          "^[ \t]*\\(\\(public\\|private\\|protected\\|final\\|abstract\\)\\b.*\\)?\\bclass\\b"
+          "\\)"))
 (defvar java-nondefinition-regexp
   (concat
    "^[ \t]*\\(catch\\|if\\|return\\|switch\\|while\\)\\b" ; these aren't (typeless) methods
    "\\|"
-   "^[ \t]*[^a].*\;$"		      ; ends w/semicolon, but isn't abstract
+   "^[ \t]*[^a].*\;$"                 ; ends w/semicolon, but isn't abstract
    ))
 
 
@@ -143,7 +143,7 @@ adjust `scheme-defform-regexp' to include named-lambda.")
 (if (not (boundp 'ctl-x-ctl-p-map))
     (progn
       (defvar ctl-x-ctl-p-map (make-sparse-keymap)
-	"Keymap for subcommands of C-x C-p, which are for page handling.")
+        "Keymap for subcommands of C-x C-p, which are for page handling.")
       (fset 'ctl-x-ctl-p-prefix ctl-x-ctl-p-map)
       (global-unset-key "\C-x\C-p")
       (define-key ctl-x-map "\C-p" 'ctl-x-ctl-p-prefix)
@@ -162,16 +162,16 @@ adjust `scheme-defform-regexp' to include named-lambda.")
   "Display a buffer of definition \(function\) headers for this code buffer."
   (interactive)
   (let ((code-buffer (current-buffer))
-	(code-tab-width tab-width)
-	(header-buffer (get-buffer-create
-			  (concat "*Definitions in: " (buffer-name))))
-	(current-header (save-excursion
-			  (end-of-defun 1) ; associate comments w/following def
-			  (beginning-of-defun 1)
-			  (concat "\n" (buffer-line) "\n")))
-	(regexp (headers-regexp))
-	(omit-regexp (headers-omit-regexp))
-	(page-regexp (or (headers-page-delimiter) page-delimiter)))
+        (code-tab-width tab-width)
+        (header-buffer (get-buffer-create
+                          (concat "*Definitions in: " (buffer-name))))
+        (current-header (save-excursion
+                          (end-of-defun 1) ; associate comments w/following def
+                          (beginning-of-defun 1)
+                          (concat "\n" (buffer-line) "\n")))
+        (regexp (headers-regexp))
+        (omit-regexp (headers-omit-regexp))
+        (page-regexp (or (headers-page-delimiter) page-delimiter)))
 
     (pop-to-buffer header-buffer)
     (buffer-disable-undo header-buffer)
@@ -185,12 +185,12 @@ adjust `scheme-defform-regexp' to include named-lambda.")
     (goto-char (point-min))
     (delete-non-matching-lines (concat "\\(" regexp "\\|" page-regexp "\\)"))
     (if omit-regexp
-	(delete-matching-lines omit-regexp))
+        (delete-matching-lines omit-regexp))
     (while (re-search-forward "\n\n\n+" nil t)
       (replace-match "\n\n" nil nil))
     (goto-char (point-min))
     (if (search-forward current-header nil t)
-	(forward-line -1))
+        (forward-line -1))
     (shrink-window-if-larger-than-buffer)
     (set-buffer-modified-p nil)
     (setq buffer-read-only t)))
@@ -221,71 +221,71 @@ adjust `scheme-defform-regexp' to include named-lambda.")
   "Return a regular expression for finding headers in the current major mode."
   (or headers-regexp
       (cond ((or (eq major-mode 'scheme-mode)
-		 (eq major-mode 'chez-scheme-mode))
-	     (or headers-scheme-regexp
-		 (concat (if headers-internal-definitions-p "^[\t ]*(" "^\(")
-			 (substring (or scheme-defform-regexp "^def") 1))))
-	    ((or (eq major-mode 'lisp-mode)
-		 (eq major-mode 'emacs-lisp-mode)
-		 (eq major-mode 'fi:common-lisp-mode))
-	     "^\(def")
-	    ((or (eq major-mode 'c-mode)
-		 (eq major-mode 'c++-mode))
-	     c-definition-regexp)
-	    ((or (eq major-mode 'java-mode)
-		 (eq major-mode 'jde-mode))
-	     java-definition-regexp)
-	    ((eq major-mode 'perl-mode)
-	     "^\\(sub\\|my\\)\\b")
-	    ((eq major-mode 'python-mode)
-	     "^[ \t]*\\(def\\|class\\)\\b")
-	    ((eq major-mode 'texinfo-mode)
-	     "^@\\(chapter\\|\\(sub\\)*section\\)[ \t]")
-	    ((eq major-mode 'cecil-mode)
-	     ;; This is giving me trouble: doesn't always include everything.
-	     (let ((top-alternatives
-		    (list
-		     (concat ;; (regexp-opt
-			     ;;  '("abstract" "template" "concrete" "dynamic")
-			     ;;  'paren)
-			     "\\(abstract\\|concrete\\|dynamic\\|template\\)"
-			     "?"
-			     "[ \t]*"
-			     ;; (regexp-opt
-			     ;;  '("representation" "object") 'paren)
-			     "\\(object\\|representation\\)")
-		     ;; (regexp-opt
-		     ;;  '("type" "predicate" "signature" "method" "module") 'paren)
-		     "\\(m\\(ethod\\|odule\\)\\|predicate\\|signature\\|type\\)"
-		     (concat "extend[ \t]+"
-			     ;; (regexp-opt
-			     ;; '("type" "representation" "object") 'paren)
-			     ;; "?"
-			     )
-		     ;; "\\(method[ \t]+\\)?implementation"
-		     (concat
-		      "\\(shared[ \t]+\\)?"
-		      "\\(var[ \t]+\\)?"
-		      "field[ \t]+"
-		      ;; (regexp-opt
-		      ;; '("signature" "field implementation") 'paren)
-		      ;; "?"
-		      ))))
-	       (concat
-		"^[ \t]*\\(public\\|private\\|protected\\)?[ \t]*"
-		(regexp-opt top-alternatives 'paren)
-		"\\b")))
-	    (t
-	     (error "headers.el doesn't understand %s; please teach it"
-		    major-mode)))))
+                 (eq major-mode 'chez-scheme-mode))
+             (or headers-scheme-regexp
+                 (concat (if headers-internal-definitions-p "^[\t ]*(" "^\(")
+                         (substring (or scheme-defform-regexp "^def") 1))))
+            ((or (eq major-mode 'lisp-mode)
+                 (eq major-mode 'emacs-lisp-mode)
+                 (eq major-mode 'fi:common-lisp-mode))
+             "^\(def")
+            ((or (eq major-mode 'c-mode)
+                 (eq major-mode 'c++-mode))
+             c-definition-regexp)
+            ((or (eq major-mode 'java-mode)
+                 (eq major-mode 'jde-mode))
+             java-definition-regexp)
+            ((eq major-mode 'perl-mode)
+             "^\\(sub\\|my\\)\\b")
+            ((eq major-mode 'python-mode)
+             "^[ \t]*\\(def\\|class\\)\\b")
+            ((eq major-mode 'texinfo-mode)
+             "^@\\(chapter\\|\\(sub\\)*section\\)[ \t]")
+            ((eq major-mode 'cecil-mode)
+             ;; This is giving me trouble: doesn't always include everything.
+             (let ((top-alternatives
+                    (list
+                     (concat ;; (regexp-opt
+                             ;;  '("abstract" "template" "concrete" "dynamic")
+                             ;;  'paren)
+                             "\\(abstract\\|concrete\\|dynamic\\|template\\)"
+                             "?"
+                             "[ \t]*"
+                             ;; (regexp-opt
+                             ;;  '("representation" "object") 'paren)
+                             "\\(object\\|representation\\)")
+                     ;; (regexp-opt
+                     ;;  '("type" "predicate" "signature" "method" "module") 'paren)
+                     "\\(m\\(ethod\\|odule\\)\\|predicate\\|signature\\|type\\)"
+                     (concat "extend[ \t]+"
+                             ;; (regexp-opt
+                             ;; '("type" "representation" "object") 'paren)
+                             ;; "?"
+                             )
+                     ;; "\\(method[ \t]+\\)?implementation"
+                     (concat
+                      "\\(shared[ \t]+\\)?"
+                      "\\(var[ \t]+\\)?"
+                      "field[ \t]+"
+                      ;; (regexp-opt
+                      ;; '("signature" "field implementation") 'paren)
+                      ;; "?"
+                      ))))
+               (concat
+                "^[ \t]*\\(public\\|private\\|protected\\)?[ \t]*"
+                (regexp-opt top-alternatives 'paren)
+                "\\b")))
+            (t
+             (error "headers.el doesn't understand %s; please teach it"
+                    major-mode)))))
 
 (defun headers-omit-regexp ()
   "Return regexp for omitted headers in current major mode."
   (or headers-omit-regexp
       (cond
        ((or (eq major-mode 'java-mode)
-	    (eq major-mode 'jde-mode))
-	java-nondefinition-regexp))))
+            (eq major-mode 'jde-mode))
+        java-nondefinition-regexp))))
 
 (defun headers-page-delimiter ()
   "Return page delimiter for current major mode."

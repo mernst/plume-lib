@@ -19,8 +19,8 @@ Strips off TeX commands, comments, figures, etc."
     (goto-char (point-min))
     (while (search-forward "\\begin{figure}" nil t)
       (let ((fig-begin (match-beginning 0)))
-	(search-forward "\\end{figure}")
-	(delete-region fig-begin (point))))
+        (search-forward "\\end{figure}")
+        (delete-region fig-begin (point))))
 
     ;; Kill \def
     (goto-char (point-min))
@@ -28,7 +28,7 @@ Strips off TeX commands, comments, figures, etc."
       (delete-region (match-beginning 0) (match-end 0))
       (kill-sexp 1)
       (if (= ?# (char-after (point)))
-	  (kill-sexp 1))
+          (kill-sexp 1))
       (kill-sexp 1))
 
     ;; Kill TeX command and argument
@@ -107,10 +107,10 @@ Strips off TeX commands, comments, figures, etc."
   (goto-char (point-min))
   (if (and argp (> argp 0))
       (let ((full-string (concat string "{")))
-	(while (search-forward full-string nil t)
-	  (delete-region (match-beginning 0) (1- (match-end 0)))
-	  (backward-char 1)
-	  (kill-sexp argp)))
+        (while (search-forward full-string nil t)
+          (delete-region (match-beginning 0) (1- (match-end 0)))
+          (backward-char 1)
+          (kill-sexp argp)))
     (while (search-forward string nil t)
       (delete-region (match-beginning 0) (match-end 0)))))
 
@@ -118,10 +118,10 @@ Strips off TeX commands, comments, figures, etc."
   (goto-char (point-min))
   (if (and argp (> argp 0))
       (let ((full-regexp (concat regexp "{")))
-	(while (re-search-forward full-regexp nil t)
-	  (delete-region (match-beginning 0) (1- (match-end 0)))
-	  (backward-char 1)
-	  (kill-sexp argp)))
+        (while (re-search-forward full-regexp nil t)
+          (delete-region (match-beginning 0) (1- (match-end 0)))
+          (backward-char 1)
+          (kill-sexp argp)))
     (while (re-search-forward regexp nil t)
       (delete-region (match-beginning 0) (match-end 0)))))
 
@@ -138,4 +138,3 @@ Strips off TeX commands, comments, figures, etc."
   (while (re-search-forward "^\\s \\s *%" nil t)
     (beginning-of-line nil)
     (kill-line 1)))
-

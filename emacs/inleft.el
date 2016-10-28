@@ -49,12 +49,12 @@ moves to end of region.  Not to be called interactively."
       ;; Should I instead use the beginning of the line containing beg,
       ;; and the end of the one containing end, or the beginning of the next?
       (narrow-to-region (or beg (point-marker))
-			(or end (mark-marker)))
+                        (or end (mark-marker)))
       (goto-char (point-min))
       (while (and (<= (point-marker) (point-max)) (not (eobp)))
-	(beginning-of-line 1)
-	(insert-before-markers left-string)
-	(forward-line 1)))))
+        (beginning-of-line 1)
+        (insert-before-markers left-string)
+        (forward-line 1)))))
 
 ;; Perhaps outleft would be a better name.
 ;; This is nicer than kill-rectangle in that it checks what it's deleting.
@@ -65,16 +65,16 @@ Prompts for string, and remembers it in the variable `inleft-string'."
   (interactive)
   (setq inleft-string (read-string "Uncomment String:" inleft-string))
   (let ((inleft-string-len (length inleft-string))
-	(p (point-marker))
-	(m (mark-marker)))
+        (p (point-marker))
+        (m (mark-marker)))
     (if (< m p) (let ((thrip m))  ; swap m and p
-		  (setq m p p thrip)))
+                  (setq m p p thrip)))
     (goto-char p)
     (while (and (<= (point-marker) m) (not (eobp)))
       (beginning-of-line 1)
       (if (string= inleft-string
-		   (buffer-substring (point) (+ (point) inleft-string-len)))
-	  (delete-char inleft-string-len))
+                   (buffer-substring (point) (+ (point) inleft-string-len)))
+          (delete-char inleft-string-len))
       (forward-line 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -106,7 +106,7 @@ Prompts for string, and remembers it in the variable `inleft-string'."
 ;; For use by programs that don't want to see the prompt for inleft-string."
 ;;   (if (not (and beg end))
 ;;       (setq beg (min (point-marker) (mark-marker))
-;; 	    end (min (point-marker) (mark-marker))))
+;;          end (min (point-marker) (mark-marker))))
 ;;   (save-restriction
 ;;     (narrow-to-region (point-after (goto-char beg) (beginning-of-line 1))
 ;;                       end)

@@ -18,7 +18,7 @@ import org.checkerframework.checker.nullness.qual.*;
  *
  * <p> Methods in this class never throw I/O exceptions. The client may
  * inquire as to whether any errors have occurred by invoking
- * checkError(). </p>
+ * {@link #checkError}. </p>
  */
 public class CountingPrintWriter extends PrintWriter {
 
@@ -172,7 +172,7 @@ public class CountingPrintWriter extends PrintWriter {
    * Print a string. If the argument is null then the string "null" is
    * printed. Otherwise, the string's characters are converted into
    * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the write(int)
+   * these bytes are written in exactly the manner of the {@link #write(int)}
    * method.
    * @param s the string to be printed, or null
    */
@@ -189,9 +189,9 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Print a boolean value. The string produced by
-   * String.valueOf(boolean) is translated into bytes according to the
+   * {@link String#valueOf(boolean)} is translated into bytes according to the
    * platform's default character encoding, and these bytes are
-   * written in exactly the manner of the write(int) method.
+   * written in exactly the manner of the {@link #write(int)} method.
    * @param b the boolean to be printed
    */
   public void print(boolean b) {
@@ -204,7 +204,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Print a character. The character is translated into one or more
    * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the write(int)
+   * these bytes are written in exactly the manner of the {@link #write(int)}
    * method.
    * @param c the char to be printed
    */
@@ -216,7 +216,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Print an array of characters. The characters are converted into
    * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the write(int)
+   * these bytes are written in exactly the manner of the {@link write(int)}
    * method.
    * @param s the char[] to be printed
    */
@@ -230,9 +230,9 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Print a double-precision floating-point number. The string
-   * produced by String.valueOf(double) is translated into bytes
+   * produced by {@link String#valueOf(double)} is translated into bytes
    * according to the platform's default character encoding, and these
-   * bytes are written in exactly the manner of the write(int) method.
+   * bytes are written in exactly the manner of the {@link #write(int)} method.
    * @param d the double to be printed
    */
   public void print(double d) {
@@ -244,9 +244,9 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Print a floating-point number. The string produced by
-   * String.valueOf(float) is translated into bytes according to the
+   * {@link String#valueOf(float)} is translated into bytes according to the
    * platform's default character encoding, and these bytes are
-   * written in exactly the manner of the write(int) method.
+   * written in exactly the manner of the {@link #write(int)} method.
    * @param f the float to be printed
    */
   public void print(float f) {
@@ -257,10 +257,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   *  Print an integer. The string produced by String.valueOf(int) is
+   *  Print an integer. The string produced by {@link String#valueOf(int)} is
    *  translated into bytes according to the platform's default
    *  character encoding, and these bytes are written in exactly the
-   *  manner of the write(int) method.
+   *  manner of the {@link #write(int)} method.
    * @param i the int to be printed
    */
   public void print(int i) {
@@ -296,9 +296,9 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    *  Print a long integer. The string produced by
-   *  String.valueOf(long) is translated into bytes according to the
+   *  {@link String#valueOf(long)} is translated into bytes according to the
    *  platform's default character encoding, and these bytes are
-   *  written in exactly the manner of the write(int) method.
+   *  written in exactly the manner of the {@link #write(int)} method.
    * @param l the long to be printed
    */
   public void print(long l) {
@@ -310,9 +310,9 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Print an object. The string produced by the
-   * String.valueOf(Object) method is translated into bytes according
+   * {@link String#valueOf(Object)} method is translated into bytes according
    * to the platform's default character encoding, and these bytes are
-   * written in exactly the manner of the write(int) method.
+   * written in exactly the manner of the {@link #write(int)} method.
    * @param obj the object to be printed
    */
   public void print(/*@Nullable*/ Object obj) {

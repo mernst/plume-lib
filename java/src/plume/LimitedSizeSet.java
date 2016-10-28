@@ -159,7 +159,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   /**
-   * Merges a list of LimitedSizeSet&lt;T&gt; objects into a single object that
+   * Merges a list of {@code LimitedSizeSet<T>} objects into a single object that
    * represents the values seen by the entire list.  Returns the new
    * object, whose max_values is the given integer.
    * @param <T> (super)type of elements of the sets

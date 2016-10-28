@@ -49,7 +49,7 @@ import org.checkerframework.dataflow.qual.Pure;
  * Given one or more calendars in <a href="https://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>, produces a textual summary
  * of available times.
  * This is useful for sending someone a list of acceptable times for a meeting.
- * Also see the <code>ical-available</code> Emacs function, which inserts the
+ * Also see the {@code ical-available} Emacs function, which inserts the
  * output of this program.
  *
  * The command-line options are as follows:

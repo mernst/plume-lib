@@ -14,7 +14,7 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * Utilities for interning objects.  Interning is also known as
  * canonicalization or hash-consing:  it returns a single representative
- * object that <code>.equals()</code> the object, and the client discards the
+ * object that {@link Object#equals} the object, and the client discards the
  * argument and uses the result instead.  Since only one object exists for
  * every set of equal objects, space usage is reduced.  Time may also be
  * reduced, since it is possible to use <code>==</code> instead of
@@ -235,7 +235,7 @@ public final class Intern {
    * Hasher object which hashes and compares String[] objects according
    * to their contents.
    * @see Hasher
-   * Arrays.equals
+   * @see Arrays.equals
    */
   private static final class StringArrayHasher implements Hasher {
     @Override

@@ -110,7 +110,7 @@ public final class FileCompiler {
 
   /**
    * Compiles the files given by fileNames.
-   * Return the error output.
+   * Returns the error output.
    * @return the error output from compiling the files
    * @param fileNames paths to the files to be compiled as Strings
    * @throws IOException if there is a problem reading a file
