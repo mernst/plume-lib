@@ -33,8 +33,8 @@ import java.util.Random;
  *       {FIXED,PERCENT}  : either fixed amount of samples or fixed percent.
  *
  * <P>Example use:
- * <br> // randomly selects 100 lines of text from a file
- * <pre>
+ * <pre>{@code
+ *  // randomly selects 100 lines of text from a file
  *  List selectedLines = null;
  *  try {
  *     BufferedReader br = new BufferedReader
@@ -46,7 +46,7 @@ import java.util.Random;
  *     selectedLines = selector.getValues();
  *   }
  *   catch (IOException e2) { e2.printStackTrace(); }
- * </pre>
+ * }</pre>
  *
  * @param <T> the type of elements being selected over
  */

@@ -216,7 +216,7 @@ public class CountingPrintWriter extends PrintWriter {
   /**
    * Print an array of characters. The characters are converted into
    * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the {@link write(int)}
+   * these bytes are written in exactly the manner of the {@link #write(int)}
    * method.
    * @param s the char[] to be printed
    */

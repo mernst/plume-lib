@@ -17,10 +17,14 @@ import org.checkerframework.checker.nullness.qual.*;
  * <p>
  *
  * For example, suppose that the inputs are
+ * <pre>
  *   [1, 2, 3, 5] and
  *   [1, 3, 5, 7, 9].
+ * </pre>
  * Then the output is
+ * <pre>
  *   [(1,1), (2,null), (3,3), (5,5), (null,7), (null, 9)].
+ * </pre>
  * <p>
  *
  * (This operation is similar to, but not the same as, the operation called

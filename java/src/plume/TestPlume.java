@@ -1665,7 +1665,7 @@ public final class TestPlume {
 
   /**
    * On a heavily-loaded machine, this test fails.
-   * Try again when the load is lower.
+   * You should run the test again when the load is lower.
    * (Better might be exponential backoff up to some limit.)
    */
   @Test

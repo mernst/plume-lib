@@ -1495,7 +1495,7 @@ public final class UtilMDE {
   /**
    * An Iterator that returns first the elements returned by its first
    * argument, then the elements returned by its second argument.
-   * Like MergedIterator, but specialized for the case of two arguments.
+   * Like {@link MergedIterator}, but specialized for the case of two arguments.
    */
   public static final class MergedIterator2<T> implements Iterator<T> {
     Iterator<T> itor1, itor2;
@@ -1528,7 +1528,7 @@ public final class UtilMDE {
   /**
    * An Iterator that returns the elements in each of its argument
    * Iterators, in turn.  The argument is an Iterator of Iterators.
-   * Like MergedIterator2, but generalized to arbitrary number of iterators.
+   * Like {@link MergedIterator2}, but generalized to arbitrary number of iterators.
    */
   public static final class MergedIterator<T> implements Iterator<T> {
     Iterator<Iterator<T>> itorOfItors;
@@ -1823,6 +1823,7 @@ public final class UtilMDE {
 
   /**
    * Given a method signature, return the method.
+   *
    * Example calls are:
    * <pre>
    * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String, java.lang.String, java.lang.Class[])")
@@ -2382,7 +2383,9 @@ public final class UtilMDE {
 
   /**
    * Like escapeNonJava(), but quote more characters so that the
-   * result is sure to be printable ASCII. Not particularly optimized.
+   * result is sure to be printable ASCII.
+   *
+   * This implementatino is not particularly optimized.
    * @param c character to quote
    * @return quoted version of c
    */
@@ -2764,7 +2767,7 @@ public final class UtilMDE {
 
   /**
    * Return a String representation of the backtrace of the given Throwable.
-   * To see a backtrace at the the current location, do "backtrace(new Throwable())".
+   * To see a backtrace at the the current location, do {@code backtrace(new Throwable())}.
    * @param t the Throwable to obtain a backtrace of
    * @return a String representation of the backtrace of the given Throwable
    */
@@ -2783,7 +2786,7 @@ public final class UtilMDE {
 
   /**
    * Return the sorted version of the list.  Does not alter the list.
-   * Simply calls Collections.sort(List&lt;T&gt;, Comparator&lt;? super T&gt;).
+   * Simply calls {@code Collections.sort(List<T>, Comparator<? super T>)}.
    * @return a sorted version of the list
    * @param <T> type of elements of the list
    * @param l a list to sort

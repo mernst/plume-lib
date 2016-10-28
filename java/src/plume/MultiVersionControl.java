@@ -520,7 +520,7 @@ public class MultiVersionControl {
      * For distributed systems, refers to the parent repository from which
      * this was cloned, not the one here in this directory.
      * <p>
-     * Most operations don't need this.  it is needed for checkout, though.
+     * Most operations don't need this.  It is needed for checkout, though.
      */
     /*@Nullable*/ String repository;
     /**
