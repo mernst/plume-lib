@@ -205,6 +205,7 @@ public class OptionsDoclet {
   private boolean inPlace = false;
   /** If true, then output format is Javadoc. */
   private boolean formatJavadoc = false;
+  /** If true, then include the class's main Javadoc comment. */
   private boolean includeClassDoc = false;
 
   private RootDoc root;

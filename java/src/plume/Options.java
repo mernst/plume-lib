@@ -544,11 +544,12 @@ public class Options {
       new LinkedHashMap<String, OptionGroupInfo>();
 
   /**
-   * If, after the Options constructor is called, use_groups is true, then the
-   * user is using @OptionGroup annotations correctly (as per the requirement
-   * specified above).  If false, then @OptionGroup annotations have not been
-   * specified on any @Option-annotated fields.  When @OptionGroup annotations
+   * If, after the Options constructor is called, {@code use_groups} is true, then the
+   * user is using {@code @OptionGroup} annotations correctly (as per the requirement
+   * specified above).  If false, then {@code @OptionGroup} annotations have not been
+   * specified on any {@code @Option}-annotated fields.  When {@code @OptionGroup} annotations
    * are used incorrectly, an Error is thrown by the Options constructor.
+   * @see OptionGroup
    */
   private boolean use_groups;
 
@@ -559,8 +560,8 @@ public class Options {
   private final boolean use_dashes = true;
 
   /**
-   * When true, long options take the form -longOption with a single dash,
-   * rather than the default --longOption with two dashes.
+   * When true, long options take the form {@code -longOption} with a single dash,
+   * rather than the default {@code --longOption} with two dashes.
    */
   private boolean use_single_dash = false;
 
@@ -570,8 +571,8 @@ public class Options {
   private static final String LIST_HELP = "[+] marked option can be specified multiple times";
 
   /**
-   * Whether printing the usage message should print LIST_HELP.  The default is
-   * to print LIST_HELP if the usage message contains an option that accepts a
+   * Whether printing the usage message should print {@link #LIST_HELP}.  The default is
+   * to print {@link #LIST_HELP} if the usage message contains an option that accepts a
    * list as a parameter.
    */
   private boolean print_list_help = false;
@@ -823,9 +824,9 @@ public class Options {
 
   /**
    * If true, long options (those derived from field names) will be parsed with
-   * a single dash prefix as in -longOption.  The default is false and long
-   * options will be parsed with a double dash prefix as in --longOption.
-   * @param val whether to parse long options with a single dash, as in -longOption
+   * a single dash prefix as in {@code -longOption}.  The default is false and long
+   * options will be parsed with a double dash prefix as in {@code --longOption}.
+   * @param val whether to parse long options with a single dash, as in {@code -longOption}
    */
   public void use_single_dash(boolean val) {
     use_single_dash = val;
@@ -1463,7 +1464,7 @@ public class Options {
   /**
    * Returns a string containing the current setting for each option, in a
    * format that can be parsed by Options.  This differs from
-   * get_options_str() in that it contains each known option exactly once:
+   * {@link #get_options_str()} in that it contains each known option exactly once:
    * it never contains duplicates, and it contains every known option even
    * if the option was not specified on the command line.
    * @return options, similarly to supplied on the command line
@@ -1475,7 +1476,7 @@ public class Options {
   /**
    * Returns a string containing the current setting for each option, in a
    * format that can be parsed by Options.  This differs from
-   * get_options_str() in that it contains each known option exactly once:
+   * {@link #get_options_str()} in that it contains each known option exactly once:
    * it never contains duplicates, and it contains every known option even
    * if the option was not specified on the command line.
    *
