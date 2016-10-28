@@ -425,7 +425,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in that section of the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
@@ -465,7 +465,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in that section of the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
@@ -513,7 +513,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in that section of the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
@@ -555,7 +555,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in that section of the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
@@ -616,7 +616,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
@@ -637,7 +637,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
@@ -694,7 +694,7 @@ public final class ArraysMDE {
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
+   *    such that {@code minindex &le; i &lt; indexlimit},
    *    or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
@@ -2263,8 +2263,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2285,8 +2286,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2307,8 +2309,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2329,8 +2332,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2351,8 +2355,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2373,8 +2378,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2395,9 +2401,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space. Equality checking
-   * uses the .equals() method for java.lang.Double.
+   * Return true iff a does not contain duplicate elements.
+   * Equality checking uses {@link Double#equals}.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2418,8 +2425,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2440,8 +2448,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2461,8 +2470,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2482,8 +2492,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * The implementation uses O(n) time and O(n) space.
    * @param <T> the type of the elements
    * @param a a list
    * @return true iff a does not contain duplicate elements
@@ -2619,7 +2630,9 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Return whether smaller is a subset of bigger.  The implementation is to
+   * Return whether smaller is a subset of bigger.
+   *
+   * The implementation is to
    * use collections because we want to take advantage of HashSet's
    * constant time membership tests.
    * @param smaller first set to test
@@ -2649,7 +2662,9 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Return whether smaller is a subset of bigger.  The implementation is to
+   * Return whether smaller is a subset of bigger.
+   *
+   * The implementation is to
    * use collections because we want to take advantage of HashSet's
    * constant time membership tests.
    * @param smaller first set to test
@@ -2679,7 +2694,9 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Return whether smaller is a subset of bigger.  The implementation is to
+   * Return whether smaller is a subset of bigger.
+   *
+   * The implementation is to
    * use collections because we want to take advantage of HashSet's
    * constant time membership tests.
    * @param smaller first set to test
@@ -2714,8 +2731,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * numbers).
    */
   public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
@@ -2750,8 +2767,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * numbers).
    */
   public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
@@ -2786,8 +2803,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * numbers).
    */
   public static final class DoubleArrayComparatorLexical
@@ -2824,8 +2841,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * Strings).
    */
   public static final class StringArrayComparatorLexical
@@ -2877,8 +2894,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * objects).
    */
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>>
@@ -2935,8 +2952,8 @@ public final class ArraysMDE {
    * then the shorter array is considered less.
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * objects).
    */
   public static final class ObjectArrayComparatorLexical
@@ -2993,8 +3010,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * numbers).
    */
   public static final class IntArrayComparatorLengthFirst
@@ -3033,8 +3050,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * numbers).
    */
   public static final class LongArrayComparatorLengthFirst
@@ -3073,8 +3090,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * objects).
    */
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>>
@@ -3134,8 +3151,8 @@ public final class ArraysMDE {
    * less), and if of equal length compare lexically (element-by-element).
    * <p>
    * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
+   * {@link Object#equals}.  That is, it may return 0 if the arrays are not
+   * equal according to {@code equals()} (but do contain identical
    * objects).
    */
   public static final class ObjectArrayComparatorLengthFirst

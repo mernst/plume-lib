@@ -14,7 +14,7 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * Utilities for interning objects.  Interning is also known as
  * canonicalization or hash-consing:  it returns a single representative
- * object that <code>.equals()</code> the object, and the client discards the
+ * object that {@link Object#equals} the object, and the client discards the
  * argument and uses the result instead.  Since only one object exists for
  * every set of equal objects, space usage is reduced.  Time may also be
  * reduced, since it is possible to use <code>==</code> instead of

@@ -39,14 +39,16 @@ import org.checkerframework.checker.regex.qual.*;
 /**
  * Class that reads "entries" from a file.  In the simplest case, entries
  * can be lines.  It supports:
- *   include files,
- *   comments, and
- *   multi-line entries (paragraphs).
+ * <ul>
+ *   <li>include files,
+ *   <li>comments, and
+ *   <li>multi-line entries (paragraphs).
+ * </ul>
  * The syntax of each of these is customizable.
  * <p>
  *
  * Example use:
- * <pre>
+ * <pre>{@code
  *  // args are filename, comment regexp, include regexp
  *  try (EntryReader er = new EntryReader(filename, "^#.*", null)) {
  *    for (String line : er) {
@@ -57,7 +59,7 @@ import org.checkerframework.checker.regex.qual.*;
  *    System.exit(2);
  *    throw new Error("This can't happen"); // for definite assignment check
  *  }
- * </pre>
+ * }</pre>
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
  */
@@ -77,8 +79,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * Regular expression that starts a long entry.
    * <p>
    * If the first line of an entry matches this regexp, then the entry is
-   * terminated by:  entry_stop_re, another line that matches
-   * entry_start_re (even not following a newline), or the end of the
+   * terminated by:  {@link #entry_stop_re}, another line that matches
+   * {@code entry_start_re} (even not following a newline), or the end of the
    * current file.
    * <p>
    * Otherwise, the first line of an entry does NOT match this regexp (or
@@ -412,7 +414,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *
    *    @param filename   initial file to read
    *    @param comment_re regular expression that matches comments.
-   *                      Any text that matches comment_re is removed.
+   *                      Any text that matches {@code comment_re} is removed.
    *                      A line that is entirely a comment is ignored.
    *    @param include_re regular expression that matches include directives.
    *                      The expression should define one group that contains

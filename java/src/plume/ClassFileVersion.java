@@ -23,7 +23,7 @@ import org.checkerframework.checker.nullness.qual.*;
  * files that require at least that JDK version.  For instance, to list all
  * the .class/.jar files that require JDK 6 or later, in this or any
  * subdirectory, run
- *   <pre>  find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6</pre>
+ *   <pre>find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6</pre>
  */
 public final class ClassFileVersion {
 

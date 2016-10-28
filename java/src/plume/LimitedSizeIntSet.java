@@ -13,7 +13,7 @@ import org.checkerframework.dataflow.qual.*;
  * LimitedSizeIntSet stores up to some maximum number of unique
  * integer values, at which point its rep is nulled, in order to save space.
  * <p>
- * The advantage of this class over LimitedSizeSet&lt;Integer&gt; is that
+ * The advantage of this class over {@code LimitedSizeSet<Integer>} is that
  * it does not autobox the int values, so it takes less memory.
  *
  * @see LimitedSizeSet
