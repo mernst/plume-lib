@@ -85,7 +85,7 @@ public class RandomSelector<T> {
    * from the input elements
    * @param r the seed to give for random number generation.
    *
-   * Sets 'number_to_take' = num_elts
+   * Sets 'number_to_take' = num_elts.
    */
   public RandomSelector(int num_elts, Random r) {
     values = new ArrayList<T>();

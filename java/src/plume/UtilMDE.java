@@ -605,7 +605,7 @@ public final class UtilMDE {
    * a field descriptor (e.g., "I", "D", etc.).
    * @param primitive_name name of the type, in Java format
    * @return name of the type, in field descriptor format
-   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
+   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name
    */
   public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(
       String primitive_name) {
@@ -1734,7 +1734,7 @@ public final class UtilMDE {
    * @param key the key for the element whose value will be incremented
    * @param count how much to increment the value by
    * @return the old value, before it was incremented
-   * @throws Error if the key is in the Map but maps to a non-Integer.
+   * @throws Error if the key is in the Map but maps to a non-Integer
    */
   public static <T> /*@Nullable*/ Integer incrementMap(Map<T, Integer> m, T key, int count) {
     Integer old = m.get(key);

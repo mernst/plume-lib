@@ -837,7 +837,7 @@ public class Options {
    * @param args the commandline to be parsed
    * @return all non-option arguments
    * @throws ArgException if the command line contains unknown option or
-   * misused options.
+   * misused options
    */
   public String[] parse(String[] args) throws ArgException {
 
@@ -937,7 +937,7 @@ public class Options {
    *
    * @param args the command line to parse
    * @return all non-option arguments
-   * @throws ArgException if the command line contains misused options or an unknown option.
+   * @throws ArgException if the command line contains misused options or an unknown option
    * @see #parse(String[])
    */
   public String[] parse(String args) throws ArgException {
@@ -1088,7 +1088,7 @@ public class Options {
   /**
    * Prints, to standard output, a message followed by usage information.
    * The message is printed in addition to (not replacing) the usage synopsis.
-   * @param msg messag. to print before usage information
+   * @param msg message to print before usage information
    */
   public void print_usage(String msg) {
     print_usage(System.out, msg);
@@ -1261,7 +1261,7 @@ public class Options {
 
   /**
    * Set the specified option to the value specified in arg_value.
-   * @throws ArgException if there are any errors.
+   * @throws ArgException if there are any errors
    */
   private void set_arg(OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
       throws ArgException {
