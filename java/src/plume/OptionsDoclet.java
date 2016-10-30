@@ -41,132 +41,128 @@ import org.checkerframework.checker.signature.qual.*;
 */
 
 /**
- * Generates HTML documentation of command-line options.  Works with the
- * {@link plume.Options} class.
- * <p>
+ * Generates HTML documentation of command-line options. Works with the {@link plume.Options} class.
  *
- * <b>Usage</b> <p>
- * This doclet is typically invoked with:
+ * <p><b>Usage</b>
+ *
+ * <p>This doclet is typically invoked with:
+ *
  * <pre>javadoc -quiet -doclet plume.OptionsDoclet [doclet options] [java files]</pre>
- * <p>
  *
- * <b>Doclet Options</b> <p>
- * The following doclet options are supported:
+ * <p><b>Doclet Options</b>
+ *
+ * <p>The following doclet options are supported:
+ *
  * <ul>
- * <li> <b>-docfile</b> <i>file</i> When specified, the output of this doclet
- * is the result of replacing everything between the two lines
- * <pre>&lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
- * and
- * <pre>&lt;!-- end options doc --&gt;</pre>
- * in <i>file</i> with the options documentation.  This can be used for
- * inserting option documentation into an existing manual.  The existing
- * docfile is not modified; output goes to the <code>-outfile</code>
- * argument, or to standard out.
+ *   <li> <b>-docfile</b> <i>file</i> When specified, the output of this doclet is the result of
+ *       replacing everything between the two lines
+ *       <pre>&lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
+ *       and
+ *       <pre>&lt;!-- end options doc --&gt;</pre>
+ *       in <i>file</i> with the options documentation. This can be used for inserting option
+ *       documentation into an existing manual. The existing docfile is not modified; output goes to
+ *       the <code>-outfile</code> argument, or to standard out.
+ *   <li> <b>-outfile</b> <i>file</i> The destination for the output (the default is standard out).
+ *       If both <code>-outfile</code> and <code>-docfile</code> are specified, they must be
+ *       different. When <code>-d</code> is used, the output is written to a file with the given
+ *       name relative to that destination directory.
+ *   <li> <b>-d</b> <i>directory</i> The destination directory for the output file. Only used if
+ *       <code>-outfile</code> is used, in which case, the file is written in this directory.
+ *       Otherwise, this option is ignored.
+ *   <li> <b>-i</b> Specifies that the docfile should be edited in-place. This option can only be
+ *       used if the <code>-docfile</code> option is used, and may not be used at the same time as
+ *       the <code>-outfile</code> option.
+ *   <li> <b>-format</b> <i>format</i> This option sets the output format of this doclet. Currently,
+ *       the following values for <i>format</i> are supported:
+ *       <ul>
+ *         <li> <b>javadoc</b> When this format is specified, the output of this doclet is formatted
+ *             as a Javadoc comment. This is useful for including option documentation inside Java
+ *             source code. When this format is used with the <code>-docfile</code> option, the
+ *             generated documentation is inserted between the lines
+ *             <pre>* &lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
+ *             and
+ *             <pre>* &lt;!-- end options doc --&gt;</pre>
+ *             using the same indentation. Inline {@code @link} and {@code @see} tags in the Javadoc
+ *             input are left untouched.
+ *         <li> <b>html</b> This format outputs HTML for general-purpose use, meaning inline
+ *             {@code @link} and {@code @see} tags in the Javadoc input are suitably replaced. This
+ *             is the default output format and does not need to be specified explicitly.
+ *       </ul>
  *
- * <li> <b>-outfile</b> <i>file</i> The destination for the output (the default
- * is standard out).  If both <code>-outfile</code> and <code>-docfile</code>
- * are specified, they must be different. When <code>-d</code> is used, the
- * output is written to a file with the given name relative to that destination
- * directory.
- *
- * <li> <b>-d</b> <i>directory</i> The destination directory for the output file.
- * Only used if <code>-outfile</code> is used, in which case, the file is
- * written in this directory. Otherwise, this option is ignored.
- *
- * <li> <b>-i</b> Specifies that the docfile should be edited in-place.  This
- * option can only be used if the <code>-docfile</code> option is used, and
- * may not be used at the same time as the <code>-outfile</code> option.
- *
- * <li> <b>-format</b> <i>format</i> This option sets the output format of this
- * doclet.  Currently, the following values for <i>format</i> are supported:
- * <ul>
- *   <li> <b>javadoc</b> When this format is specified, the output of this
- *   doclet is formatted as a Javadoc comment.  This is useful for including
- *   option documentation inside Java source code.  When this format is used
- *   with the <code>-docfile</code> option, the generated documentation is
- *   inserted between the lines
- *   <pre>* &lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
- *   and
- *   <pre>* &lt;!-- end options doc --&gt;</pre>
- *   using the same indentation.  Inline <code>@link</code> and
- *   <code>@see</code> tags in the Javadoc input are left untouched.
- *
- *   <li> <b>html</b> This format outputs HTML for general-purpose use, meaning
- *   inline <code>@link</code> and <code>@see</code> tags in the Javadoc input
- *   are suitably replaced.  This is the default output format and does not
- *   need to be specified explicitly.
+ *   <li> <b>-classdoc</b> When specified, the output of this doclet includes the class
+ *       documentation of the first class specified on the command-line.
+ *   <li> <b>-singledash</b> When specified, <code>use_single_dash(true)</code> is called on the
+ *       underlying instance of Options used to generate documentation. See {@link
+ *       plume.Options#use_single_dash(boolean)}.
  * </ul>
  *
- * <li> <b>-classdoc</b> When specified, the output of this doclet includes the
- * class documentation of the first class specified on the command-line.
+ * <p><b>Examples</b>
  *
- * <li> <b>-singledash</b> When specified, <code>use_single_dash(true)</code> is
- * called on the underlying instance of Options used to generate documentation.
- * See {@link plume.Options#use_single_dash(boolean)}.
- * </ul>
- * <p>
+ * <p>To update the Javarifier HTML manual with option documentation run:
  *
- * <b>Examples</b> <p>
- * To update the Javarifier HTML manual with option documentation run:
- * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile javarifier.html src/javarifier/Main.java</pre>
- * <p>
+ * <pre>
+ * javadoc -quiet -doclet plume.OptionsDoclet -i -docfile javarifier.html src/javarifier/Main.java
+ * </pre>
  *
- * To update the class Javadoc for plume.Lookup with option documentation run:
- * <pre>javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java</pre>
- * <p>
+ * <p>To update the class Javadoc for plume.Lookup with option documentation run:
  *
- * For a more extensive example, see file <code>java/Makefile</code> in
- * plume-lib itself.
- * <p>
+ * <pre>
+ * javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java
+ * </pre>
  *
- * <b>Requirements</b> <p>
- * Classes passed to OptionsDoclet that have <code>@</code>{@link Option} annotations on
- * non-static fields should have a nullary (no-argument) constructor.  The
- * nullary constructor may be private or public.  This is required because an
- * object instance is needed to get the default value of a non-static field.  It
- * is cleaner to require a nullary constructor instead of trying to guess
- * arguments to pass to another constructor. <p>
+ * <p>For a more extensive example, see file <code>java/Makefile</code> in plume-lib itself.
  *
- * <b>Hiding default value strings</b> <p>
- * By default, the documentation generated by OptionsDoclet includes a default
- * value string for each option in square brackets after the option's
- * description, similar to the usage messages generated by {@link
- * plume.Options#usage(String...)}.  The {@link plume.Option#noDocDefault}
- * field in the <code>@Option</code> annotation can be set to <code>true</code>
- * to omit the default value string from the generated documentation for that
- * option. <p>
+ * <p><b>Requirements</b>
  *
- * Omitting the generated default value string is useful for options that have
- * system-dependent defaults.  Such options are not an issue for usage messages
- * that are generated at runtime.  However, system dependent defaults do pose
- * a problem for static documentation, which is rarely regenerated and meant to
- * apply to all users.  Consider the following <code>@Option</code>-annotated
+ * <p>Classes passed to OptionsDoclet that have <code>@</code>{@link Option} annotations on
+ * non-static fields should have a nullary (no-argument) constructor. The nullary constructor may be
+ * private or public. This is required because an object instance is needed to get the default value
+ * of a non-static field. It is cleaner to require a nullary constructor instead of trying to guess
+ * arguments to pass to another constructor.
+ *
+ * <p><b>Hiding default value strings</b>
+ *
+ * <p>By default, the documentation generated by OptionsDoclet includes a default value string for
+ * each option in square brackets after the option's description, similar to the usage messages
+ * generated by {@link plume.Options#usage(String...)}. The {@link plume.Option#noDocDefault} field
+ * in the {@code @Option} annotation can be set to <code>true</code> to omit the default value
+ * string from the generated documentation for that option.
+ *
+ * <p>Omitting the generated default value string is useful for options that have system-dependent
+ * defaults. Such options are not an issue for usage messages that are generated at runtime.
+ * However, system dependent defaults do pose a problem for static documentation, which is rarely
+ * regenerated and meant to apply to all users. Consider the following {@code @Option}-annotated
  * field:
+ *
  * <pre>
  * &#64;Option(value="&lt;timezone&gt; Set the time zone")
  * public static String timezone = TimeZone.getDefault().getID();</pre>
- * The default value for <code>timezone</code> depends on the system's timezone
- * setting.  HTML documentation of this option generated in Chicago would not
- * apply to a user in New York.  To work around this problem, the
- * default value should be hidden; instead the Javadoc for this field
+ *
+ * The default value for <code>timezone</code> depends on the system's timezone setting. HTML
+ * documentation of this option generated in Chicago would not apply to a user in New York. To work
+ * around this problem, the default value should be hidden; instead the Javadoc for this field
  * should indicate a special default as follows.
+ *
  * <pre>
  * &#47;**
  *  * &lt;other stuff...&gt;  This option defaults to the system timezone.
  *  *&#47;
  * &#64;Option(value="&lt;timezone&gt; Set the timezone", noDocDefault=true)
  * public static String timezone = TimeZone.getDefault().getID();</pre>
- * This keeps the documentation system-agnostic. <p>
  *
- * <b>Caveats</b> <p>
- * The generated HTML documentation includes unpublicized option groups but not
- * <code>@Unpublicized</code> options.  Option groups which contain only
- * <code>@Unpublicized</code> options are not included in the output at all. <p>
+ * This keeps the documentation system-agnostic.
  *
- * <b>Troubleshooting</b> <p>
- * If you get an error such as "<code>ARGH! @Option</code>", then you are using a
- * buggy version of gjdoc, the GNU Classpath implementation of Javadoc.
- * To avoid the problem, upgrade or use a different Javadoc implementation.
+ * <p><b>Caveats</b>
+ *
+ * <p>The generated HTML documentation includes unpublicized option groups but not
+ * {@code @Unpublicized} options. Option groups that contain only {@code @Unpublicized} options are
+ * not included in the output at all.
+ *
+ * <p><b>Troubleshooting</b>
+ *
+ * <p>If you get an error such as "<code>ARGH! @Option</code>", then you are using a buggy version
+ * of gjdoc, the GNU Classpath implementation of Javadoc. To avoid the problem, upgrade or use a
+ * different Javadoc implementation.
  *
  * @see plume.Option
  * @see plume.Options
@@ -220,6 +216,7 @@ public class OptionsDoclet {
 
   /**
    * Entry point for the doclet.
+   *
    * @param root the root document
    * @return true if processing completed without an error
    */
@@ -285,14 +282,15 @@ public class OptionsDoclet {
   }
 
   /**
-   * Given a command-line option of this doclet, returns the number of
-   * arguments you must specify on the command line for the given option.
-   * Returns 0 if the argument is not recognized.  This method is
-   * automatically invoked.
+   * Given a command-line option of this doclet, returns the number of arguments you must specify on
+   * the command line for the given option. Returns 0 if the argument is not recognized. This method
+   * is automatically invoked.
    *
    * @param option the command-line option
    * @return the number of command-line arguments needed when using the option
-   * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
+   * @see <a
+   *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
+   *     overview</a>
    */
   public static int optionLength(String option) {
     if (option.equals("-help")) {
@@ -312,14 +310,15 @@ public class OptionsDoclet {
   }
 
   /**
-   * Tests the validity of command-line arguments passed to this doclet.
-   * Returns true if the option usage is valid, and false otherwise.  This
-   * method is automatically invoked.
+   * Tests the validity of command-line arguments passed to this doclet. Returns true if the option
+   * usage is valid, and false otherwise. This method is automatically invoked.
    *
    * @param options the command-line options to be checked: an array of 1- or 2-element arrays
    * @param reporter where to report errors
    * @return true iff the command-line options are valid
-   * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
+   * @see <a
+   *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
+   *     overview</a>
    */
   public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
@@ -395,8 +394,8 @@ public class OptionsDoclet {
   }
 
   /**
-   * Set the options for this class based on command-line arguments given by
-   * RootDoc.options().
+   * Set the options for this class based on command-line arguments given by RootDoc.options().
+   *
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
   public void setOptions(String[][] options) {
@@ -433,8 +432,7 @@ public class OptionsDoclet {
   }
 
   /**
-   * Determine if a class needs to be instantiated in order to work properly
-   * with {@link Options}.
+   * Determine if a class needs to be instantiated in order to work properly with {@link Options}.
    */
   private static boolean needsInstantiation(Class<?> clazz) {
     for (Field f : clazz.getDeclaredFields()) {
@@ -449,6 +447,7 @@ public class OptionsDoclet {
 
   /**
    * Write the output of this doclet to the correct file.
+   *
    * @throws Exception if there is trouble
    */
   public void write() throws Exception {
@@ -471,8 +470,9 @@ public class OptionsDoclet {
   }
 
   /**
-   * Get the final output of this doclet.  The string returned by this method
-   * is the output seen by the user.
+   * Get the final output of this doclet. The string returned by this method is the output seen by
+   * the user.
+   *
    * @return the user-visible doclet output
    * @throws Exception if there is trouble
    */
@@ -488,9 +488,7 @@ public class OptionsDoclet {
     return newDocFileText();
   }
 
-  /**
-   * Get the result of inserting the options documentation into the docfile.
-   */
+  /** Get the result of inserting the options documentation into the docfile. */
   /*@RequiresNonNull("docFile")*/
   private String newDocFileText() throws Exception {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
@@ -563,10 +561,7 @@ public class OptionsDoclet {
     }
   }
 
-  /**
-   * Initializes {@link Options.OptionInfo.enum_jdoc} for the given
-   * <code>OptionInfo</code>.
-   */
+  /** Initializes {@link Options.OptionInfo.enum_jdoc} for the given <code>OptionInfo</code>. */
   private void processEnumJavadoc(Options.OptionInfo oi) {
     Enum<?>[] constants = (Enum<?>[]) oi.base_type.getEnumConstants();
     if (constants == null) {
@@ -602,6 +597,8 @@ public class OptionsDoclet {
 
   /**
    * Get the HTML documentation for the underlying options instance.
+   *
+   * @param refillWidth the number of columns to fit the text into, by breaking lines
    * @return the HTML documentation for the underlying options instance
    */
   public String optionsToHtml(int refillWidth) {
@@ -652,6 +649,7 @@ public class OptionsDoclet {
    * Get the HTML documentation for the underlying options instance, formatted as a Javadoc comment.
    *
    * @param padding the number of leading spaces to add in the Javadoc output, before "* "
+   * @param refillWidth the number of columns to fit the text into, by breaking lines
    * @return the HTML documentation for the underlying options instance
    */
   public String optionsToJavadoc(int padding, int refillWidth) {
@@ -673,9 +671,7 @@ public class OptionsDoclet {
     return b.toString();
   }
 
-  /**
-   * Get the HTML describing many options, formatted as an HTML list.
-   */
+  /** Get the HTML describing many options, formatted as an HTML list. */
   private String optionListToHtml(
       List<Options.OptionInfo> opt_list, int padding, int firstLinePadding, int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
@@ -743,9 +739,10 @@ public class OptionsDoclet {
 
   /**
    * Get the line of HTML describing an Option.
+   *
    * @param oi the option to describe
-   * @param padding the number of spaces to add at the begginning of the
-   *   detail line (after the line with the option itself)
+   * @param padding the number of spaces to add at the begginning of the detail line (after the line
+   *     with the option itself)
    * @return HTML describing oi
    */
   public String optionToHtml(Options.OptionInfo oi, int padding) {
@@ -797,12 +794,11 @@ public class OptionsDoclet {
   }
 
   /**
-   * Replace the @link tags and block @see tags in a Javadoc comment with
-   * sensible, non-hyperlinked HTML.  This keeps most of the information in the
-   * comment while still being presentable. <p>
+   * Replace the @link tags and block @see tags in a Javadoc comment with sensible, non-hyperlinked
+   * HTML. This keeps most of the information in the comment while still being presentable.
    *
-   * This is only a temporary solution.  Ideally, @link/@see tags would be
-   * converted to HTML links that point to actual documentation.
+   * <p>This is only a temporary solution. Ideally, @link/@see tags would be converted to HTML links
+   * that point to actual documentation.
    *
    * @param doc a Javadoc comment to convert to HTML
    * @return HTML version of doc

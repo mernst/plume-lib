@@ -14,16 +14,18 @@ import org.checkerframework.checker.nullness.qual.*;
 */
 
 /**
- * Given a list of .class files, print the class file version and also the
- * JDK/JRE version required to run it.
- * A .jar file can also be supplied, in which case each .class file within
- * it is processed.
- * Example use:  <pre>  java ClassFileVersion MyClass.class</pre>
- * Supplying the "-min JDKVER" argument suppresses output except for .class
- * files that require at least that JDK version.  For instance, to list all
- * the .class/.jar files that require JDK 6 or later, in this or any
- * subdirectory, run
- *   <pre>find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6</pre>
+ * Given a list of .class files, print the class file version and also the JDK/JRE version required
+ * to run it. A .jar file can also be supplied, in which case each .class file within it is
+ * processed. Example use:
+ *
+ * <pre>  java ClassFileVersion MyClass.class</pre>
+ *
+ * Supplying the "-min JDKVER" argument suppresses output except for .class files that require at
+ * least that JDK version. For instance, to list all the .class/.jar files that require JDK 6 or
+ * later, in this or any subdirectory, run
+ *
+ * <pre>find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6
+ * </pre>
  */
 public final class ClassFileVersion {
 
@@ -35,7 +37,9 @@ public final class ClassFileVersion {
   /** Only report versions that are at least this large. */
   static double minversion = 0;
 
-  /** Main method for the ClassFileVersion program.
+  /**
+   * Main method for the ClassFileVersion program.
+   *
    * @param args command-line arguments
    * @throws IOException if a file cannot be read
    */
@@ -89,6 +93,7 @@ public final class ClassFileVersion {
 
   /**
    * Print, to standard out, the version number for the class file found in is.
+   *
    * @param filename file name to appear in printed messages
    * @param is input stream from which to read classfile bytes to process
    */
@@ -118,9 +123,9 @@ public final class ClassFileVersion {
   }
 
   /**
-   * Return an array of the major vernios, minor version, and JDK version
-   * of the class read from the input stream.
-   * Return null if there is an error or the input isn't a class file.
+   * Return an array of the major vernios, minor version, and JDK version of the class read from the
+   * input stream. Return null if there is an error or the input isn't a class file.
+   *
    * @param is input stream from which to read a class
    * @return array of three version numbers
    */

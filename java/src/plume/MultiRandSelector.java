@@ -8,26 +8,21 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Performs uniform random selection over an iterator, where the objects in
- * the iteration may be partitioned so that the random selection chooses
- * the same number from each group.
+ * Performs uniform random selection over an iterator, where the objects in the iteration may be
+ * partitioned so that the random selection chooses the same number from each group.
  *
- * <p>For example, given data about incomes by state, it may be more
- * useful to select 1000 people from each state rather than 50,000 from the
- * nation. As another example, for selecting invocations in a Daikon trace
- * file, it may be more useful to select an equal number of samples per
- * program point.
+ * <p>For example, given data about incomes by state, it may be more useful to select 1000 people
+ * from each state rather than 50,000 from the nation. As another example, for selecting invocations
+ * in a Daikon trace file, it may be more useful to select an equal number of samples per program
+ * point.
  *
- * <p>The performance is the same as running a set of RandomSelector
- * Objects, one for each bucket, plus some overhead for
- * determining which bucket to assign to each Object in the iteration.
+ * <p>The performance is the same as running a set of RandomSelector Objects, one for each bucket,
+ * plus some overhead for determining which bucket to assign to each Object in the iteration.
  *
- * <p>To use this class, call this.accept() on every Object in the
- * iteration to be sampled. Then, call valuesIter() to receive an
- * iteration of all the values selected by the random selection.
+ * <p>To use this class, call this.accept() on every Object in the iteration to be sampled. Then,
+ * call valuesIter() to receive an iteration of all the values selected by the random selection.
  *
  * @param <T> the type of elements to be selected among
- *
  * @see RandomSelector
  */
 public class MultiRandSelector<T> {
@@ -40,9 +35,9 @@ public class MultiRandSelector<T> {
 
   private HashMap<T, RandomSelector<T>> map;
 
-  /** @param num_elts the number of elements to select from each bucket
-   *  @param eq partioner that determines how to partition the objects from
-   *  the iteration
+  /**
+   * @param num_elts the number of elements to select from each bucket
+   * @param eq partioner that determines how to partition the objects from the iteration
    */
   public MultiRandSelector(int num_elts, Partitioner<T, T> eq) {
     this(num_elts, new Random(), eq);
@@ -96,8 +91,11 @@ public class MultiRandSelector<T> {
     return map;
   }
 
-  /** Returns an iterator of all objects selected.
-   * @return an iterator of all objects selected */
+  /**
+   * Returns an iterator of all objects selected.
+   *
+   * @return an iterator of all objects selected
+   */
   public Iterator<T> valuesIter() {
     ArrayList<T> ret = new ArrayList<T>();
     for (RandomSelector<T> rs : map.values()) {

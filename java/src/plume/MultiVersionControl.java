@@ -47,15 +47,14 @@ import org.checkerframework.dataflow.qual.*;
 //  * mvc's configuration files tend to be smaller & simpler
 
 /**
- * This program, mvc for Multiple Version Control, lets you run a version
- * control command, such as "status" or "update", on a <b>set</b> of
- * CVS/Git/Hg/SVN checkouts rather than just one.<p>
+ * This program, mvc for Multiple Version Control, lets you run a version control command, such as
+ * "status" or "update", on a <b>set</b> of CVS/Git/Hg/SVN checkouts rather than just one.
  *
- * This program simplifies managing your checkouts/clones.  You might
- * want to update/pull all of them, or you might want to know whether any
- * of them have uncommitted changes.  When setting up a new account,
- * you might want to clone or check them all out.  This program does any
- * of those tasks.  In particular, it accepts these arguments:
+ * <p>This program simplifies managing your checkouts/clones. You might want to update/pull all of
+ * them, or you might want to know whether any of them have uncommitted changes. When setting up a
+ * new account, you might want to clone or check them all out. This program does any of those tasks.
+ * In particular, it accepts these arguments:
+ *
  * <pre>
  *   clone     -- Clone (check out) all repositories.
  *   checkout  -- Same as clone
@@ -65,17 +64,19 @@ import org.checkerframework.dataflow.qual.*;
  *                but not pushed, or have shelved/stashed changes.
  *   list      -- List the clones/checkouts that this program is aware of.
  * </pre>
- * (The <code>commit</code> action is not supported, because that is not
- * something that should be done in an automated way -- it needs a
- * user-written commit message.)<p>
  *
- * You can specify the set of checkouts/clones for the program to manage, or
- * it can search your directory structure to find all of your checkouts, or
- * both.  To list all un-committed changed files under your home directory:
+ * (The <code>commit</code> action is not supported, because that is not something that should be
+ * done in an automated way -- it needs a user-written commit message.)
+ *
+ * <p>You can specify the set of checkouts/clones for the program to manage, or it can search your
+ * directory structure to find all of your checkouts, or both. To list all un-committed changed
+ * files under your home directory:
+ *
  * <pre>java plume.MultiVersionControl status --search=true</pre>
  *
- * <b>Command-line arguments</b><p>
- * The command-line options are as follows:
+ * <b>Command-line arguments</b>
+ *
+ * <p>The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
  *
  * <ul>
@@ -129,43 +130,38 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <code>[+]</code> marked option can be specified multiple times
  * <!-- end options doc -->
- * <p>
  *
- * <b>File format for <code>.mvc-checkouts</code> file</b><p>
+ * <p><b>File format for <code>.mvc-checkouts</code> file</b>
  *
- * The remainder of this document describes the file format for the
- * <code>.mvc-checkouts</code> file.<p>
+ * <p>The remainder of this document describes the file format for the <code>.mvc-checkouts</code>
+ * file.
  *
- * (Note:  because mvc can search for all checkouts in your directory, you
- * don't need a <code>.mvc-checkouts</code> file.  Using a
- * <code>.mvc-checkouts</code> file makes the program faster because it does not
- * have to search all of your directories.  It also permits you to
- * process only a certain set of checkouts.)<p>
+ * <p>(Note: because mvc can search for all checkouts in your directory, you don't need a <code>
+ * .mvc-checkouts</code> file. Using a <code>.mvc-checkouts</code> file makes the program faster
+ * because it does not have to search all of your directories. It also permits you to process only a
+ * certain set of checkouts.)
  *
- * The <code>.mvc-checkouts</code> file contains a list of <em>sections</em>.
- * Each section names either a root from which a sub-part (e.g., a module
- * or a subdirectory) will be checked out, or a repository all of which
- * will be checked out.
- * Examples include:
+ * <p>The <code>.mvc-checkouts</code> file contains a list of <em>sections</em>. Each section names
+ * either a root from which a sub-part (e.g., a module or a subdirectory) will be checked out, or a
+ * repository all of which will be checked out. Examples include:
+ *
  * <pre>
  * CVSROOT: :ext:login.csail.mit.edu:/afs/csail.mit.edu/u/m/mernst/.CVS/.CVS-mernst
  * SVNROOT: svn+ssh://tricycle.cs.washington.edu/cse/courses/cse403/09sp
  * SVNREPOS: svn+ssh://login.csail.mit.edu/afs/csail/u/a/akiezun/.SVN/papers/parameterization-paper/trunk
  * HGREPOS: https://jsr308-langtools.googlecode.com/hg</pre>
  *
- * Within each section is a list of directories that contain a checkout
- * from that repository.  If the section names a root, then a module or
- * subdirectory is needed.  By default, the directory's basename is used.
- * This can be overridden by specifying the module/subdirectory on the same
- * line, after a space.  If the section names a repository, then no module
- * information is needed or used.<p>
+ * Within each section is a list of directories that contain a checkout from that repository. If the
+ * section names a root, then a module or subdirectory is needed. By default, the directory's
+ * basename is used. This can be overridden by specifying the module/subdirectory on the same line,
+ * after a space. If the section names a repository, then no module information is needed or used.
  *
- * When performing a checkout, the parent directories are created if
- * needed.<p>
+ * <p>When performing a checkout, the parent directories are created if needed.
  *
- * In the file, blank lines, and lines beginning with "#", are ignored.<p>
+ * <p>In the file, blank lines, and lines beginning with "#", are ignored.
  *
- * Here are some example sections:
+ * <p>Here are some example sections:
+ *
  * <pre>
  * CVSROOT: :ext:login.csail.mit.edu:/afs/csail.mit.edu/group/pag/projects/classify-tests/.CVS
  * ~/research/testing/symstra-eclat-paper
@@ -184,16 +180,20 @@ import org.checkerframework.dataflow.qual.*;
  *
  * SVNROOT: svn+ssh://login.csail.mit.edu/afs/csail/u/d/dannydig/REPOS/
  * ~/research/concurrency/concurrentPaper
- * ~/research/concurrency/mit.edu.concurrencyRefactorings concurrencyRefactorings/project/mit.edu.concurrencyRefactorings</pre>
+ * ~/research/concurrency/mit.edu.concurrencyRefactorings concurrencyRefactorings/project/mit.edu.concurrencyRefactorings
+ * </pre>
  *
  * Furthermore, these 2 sections have identical effects:
+ *
  * <pre>
  * SVNROOT: https://crashma.googlecode.com/svn/
  * ~/research/crashma trunk
  *
  * SVNREPOS: https://crashma.googlecode.com/svn/trunk
  * ~/research/crashma</pre>
+ *
  * and, all 3 of these sections have identical effects:
+ *
  * <pre>
  * SVNROOT: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/
  * ~/research/typequals/annotations
@@ -251,8 +251,8 @@ public class MultiVersionControl {
   public static String home = System.getProperty("user.home");
 
   /**
-   * File with list of checkouts.  Set it to /dev/null to suppress reading.
-   * Defaults to <code>$HOME/.mvc-checkouts</code>.
+   * File with list of checkouts. Set it to /dev/null to suppress reading. Defaults to <code>
+   * $HOME/.mvc-checkouts</code>.
    */
   @Option("File with list of checkouts.  Set it to /dev/null to suppress reading.")
   public String checkouts = "~/.mvc-checkouts";
@@ -280,14 +280,14 @@ public class MultiVersionControl {
   @Option("Do not execute commands; just print them.  Implies --show --redo-existing")
   public boolean dry_run = false;
 
-  /**  Default is for checkout command to skip existing directories. */
+  /** Default is for checkout command to skip existing directories. */
   @Option("Redo existing checkouts; relevant only to checkout command")
   public boolean redo_existing = false;
 
   /**
-   * Terminating the process can leave the repository in a bad state, so
-   * set this rather high for safety.  Also, the timeout needs to account
-   * for the time to run hooks (that might recompile or run tests).
+   * Terminating the process can leave the repository in a bad state, so set this rather high for
+   * safety. Also, the timeout needs to account for the time to run hooks (that might recompile or
+   * run tests).
    */
   @Option("Timeout for each command, in seconds")
   public int timeout = 600;
@@ -437,8 +437,7 @@ public class MultiVersionControl {
     if (remaining_args.length != 1) {
       options.print_usage(
           "Please supply exactly one argument (found %d)%n%s",
-          remaining_args.length,
-          UtilMDE.join(remaining_args, " "));
+          remaining_args.length, UtilMDE.join(remaining_args, " "));
       System.exit(1);
     }
     String action_string = remaining_args[0];
@@ -514,18 +513,16 @@ public class MultiVersionControl {
     // actually the parent directory?
     File directory;
     /**
-     * Non-null for CVS and SVN.
-     * May be null for distributed version control systems (Bzr, Git, Hg).
-     * For distributed systems, refers to the parent repository from which
-     * this was cloned, not the one here in this directory.
-     * <p>
-     * Most operations don't need this.  It is needed for checkout, though.
+     * Non-null for CVS and SVN. May be null for distributed version control systems (Bzr, Git, Hg).
+     * For distributed systems, refers to the parent repository from which this was cloned, not the
+     * one here in this directory.
+     *
+     * <p>Most operations don't need this. It is needed for checkout, though.
      */
     /*@Nullable*/ String repository;
     /**
-     * Null if no module, just whole thing.
-     * Non-null for CVS and, optionally, for SVN.
-     * Null for distributed version control systems (Bzr, Git, Hg).
+     * Null if no module, just whole thing. Non-null for CVS and, optionally, for SVN. Null for
+     * distributed version control systems (Bzr, Git, Hg).
      */
     /*@Nullable*/ String module;
 
@@ -618,10 +615,7 @@ public class MultiVersionControl {
   /// Read checkouts from a file
   ///
 
-  /**
-   * Read checkouts from the file (in .mvc-checkouts format), and add
-   * them to the set.
-   */
+  /** Read checkouts from the file (in .mvc-checkouts format), and add them to the set. */
   static void readCheckouts(File file, Set<Checkout> checkouts) throws IOException {
     RepoType currentType = RepoType.BZR; // arbitrary choice
     String currentRoot = null;
@@ -684,8 +678,7 @@ public class MultiVersionControl {
       if (currentRoot == null) {
         System.err.printf(
             "need root before directory at line %d of file %s%n",
-            er.getLineNumber(),
-            er.getFileName());
+            er.getLineNumber(), er.getFileName());
         System.exit(1);
       }
 
@@ -754,10 +747,9 @@ public class MultiVersionControl {
   //   }
 
   /**
-   * Find all checkouts at or under the given directory (or, as a special
-   * case, also its parent -- could rewrite to avoid that case), and adds
-   * them to checkouts.  Works by checking whether dir or any of its
-   * descendants is a version control directory.
+   * Find all checkouts at or under the given directory (or, as a special case, also its parent --
+   * could rewrite to avoid that case), and adds them to checkouts. Works by checking whether dir or
+   * any of its descendants is a version control directory.
    */
   private static void findCheckouts(File dir, Set<Checkout> checkouts, List<File> ignoreDirs) {
     if (!dir.isDirectory()) {
@@ -834,9 +826,8 @@ public class MultiVersionControl {
   static IsDirectoryFilter idf = new IsDirectoryFilter();
 
   /**
-   * Given a directory named "CVS", create a corresponding Checkout object
-   * for its parent, and add it to the given set.  (Google Web Toolkit does
-   * that, for example.)
+   * Given a directory named "CVS", create a corresponding Checkout object for its parent, and add
+   * it to the given set. (Google Web Toolkit does that, for example.)
    */
   static void addCheckoutCvs(File cvsDir, File dir, Set<Checkout> checkouts) {
     assert cvsDir.getName().toString().equals("CVS") : cvsDir.getName();
@@ -874,10 +865,7 @@ public class MultiVersionControl {
     checkouts.add(new Checkout(RepoType.CVS, cDir, repoRoot, pathInRepoAtCheckout));
   }
 
-  /**
-   * Given a directory named ".hg" , create a corresponding Checkout object
-   * for its parent.
-   */
+  /** Given a directory named ".hg" , create a corresponding Checkout object for its parent. */
   static Checkout dirToCheckoutHg(File hgDir, File dir) {
     String repository = null;
 
@@ -903,10 +891,7 @@ public class MultiVersionControl {
     return new Checkout(RepoType.HG, dir, repository, null);
   }
 
-  /**
-   * Given a directory named ".git" , create a corresponding Checkout object
-   * for its parent.
-   */
+  /** Given a directory named ".git" , create a corresponding Checkout object for its parent. */
   static Checkout dirToCheckoutGit(File gitDir, File dir) {
     String repository = UtilMDE.backticks("git", "config", "remote.origin.url");
 
@@ -914,8 +899,7 @@ public class MultiVersionControl {
   }
 
   /**
-   * Given a directory that contains a .svn subdirectory, create a
-   * corresponding Checkout object.
+   * Given a directory that contains a .svn subdirectory, create a corresponding Checkout object.
    * Returns null if this is not possible.
    */
   static /*@Nullable*/ Checkout dirToCheckoutSvn(File dir) {
@@ -1007,11 +991,10 @@ public class MultiVersionControl {
   }
 
   /**
-   * Strip identical elements off the end of both paths, and then return
-   * what is left of each.  Returned elements can be null!  If p2_limit is
-   * non-null, then it should be a parent of p2, and the stripping stops
-   * when p2 becomes p2_limit.  If p1_contains is non-null, then p1 must
-   * contain a subdirectory of that name.
+   * Strip identical elements off the end of both paths, and then return what is left of each.
+   * Returned elements can be null! If p2_limit is non-null, then it should be a parent of p2, and
+   * the stripping stops when p2 becomes p2_limit. If p1_contains is non-null, then p1 must contain
+   * a subdirectory of that name.
    */
   static Pair</*@Nullable*/ File, /*@Nullable*/ File> removeCommonSuffixDirs(
       File p1, File p2, File p2_limit, String p1_contains) {
@@ -1474,8 +1457,7 @@ public class MultiVersionControl {
                 if (!dry_run) {
                   System.out.printf(
                       "Parent directory %s does not exist%s%n",
-                      parent,
-                      (dry_run ? "" : " (creating)"));
+                      parent, (dry_run ? "" : " (creating)"));
                 } else {
                   System.out.printf("  mkdir -p %s%n", parent);
                 }
@@ -1516,8 +1498,8 @@ public class MultiVersionControl {
   private /*@Regex(1)*/ Pattern defaultPattern = Pattern.compile("^default[ \t]*=[ \t]*(.*)");
 
   /**
-   * Given a directory containing a Mercurial checkout, return its default
-   * path.  Return null otherwise.
+   * Given a directory containing a Mercurial checkout, return its default path. Return null
+   * otherwise.
    */
   // This implementation is not quite right because we didn't look for the
   // [path] section.  We could fix this by using a real ini reader or
@@ -1706,8 +1688,9 @@ public class MultiVersionControl {
   // }
 
   /**
-   * A stream of newlines.  Used for processes that want input, when we
-   * don't want to give them input but don't want them to simply hang. */
+   * A stream of newlines. Used for processes that want input, when we don't want to give them input
+   * but don't want them to simply hang.
+   */
   static class StreamOfNewlines extends InputStream {
     public int read() {
       return (int) '\n';

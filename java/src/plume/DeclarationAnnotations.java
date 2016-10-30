@@ -54,10 +54,7 @@ public class DeclarationAnnotations {
         if (debug) {
           System.out.printf(
               "Trouble in getAnnotation(Target.class): %s: %s: %s \"%s\"%n",
-              ci,
-              c,
-              e.getClass(),
-              e.getMessage());
+              ci, c, e.getClass(), e.getMessage());
         }
       }
       if (anno != null) {

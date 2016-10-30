@@ -1124,16 +1124,7 @@ public final class TestPlume {
       assert ((i <= max_size) ? (size == i) : (size == max_size + 1))
           : String.format(
               "(%d<=%d) ? (%d==%d) : (%d==%d+1)   size=%d, i=%d, max_size=%d, s=%s",
-              i,
-              max_size,
-              size,
-              i,
-              size,
-              max_size,
-              size,
-              i,
-              max_size,
-              s);
+              i, max_size, size, i, size, max_size, size, i, max_size, s);
     }
   }
 
@@ -1574,6 +1565,7 @@ public final class TestPlume {
 
   /**
    * Throws an assertion unless the paired iterator contains the same values as the argument array.
+   *
    * @param opi an iterator over pairs of integers
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
@@ -1596,13 +1588,15 @@ public final class TestPlume {
 
   /**
    * Print one integer periodically.
-   * <p>
-   * Example use from the command line, for one integer each half-second:
+   *
+   * <p>Example use from the command line, for one integer each half-second:
+   *
    * <pre>  java plume.TestPlume\$PrintOneIntPerSecond 500</pre>
    */
   public static class PrintOneIntPerTimePeriod {
     /**
-     * @param args  two-element array containing:  how many to print; how many milliseconds between each
+     * @param args two-element array containing: how many to print; how many milliseconds between
+     *     each
      */
     public static void main(String[] args) {
       if (args.length != 2) {
@@ -1664,9 +1658,8 @@ public final class TestPlume {
   }
 
   /**
-   * On a heavily-loaded machine, this test fails.
-   * You should run the test again when the load is lower.
-   * (Better might be exponential backoff up to some limit.)
+   * On a heavily-loaded machine, this test fails. You should run the test again when the load is
+   * lower. (Better might be exponential backoff up to some limit.)
    */
   @Test
   public void testTimeLimitProcess() {
@@ -2080,11 +2073,7 @@ public final class TestPlume {
             if (now.after(nextNotification)) {
               System.out.printf(
                   "%s: iteration (%d,%d) out of (%d,%d)%n",
-                  df.format(nextNotification.getTime()),
-                  i,
-                  j,
-                  num_elts_limit,
-                  tries);
+                  df.format(nextNotification.getTime()), i, j, num_elts_limit, tries);
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
@@ -2462,9 +2451,9 @@ public final class TestPlume {
   public void testWeakHasherMap() {}
 
   /**
-   * These tests could be much more thorough.  Basically all that is tested
-   * is that identity is used rather than a normal hash.  The tests will
-   * fail however, if WeakHashMap is swapped for WeakIdentityHashMap.
+   * These tests could be much more thorough. Basically all that is tested is that identity is used
+   * rather than a normal hash. The tests will fail however, if WeakHashMap is swapped for
+   * WeakIdentityHashMap.
    */
   @Test
   public void testWeakIdentityHashMap() {
@@ -2513,9 +2502,8 @@ public final class TestPlume {
   }
 
   /**
-   * Tests whether CountingPrintWriter
-   * counts the bytes printed, written for
-   * different types (boolean, int, float etc.).
+   * Tests whether CountingPrintWriter counts the bytes printed, written for different types
+   * (boolean, int, float etc.).
    */
   @Test
   public void testCountingPrintWriter() {
@@ -2546,8 +2534,8 @@ public final class TestPlume {
   }
 
   /**
-   * Test the intering of subsequences as triples of the original
-   * sequence, the start and the end indices.
+   * Test the intering of subsequences as triples of the original sequence, the start and the end
+   * indices.
    */
   @Test
   public void testSequenceAndIndices() {
@@ -2580,10 +2568,7 @@ public final class TestPlume {
   // public static void testFileIOException() {
   // }
 
-  /**
-   * Test the comparison, indexof, and set equivalence calls in fuzzy
-   * float.
-   */
+  /** Test the comparison, indexof, and set equivalence calls in fuzzy float. */
   @Test
   public void testFuzzyFloat() {
 
@@ -2883,9 +2868,7 @@ public final class TestPlume {
     }
   }
 
-  /**
-   * Tests UtilMDE create_combinations routines.
-   */
+  /** Tests UtilMDE create_combinations routines. */
   @Test
   public void test_create_combinations() {
 
@@ -2947,9 +2930,7 @@ public final class TestPlume {
     assert UtilMDE.fullyQualifiedNameToSimpleName("String").equals("String");
   }
 
-  /**
-   * Test class for Options testing.
-   */
+  /** Test class for Options testing. */
   public static class TestOptions {
 
     // TODO: test the @Unpublicized annotation and the usage() message.
@@ -2984,6 +2965,7 @@ public final class TestPlume {
 
   /**
    * Test command line option parsing (Options).
+   *
    * @throws ArgException if there is an illegal argument
    */
   @Test
@@ -3070,6 +3052,7 @@ public final class TestPlume {
 
   /**
    * Test option aliases (Options).
+   *
    * @throws ArgException if there is an illegal argument
    */
   @Test
@@ -3179,6 +3162,7 @@ public final class TestPlume {
 
   /**
    * Test option groups (Options).
+   *
    * @throws ArgException if there is an illegal argument
    */
   @Test
