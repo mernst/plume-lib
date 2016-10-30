@@ -187,6 +187,7 @@ endif
 export CLASSPATH
 
 default: jar
+# No need for optionsdoc here, because javadoc depends on optionsdoc
 all: jar javadoc
 
 # Must not depend on javadoc, since javadoc depends on it
