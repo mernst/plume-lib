@@ -2,7 +2,7 @@
 *.elc
 *~
 TAGS
-java/.rgjf
+java/.run-google-java-format/
 java/.class-files-timestamp
 java/.javadoc-timestamp
 java/.optionsdoc-timestamp

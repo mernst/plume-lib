@@ -533,17 +533,13 @@ checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
 
-reformat: ${JAVA_AND_CPP_FILES}
-	@mkdir -p .rgjf
-	@(cd .rgjf && wget -N https://raw.githubusercontent.com/plume-lib/run-google-java-format/master/run-google-java-format.py)
-	@chmod +x .rgjf/run-google-java-format.py
-	@.rgjf/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+reformat:
+	@-git -C .run-google-java-format pull -q || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
+	@.run-google-java-format/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
-check-format: ${JAVA_AND_CPP_FILES}
-	@mkdir -p .rgjf
-	@(cd .rgjf && wget -N https://raw.githubusercontent.com/plume-lib/run-google-java-format/master/check-google-java-format.py)
-	@chmod +x .rgjf/check-google-java-format.py
-	@.rgjf/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+check-format:
+	@-git -C .run-google-java-format pull -q || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
+	@.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format
 
