@@ -2145,7 +2145,7 @@ public final class ArraysMDE {
    * int, long, or Object array.
    * @param obj an array
    * @return a string representation of the array
-   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above.
+   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above
    */
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
   /*@SideEffectFree*/
@@ -2175,7 +2175,7 @@ public final class ArraysMDE {
    * Only call this method if obj is a boolean, double, int, long, or Object array.
    * @param obj a list
    * @return a string representation of the array
-   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above.
+   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above
    */
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
   /*@Pure*/

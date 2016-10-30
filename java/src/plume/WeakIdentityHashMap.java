@@ -194,7 +194,7 @@ public class WeakIdentityHashMap<K,V>
      * @param  loadFactor      the load factor of the
      *      <code>WeakIdentityHashMap</code>
      * @throws IllegalArgumentException  If the initial capacity is negative,
-     *      or if the load factor is nonpositive.
+     *      or if the load factor is nonpositive
      */
     public WeakIdentityHashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
@@ -223,7 +223,7 @@ public class WeakIdentityHashMap<K,V>
      *
      * @param  initialCapacity the initial capacity of the
      *      <code>WeakIdentityHashMap</code>
-     * @throws IllegalArgumentException  If the initial capacity is negative.
+     * @throws IllegalArgumentException  If the initial capacity is negative
      */
     public WeakIdentityHashMap(int initialCapacity) {
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
@@ -249,8 +249,8 @@ public class WeakIdentityHashMap<K,V>
      * factor, which is <code>0.75</code> and an initial capacity
      * sufficient to hold the mappings in the specified <code>Map</code>.
      *
-     * @param   t the map whose mappings are to be placed in this map.
-     * @throws  NullPointerException if the specified map is null.
+     * @param   t the map whose mappings are to be placed in this map
+     * @throws  NullPointerException if the specified map is null
      * @since	1.3
      */
     public WeakIdentityHashMap(Map<? extends K, ? extends V> t) {
@@ -386,7 +386,7 @@ public class WeakIdentityHashMap<K,V>
      * <code>containsKey</code> method may be used to distinguish these two
      * cases.
      *
-     * @param   key the key whose associated value is to be returned.
+     * @param   key the key whose associated value is to be returned
      * @return  the value to which this map maps the specified key, or
      *          <code>null</code> if the map contains no mapping for this key.
      * @see #put(Object, Object)
@@ -440,8 +440,8 @@ public class WeakIdentityHashMap<K,V>
      * If the map previously contained a mapping for this key, the old
      * value is replaced.
      *
-     * @param key key with which the specified value is to be associated.
-     * @param value value to be associated with the specified key.
+     * @param key key with which the specified value is to be associated
+     * @param value value to be associated with the specified key
      * @return previous value associated with specified key, or <code>null</code>
      *	       if there was no mapping for key.  A <code>null</code> return can
      *	       also indicate that the HashMap previously associated
@@ -483,7 +483,7 @@ public class WeakIdentityHashMap<K,V>
      * @param newCapacity the new capacity, MUST be a power of two;
      *        must be greater than current capacity unless current
      *        capacity is MAXIMUM_CAPACITY (in which case value
-     *        is irrelevant).
+     *        is irrelevant)
      */
     void resize(int newCapacity) {
         /*@Nullable*/ Entry<K,V>[] oldTable = getTable();
@@ -539,8 +539,8 @@ public class WeakIdentityHashMap<K,V>
      * mappings will replace any mappings that this map had for any of the
      * keys currently in the specified map.<p>
      *
-     * @param m mappings to be stored in this map.
-     * @throws  NullPointerException if the specified map is null.
+     * @param m mappings to be stored in this map
+     * @throws  NullPointerException if the specified map is null
      */
     public void putAll(Map<? extends K, ? extends V> m) {
         int numKeysToBeAdded = m.size();
@@ -576,7 +576,7 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Removes the mapping for this key from this map if present.
      *
-     * @param key key whose mapping is to be removed from the map.
+     * @param key key whose mapping is to be removed from the map
      * @return previous value associated with specified key, or <code>null</code>
      *	       if there was no mapping for key.  A <code>null</code> return can
      *	       also indicate that the map previously associated <code>null</code>
@@ -666,7 +666,7 @@ public class WeakIdentityHashMap<K,V>
      * Returns <code>true</code> if this map maps one or more keys to the
      * specified value.
      *
-     * @param value value whose presence in this map is to be tested.
+     * @param value value whose presence in this map is to be tested
      * @return <code>true</code> if this map maps one or more keys to the
      *         specified value.
      */
@@ -867,7 +867,7 @@ public class WeakIdentityHashMap<K,V>
      * <code>clear</code> operations.  It does not support the <code>add</code> or
      * <code>addAll</code> operations.
      *
-     * @return a set view of the keys contained in this map.
+     * @return a set view of the keys contained in this map
      */
     /*@SideEffectFree*/
     public Set<K> keySet() {
@@ -929,7 +929,7 @@ public class WeakIdentityHashMap<K,V>
      * <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations.
      * It does not support the <code>add</code> or <code>addAll</code> operations.
      *
-     * @return a collection view of the values contained in this map.
+     * @return a collection view of the values contained in this map
      */
     /*@SideEffectFree*/
     public Collection<V> values() {
@@ -981,7 +981,7 @@ public class WeakIdentityHashMap<K,V>
      * <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations.
      * It does not support the <code>add</code> or <code>addAll</code> operations.
      *
-     * @return a collection view of the mappings contained in this map.
+     * @return a collection view of the mappings contained in this map
      * @see java.util.Map.Entry
      */
     /*@SideEffectFree*/

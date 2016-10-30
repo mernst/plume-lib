@@ -56,8 +56,8 @@ public class IterableIterator<T> implements Iterable<T> {
 
   /**
    * Create an IterableIterator.
-   * @param iter the iterator to wrap.
-   * */
+   * @param iter the iterator to wrap
+   */
   public IterableIterator(Iterator<T> iter) {
     this.iter = iter;
   }

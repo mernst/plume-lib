@@ -72,7 +72,7 @@ public final class FileCompiler {
    * spaces and other special characters in the command and arguments.
    * @param compiler an array of Strings representing a command that runs a
    * Java compiler (it could be the full path name or whatever is used on
-   * the commandline), plus any command-line options.
+   * the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String[] compiler, long timeLimit) {
@@ -90,7 +90,7 @@ public final class FileCompiler {
    * spaces and other special characters in the command and arguments.
    * @param compiler a list of Strings representing a command that runs a
    * Java compiler (it could be the full path name or whatever is used on
-   * the commandline), plus any command-line options.
+   * the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(ArrayList<String> compiler, long timeLimit) {
@@ -168,7 +168,7 @@ public final class FileCompiler {
   /**
    * @param filenames the paths of the Java source to be compiled as Strings
    * @return the process that executed the external compile command
-   * @throws Error if an empty list of filenames is provided.
+   * @throws Error if an empty list of filenames is provided
    */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
