@@ -84,8 +84,8 @@ import org.checkerframework.checker.signature.qual.*;
  *             <pre>* &lt;!-- end options doc --&gt;</pre>
  *             using the same indentation. Inline <code>@link</code> and <code>@see</code> tags in
  *             the Javadoc input are left untouched.
- *         <li> <b>html</b> This format outputs HTML for general-purpose use, meaning inline <code>
- *             @link</code> and <code>@see</code> tags in the Javadoc input are suitably replaced.
+ *         <li> <b>html</b> This format outputs HTML for general-purpose use, meaning inline
+ *             {@code @link} and <code>@see</code> tags in the Javadoc input are suitably replaced.
  *             This is the default output format and does not need to be specified explicitly.
  *       </ul>
  *
@@ -598,6 +598,7 @@ public class OptionsDoclet {
   /**
    * Get the HTML documentation for the underlying options instance.
    *
+   * @param refillWidth the number of columns to fit the text into, by breaking lines
    * @return the HTML documentation for the underlying options instance
    */
   public String optionsToHtml(int refillWidth) {
@@ -648,6 +649,7 @@ public class OptionsDoclet {
    * Get the HTML documentation for the underlying options instance, formatted as a Javadoc comment.
    *
    * @param padding the number of leading spaces to add in the Javadoc output, before "* "
+   * @param refillWidth the number of columns to fit the text into, by breaking lines
    * @return the HTML documentation for the underlying options instance
    */
   public String optionsToJavadoc(int padding, int refillWidth) {
