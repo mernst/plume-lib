@@ -737,12 +737,22 @@ Works over the currently-visited tags table."
       (downcase-previous-character)))
   ;; PROBLEM: the final tags-loop-continue terminates the whole function so
   ;; nothing here or beyond will be executed.
+
+  ;; TODO:
+
+  ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
+  ;; (Run each until it finds no more issues)
+  (tags-query-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|@\\)")
+  ;; Missing period at the end of the main part of the Javadoc:
+  (tags-search "/\\*\\*[^@/]*\\. [^@/]*[^. \n][ \n]*\\*/")
+
   )
    
 (defun improve-javadoc-code-style ()
   "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
 
-  ;; TODO: as I run these, I mad need to convert
+  ;; TODO: as I run these, I may need to convert
   ;;   <code>...</code>
   ;; to
   ;;   {@code ...}
