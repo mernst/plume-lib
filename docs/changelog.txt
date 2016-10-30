@@ -9,6 +9,9 @@ plume-lib 1.1.1, released ??
 
 The plume-lib homepage has moved to https://mernst.github.io/plume-lib/
 
+plume-lib is being gradually split up into multiple smaller projects.
+ * https://github.com/plume-lib/run-google-java-format
+
 ===========================================================================
 
 plume-lib 1.1.0, released August 17, 2016
@@ -24,7 +27,8 @@ status if there were any.
 
 Deprecated the search program in favor of ag.  ag is faster.  A limitation
 of ag is that, contrary to its documentation, it does not search within
-archives such as .zip and .tar files.
+archives such as .zip and .tar files.  It also does not respect .gitignore
+files in parent directories.
 
 plume.jar no longer contains the contents of junit.jar.  JUnit is needed to
 run plume-lib's tests, but is not needed at run time.  This reduces the
