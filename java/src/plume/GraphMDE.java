@@ -12,10 +12,7 @@ import java.util.Set;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
-/**
- * Graph utility methods.  This class does not model a graph:  all methods
- * are static.
- */
+/** Graph utility methods. This class does not model a graph: all methods are static. */
 public final class GraphMDE {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -52,8 +49,9 @@ public final class GraphMDE {
   // follows the Wikipedia one.
 
   /**
-   * Computes, for each node in the graph, its set of (pre-)dominators.
-   * Supply a successor graph if you want post-dominators.
+   * Computes, for each node in the graph, its set of (pre-)dominators. Supply a successor graph if
+   * you want post-dominators.
+   *
    * @param <T> type of the graph nodes
    * @param predecessors a graph, represented as a predecessor map
    * @return a map from each node to a list of its pre-dominators
@@ -141,6 +139,7 @@ public final class GraphMDE {
 
   /**
    * Print a representation of the graph to ps, indented by intent spaces.
+   *
    * @param <T> the type of nodes of the graph
    * @param graph the graph to print
    * @param ps the PrintStream to which to print the graph

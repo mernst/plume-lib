@@ -10,8 +10,9 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * LimitedSizeSet stores up to some maximum number of unique
- * values, at which point its rep is nulled, in order to save space.
+ * LimitedSizeSet stores up to some maximum number of unique values, at which point its rep is
+ * nulled, in order to save space.
+ *
  * @param <T> the type of elements in the set
  */
 public class LimitedSizeSet<T> implements Serializable, Cloneable {
@@ -23,8 +24,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   // public final int max_values;
 
   /**
-   * If null, then at least num_values distinct values have been seen.
-   * The size is not separately stored, because that would take extra space.
+   * If null, then at least num_values distinct values have been seen. The size is not separately
+   * stored, because that would take extra space.
    */
   protected /*@Nullable*/ T /*@Nullable*/ [] values;
   /** The number of active elements (equivalently, the first unused index). */
@@ -32,6 +33,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   /**
    * Create a new LimitedSizeSet that can hold max_values values.
+   *
    * @param max_values the maximum number of values this set will be able to hold
    */
   public LimitedSizeSet(int max_values) {
@@ -111,9 +113,9 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   /**
-   * A lower bound on the number of elements in the set.  Returns either
-   * the number of elements that have been inserted in the set, or
-   * max_size(), whichever is less.
+   * A lower bound on the number of elements in the set. Returns either the number of elements that
+   * have been inserted in the set, or max_size(), whichever is less.
+   *
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
@@ -122,9 +124,9 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   /**
-   * An upper bound on how many distinct elements can be individually
-   * represented in the set.
+   * An upper bound on how many distinct elements can be individually represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
+   *
    * @return maximum capacity of the set representation
    */
   public int max_size() {
@@ -159,9 +161,9 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   /**
-   * Merges a list of {@code LimitedSizeSet<T>} objects into a single object that
-   * represents the values seen by the entire list.  Returns the new
-   * object, whose max_values is the given integer.
+   * Merges a list of {@code LimitedSizeSet<T>} objects into a single object that represents the
+   * values seen by the entire list. Returns the new object, whose max_values is the given integer.
+   *
    * @param <T> (super)type of elements of the sets
    * @param max_values the maximum size for the returned LimitedSizeSet
    * @param slist a list of LimitedSizeSet, whose elements will be merged

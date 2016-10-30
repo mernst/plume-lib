@@ -11,6 +11,7 @@ import org.checkerframework.checker.nullness.qual.*;
 
 /**
  * A logging class with the following features:
+ *
  * <ul>
  *   <li>Can be enabled and disabled (when disabled, all operations are no-ops),
  *   <li>Write to a file or to standard output,
@@ -37,10 +38,9 @@ public final class SimpleLog {
   public boolean always_traceback = false;
 
   /**
-   * True if every log call is made with a complete line of text.
-   * False if a log call may contain multiple lines, or if multiple log
-   * calls may be made, each with parts of a line; in this case, you must
-   * manage line delimiters yourself.
+   * True if every log call is made with a complete line of text. False if a log call may contain
+   * multiple lines, or if multiple log calls may be made, each with parts of a line; in this case,
+   * you must manage line delimiters yourself.
    */
   public boolean line_oriented = true;
 
@@ -74,8 +74,8 @@ public final class SimpleLog {
   }
 
   /**
-   * Log a message.  Provide a backtrace (traceback) if variable
-   * always_traceback is set.
+   * Log a message. Provide a backtrace (traceback) if variable always_traceback is set.
+   *
    * @param format format string for message
    * @param args values to be substituted into format
    */
@@ -94,7 +94,9 @@ public final class SimpleLog {
     }
   }
 
-  /** Log a message, and provide a backtrace (traceback, or tb).
+  /**
+   * Log a message, and provide a backtrace (traceback, or tb).
+   *
    * @param format format string for message
    * @param args values to be substituted into format
    */
@@ -120,8 +122,7 @@ public final class SimpleLog {
   }
 
   /**
-   * Helper method:  add a newline if one isn't already there, and if
-   * variable line_oriented is set.
+   * Helper method: add a newline if one isn't already there, and if variable line_oriented is set.
    */
   private String add_newline(String format) {
 
@@ -157,9 +158,7 @@ public final class SimpleLog {
     }
   }
 
-  /**
-   * Clears indent and start times and then pushes one start time.
-   */
+  /** Clears indent and start times and then pushes one start time. */
   public void clear() {
     if (enabled) {
       indent_str = "";
@@ -170,6 +169,7 @@ public final class SimpleLog {
 
   /**
    * Calls clear() and then logs the specified message
+   *
    * @param format format string for message
    * @param args values to be substituted into format
    */
@@ -190,7 +190,9 @@ public final class SimpleLog {
     }
   }
 
-  /** Prints the time and then exdents.
+  /**
+   * Prints the time and then exdents.
+   *
    * @param format format string for message
    * @param args values to be substituted into format
    */
@@ -231,9 +233,9 @@ public final class SimpleLog {
   }
 
   /**
-   * Writes the specified message and the elapsed time since
-   * the last call to start_time().
-   * Does not pop nor reset the current start time.
+   * Writes the specified message and the elapsed time since the last call to start_time(). Does not
+   * pop nor reset the current start time.
+   *
    * @param format format string for message
    * @param args values to be substituted into format
    */

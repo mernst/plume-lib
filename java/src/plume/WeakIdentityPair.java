@@ -9,20 +9,18 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * Immutable pair class:
- * type-safely holds two objects of possibly-different types.
- * <p>
- * Differs from Pair in the following ways:  is immutable, cannot hold
- * null, holds its elements with weak pointers, and its equals() method
- * uses object equality to compare its elements.
+ * Immutable pair class: type-safely holds two objects of possibly-different types.
+ *
+ * <p>Differs from Pair in the following ways: is immutable, cannot hold null, holds its elements
+ * with weak pointers, and its equals() method uses object equality to compare its elements.
  */
 public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
 
-  final private WeakReference<T1> a;
-  final private WeakReference<T2> b;
+  private final WeakReference<T1> a;
+  private final WeakReference<T2> b;
 
   // Must cache the hashCode to prevent it from changing.
-  final private int hashCode;
+  private final int hashCode;
 
   public WeakIdentityPair(T1 a, T2 b) {
     if (a == null || b == null) {
@@ -39,7 +37,9 @@ public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
     hashCode = localHashCode;
   }
 
-  /** Factory method with short name and no need to name type parameters.
+  /**
+   * Factory method with short name and no need to name type parameters.
+   *
    * @param <A> type of first argument
    * @param <B> type of second argument
    * @param a first argument
@@ -50,7 +50,9 @@ public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
     return new WeakIdentityPair<A, B>(a, b);
   }
 
-  /** Return the first element of the pair, or null if it has been garbage-collected.
+  /**
+   * Return the first element of the pair, or null if it has been garbage-collected.
+   *
    * @return the first element of the pail, or null if it has been garbage-collected
    */
   /*@SideEffectFree*/
@@ -58,7 +60,9 @@ public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
     return a.get();
   }
 
-  /** Return the second element of the pair, or null if it has been garbage-collected.
+  /**
+   * Return the second element of the pair, or null if it has been garbage-collected.
+   *
    * @return the second element of the pair, or null if it has been garbage-collected
    */
   /*@SideEffectFree*/

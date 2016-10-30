@@ -10,14 +10,12 @@ import org.checkerframework.dataflow.qual.*;
 // (Probably mostly Javadoc "see" directives, possibly with first line of relevant method doc.)
 
 /**
- * Like StringBuilder, but adds a delimiter between each pair of strings
- * that are inserted into the Stringbuilder.  This can simplify the logic of
- * programs and also avoid errors. <p>
+ * Like StringBuilder, but adds a delimiter between each pair of strings that are inserted into the
+ * Stringbuilder. This can simplify the logic of programs and also avoid errors.
  *
- * Does not extend StringBuilder because that would probably break, due to
- * the possibility of calling the wrong version of append.  Also, I don't
- * (yet) want to override all the methods; this simpler version seems
- * sufficient for the time being.
+ * <p>Does not extend StringBuilder because that would probably break, due to the possibility of
+ * calling the wrong version of append. Also, I don't (yet) want to override all the methods; this
+ * simpler version seems sufficient for the time being.
  */
 public class StringBuilderDelimited implements Appendable, CharSequence {
 
@@ -28,9 +26,10 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   /** The delimiter put between strings appended to this. */
   private final String delimiter;
 
-  /** Create a new StringBuilderDelimited.
-   * @param delimiter the delimiter to be put between strings that are
-   * appended to this
+  /**
+   * Create a new StringBuilderDelimited.
+   *
+   * @param delimiter the delimiter to be put between strings that are appended to this
    */
   public StringBuilderDelimited(String delimiter) {
     this.delimiter = delimiter;

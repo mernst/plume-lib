@@ -8,8 +8,8 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 
 /**
- * Computes a message digest for a file.  The primary entry point into this
- * class is {@link #getFileDigest(String,MessageDigest)}.
+ * Computes a message digest for a file. The primary entry point into this class is {@link
+ * #getFileDigest(String,MessageDigest)}.
  */
 public final class Digest {
 
@@ -19,9 +19,9 @@ public final class Digest {
   }
 
   /**
-   * This convenience method is used by both create() and verify().  It
-   * reads the contents of a named file and computes a message digest
-   * for it, using the specified MessageDigest object.
+   * This convenience method is used by both create() and verify(). It reads the contents of a named
+   * file and computes a message digest for it, using the specified MessageDigest object.
+   *
    * @param filename the file to read
    * @param md the MessageDigest
    * @return the message digest
@@ -56,9 +56,10 @@ public final class Digest {
   };
 
   /**
-   * A convenience method to convert an array of bytes to a String.  We do
-   * this simply by converting each byte to two hexadecimal digits.  Something
-   * like Base 64 encoding is more compact, but harder to encode.
+   * A convenience method to convert an array of bytes to a String. We do this simply by converting
+   * each byte to two hexadecimal digits. Something like Base 64 encoding is more compact, but
+   * harder to encode.
+   *
    * @param bytes the bytes to convert to a String
    * @return a String representation of the input bytes
    */
@@ -73,9 +74,9 @@ public final class Digest {
   }
 
   /**
-   * A convenience method to convert from a string
-   * of hexadecimal digits to an array of bytes.
-   * This method is the reverse of {@link #hexEncode(byte[])}.
+   * A convenience method to convert from a string of hexadecimal digits to an array of bytes. This
+   * method is the reverse of {@link #hexEncode(byte[])}.
+   *
    * @param s the String to convert to an array of bytes
    * @return the bytes equivalent to the input String
    */
