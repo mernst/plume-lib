@@ -479,9 +479,9 @@ public class OptionsDoclet {
   public String output() throws Exception {
     if (docFile == null) {
       if (formatJavadoc) {
-        return optionsToJavadoc(0);
+        return optionsToJavadoc(0, 99);
       } else {
-        return optionsToHtml();
+        return optionsToHtml(0);
       }
     }
 
@@ -498,6 +498,7 @@ public class OptionsDoclet {
     String docline;
     boolean replacing = false;
     boolean replaced_once = false;
+    String prefix = null;
 
     while ((docline = doc.readLine()) != null) {
       if (replacing) {
@@ -512,9 +513,15 @@ public class OptionsDoclet {
 
       if (!replaced_once && docline.trim().equals(startDelim)) {
         if (formatJavadoc) {
-          b.append(optionsToJavadoc(docline.indexOf('*')));
+          int starIndex = docline.indexOf('*');
+          b.append(docline.substring(0, starIndex + 1));
+          String jdoc = optionsToJavadoc(starIndex, 100);
+          b.append(jdoc);
+          if (jdoc.endsWith("</ul>")) {
+            b.append(docline.substring(0, starIndex + 1));
+          }
         } else {
-          b.append(optionsToHtml());
+          b.append(optionsToHtml(0));
         }
         replaced_once = true;
         replacing = true;
@@ -527,9 +534,7 @@ public class OptionsDoclet {
 
   // HTML and Javadoc processing methods
 
-  /**
-   * Process each option and add in the Javadoc info.
-   */
+  /** Side-effects each option in {@code options.getOptions()}. Adds Javadoc info to it. */
   public void processJavadoc() {
     for (Options.OptionInfo oi : options.getOptions()) {
       ClassDoc opt_doc = root.classNamed(oi.get_declaring_class().getName());
@@ -599,7 +604,7 @@ public class OptionsDoclet {
    * Get the HTML documentation for the underlying options instance.
    * @return the HTML documentation for the underlying options instance
    */
-  public String optionsToHtml() {
+  public String optionsToHtml(int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
     if (includeClassDoc && root.classes().length > 0) {
@@ -609,7 +614,7 @@ public class OptionsDoclet {
 
     b.append("<ul>");
     if (!options.isUsingGroups()) {
-      b.append(optionListToHtml(options.getOptions(), 2));
+      b.append(optionListToHtml(options.getOptions(), 6, 2, refillWidth));
     } else {
       for (Options.OptionGroupInfo gi : options.getOptionGroups()) {
         // Do not include groups without publicized options in output
@@ -617,18 +622,21 @@ public class OptionsDoclet {
           continue;
         }
 
-        b.append(
+        String ogroupHeader =
             "  <li id=\"optiongroup:"
                 + gi.name.replace(" ", "-").replace("/", "-")
                 + "\">"
-                + gi.name);
-        b.append("    <ul>");
-        b.append(optionListToHtml(gi.optionList, 6));
-        b.append("    </ul>");
-        b.append("  </li>");
+                + gi.name;
+        b.append(refill(ogroupHeader, 6, 2, refillWidth));
+        b.append("      <ul>");
+        b.append(optionListToHtml(gi.optionList, 12, 8, refillWidth));
+        b.append("      </ul>");
+        b.append("");
+        // b.append("  </li>");
       }
     }
     b.append("</ul>");
+    b.append("");
 
     for (Options.OptionInfo oi : options.getOptions()) {
       if (oi.list != null && !oi.unpublicized) {
@@ -641,18 +649,24 @@ public class OptionsDoclet {
   }
 
   /**
-   * Get the HTML documentation for the underlying options instance, formatted
-   * as a Javadoc comment.
-   * @param padding the padding to add in the Javadoc output
+   * Get the HTML documentation for the underlying options instance, formatted as a Javadoc comment.
+   *
+   * @param padding the number of leading spaces to add in the Javadoc output, before "* "
    * @return the HTML documentation for the underlying options instance
    */
-  public String optionsToJavadoc(int padding) {
+  public String optionsToJavadoc(int padding, int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
-    Scanner s = new Scanner(optionsToHtml());
+    Scanner s = new Scanner(optionsToHtml(refillWidth - padding - 2));
 
     while (s.hasNextLine()) {
+      String line = s.nextLine();
       StringBuilder bb = new StringBuilder();
-      bb.append(StringUtils.repeat(" ", padding)).append("* ").append(s.nextLine());
+      bb.append(StringUtils.repeat(" ", padding));
+      if (line.trim().equals("")) {
+        bb.append("*");
+      } else {
+        bb.append("* ").append(line);
+      }
       b.append(bb);
     }
 
@@ -662,7 +676,8 @@ public class OptionsDoclet {
   /**
    * Get the HTML describing many options, formatted as an HTML list.
    */
-  private String optionListToHtml(List<Options.OptionInfo> opt_list, int padding) {
+  private String optionListToHtml(
+      List<Options.OptionInfo> opt_list, int padding, int firstLinePadding, int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
     for (Options.OptionInfo oi : opt_list) {
       if (oi.unpublicized) {
@@ -671,10 +686,59 @@ public class OptionsDoclet {
       StringBuilder bb = new StringBuilder();
       String optHtml = optionToHtml(oi, padding);
       bb.append(StringUtils.repeat(" ", padding));
-      bb.append("<li id=\"option:" + oi.long_name + "\">").append(optHtml).append("</li>");
-      b.append(bb);
+      bb.append("<li id=\"option:" + oi.long_name + "\">").append(optHtml);
+      // .append("</li>");
+      if (refillWidth <= 0) {
+        b.append(bb);
+      } else {
+        b.append(refill(bb.toString(), padding, firstLinePadding, refillWidth));
+      }
     }
     return b.toString();
+  }
+
+  /** refillWidth includes the padding. */
+  private String refill(String in, int padding, int firstLinePadding, int refillWidth) {
+    if (refillWidth <= 0) {
+      return in;
+    }
+
+    // suffix is text *not* to refill.
+    String suffix = null;
+    int ulPos = in.indexOf(eol + "<ul>" + eol);
+    if (ulPos != -1) {
+      suffix = in.substring(ulPos + eol.length());
+      in = in.substring(0, ulPos);
+    }
+
+    String compressedSpaces = in.replaceAll("[ \n\r]+", " ");
+    // google-java-format bug: https://github.com/google/google-java-format/issues/84
+    compressedSpaces = compressedSpaces.replaceAll("<code> ", "<code>");
+    if (compressedSpaces.startsWith(" ")) {
+      compressedSpaces = compressedSpaces.substring(1);
+    }
+    String oneLine = StringUtils.repeat(" ", firstLinePadding) + compressedSpaces;
+    StringBuilderDelimited multiLine = new StringBuilderDelimited(eol);
+    while (oneLine.length() > refillWidth) {
+      int breakLoc = oneLine.lastIndexOf(' ', refillWidth);
+      if (breakLoc == -1) {
+        break;
+      }
+      String firstPart = oneLine.substring(0, breakLoc);
+      if (firstPart.trim().isEmpty()) {
+        break;
+      }
+      multiLine.append(firstPart);
+      oneLine = StringUtils.repeat(" ", padding) + oneLine.substring(breakLoc + 1);
+    }
+    multiLine.append(oneLine);
+    if (suffix != null) {
+      Scanner s = new Scanner(suffix);
+      while (s.hasNextLine()) {
+        multiLine.append(StringUtils.repeat(" ", padding) + s.nextLine());
+      }
+    }
+    return multiLine.toString();
   }
 
   /**
@@ -716,17 +780,18 @@ public class OptionsDoclet {
       f.format("%s [%s]%s", jdoc, StringEscapeUtils.escapeHtml4(default_str), suffix);
     }
     if (oi.base_type.isEnum()) {
-      b.append("<ul>");
+      b.append(eol).append("<ul>").append(eol);
       assert oi.enum_jdoc != null
           : "@AssumeAssertion(nullness): dependent: non-null if oi.base_type is an enum";
       for (Map.Entry<String, String> entry : oi.enum_jdoc.entrySet()) {
-        b.append("<li><b>").append(entry.getKey()).append("</b>");
+        b.append("  <li><b>").append(entry.getKey()).append("</b>");
         if (entry.getValue().length() != 0) {
           b.append(" ").append(entry.getValue());
         }
-        b.append("</li>");
+        // b.append("</li>");
+        b.append(eol);
       }
-      b.append("</ul>");
+      b.append("</ul>").append(eol).append(eol);
     }
     return b.toString();
   }
