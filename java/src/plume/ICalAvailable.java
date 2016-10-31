@@ -288,8 +288,7 @@ public final class ICalAvailable {
     return (result == null) ? tzString : result;
   }
 
-  static /*@Regex(4)*/ Pattern timeRegexp =
-      Pattern.compile("([0-2]?[0-9])(:([0-5][0-9]))?([aApP][mM])?");
+  static /*@Regex(4)*/ Pattern timeRegexp = Pattern.compile("([0-2]?[0-9])(:([0-5][0-9]))?([aApP][mM])?");
 
   // Parse a time like "9:30pm"
   @SuppressWarnings("deprecation") // for iCal4j
