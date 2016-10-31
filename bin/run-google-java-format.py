@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+### NOTE: This script is obsolescent.  For its replacement, see
+###   https://github.com/plume-lib/run-google-java-format
+
 # This script reformats each file supplied on the command line according to
 # the Google Java style (by calling out to the google-java-format program,
 # https://github.com/google/google-java-format), but with improvements to
