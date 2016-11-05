@@ -1,7 +1,7 @@
 #!/usr/bin/perl -wpi.bak
 # html-update-link-dates
 # Michael Ernst <mernst@alum.mit.edu>
-# Time-stamp: <2010-08-31 11:57:39 mernst>
+# Time-stamp: <2016-10-04 10:35:20 mernst>
 
 # usage:
 #   html-update-link-dates file [...]
@@ -12,7 +12,7 @@
 #   <a href="filename">text</a> (PDF, 14 Mar 1967, 19 Mbytes)
 # update the date and file size text, but don't update the HTML file's
 # modification date.
-# For examples, see http://www.cs.washington.edu/homes/mernst/software/ and
+# For examples, see http://homes.cs.washington.edu/~mernst/software/ and
 # http://pag.csail.mit.edu/daikon/download/.
 
 # Warning: if the filename is the HTML file being edited, the date/size may

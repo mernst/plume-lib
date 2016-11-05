@@ -46,35 +46,29 @@ import org.checkerframework.dataflow.qual.Pure;
 // TODO:  Fix "Problem:  any all-day events will be treated as UTC." (see below)
 
 /**
- * Given one or more calendars in <a href="https://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>, produces a textual summary
- * of available times.
- * This is useful for sending someone a list of acceptable times for a meeting.
- * Also see the <code>ical-available</code> Emacs function, which inserts the
- * output of this program.
+ * Given one or more calendars in <a href="https://en.wikipedia.org/wiki/ICalendar">iCalendar
+ * format</a>, produces a textual summary of available times. This is useful for sending someone a
+ * list of acceptable times for a meeting. Also see the {@code ical-available} Emacs function, which
+ * inserts the output of this program.
  *
- * The command-line options are as follows:
+ * <p>The command-line options are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ *
  * <ul>
- *   <li id="option:date"><b>--date=</b><i>string</i>.
- *    first date to summarize [default today]</li>
- *   <li id="option:days"><b>--days=</b><i>int</i>.
- *    number of calendar days to summarize [default 8]</li>
- *   <li id="option:iCal-URL"><b>--iCal-URL=</b><i>url</i> <code>[+]</code>.
- *    For a Google calendar:  go to settings, then click on the green "ICAL"
- *  icon for the "private address".</li>
- *   <li id="option:business-hours"><b>--business-hours=</b><i>string</i>.
- *    A list of time ranges, expressed as a String.
- *  Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]</li>
- *   <li id="option:timezone1"><b>--timezone1=</b><i>timezone</i>.
- *    Time zone as an Olson timezone ID, e.g.: America/New_York.
- *  Available times are printed in this time zone.  It defaults to the
- *  system time zone.</li>
- *   <li id="option:timezone2"><b>--timezone2=</b><i>timezone</i>.
- *    Time zone as an Olson timezone ID, e.g.: America/New_York.
- *  If set, then free times are printed in two time zones.</li>
- *   <li id="option:debug"><b>--debug=</b><i>boolean</i>.
- *    enable debugging output [default false]</li>
+ *   <li id="option:date"><b>--date=</b><i>string</i>. first date to summarize [default today]
+ *   <li id="option:days"><b>--days=</b><i>int</i>. number of calendar days to summarize [default 8]
+ *   <li id="option:iCal-URL"><b>--iCal-URL=</b><i>url</i> <code>[+]</code>. For a Google calendar:
+ *       go to settings, then click on the green "ICAL" icon for the "private address".
+ *   <li id="option:business-hours"><b>--business-hours=</b><i>string</i>. A list of time ranges,
+ *       expressed as a String. Example: 9am-5pm,7:30pm-9:30pm [default 9am-5pm]
+ *   <li id="option:timezone1"><b>--timezone1=</b><i>timezone</i>. Time zone as an Olson timezone
+ *       ID, e.g.: America/New_York. Available times are printed in this time zone. It defaults to
+ *       the system time zone.
+ *   <li id="option:timezone2"><b>--timezone2=</b><i>timezone</i>. Time zone as an Olson timezone
+ *       ID, e.g.: America/New_York. If set, then free times are printed in two time zones.
+ *   <li id="option:debug"><b>--debug=</b><i>boolean</i>. enable debugging output [default false]
  * </ul>
+ *
  * <code>[+]</code> marked option can be specified multiple times
  * <!-- end options doc -->
  */
@@ -96,15 +90,13 @@ public final class ICalAvailable {
   public static int days = 8;
 
   /**
-   * For a Google calendar:  go to settings, then click on the green "ICAL"
-   * icon for the "private address".
+   * For a Google calendar: go to settings, then click on the green "ICAL" icon for the "private
+   * address".
    */
   @Option("<url> schedule in iCal format")
   public static List<String> iCal_URL = new ArrayList<String>();
 
-  /**
-   * A list of time ranges, expressed as a String.
-   * Example: 9am-5pm,7:30pm-9:30pm */
+  /** A list of time ranges, expressed as a String. Example: 9am-5pm,7:30pm-9:30pm */
   @Option("time ranges during which appointments are permitted")
   public static String business_hours = "9am-5pm";
 
@@ -121,9 +113,8 @@ public final class ICalAvailable {
 
   static TimeZoneRegistry tzRegistry = TimeZoneRegistryFactory.getInstance().createRegistry();
   /**
-   * Time zone as an Olson timezone ID, e.g.: America/New_York.
-   * Available times are printed in this time zone.  It defaults to the
-   * system time zone.
+   * Time zone as an Olson timezone ID, e.g.: America/New_York. Available times are printed in this
+   * time zone. It defaults to the system time zone.
    */
   // don't need "e.g.: America/New_York" in message:  the default is an example
   @Option(value = "<timezone> time zone, e.g.: America/New_York", noDocDefault = true)
@@ -137,8 +128,9 @@ public final class ICalAvailable {
   // may be different than the other timezone's notion of a "day".  This
   // doesn't seem important enough to fix right now.
   /**
-   * Time zone as an Olson timezone ID, e.g.: America/New_York.
-   * If set, then free times are printed in two time zones. */
+   * Time zone as an Olson timezone ID, e.g.: America/New_York. If set, then free times are printed
+   * in two time zones.
+   */
   @Option("<timezone> optional second time zone, e.g.: America/New_York")
   public static /*@Nullable*/ String timezone2;
 
@@ -296,8 +288,7 @@ public final class ICalAvailable {
     return (result == null) ? tzString : result;
   }
 
-  static /*@Regex(4)*/ Pattern timeRegexp =
-      Pattern.compile("([0-2]?[0-9])(:([0-5][0-9]))?([aApP][mM])?");
+  static /*@Regex(4)*/ Pattern timeRegexp = Pattern.compile("([0-2]?[0-9])(:([0-5][0-9]))?([aApP][mM])?");
 
   // Parse a time like "9:30pm"
   @SuppressWarnings("deprecation") // for iCal4j
@@ -407,8 +398,9 @@ public final class ICalAvailable {
   }
 
   /**
-   * Creates a new DateTime with date taken from the first argument and
-   * time taken from the second argument.
+   * Creates a new DateTime with date taken from the first argument and time taken from the second
+   * argument.
+   *
    * @return the merged DateTime
    */
   @SuppressWarnings("deprecation") // for iCal4j
@@ -504,6 +496,7 @@ public final class ICalAvailable {
 
   /**
    * Parses a date when formatted in several common formats.
+   *
    * @return a Date read from the given string
    * @see dateFormats
    */

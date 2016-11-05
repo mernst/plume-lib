@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+### NOTE: This script is obsolescent.  For its replacement, see
+###   https://github.com/plume-lib/run-google-java-format
+
 # This script checks whether the files supplied on the command line conform
 # to the Google Java style (as enforced by the google-java-format program,
 # but with improvements to the formatting of annotations in comments).
@@ -24,7 +27,7 @@
 # CHANGED_JAVA_FILES=`git diff --staged --name-only --diff-filter=ACM | grep '\.java$'` || true
 # if [ ! -z "$CHANGED_JAVA_FILES" ]; then
 #     wget -N https://raw.githubusercontent.com/mernst/plume-lib/master/bin/check-google-java-format.py
-#     check-google-java-format.py ${CHANGED_JAVA_FILES}
+#     python check-google-java-format.py ${CHANGED_JAVA_FILES}
 # fi
 
 

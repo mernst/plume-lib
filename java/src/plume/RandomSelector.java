@@ -5,48 +5,44 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * RandomSelector selects k elements uniformly at random from
- * an arbitrary iterator, using O(k) space.  A naive algorithm would use O(n)
- * space.  For example, selecting 1 element from a FileStream
- * containing 1000 elements will take O(1) space. The class takes as
- * input the number k during initialization and then can accept() any
- * number of Objects in the future.  At any point in time, getValues()
- * will either return k randomly selected elements from the elements
- * previous accepted or if accept() was called fewer than k times, will
- * return all elements previously accepted.
+ * RandomSelector selects k elements uniformly at random from an arbitrary iterator, using O(k)
+ * space. A naive algorithm would use O(n) space. For example, selecting 1 element from a FileStream
+ * containing 1000 elements will take O(1) space. The class takes as input the number k during
+ * initialization and then can accept() any number of Objects in the future. At any point in time,
+ * getValues() will either return k randomly selected elements from the elements previous accepted
+ * or if accept() was called fewer than k times, will return all elements previously accepted.
  *
- * <p>The random selection is independent between every constructed
- * instance of RandomSelector objects, but for the same instance,
- * multiple calls to getValues() are not independent. Making two calls
- * to consecutive getValues() without an accept() in between will
- * return two new Lists containing the same elements.
+ * <p>The random selection is independent between every constructed instance of RandomSelector
+ * objects, but for the same instance, multiple calls to getValues() are not independent. Making two
+ * calls to consecutive getValues() without an accept() in between will return two new Lists
+ * containing the same elements.
  *
- * <p>A second mode allows for a fixed probability of randomly keeping
- *  each item as opposed to a fixed number of samples.
+ * <p>A second mode allows for a fixed probability of randomly keeping each item as opposed to a
+ * fixed number of samples.
  *
- * <P>SPECFIELDS:
- * <BR>current_values  : Set : The values chosen based on the Objects observed
- * <BR>number_observed : int : The number of Objects observed
- * <BR>number_to_take  : int : The number of elements to choose ('k' above)
- * <BR>keep_probability: double :  The percentage of elements to keep
- * <BR>selector_mode :
- *       {FIXED,PERCENT}  : either fixed amount of samples or fixed percent.
+ * <p>SPECFIELDS: <br>
+ * current_values : Set : The values chosen based on the Objects observed <br>
+ * number_observed : int : The number of Objects observed <br>
+ * number_to_take : int : The number of elements to choose ('k' above) <br>
+ * keep_probability: double : The percentage of elements to keep <br>
+ * selector_mode : {FIXED,PERCENT} : either fixed amount of samples or fixed percent.
  *
- * <P>Example use:
- * <br> // randomly selects 100 lines of text from a file
- * <pre>
- *  List selectedLines = null;
- *  try {
- *     BufferedReader br = new BufferedReader
- *       (new FileReader ("myfile.txt"));
- *     RandomSelector selector = new RandomSelector (100);
- *     while (br.ready()) {
- *       selector.accept (br.readLine());
- *     }
- *     selectedLines = selector.getValues();
- *   }
- *   catch (IOException e2) { e2.printStackTrace(); }
- * </pre>
+ * <p>Example use:
+ *
+ * <pre>{@code
+ * // randomly selects 100 lines of text from a file
+ * List selectedLines = null;
+ * try {
+ *    BufferedReader br = new BufferedReader
+ *      (new FileReader ("myfile.txt"));
+ *    RandomSelector selector = new RandomSelector (100);
+ *    while (br.ready()) {
+ *      selector.accept (br.readLine());
+ *    }
+ *    selectedLines = selector.getValues();
+ *  }
+ *  catch (IOException e2) { e2.printStackTrace(); }
+ * }</pre>
  *
  * @param <T> the type of elements being selected over
  */
@@ -72,20 +68,18 @@ public class RandomSelector<T> {
   private boolean coin_toss_mode = false;
   private double keep_probability = -1.0;
 
-  /** @param num_elts the number of elements intended to be selected
-   * from the input elements
-   *
-   * Sets 'number_to_take' = num_elts
+  /**
+   * @param num_elts the number of elements intended to be selected from the input elements
+   *     <p>Sets 'number_to_take' = num_elts
    */
   public RandomSelector(int num_elts) {
     this(num_elts, new Random());
   }
 
-  /** @param num_elts the number of elements intended to be selected
-   * from the input elements
+  /**
+   * @param num_elts the number of elements intended to be selected from the input elements
    * @param r the seed to give for random number generation.
-   *
-   * Sets 'number_to_take' = num_elts
+   *     <p>Sets 'number_to_take' = num_elts.
    */
   public RandomSelector(int num_elts, Random r) {
     values = new ArrayList<T>();
@@ -94,8 +88,9 @@ public class RandomSelector<T> {
     generator = r;
   }
 
-  /** @param keep_probability the probability that each element is
-   * selected from the oncoming Iteration
+  /**
+   * @param keep_probability the probability that each element is selected from the oncoming
+   *     Iteration
    * @param r the seed to give for random number generation
    */
   public RandomSelector(double keep_probability, Random r) {
@@ -106,16 +101,14 @@ public class RandomSelector<T> {
     generator = r;
   }
 
-  /** <P>When in fixed sample mode, increments the number of
-   * observed elements i by 1, then with probability k / i, the
-   * Object 'next' will be added to the currently selected values
-   * 'current_values' where k is equal to 'number_to_take'. If the
-   * size of current_values exceeds number_to_take, then one of the
-   * existing elements in current_values will be removed at random.
+  /**
+   * When in fixed sample mode, increments the number of observed elements i by 1, then with
+   * probability k / i, the Object 'next' will be added to the currently selected values
+   * 'current_values' where k is equal to 'number_to_take'. If the size of current_values exceeds
+   * number_to_take, then one of the existing elements in current_values will be removed at random.
    *
-   *
-   * <P>When in probability mode, adds next to 'current_values' with
-   * probability equal to 'keep_probability'.
+   * <p>When in probability mode, adds next to 'current_values' with probability equal to
+   * 'keep_probability'.
    *
    * @param next value to be added to this selector
    */
@@ -146,7 +139,9 @@ public class RandomSelector<T> {
     // do nothing if the probability condition is not met
   }
 
-  /** Returns current_values, modifies none.
+  /**
+   * Returns current_values, modifies none.
+   *
    * @return current_values
    */
   public List<T> getValues() {

@@ -6,7 +6,7 @@ For documentation, please see
 or file ../README.html .
 
 
-A note about licenses, which augments the main text in ../LICENSE.txt :
+A note about licenses, which augments the main text in ../docs/LICENSE.txt :
 
 This package includes modified versions of code from the Java 2 SDK, such
 as those for hashing.  (I've renamed classes so they won't be used

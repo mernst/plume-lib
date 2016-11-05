@@ -2,7 +2,8 @@
 
 # Print all lines that occur between the two specified regexps (inclusive).
 # That is, print a line matching the first regexp; then print all lines
-# up to one matching the second regexp, but stop printing; then repeat.
+# up to one matching the second regexp, but stop printing thereafter; then repeat.
+# TODO: If the first argument is --exclusive, then don't print the matching lines.
 # Does a case-insensitive match.
 
 # The patterns are the first two arguments.
@@ -12,20 +13,31 @@
 
 BEGIN {
   $outputting = 0;
+  $exclusive = 0;
   $startpattern = shift @ARGV;
+  if ($startpattern eq "--exclusive") {
+    $exclusive = 1;
+    $startpattern = shift @ARGV;
+  }
   $endpattern = shift @ARGV;
   # print STDERR "startpattern: $startpattern\n";
   # print STDERR "endpattern: $endpattern\n";
 }
 
 if ($outputting) {
-  print;
   if (/$endpattern/io) {
     $outputting = 0;
+    if (! $exclusive) {
+      print;
+    }
+  } else {
+    print;
   }
 } else {
   if (/$startpattern/io) {
     $outputting = 1;
-    print;
+    if (! $exclusive) {
+      print;
+    }
   }
 }

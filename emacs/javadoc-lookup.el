@@ -38,34 +38,34 @@ The mapping is created by the javadoc-index-to-alist program.")
    ;; there are negative consequences, such as typing "Iterato" and having
    ;; it complete to "iterator".  But my fixes correct that.
    (list (let ((completion-ignore-case t))
-	   (completing-read "Javadoc for: " javadoc-html-refs nil
-			    t ; require match
-			    (let* ((raw-guess (current-word))
-				   (guess (if (or (null raw-guess)
-						  (member raw-guess java-keywords))
-					      ""
-					    raw-guess))
-				   (try (try-completion guess javadoc-html-refs)))
-			      (if (eq try t) guess try))))))
+           (completing-read "Javadoc for: " javadoc-html-refs nil
+                            t ; require match
+                            (let* ((raw-guess (current-word))
+                                   (guess (if (or (null raw-guess)
+                                                  (member raw-guess java-keywords))
+                                              ""
+                                            raw-guess))
+                                   (try (try-completion guess javadoc-html-refs)))
+                              (if (eq try t) guess try))))))
   (let* ((refs (cdr (or (assoc id javadoc-html-refs)
-			;; If exact match failed, try case-insensitive
-			(assoc-string id javadoc-html-refs t))))
-	 (ref (if (= 1 (length refs))
-		  (car refs)
-		(let ((refs-as-lists (mapcar #'(lambda (ref)
-						 (cons (ref-to-class ref) ref))
-					     refs))
-		      (completion-ignore-case t)
-		      (choice nil))
-		  ;; loop because completing-read can return null
-		  (while (or (not choice) (equal choice ""))
-		    (setq choice
-			  (completing-read "Select an index entry: "
-					   refs-as-lists
-					   nil t
-					   (try-completion "" refs-as-lists))))
-		  (cdr (or (assoc choice refs-as-lists)
-			   (assoc-string choice refs-as-lists t)))))))
+                        ;; If exact match failed, try case-insensitive
+                        (assoc-string id javadoc-html-refs t))))
+         (ref (if (= 1 (length refs))
+                  (car refs)
+                (let ((refs-as-lists (mapcar #'(lambda (ref)
+                                                 (cons (ref-to-class ref) ref))
+                                             refs))
+                      (completion-ignore-case t)
+                      (choice nil))
+                  ;; loop because completing-read can return null
+                  (while (or (not choice) (equal choice ""))
+                    (setq choice
+                          (completing-read "Select an index entry: "
+                                           refs-as-lists
+                                           nil t
+                                           (try-completion "" refs-as-lists))))
+                  (cdr (or (assoc choice refs-as-lists)
+                           (assoc-string choice refs-as-lists t)))))))
     (funcall browse-url-browser-function ref)))
 
 (defun ref-to-class (str)
@@ -73,9 +73,9 @@ The mapping is created by the javadoc-index-to-alist program.")
   (let ((prefixes javadoc-ignored-prefixes))
     (while prefixes
       (if (string-match (car prefixes) str)
-	  (setq str (substring str (match-end 0))
-		prefixes nil)
-	(setq prefixes (cdr prefixes)))))
+          (setq str (substring str (match-end 0))
+                prefixes nil)
+        (setq prefixes (cdr prefixes)))))
   (if (string-match "\\.html#" str)
       (setq str (replace-match "." t t str)))
   (if (string-match "\\.html$" str)
@@ -107,21 +107,21 @@ used instead of `browse-url-new-window-p'."
   ;; include at least commas; presumably also close parens.
   (while (string-match "[,()]" url)
     (setq url (replace-match
-	       (format "%%%x" (string-to-char (match-string 0 url))) t t url)))
+               (format "%%%x" (string-to-char (match-string 0 url))) t t url)))
   (let* ((process-environment (browse-url-process-environment))
          (process (apply 'start-process
-			 (concat "netscape " url) nil
-			 browse-url-netscape-program
-			 (append
-			  browse-url-netscape-arguments
-			  (if (eq window-system 'w32)
-			      (list url)
-			    (append
-			     (if new-window '("-noraise"))
-			     (list "-remote"
-				   (concat "openURL(" url
-					   (if new-window ",new-window")
-					   ")"))))))))
+                         (concat "netscape " url) nil
+                         browse-url-netscape-program
+                         (append
+                          browse-url-netscape-arguments
+                          (if (eq window-system 'w32)
+                              (list url)
+                            (append
+                             (if new-window '("-noraise"))
+                             (list "-remote"
+                                   (concat "openURL(" url
+                                           (if new-window ",new-window")
+                                           ")"))))))))
     (set-process-sentinel process
-			  (list 'lambda '(process change)
-				(list 'browse-url-netscape-sentinel 'process url))))))
+                          (list 'lambda '(process change)
+                                (list 'browse-url-netscape-sentinel 'process url))))))

@@ -7,8 +7,8 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * Mutable triple class:
- * type-safely holds three objects of possibly-different types.
+ * Mutable triple class: type-safely holds three objects of possibly-different types.
+ *
  * @param <T1> the type of the first element of the triple
  * @param <T2> the type of the second element of the triple
  * @param <T3> the type of the third element of the triple
@@ -24,7 +24,9 @@ public class Triple<T1, T2, T3> {
     this.c = c;
   }
 
-  /** Factory method with short name and no need to name type parameters.
+  /**
+   * Factory method with short name and no need to name type parameters.
+   *
    * @param <A> type of first argument
    * @param <B> type of second argument
    * @param <C> type of third argument

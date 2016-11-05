@@ -34,13 +34,13 @@ they are maintained by someone else, and I wish to minimize differences/patches.
 (defun whitespace-ignored-filename-p (filename)
   "Return t if FILENAME should not have trailing whitespace removed."
   (let ((match nil)
-	(regexps whitespace-ignore-filename-regexps))
+        (regexps whitespace-ignore-filename-regexps))
     (while regexps
       (let ((regexp (car regexps)))
-	(setq regexps (cdr regexps))
-	(if (string-match regexp filename)
-	    (setq match t
-		  regexps nil))))
+        (setq regexps (cdr regexps))
+        (if (string-match regexp filename)
+            (setq match t
+                  regexps nil))))
     match))
 
 (provide 'whitespace-filenames)

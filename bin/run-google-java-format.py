@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+### NOTE: This script is obsolescent.  For its replacement, see
+###   https://github.com/plume-lib/run-google-java-format
+
 # This script reformats each file supplied on the command line according to
 # the Google Java style (by calling out to the google-java-format program,
 # https://github.com/google/google-java-format), but with improvements to
@@ -24,7 +27,8 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 fixup_py = os.path.join(script_dir, "fixup-google-java-format.py")
 
 gjf_jar_name = "google-java-format-1.0-all-deps.jar"
-# gjf_jar_name = "google-java-format-1.1-SNAPSHOT-all-deps.jar"
+# gjf_jar_name = "google-java-format-1.1-all-deps.jar"
+# gjf_jar_name = "google-java-format-1.2-SNAPSHOT-all-deps.jar"
 # Set gjf_jar_path, or retrieve it if it doesn't appear locally
 if os.path.isfile(os.path.join(script_dir, gjf_jar_name)):
     gjf_jar_path = os.path.join(script_dir, gjf_jar_name)
@@ -74,7 +78,7 @@ if len(files) == 0:
     print("run-google-java-format.py expects 1 or more filenames as arguments")
     sys.exit(1)
 
-result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imports=also"] + files)
+result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace"] + files)
 # result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace"] + files)
 # Don't stop if there was an error, because google-java-format won't munge
 # files and we still want to run fixup-google-java-format.py.
@@ -83,7 +87,7 @@ result = subprocess.call(["java", "-jar", gjf_jar_path, "--replace", "--sort-imp
 #     sys.exit(result)
 
 # Remove command-line arguments
-files = [f for f in files if not f.startswith("--")]
+files = [f for f in files if not f.startswith("-")]
 # Exit if no files were supplied (maybe "--help" was supplied)
 if not files:
     sys.exit(0)

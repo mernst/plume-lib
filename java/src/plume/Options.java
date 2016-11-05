@@ -37,27 +37,24 @@ import org.checkerframework.dataflow.qual.*;
 
 /**
  * The Options class:
+ *
  * <ul>
- *   <li>parses command-line options and sets fields in your program accordingly,</li>
- *   <li>creates usage messages (such as printed by a <code>--help</code> option), and</li>
- *   <li>creates documentation suitable for a manual or manpage.</li>
+ *   <li>parses command-line options and sets fields in your program accordingly,
+ *   <li>creates usage messages (such as printed by a <code>--help</code> option), and
+ *   <li>creates documentation suitable for a manual or manpage.
  * </ul>
- * Thus, the programmer is freed from writing duplicative, boilerplate code
- * and documentation that could get out of sync with the rest of the program.
- * <p>
  *
- * The programmer does not have to write any code, only declare and
- * document variables.  For each field that you want to set from a
- * command-line argument, you write Javadoc and an @{@link plume.Option}
- * annotation.  Then, the field is automatically set from a command-line
- * option of the same name, and usage messages and printed documentation
- * are generated automatically.
- * <p>
+ * Thus, the programmer is freed from writing duplicative, boilerplate code and documentation that
+ * could get out of sync with the rest of the program.
  *
- * The main entry point is {@link #parse_or_usage(String[])}.
- * Typical use is:
+ * <p>The programmer does not have to write any code, only declare and document variables. For each
+ * field that you want to set from a command-line argument, you write Javadoc and an @{@link
+ * plume.Option} annotation. Then, the field is automatically set from a command-line option of the
+ * same name, and usage messages and printed documentation are generated automatically.
  *
+ * <p>The main entry point is {@link #parse_or_usage(String[])}. Typical use is:
  * <!-- Example needs some more words of explanation and example command lines. -->
+ *
  * <pre>
  *  import plume.*;
  *
@@ -80,150 +77,138 @@ import org.checkerframework.dataflow.qual.*;
  *      ...
  *    }
  *  }</pre>
- * A user may invoke the program using the command-line arguments
- * <code>-o</code>, <code>--outfile</code>, <code>-i</code>, <code>--ignore-case</code>,
- * and <code>--temperature</code>. <p>
  *
- * The call to {@link #parse_or_usage} sets fields in object myInstance,
- * and sets static fields in class MyUtilityClass.  It returns the original
- * command line, with all options removed. <p>
+ * A user may invoke the program using the command-line arguments <code>-o</code>, <code>--outfile
+ * </code>, <code>-i</code>, <code>--ignore-case</code>, and <code>--temperature</code>.
  *
- * <b>@Option indicates a command-line option</b> <p>
- * The @{@link Option} annotation on a field specifies brief user documentation
- * and, optionally, a one-character short name that users may supply on the
- * command line.  The long name is taken from the name of the variable;
- * when the name contains an underscore, the user may substitute a hyphen
- * on the command line instead; for example, the --multi-word-variable
- * command-line option would set the variable multi_word_variable. <p>
+ * <p>The call to {@link #parse_or_usage} sets fields in object myInstance, and sets static fields
+ * in class MyUtilityClass. It returns the original command line, with all options removed.
  *
- * On the command line, the values for options are specified in the form
- * '--longname=value', '-shortname=value', '--longname value', or '-shortname
- * value'.  If {@link #use_single_dash(boolean)} is true, then the long names
- * take the form '-longname=value' or '-longname value'.  The value is
- * mandatory for all options except booleans.  Booleans are set to true if no
- * value is specified. <p>
+ * <p><b>@Option indicates a command-line option</b>
  *
- * All arguments that start with '-' are processed as options.  To
- * terminate option processing at the first non-option argument, see {@link
- * #parse_options_after_arg(boolean)}.  Also, the special option '--'
- * terminates option processing; method <code>parse_or_usage</code> returns
- * all subsequent arguments (along with any preceding non-option arguments)
- * without scanning them for options. <p>
+ * <p>The @{@link Option} annotation on a field specifies brief user documentation and, optionally,
+ * a one-character short name that users may supply on the command line. The long name is taken from
+ * the name of the variable; when the name contains an underscore, the user may substitute a hyphen
+ * on the command line instead; for example, the --multi-word-variable command-line option would set
+ * the variable multi_word_variable.
  *
- * A user may provide an option multiple times on the command line.  If the
- * field is a list, each entry is added to the list.  If the field is
- * not a list, then only the last occurrence is used (subsequent
- * occurrences overwrite the previous value). <p>
+ * <p>On the command line, the values for options are specified in the form '--longname=value',
+ * '-shortname=value', '--longname value', or '-shortname value'. If {@link
+ * #use_single_dash(boolean)} is true, then the long names take the form '-longname=value' or
+ * '-longname value'. The value is mandatory for all options except booleans. Booleans are set to
+ * true if no value is specified.
  *
- * <b>Unpublicized options</b> <p>
- * The @{@link Unpublicized} annotation causes an option not to be displayed
- * in the usage message.  This can be useful for options that are
- * preliminary, experimental, or for internal purposes only.  The @{@link
- * Unpublicized} annotation must be specified in addition to the @{@link
- * Option} annotation. <p>
+ * <p>All arguments that start with '-' are processed as options. To terminate option processing at
+ * the first non-option argument, see {@link #parse_options_after_arg(boolean)}. Also, the special
+ * option '--' terminates option processing; method <code>parse_or_usage</code> returns all
+ * subsequent arguments (along with any preceding non-option arguments) without scanning them for
+ * options.
  *
- * There are forms of the usage-message methods that can include even
- * unpublicized options; for example, see {@link #usage(boolean,String...)}.
- * <p>
+ * <p>A user may provide an option multiple times on the command line. If the field is a list, each
+ * entry is added to the list. If the field is not a list, then only the last occurrence is used
+ * (subsequent occurrences overwrite the previous value).
  *
- * <b>Option groups</b> <p>
- * The @{@link OptionGroup} annotation can be used to assign a name to a set of
- * related options.  This is useful for organizing a list of
- * options.  Options in the same group are displayed under the same heading
- * in usage texts. <p>
+ * <p><b>Unpublicized options</b>
  *
- * The @{@link OptionGroup} annotation must be specified on a field in addition
- * to an @{@link Option} annotation.  Note that, due to a deficiency in
- * Javadoc, an <code>@OptionGroup</code> annotation must appear underneath any
- * Javadoc comment for the field it applies to. <p>
+ * <p>The @{@link Unpublicized} annotation causes an option not to be displayed in the usage
+ * message. This can be useful for options that are preliminary, experimental, or for internal
+ * purposes only. The @{@link Unpublicized} annotation must be specified in addition to the @{@link
+ * Option} annotation.
  *
- * The <code>@OptionGroup</code> annotation acts like a delimiter &mdash; all
- * <code>@Option</code>-annotated fields up to the next
- * <code>@OptionGroup</code> annotation belong to the same group.  When using
- * option groups, the first <code>@Option</code>-annotated field of every class
- * and object passed to the {@link #Options(String, Object...)} constructor
- * must have an <code>@OptionGroup</code> annotation.  Furthermore, the first
- * parameter of an <code>@OptionGroup</code> annotation (the group name) must
- * be unique among all classes and objects passed to the {@link
- * #Options(String, Object...)} constructor. <p>
+ * <p>There are forms of the usage-message methods that can include even unpublicized options; for
+ * example, see {@link #usage(boolean,String...)}.
  *
- * If an option group itself is unpublicized:
+ * <p><b>Option groups</b>
+ *
+ * <p>The @{@link OptionGroup} annotation can be used to assign a name to a set of related options.
+ * This is useful for organizing a list of options. Options in the same group are displayed under
+ * the same heading in usage texts.
+ *
+ * <p>The @{@link OptionGroup} annotation must be specified on a field in addition to an @{@link
+ * Option} annotation. Note that, due to a deficiency in Javadoc, an <code>@OptionGroup</code>
+ * annotation must appear underneath any Javadoc comment for the field it applies to.
+ *
+ * <p>The {@code @OptionGroup} annotation acts like a delimiter &mdash; all
+ * {@code @Option}-annotated fields up to the next {@code @OptionGroup} annotation belong to the
+ * same group. When using option groups, the first {@code @Option}-annotated field of every class
+ * and object passed to the {@link #Options(String, Object...)} constructor must have an
+ * {@code @OptionGroup} annotation. Furthermore, the first parameter of an {@code @OptionGroup}
+ * annotation (the group name) must be unique among all classes and objects passed to the {@link
+ * #Options(String, Object...)} constructor.
+ *
+ * <p>If an option group itself is unpublicized:
+ *
  * <ul>
- *   <li>The default usage message omits the group and all options belonging
- *       to it.
- *   <li>An unpublicized option group (that has any publicized options) is
- *       included in documentation for a manual.
- *   <li>A field with an @{@link Unpublicized} annotation is excluded
- *       even when passing the group's name
- *       explicitly as a parameter to {@link #usage(String...)}.
+ *   <li>The default usage message omits the group and all options belonging to it.
+ *   <li>An unpublicized option group (that has any publicized options) is included in documentation
+ *       for a manual.
+ *   <li>A field with an @{@link Unpublicized} annotation is excluded even when passing the group's
+ *       name explicitly as a parameter to {@link #usage(String...)}.
  * </ul>
  *
- * If an option group is not unpublicized but contains only unpublicized
- * options, it will not be included in the default usage message. <p>
+ * If an option group is not unpublicized but contains only unpublicized options, it will not be
+ * included in the default usage message.
  *
- * <b>Option aliases</b> <p>
- * The @{@link Option} annotation has an optional parameter <code>aliases</code>,
- * which accepts an array of strings.  Each string in the array is an alias for
- * the option being defined and can be used in place of an option's long name
- * or short name.</p>
+ * <p><b>Option aliases</b>
  *
- * For example:
+ * <p>The @{@link Option} annotation has an optional parameter <code>aliases</code>, which accepts
+ * an array of strings. Each string in the array is an alias for the option being defined and can be
+ * used in place of an option's long name or short name. For example:
+ *
  * <pre>
  *     // The user may supply --help, -h, or -help, all of which mean the same thing and set this variable
  *     &#64;Option(value="-h Print a help message", aliases={"-help"})
  *     public static boolean help;</pre>
  *
- * Aliases should start with a single dash or double dash.
- * If there is only a single, one-character alias, it can be put at the
- * beginning of the value field without the need for an aliases field.
- * It is the user's responsibility to ensure that no alias is the same as other
- * options or aliases and that they can be parsed unambiguously. <p>
+ * Aliases should start with a single dash or double dash. If there is only a single, one-character
+ * alias, it can be put at the beginning of the value field without the need for an aliases field.
+ * It is the user's responsibility to ensure that no alias is the same as other options or aliases
+ * and that they can be parsed unambiguously.
  *
- * <b>Generating documentation for a manual or manpage</b> <p>
- * The class Javadoc for a class that has a main method should generally
- * contain a summary of all command-line options.  Such a summary can also
- * be useful in other circumstances.
- * See the {@link plume.OptionsDoclet} class for instructions about generating
- * HTML documentation. <p>
+ * <p><b>Generating documentation for a manual or manpage</b>
  *
- * <b>Supported field types</b> <p>
- * A field with an @{@link Option} annotation may be of the following types:
+ * <p>The class Javadoc for a class that has a main method should generally contain a summary of all
+ * command-line options. Such a summary can also be useful in other circumstances. See the {@link
+ * plume.OptionsDoclet} class for instructions about generating HTML documentation.
+ *
+ * <p><b>Supported field types</b>
+ *
+ * <p>A field with an @{@link Option} annotation may be of the following types:
+ *
  * <ul>
- *   <li>Primitive types:  boolean, int, long, float, double.
- *       (Primitives can also be represented as wrappers:  Boolean,
- *       Integer, Long, Float, Double.  Use of a wrapper type allows the
- *       argument to have no default value.)
- *   <li>Reference types that have a constructor with a single string
- *       parameter.
+ *   <li>Primitive types: boolean, int, long, float, double. (Primitives can also be represented as
+ *       wrappers: Boolean, Integer, Long, Float, Double. Use of a wrapper type allows the argument
+ *       to have no default value.)
+ *   <li>Reference types that have a constructor with a single string parameter.
  *   <li>java.util.regex.Pattern.
  *   <li>enums.
  *   <li>Lists of any of the above reference types.
- * </ul> <p>
+ * </ul>
  *
- * <b>More examples</b> <p>
+ * <p><b>More examples</b>
  *
- * Example clients of the Options library include {@link plume.Lookup},
- * <a href="https://randoop.github.io/randoop/manual/#command-line-options">Randoop</a>, and
- * <a href="http://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among many others.  <p>
+ * <p>Example clients of the Options library include {@link plume.Lookup}, <a
+ * href="https://randoop.github.io/randoop/manual/#command-line-options">Randoop</a>, and <a
+ * href="http://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among
+ * many others.
  *
- * <b>Limitations</b> <ul>
+ * <p><b>Limitations</b>
  *
- *  <li> Short options are only supported as separate entries
- *  (e.g., "-a -b") and not as a single group (e.g., "-ab").
+ * <ul>
+ *   <li> Short options are only supported as separate entries (e.g., "-a -b") and not as a single
+ *       group (e.g., "-ab").
+ *   <li> Not all primitive types are supported.
+ *   <li> Types without a constructor that takes a single <code>String</code> argument are not
+ *       supported.
+ *   <li> The "--no-long" option to turn off a boolean option named "long" is not supported; use
+ *       "--long=false" instead.
+ * </ul>
  *
- *  <li> Not all primitive types are supported.
+ * <p><b>Possible enhancements</b>
  *
- *  <li> Types without a constructor that takes a single <code>String</code>
- *  argument are not supported.
- *
- *  <li> The "--no-long" option to turn off a boolean option named "long"
- *  is not supported; use "--long=false" instead.
- *
- * </ul> <p>
- *
- * <b>Possible enhancements</b> <ul>
- *  <li> Positional arguments (non-options that must be provided in a given
- *  order) could be supported.
+ * <ul>
+ *   <li> Positional arguments (non-options that must be provided in a given order) could be
+ *       supported.
  * </ul>
  *
  * @see plume.Option
@@ -245,7 +230,7 @@ public class Options {
     //    /** Option annotation on the field. */
     //    Option option;
 
-    /** Object containing the field.  Null if the field is static. **/
+    /** Object containing the field. Null if the field is static. */
     /*@UnknownInitialization*/ /*@Raw*/ /*@Nullable*/ Object obj;
 
     /** Short (one-character) argument name. */
@@ -264,57 +249,56 @@ public class Options {
     /*@Nullable*/ String jdoc;
 
     /**
-     * Maps names of enum constants to their corresponding Javadoc.  This is
-     * used by OptionsDoclet to generate documentation for enum-type options.
-     * Null if the base_type is not an Enum.
+     * Maps names of enum constants to their corresponding Javadoc. This is used by OptionsDoclet to
+     * generate documentation for enum-type options. Null if the base_type is not an Enum.
      */
     /*@MonotonicNonNull*/ Map<String, String> enum_jdoc;
 
     /**
-     * Name of the argument type.  Defaults to the type of the field, but
-     * user can override this in the option string.
+     * Name of the argument type. Defaults to the type of the field, but user can override this in
+     * the option string.
      */
     String type_name;
 
-    /**
-     * Class type of this field.  If the field is a list, the basetype
-     * of the list.
-     */
+    /** Class type of this field. If the field is a list, the basetype of the list. */
     Class<?> base_type;
 
     /** Default value of the option as a string. */
     /*@Nullable*/ String default_str = null;
 
     /**
-     * If true, the default value string for this option will be excluded from
-     * OptionsDoclet documentation.
+     * If true, the default value string for this option will be excluded from OptionsDoclet
+     * documentation.
      */
     boolean no_doc_default = false;
 
-    /** If the option is a list, this references that list. **/
+    /** If the option is a list, this references that list. */
     /*@MonotonicNonNull*/ List<Object> list = null;
 
     /** Constructor that takes one String for the type. */
     /*@Nullable*/ Constructor<?> constructor = null;
 
-    /** Factory that takes a string (some classes don't have a string constructor) and always returns non-null. */
+    /**
+     * Factory that takes a string (some classes don't have a string constructor) and always returns
+     * non-null.
+     */
     /*@Nullable*/ Method factory = null;
 
     /**
      * If true, this OptionInfo is not output when printing documentation.
+     *
      * @see #usage()
      */
     boolean unpublicized;
 
     /**
-     * Create a new OptionInfo.
-     * The short name, type name, and description are taken
-     * from the option parameter.  The long name is the name of the
-     * field.  The default value is the current value of the field.
+     * Create a new OptionInfo. The short name, type name, and description are taken from the option
+     * parameter. The long name is the name of the field. The default value is the current value of
+     * the field.
+     *
      * @param field the field to set
      * @param option the option
-     * @param obj the object whose field will be set;
-     *   if obj is null, the field must be static
+     * @param obj the object whose field will be set; if obj is null, the field must be static
      * @param unpublicized whether the option is unpublicized
      */
     OptionInfo(
@@ -429,6 +413,7 @@ public class Options {
 
     /**
      * Return whether or not this option has a required argument.
+     *
      * @return whether or not this option has a required argument
      */
     public boolean argument_required() {
@@ -437,10 +422,8 @@ public class Options {
     }
 
     /**
-     * Returns a short synopsis of the option in the form
-     * <code>-s --long=&lt;type&gt;</code>
-     * <strong>or</strong> (if use_single_dash is true)
-     * <code>-s -long=&lt;type&gt;</code> .
+     * Returns a short synopsis of the option in the form <code>-s --long=&lt;type&gt;</code>
+     * <strong>or</strong> (if use_single_dash is true) <code>-s -long=&lt;type&gt;</code> .
      */
     public String synopsis() {
       String prefix = use_single_dash ? "-" : "--";
@@ -457,6 +440,7 @@ public class Options {
 
     /**
      * Return a one-line description of the option.
+     *
      * @return a one-line description of the option
      */
     @Override
@@ -470,7 +454,9 @@ public class Options {
       return String.format("%s%s%s field %s", short_name_str, prefix, long_name, field);
     }
 
-    /** Returns the class that declares this option.
+    /**
+     * Returns the class that declares this option.
+     *
      * @return the class that declares this option
      */
     public Class<?> get_declaring_class() {
@@ -485,10 +471,9 @@ public class Options {
     String name;
 
     /**
-     * If true, this group of options will not be printed in usage output by
-     * default. However, the usage information for this option group can be
-     * printed by specifying the group explicitly in the call to {@link
-     * #usage}.
+     * If true, this group of options will not be printed in usage output by default. However, the
+     * usage information for this option group can be printed by specifying the group explicitly in
+     * the call to {@link #usage}.
      */
     boolean unpublicized;
 
@@ -508,8 +493,8 @@ public class Options {
     }
 
     /**
-     * If false, this group of options does not contain any publicized options,
-     * so it will not be included in the default usage message.
+     * If false, this group of options does not contain any publicized options, so it will not be
+     * included in the default usage message.
      */
     boolean any_publicized() {
       for (OptionInfo oi : optionList) {
@@ -523,6 +508,7 @@ public class Options {
 
   /**
    * Whether to parse options after a non-option command-line argument.
+   *
    * @see #parse_options_after_arg(boolean)
    */
   private boolean parse_options_after_arg = true;
@@ -530,7 +516,7 @@ public class Options {
   /** All of the argument options as a single string. */
   private String options_str = "";
 
-  /** First specified class.  Void stands for "not yet initialized". **/
+  /** First specified class. Void stands for "not yet initialized". */
   private Class<?> main_class = Void.TYPE;
 
   /** List of all of the defined options. */
@@ -544,52 +530,50 @@ public class Options {
       new LinkedHashMap<String, OptionGroupInfo>();
 
   /**
-   * If, after the Options constructor is called, use_groups is true, then the
-   * user is using @OptionGroup annotations correctly (as per the requirement
-   * specified above).  If false, then @OptionGroup annotations have not been
-   * specified on any @Option-annotated fields.  When @OptionGroup annotations
-   * are used incorrectly, an Error is thrown by the Options constructor.
+   * If, after the Options constructor is called, {@code use_groups} is true, then the user is using
+   * {@code @OptionGroup} annotations correctly (as per the requirement specified above). If false,
+   * then {@code @OptionGroup} annotations have not been specified on any {@code @Option}-annotated
+   * fields. When {@code @OptionGroup} annotations are used incorrectly, an Error is thrown by the
+   * Options constructor.
+   *
+   * @see OptionGroup
    */
   private boolean use_groups;
 
   /**
-   * Convert underscores to dashes in long options in usage messages.  Users
-   * may specify either the underscore or dashed name on the command line.
+   * Convert underscores to dashes in long options in usage messages. Users may specify either the
+   * underscore or dashed name on the command line.
    */
   private final boolean use_dashes = true;
 
   /**
-   * When true, long options take the form -longOption with a single dash,
-   * rather than the default --longOption with two dashes.
+   * When true, long options take the form {@code -longOption} with a single dash, rather than the
+   * default {@code --longOption} with two dashes.
    */
   private boolean use_single_dash = false;
 
-  /**
-   * String describing "[+]" (copied from Mercurial).
-   */
+  /** String describing "[+]" (copied from Mercurial). */
   private static final String LIST_HELP = "[+] marked option can be specified multiple times";
 
   /**
-   * Whether printing the usage message should print LIST_HELP.  The default is
-   * to print LIST_HELP if the usage message contains an option that accepts a
-   * list as a parameter.
+   * Whether printing the usage message should print {@link #LIST_HELP}. The default is to print
+   * {@link #LIST_HELP} if the usage message contains an option that accepts a list as a parameter.
    */
   private boolean print_list_help = false;
 
   /**
-   * When true, an argument to a option of list type is split, on
-   * whitespace, into multiple arguments each of which is added to the
-   * list.  When false, each argument to an option of list type is treated
-   * as a single element, no matter what characters it contains.
+   * When true, an argument to a option of list type is split, on whitespace, into multiple
+   * arguments each of which is added to the list. When false, each argument to an option of list
+   * type is treated as a single element, no matter what characters it contains.
    */
   @Option("Treat arguments to lists as space-separated.")
   public static boolean split_lists = false;
 
   /**
-   * Synopsis of usage.  Example:  "prog [options] arg1 arg2 ..."
-   * <p>
-   * This variable is public so that clients can reset it (useful for
-   * masquerading as another program, based on parsed options).
+   * Synopsis of usage. Example: "prog [options] arg1 arg2 ..."
+   *
+   * <p>This variable is public so that clients can reset it (useful for masquerading as another
+   * program, based on parsed options).
    */
   public /*@Nullable*/ String usage_synopsis = null;
 
@@ -599,6 +583,7 @@ public class Options {
 
   /**
    * Enable or disable debug logging.
+   *
    * @param enabled whether to enable or disable logging
    */
   public void enableDebugLogging(boolean enabled) {
@@ -606,11 +591,11 @@ public class Options {
   }
 
   /**
-   * Prepare for option processing.  Creates an object that will set fields
-   * in all the given arguments.  An argument to this method may be a
-   * Class, in which case its static fields are set.  The names of all the
-   * options (that is, the fields annotated with &#064;{@link Option}) must be
+   * Prepare for option processing. Creates an object that will set fields in all the given
+   * arguments. An argument to this method may be a Class, in which case its static fields are set.
+   * The names of all the options (that is, the fields annotated with &#064;{@link Option}) must be
    * unique across all the arguments.
+   *
    * @param args the classes whose options to process
    */
   public Options(/*@UnknownInitialization*/ /*@Raw*/ Object... args) {
@@ -618,12 +603,11 @@ public class Options {
   }
 
   /**
-   * Prepare for option processing.  Creates an object that will set fields
-   * in all the given arguments.  An argument to this method may be a
-   * Class, in which case it must be fully initalized and its static fields are set.
-   * The names of all the
-   * options (that is, the fields annotated with &#064;{@link Option}) must be
-   * unique across all the arguments.
+   * Prepare for option processing. Creates an object that will set fields in all the given
+   * arguments. An argument to this method may be a Class, in which case it must be fully initalized
+   * and its static fields are set. The names of all the options (that is, the fields annotated with
+   * &#064;{@link Option}) must be unique across all the arguments.
+   *
    * @param usage_synopsis a synopsis of how to call your program
    * @param args the classes whose options to process
    */
@@ -689,8 +673,7 @@ public class Options {
 
         @SuppressWarnings(
             "initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
-        /*@Initialized*/ OptionInfo oi =
-            new OptionInfo(f, option, is_class ? null : obj, unpublicized);
+        /*@Initialized*/ OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
         options.add(oi);
 
         // FIXME: should also check that the option does not belong to an
@@ -780,8 +763,7 @@ public class Options {
   }
 
   /**
-   * Like getAnnotation, but returns null (and prints a warning) rather
-   * than throwing an exception.
+   * Like getAnnotation, but returns null (and prints a warning) rather than throwing an exception.
    */
   @SuppressWarnings(
       "initialization") // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
@@ -798,9 +780,7 @@ public class Options {
       // when an annotation is not present at run time (example: @NonNull)
       System.out.printf(
           "Exception in call to f.getAnnotation(%s)%n  for f=%s%n  %s%nClasspath =%n",
-          annotationClass,
-          f,
-          e.getMessage());
+          annotationClass, f, e.getMessage());
       //e.printStackTrace();
       JWhich.printClasspath();
       annotation = null;
@@ -810,11 +790,11 @@ public class Options {
   }
 
   /**
-   * If true, Options will parse arguments even after a non-option
-   * command-line argument.  Setting this to true is useful to permit users
-   * to write options at the end of a command line.  Setting this to false
-   * is useful to avoid processing arguments that are actually
-   * options/arguments for another program that this one will invoke.
+   * If true, Options will parse arguments even after a non-option command-line argument. Setting
+   * this to true is useful to permit users to write options at the end of a command line. Setting
+   * this to false is useful to avoid processing arguments that are actually options/arguments for
+   * another program that this one will invoke.
+   *
    * @param val whether to parse arguments after a non-option command-line argument
    */
   public void parse_options_after_arg(boolean val) {
@@ -822,10 +802,11 @@ public class Options {
   }
 
   /**
-   * If true, long options (those derived from field names) will be parsed with
-   * a single dash prefix as in -longOption.  The default is false and long
-   * options will be parsed with a double dash prefix as in --longOption.
-   * @param val whether to parse long options with a single dash, as in -longOption
+   * If true, long options (those derived from field names) will be parsed with a single dash prefix
+   * as in {@code -longOption}. The default is false and long options will be parsed with a double
+   * dash prefix as in {@code --longOption}.
+   *
+   * @param val whether to parse long options with a single dash, as in {@code -longOption}
    */
   public void use_single_dash(boolean val) {
     use_single_dash = val;
@@ -833,10 +814,10 @@ public class Options {
 
   /**
    * Parses a command line and sets the options accordingly.
+   *
    * @param args the commandline to be parsed
    * @return all non-option arguments
-   * @throws ArgException if the command line contains unknown option or
-   * misused options.
+   * @throws ArgException if the command line contains unknown option or misused options
    */
   public String[] parse(String[] args) throws ArgException {
 
@@ -925,18 +906,17 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly.  This method
-   * splits the argument string into command-line arguments, respecting
-   * single and double quotes, then calls {@link #parse(String[])}.
-   * <p>
-   * {@link #parse(String[])} is usually a better method to call.  This one
-   * is appropriate when the <code>String[]</code> version of the arguments is
-   * not available &mdash; for example, for the <code>premain</code> method of
-   * a Java agent.
+   * Parses a command line and sets the options accordingly. This method splits the argument string
+   * into command-line arguments, respecting single and double quotes, then calls {@link
+   * #parse(String[])}.
+   *
+   * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
+   * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
+   * the <code>premain</code> method of a Java agent.
    *
    * @param args the command line to parse
    * @return all non-option arguments
-   * @throws ArgException if the command line contains misused options or an unknown option.
+   * @throws ArgException if the command line contains misused options or an unknown option
    * @see #parse(String[])
    */
   public String[] parse(String args) throws ArgException {
@@ -981,9 +961,10 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly.  If an error
-   * occurs, prints the usage message and terminates the program.  The program is
-   * terminated rather than throwing an error to create cleaner output.
+   * Parses a command line and sets the options accordingly. If an error occurs, prints the usage
+   * message and terminates the program. The program is terminated rather than throwing an error to
+   * create cleaner output.
+   *
    * @param args the command line to parse
    * @return all non-option arguments
    * @see #parse(String[])
@@ -1008,18 +989,16 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly.  If an error
-   * occurs, prints the usage message and terminates the program.  The program is
-   * terminated rather than throwing an error to create cleaner output.
-   * <p>
-   * This method splits the argument string into command-line arguments,
-   * respecting single and double quotes, then calls
-   * {@link #parse_or_usage(String[])}.
-   * <p>
-   * {@link #parse(String[])} is usually a better method to call.  This one
-   * is appropriate when the <code>String[]</code> version of the arguments is
-   * not available &mdash; for example, for the <code>premain</code> method of
-   * a Java agent.
+   * Parses a command line and sets the options accordingly. If an error occurs, prints the usage
+   * message and terminates the program. The program is terminated rather than throwing an error to
+   * create cleaner output.
+   *
+   * <p>This method splits the argument string into command-line arguments, respecting single and
+   * double quotes, then calls {@link #parse_or_usage(String[])}.
+   *
+   * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
+   * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
+   * the <code>premain</code> method of a Java agent.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -1048,8 +1027,8 @@ public class Options {
   /// programmer.
 
   /**
-   * Prints usage information.  Uses the usage synopsis passed into the
-   * constructor, if any.
+   * Prints usage information. Uses the usage synopsis passed into the constructor, if any.
+   *
    * @param ps where to print usage information
    */
   public void print_usage(PrintStream ps) {
@@ -1063,9 +1042,7 @@ public class Options {
     }
   }
 
-  /**
-   * Prints, to standard output, usage information.
-   */
+  /** Prints, to standard output, usage information. */
   public void print_usage() {
     print_usage(System.out);
   }
@@ -1074,8 +1051,9 @@ public class Options {
   //   print_usage (PrintStream ps, String format, Object... args)
   // because % characters in the message are not interpreted.
   /**
-   * Prints a message followed by indented usage information.
-   * The message is printed in addition to (not replacing) the usage synopsis.
+   * Prints a message followed by indented usage information. The message is printed in addition to
+   * (not replacing) the usage synopsis.
+   *
    * @param ps where to print usage information
    * @param msg message to print before usage information
    */
@@ -1085,17 +1063,19 @@ public class Options {
   }
 
   /**
-   * Prints, to standard output, a message followed by usage information.
-   * The message is printed in addition to (not replacing) the usage synopsis.
-   * @param msg messag. to print before usage information
+   * Prints, to standard output, a message followed by usage information. The message is printed in
+   * addition to (not replacing) the usage synopsis.
+   *
+   * @param msg message to print before usage information
    */
   public void print_usage(String msg) {
     print_usage(System.out, msg);
   }
 
   /**
-   * Prints a message followed by usage information.
-   * The message is printed in addition to (not replacing) the usage synopsis.
+   * Prints a message followed by usage information. The message is printed in addition to (not
+   * replacing) the usage synopsis.
+   *
    * @param ps where to print usage information
    * @param format message to print before usage information
    * @param args objects to put in formatted message
@@ -1110,8 +1090,9 @@ public class Options {
   }
 
   /**
-   * Prints, to standard output, a message followed by usage information.
-   * The message is printed in addition to (not replacing) the usage synopsis.
+   * Prints, to standard output, a message followed by usage information. The message is printed in
+   * addition to (not replacing) the usage synopsis.
+   *
    * @param format message to print before usage information
    * @param args objects to put in formatted message
    */
@@ -1124,11 +1105,10 @@ public class Options {
    * Return the String containing the usage message for command-line options.
    *
    * @return the command-line usage message
-   * @param group_names the list of option groups to include in the usage
-   * message.  If empty and option groups are being used, will return usage
-   * for all option groups that are not unpublicized.  If empty and option
-   * groups are not being used, will return usage for all options that are
-   * not unpublicized.
+   * @param group_names the list of option groups to include in the usage message. If empty and
+   *     option groups are being used, will return usage for all option groups that are not
+   *     unpublicized. If empty and option groups are not being used, will return usage for all
+   *     options that are not unpublicized.
    */
   public String usage(String... group_names) {
     return usage(false, group_names);
@@ -1138,13 +1118,12 @@ public class Options {
    * Returns the String containing the usage message for command-line options.
    *
    * @return the command-line usage message
-   * @param include_unpublicized if true, treat all unpublicized options
-   * and option groups as publicized
-   * @param group_names the list of option groups to include in the usage
-   * message.  If empty and option groups are being used, will return usage
-   * for all option groups that are not unpublicized.  If empty and option
-   * groups are not being used, will return usage for all options that are
-   * not unpublicized.
+   * @param include_unpublicized if true, treat all unpublicized options and option groups as
+   *     publicized
+   * @param group_names the list of option groups to include in the usage message. If empty and
+   *     option groups are being used, will return usage for all option groups that are not
+   *     unpublicized. If empty and option groups are not being used, will return usage for all
+   *     options that are not unpublicized.
    */
   public String usage(boolean include_unpublicized, String... group_names) {
     if (!use_groups) {
@@ -1194,9 +1173,7 @@ public class Options {
     return buf.toString();
   }
 
-  /**
-   * Format a list of options for use in generating usage messages.
-   */
+  /** Format a list of options for use in generating usage messages. */
   private String format_options(
       List<OptionInfo> opt_list, int max_len, boolean include_unpublicized) {
     StringBuilderDelimited buf = new StringBuilderDelimited(eol);
@@ -1218,8 +1195,9 @@ public class Options {
   }
 
   /**
-   * Return the length of the longest synopsis message in a list of options.
-   * Useful for aligning options in usage strings.
+   * Return the length of the longest synopsis message in a list of options. Useful for aligning
+   * options in usage strings.
+   *
    * @return the length of the longest synopsis message in a list of options
    */
   private int max_opt_len(List<OptionInfo> opt_list, boolean include_unpublicized) {
@@ -1237,8 +1215,8 @@ public class Options {
   }
 
   /**
-   * Package-private accessors/utility methods that are needed by the
-   * OptionsDoclet class to generate HTML documentation.
+   * Package-private accessors/utility methods that are needed by the OptionsDoclet class to
+   * generate HTML documentation.
    */
   /*@Pure*/
   boolean isUsingGroups() {
@@ -1259,8 +1237,9 @@ public class Options {
   }
 
   /**
-   * Set the specified option to the value specified in arg_value.  Throws
-   * an ArgException if there are any errors.
+   * Set the specified option to the value specified in arg_value.
+   *
+   * @throws ArgException if there are any errors
    */
   private void set_arg(OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
       throws ArgException {
@@ -1377,9 +1356,8 @@ public class Options {
   }
 
   /**
-   * Create an instance of the correct type by passing the argument value
-   * string to the constructor.  The only expected error is some sort
-   * of parse error from the constructor.
+   * Create an instance of the correct type by passing the argument value string to the constructor.
+   * The only expected error is some sort of parse error from the constructor.
    */
   private /*@NonNull*/ Object get_ref_arg(OptionInfo oi, String arg_name, String arg_value)
       throws ArgException {
@@ -1409,10 +1387,10 @@ public class Options {
   }
 
   /**
-   * Behaves like {@link java.lang.Enum#valueOf}, except that <code>name</code>
-   * is case-insensitive and hyphen-insensitive (hyphens can be used in place of
-   * underscores).  This allows for greater flexibility when specifying enum
-   * types as command-line arguments.
+   * Behaves like {@link java.lang.Enum#valueOf}, except that <code>name</code> is case-insensitive
+   * and hyphen-insensitive (hyphens can be used in place of underscores). This allows for greater
+   * flexibility when specifying enum types as command-line arguments.
+   *
    * @param <T> the enum type
    */
   private <T extends Enum<T>> T getEnumValue(Class<T> enumType, String name) {
@@ -1432,6 +1410,7 @@ public class Options {
 
   /**
    * Return a short name for the specified type for use in messages.
+   *
    * @return a short name for the specified type for use in messages
    */
   private static String type_short_name(Class<?> type) {
@@ -1450,9 +1429,9 @@ public class Options {
   }
 
   /**
-   * Returns a string containing all of the options that were set and their
-   * arguments.  This is essentially the contents of args[] with all
-   * non-options removed.
+   * Returns a string containing all of the options that were set and their arguments. This is
+   * essentially the contents of args[] with all non-options removed.
+   *
    * @return options, similarly to supplied on the command line
    * @see #settings()
    */
@@ -1461,11 +1440,11 @@ public class Options {
   }
 
   /**
-   * Returns a string containing the current setting for each option, in a
-   * format that can be parsed by Options.  This differs from
-   * get_options_str() in that it contains each known option exactly once:
-   * it never contains duplicates, and it contains every known option even
-   * if the option was not specified on the command line.
+   * Returns a string containing the current setting for each option, in a format that can be parsed
+   * by Options. This differs from {@link #get_options_str()} in that it contains each known option
+   * exactly once: it never contains duplicates, and it contains every known option even if the
+   * option was not specified on the command line.
+   *
    * @return options, similarly to supplied on the command line
    */
   public String settings() {
@@ -1473,14 +1452,13 @@ public class Options {
   }
 
   /**
-   * Returns a string containing the current setting for each option, in a
-   * format that can be parsed by Options.  This differs from
-   * get_options_str() in that it contains each known option exactly once:
-   * it never contains duplicates, and it contains every known option even
-   * if the option was not specified on the command line.
+   * Returns a string containing the current setting for each option, in a format that can be parsed
+   * by Options. This differs from {@link #get_options_str()} in that it contains each known option
+   * exactly once: it never contains duplicates, and it contains every known option even if the
+   * option was not specified on the command line.
    *
-   * @param include_unpublicized  if true, treat all unpublicized options
-   * and option groups as publicized
+   * @param include_unpublicized if true, treat all unpublicized options and option groups as
+   *     publicized
    * @return options, similarly to supplied on the command line
    */
   public String settings(boolean include_unpublicized) {
@@ -1505,8 +1483,9 @@ public class Options {
   }
 
   /**
-   * Return a description of all of the known options.
-   * Each option is described on its own line in the output.
+   * Return a description of all of the known options. Each option is described on its own line in
+   * the output.
+   *
    * @return a description of all of the known options
    */
   @Override
@@ -1522,9 +1501,7 @@ public class Options {
     return out.toString();
   }
 
-  /**
-   * Exceptions encountered during argument processing.
-   */
+  /** Exceptions encountered during argument processing. */
   public static class ArgException extends Exception {
     static final long serialVersionUID = 20051223L;
 
@@ -1552,9 +1529,8 @@ public class Options {
   }
 
   /**
-   * Parse an option value and return its three components (short_name,
-   * type_name, and description).  The short_name and type_name are null
-   * if they are not specified in the string.
+   * Parse an option value and return its three components (short_name, type_name, and description).
+   * The short_name and type_name are null if they are not specified in the string.
    */
   private static ParseResult parse_option(String val) {
 

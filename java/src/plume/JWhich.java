@@ -45,25 +45,28 @@ import org.checkerframework.checker.nullness.qual.*;
 // class appears at the beginning of the real classpath.
 
 /**
- * <code>JWhich</code> is a utility that takes a Java class name
- * and displays the absolute pathname of the class file that would
- * be loaded first by the class loader, as prescribed by the
- * class path.
- * <p>
- * <code>JWhich</code> also validates the class path and reports
- * any non-existent or invalid class path entries.
- * <p>
- * Usage is similar to the UNIX <code>which</code> command.
- * <p>
- * Example uses:
- * <blockquote>
- *    To find the absolute pathname of <code>MyClass.class</code>
- *    not in a package:
- *    <pre>java JWhich MyClass</pre>
+ * <code>JWhich</code> is a utility that takes a Java class name and displays the absolute pathname
+ * of the class file that would be loaded first by the class loader, as prescribed by the class
+ * path.
  *
- *    To find the absolute pathname of <code>MyClass.class</code>
- *    in the <code>my.package</code> package:
- *    <pre>java JWhich my.package.MyClass</pre>
+ * <p><code>JWhich</code> also validates the class path and reports any non-existent or invalid
+ * class path entries.
+ *
+ * <p>Usage is similar to the UNIX <code>which</code> command.
+ *
+ * <p>Example uses:
+ *
+ * <blockquote>
+ *
+ * To find the absolute pathname of <code>MyClass.class</code> not in a package:
+ *
+ * <pre>java JWhich MyClass</pre>
+ *
+ * To find the absolute pathname of <code>MyClass.class</code> in the <code>my.package</code>
+ * package:
+ *
+ * <pre>java JWhich my.package.MyClass</pre>
+ *
  * </blockquote>
  *
  * @author <a href="mailto:mike@clarkware.com">Mike Clark</a>
@@ -80,9 +83,8 @@ public final class JWhich {
   }
 
   /**
-   * Prints the absolute pathname of the class file
-   * containing the specified class name, as prescribed
-   * by the class path.
+   * Prints the absolute pathname of the class file containing the specified class name, as
+   * prescribed by the class path.
    *
    * @param className name of the class
    */
@@ -103,8 +105,8 @@ public final class JWhich {
   }
 
   /**
-   * Returns the URL of the resource denoted by the specified
-   * class name, as prescribed by the class path.
+   * Returns the URL of the resource denoted by the specified class name, as prescribed by the class
+   * path.
    *
    * @param className name of the class
    * @return class URL, or null of the class was not found
@@ -123,11 +125,10 @@ public final class JWhich {
   }
 
   /**
-   * Validates the class path and reports any non-existent
-   * or invalid class path entries.
-   * <p>
-   * Valid class path entries include directories, <code>.zip</code>
-   * files, and <code>.jar</code> files.
+   * Validates the class path and reports any non-existent or invalid class path entries.
+   *
+   * <p>Valid class path entries include directories, <code>.zip</code> files, and <code>.jar</code>
+   * files.
    */
   /*@EnsuresNonNull("CLASSPATH")*/
   public static void validate() {
@@ -164,7 +165,9 @@ public final class JWhich {
     }
   }
 
-  /** Set the classpath to the given string.
+  /**
+   * Set the classpath to the given string.
+   *
    * @param classpath the new classpath
    */
   /*@EnsuresNonNull("CLASSPATH")*/
@@ -172,7 +175,9 @@ public final class JWhich {
     CLASSPATH = classpath;
   }
 
-  /** Return the classpath.
+  /**
+   * Return the classpath.
+   *
    * @return the classpath
    */
   /*@EnsuresNonNull("CLASSPATH")*/

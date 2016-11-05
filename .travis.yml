@@ -27,3 +27,6 @@ after_script:
           sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
         fi
       fi
+
+git:
+  depth: 9

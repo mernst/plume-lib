@@ -53,6 +53,7 @@
 --suppress-broken 401:https://developer.apple.com/search/index.php?q=java
 --suppress-broken 403:http://www.darpa.mil/	
 --suppress-broken 403:http://gradle.org/
+--suppress-broken 403:https://gradle.org/
 --suppress-broken 403:http://homes.cs.washington.edu/~mernst/uw-only/research/potential-research-projects.html
 --suppress-broken 403:http://mercurial.selenic.com/wiki/NotifyExtension
 --suppress-broken 403:http://mercurial.selenic.com/wiki/QuickStart
@@ -77,6 +78,7 @@
 --suppress-broken 403:http://www.seattletimes.com/	
 --suppress-broken 403:http://www.seattleweekly.com/
 --suppress-broken 403:http://www.topcoder.com/
+--suppress-broken 403:https://galois.com/team/joe-kiniry/
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 403:https://wiki.gnome.org/Apps/Dia
@@ -98,6 +100,8 @@
 --suppress-broken 404:http://www.juliasoft.com/
 --suppress-broken 404:https://calendar.google.com/calendar/embed?src=mernst%40cs.washington.edu&title=Michael%20Ernst&mode=WEEK
 --suppress-broken 404:https://www.google.com/calendar/embed?mode=WEEK&src=mernst%40cs.washington.edu&ctz=America/Los_Angeles
+--suppress-broken 405:http://dx.doi.org/10.1109/WODA.2007.3
+--suppress-broken 405:http://ieeexplore.ieee.org/document/4273458/?reload=true&arnumber=4273458	
 --suppress-broken 405:http://aws.amazon.com/datasets
 --suppress-broken 405:http://code.activestate.com/recipes/langs/python/
 --suppress-broken 405:http://developer.android.com/tools/building/plugin-for-gradle.html
@@ -114,6 +118,7 @@
 --suppress-broken 406:http://www.artscrush.org/
 --suppress-broken 406:http://www.cra.org/resources/bp-view/evaluating_computer_scientists_and_engineers_for_promotion_and_tenure/
 --suppress-broken 406:http://www.ijcai.org/past/ijcai-97/
+--suppress-broken 406:http://www.nwfolklife.org/festival/
 --suppress-broken 412:http://validator.w3.org/check?uri=referer
 --suppress-broken 416:http://www.switchboard.com/
 --suppress-broken 500:http://fivethirtyeight.blogs.nytimes.com/methodology/
@@ -180,6 +185,7 @@
 
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
+--suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Crandoop
 --suppress-fragment http://www.washington.edu/maps/#!/low
 --suppress-fragment http://www.washington.edu/maps/#!/cdh
 --suppress-fragment https://connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=124498177728201
@@ -194,6 +200,7 @@
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr-305
 --suppress-fragment https://groups.google.com/forum/#!forum/jsr308-discuss
+--suppress-fragment https://groups.google.com/forum/#!forum/randoop-discuss
 --suppress-fragment https://groups.google.com/forum/#!overview
 --suppress-fragment https://groups.google.com/forum/?fromgroups#!forum/checker-framework-discuss
 --suppress-fragment https://htmlpreview.github.io/?https://bitbucket.org/typetools/jsr308-langtools/raw/tip/doc/README-jsr308.html#reporting-bugs
@@ -286,6 +293,8 @@
 --suppress-redirect http://dx.doi.org/10.1007/s10515-006-0002-0->http://www.springerlink.com/link.asp?id=A5U0J7H002247138
 --suppress-redirect http://dx.doi.org/10.1109/2.59->http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=59&tag=1&tag=1&tag=1&tag=1&tag=1
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/Xplore/defdeny.jsp?url=http%3A%2F%2Fieeexplore.ieee.org%2FXplore%2Ferror.jsp&denyReason=-133&productsMatched=null&userType=inst	
+--suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/document/4273458/?reload=true&arnumber=4273458	
+--suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org/document/4273458/
 --suppress-redirect http://dx.doi.org/10.1109/WODA.2007.3->http://ieeexplore.ieee.org:80/Xplore/errorpage.jsp?reload=true
 --suppress-redirect http://en.wikipedia.org/->http://en.wikipedia.org/wiki/Main_Page
 --suppress-redirect http://groups.google.com/->http://groups-beta.google.com/

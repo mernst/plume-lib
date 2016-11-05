@@ -69,7 +69,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/checker-qual.jar:lib/backport-util-concurrent-3.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.4.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -125,7 +125,7 @@ JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
 # Files whose style we can automatically check
-JAVA_FILES_FOR_STYLE ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort))
+JAVA_FILES_FOR_STYLE ?= $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort)
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -187,6 +187,7 @@ endif
 export CLASSPATH
 
 default: jar
+# No need for optionsdoc here, because javadoc depends on optionsdoc
 all: jar javadoc
 
 # Must not depend on javadoc, since javadoc depends on it
@@ -246,7 +247,7 @@ test: .test-timestamp
 .test-timestamp: .class-files-timestamp
 # CLASSPATH is set in this file; it is not an external dependency
 ifdef USE_CODECOV
-	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.6.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
+	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.8.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 else
 	set JAVA_COMPILER=NONE; ${JAVA} -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 endif
@@ -405,9 +406,9 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/checker-qual.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
 # ical4j 1.0.6 requrires the legacy library commons-lang-2.6.jar
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.4.jar)
@@ -532,11 +533,16 @@ checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
 
-reformat: ${JAVA_AND_CPP_FILES}
-	../bin/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+get-run-google-java-format:
+	@-git -C .run-google-java-format pull -q || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
 
-check-format: ${JAVA_AND_CPP_FILES}
-	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+reformat:
+	${MAKE} get-run-google-java-format
+	@.run-google-java-format/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+
+check-format:
+	${MAKE} get-run-google-java-format
+	@.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format
 

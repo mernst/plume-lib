@@ -4,38 +4,36 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.Formatter;
 import java.util.Iterator;
-import org.apache.commons.bcel6.Const;
-import org.apache.commons.bcel6.classfile.Attribute;
-import org.apache.commons.bcel6.classfile.Code;
-import org.apache.commons.bcel6.classfile.Constant;
-import org.apache.commons.bcel6.classfile.ConstantClass;
-import org.apache.commons.bcel6.classfile.ConstantPool;
-import org.apache.commons.bcel6.classfile.ConstantUtf8;
-import org.apache.commons.bcel6.classfile.Field;
-import org.apache.commons.bcel6.classfile.JavaClass;
-import org.apache.commons.bcel6.classfile.Method;
-import org.apache.commons.bcel6.generic.ArrayType;
-import org.apache.commons.bcel6.generic.ClassGen;
-import org.apache.commons.bcel6.generic.CodeExceptionGen;
-import org.apache.commons.bcel6.generic.ConstantPoolGen;
-import org.apache.commons.bcel6.generic.InstructionHandle;
-import org.apache.commons.bcel6.generic.InstructionList;
-import org.apache.commons.bcel6.generic.InstructionTargeter;
-import org.apache.commons.bcel6.generic.LineNumberGen;
-import org.apache.commons.bcel6.generic.LocalVariableGen;
-import org.apache.commons.bcel6.generic.MethodGen;
-import org.apache.commons.bcel6.generic.ObjectType;
-import org.apache.commons.bcel6.generic.RETURN;
-import org.apache.commons.bcel6.generic.Type;
+import org.apache.bcel.Const;
+import org.apache.bcel.classfile.Attribute;
+import org.apache.bcel.classfile.Code;
+import org.apache.bcel.classfile.Constant;
+import org.apache.bcel.classfile.ConstantClass;
+import org.apache.bcel.classfile.ConstantPool;
+import org.apache.bcel.classfile.ConstantUtf8;
+import org.apache.bcel.classfile.Field;
+import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.classfile.Method;
+import org.apache.bcel.generic.ArrayType;
+import org.apache.bcel.generic.ClassGen;
+import org.apache.bcel.generic.CodeExceptionGen;
+import org.apache.bcel.generic.ConstantPoolGen;
+import org.apache.bcel.generic.InstructionHandle;
+import org.apache.bcel.generic.InstructionList;
+import org.apache.bcel.generic.InstructionTargeter;
+import org.apache.bcel.generic.LineNumberGen;
+import org.apache.bcel.generic.LocalVariableGen;
+import org.apache.bcel.generic.MethodGen;
+import org.apache.bcel.generic.ObjectType;
+import org.apache.bcel.generic.RETURN;
+import org.apache.bcel.generic.Type;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
 
-/**
- * Static utility methods for working with BCEL.
- */
+/** Static utility methods for working with BCEL. */
 public final class BCELUtil {
   /** This class is a collection of methods; it does not represent anything. */
   private BCELUtil() {
@@ -48,7 +46,9 @@ public final class BCELUtil {
   /** The type that represents String[]. */
   private static final Type string_array = Type.getType("[Ljava.lang.String;");
 
-  /** Prints method declarations to System.out.
+  /**
+   * Prints method declarations to System.out.
+   *
    * @param gen class whose methods to print
    */
   static void dump_method_declarations(ClassGen gen) {
@@ -59,9 +59,10 @@ public final class BCELUtil {
   }
 
   /**
-   * Returns a string describing a method declaration. It contains the access
-   * flags (public, private, static, etc), the return type, the method name, and
-   * the types of each of its arguments.
+   * Returns a string describing a method declaration. It contains the access flags (public,
+   * private, static, etc), the return type, the method name, and the types of each of its
+   * arguments.
+   *
    * @param m the method
    * @return a string describing the method declaration
    */
@@ -78,7 +79,9 @@ public final class BCELUtil {
     return (sb.toString().replace(", )", ")"));
   }
 
-  /** Return a string representation of the access flags of method m.
+  /**
+   * Return a string representation of the access flags of method m.
+   *
    * @param m the method whose access flags to retrieve
    * @return a string representation of the access flags of method m
    */
@@ -106,6 +109,7 @@ public final class BCELUtil {
 
   /**
    * Return the attribute name for the specified attribute.
+   *
    * @param a the attribute
    * @return the attribute name for the specified attribute
    */
@@ -120,6 +124,7 @@ public final class BCELUtil {
 
   /**
    * Returns the constant string at the specified offset.
+   *
    * @param pool the constant pool
    * @param index the index in the constant pool
    * @return the constant string at the specified offset in the constant pool
@@ -138,7 +143,9 @@ public final class BCELUtil {
     }
   }
 
-  /** Returns whether or not the method is a constructor.
+  /**
+   * Returns whether or not the method is a constructor.
+   *
    * @param mg the method to test
    * @return true iff the method is a constructor
    */
@@ -146,7 +153,9 @@ public final class BCELUtil {
     return (mg.getName().equals("<init>") || mg.getName().equals(""));
   }
 
-  /** Returns whether or not the method is a constructor.
+  /**
+   * Returns whether or not the method is a constructor.
+   *
    * @param m the method to test
    * @return true iff the method is a constructor
    */
@@ -154,7 +163,9 @@ public final class BCELUtil {
     return (m.getName().equals("<init>") || m.getName().equals(""));
   }
 
-  /** Returns whether or not the method is a class initializer.
+  /**
+   * Returns whether or not the method is a class initializer.
+   *
    * @param mg the method to test
    * @return true iff the method is a class initializer
    */
@@ -162,7 +173,9 @@ public final class BCELUtil {
     return (mg.getName().equals("<clinit>"));
   }
 
-  /** Returns whether or not the method is a class initializer.
+  /**
+   * Returns whether or not the method is a class initializer.
+   *
    * @param m the method to test
    * @return true iff the method is a class initializer
    */
@@ -170,7 +183,9 @@ public final class BCELUtil {
     return (m.getName().equals("<clinit>"));
   }
 
-  /** Returns whether or not the class is part of the JDK (rt.jar).
+  /**
+   * Returns whether or not the class is part of the JDK (rt.jar).
+   *
    * @param gen the class to test
    * @return true iff the class is part of the JDK (rt.jar)
    */
@@ -178,35 +193,50 @@ public final class BCELUtil {
     return (in_jdk(gen.getClassName()));
   }
 
-  /** Returns whether or not the class is part of the JDK (rt.jar).
-   * @param classname the class to test, in the format of Class.getName();
-   *   the class should not be an array
+  /**
+   * Returns whether or not the class is part of the JDK (rt.jar).
+   *
+   * @param classname the class to test, in the format of Class.getName(); the class should not be
+   *     an array
    * @return true iff the class is part of the JDK (rt.jar)
    */
   public static boolean in_jdk(/*@ClassGetName*/ String classname) {
     return classname.startsWith("java.")
-        || classname.startsWith("com.")
+        || classname.startsWith("com.oracle.")
+        || classname.startsWith("com.sun.")
         || classname.startsWith("javax.")
-        || classname.startsWith("org.")
+        || classname.startsWith("org.ietf.")
+        || classname.startsWith("org.jcp.")
+        || classname.startsWith("org.omg.")
+        || classname.startsWith("org.w3c.")
+        || classname.startsWith("org.xml.")
         || classname.startsWith("sun.")
         || classname.startsWith("sunw.");
   }
 
-  /** Returns whether or not the class is part of the JDK (rt.jar).
+  /**
+   * Returns whether or not the class is part of the JDK (rt.jar).
+   *
    * @param classname the class to test, in internal form
    * @return true iff the class is part of the JDK (rt.jar)
    */
   public static boolean in_jdk_internalform(/*@InternalForm*/ String classname) {
     return classname.startsWith("java/")
-        || classname.startsWith("com/")
+        || classname.startsWith("com/oracle/")
+        || classname.startsWith("com/sun/")
         || classname.startsWith("javax/")
-        || classname.startsWith("org/")
+        || classname.startsWith("org/ietj/")
+        || classname.startsWith("org/jcp/")
+        || classname.startsWith("org/omg/")
+        || classname.startsWith("org/w3c/")
+        || classname.startsWith("org/xml/")
         || classname.startsWith("sun/")
         || classname.startsWith("sunw/");
   }
 
   /**
    * Print the methods in the class, to standard output.
+   *
    * @param gen the class whose methods to print
    */
   static void dump_methods(ClassGen gen) {
@@ -219,6 +249,7 @@ public final class BCELUtil {
 
   /**
    * Checks the specific method for consistency.
+   *
    * @param mgen the class to check
    */
   public static void checkMgen(MethodGen mgen) {
@@ -256,6 +287,7 @@ public final class BCELUtil {
 
   /**
    * Checks all of the methods in gen for consistency.
+   *
    * @param gen the class to check
    */
   public static void checkMgens(final ClassGen gen) {
@@ -291,7 +323,9 @@ public final class BCELUtil {
     }
   }
 
-  /** Adds code in nl to start of method mg.
+  /**
+   * Adds code in nl to start of method mg.
+   *
    * @param mg method to be augmented
    * @param nl instructions to prepend to the method
    */
@@ -319,9 +353,10 @@ public final class BCELUtil {
   }
 
   /**
-   * Dumps the contents of the specified class to the specified directory.
-   * The file is named dump_dir/[class].bcel.  It contains a synopsis
-   * of the fields and methods followed by the jvm code for each method.
+   * Dumps the contents of the specified class to the specified directory. The file is named
+   * dump_dir/[class].bcel. It contains a synopsis of the fields and methods followed by the jvm
+   * code for each method.
+   *
    * @param jc javaclass to dump
    * @param dump_dir directory in which to write the file
    * @see #dump(JavaClass, File)
@@ -332,9 +367,9 @@ public final class BCELUtil {
   }
 
   /**
-   * Dumps the contents of the specified class to the specified directory.
-   * The file is named dump_dir/[class].bcel.  It contains a synopsis
-   * of the fields and methods followed by the jvm code for each method.
+   * Dumps the contents of the specified class to the specified directory. The file is named
+   * dump_dir/[class].bcel. It contains a synopsis of the fields and methods followed by the jvm
+   * code for each method.
    *
    * @param jc javaclass to dump
    * @param dump_dir directory in which to write the file
@@ -412,6 +447,7 @@ public final class BCELUtil {
 
   /**
    * Return a description of the local variables (one per line).
+   *
    * @param mg the method whose local variables to describe
    * @return a description of the local variables (one per line)
    */
@@ -429,8 +465,9 @@ public final class BCELUtil {
   }
 
   /**
-   * Builds an array of line numbers for the specified instruction list. Each
-   * opcode is assigned the next source line number starting at 1000.
+   * Builds an array of line numbers for the specified instruction list. Each opcode is assigned the
+   * next source line number starting at 1000.
+   *
    * @param mg the method whose line numbers to extract
    * @param il the instruction list to augment with line numbers
    */
@@ -443,8 +480,9 @@ public final class BCELUtil {
   }
 
   /**
-   * Sets the locals to 'this' and each of the arguments. Any other locals are
-   * removed. An instruction list with at least one instruction must exist.
+   * Sets the locals to 'this' and each of the arguments. Any other locals are removed. An
+   * instruction list with at least one instruction must exist.
+   *
    * @param mg the method whose locals to set
    */
   @SuppressWarnings("nullness")
@@ -476,8 +514,9 @@ public final class BCELUtil {
   }
 
   /**
-   * Empties the method of all code (except for a return).  This
-   * includes line numbers, exceptions, local variables, etc.
+   * Empties the method of all code (except for a return). This includes line numbers, exceptions,
+   * local variables, etc.
+   *
    * @param mg the method to clear out
    */
   public static void empty_method(MethodGen mg) {
@@ -490,10 +529,10 @@ public final class BCELUtil {
   }
 
   /**
-   * Remove the local variable type table attribute (LVTT) from mg.
-   * Evidently some changes require this to be updated, but without
-   * BCEL support that would be hard to do.  It should be safe to just delete
-   * it since it is optional and really only of use to a debugger.
+   * Remove the local variable type table attribute (LVTT) from mg. Evidently some changes require
+   * this to be updated, but without BCEL support that would be hard to do. It should be safe to
+   * just delete it since it is optional and really only of use to a debugger.
+   *
    * @param mg the method to clear out
    */
   public static void remove_local_variable_type_tables(MethodGen mg) {
@@ -506,8 +545,8 @@ public final class BCELUtil {
   }
 
   /**
-   * Returns whether or not the specified attribute is a local variable type
-   * table.
+   * Returns whether or not the specified attribute is a local variable type table.
+   *
    * @param a the attribute
    * @param pool the constant pool
    * @return true iff the attribute is a local variable type table
@@ -518,6 +557,7 @@ public final class BCELUtil {
 
   /**
    * Return the attribute name for the specified attribute.
+   *
    * @param a the attribute
    * @param pool the constant pool
    * @return the attribute name for the specified attribute
@@ -531,8 +571,9 @@ public final class BCELUtil {
   }
 
   /**
-   * Returns whether or not this is a standard main method (static,
-   * name is 'main', and one argument of string array).
+   * Returns whether or not this is a standard main method (static, name is 'main', and one argument
+   * of string array).
+   *
    * @param mg the method to check
    * @return true iff the method is a main method
    */
@@ -545,8 +586,9 @@ public final class BCELUtil {
   }
 
   /**
-   * Returns the Java class name, in the format of {@link Class#getName()},
-   * that corresponds to type.
+   * Returns the Java class name, in the format of {@link Class#getName()}, that corresponds to
+   * type.
+   *
    * @param type the type
    * @return the Java classname that corresponds to type
    */
@@ -557,6 +599,7 @@ public final class BCELUtil {
 
   /**
    * Returns the class that corresponds to type.
+   *
    * @param type the type
    * @return the Java class that corresponds to type
    */
@@ -573,6 +616,7 @@ public final class BCELUtil {
 
   /**
    * Returns a type array with new_type added to the end of types.
+   *
    * @param types the array to extend
    * @param new_type the element to add to the end of the types array
    * @return the array (or a new one), with new_type at the end
@@ -587,6 +631,7 @@ public final class BCELUtil {
 
   /**
    * Returns a type array with new_type inserted at the beginning.
+   *
    * @param types the array to extend
    * @param new_type the element to add to the beginning of the types array
    * @return the array (or a new one), with new_type at the beginning
@@ -601,6 +646,7 @@ public final class BCELUtil {
 
   /**
    * Return the type corresponding to a given class name.
+   *
    * @param classname the class to convert to a type
    * @return the type corresponding to the given class name
    */
