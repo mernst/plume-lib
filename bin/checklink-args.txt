@@ -8,6 +8,7 @@
 # Please keep the file organized.  Each type of argument goes in its own
 # section, alphabetized within the section.
 
+## These are files not to check; but links into such URLs are still checked
 --exclude-docs /serialized-form.html
 --exclude-docs /~adonovan/
 --exclude-docs bugzilla/
@@ -25,6 +26,7 @@
 --exclude-docs http://pag.csail.mit.edu/pag/
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --exclude-docs http://www.w3.org/1999/xhtml/vocab/
+--exclude-docs https://courses.cs.washington.edu/courses/cse599e1/16au/csenetid/
 
 # --suppress-broken -1:http://whereis.mit.edu/map-jpg?selection=32&Buildings=go
 --suppress-broken 301:http://www.cs.virginia.edu/~sullivan/
@@ -40,6 +42,7 @@
 --suppress-broken 302:http://www.dofactory.com/net/design-patterns
 --suppress-broken 302:http://www.edwardxwu.com/	
 --suppress-broken 302:http://www.facebook.com/note.php?note_id=469716398919
+--suppress-broken 302:http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7387744
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
