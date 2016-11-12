@@ -1240,8 +1240,6 @@ By default, `scroll-down' raises an error in that circumstance."
         (ad-set-arg 1 (remove-duplicates (ad-get-arg 1) ':test (function equal))))))
 
 
-;; Also see `remove-trailing-whitespace-ignored-filename' in file
-;; remove-trailing-whitespace.el.
 (defun emacs-source-file-p (filename)
   "Return t if FILENAME is an Emacs source file."
   (or (string-match "/emacs/x?lisp/" filename)
@@ -1492,7 +1490,7 @@ one in the source code."
   arguments
   )
 
-;; 
+;;
 (defun quote-word-for-shell-command (string)
   (cond ((and (string-match "'" string)
            (not (string-match "\"" string)))
