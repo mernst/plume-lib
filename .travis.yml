@@ -15,6 +15,7 @@ script: set -e && make USE_CODECOV=1 all-but-emacs check
 
 after_script:
   - |
+      set +e
       declare exitCode;
       $(npm bin)/travis-after-all
       exitCode=$?

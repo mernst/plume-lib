@@ -33,7 +33,9 @@ emacs:
 
 check:
 	${MAKE} -C bin check-python
+ifneq (,$(findstring 1.8.,$(shell java -version 2>&1)))
 	${MAKE} -C java check-format
+endif
 
 
 # Tags
