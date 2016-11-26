@@ -11,7 +11,8 @@ before_install:
   - pip install --user pylint
   - npm install --save-dev travis-after-all
 
-script: set -e && make USE_CODECOV=1 all-but-emacs check
+# script: set -e && make USE_CODECOV=1 all-but-emacs check
+script: make USE_CODECOV=1 all-but-emacs check
 
 after_script:
   - |
