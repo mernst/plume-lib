@@ -26,6 +26,7 @@ after_script:
       declare exitCode;
       $(npm bin)/travis-after-all
       exitCode=$?
+      echo "exitCode=$exitCode"
 
       if [ "$exitCode" -eq 0 ]; then
         if [[ ($TRAVIS_BRANCH == master) &&
