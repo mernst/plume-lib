@@ -11,14 +11,6 @@ before_install:
   - pip install --user pylint
   - npm install --save-dev travis-after-all
 
-# If the after-script block exists, then in Travis, this fails under JDK 7:
-# script: set -e && make USE_CODECOV=1 all-but-emacs check
-# script: set -e && make USE_CODECOV=1 all-but-emacs
-# script: set -e && make USE_CODECOV=1 check
-# script: set -e && true
-# but this succeeds:
-# script: make USE_CODECOV=1 all-but-emacs check
-# I don't understand why.
 script: set -e && make USE_CODECOV=1 all-but-emacs check
 
 after_script:
