@@ -17,7 +17,7 @@ before_install:
 # script: make USE_CODECOV=1 all-but-emacs check
 # script: set -e && make USE_CODECOV=1 all-but-emacs
 # script: make USE_CODECOV=1 check
-set -e && make USE_CODECOV=1 all-but-emacs
+script: set -e && make USE_CODECOV=1 all-but-emacs
 
 after_script:
   - |
