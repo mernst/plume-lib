@@ -769,7 +769,8 @@ public final class UtilMDE {
      * @return the <code>Class</code> object that was created
      */
     public Class<?> defineClassFromFile(
-        /*@BinaryName*/ String className, String pathname) throws FileNotFoundException, IOException {
+        /*@BinaryName*/ String className, String pathname)
+        throws FileNotFoundException, IOException {
       FileInputStream fi = new FileInputStream(pathname);
       int numbytes = fi.available();
       byte[] classBytes = new byte[numbytes];

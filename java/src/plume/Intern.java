@@ -288,10 +288,12 @@ public final class Intern {
   private static WeakHasherMap<double /*@Interned*/ [], WeakReference<double /*@Interned*/ []>>
       internedDoubleArrays;
   private static WeakHasherMap<
-          /*@Nullable*/ /*@Interned*/ String /*@Interned*/ [], WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>>
+          /*@Nullable*/ /*@Interned*/ String /*@Interned*/ [],
+          WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>>
       internedStringArrays;
   private static WeakHasherMap<
-          /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [], WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>>
+          /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [],
+          WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>>
       internedObjectArrays;
   private static WeakHasherMap<
           SequenceAndIndices<int /*@Interned*/ []>, WeakReference<int /*@Interned*/ []>>
@@ -333,11 +335,13 @@ public final class Intern {
             new DoubleArrayHasher());
     internedStringArrays =
         new WeakHasherMap<
-            /*@Nullable*/ /*@Interned*/ String /*@Interned*/ [], WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>>(
+            /*@Nullable*/ /*@Interned*/ String /*@Interned*/ [],
+            WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>>(
             new StringArrayHasher());
     internedObjectArrays =
         new WeakHasherMap<
-            /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [], WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>>(
+            /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [],
+            WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>>(
             new ObjectArrayHasher());
     internedIntSequenceAndIndices =
         new WeakHasherMap<

@@ -673,7 +673,8 @@ public class Options {
 
         @SuppressWarnings(
             "initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
-        /*@Initialized*/ OptionInfo oi = new OptionInfo(f, option, is_class ? null : obj, unpublicized);
+        /*@Initialized*/ OptionInfo oi =
+            new OptionInfo(f, option, is_class ? null : obj, unpublicized);
         options.add(oi);
 
         // FIXME: should also check that the option does not belong to an
