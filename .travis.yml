@@ -11,7 +11,7 @@ before_install:
   - pip install --user pylint
   - npm install --save-dev travis-after-all
 
-# In Travis, this fails under JDK 7:
+# If the after-script block exists, then in Travis, this fails under JDK 7:
 # script: set -e && make USE_CODECOV=1 all-but-emacs check
 # script: set -e && make USE_CODECOV=1 all-but-emacs
 # script: set -e && make USE_CODECOV=1 check
@@ -21,21 +21,21 @@ before_install:
 # I don't understand why.
 script: set -e && make USE_CODECOV=1 all-but-emacs check
 
-# after_script:
-#   - |
-#       declare exitCode;
-#       $(npm bin)/travis-after-all
-#       exitCode=$?
-#       echo "exitCode=$exitCode"
-# 
-#       if [ "$exitCode" -eq 0 ]; then
-#         if [[ ($TRAVIS_BRANCH == master) &&
-#               ($TRAVIS_PULL_REQUEST == false) ]] ; then
-#           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-#           sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
-#           sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
-#         fi
-#       fi
+after_script:
+  - |
+      set +e
+      declare exitCode;
+      $(npm bin)/travis-after-all
+      exitCode=$?
+
+      if [ "$exitCode" -eq 0 ]; then
+        if [[ ($TRAVIS_BRANCH == master) &&
+              ($TRAVIS_PULL_REQUEST == false) ]] ; then
+          curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+          sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
+          sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+        fi
+      fi
 
 git:
   depth: 9
