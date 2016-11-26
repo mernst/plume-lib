@@ -13,11 +13,12 @@ before_install:
 
 # In Travis, this fails:
 # script: set -e && make USE_CODECOV=1 all-but-emacs check
+script: set -e && make USE_CODECOV=1 all-but-emacs
 # but each of these succeeds:
 # script: make USE_CODECOV=1 all-but-emacs check
 # script: set -e && make USE_CODECOV=1 all-but-emacs
 # script: make USE_CODECOV=1 check
-script: set -e && make USE_CODECOV=1 all-but-emacs
+script: set -e && make USE_CODECOV=1 check
 
 after_script:
   - |
