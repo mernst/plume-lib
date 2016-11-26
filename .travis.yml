@@ -11,10 +11,13 @@ before_install:
   - pip install --user pylint
   - npm install --save-dev travis-after-all
 
-# For some reason, "set -e" makes this fail in Travis.
+# In Travis, this fails:
 # script: set -e && make USE_CODECOV=1 all-but-emacs check
+# but each of these succeeds:
 # script: make USE_CODECOV=1 all-but-emacs check
-script: make USE_CODECOV=1 check
+# script: set -e && make USE_CODECOV=1 all-but-emacs
+# script: make USE_CODECOV=1 check
+set -e && make USE_CODECOV=1 all-but-emacs
 
 after_script:
   - |
