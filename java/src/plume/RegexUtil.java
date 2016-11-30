@@ -14,14 +14,12 @@ import org.checkerframework.framework.qual.EnsuresQualifierIf;
 */
 
 /**
- * Utility methods for regular expressions, most notably for testing whether
- * a string is a regular expression.
- * <p>
+ * Utility methods for regular expressions, most notably for testing whether a string is a regular
+ * expression.
  *
- * For an example of intended use, see section <a
+ * <p>For an example of intended use, see section <a
  * href="http://types.cs.washington.edu/checker-framework/current/checker-framework-manual.html#regexutil-methods">Testing
- * whether a string is a regular expression</a> in the Checker Framework
- * manual.
+ * whether a string is a regular expression</a> in the Checker Framework manual.
  */
 // The Purity Checker cannot show for most methods in this class that
 // they are pure, even though they are.
@@ -35,15 +33,14 @@ public final class RegexUtil {
 
   /**
    * A checked version of {@link PatternSyntaxException}.
-   * <p>
-   * This exception is useful when an illegal regex is detected but the
-   * contextual information to report a helpful error message is not available
-   * at the current depth in the call stack. By using a checked
-   * PatternSyntaxException the error must be handled up the call stack where
-   * a better error message can be reported.
-   * <p>
    *
-   * Typical usage is:
+   * <p>This exception is useful when an illegal regex is detected but the contextual information to
+   * report a helpful error message is not available at the current depth in the call stack. By
+   * using a checked PatternSyntaxException the error must be handled up the call stack where a
+   * better error message can be reported.
+   *
+   * <p>Typical usage is:
+   *
    * <pre>
    * void myMethod(...) throws CheckedPatternSyntaxException {
    *   ...
@@ -53,14 +50,13 @@ public final class RegexUtil {
    *   ... Pattern.compile(myString) ...
    * </pre>
    *
-   * Simply calling <code>Pattern.compile</code> would have a similar effect,
-   * in that <code>PatternSyntaxException</code> would be thrown at run time if
-   * <code>myString</code> is not a regular expression.  There are two problems
-   * with such an approach.  First, a client of <code>myMethod</code> might
-   * forget to handle the exception, since <code>PatternSyntaxException</code>
-   * is not checked.  Also, the Regex Checker would issue a warning about
-   * the call to <code>Pattern.compile</code> that might throw an exception.
-   * The above usage pattern avoids both problems.
+   * Simply calling <code>Pattern.compile</code> would have a similar effect, in that <code>
+   * PatternSyntaxException</code> would be thrown at run time if <code>myString</code> is not a
+   * regular expression. There are two problems with such an approach. First, a client of <code>
+   * myMethod</code> might forget to handle the exception, since <code>PatternSyntaxException</code>
+   * is not checked. Also, the Regex Checker would issue a warning about the call to <code>
+   * Pattern.compile</code> that might throw an exception. The above usage pattern avoids both
+   * problems.
    *
    * @see PatternSyntaxException
    */
@@ -72,11 +68,11 @@ public final class RegexUtil {
     private final PatternSyntaxException pse;
 
     /**
-     * Constructs a new CheckedPatternSyntaxException equivalent to the
-     * given {@link PatternSyntaxException}.
-     * <p>
-     * Consider calling this constructor with the result of
-     * {@link RegexUtil#regexError}.
+     * Constructs a new CheckedPatternSyntaxException equivalent to the given {@link
+     * PatternSyntaxException}.
+     *
+     * <p>Consider calling this constructor with the result of {@link RegexUtil#regexError}.
+     *
      * @param pse the PatternSyntaxException to be wrapped
      */
     public CheckedPatternSyntaxException(PatternSyntaxException pse) {
@@ -88,8 +84,8 @@ public final class RegexUtil {
      *
      * @param desc a description of the error
      * @param regex the erroneous pattern
-     * @param index the approximate index in the pattern of the error,
-     *              or {@code -1} if the index is not known
+     * @param index the approximate index in the pattern of the error, or {@code -1} if the index is
+     *     not known
      */
     public CheckedPatternSyntaxException(String desc, String regex, int index) {
       this(new PatternSyntaxException(desc, regex, index));
@@ -107,17 +103,17 @@ public final class RegexUtil {
     /**
      * Retrieves the error index.
      *
-     * @return the approximate index in the pattern of the error, or {@code -1}
-     *         if the index is not known
+     * @return the approximate index in the pattern of the error, or {@code -1} if the index is not
+     *     known
      */
     public int getIndex() {
       return pse.getIndex();
     }
 
     /**
-     * Returns a multi-line string containing the description of the syntax
-     * error and its index, the erroneous regular-expression pattern, and a
-     * visual indication of the error index within the pattern.
+     * Returns a multi-line string containing the description of the syntax error and its index, the
+     * erroneous regular-expression pattern, and a visual indication of the error index within the
+     * pattern.
      *
      * @return the full detail message
      */
@@ -138,8 +134,8 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns true if the argument is a syntactically valid regular
-   * expression.
+   * Returns true if the argument is a syntactically valid regular expression.
+   *
    * @param s string to check for being a regular expression
    * @return true iff s is a regular expression
    */
@@ -150,8 +146,9 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns true if the argument is a syntactically valid regular
-   * expression with at least the given number of groups.
+   * Returns true if the argument is a syntactically valid regular expression with at least the
+   * given number of groups.
+   *
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
    * @return true iff s is a regular expression with groups groups
@@ -172,8 +169,8 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns true if the argument is a syntactically valid regular
-   * expression.
+   * Returns true if the argument is a syntactically valid regular expression.
+   *
    * @param c char to check for being a regular expression
    * @return true iff c is a regular expression
    */
@@ -188,9 +185,9 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns null if the argument is a syntactically valid regular
-   * expression. Otherwise returns a string describing why the argument is
-   * not a regex.
+   * Returns null if the argument is a syntactically valid regular expression. Otherwise returns a
+   * string describing why the argument is not a regex.
+   *
    * @param s string to check for being a regular expression
    * @return null, or a string describing why the argument is not a regex
    */
@@ -201,9 +198,9 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns null if the argument is a syntactically valid regular
-   * expression with at least the given number of groups. Otherwise returns
-   * a string describing why the argument is not a regex.
+   * Returns null if the argument is a syntactically valid regular expression with at least the
+   * given number of groups. Otherwise returns a string describing why the argument is not a regex.
+   *
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
    * @return null, or a string describing why the argument is not a regex
@@ -224,9 +221,9 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns null if the argument is a syntactically valid regular
-   * expression. Otherwise returns a PatternSyntaxException describing
-   * why the argument is not a regex.
+   * Returns null if the argument is a syntactically valid regular expression. Otherwise returns a
+   * PatternSyntaxException describing why the argument is not a regex.
+   *
    * @param s string to check for being a regular expression
    * @return null, or a PatternSyntaxException describing why the argument is not a regex
    */
@@ -237,9 +234,10 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns null if the argument is a syntactically valid regular
-   * expression with at least the given number of groups. Otherwise returns a
-   * PatternSyntaxException describing why the argument is not a regex.
+   * Returns null if the argument is a syntactically valid regular expression with at least the
+   * given number of groups. Otherwise returns a PatternSyntaxException describing why the argument
+   * is not a regex.
+   *
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
    * @return null, or a PatternSyntaxException describing why the argument is not a regex
@@ -260,9 +258,10 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns the argument as a {@code @Regex String} if it is a regex,
-   * otherwise throws an error. The purpose of this method is to suppress Regex
-   * Checker warnings. It should be very rarely needed.
+   * Returns the argument as a {@code @Regex String} if it is a regex, otherwise throws an error.
+   * The purpose of this method is to suppress Regex Checker warnings. It should be very rarely
+   * needed.
+   *
    * @param s string to check for being a regular expression
    * @return its argument
    * @throws Error if argument is not a regex
@@ -274,10 +273,10 @@ public final class RegexUtil {
   }
 
   /**
-   * Returns the argument as a {@code @Regex(groups) String} if it is a regex
-   * with at least the given number of groups, otherwise throws an error. The
-   * purpose of this method is to suppress Regex Checker warnings. It should
-   * be very rarely needed.
+   * Returns the argument as a {@code @Regex(groups) String} if it is a regex with at least the
+   * given number of groups, otherwise throws an error. The purpose of this method is to suppress
+   * Regex Checker warnings. It should be very rarely needed.
+   *
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
    * @return its argument
@@ -301,11 +300,11 @@ public final class RegexUtil {
   }
 
   /**
-   * Generates an error message for s when expectedGroups are needed, but s
-   * only has actualGroups.
+   * Generates an error message for s when expectedGroups are needed, but s only has actualGroups.
+   *
    * @param s string to check for being a regular expression
-   * @return an error message for s when expectedGroups groups are needed, but s
-   * only has actualGroups groups
+   * @return an error message for s when expectedGroups groups are needed, but s only has
+   *     actualGroups groups
    */
   /*@SideEffectFree*/
   private static String regexErrorMessage(String s, int expectedGroups, int actualGroups) {
@@ -320,6 +319,7 @@ public final class RegexUtil {
 
   /**
    * Return the count of groups in the argument.
+   *
    * @param p pattern whose groups to count
    * @return the count of groups in the argument
    */

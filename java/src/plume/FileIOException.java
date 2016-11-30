@@ -18,9 +18,8 @@ import org.checkerframework.dataflow.qual.*;
 // forget to provide the right type of Reader, too.
 
 /**
- * This class extends IOException by also reporting a file name and line
- * number at which the exception occurred.  It requires use of a
- * {@link LineNumberReader}.
+ * This class extends IOException by also reporting a file name and line number at which the
+ * exception occurred. It requires use of a {@link LineNumberReader}.
  */
 public class FileIOException extends IOException {
   static final long serialVersionUID = 20050923L;
@@ -49,6 +48,7 @@ public class FileIOException extends IOException {
   // This looks like a JDK bug.  -MDE 12/9/2008
   /**
    * Create a FileIOException.
+   *
    * @param cause the exception that occurred
    */
   public FileIOException(/*@Nullable*/ Throwable cause) {
@@ -64,9 +64,9 @@ public class FileIOException extends IOException {
   ///
 
   /**
-   * Create a FileIOException with no known file name or line number (which
-   * is kind of pointless; you might as well just have a regular
-   * exception).
+   * Create a FileIOException with no known file name or line number (which is kind of pointless;
+   * you might as well just have a regular exception).
+   *
    * @param message the detail message
    */
   public FileIOException(/*@Nullable*/ String message) {
@@ -77,6 +77,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param cause the exception that occurred
    */
@@ -94,6 +95,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param fileName the name of the file being read
    * @param lineNumber the line number to which the file has been read
@@ -107,6 +109,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param cause the exception that occurred
    * @param fileName the name of the file being read
@@ -132,8 +135,11 @@ public class FileIOException extends IOException {
   // I cannot infer the filename from the reader, because LineNumberReader
   // gives no access to the underlying stream.
 
-  /** Create a FileIOException.
-   * @param reader the reader for the file being read (used for the line number only; no file name is known)
+  /**
+   * Create a FileIOException.
+   *
+   * @param reader the reader for the file being read (used for the line number only; no file name
+   *     is known)
    * @param cause the exception that occurred
    */
   public FileIOException(/*@Nullable*/ LineNumberReader reader, /*@Nullable*/ Throwable cause) {
@@ -142,9 +148,10 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
-   * @param reader indicates the line number at which the exception occurred;
-   *    there is no known file name
+   * @param reader indicates the line number at which the exception occurred; there is no known file
+   *     name
    */
   public FileIOException(/*@Nullable*/ String message, /*@Nullable*/ LineNumberReader reader) {
     this(message, reader, /*fileName=*/ (/*@Nullable*/ String) null);
@@ -152,6 +159,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param reader the reader for the file being read
    * @param cause the exception that occurred
@@ -169,6 +177,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param reader the reader for the file being read (used for the line number only)
    * @param fileName the name of the file being read
@@ -184,6 +193,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param reader the reader for the file being read (used for the line number only)
    * @param fileName the name of the file being read
    * @param cause the exception that occurred
@@ -201,6 +211,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param reader the reader for the file being read (used for the line number only)
    * @param fileName the name of the file being read
@@ -225,6 +236,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param reader the reader for the file being read (used for the line number only)
    * @param file the file being read (used for its name only)
@@ -236,6 +248,7 @@ public class FileIOException extends IOException {
 
   /**
    * Create a FileIOException.
+   *
    * @param message the detail message for the exception
    * @param reader the reader for the file being read (used for the line number only)
    * @param file the file being read (used for its name only)
@@ -249,7 +262,9 @@ public class FileIOException extends IOException {
     this(message, reader, file.getName(), cause);
   }
 
-  /** Create a FileIOException.
+  /**
+   * Create a FileIOException.
+   *
    * @param reader the reader for the file being read (used for the line number only)
    * @param file the file being read (used for its name only)
    * @param cause the exception that occurred

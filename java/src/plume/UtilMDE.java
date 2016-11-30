@@ -49,7 +49,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -82,8 +81,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Returns true if the cardinality of the intersection of the two
-   * BitSets is at least the given value.
+   * Returns true if the cardinality of the intersection of the two BitSets is at least the given
+   * value.
+   *
    * @param a the first BitSet to intersect
    * @param b the second BitSet to intersect
    * @param i the cardinality bound
@@ -116,8 +116,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns true if the cardinality of the intersection of the three
-   * BitSets is at least the given value.
+   * Returns true if the cardinality of the intersection of the three BitSets is at least the given
+   * value.
+   *
    * @param a the first BitSet to intersect
    * @param b the second BitSet to intersect
    * @param c the third BitSet to intersect
@@ -145,7 +146,9 @@ public final class UtilMDE {
     return (intersectionCardinality(a, b, c) >= i);
   }
 
-  /** Returns the cardinality of the intersection of the two BitSets.
+  /**
+   * Returns the cardinality of the intersection of the two BitSets.
+   *
    * @param a the first BitSet to intersect
    * @param b the second BitSet to intersect
    * @return size(a intersect b)
@@ -158,7 +161,9 @@ public final class UtilMDE {
     return intersection.cardinality();
   }
 
-  /** Returns the cardinality of the intersection of the three BitSets.
+  /**
+   * Returns the cardinality of the intersection of the three BitSets.
+   *
    * @param a the first BitSet to intersect
    * @param b the second BitSet to intersect
    * @param c the third BitSet to intersect
@@ -180,14 +185,13 @@ public final class UtilMDE {
   // Convenience methods for creating InputStreams, Readers, BufferedReaders, and LineNumberReaders.
 
   /**
-   * Returns an InputStream for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns an InputStream for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param file the possibly-compressed file to read
    * @return an InputStream for file
    * @throws IOException if there is trouble reading the file
@@ -207,14 +211,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a Reader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a Reader for the file, accounting for the possibility that the file is compressed. (A
+   * file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to read
    * @return an InputStream for filename
    * @throws IOException if there is trouble reading the file
@@ -227,14 +230,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a Reader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a Reader for the file, accounting for the possibility that the file is compressed. (A
+   * file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param file the possibly-compressed file to read
    * @return an InputStreamReader for file
    * @throws FileNotFoundException if the file cannot be found
@@ -245,14 +247,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a Reader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a Reader for the file, accounting for the possibility that the file is compressed. (A
+   * file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param file the possibly-compressed file to read
    * @param charsetName null, or the name of a Charset to use when reading the file
    * @return an InputStreamReader for file
@@ -272,14 +273,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedReader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedReader for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to read
    * @return a BufferedReader for file
    * @throws FileNotFoundException if the file cannot be found
@@ -291,14 +291,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedReader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedReader for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param file the possibility-compressed file to read
    * @return a BufferedReader for file
    * @throws FileNotFoundException if the file cannot be found
@@ -310,14 +309,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedReader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedReader for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to read
    * @param charsetName the character set to use when reading the file
    * @return a BufferedReader for filename
@@ -330,14 +328,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedReader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedReader for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param file the possibly-compressed file to read
    * @param charsetName the character set to use when reading the file
    * @return a BufferedReader for file
@@ -351,14 +348,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a LineNumberReader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a LineNumberReader for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to read
    * @return a LineNumberReader for filename
    * @throws FileNotFoundException if the file cannot be found
@@ -370,14 +366,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a LineNumberReader for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a LineNumberReader for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param file the possibly-compressed file to read
    * @return a LineNumberReader for file
    * @throws FileNotFoundException if the file cannot be found
@@ -400,14 +395,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedWriter for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedWriter for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to write
    * @return a BufferedWriter for filename
    * @throws IOException if there is trouble writing the file
@@ -417,17 +411,16 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedWriter for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedWriter for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to write
-   * @param append if true, the resulting BufferedWriter appends to the end
-   * of the file instead of the beginning
+   * @param append if true, the resulting BufferedWriter appends to the end of the file instead of
+   *     the beginning
    * @return a BufferedWriter for filename
    * @throws IOException if there is trouble writing the file
    */
@@ -445,17 +438,16 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a BufferedOutputStream for the file, accounting for the possibility
-   * that the file is compressed.
-   * (A file whose name ends with ".gz" is treated as compressed.)
-   * <p>
-   * Warning: The "gzip" program writes and reads files containing
-   * concatenated gzip files.  As of Java 1.4, Java reads
-   * just the first one:  it silently discards all characters (including
-   * gzipped files) after the first gzipped file.
+   * Returns a BufferedOutputStream for the file, accounting for the possibility that the file is
+   * compressed. (A file whose name ends with ".gz" is treated as compressed.)
+   *
+   * <p>Warning: The "gzip" program writes and reads files containing concatenated gzip files. As of
+   * Java 1.4, Java reads just the first one: it silently discards all characters (including gzipped
+   * files) after the first gzipped file.
+   *
    * @param filename the possibly-compressed file to write
-   * @param append if true, the resulting BufferedOutputStream appends to the end
-   * of the file instead of the beginning
+   * @param append if true, the resulting BufferedOutputStream appends to the end of the file
+   *     instead of the beginning
    * @return a BufferedOutputStream for filename
    * @throws IOException if there is trouble writing the file
    */
@@ -473,9 +465,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return true iff sub is a subtype of sup.
-   * If sub == sup, then sub is considered a subtype of sub and this method
-   * returns true.
+   * Return true iff sub is a subtype of sup. If sub == sup, then sub is considered a subtype of sub
+   * and this method returns true.
+   *
    * @param sub class to test for being a subtype
    * @param sup class to test for being a supertype
    * @return true iff sub is a subtype of sup
@@ -517,18 +509,17 @@ public final class UtilMDE {
   }
 
   /**
-   * Like {@link Class#forName(String)}, but also works when the string
-   * represents a primitive type or a fully-qualified name (as opposed to a binary name).
-   * <p>
-   * If the given name can't be found, this method changes the last '.'  to
-   * a dollar sign ($) and tries again.  This accounts for inner classes
-   * that are incorrectly passed in in fully-qualified format instead of
-   * binary format.
-   * <p>
-   * Recall the rather odd specification for {@link Class#forName(String)}:
-   * the argument is a binary name for non-arrays, but a field descriptor
-   * for arrays.  This method uses the same rules, but additionally handles
-   * primitive types and, for non-arrays, fully-qualified names.
+   * Like {@link Class#forName(String)}, but also works when the string represents a primitive type
+   * or a fully-qualified name (as opposed to a binary name).
+   *
+   * <p>If the given name can't be found, this method changes the last '.' to a dollar sign ($) and
+   * tries again. This accounts for inner classes that are incorrectly passed in in fully-qualified
+   * format instead of binary format.
+   *
+   * <p>Recall the rather odd specification for {@link Class#forName(String)}: the argument is a
+   * binary name for non-arrays, but a field descriptor for arrays. This method uses the same rules,
+   * but additionally handles primitive types and, for non-arrays, fully-qualified names.
+   *
    * @param className name of the class
    * @return the Class corresponding to className
    * @throws ClassNotFoundException if the class is not found
@@ -576,9 +567,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a binary name to a field descriptor.
-   * For example, convert "java.lang.Object[]" to "[Ljava/lang/Object;"
-   * or "int" to "I".
+   * Convert a binary name to a field descriptor. For example, convert "java.lang.Object[]" to
+   * "[Ljava/lang/Object;" or "int" to "I".
+   *
    * @param classname name of the class, in binary class name format
    * @return name of the class, in field descriptor format
    */
@@ -602,11 +593,12 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a primitive java type name (e.g., "int", "double", etc.) to
-   * a field descriptor (e.g., "I", "D", etc.).
+   * Convert a primitive java type name (e.g., "int", "double", etc.) to a field descriptor (e.g.,
+   * "I", "D", etc.).
+   *
    * @param primitive_name name of the type, in Java format
    * @return name of the type, in field descriptor format
-   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name.
+   * @throws IllegalArgumentException if primitive_name is not a valid primitive type name
    */
   public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(
       String primitive_name) {
@@ -617,7 +609,9 @@ public final class UtilMDE {
     return result;
   }
 
-  /** Convert from a BinaryName to the format of {@link Class#getName()}.
+  /**
+   * Convert from a BinaryName to the format of {@link Class#getName()}.
+   *
    * @param bn the binary name to convert
    * @return the class name, in Class.getName format
    */
@@ -630,7 +624,9 @@ public final class UtilMDE {
     }
   }
 
-  /** Convert from a FieldDescriptor to the format of {@link Class#getName()}.
+  /**
+   * Convert from a FieldDescriptor to the format of {@link Class#getName()}.
+   *
    * @param fd the class, in field descriptor format
    * @return the class name, in Class.getName format
    */
@@ -645,9 +641,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a fully-qualified argument list from Java format to JVML format.
-   * For example, convert "(java.lang.Integer[], int, java.lang.Integer[][])"
-   * to "([Ljava/lang/Integer;I[[Ljava/lang/Integer;)".
+   * Convert a fully-qualified argument list from Java format to JVML format. For example, convert
+   * "(java.lang.Integer[], int, java.lang.Integer[][])" to
+   * "([Ljava/lang/Integer;I[[Ljava/lang/Integer;)".
+   *
    * @param arglist an argument list, in Java format
    * @return argument list, in JVML format
    */
@@ -683,9 +680,9 @@ public final class UtilMDE {
 
   // does not convert "V" to "void".  Should it?
   /**
-   * Convert a field descriptor to a binary name.
-   * For example, convert "[Ljava/lang/Object;" to "java.lang.Object[]"
-   * or "I" to "int".
+   * Convert a field descriptor to a binary name. For example, convert "[Ljava/lang/Object;" to
+   * "java.lang.Object[]" or "I" to "int".
+   *
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
@@ -715,9 +712,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert an argument list from JVML format to Java format.
-   * For example, convert "([Ljava/lang/Integer;I[[Ljava/lang/Integer;)"
-   * to "(java.lang.Integer[], int, java.lang.Integer[][])".
+   * Convert an argument list from JVML format to Java format. For example, convert
+   * "([Ljava/lang/Integer;I[[Ljava/lang/Integer;)" to "(java.lang.Integer[], int,
+   * java.lang.Integer[][])".
+   *
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
    */
@@ -759,14 +757,13 @@ public final class UtilMDE {
 
   /**
    * This static nested class has no purpose but to define defineClassFromFile.
-   * ClassLoader.defineClass is protected, so I subclass ClassLoader in
-   * order to call defineClass.
+   * ClassLoader.defineClass is protected, so I subclass ClassLoader in order to call defineClass.
    */
   private static class PromiscuousLoader extends ClassLoader {
     /**
-     * Converts the bytes in a file into an instance of
-     * class Class, and also resolves (links) the class.
-     * Delegates the real work to defineClass.
+     * Converts the bytes in a file into an instance of class Class, and also resolves (links) the
+     * class. Delegates the real work to defineClass.
+     *
      * @see ClassLoader#defineClass(String,byte[],int,int)
      * @param className the expected binary name of the class to define, or null if not known
      * @param pathname the file from which to load the class
@@ -794,11 +791,10 @@ public final class UtilMDE {
   private static PromiscuousLoader thePromiscuousLoader = new PromiscuousLoader();
 
   /**
-   * Converts the bytes in a file into an instance of class Class, and
-   * resolves (links) the class.
-   * Like {@link ClassLoader#defineClass(String,byte[],int,int)}, but takes a
-   * file name rather than an array of bytes as an argument, and also resolves
-   * (links) the class.
+   * Converts the bytes in a file into an instance of class Class, and resolves (links) the class.
+   * Like {@link ClassLoader#defineClass(String,byte[],int,int)}, but takes a file name rather than
+   * an array of bytes as an argument, and also resolves (links) the class.
+   *
    * @see ClassLoader#defineClass(String,byte[],int,int)
    * @param className the name of the class to define, or null if not known
    * @param pathname the pathname of a .class file
@@ -817,7 +813,9 @@ public final class UtilMDE {
   ///
 
   // Perhaps abstract out the simpler addToPath from this
-  /** Add the directory to the system classpath.
+  /**
+   * Add the directory to the system classpath.
+   *
    * @param dir directory to add to the system classpath
    */
   public static void addToClasspath(String dir) {
@@ -839,7 +837,9 @@ public final class UtilMDE {
   /// File
   ///
 
-  /** Count the number of lines in the specified file.
+  /**
+   * Count the number of lines in the specified file.
+   *
    * @param filename file whose size to count
    * @return number of lines in filename
    * @throws IOException if there is trouble reading the file
@@ -854,7 +854,9 @@ public final class UtilMDE {
     return count;
   }
 
-  /** Tries to infer the line separator used in a file.
+  /**
+   * Tries to infer the line separator used in a file.
+   *
    * @param filename the file to infer a line separator from
    * @return the inferred line separator used in filename
    * @throws IOException if there is trouble reading the file
@@ -863,7 +865,9 @@ public final class UtilMDE {
     return inferLineSeparator(new File(filename));
   }
 
-  /** Tries to infer the line separator used in a file.
+  /**
+   * Tries to infer the line separator used in a file.
+   *
    * @param file the file to infer a line separator from
    * @return the inferred line separator used in filename
    * @throws IOException if there is trouble reading the file
@@ -906,6 +910,7 @@ public final class UtilMDE {
 
   /**
    * Return true iff files have the same contents.
+   *
    * @param file1 first file to compare
    * @param file2 second file to compare
    * @return true iff the files have the same contents
@@ -917,6 +922,7 @@ public final class UtilMDE {
 
   /**
    * Return true iff the files have the same contents.
+   *
    * @param file1 first file to compare
    * @param file2 second file to compare
    * @param trimLines if true, call String.trim on each line before comparing
@@ -950,9 +956,8 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns true
-   *  if the file exists and is writable, or
-   *  if the file can be created.
+   * Returns true if the file exists and is writable, or if the file can be created.
+   *
    * @param file the file to create and write
    * @return true iff the file can be created and written
    */
@@ -987,24 +992,21 @@ public final class UtilMDE {
   ///
 
   /**
-   * Creates an empty directory in the default temporary-file directory,
-   * using the given prefix and suffix to generate its name. For example,
-   * calling createTempDir("myPrefix", "mySuffix") will create the following
-   * directory: temporaryFileDirectory/myUserName/myPrefix_someString_suffix.
-   * someString is internally generated to ensure no temporary files of the
-   * same name are generated.
-   * @param prefix the prefix string to be used in generating the file's
-   *  name; must be at least three characters long
-   * @param suffix the suffix string to be used in generating the file's
-   *  name; may be null, in which case the suffix ".tmp" will be used Returns:
-   *  An abstract pathname denoting a newly-created empty file
+   * Creates an empty directory in the default temporary-file directory, using the given prefix and
+   * suffix to generate its name. For example, calling createTempDir("myPrefix", "mySuffix") will
+   * create the following directory: temporaryFileDirectory/myUserName/myPrefix_someString_suffix.
+   * someString is internally generated to ensure no temporary files of the same name are generated.
+   *
+   * @param prefix the prefix string to be used in generating the file's name; must be at least
+   *     three characters long
+   * @param suffix the suffix string to be used in generating the file's name; may be null, in which
+   *     case the suffix ".tmp" will be used Returns: An abstract pathname denoting a newly-created
+   *     empty file
    * @return a File representing the newly-created temporary directory
-   * @throws IllegalArgumentException If the prefix argument contains fewer
-   *  than three characters
+   * @throws IllegalArgumentException If the prefix argument contains fewer than three characters
    * @throws IOException If a file could not be created
    * @throws SecurityException If a security manager exists and its
-   *  SecurityManager.checkWrite(java.lang.String) method does not allow a
-   *  file to be created
+   *     SecurityManager.checkWrite(java.lang.String) method does not allow a file to be created
    * @see java.io.File#createTempFile(String, String, File)
    */
   public static File createTempDir(String prefix, String suffix) throws IOException {
@@ -1031,6 +1033,7 @@ public final class UtilMDE {
 
   /**
    * Deletes the directory at dirName and all its files.
+   *
    * @param dirName the directory to delete
    * @return true if and only if the file or directory is successfully deleted; false otherwise
    */
@@ -1040,6 +1043,7 @@ public final class UtilMDE {
 
   /**
    * Deletes the directory at dir and all its files.
+   *
    * @param dir the directory to delete
    * @return true if and only if the file or directory is successfully deleted; false otherwise
    */
@@ -1061,8 +1065,8 @@ public final class UtilMDE {
   // Someone must have already written this.  Right?
 
   /**
-   * A FilenameFilter that accepts files whose name matches the given wildcard.
-   * The wildcard may contain exactly one "*".
+   * A FilenameFilter that accepts files whose name matches the given wildcard. The wildcard may
+   * contain exactly one "*".
    */
   public static final class WildcardFilter implements FilenameFilter {
     String prefix;
@@ -1089,6 +1093,7 @@ public final class UtilMDE {
 
   /**
    * Does tilde expansion on a file name (to the user's home directory).
+   *
    * @param name file whose name to expand
    * @return file with expanded file
    */
@@ -1106,6 +1111,7 @@ public final class UtilMDE {
 
   /**
    * Does tilde expansion on a file name (to the user's home directory).
+   *
    * @param name filename to expand
    * @return expanded filename
    */
@@ -1118,14 +1124,12 @@ public final class UtilMDE {
   }
 
   /**
-   * Return a string version of the name that can be used in Java source.
-   * On Windows, the file will return a backslash separated string.  Since
-   * backslash is an escape character, it must be quoted itself inside
-   * the string.
-   * <p>
-   * The current implementation presumes that backslashes don't appear
-   * in filenames except as windows path separators.  That seems like a
-   * reasonable assumption.
+   * Return a string version of the name that can be used in Java source. On Windows, the file will
+   * return a backslash separated string. Since backslash is an escape character, it must be quoted
+   * itself inside the string.
+   *
+   * <p>The current implementation presumes that backslashes don't appear in filenames except as
+   * windows path separators. That seems like a reasonable assumption.
    *
    * @param name file to quote
    * @return a string version of the name that can be used in Java source
@@ -1141,6 +1145,7 @@ public final class UtilMDE {
 
   /**
    * Writes an Object to a File.
+   *
    * @param o the object to write
    * @param file the file to which to write the object
    * @throws IOException if there is trouble writing the file
@@ -1158,6 +1163,7 @@ public final class UtilMDE {
 
   /**
    * Reads an Object from a File.
+   *
    * @param file the file from which to read
    * @return the object read from the file
    * @throws IOException if there is trouble reading the file
@@ -1178,8 +1184,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Reads the entire contents of the reader and returns it as a string.
-   * Any IOException encountered will be turned into an Error.
+   * Reads the entire contents of the reader and returns it as a string. Any IOException encountered
+   * will be turned into an Error.
+   *
    * @param r the Reader to read
    * @return the entire contents of the reader, as a string
    */
@@ -1199,8 +1206,9 @@ public final class UtilMDE {
 
   // an alternate name would be "fileContents".
   /**
-   * Reads the entire contents of the file and returns it as a string.
-   * Any IOException encountered will be turned into an Error.
+   * Reads the entire contents of the file and returns it as a string. Any IOException encountered
+   * will be turned into an Error.
+   *
    * @param file the file to read
    * @return the entire contents of the reader, as a string
    */
@@ -1224,9 +1232,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Creates a file with the given name and writes the specified string
-   * to it.  If the file currently exists (and is writable) it is overwritten
-   * Any IOException encountered will be turned into an Error.
+   * Creates a file with the given name and writes the specified string to it. If the file currently
+   * exists (and is writable) it is overwritten Any IOException encountered will be turned into an
+   * Error.
+   *
    * @param file the file to write to
    * @param contents the text to put in the file
    */
@@ -1266,8 +1275,9 @@ public final class UtilMDE {
   // is also known as fingerprinting.
 
   /**
-   * Return a hash of the arguments.
-   * Note that this differs from the result of {@link Double#hashCode()}.
+   * Return a hash of the arguments. Note that this differs from the result of {@link
+   * Double#hashCode()}.
+   *
    * @param x value to be hashed
    * @return a hash of the arguments
    */
@@ -1275,7 +1285,9 @@ public final class UtilMDE {
     return hash(Double.doubleToLongBits(x));
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @return a hash of the arguments
@@ -1287,7 +1299,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @param c value to be hashed
@@ -1301,7 +1315,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @return a hash of the arguments
    */
@@ -1316,7 +1332,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @return a hash of the arguments
@@ -1328,9 +1346,9 @@ public final class UtilMDE {
   /// Don't define hash with int args; use the long versions instead.
 
   /**
-   * Return a hash of the arguments.
-   * Note that this differs from the result of {@link Long#hashCode()}.
-   * But it doesn't map -1 and 0 to the same value.
+   * Return a hash of the arguments. Note that this differs from the result of {@link
+   * Long#hashCode()}. But it doesn't map -1 and 0 to the same value.
+   *
    * @param l value to be hashed
    * @return a hash of the arguments
    */
@@ -1348,7 +1366,9 @@ public final class UtilMDE {
     return result;
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @return a hash of the arguments
@@ -1360,7 +1380,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @param c value to be hashed
@@ -1374,7 +1396,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @return a hash of the arguments
    */
@@ -1389,7 +1413,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @return a hash of the arguments
@@ -1398,7 +1424,9 @@ public final class UtilMDE {
     return hash(hash(a), hash(b));
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @return a hash of the arguments
    */
@@ -1406,7 +1434,9 @@ public final class UtilMDE {
     return (a == null) ? 0 : a.hashCode();
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @return a hash of the arguments
@@ -1418,7 +1448,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @param b value to be hashed
    * @param c value to be hashed
@@ -1432,7 +1464,9 @@ public final class UtilMDE {
     return hash(result);
   }
 
-  /** Return a hash of the arguments.
+  /**
+   * Return a hash of the arguments.
+   *
    * @param a value to be hashed
    * @return a hash of the arguments
    */
@@ -1494,9 +1528,9 @@ public final class UtilMDE {
 
   // This must already be implemented someplace else.  Right??
   /**
-   * An Iterator that returns first the elements returned by its first
-   * argument, then the elements returned by its second argument.
-   * Like MergedIterator, but specialized for the case of two arguments.
+   * An Iterator that returns first the elements returned by its first argument, then the elements
+   * returned by its second argument. Like {@link MergedIterator}, but specialized for the case of
+   * two arguments.
    */
   public static final class MergedIterator2<T> implements Iterator<T> {
     Iterator<T> itor1, itor2;
@@ -1527,9 +1561,9 @@ public final class UtilMDE {
 
   // This must already be implemented someplace else.  Right??
   /**
-   * An Iterator that returns the elements in each of its argument
-   * Iterators, in turn.  The argument is an Iterator of Iterators.
-   * Like MergedIterator2, but generalized to arbitrary number of iterators.
+   * An Iterator that returns the elements in each of its argument Iterators, in turn. The argument
+   * is an Iterator of Iterators. Like {@link MergedIterator2}, but generalized to arbitrary number
+   * of iterators.
    */
   public static final class MergedIterator<T> implements Iterator<T> {
     Iterator<Iterator<T>> itorOfItors;
@@ -1601,9 +1635,8 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns an iterator just like its argument, except that the first and
-   * last elements are removed.  They can be accessed via the getFirst and
-   * getLast methods.
+   * Returns an iterator just like its argument, except that the first and last elements are
+   * removed. They can be accessed via the getFirst and getLast methods.
    */
   @SuppressWarnings("assignment.type.incompatible") // problems in DFF branch
   public static final class RemoveFirstAndLastIterator<T> implements Iterator<T> {
@@ -1664,10 +1697,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Return a List containing num_elts randomly chosen
-   * elements from the iterator, or all the elements of the iterator if
-   * there are fewer.  It examines every element of the iterator, but does
-   * not keep them all in memory.
+   * Return a List containing num_elts randomly chosen elements from the iterator, or all the
+   * elements of the iterator if there are fewer. It examines every element of the iterator, but
+   * does not keep them all in memory.
+   *
    * @param <T> type of the iterator elements
    * @param itor elements to be randomly selected from
    * @param num_elts number of elements to select
@@ -1680,10 +1713,10 @@ public final class UtilMDE {
   private static Random r = new Random();
 
   /**
-   * Return a List containing num_elts randomly chosen
-   * elements from the iterator, or all the elements of the iterator if
-   * there are fewer.  It examines every element of the iterator, but does
-   * not keep them all in memory.
+   * Return a List containing num_elts randomly chosen elements from the iterator, or all the
+   * elements of the iterator if there are fewer. It examines every element of the iterator, but
+   * does not keep them all in memory.
+   *
    * @param <T> type of the iterator elements
    * @param itor elements to be randomly selected from
    * @param num_elts number of elements to select
@@ -1728,14 +1761,15 @@ public final class UtilMDE {
   // In Python, inlining this gave a 10x speed improvement.
   // Will the same be true for Java?
   /**
-   * Increment the Integer which is indexed by key in the Map.
-   * If the key isn't in the Map, it is added.
+   * Increment the Integer which is indexed by key in the Map. If the key isn't in the Map, it is
+   * added.
+   *
    * @param <T> type of keys in the map
    * @param m map to have one of its values incremented
    * @param key the key for the element whose value will be incremented
    * @param count how much to increment the value by
    * @return the old value, before it was incremented
-   * @throws Error if the key is in the Map but maps to a non-Integer.
+   * @throws Error if the key is in the Map but maps to a non-Integer
    */
   public static <T> /*@Nullable*/ Integer incrementMap(Map<T, Integer> m, T key, int count) {
     Integer old = m.get(key);
@@ -1748,7 +1782,9 @@ public final class UtilMDE {
     return m.put(key, new Integer(new_total));
   }
 
-  /** Returns a multi-line string representation of a map.
+  /**
+   * Returns a multi-line string representation of a map.
+   *
    * @param <K> type of map keys
    * @param <V> type of map values
    * @param m map to be converted to a string
@@ -1761,11 +1797,12 @@ public final class UtilMDE {
   }
 
   /**
-   * Write a multi-line representation of the map into the given Appendable
-   * (e.g., a StringBuilder).
+   * Write a multi-line representation of the map into the given Appendable (e.g., a StringBuilder).
+   *
    * @param <K> type of map keys
    * @param <V> type of map values
-   * @param sb an Appendable (such as StringBuilder) to which to write a multi-line string representation of m
+   * @param sb an Appendable (such as StringBuilder) to which to write a multi-line string
+   *     representation of m
    * @param m map to be converted to a string
    * @param linePrefix prefix to write at the beginning of each line
    */
@@ -1783,7 +1820,9 @@ public final class UtilMDE {
     }
   }
 
-  /** Returns a sorted version of m.keySet().
+  /**
+   * Returns a sorted version of m.keySet().
+   *
    * @param <K> type of the map keys
    * @param <V> type of the map values
    * @param m a map whose keyset will be sorted
@@ -1796,7 +1835,9 @@ public final class UtilMDE {
     return theKeys;
   }
 
-  /** Returns a sorted version of m.keySet().
+  /**
+   * Returns a sorted version of m.keySet().
+   *
    * @param <K> type of the map keys
    * @param <V> type of the map values
    * @param m a map whose keyset will be sorted
@@ -1815,21 +1856,23 @@ public final class UtilMDE {
   ///
 
   /**
-   * Maps from a comma-delimited string of arg types, such as appears in a
-   * method signature, to an array of Class objects, one for each arg
-   * type. Example keys include: "java.lang.String, java.lang.String,
-   * java.lang.Class[]" and "int,int".
+   * Maps from a comma-delimited string of arg types, such as appears in a method signature, to an
+   * array of Class objects, one for each arg type. Example keys include: "java.lang.String,
+   * java.lang.String, java.lang.Class[]" and "int,int".
    */
   static HashMap<String, Class<?>[]> args_seen = new HashMap<String, Class<?>[]>();
 
   /**
    * Given a method signature, return the method.
-   * Example calls are:
+   *
+   * <p>Example calls are:
+   *
    * <pre>
    * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String, java.lang.String, java.lang.Class[])")
    * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String,java.lang.String,java.lang.Class[])")
    * UtilMDE.methodForName("java.lang.Math.min(int,int)")
    * </pre>
+   *
    * @param method a method signature
    * @return the method corresponding to the given signature
    * @throws ClassNotFoundException if the class is not found
@@ -1887,7 +1930,9 @@ public final class UtilMDE {
     return methodForName(classname, methodname, argclasses);
   }
 
-  /** Given a class name and a method name in that class, return the method.
+  /**
+   * Given a class name and a method name in that class, return the method.
+   *
    * @param classname class in which to find the method
    * @param methodname the method name
    * @param params the parameters of the method
@@ -1910,6 +1955,7 @@ public final class UtilMDE {
 
   /**
    * Execute the given command, and return all its output as a string.
+   *
    * @param command a command to execute on the command line
    * @return all the output of the command
    */
@@ -1919,8 +1965,9 @@ public final class UtilMDE {
 
   /**
    * Execute the given command, and return all its output as a string.
-   * @param command a command to execute on the command line, as a list of
-   * strings (the command, then its arguments)
+   *
+   * @param command a command to execute on the command line, as a list of strings (the command,
+   *     then its arguments)
    * @return all the output of the command
    */
   public static String backticks(List<String> command) {
@@ -1944,6 +1991,7 @@ public final class UtilMDE {
 
   /**
    * Determines whether a property has value "true", "yes", or "1".
+   *
    * @see Properties#getProperty
    * @param p a Properties object in which to look up the property
    * @param key name of the property to look up
@@ -1961,8 +2009,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Set the property to its previous value concatenated to the given value.
-   * Return the previous value.
+   * Set the property to its previous value concatenated to the given value. Return the previous
+   * value.
+   *
    * @param p a Properties object in which to look up the property
    * @param key name of the property to look up
    * @param value value to concatenate to the previous value of the property
@@ -1976,6 +2025,7 @@ public final class UtilMDE {
 
   /**
    * Set the property only if it was not previously set.
+   *
    * @see Properties#getProperty
    * @see Properties#setProperty
    * @param p a Properties object in which to look up the property
@@ -2008,9 +2058,9 @@ public final class UtilMDE {
   // value).
 
   /**
-   * Sets the given field, which may be final and/or private.
-   * Leaves the field accessible.
-   * Intended for use in readObject and nowhere else!
+   * Sets the given field, which may be final and/or private. Leaves the field accessible. Intended
+   * for use in readObject and nowhere else!
+   *
    * @param o object in which to set the field
    * @param fieldName name of field to set
    * @param value new value of field
@@ -2041,9 +2091,8 @@ public final class UtilMDE {
 
   // TODO: set the field back to private after is is accessed.
   /**
-   * Reads the given field, which may be private.
-   * Leaves the field accessible.
-   * Use with care!
+   * Reads the given field, which may be private. Leaves the field accessible. Use with care!
+   *
    * @param o object in which to set the field
    * @param fieldName name of field to set
    * @return new value of field
@@ -2078,9 +2127,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return the object in this set that is equal to key.
-   * The Set abstraction doesn't provide this; it only provides "contains".
-   * Returns null if the argument is null, or if it isn't in the set.
+   * Return the object in this set that is equal to key. The Set abstraction doesn't provide this;
+   * it only provides "contains". Returns null if the argument is null, or if it isn't in the set.
+   *
    * @param set a set in which to look up the value
    * @param key the value to look up in the set
    * @return the object in this set that is equal to key, or null
@@ -2101,7 +2150,9 @@ public final class UtilMDE {
   /// Stream
   ///
 
-  /** Copy the contents of the input stream to the output stream.
+  /**
+   * Copy the contents of the input stream to the output stream.
+   *
    * @param from input stream
    * @param to output stream
    */
@@ -2122,7 +2173,9 @@ public final class UtilMDE {
     }
   }
 
-  /** Return a String containing all the characters from the input stream.
+  /**
+   * Return a String containing all the characters from the input stream.
+   *
    * @param is input stream to read
    * @return a String containing all the characters from the input stream
    */
@@ -2137,8 +2190,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return a new string which is the text of target with all instances of
-   * oldStr replaced by newStr.
+   * Return a new string which is the text of target with all instances of oldStr replaced by
+   * newStr.
+   *
    * @param target the string to do replacement in
    * @param oldStr the substring to replace
    * @param newStr the replacement
@@ -2162,10 +2216,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Return an array of Strings representing the characters between
-   * successive instances of the delimiter character.
-   * Always returns an array of length at least 1 (it might contain only the
+   * Return an array of Strings representing the characters between successive instances of the
+   * delimiter character. Always returns an array of length at least 1 (it might contain only the
    * empty string).
+   *
    * @see #split(String s, String delim)
    * @param s the string to split
    * @param delim delimiter to split the string on
@@ -2185,10 +2239,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Return an array of Strings representing the characters between
-   * successive instances of the delimiter String.
-   * Always returns an array of length at least 1 (it might contain only the
-   * empty string).
+   * Return an array of Strings representing the characters between successive instances of the
+   * delimiter String. Always returns an array of length at least 1 (it might contain only the empty
+   * string).
+   *
    * @see #split(String s, char delim)
    * @param s the string to split
    * @param delim delimiter to split the string on
@@ -2212,11 +2266,11 @@ public final class UtilMDE {
   }
 
   /**
-   * Return an array of Strings, one for each line in the argument.
-   * Always returns an array of length at least 1 (it might contain only the
-   * empty string).  All common line separators (cr, lf, cr-lf, or lf-cr)
-   * are supported.  Note that a string that ends with a line separator
-   * will return an empty string as the last element of the array.
+   * Return an array of Strings, one for each line in the argument. Always returns an array of
+   * length at least 1 (it might contain only the empty string). All common line separators (cr, lf,
+   * cr-lf, or lf-cr) are supported. Note that a string that ends with a line separator will return
+   * an empty string as the last element of the array.
+   *
    * @see #split(String s, char delim)
    * @param s the string to split
    * @return an array of Strings, one for each line in the argument
@@ -2226,12 +2280,14 @@ public final class UtilMDE {
   }
 
   /**
-   * Concatenate the string representations of the array elements, placing the
-   * delimiter between them.
+   * Concatenate the string representations of the array elements, placing the delimiter between
+   * them.
+   *
    * @see plume.ArraysMDE#toString(int[])
    * @param a array of values to concatenate
    * @param delim delimiter to place between printed representations
-   * @return the concatenation of the string representations of the values, with the delimiter between
+   * @return the concatenation of the string representations of the values, with the delimiter
+   *     between
    */
   public static String join(Object[] a, String delim) {
     if (a.length == 0) {
@@ -2248,8 +2304,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Concatenate the string representations of the objects, placing the
-   * system-specific line separator between them.
+   * Concatenate the string representations of the objects, placing the system-specific line
+   * separator between them.
+   *
    * @see plume.ArraysMDE#toString(int[])
    * @param a array of values to concatenate
    * @return the concatenation of the string representations of the values, each on its own line
@@ -2259,12 +2316,13 @@ public final class UtilMDE {
   }
 
   /**
-   * Concatenate the string representations of the objects, placing the
-   * delimiter between them.
+   * Concatenate the string representations of the objects, placing the delimiter between them.
+   *
    * @see java.util.AbstractCollection#toString()
    * @param v list of values to concatenate
    * @param delim delimiter to place between printed representations
-   * @return the concatenation of the string representations of the values, with the delimiter between
+   * @return the concatenation of the string representations of the values, with the delimiter
+   *     between
    */
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) {
@@ -2282,8 +2340,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Concatenate the string representations of the objects, placing the
-   * system-specific line separator between them.
+   * Concatenate the string representations of the objects, placing the system-specific line
+   * separator between them.
+   *
    * @see java.util.AbstractCollection#toString()
    * @param v list of values to concatenate
    * @return the concatenation of the string representations of the values, each on its own line
@@ -2293,11 +2352,11 @@ public final class UtilMDE {
   }
 
   /**
-   * Escape \, ", newline, and carriage-return characters in the
-   * target as \\, \", \n, and \r; return a new string if any
-   * modifications were necessary.  The intent is that by surrounding
-   * the return value with double quote marks, the result will be a
-   * Java string literal denoting the original string.
+   * Escape \, ", newline, and carriage-return characters in the target as \\, \", \n, and \r;
+   * return a new string if any modifications were necessary. The intent is that by surrounding the
+   * return value with double quote marks, the result will be a Java string literal denoting the
+   * original string.
+   *
    * @param orig string to quote
    * @return quoted version of orig
    */
@@ -2344,7 +2403,9 @@ public final class UtilMDE {
 
   // The overhead of this is too high to call in escapeNonJava(String), so
   // it is inlined there.
-  /** Like {@link #escapeNonJava(String)}, but for a single character.
+  /**
+   * Like {@link #escapeNonJava(String)}, but for a single character.
+   *
    * @param ch character to quote
    * @return quoted version och ch
    */
@@ -2365,9 +2426,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Escape unprintable characters in the target, following the usual
-   * Java backslash conventions, so that the result is sure to be
-   * printable ASCII.  Returns a new string.
+   * Escape unprintable characters in the target, following the usual Java backslash conventions, so
+   * that the result is sure to be printable ASCII. Returns a new string.
+   *
    * @param orig string to quote
    * @return quoted version of orig
    */
@@ -2382,8 +2443,11 @@ public final class UtilMDE {
   }
 
   /**
-   * Like escapeNonJava(), but quote more characters so that the
-   * result is sure to be printable ASCII. Not particularly optimized.
+   * Like escapeNonJava(), but quote more characters so that the result is sure to be printable
+   * ASCII.
+   *
+   * <p>This implementatino is not particularly optimized.
+   *
    * @param c character to quote
    * @return quoted version of c
    */
@@ -2416,11 +2480,11 @@ public final class UtilMDE {
   }
 
   /**
-   * Replace "\\", "\"", "\n", and "\r" sequences by their
-   * one-character equivalents.  All other backslashes are removed
-   * (for instance, octal/hex escape sequences are not turned into
-   * their respective characters). This is the inverse operation of
-   * escapeNonJava(). Previously known as unquote().
+   * Replace "\\", "\"", "\n", and "\r" sequences by their one-character equivalents. All other
+   * backslashes are removed (for instance, octal/hex escape sequences are not turned into their
+   * respective characters). This is the inverse operation of escapeNonJava(). Previously known as
+   * unquote().
+   *
    * @param orig string to quoto
    * @return quoted version of orig
    */
@@ -2525,7 +2589,9 @@ public final class UtilMDE {
   // // assert(UtilMDE.trimWhitespace("").equals(""));
   // // assert(UtilMDE.trimWhitespace("   ").equals(""));
 
-  /** Remove all whitespace before or after instances of delimiter.
+  /**
+   * Remove all whitespace before or after instances of delimiter.
+   *
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace abutting
    * @return version of arg, with whitespace abutting delimiter removed
@@ -2536,7 +2602,9 @@ public final class UtilMDE {
     return arg;
   }
 
-  /** Remove all whitespace after instances of delimiter.
+  /**
+   * Remove all whitespace after instances of delimiter.
+   *
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
@@ -2563,7 +2631,9 @@ public final class UtilMDE {
     return arg;
   }
 
-  /** Remove all whitespace before instances of delimiter.
+  /**
+   * Remove all whitespace before instances of delimiter.
+   *
    * @param arg string to remove whitespace in
    * @param delimiter string to remove whitespace before
    * @return version of arg, with whitespace before delimiter removed
@@ -2591,8 +2661,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Return either "n <em>noun</em>" or "n <em>noun</em>s" depending on n.
-   * Adds "es" to words ending with "ch", "s", "sh", or "x".
+   * Return either "n <em>noun</em>" or "n <em>noun</em>s" depending on n. Adds "es" to words ending
+   * with "ch", "s", "sh", or "x".
+   *
    * @param n count of nouns
    * @param noun word being counted
    * @return noun, if n==1; otherwise, pluralization of noun
@@ -2611,8 +2682,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a string of the specified length, truncated if necessary,
-   * and padded with spaces to the left if necessary.
+   * Returns a string of the specified length, truncated if necessary, and padded with spaces to the
+   * left if necessary.
+   *
    * @param s string to truncate or pad
    * @param length goal length
    * @return s truncated or padded to length characters
@@ -2630,8 +2702,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a string of the specified length, truncated if necessary,
-   * and padded with spaces to the right if necessary.
+   * Returns a string of the specified length, truncated if necessary, and padded with spaces to the
+   * right if necessary.
+   *
    * @param s string to truncate or pad
    * @param length goal length
    * @return s truncated or padded to length characters
@@ -2648,7 +2721,9 @@ public final class UtilMDE {
     }
   }
 
-  /** Converts the int to a String, then formats it using {@link #rpad(String,int)}.
+  /**
+   * Converts the int to a String, then formats it using {@link #rpad(String,int)}.
+   *
    * @param num int whose string representation to truncate or pad
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
@@ -2657,7 +2732,9 @@ public final class UtilMDE {
     return rpad(String.valueOf(num), length);
   }
 
-  /** Converts the double to a String, then formats it using {@link #rpad(String,int)}.
+  /**
+   * Converts the double to a String, then formats it using {@link #rpad(String,int)}.
+   *
    * @param num double whose string representation to truncate or pad
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
@@ -2667,8 +2744,7 @@ public final class UtilMDE {
   }
 
   /**
-   * Same as built-in String comparison, but accept null arguments,
-   * and place them at the beginning.
+   * Same as built-in String comparison, but accept null arguments, and place them at the beginning.
    */
   public static class NullableStringComparator implements Comparator<String>, Serializable {
     static final long serialVersionUID = 20150812L;
@@ -2688,7 +2764,9 @@ public final class UtilMDE {
     }
   }
 
-  /** Return the number of times the character appears in the string.
+  /**
+   * Return the number of times the character appears in the string.
+   *
    * @param s string to search in
    * @param ch character to search for
    * @return number of times the character appears in the string
@@ -2703,7 +2781,9 @@ public final class UtilMDE {
     return result;
   }
 
-  /** Return the number of times the second string appears in the first.
+  /**
+   * Return the number of times the second string appears in the first.
+   *
    * @param s string to search in
    * @param sub string to search for
    * @return number of times the substring appears in the string
@@ -2723,12 +2803,13 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return a Vector of the Strings returned by
-   * {@link java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
-   * <p>
-   * The static type is Vector&lt;Object&gt; because StringTokenizer extends
-   * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should
-   * (probably due to backward-compatibility).
+   * Return a Vector of the Strings returned by {@link
+   * java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
+   *
+   * <p>The static type is Vector&lt;Object&gt; because StringTokenizer extends
+   * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should (probably due to
+   * backward-compatibility).
+   *
    * @param str a string to be parsed
    * @param delim the delimiters
    * @param returnDelims flag indicating whether to return the delimiters as tokens
@@ -2739,8 +2820,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Return a Vector of the Strings returned by
-   * {@link java.util.StringTokenizer#StringTokenizer(String,String)} with the given arguments.
+   * Return a Vector of the Strings returned by {@link
+   * java.util.StringTokenizer#StringTokenizer(String,String)} with the given arguments.
+   *
    * @param str a string to be parsed
    * @param delim the delimiters
    * @return vector of strings resulting from tokenization
@@ -2750,8 +2832,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Return a Vector of the Strings returned by
-   * {@link java.util.StringTokenizer#StringTokenizer(String)} with the given arguments.
+   * Return a Vector of the Strings returned by {@link
+   * java.util.StringTokenizer#StringTokenizer(String)} with the given arguments.
+   *
    * @param str a string to be parsed
    * @return vector of strings resulting from tokenization
    */
@@ -2764,8 +2847,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return a String representation of the backtrace of the given Throwable.
-   * To see a backtrace at the the current location, do "backtrace(new Throwable())".
+   * Return a String representation of the backtrace of the given Throwable. To see a backtrace at
+   * the the current location, do {@code backtrace(new Throwable())}.
+   *
    * @param t the Throwable to obtain a backtrace of
    * @return a String representation of the backtrace of the given Throwable
    */
@@ -2783,8 +2867,9 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return the sorted version of the list.  Does not alter the list.
-   * Simply calls Collections.sort(List&lt;T&gt;, Comparator&lt;? super T&gt;).
+   * Return the sorted version of the list. Does not alter the list. Simply calls {@code
+   * Collections.sort(List<T>, Comparator<? super T>)}.
+   *
    * @return a sorted version of the list
    * @param <T> type of elements of the list
    * @param l a list to sort
@@ -2799,8 +2884,8 @@ public final class UtilMDE {
   // This should perhaps be named withoutDuplicates to emphasize that
   // it does not side-effect its argument.
   /**
-   * Return a copy of the list with duplicates removed.
-   * Retains the original order.
+   * Return a copy of the list with duplicates removed. Retains the original order.
+   *
    * @param <T> type of elements of the list
    * @param l a list to remove duplicates from
    * @return a copy of the list with duplicates removed
@@ -2811,20 +2896,21 @@ public final class UtilMDE {
     return result;
   }
 
-  /**
-   * All calls to deepEquals that are currently underway.
-   */
+  /** All calls to deepEquals that are currently underway. */
   private static HashSet<WeakIdentityPair<Object, Object>> deepEqualsUnderway =
       new HashSet<WeakIdentityPair<Object, Object>>();
 
   /**
    * Determines deep equality for the elements.
+   *
    * <ul>
-   * <li>If both are primitive arrays, uses java.util.Arrays.equals.
-   * <li>If both are Object[], uses java.util.Arrays.deepEquals and does not recursively call this method.
-   * <li>If both are lists, uses deepEquals recursively on each element.
-   * <li>For other types, just uses equals() and does not recursively call this method.
+   *   <li>If both are primitive arrays, uses java.util.Arrays.equals.
+   *   <li>If both are Object[], uses java.util.Arrays.deepEquals and does not recursively call this
+   *       method.
+   *   <li>If both are lists, uses deepEquals recursively on each element.
+   *   <li>For other types, just uses equals() and does not recursively call this method.
    * </ul>
+   *
    * @param o1 first value to compare
    * @param o2 second value to comare
    * @return true iff o1 and o2 are deeply equal
@@ -2905,7 +2991,9 @@ public final class UtilMDE {
   /// Vector
   ///
 
-  /** Returns a vector containing the elements of the enumeration.
+  /**
+   * Returns a vector containing the elements of the enumeration.
+   *
    * @param <T> type of the enumeration and vector elements
    * @param e an enumeration to convert to a Vector
    * @return a vector containing the elements of the enumeration
@@ -2922,22 +3010,25 @@ public final class UtilMDE {
   //   v.toArray(new String[0])
 
   /**
-   * Returns a list of lists of each combination (with repetition, but
-   * not permutations) of the specified objects starting at index
-   * start over dims dimensions, for dims &gt; 0.
-   * <p>
-   * For example, create_combinations (1, 0, {a, b, c}) returns:
+   * Returns a list of lists of each combination (with repetition, but not permutations) of the
+   * specified objects starting at index start over dims dimensions, for dims &gt; 0.
+   *
+   * <p>For example, create_combinations (1, 0, {a, b, c}) returns:
+   *
    * <pre>
    *    {a}, {b}, {c}
    * </pre>
+   *
    * And create_combinations (2, 0, {a, b, c}) returns:
+   *
    * <pre>
    *    {a, a}, {a, b}, {a, c}
    *    {b, b}, {b, c},
    *    {c, c}
    * </pre>
+   *
    * @param <T> type of the input list elements, and type of the innermost output list elements
-   * @param dims number of dimensions:  that is, size of each innermost list
+   * @param dims number of dimensions: that is, size of each innermost list
    * @param start initial index
    * @param objs list of elements to
    * @return list of lists of length dims, each of which combines elements from objs
@@ -2971,20 +3062,23 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns a list of lists of each combination (with repetition, but
-   * not permutations) of integers from start to cnt (inclusive) over
-   * arity dimensions.
-   * <p>
-   * For example, create_combinations (1, 0, 2) returns:
+   * Returns a list of lists of each combination (with repetition, but not permutations) of integers
+   * from start to cnt (inclusive) over arity dimensions.
+   *
+   * <p>For example, create_combinations (1, 0, 2) returns:
+   *
    * <pre>
    *    {0}, {1}, {2}
    * </pre>
+   *
    * And create_combinations (2, 0, 2) returns:
+   *
    * <pre>
    *    {0, 0}, {0, 1}, {0, 2}
    *    {1, 1}  {1, 2},
    *    {2, 2}
    * </pre>
+   *
    * @param arity size of each innermost list
    * @param start initial value
    * @param cnt maximum element value
@@ -3015,9 +3109,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns the simple unqualified class name that corresponds to the
-   * specified fully qualified name.  For example, if qualified_name
-   * is java.lang.String, String will be returned.
+   * Returns the simple unqualified class name that corresponds to the specified fully qualified
+   * name. For example, if qualified_name is java.lang.String, String will be returned.
+   *
    * @deprecated use {@link #fullyQualifiedNameToSimpleName} instead.
    * @param qualified_name the fully-qualified name of a class
    * @return the simple unqualified name of the class
@@ -3029,9 +3123,9 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns the simple unqualified class name that corresponds to the
-   * specified fully qualified name.  For example, if qualified_name
-   * is java.lang.String, String will be returned.
+   * Returns the simple unqualified class name that corresponds to the specified fully qualified
+   * name. For example, if qualified_name is java.lang.String, String will be returned.
+   *
    * @param qualified_name the fully-qualified name of a class
    * @return the simple unqualified name of the class
    */
@@ -3049,12 +3143,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Returns the simple unqualified class name that corresponds to the
-   * specified class.  For example if qualified name of the class
-   * is java.lang.String, String will be returned.
+   * Returns the simple unqualified class name that corresponds to the specified class. For example
+   * if qualified name of the class is java.lang.String, String will be returned.
    *
    * @deprecated use {@link Class#getSimpleName()} instead.
-   *
    * @param cls a class
    * @return the simple unqualified name of the class
    */
@@ -3064,10 +3156,10 @@ public final class UtilMDE {
   }
 
   /**
-   * Convert a number into an abbreviation such as "5.00K" for 5000 or
-   * "65.0M" for 65000000.  K stands for 1000, not 1024; M stands for
-   * 1000000, not 1048576, etc.  There are always exactly 3 decimal digits
-   * of precision in the result (counting both sides of the decimal point).
+   * Convert a number into an abbreviation such as "5.00K" for 5000 or "65.0M" for 65000000. K
+   * stands for 1000, not 1024; M stands for 1000000, not 1048576, etc. There are always exactly 3
+   * decimal digits of precision in the result (counting both sides of the decimal point).
+   *
    * @param val a numeric value
    * @return an abbreviated string representation of the value
    */

@@ -125,7 +125,7 @@ JAVA_CPP_FILES := $(shell find src  -name '*.java.jpp' -print | sort)
 JAVA_AND_CPP_FILES := ${JAVA_FILES} ${JAVA_CPP_FILES}
 
 # Files whose style we can automatically check
-JAVA_FILES_FOR_STYLE ?= $(sort $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort))
+JAVA_FILES_FOR_STYLE ?= $(shell find src -name '*.java' -print | grep -v '\.\#' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java | grep -v MathMDE.java | sort)
 
 ## This is not necessary; the scripts java-cygwin, javac-cygwin, and
 ## javadoc-cygwin do the path translation.
@@ -189,6 +189,7 @@ endif
 export CLASSPATH
 
 default: jar
+# No need for optionsdoc here, because javadoc depends on optionsdoc
 all: jar javadoc
 
 # Must not depend on javadoc, since javadoc depends on it
@@ -534,11 +535,18 @@ checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
 
-reformat: ${JAVA_AND_CPP_FILES}
-	../bin/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+get-run-google-java-format:
+	@-git -C .run-google-java-format pull -q || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
 
-check-format: ${JAVA_AND_CPP_FILES}
-	../bin/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+# Requires Java 8
+reformat:
+	${MAKE} get-run-google-java-format
+	@.run-google-java-format/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+
+# Requires Java 8
+check-format:
+	${MAKE} get-run-google-java-format
+	@.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format
 

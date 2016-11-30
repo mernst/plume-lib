@@ -7,8 +7,8 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * Mutable pair class:
- * type-safely holds two objects of possibly-different types.
+ * Mutable pair class: type-safely holds two objects of possibly-different types.
+ *
  * @param <T1> the type of the first element of the pair
  * @param <T2> the type of the second element of the pair
  */
@@ -18,7 +18,9 @@ public class Pair<T1 extends /*@Nullable*/ Object, T2 extends /*@Nullable*/ Obje
   /** The second element of the pair. */
   public T2 b;
 
-  /** Make a new pair.
+  /**
+   * Make a new pair.
+   *
    * @param a the first element of the pair
    * @param b the second element of the pair
    */
@@ -27,7 +29,9 @@ public class Pair<T1 extends /*@Nullable*/ Object, T2 extends /*@Nullable*/ Obje
     this.b = b;
   }
 
-  /** Factory method with short name and no need to name type parameters.
+  /**
+   * Factory method with short name and no need to name type parameters.
+   *
    * @param <A> type of first argument
    * @param <B> type of second argument
    * @param a first argument

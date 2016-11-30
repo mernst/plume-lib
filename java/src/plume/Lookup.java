@@ -17,109 +17,105 @@ import org.checkerframework.checker.regex.qual.*;
 */
 
 /**
- * Lookup searches a set of files, much like <code>grep</code> does.  However,
- * Lookup searches by entry (by default, paragraphs) rather than by line,
- * respects comments (ignores matches within them), respects
- * <code>\include</code> directives (searches the named file), and has other
- * features. <p>
+ * Lookup searches a set of files, much like <code>grep</code> does. However, Lookup searches by
+ * entry (by default, paragraphs) rather than by line, respects comments (ignores matches within
+ * them), respects <code>\include</code> directives (searches the named file), and has other
+ * features.
  *
- * Each search criterion is a keyword or regular expression.  Lookup
- * outputs each <em>entry</em> that matches all the search criteria. <p>
+ * <p>Each search criterion is a keyword or regular expression. Lookup outputs each <em>entry</em>
+ * that matches all the search criteria.
  *
- * By default, search criteria are treated as keywords, and each paragraph
- * is treated as an entry &mdash; in other words, Lookup prints each
- * paragraph (in any of the files) that contains all the keywords,
- * essentially performing paragraph-wise grep. <p>
+ * <p>By default, search criteria are treated as keywords, and each paragraph is treated as an entry
+ * &mdash; in other words, Lookup prints each paragraph (in any of the files) that contains all the
+ * keywords, essentially performing paragraph-wise grep.
  *
- * A file can contain one or more entries, each of which is a short entry
- * or a long entry.
+ * <p>A file can contain one or more entries, each of which is a short entry or a long entry.
+ *
  * <ul>
- *   <li>A short entry is a single paragraph (delimited from the next entry
- *       by a blank line).  Lookup searches all of a short entry.</li>
- *   <li>A long entry is introduced by a line that begins with '&gt;entry'.  The
- *       remainder of that line is a one-line description of the entry.  A
- *       long entry is terminated by '&lt;entry', by the start of a new long
- *       entry, or by the start of a new file.  Lookup searches only the first
- *       line of a long entry.</li>
+ *   <li>A short entry is a single paragraph (delimited from the next entry by a blank line). Lookup
+ *       searches all of a short entry.
+ *   <li>A long entry is introduced by a line that begins with '&gt;entry'. The remainder of that
+ *       line is a one-line description of the entry. A long entry is terminated by '&lt;entry', by
+ *       the start of a new long entry, or by the start of a new file. Lookup searches only the
+ *       first line of a long entry.
  * </ul>
  *
- * If multiple entries match, the first line of each is printed.  If only
- * one entry matches, then that entry is printed in its entirety. <p>
+ * If multiple entries match, the first line of each is printed. If only one entry matches, then
+ * that entry is printed in its entirety.
  *
- * By default, Lookup searches the file ~/lookup/root.  Files can
- * contain comments and can include other files.  Comments start with
- * a % sign in the first column.  Any comment line is ignored (it is
- * not treated as a blank line for the purpose of separating entries).
- * A file can include another file via a line of the form
- * '\include{filename}'. <p>
+ * <p>By default, Lookup searches the file ~/lookup/root. Files can contain comments and can include
+ * other files. Comments start with a % sign in the first column. Any comment line is ignored (it is
+ * not treated as a blank line for the purpose of separating entries). A file can include another
+ * file via a line of the form '\include{filename}'.
  *
- * The default behavior can be customized by way of command-line options. <p>
+ * <p>The default behavior can be customized by way of command-line options.
  *
- * The <a name="command-line-options">command-line options</a> are as follows:
+ * <p>The <a name="command-line-options">command-line options</a> are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ *
  * <ul>
  *   <li id="optiongroup:Getting-help">Getting help
- *     <ul>
- *       <li id="option:help"><b>-h</b> <b>--help=</b><i>boolean</i>.
- *        Show detailed help information and exit. [default false]</li>
- *       <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>.
- *        Print progress information [default false]</li>
- *     </ul>
- *   </li>
+ *       <ul>
+ *         <li id="option:help"><b>-h</b> <b>--help=</b><i>boolean</i>. Show detailed help
+ *             information and exit. [default false]
+ *         <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress
+ *             information [default false]
+ *       </ul>
+ *
  *   <li id="optiongroup:Where-to-search">Where to search
- *     <ul>
- *       <li id="option:entry-file"><b>-f</b> <b>--entry-file=</b><i>string</i>.
- *        Specify the colon-separated search list for the file that contains
- *  information to be searched.  Only the first file found is used, though
- *  it may itself contain include directives. [default ~/lookup/root]</li>
- *       <li id="option:search-body"><b>-b</b> <b>--search-body=</b><i>boolean</i>.
- *        Search the body of long entries in addition to the entry's
- *  description.  The bodies of short entries are always searched. [default false]</li>
- *     </ul>
- *   </li>
+ *       <ul>
+ *         <li id="option:entry-file"><b>-f</b> <b>--entry-file=</b><i>string</i>. Specify the
+ *             colon-separated search list for the file that contains information to be searched.
+ *             Only the first file found is used, though it may itself contain include directives.
+ *             [default ~/lookup/root]
+ *         <li id="option:search-body"><b>-b</b> <b>--search-body=</b><i>boolean</i>. Search the
+ *             body of long entries in addition to the entry's description. The bodies of short
+ *             entries are always searched. [default false]
+ *       </ul>
+ *
  *   <li id="optiongroup:What-to-search-for">What to search for
- *     <ul>
- *       <li id="option:regular-expressions"><b>-e</b> <b>--regular-expressions=</b><i>boolean</i>.
- *        Specifies that keywords are regular expressions.  If false, keywords
- *  are text matches. [default false]</li>
- *       <li id="option:case-sensitive"><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>.
- *        If true, keywords matching is case sensistive.  By default, both
- *  regular expressions and text keywords are case-insensitive. [default false]</li>
- *       <li id="option:word-match"><b>-w</b> <b>--word-match=</b><i>boolean</i>.
- *        If true, match a text keyword only as a separate word, not as a
- *  substring of a word.  This option is ignored if
- *  regular_expressions is true. [default false]</li>
- *     </ul>
- *   </li>
+ *       <ul>
+ *         <li id="option:regular-expressions"><b>-e</b>
+ *             <b>--regular-expressions=</b><i>boolean</i>. Specifies that keywords are regular
+ *             expressions. If false, keywords are text matches. [default false]
+ *         <li id="option:case-sensitive"><b>-c</b> <b>--case-sensitive=</b><i>boolean</i>. If true,
+ *             keywords matching is case sensistive. By default, both regular expressions and text
+ *             keywords are case-insensitive. [default false]
+ *         <li id="option:word-match"><b>-w</b> <b>--word-match=</b><i>boolean</i>. If true, match a
+ *             text keyword only as a separate word, not as a substring of a word. This option is
+ *             ignored if regular_expressions is true. [default false]
+ *       </ul>
+ *
  *   <li id="optiongroup:How-to-print-matches">How to print matches
- *     <ul>
- *       <li id="option:print-all"><b>-a</b> <b>--print-all=</b><i>boolean</i>.
- *        By default, if multiple entries are matched, only a synopsis
- *  of each entry is printed.  If 'print_all' is selected then
- *  the body of each matching entry is printed. [default false]</li>
- *       <li id="option:item-num"><b>-i</b> <b>--item-num=</b><i>integer</i>.
- *        Specifies which item to print when there are multiple matches.
- *  The index is 1-based; that is, it starts counting at 1.</li>
- *       <li id="option:show-location"><b>-l</b> <b>--show-location=</b><i>boolean</i>.
- *        If true, show the filename/line number of each matching entry
- *  in the output. [default false]</li>
- *     </ul>
- *   </li>
- *   <li id="optiongroup:Customizing-format-of-files-to-be-searched">Customizing format of files to be searched
- *     <ul>
- *       <li id="option:entry-start-re"><b>--entry-start-re=</b><i>regex</i>.
- *        Regex that denotes the start of a long entry [default ^&gt;entry *()]</li>
- *       <li id="option:entry-stop-re"><b>--entry-stop-re=</b><i>regex</i>.
- *        Regex that denotes the end of a long entry [default ^&lt;entry]</li>
- *       <li id="option:description-re"><b>--description-re=</b><i>regex</i>.
- *        Regex that finds an entry's description (for long entries)</li>
- *       <li id="option:comment-re"><b>--comment-re=</b><i>string</i>.
- *        Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
- *       <li id="option:include-re"><b>--include-re=</b><i>string</i>.
- *        Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
- *     </ul>
- *   </li>
+ *       <ul>
+ *         <li id="option:print-all"><b>-a</b> <b>--print-all=</b><i>boolean</i>. By default, if
+ *             multiple entries are matched, only a synopsis of each entry is printed. If
+ *             'print_all' is selected then the body of each matching entry is printed. [default
+ *             false]
+ *         <li id="option:item-num"><b>-i</b> <b>--item-num=</b><i>integer</i>. Specifies which item
+ *             to print when there are multiple matches. The index is 1-based; that is, it starts
+ *             counting at 1.
+ *         <li id="option:show-location"><b>-l</b> <b>--show-location=</b><i>boolean</i>. If true,
+ *             show the filename/line number of each matching entry in the output. [default false]
+ *       </ul>
+ *
+ *   <li id="optiongroup:Customizing-format-of-files-to-be-searched">Customizing format of files to
+ *       be searched
+ *       <ul>
+ *         <li id="option:entry-start-re"><b>--entry-start-re=</b><i>regex</i>. Regex that denotes
+ *             the start of a long entry [default ^&gt;entry *()]
+ *         <li id="option:entry-stop-re"><b>--entry-stop-re=</b><i>regex</i>. Regex that denotes the
+ *             end of a long entry [default ^&lt;entry]
+ *         <li id="option:description-re"><b>--description-re=</b><i>regex</i>. Regex that finds an
+ *             entry's description (for long entries)
+ *         <li id="option:comment-re"><b>--comment-re=</b><i>string</i>. Regex that matches an
+ *             entire comment (not just a comment start) [default ^%.*]
+ *         <li id="option:include-re"><b>--include-re=</b><i>string</i>. Regex that matches an
+ *             include directive; group 1 is the file name [default \\include\{(.*)\}]
+ *       </ul>
+ *
  * </ul>
+ *
  * <!-- end options doc -->
  */
 public final class Lookup {
@@ -143,9 +139,8 @@ public final class Lookup {
   // or by taking over this one, or by the syntax of the separator, or in
   // some other way) specifying multiple files on the command line.
   /**
-   * Specify the colon-separated search list for the file that contains
-   * information to be searched.  Only the first file found is used, though
-   * it may itself contain include directives.
+   * Specify the colon-separated search list for the file that contains information to be searched.
+   * Only the first file found is used, though it may itself contain include directives.
    */
   @OptionGroup("Where to search")
   @Option(
@@ -153,55 +148,47 @@ public final class Lookup {
   public static String entry_file = "~/lookup/root";
 
   /**
-   * Search the body of long entries in addition to the entry's
-   * description.  The bodies of short entries are always searched.
+   * Search the body of long entries in addition to the entry's description. The bodies of short
+   * entries are always searched.
    */
   @Option("-b Search body of long entries for matches")
   public static boolean search_body = false;
 
-  /**
-   * Specifies that keywords are regular expressions.  If false, keywords
-   * are text matches.
-   */
+  /** Specifies that keywords are regular expressions. If false, keywords are text matches. */
   @OptionGroup("What to search for")
   @Option("-e Keywords are regular expressions")
   public static boolean regular_expressions = false;
 
   /**
-   * If true, keywords matching is case sensistive.  By default, both
-   * regular expressions and text keywords are case-insensitive.
+   * If true, keywords matching is case sensistive. By default, both regular expressions and text
+   * keywords are case-insensitive.
    */
   @Option("-c Keywords are case sensistive")
   public static boolean case_sensitive = false;
 
   /**
-   * If true, match a text keyword only as a separate word, not as a
-   * substring of a word.  This option is ignored if
-   * regular_expressions is true.
+   * If true, match a text keyword only as a separate word, not as a substring of a word. This
+   * option is ignored if regular_expressions is true.
    */
   @Option("-w Only match text keywords against complete words")
   public static boolean word_match = false;
 
   /**
-   * By default, if multiple entries are matched, only a synopsis
-   * of each entry is printed.  If 'print_all' is selected then
-   * the body of each matching entry is printed.
+   * By default, if multiple entries are matched, only a synopsis of each entry is printed. If
+   * 'print_all' is selected then the body of each matching entry is printed.
    */
   @OptionGroup("How to print matches")
   @Option("-a Print the entire entry for each match")
   public static boolean print_all = false;
 
   /**
-   * Specifies which item to print when there are multiple matches.
-   * The index is 1-based; that is, it starts counting at 1.
+   * Specifies which item to print when there are multiple matches. The index is 1-based; that is,
+   * it starts counting at 1.
    */
   @Option("-i Choose a specific item when there are multiple matches; index is 1-based")
   public static /*@Nullable*/ Integer item_num;
 
-  /**
-   * If true, show the filename/line number of each matching entry
-   * in the output.
-   */
+  /** If true, show the filename/line number of each matching entry in the output. */
   @Option("-l Show the location of each matching entry")
   public static boolean show_location = false;
 
@@ -229,8 +216,8 @@ public final class Lookup {
   private static String usage_string = "lookup [options] <keyword> ...";
 
   /**
-   * Look for the specified keywords in the file(s) and print
-   * the corresponding entries.
+   * Look for the specified keywords in the file(s) and print the corresponding entries.
+   *
    * @param args command-line arguments; see documentation
    * @throws IOException if there is a problem reading a file
    */
@@ -358,9 +345,7 @@ public final class Lookup {
     } catch (FileNotFoundException e) {
       System.out.printf(
           "Error: Can't read %s at line %d in file %s%n",
-          e.getMessage(),
-          reader.getLineNumber(),
-          reader.getFileName());
+          e.getMessage(), reader.getLineNumber(), reader.getFileName());
       System.exit(254);
     }
 
@@ -422,7 +407,8 @@ public final class Lookup {
   }
 
   /**
-   * Returns the next entry.  If no more entries are available, returns null.
+   * Returns the next entry. If no more entries are available, returns null.
+   *
    * @param reader where to read the entry from
    * @return the next entry, or null
    * @throws IOException if there is a problem reading a file
@@ -494,15 +480,15 @@ public final class Lookup {
     } catch (FileNotFoundException e) {
       System.out.printf(
           "Error: Can't read %s at line %d in file %s%n",
-          e.getMessage(),
-          reader.getLineNumber(),
-          reader.getFileName());
+          e.getMessage(), reader.getLineNumber(), reader.getFileName());
       System.exit(254);
       return (null);
     }
   }
 
-  /** Returns the first line of entry.
+  /**
+   * Returns the first line of entry.
+   *
    * @param entry the entry whose first line to return
    * @return the first line of entry
    */

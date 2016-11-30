@@ -12,18 +12,16 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * Routines for doing approximate ('fuzzy') floating point comparisons.
- * Those are comparisons that only require the floating point numbers to be
- * relatively close to one another to be equal, rather than exactly
- * equal. <p>
+ * Routines for doing approximate ('fuzzy') floating point comparisons. Those are comparisons that
+ * only require the floating point numbers to be relatively close to one another to be equal, rather
+ * than exactly equal.
  *
- * Floating point numbers are compared for equality by dividing them by
- * one another and comparing the ratio.  By default they must be within
- * 0.0001 (0.01%) to be considered equal; supply this value to the
- * FuzzyFloat constructor, or set the value with the set_rel_diff method.
- * Note that zero is never equal to a non-zero number using this method. <p>
+ * <p>Floating point numbers are compared for equality by dividing them by one another and comparing
+ * the ratio. By default they must be within 0.0001 (0.01%) to be considered equal; supply this
+ * value to the FuzzyFloat constructor, or set the value with the set_rel_diff method. Note that
+ * zero is never equal to a non-zero number using this method.
  *
- * Two NaN floats are not considered equal (consistent with the == operator).
+ * <p>Two NaN floats are not considered equal (consistent with the == operator).
  */
 public class FuzzyFloat {
 
@@ -33,22 +31,19 @@ public class FuzzyFloat {
   double max_ratio = 1.0001;
 
   /**
-   * True if ratio test turned off.
-   * This occurs exactly if the class is instantiated with the relative
-   * difference 0.
+   * True if ratio test turned off. This occurs exactly if the class is instantiated with the
+   * relative difference 0.
    */
   boolean off = false;
 
-  /**
-   * Creates a FuzzyFloat with the default rel_diff value of .0001.
-   */
+  /** Creates a FuzzyFloat with the default rel_diff value of .0001. */
   public FuzzyFloat() {}
 
   /**
-   * Creates a FuzzyFloat.
-   * Specify the specific relative difference allowed between two
-   * floats in order for them to be equal.  The default is 0.0001
-   * a relative diff of zero, disables it (i.e., only exact matches work).
+   * Creates a FuzzyFloat. Specify the specific relative difference allowed between two floats in
+   * order for them to be equal. The default is 0.0001 a relative diff of zero, disables it (i.e.,
+   * only exact matches work).
+   *
    * @param rel_diff the relative diff to use
    */
   public FuzzyFloat(double rel_diff) {
@@ -57,6 +52,7 @@ public class FuzzyFloat {
 
   /**
    * Set all the fields of this class.
+   *
    * @param rel_diff the new relative diff to use
    * @see #FuzzyFloat
    */
@@ -70,12 +66,11 @@ public class FuzzyFloat {
   }
 
   /**
-   * Test d1 and d2 for equality using the current ratio.  Two NaN floats
-   * are not considered equal (consistent with the == operator). <p>
+   * Test d1 and d2 for equality using the current ratio. Two NaN floats are not considered equal
+   * (consistent with the == operator).
    *
-   * Note that if one of the numbers if 0.0, then the other number must
-   * be less than the square of the fuzzy ratio.  This policy accommodates
-   * round off errors in floating point values.
+   * <p>Note that if one of the numbers if 0.0, then the other number must be less than the square
+   * of the fuzzy ratio. This policy accommodates round off errors in floating point values.
    *
    * @param d1 the first value to compare
    * @param d2 the first value to compare
@@ -126,6 +121,7 @@ public class FuzzyFloat {
 
   /**
    * Test d1 and d2 for non-equality using the current ratio.
+   *
    * @param d1 the first value to compare
    * @param d2 the first value to compare
    * @return whether d1 and d2 are non-equal
@@ -137,8 +133,8 @@ public class FuzzyFloat {
   }
 
   /**
-   * Test d1 and d2 for d1 &lt; d2.  If d1 is equal to d2 using the current ratio
-   * this returns false.
+   * Test d1 and d2 for d1 &lt; d2. If d1 is equal to d2 using the current ratio this returns false.
+   *
    * @param d1 the first value to compare
    * @param d2 the first value to compare
    * @return whether d1 &lt; d2
@@ -150,8 +146,8 @@ public class FuzzyFloat {
   }
 
   /**
-   * test d1 and  d2 for d1 &le; d2.  If d1 is equal to d2 using the current
-   * ratio, this returns true.
+   * test d1 and d2 for d1 &le; d2. If d1 is equal to d2 using the current ratio, this returns true.
+   *
    * @param d1 the first value to compare
    * @param d2 the first value to compare
    * @return whether d1 &le; d2
@@ -163,8 +159,9 @@ public class FuzzyFloat {
   }
 
   /**
-   * test d1 and d2  for d1 &gt; d2.  IF d1 is equal to d2 using the current
-   * ratio, this returns false.
+   * test d1 and d2 for d1 &gt; d2. IF d1 is equal to d2 using the current ratio, this returns
+   * false.
+   *
    * @param d1 the first value to compare
    * @param d2 the first value to compare
    * @return whether d1 &gt; d2
@@ -176,8 +173,8 @@ public class FuzzyFloat {
   }
 
   /**
-   * test d1 and  d2 for d1 &gt; d2.  If d1 is equal to d2 using the current
-   * ratio, this returns true.
+   * test d1 and d2 for d1 &gt; d2. If d1 is equal to d2 using the current ratio, this returns true.
+   *
    * @param d1 the first value to compare
    * @param d2 the first value to compare
    * @return whether d1 &gt; d2
@@ -189,13 +186,13 @@ public class FuzzyFloat {
   }
 
   /**
-   * Searches for the first occurrence of elt in a.  elt is considered
-   * equal to a[i] if it passes the {@link #eq} test.
+   * Searches for the first occurrence of elt in a. elt is considered equal to a[i] if it passes the
+   * {@link #eq} test.
    *
    * @param a the array to search
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -209,14 +206,13 @@ public class FuzzyFloat {
   }
 
   /**
-   * Searches for the first subsequence of a that matches sub elementwise.
-   * Elements of sub are considered to match elements of a if they pass
-   * the {@link #eq} test.
+   * Searches for the first subsequence of a that matches sub elementwise. Elements of sub are
+   * considered to match elements of a if they pass the {@link #eq} test.
    *
    * @param a the sequence to search in
    * @param sub the sequence to search for
-   * @return the first index whose subarray is equal to the specified array
-   *    or -1 if no such subarray is found in the array
+   * @return the first index whose subarray is equal to the specified array or -1 if no such
+   *     subarray is found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -238,12 +234,11 @@ public class FuzzyFloat {
   }
 
   /**
-   * Determines whether or not a1 and a2 are set equivalent (contain only the
-   * same elements).  Element comparison uses {@link #eq}. <p>
+   * Determines whether or not a1 and a2 are set equivalent (contain only the same elements).
+   * Element comparison uses {@link #eq}.
    *
-   * Note that this implementation is optimized for cases where the
-   * elements are actually the same, since it does a sort of both arrays
-   * before starting the comparisons.
+   * <p>Note that this implementation is optimized for cases where the elements are actually the
+   * same, since it does a sort of both arrays before starting the comparisons.
    *
    * @param a1 the first value to compare
    * @param a2 the first value to compare
@@ -329,9 +324,7 @@ public class FuzzyFloat {
   //     return (true);
   //     }
 
-  /**
-   * Lexically compares two double arrays.
-   */
+  /** Lexically compares two double arrays. */
   public class DoubleArrayComparatorLexical implements Comparator<double[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
@@ -358,17 +351,15 @@ public class FuzzyFloat {
   }
 
   /**
-   * Determines whether smaller is a subset of bigger.  Element
-   * comparison uses {@link #eq}. <p>
+   * Determines whether smaller is a subset of bigger. Element comparison uses {@link #eq}.
    *
-   * Note that this implementation is optimized for cases where the
-   * elements are actually the same, since it does a sort of both
-   * arrays before starting the comparisons.
+   * <p>Note that this implementation is optimized for cases where the elements are actually the
+   * same, since it does a sort of both arrays before starting the comparisons.
    *
    * @param smaller the possibly-smaller subset
    * @param bigger the possibly-larger set
-   * @return true if smaller is a subset (each element of smaller is
-   * also a element of bigger) of bigger, false otherwise
+   * @return true if smaller is a subset (each element of smaller is also a element of bigger) of
+   *     bigger, false otherwise
    */
   @SuppressWarnings("purity") // side effect to local state (arrays)
   /*@Pure*/

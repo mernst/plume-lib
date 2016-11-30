@@ -13,7 +13,6 @@
 package plume;
 
 import com.google.common.reflect.ClassPath;
-import com.google.common.reflect.ClassPath.ClassInfo;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -54,10 +53,7 @@ public class DeclarationAnnotations {
         if (debug) {
           System.out.printf(
               "Trouble in getAnnotation(Target.class): %s: %s: %s \"%s\"%n",
-              ci,
-              c,
-              e.getClass(),
-              e.getMessage());
+              ci, c, e.getClass(), e.getMessage());
         }
       }
       if (anno != null) {

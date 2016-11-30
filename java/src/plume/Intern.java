@@ -13,17 +13,14 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * Utilities for interning objects.  Interning is also known as
- * canonicalization or hash-consing:  it returns a single representative
- * object that <code>.equals()</code> the object, and the client discards the
- * argument and uses the result instead.  Since only one object exists for
- * every set of equal objects, space usage is reduced.  Time may also be
- * reduced, since it is possible to use <code>==</code> instead of
- * <code>.equals()</code> for comparisons.
- * <p>
+ * Utilities for interning objects. Interning is also known as canonicalization or hash-consing: it
+ * returns a single representative object that {@link Object#equals} the object, and the client
+ * discards the argument and uses the result instead. Since only one object exists for every set of
+ * equal objects, space usage is reduced. Time may also be reduced, since it is possible to use
+ * <code>==</code> instead of <code>.equals()</code> for comparisons.
  *
- * Java builds in interning for Strings, but not for other objects.  The
- * methods in this class extend interning to all Java objects.
+ * <p>Java builds in interning for Strings, but not for other objects. The methods in this class
+ * extend interning to all Java objects.
  */
 public final class Intern {
 
@@ -37,8 +34,9 @@ public final class Intern {
   ///
 
   /**
-   * Replace each element of the array by its interned version.
-   * Side-effects the array, but also returns it.
+   * Replace each element of the array by its interned version. Side-effects the array, but also
+   * returns it.
+   *
    * @param a the array whose elements to intern in place
    * @return an interned version of a
    * @see String#intern
@@ -58,8 +56,8 @@ public final class Intern {
   ///
 
   /**
-   * Return true if the argument is interned (is canonical among all
-   * objects equal to itself).
+   * Return true if the argument is interned (is canonical among all objects equal to itself).
+   *
    * @param value the value to test for interning
    * @return true iff value is interned
    */
@@ -99,8 +97,9 @@ public final class Intern {
   ///
 
   /**
-   * Hasher object which hashes and compares Integers.
-   * This is the obvious implementation that uses intValue() for the hashCode.
+   * Hasher object which hashes and compares Integers. This is the obvious implementation that uses
+   * intValue() for the hashCode.
+   *
    * @see Hasher
    */
   private static final class IntegerHasher implements Hasher {
@@ -117,8 +116,9 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares Longs.
-   * This is the obvious implementation that uses intValue() for the hashCode.
+   * Hasher object which hashes and compares Longs. This is the obvious implementation that uses
+   * intValue() for the hashCode.
+   *
    * @see Hasher
    */
   private static final class LongHasher implements Hasher {
@@ -135,8 +135,8 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares int[] objects according
-   * to their contents.
+   * Hasher object which hashes and compares int[] objects according to their contents.
+   *
    * @see Hasher
    * @see Arrays#equals(int[], int[])
    */
@@ -153,8 +153,8 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares long[] objects according
-   * to their contents.
+   * Hasher object which hashes and compares long[] objects according to their contents.
+   *
    * @see Hasher
    * @see Arrays#equals (long[], long[])
    */
@@ -176,6 +176,7 @@ public final class Intern {
 
   /**
    * Hasher object which hashes and compares Doubles.
+   *
    * @see Hasher
    */
   private static final class DoubleHasher implements Hasher {
@@ -192,8 +193,8 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares double[] objects according
-   * to their contents.
+   * Hasher object which hashes and compares double[] objects according to their contents.
+   *
    * @see Hasher
    * @see Arrays#equals(Object[],Object[])
    */
@@ -233,10 +234,10 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares String[] objects according
-   * to their contents.
+   * Hasher object which hashes and compares String[] objects according to their contents.
+   *
    * @see Hasher
-   * Arrays.equals
+   * @see Arrays.equals
    */
   private static final class StringArrayHasher implements Hasher {
     @Override
@@ -251,8 +252,8 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares Object[] objects according
-   * to their contents.
+   * Hasher object which hashes and compares Object[] objects according to their contents.
+   *
    * @see Hasher
    * @see Arrays#equals(Object[], Object[])
    */
@@ -433,9 +434,8 @@ public final class Intern {
   }
 
   /**
-   * Interns a String.
-   * Delegates to the builtin String.intern() method.
-   * Provided for completeness.
+   * Interns a String. Delegates to the builtin String.intern() method. Provided for completeness.
+   *
    * @param a the string to intern
    * @return an interned version of the argument
    */
@@ -449,8 +449,8 @@ public final class Intern {
   }
 
   /**
-   * Interns a long.
-   * A no-op.  Provided for completeness.
+   * Interns a long. A no-op. Provided for completeness.
+   *
    * @param l the long to intern
    * @return an interned version of the argument
    */
@@ -460,8 +460,8 @@ public final class Intern {
   }
 
   /**
-   * Interns a double
-   * A no-op.  Provided for completeness.
+   * Interns a double A no-op. Provided for completeness.
+   *
    * @param d the double to intern
    * @return an interned version of the argument
    */
@@ -471,8 +471,8 @@ public final class Intern {
   }
 
   /**
-   * Intern (canonicalize) an Integer.
-   * Return a canonical representation for the Integer.
+   * Intern (canonicalize) an Integer. Return a canonical representation for the Integer.
+   *
    * @param a an Integer to canonicalize
    * @return a canonical representation for the Integer
    */
@@ -494,7 +494,9 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Integer with value i.
+  /**
+   * Returns an interned Integer with value i.
+   *
    * @param i the value to intern
    * @return an interned Integer with value i
    */
@@ -503,7 +505,9 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Integer with value parsed from the string.
+  /**
+   * Returns an interned Integer with value parsed from the string.
+   *
    * @param s the string to parse
    * @return an interned Integer parsed from s
    */
@@ -512,8 +516,8 @@ public final class Intern {
   }
 
   /**
-   * Intern (canonicalize) a Long.
-   * Return a canonical representation for the Long.
+   * Intern (canonicalize) a Long. Return a canonical representation for the Long.
+   *
    * @param a the value to intern
    * @return a canonical representation for the Long
    */
@@ -535,7 +539,9 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Long with value i.
+  /**
+   * Returns an interned Long with value i.
+   *
    * @param i the value to intern
    * @return an interned Integer with value i
    */
@@ -544,7 +550,9 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Long with value parsed from the string.
+  /**
+   * Returns an interned Long with value parsed from the string.
+   *
    * @param s the string to parse
    * @return an interned Long parsed from s
    */
@@ -558,9 +566,9 @@ public final class Intern {
   // that really improve performance even in that case?)
 
   /**
-   * Intern (canonicalize) an int[].
-   * Return a canonical representation for the int[] array.
-   * Arrays are compared according to their elements.
+   * Intern (canonicalize) an int[]. Return a canonical representation for the int[] array. Arrays
+   * are compared according to their elements.
+   *
    * @param a the array to canonicalize
    * @return a canonical representation for the int[] array
    */
@@ -583,9 +591,9 @@ public final class Intern {
   }
 
   /**
-   * Intern (canonicalize) a long[].
-   * Return a canonical representation for the long[] array.
-   * Arrays are compared according to their elements.
+   * Intern (canonicalize) a long[]. Return a canonical representation for the long[] array. Arrays
+   * are compared according to their elements.
+   *
    * @param a the array to canonicalize
    * @return a canonical representation for the long[] array
    */
@@ -606,8 +614,8 @@ public final class Intern {
   }
 
   /**
-   * Intern (canonicalize) a Double.
-   * Return a canonical representation for the Double.
+   * Intern (canonicalize) a Double. Return a canonical representation for the Double.
+   *
    * @param a the Double to canonicalize
    * @return a canonical representation for the Double
    */
@@ -637,7 +645,9 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Double with value i.
+  /**
+   * Returns an interned Double with value i.
+   *
    * @param d the value to intern
    * @return an interned Double with value d
    */
@@ -646,7 +656,9 @@ public final class Intern {
   }
 
   // Not sure whether this convenience method is really worth it.
-  /** Returns an interned Double with value parsed from the string.
+  /**
+   * Returns an interned Double with value parsed from the string.
+   *
    * @param s the string to parse
    * @return an interned Double parsed from s
    */
@@ -660,9 +672,9 @@ public final class Intern {
   // that really improve performance even in that case?)
 
   /**
-   * Intern (canonicalize) a double[].
-   * Return a canonical representation for the double[] array.
+   * Intern (canonicalize) a double[]. Return a canonical representation for the double[] array.
    * Arrays are compared according to their elements.
+   *
    * @param a the array to canonicalize
    * @return a canonical representation for the double[] array
    */
@@ -681,11 +693,10 @@ public final class Intern {
   }
 
   /**
-   * Intern (canonicalize) an String[].
-   * Return a canonical representation for the String[] array.
-   * Arrays are compared according to their elements.
-   * The elements should themselves already be interned;
-   * they are compared using their equals() methods.
+   * Intern (canonicalize) an String[]. Return a canonical representation for the String[] array.
+   * Arrays are compared according to their elements. The elements should themselves already be
+   * interned; they are compared using their equals() methods.
+   *
    * @param a the array to canonicalize
    * @return a canonical representation for the String[] array
    */
@@ -720,11 +731,10 @@ public final class Intern {
   }
 
   /**
-   * Intern (canonicalize) an Object[].
-   * Return a canonical representation for the Object[] array.
-   * Arrays are compared according to their elements.
-   * The elements should themselves already be interned;
-   * they are compared using their equals() methods.
+   * Intern (canonicalize) an Object[]. Return a canonical representation for the Object[] array.
+   * Arrays are compared according to their elements. The elements should themselves already be
+   * interned; they are compared using their equals() methods.
+   *
    * @param a the array to canonicalize
    * @return a canonical representation for the Object[] array
    */
@@ -755,11 +765,10 @@ public final class Intern {
   }
 
   /**
-   * Convenince method to intern an Object when we don't know its
-   * runtime type.  Its runtime type must be one of the types for
-   * which we have an intern() method, else an exception is thrown.
-   * If the argument is an array, its elements should themselves be
-   * interned.
+   * Convenince method to intern an Object when we don't know its runtime type. Its runtime type
+   * must be one of the types for which we have an intern() method, else an exception is thrown. If
+   * the argument is an array, its elements should themselves be interned.
+   *
    * @param a an Object to canonicalize
    * @return a canonical version of a
    */
@@ -797,17 +806,15 @@ public final class Intern {
   }
 
   /**
-   * Return the subsequence of seq from start (inclusive) to end
-   * (exclusive) that is interned.  What's different about this method
-   * from manually finding the subsequence and interning the
-   * subsequence is that if the subsequence is already interned, we
-   * can avoid having to compute the sequence.  Since derived
-   * variables in Daikon compute the subsequence many times, this
-   * shortcut saves quite a bit of computation.  It saves even more
-   * when there may be many derived variables that are non-canonical,
-   * since they are guaranteed to be ==.
-   * <p>
-   * Requires that seq is already interned.
+   * Return the subsequence of seq from start (inclusive) to end (exclusive) that is interned.
+   * What's different about this method from manually finding the subsequence and interning the
+   * subsequence is that if the subsequence is already interned, we can avoid having to compute the
+   * sequence. Since derived variables in Daikon compute the subsequence many times, this shortcut
+   * saves quite a bit of computation. It saves even more when there may be many derived variables
+   * that are non-canonical, since they are guaranteed to be ==.
+   *
+   * <p>Requires that seq is already interned.
+   *
    * @param seq the sequence whose subsequence should be interned
    * @param start the index of the start of the subsequence to be interned
    * @param end the index of the end of the subsequence to be interned
@@ -951,10 +958,9 @@ public final class Intern {
   }
 
   /**
-   * Data structure for storing triples of a sequence and start and
-   * end indices, to represent a subsequence.  Requires that the
-   * sequence be interned.  Used for interning the repeated finding
-   * of subsequences on the same sequence.
+   * Data structure for storing triples of a sequence and start and end indices, to represent a
+   * subsequence. Requires that the sequence be interned. Used for interning the repeated finding of
+   * subsequences on the same sequence.
    */
   private static final class SequenceAndIndices<T extends /*@Interned*/ Object> {
     public T seq;
@@ -1005,8 +1011,8 @@ public final class Intern {
   }
 
   /**
-   * Hasher object which hashes and compares String[] objects according
-   * to their contents.
+   * Hasher object which hashes and compares String[] objects according to their contents.
+   *
    * @see Hasher
    */
   private static final class SequenceAndIndicesHasher<T extends /*@Interned*/ Object>

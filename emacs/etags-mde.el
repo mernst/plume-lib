@@ -50,15 +50,15 @@ Otherwise, the default is displayed but no initial input is supplied.")
 The two functions are sufficiently different that it probably doesn't
 pay to try to merge them."
   (let* ((default (funcall (tags-search-tag-default-function)))
-	 (default-re (and default (regexp-quote default)))
-	 (spec (if tags-search-edit-search-string
-		   (read-string (concat prompt ": ") default-re)
-		 (read-string
-		  (if default-re
-		      (format "%s (default %s): " prompt default-re)
-		    (concat prompt ": "))))))
+         (default-re (and default (regexp-quote default)))
+         (spec (if tags-search-edit-search-string
+                   (read-string (concat prompt ": ") default-re)
+                 (read-string
+                  (if default-re
+                      (format "%s (default %s): " prompt default-re)
+                    (concat prompt ": "))))))
     (if (equal spec "")
-	(or default-re (error "There is no default tag"))
+        (or default-re (error "There is no default tag"))
       spec)))
 
 (emacs-fsf
@@ -81,10 +81,10 @@ pay to try to merge them."
   (interactive
    (let ((search (tags-search-tag "Tags query replace regexp")))
      (list search
-	   (read-string (format "Tags query replace %s by: "
-				search)
-			(and tags-search-edit-search-string
-			     search))))))
+           (read-string (format "Tags query replace %s by: "
+                                search)
+                        (and tags-search-edit-search-string
+                             search))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -139,29 +139,29 @@ of tag regexps to try if that search fails.")
 ;;    (if next-p
 ;;        (switch-to-buffer (find-tag-noselect tagname next-p regexp-p))
 ;;      (condition-case err
-;; 	 (switch-to-buffer (find-tag-noselect tagname next-p regexp-p))
+;;       (switch-to-buffer (find-tag-noselect tagname next-p regexp-p))
 ;;        (error
-;; 	(if (not (err-no-tag-p err))
-;; 	    ;; I'd prefer to reraise/pass the error along instead of
-;; 	    ;; creating a new one, so it doesn't seem to come from here.
-;; 	    (signal (car err) (cdr err)))
-;; 	(let ((mod-tagnames (apply (function append)
-;; 				   (mapcar (function (lambda (f) (funcall f tagname)))
-;; 					   tags-find-related-names-functions)))
-;; 	      (found nil))
-;; 	  (while (and mod-tagnames (not found))
-;; 	    (condition-case err
-;; 		(setq found
-;; 		      (find-tag-noselect (car mod-tagnames) next-p t))
-;; 	      (error
-;; 	       (if (err-no-tag-p err)
-;; 		   ;; I'd prefer to reraise/pass the error along instead of
-;; 		   ;; creating a new one, so it doesn't seem to come from here.
-;; 		   (signal (car err) (cdr err))
-;; 		 (setq mod-tagnames (cdr mod-tagnames))))))
-;; 	  (if found
-;; 	      (switch-to-buffer found)
-;; 	    (error "No tags containing %s" tagname))))))))
+;;      (if (not (err-no-tag-p err))
+;;          ;; I'd prefer to reraise/pass the error along instead of
+;;          ;; creating a new one, so it doesn't seem to come from here.
+;;          (signal (car err) (cdr err)))
+;;      (let ((mod-tagnames (apply (function append)
+;;                                 (mapcar (function (lambda (f) (funcall f tagname)))
+;;                                         tags-find-related-names-functions)))
+;;            (found nil))
+;;        (while (and mod-tagnames (not found))
+;;          (condition-case err
+;;              (setq found
+;;                    (find-tag-noselect (car mod-tagnames) next-p t))
+;;            (error
+;;             (if (err-no-tag-p err)
+;;                 ;; I'd prefer to reraise/pass the error along instead of
+;;                 ;; creating a new one, so it doesn't seem to come from here.
+;;                 (signal (car err) (cdr err))
+;;               (setq mod-tagnames (cdr mod-tagnames))))))
+;;        (if found
+;;            (switch-to-buffer found)
+;;          (error "No tags containing %s" tagname))))))))
 
 ;; Perhaps inline for speed?
 ;; This returns false in particular for "rerun etags" and such.
@@ -169,14 +169,14 @@ of tag regexps to try if that search fails.")
   "Return t if error ERR has to do with tag not found in tags table, nil otherwise."
   (and (eq (car err) 'error)
        (let ((err-text (car (cdr err))))
-	 (and (> (length err-text) 17)
-	      (let ((first-seventeen (substring err-text 0 17)))
-		;; perhaps more efficient than string-match,
-		;; and doesn't clobber match-data
-		(or (equal first-seventeen "No more tags matc")
-		    (equal first-seventeen "No more tags cont")
-		    (equal first-seventeen "No tags matching ")
-		    (equal first-seventeen "No tags containin")))))))
+         (and (> (length err-text) 17)
+              (let ((first-seventeen (substring err-text 0 17)))
+                ;; perhaps more efficient than string-match,
+                ;; and doesn't clobber match-data
+                (or (equal first-seventeen "No more tags matc")
+                    (equal first-seventeen "No more tags cont")
+                    (equal first-seventeen "No tags matching ")
+                    (equal first-seventeen "No tags containin")))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -194,8 +194,8 @@ of tag regexps to try if that search fails.")
 ;; string, not a regexp.
 (setq tags-find-related-names-functions
       '(lisp-tags-find-related-names
-	mit-scheme-tags-find-related-names
-	perl-tags-find-related-names))
+        mit-scheme-tags-find-related-names
+        perl-tags-find-related-names))
 
 (defun perl-tags-find-related-names (tagname)
   "Find `@TAGNAME' or `%TAGNAME' definition based on a `$TAGNAME' use."
@@ -204,17 +204,17 @@ of tag regexps to try if that search fails.")
 
 (defun lisp-tags-find-related-names (tagname)
   (cond ((or (string-match "^\\([^:]+::?\\)?set-\\(.+\\)-[^-]+!$" tagname)
-	     (string-match "^\\([^:]+::?\\)?\\(.+\\)-[^>][^-]+$" tagname))
-	 (let ((max-name (substring tagname
-				    (match-beginning 2) (match-end 2)))
-	       (result ()))
-	   (while max-name
-	     ;; largest names come first in result list
-	     (setq result (nconc result
-				 (structure-name->defstruct-line max-name))
-		   max-name (if (string-match "-[^>][^-]*$" max-name)
-				(substring max-name 0 (match-beginning 0)))))
-	   result))))
+             (string-match "^\\([^:]+::?\\)?\\(.+\\)-[^>][^-]+$" tagname))
+         (let ((max-name (substring tagname
+                                    (match-beginning 2) (match-end 2)))
+               (result ()))
+           (while max-name
+             ;; largest names come first in result list
+             (setq result (nconc result
+                                 (structure-name->defstruct-line max-name))
+                   max-name (if (string-match "-[^>][^-]*$" max-name)
+                                (substring max-name 0 (match-beginning 0)))))
+           result))))
 ;; Testing
 ;; (lisp-tags-find-related-names "foo-bar-baz")
 ;; (lisp-tags-find-related-names "foo-set-bar-baz")
@@ -223,43 +223,43 @@ of tag regexps to try if that search fails.")
 ;; Returns a list of tag regexps to try if tagname isn't found verbatim.
 (defun mit-scheme-tags-find-related-names (tagname)
   (cond ((string-match "\\(^\\|:\\)\\(make\\|copy\\)-" tagname)
-	 (structure-name->define-structure-line
-	  (substring tagname (match-end 0))
-	  (substring tagname 0 (match-beginning 0))))
-	((string-match "^vdg:construct-\\(.*\\)-\\(node\\|ports?\\)$" tagname)
-	 (list (concat "(define-vdg-constructors "
-		       (substring tagname
-				  (match-beginning 1)
-				  (match-end 1)))))
-	(;; (string-match "\\(^\\|:\\)\\(.+\\)\\?$" tagname)
-	 (string-match "^\\([^:]+:\\)?\\(.+\\)\\?$" tagname)
-	 (structure-name->define-structure-line
-	  (substring tagname (match-beginning 2) (match-end 2))
-	  (and (match-beginning 1)
-	       (substring tagname (match-beginning 1) (1- (match-end 1))))))
-	((or (string-match "^\\([^:]+:\\)?set-\\(.+\\)-[^-]+!$" tagname)
-	     (string-match "^\\([^:]+:\\)?\\(.+\\)-[^>][^-]+$" tagname))
-	 (append
-	  (save-match-data
-	    (if (string-match "^vdg:node-" tagname)
-		(list
-		 (concat "(define-vdg-attribute-and-accessors "
-			 (substring tagname (match-end 0))))
-	      '()))
-	  (let ((prefix (and (match-beginning 1)
-			     (substring tagname
-					(match-beginning 1) (1- (match-end 1)))))
-		(max-name (substring tagname
-				     (match-beginning 2) (match-end 2)))
-		(result ()))
-	    (while max-name
-	      ;; largest names come first in result list
-	      (setq result (nconc result
-				  (structure-name->define-structure-line
-				   max-name prefix))
-		    max-name (if (string-match "-[^>][^-]*$" max-name)
-				 (substring max-name 0 (match-beginning 0)))))
-	    result)))))
+         (structure-name->define-structure-line
+          (substring tagname (match-end 0))
+          (substring tagname 0 (match-beginning 0))))
+        ((string-match "^vdg:construct-\\(.*\\)-\\(node\\|ports?\\)$" tagname)
+         (list (concat "(define-vdg-constructors "
+                       (substring tagname
+                                  (match-beginning 1)
+                                  (match-end 1)))))
+        (;; (string-match "\\(^\\|:\\)\\(.+\\)\\?$" tagname)
+         (string-match "^\\([^:]+:\\)?\\(.+\\)\\?$" tagname)
+         (structure-name->define-structure-line
+          (substring tagname (match-beginning 2) (match-end 2))
+          (and (match-beginning 1)
+               (substring tagname (match-beginning 1) (1- (match-end 1))))))
+        ((or (string-match "^\\([^:]+:\\)?set-\\(.+\\)-[^-]+!$" tagname)
+             (string-match "^\\([^:]+:\\)?\\(.+\\)-[^>][^-]+$" tagname))
+         (append
+          (save-match-data
+            (if (string-match "^vdg:node-" tagname)
+                (list
+                 (concat "(define-vdg-attribute-and-accessors "
+                         (substring tagname (match-end 0))))
+              '()))
+          (let ((prefix (and (match-beginning 1)
+                             (substring tagname
+                                        (match-beginning 1) (1- (match-end 1)))))
+                (max-name (substring tagname
+                                     (match-beginning 2) (match-end 2)))
+                (result ()))
+            (while max-name
+              ;; largest names come first in result list
+              (setq result (nconc result
+                                  (structure-name->define-structure-line
+                                   max-name prefix))
+                    max-name (if (string-match "-[^>][^-]*$" max-name)
+                                 (substring max-name 0 (match-beginning 0)))))
+            result)))))
 
 (defvar tag-end-re "[ \)]")
 
@@ -277,50 +277,50 @@ of tag regexps to try if that search fails.")
   (if (and (not fullname) prefix)
       (setq fullname (concat prefix ":" structure-name)))
   (let* ((structure-name-re (regexp-quote structure-name))
-	 (fullname-re (and fullname (regexp-quote fullname)))
-	 (structure-names
-	  ;; This will pick up some false hits; I can't add punctuation after
-	  ;; structure-name because the DEL character immediately follows it.
-	  ;; Or, I could use the regexp-p option of `find-tag-noselect'.
-	  (if prefix
-	      (list
-	       (concat "(define-structure\\(-prefixed\\)? (?" fullname-re tag-end-re))
-	    (list
-	     (concat "(define-structure (?" structure-name-re tag-end-re))))
-	 ;; For MSR
-	 (zaphod-node-names
-	   (append
-	    (if prefix
-		(cond ((string= prefix "vdg")
-		       (list
-			(concat "(define-vdg-\\(call-\\|lambda-\\)?node (?"
-				fullname-re tag-end-re)
-			(concat "(define-vdg:primop-accessors "
-				structure-name-re tag-end-re)))
-		      ((string= prefix "pdg")
-		       (list
-			(concat "(define-pdg-structure (?" fullname-re tag-end-re)))
-		      ((string= prefix "cfg")
-		       (list
-			(concat "(define-cfg-structure (?" fullname-re tag-end-re)))
-		      ((string= prefix "vtype")
-		       (list
-			(concat "(define-vtype (?" fullname-re tag-end-re)))
-		      ((string= prefix "source")
-		       (list
-			(concat "(define-source-node (?" fullname-re tag-end-re)
-			(concat "(define-vdg:primop-accessors "
-				structure-name-re tag-end-re)))
-		      ;; ((or (string= prefix "etext")
-		      ;;      (string= prefix "source")
-		      ;;      (string= prefix "portinst"))
-		      ;;  (list
-		      ;;   (concat "(define-etext-accessors " structure-name-re)))
-		      (t
-		       '()))
-	      '())
-	    (list
-	     (concat "(define-disjoint-type (?" structure-name-re)))))
+         (fullname-re (and fullname (regexp-quote fullname)))
+         (structure-names
+          ;; This will pick up some false hits; I can't add punctuation after
+          ;; structure-name because the DEL character immediately follows it.
+          ;; Or, I could use the regexp-p option of `find-tag-noselect'.
+          (if prefix
+              (list
+               (concat "(define-structure\\(-prefixed\\)? (?" fullname-re tag-end-re))
+            (list
+             (concat "(define-structure (?" structure-name-re tag-end-re))))
+         ;; For MSR
+         (zaphod-node-names
+           (append
+            (if prefix
+                (cond ((string= prefix "vdg")
+                       (list
+                        (concat "(define-vdg-\\(call-\\|lambda-\\)?node (?"
+                                fullname-re tag-end-re)
+                        (concat "(define-vdg:primop-accessors "
+                                structure-name-re tag-end-re)))
+                      ((string= prefix "pdg")
+                       (list
+                        (concat "(define-pdg-structure (?" fullname-re tag-end-re)))
+                      ((string= prefix "cfg")
+                       (list
+                        (concat "(define-cfg-structure (?" fullname-re tag-end-re)))
+                      ((string= prefix "vtype")
+                       (list
+                        (concat "(define-vtype (?" fullname-re tag-end-re)))
+                      ((string= prefix "source")
+                       (list
+                        (concat "(define-source-node (?" fullname-re tag-end-re)
+                        (concat "(define-vdg:primop-accessors "
+                                structure-name-re tag-end-re)))
+                      ;; ((or (string= prefix "etext")
+                      ;;      (string= prefix "source")
+                      ;;      (string= prefix "portinst"))
+                      ;;  (list
+                      ;;   (concat "(define-etext-accessors " structure-name-re)))
+                      (t
+                       '()))
+              '())
+            (list
+             (concat "(define-disjoint-type (?" structure-name-re)))))
     ;; Put zaphod-node-names first as they're more specific
     (nconc zaphod-node-names structure-names)))
 
@@ -366,8 +366,8 @@ If the latter returns non-nil, we exit; otherwise we scan the next file."
   (interactive)
   (if (and (eq last-command 'find-tag) (not first-time))
       (progn
-	(setq this-command 'find-tag)
-	(find-tag nil t))
+        (setq this-command 'find-tag)
+        (find-tag nil t))
     (progn
       (setq this-command 'tags-loop-continue)
       (tags-loop-continue first-time))))
@@ -390,16 +390,16 @@ If the latter returns non-nil, we exit; otherwise we scan the next file."
       ;;   \6 is the line to start searching at;
       ;;   \7 is the char to start searching at.
       (while (re-search-forward
-	      "^\\(\\(.+[^-a-zA-Z0-9_$]+\\)?\\([-a-zA-Z0-9_$?:]+\\)\
+              "^\\(\\(.+[^-a-zA-Z0-9_$]+\\)?\\([-a-zA-Z0-9_$?:]+\\)\
 \[^-a-zA-Z0-9_$?:]*\\)\177\\(\\([^\n\001]+\\)\001\\)?\
 \\([0-9]+\\)?,\\([0-9]+\\)?\n"
-	      nil t)
-	(intern	(if (match-beginning 5)
-		    ;; There is an explicit tag name.
-		    (buffer-substring (match-beginning 5) (match-end 5))
-		  ;; No explicit tag name.  Best guess.
-		  (buffer-substring (match-beginning 3) (match-end 3)))
-		table)))
+              nil t)
+        (intern (if (match-beginning 5)
+                    ;; There is an explicit tag name.
+                    (buffer-substring (match-beginning 5) (match-end 5))
+                  ;; No explicit tag name.  Best guess.
+                  (buffer-substring (match-beginning 3) (match-end 3)))
+                table)))
     table))
 
 
@@ -419,18 +419,18 @@ See documentation of variable `tags-file-name'."
    ;; This returns 5 forms, which is the reason for the "ignore" argument.
    (interactive (query-replace-read-args "Tags replace (regexp)" t))
    (setq tags-loop-scan (list 'prog1
-			      (list 'if (list 're-search-forward
-					      (list 'quote from) nil t)
-				    ;; When we find a match, move back
-				    ;; to the beginning of it so perform-replace
-				    ;; will see it.
-				    '(goto-char (match-beginning 0))))
-	 tags-loop-operate (list 'progn
-				 (list 'replace-regexp
-				       (list 'quote from) (list 'quote to)
-				       (list 'quote delimited))
-				 ;; the loop is exited if nil is returned
-				 t))
+                              (list 'if (list 're-search-forward
+                                              (list 'quote from) nil t)
+                                    ;; When we find a match, move back
+                                    ;; to the beginning of it so perform-replace
+                                    ;; will see it.
+                                    '(goto-char (match-beginning 0))))
+         tags-loop-operate (list 'progn
+                                 (list 'replace-regexp
+                                       (list 'quote from) (list 'quote to)
+                                       (list 'quote delimited))
+                                 ;; the loop is exited if nil is returned
+                                 t))
    (tags-loop-continue (or file-list-form t))))
 
 (xemacs
@@ -448,10 +448,10 @@ See documentation of variable `tag-table-alist'."
                               ;; will see it.
                               (progn (goto-char (match-beginning 0)) t)))
         tags-loop-operate (list 'progn
-				 (list 'replace-regexp
-				       from to (not (null delimited)))
-				 ;; the loop is exited if nil is returned
-				 t))
+                                 (list 'replace-regexp
+                                       from to (not (null delimited)))
+                                 ;; the loop is exited if nil is returned
+                                 t))
    (tags-loop-continue (or file-list-form t))))
 
 
@@ -471,28 +471,28 @@ Returns non-nil iff it is a valid table."
       ;; The file is already in a buffer.  Check for the visited file
       ;; having changed since we last used it.
       (let (win)
-	(set-buffer (get-file-buffer file))
-	(setq win (or verify-tags-table-function (initialize-new-tags-table)))
-	(if (or (verify-visited-file-modtime (current-buffer))
-		(and nil ;; added by MDE
-		(not (yes-or-no-p
-		      (format "Tags file %s has changed, read new contents? "
-			      file)))))
-	    (and win (funcall verify-tags-table-function))
-	  (revert-buffer t t)
-	  (initialize-new-tags-table)))
+        (set-buffer (get-file-buffer file))
+        (setq win (or verify-tags-table-function (initialize-new-tags-table)))
+        (if (or (verify-visited-file-modtime (current-buffer))
+                (and nil ;; added by MDE
+                (not (yes-or-no-p
+                      (format "Tags file %s has changed, read new contents? "
+                              file)))))
+            (and win (funcall verify-tags-table-function))
+          (revert-buffer t t)
+          (initialize-new-tags-table)))
     (and (file-exists-p file)
-	 (progn
-	   (set-buffer (find-file-noselect file))
-	   (or (string= file buffer-file-name)
-	       ;; find-file-noselect has changed the file name.
-	       ;; Propagate the change to tags-file-name and tags-table-list.
-	       (let ((tail (member file tags-table-list)))
-		 (if tail
-		     (setcar tail buffer-file-name))
-		 (if (eq file tags-file-name)
-		     (setq tags-file-name buffer-file-name))))
-	   (initialize-new-tags-table)))))
+         (progn
+           (set-buffer (find-file-noselect file))
+           (or (string= file buffer-file-name)
+               ;; find-file-noselect has changed the file name.
+               ;; Propagate the change to tags-file-name and tags-table-list.
+               (let ((tail (member file tags-table-list)))
+                 (if tail
+                     (setcar tail buffer-file-name))
+                 (if (eq file tags-file-name)
+                     (setq tags-file-name buffer-file-name))))
+           (initialize-new-tags-table)))))
 
 (provide 'etags-mde)
 

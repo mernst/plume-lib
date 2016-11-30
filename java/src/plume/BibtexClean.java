@@ -7,16 +7,13 @@ import java.util.regex.Pattern;
 
 /**
  * Clean a BibTeX file by removing text outside BibTeX entries.
- * <p>
  *
- * Remove each non-empty line that is not in a BibTeX entry, except retain
- * any line that starts with "%".
- * <p>
+ * <p>Remove each non-empty line that is not in a BibTeX entry, except retain any line that starts
+ * with "%".
  *
- * Arguments are the names of the original files.  Cleaned copies of those
- * files are written in the CURRENT DIRECTORY.  Therefore, this should be
- * run in a different directory from where the argument files are, to avoid
- * overwriting them.
+ * <p>Arguments are the names of the original files. Cleaned copies of those files are written in
+ * the CURRENT DIRECTORY. Therefore, this should be run in a different directory from where the
+ * argument files are, to avoid overwriting them.
  */
 
 // The implementation uses regular expressions rather than a BibTeX parser,
@@ -43,7 +40,9 @@ public final class BibtexClean {
   /** Regex for a BibTeX string definition. */
   private static Pattern stringDef = Pattern.compile("^@(?i)string(\\{.*\\}|\\(.*\\))$");
 
-  /** Main method for the BibtexClean program.
+  /**
+   * Main method for the BibtexClean program.
+   *
    * @param args command-line arguments
    */
   public static void main(String[] args) {

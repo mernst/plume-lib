@@ -8,9 +8,7 @@ import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
-/**
- * A simple class for recording elapsed time.
- */
+/** A simple class for recording elapsed time. */
 public final class Stopwatch {
 
   long elapsedMillis = 0;
@@ -75,8 +73,8 @@ public final class Stopwatch {
   };
 
   /**
-   * Stops the watch, calculates the elapsed time, restarts the watch,
-   * and returns the elapsed time.
+   * Stops the watch, calculates the elapsed time, restarts the watch, and returns the elapsed time.
+   *
    * @return a String representing the elapsed time
    */
   public String stop_start() {

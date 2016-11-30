@@ -23,8 +23,8 @@ import org.checkerframework.framework.qual.PolyAll;
 */
 
 /**
- * Utilities for manipulating arrays and collections.
- * This complements {@link java.util.Arrays} and {@link java.util.Collections}.
+ * Utilities for manipulating arrays and collections. This complements {@link java.util.Arrays} and
+ * {@link java.util.Collections}.
  */
 @SuppressWarnings("interning") // to do later
 public final class ArraysMDE {
@@ -41,6 +41,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   *
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -60,6 +61,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   *
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -79,6 +81,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   *
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -98,6 +101,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   *
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -121,6 +125,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   *
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -144,6 +149,7 @@ public final class ArraysMDE {
 
   /**
    * Return the smallest value in the array.
+   *
    * @param a an array
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -167,6 +173,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   *
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -186,6 +193,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   *
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -205,6 +213,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   *
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -224,6 +233,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   *
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -247,6 +257,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   *
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -270,6 +281,7 @@ public final class ArraysMDE {
 
   /**
    * Return the largest value in the array.
+   *
    * @param a an array
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -293,6 +305,7 @@ public final class ArraysMDE {
 
   /**
    * Return a two-element array containing the smallest and largest values in the array.
+   *
    * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -315,6 +328,7 @@ public final class ArraysMDE {
 
   /**
    * Return a two-element array containing the smallest and largest values in the array.
+   *
    * @param a an array
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -337,6 +351,7 @@ public final class ArraysMDE {
 
   /**
    * Return the difference between the smallest and largest array elements.
+   *
    * @param a an array
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -354,6 +369,7 @@ public final class ArraysMDE {
 
   /**
    * Return the difference between the smallest and largest array elements.
+   *
    * @param a an array
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
@@ -371,6 +387,7 @@ public final class ArraysMDE {
 
   /**
    * Returns the sum of an array of integers.
+   *
    * @param a an array
    * @return the sum of an array of integers
    */
@@ -385,6 +402,7 @@ public final class ArraysMDE {
 
   /**
    * Returns the sum of all the elements of a 2d array of integers.
+   *
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of integers
    */
@@ -401,6 +419,7 @@ public final class ArraysMDE {
 
   /**
    * Returns the sum of an array of doubles.
+   *
    * @param a an array
    * @return the sum of an array of doubles
    */
@@ -415,6 +434,7 @@ public final class ArraysMDE {
 
   /**
    * Returns the sum of all the elements of a 2d array of doubles.
+   *
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of doubles
    */
@@ -434,13 +454,14 @@ public final class ArraysMDE {
   ///
 
   /**
-   * Searches for the first occurrence of the given element in the array,
-   *    testing for equality using the equals method.
+   * Searches for the first occurrence of the given element in the array, testing for equality using
+   * the equals method.
+   *
    * @param <T> type of the elements of the array
    * @param a an array
    * @param elt the element to search for
-   * @return the first index whose element is equal to the specified element,
-   *    or -1 if no such element is found in the array
+   * @return the first index whose element is equal to the specified element, or -1 if no such
+   *     element is found in the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -457,16 +478,17 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the array,
-   *    testing for equality using the equals method.
+   * Searches for the first occurrence of the given element in the array, testing for equality using
+   * the equals method.
+   *
    * @param <T> the type of the elements
    * @param a an array
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the array
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
+   *     of the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -484,13 +506,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the list,
-   *    testing for equality using the equals method.
-   *    Identical to List.indexOf, but included for completeness.
+   * Searches for the first occurrence of the given element in the list, testing for equality using
+   * the equals method. Identical to List.indexOf, but included for completeness.
+   *
    * @param a a list
    * @param elt the element to search for
-   * @return the first index whose element is equal to the specified element,
-   *    or -1 if no such element is found in the list
+   * @return the first index whose element is equal to the specified element, or -1 if no such
+   *     element is found in the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -499,15 +521,16 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the list,
-   *    testing for equality using the equals method.
+   * Searches for the first occurrence of the given element in the list, testing for equality using
+   * the equals method.
+   *
    * @param a a list
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the list
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
+   *     of the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -528,12 +551,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the array,
-   *    testing for equality using == (not the equals method).
+   * Searches for the first occurrence of the given element in the array, testing for equality using
+   * == (not the equals method).
+   *
    * @param a an array
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -547,15 +571,16 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the array,
-   *    testing for equality using == (not the equals method).
+   * Searches for the first occurrence of the given element in the array, testing for equality using
+   * == (not the equals method).
+   *
    * @param a an array
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the array
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
+   *     of the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -573,12 +598,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the list,
-   *    testing for equality using == (not the equals method).
+   * Searches for the first occurrence of the given element in the list, testing for equality using
+   * == (not the equals method).
+   *
    * @param a a list
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the list
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -592,15 +618,16 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first occurrence of the given element in the list,
-   *    testing for equality using == (not the equals method).
+   * Searches for the first occurrence of the given element in the list, testing for equality using
+   * == (not the equals method).
+   *
    * @param a a list
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in that section of the list
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
+   *     of the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -619,10 +646,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -637,10 +665,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -655,13 +684,13 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -676,13 +705,13 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -697,10 +726,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -715,10 +745,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -733,13 +764,13 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first occurrence of the given element in the array.
+   *
    * @param a an array
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element,
-   *    such that minindex &le; i &lt; indexlimit,
-   *    or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that <code>
+   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -764,11 +795,12 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise,
-   *    testing for equality using the equals method.
+   * testing for equality using the equals method.
+   *
    * @param a an array
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if no such
+   *     element is found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -785,11 +817,12 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise,
-   *    testing for equality using == (not the equals method).
+   * testing for equality using == (not the equals method).
+   *
    * @param a an array
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if the
+   *     element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -810,11 +843,12 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the list that matches the given array elementwise,
-   *    testing for equality using the equals method.
+   * testing for equality using the equals method.
+   *
    * @param a a list
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first list,
-   *    or -1 if no such element is found in the list
+   * @return the first index at which the second array starts in the first list, or -1 if no such
+   *     element is found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -831,11 +865,12 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the list that matches the given array elementwise,
-   *    testing for equality using == (not the equals method).
+   * testing for equality using == (not the equals method).
+   *
    * @param a a list
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first list,
-   *    or -1 if the element is not found in the list
+   * @return the first index at which the second array starts in the first list, or -1 if the
+   *     element is not found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -852,11 +887,12 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given list elementwise,
-   *    testing for equality using the equals method.
+   * testing for equality using the equals method.
+   *
    * @param a a list
    * @param sub subsequence to search for
-   * @return the first index at which the second list starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return the first index at which the second list starts in the first array, or -1 if no such
+   *     element is found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -873,11 +909,12 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given list elementwise,
-   *    testing for equality using == (not the equals method).
+   * testing for equality using == (not the equals method).
+   *
    * @param a a list
    * @param sub subsequence to search for
-   * @return the first index at which the second list starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return the first index at which the second list starts in the first array, or -1 if the
+   *     element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -893,12 +930,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first subsequence of the list that matches the given list elementwise,
-   *    testing for equality using the equals method.
+   * Searches for the first subsequence of the list that matches the given list elementwise, testing
+   * for equality using the equals method.
+   *
    * @param a a list
    * @param sub subsequence to search for
-   * @return the first index at which the second list starts in the first list,
-   *    or -1 if no such element is found in the list
+   * @return the first index at which the second list starts in the first list, or -1 if no such
+   *     element is found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -914,12 +952,13 @@ public final class ArraysMDE {
   }
 
   /**
-   * Searches for the first subsequence of the list that matches the given list elementwise,
-   *    testing for equality using == (not the equals method).
+   * Searches for the first subsequence of the list that matches the given list elementwise, testing
+   * for equality using == (not the equals method).
+   *
    * @param a a list
    * @param sub subsequence to search for
-   * @return the first index at which the second list starts in the first list,
-   *    or -1 if the element is not found in the list
+   * @return the first index at which the second list starts in the first list, or -1 if the element
+   *     is not found in the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -936,10 +975,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   *
    * @param a an array
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if the
+   *     element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -956,10 +996,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   *
    * @param a an array
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if the
+   *     element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -976,10 +1017,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   *
    * @param a an array
    * @param sub subsequence to search for
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if the
+   *     element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -996,10 +1038,11 @@ public final class ArraysMDE {
 
   /**
    * Searches for the first subsequence of the array that matches the given array elementwise.
+   *
    * @param a an array
    * @param sub subsequence to search for
-   * @return the first index containing the specified element,
-   *    or -1 if the element is not found in the array
+   * @return the first index containing the specified element, or -1 if the element is not found in
+   *     the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
@@ -1033,12 +1076,12 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @return a subarray of the given array
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ Object[] subarray(
@@ -1050,12 +1093,12 @@ public final class ArraysMDE {
 
   /**
    * Return a sublist of the given list.
+   *
    * @param <T> type of the elements
    * @param a the original list
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a sublist of the given list
    */
   /*@SideEffectFree*/
@@ -1066,11 +1109,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1083,11 +1126,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1100,11 +1143,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1117,11 +1160,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1134,11 +1177,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1151,11 +1194,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1168,11 +1211,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1185,11 +1228,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1202,11 +1245,11 @@ public final class ArraysMDE {
 
   /**
    * Return a subarray of the given array.
+   *
    * @param a the original array
    * @param startindex the first index to be included
-   * @param length the number of elements to include (not an end index,
-   *        to avoid confusion over whether it would be the last included
-   *        index or the first non-included index)
+   * @param length the number of elements to include (not an end index, to avoid confusion over
+   *     whether it would be the last included index or the first non-included index)
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
@@ -1222,9 +1265,9 @@ public final class ArraysMDE {
   ///
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using the equals method.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using the equals method.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1247,9 +1290,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using == (not the equals method).
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using == (not the equals method).
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1272,14 +1315,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using the equals method.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using the equals method.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if no such
+   *     element is found in the array
    */
   /*@Pure*/
   public static boolean isSubarray(
@@ -1298,9 +1341,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using == (not the equals method).
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using == (not the equals method).
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1323,14 +1366,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using the equals method.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using the equals method.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if no such
+   *     element is found in the array
    */
   /*@Pure*/
   public static boolean isSubarray(
@@ -1349,9 +1392,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using == (not the equals method).
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using == (not the equals method).
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1374,14 +1417,14 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using the equals method.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using the equals method.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return the first index at which the second array starts in the first array, or -1 if no such
+   *     element is found in the array
    */
   /*@Pure*/
   public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
@@ -1399,9 +1442,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first,
-   *    testing for equality using == (not the equals method).
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first, testing for equality using == (not the equals method).
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1423,8 +1466,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1446,8 +1490,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1469,8 +1514,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1492,8 +1538,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Determines whether the second array is a subarray of the first,
-   *    starting at the specified index of the first.
+   * Determines whether the second array is a subarray of the first, starting at the specified index
+   * of the first.
+   *
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
@@ -1523,6 +1570,7 @@ public final class ArraysMDE {
 
   /**
    * Call this method in order to suppress compiler warnings.
+   *
    * @param <T> the base type of the result
    * @param lst the list to convert to an array
    * @return the result of lst.toArray, casted to a more precise type than Object[]
@@ -1534,10 +1582,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param <T> the type of the sequence elements
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
@@ -1567,10 +1614,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param <T> the type of the sequence elements
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
@@ -1603,10 +1649,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param <T> the type of the sequence elements
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
@@ -1639,10 +1684,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param <T> the type of the sequence elements
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
@@ -1679,10 +1723,9 @@ public final class ArraysMDE {
 
   // Note: PolyAll is not quite right.  Need to review.
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first array to concatenate
    * @param b the second array to concatenate
    * @return an array that concatenates the arguments
@@ -1709,10 +1752,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1738,10 +1780,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1767,10 +1808,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1796,10 +1836,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1825,10 +1864,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1854,10 +1892,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1883,10 +1920,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1912,10 +1948,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return an array that contains all the elements of both argument
-   * arrays, in order.
-   * Returns a new array unless one argument is null, in which case
-   * it returns the other array.
+   * Return an array that contains all the elements of both argument arrays, in order. Returns a new
+   * array unless one argument is null, in which case it returns the other array.
+   *
    * @param a the first sequence to concatenate
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
@@ -1949,8 +1984,9 @@ public final class ArraysMDE {
   // output format).
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
@@ -1961,9 +1997,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
-   * Furthermore, each element is quoted like a Java String.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector. Furthermore, each element is quoted like a Java String.
+   *
    * @param a an array
    * @return a string representation of the array, with the elements quoted
    * @see java.util.Vector#toString
@@ -1974,9 +2010,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
-   * Furthermore, if quoted is true, then each element is quoted like a Java String.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector. Furthermore, if quoted is true, then each element is quoted like a Java
+   * String.
+   *
    * @param a an array
    * @param quoted whether to quote the array elements
    * @return a string representation of the array
@@ -2009,8 +2046,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the collection.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the collection. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a a collection
    * @return a string representation of the collection
    * @see java.util.Vector#toString
@@ -2021,8 +2059,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the collection.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the collection. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a a collection
    * @return a string representation of the collection, with the elements quoted
    * @see java.util.Vector#toString
@@ -2033,8 +2072,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the collection.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the collection. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a a collection
    * @param quoted whether to quote the collection elements that are Java strings
    * @return a string representation of the list
@@ -2068,8 +2108,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
@@ -2094,8 +2135,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
@@ -2120,8 +2162,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
@@ -2146,8 +2189,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
@@ -2172,8 +2216,9 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return a string representation of the array.
-   * The representation is patterned after that of java.util.Vector.
+   * Return a string representation of the array. The representation is patterned after that of
+   * java.util.Vector.
+   *
    * @param a an array
    * @return a string representation of the array
    * @see java.util.Vector#toString
@@ -2198,12 +2243,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Casts obj down to the proper array type then calls the appropriate
-   * toString() method.  Only call this method if obj is a boolean, double,
-   * int, long, or Object array.
+   * Casts obj down to the proper array type then calls the appropriate toString() method. Only call
+   * this method if obj is a boolean, double, int, long, or Object array.
+   *
    * @param obj an array
    * @return a string representation of the array
-   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above.
+   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above
    */
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
   /*@SideEffectFree*/
@@ -2229,11 +2274,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Casts obj down to the proper array type then calls .length.
-   * Only call this method if obj is a boolean, double, int, long, or Object array.
+   * Casts obj down to the proper array type then calls .length. Only call this method if obj is a
+   * boolean, double, int, long, or Object array.
+   *
    * @param obj a list
    * @return a string representation of the array
-   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above.
+   * @throws IllegalArgumentException if obj is null or is not one of the types mentioned above
    */
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
   /*@Pure*/
@@ -2262,6 +2308,7 @@ public final class ArraysMDE {
 
   /**
    * Returns whether the array is sorted.
+   *
    * @param a an array
    * @return true iff the array is sorted
    */
@@ -2277,6 +2324,7 @@ public final class ArraysMDE {
 
   /**
    * Returns whether the array is sorted.
+   *
    * @param a an array
    * @return true iff the array is sorted
    */
@@ -2292,6 +2340,7 @@ public final class ArraysMDE {
 
   /**
    * Returns whether the array is sorted in desending order.
+   *
    * @param a an array
    * @return true iff the array is sorted in desending order
    */
@@ -2307,6 +2356,7 @@ public final class ArraysMDE {
 
   /**
    * Returns whether the array is sorted in desending order.
+   *
    * @param a an array
    * @return true iff the array is sorted in desending order
    */
@@ -2321,8 +2371,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2343,8 +2395,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2365,8 +2419,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2387,8 +2443,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2409,8 +2467,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2431,8 +2491,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2453,9 +2515,11 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space. Equality checking
-   * uses the .equals() method for java.lang.Double.
+   * Return true iff a does not contain duplicate elements. Equality checking uses {@link
+   * Double#equals}.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2476,8 +2540,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2498,8 +2564,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2519,8 +2587,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param a an array
    * @return true iff a does not contain duplicate elements
    */
@@ -2540,8 +2610,10 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return true iff a does not contain duplicate elements,
-   * using O(n) time and O(n) space.
+   * Return true iff a does not contain duplicate elements.
+   *
+   * <p>The implementation uses O(n) time and O(n) space.
+   *
    * @param <T> the type of the elements
    * @param a a list
    * @return true iff a does not contain duplicate elements
@@ -2567,9 +2639,9 @@ public final class ArraysMDE {
 
   /**
    * Returns true if the array is a permutation of [0..a.length).
+   *
    * @param a an array, representing a function
-   * @return true iff all elements of a are in [0..a.length) and a
-   * contains no duplicates.
+   * @return true iff all elements of a are in [0..a.length) and a contains no duplicates.
    */
   @SuppressWarnings("purity") // side effect to local state (array)
   /*@Pure*/
@@ -2588,6 +2660,7 @@ public final class ArraysMDE {
 
   /**
    * Return true iff the array does not contain -1.
+   *
    * @param a an array, representing a function
    * @return true iff no element of a maps to -1
    */
@@ -2598,6 +2671,7 @@ public final class ArraysMDE {
 
   /**
    * Return an array [0..lenth).
+   *
    * @param length the length of the result
    * @return fresh array that is the identity function of the given length
    */
@@ -2611,6 +2685,7 @@ public final class ArraysMDE {
 
   /**
    * Requires that fn_is_permutation(a) holds.
+   *
    * @param a the input permutation
    * @return fresh array which is the inverse of the given permutation
    * @see #fn_is_permutation(int[])
@@ -2621,8 +2696,9 @@ public final class ArraysMDE {
 
   /**
    * Return the inverse of the given function, which is represented as an array.
-   * @param a an array representing a function from [0..a.length) to [0..arange);
-   *  each element of a is between 0 and arange inclusive
+   *
+   * @param a an array representing a function from [0..a.length) to [0..arange); each element of a
+   *     is between 0 and arange inclusive
    * @param arange length of the argument's range and the result's domain
    * @return function from [0..arange) to [0..a.length) that is the inverse of a
    * @throws IllegalArgumentException if a value of a is outside of arange
@@ -2649,12 +2725,11 @@ public final class ArraysMDE {
   }
 
   /**
-   * Return the composition of the given two functions, all of which are
-   * represented as arrays.
+   * Return the composition of the given two functions, all of which are represented as arrays.
+   *
    * @param a function from [0..a.length) to [0..b.length)
    * @param b function from [0..b.length) to range R
-   * @return function from [0..a.length) to range R that is the
-   * composition of a and b
+   * @return function from [0..a.length) to range R that is the composition of a and b
    */
   public static int[] fn_compose(/*@NonNegative*/ int[] a, int[] b) {
     int[] result = new int[a.length];
@@ -2677,9 +2752,11 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Return whether smaller is a subset of bigger.  The implementation is to
-   * use collections because we want to take advantage of HashSet's
+   * Return whether smaller is a subset of bigger.
+   *
+   * <p>The implementation is to use collections because we want to take advantage of HashSet's
    * constant time membership tests.
+   *
    * @param smaller first set to test
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
@@ -2707,9 +2784,11 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Return whether smaller is a subset of bigger.  The implementation is to
-   * use collections because we want to take advantage of HashSet's
+   * Return whether smaller is a subset of bigger.
+   *
+   * <p>The implementation is to use collections because we want to take advantage of HashSet's
    * constant time membership tests.
+   *
    * @param smaller first set to test
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
@@ -2737,9 +2816,11 @@ public final class ArraysMDE {
   // might be quicker when it is not.  Sorting both sets has (minimum
   // and maximum) running time of Theta(n log n).
   /**
-   * Return whether smaller is a subset of bigger.  The implementation is to
-   * use collections because we want to take advantage of HashSet's
+   * Return whether smaller is a subset of bigger.
+   *
+   * <p>The implementation is to use collections because we want to take advantage of HashSet's
    * constant time membership tests.
+   *
    * @param smaller first set to test
    * @param bigger second set to test
    * @return true iff smaller is a subset of bigger
@@ -2767,25 +2848,23 @@ public final class ArraysMDE {
   ///
 
   /**
-   * Compare two arrays lexically (element-by-element).
-   * If all shared elements are the same, but the lengths differ,
-   * then the shorter array is considered less.
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * numbers).
+   * Compare two arrays lexically (element-by-element). If all shared elements are the same, but the
+   * lengths differ, then the shorter array is considered less.
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical numbers).
    */
   public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
     /**
      * Compare two arrays lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer,
-     * depending on whether the first argument is less than,
-     * equal to, or greater than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     public int compare(int[] a1, int[] a2) {
@@ -2803,25 +2882,23 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays lexically (element-by-element).
-   * If all shared elements are the same, but the lengths differ,
-   * then the shorter array is considered less.
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * numbers).
+   * Compare two arrays lexically (element-by-element). If all shared elements are the same, but the
+   * lengths differ, then the shorter array is considered less.
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical numbers).
    */
   public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
     static final long serialVersionUID = 20150812L;
 
     /**
      * Compare two arrays lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     public int compare(long[] a1, long[] a2) {
@@ -2839,14 +2916,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays lexically (element-by-element).
-   * If all shared elements are the same, but the lengths differ,
-   * then the shorter array is considered less.
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * numbers).
+   * Compare two arrays lexically (element-by-element). If all shared elements are the same, but the
+   * lengths differ, then the shorter array is considered less.
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical numbers).
    */
   public static final class DoubleArrayComparatorLexical
       implements Comparator<double[]>, Serializable {
@@ -2854,11 +2929,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     public int compare(double[] a1, double[] a2) {
@@ -2877,14 +2952,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays lexically (element-by-element).
-   * If all shared elements are the same, but the lengths differ,
-   * then the shorter array is considered less.
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * Strings).
+   * Compare two arrays lexically (element-by-element). If all shared elements are the same, but the
+   * lengths differ, then the shorter array is considered less.
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical Strings).
    */
   public static final class StringArrayComparatorLexical
       implements Comparator<String[]>, Serializable {
@@ -2892,11 +2965,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     @SuppressWarnings(
@@ -2930,14 +3003,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays lexically (element-by-element).
-   * If all shared elements are the same, but the lengths differ,
-   * then the shorter array is considered less.
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * objects).
+   * Compare two arrays lexically (element-by-element). If all shared elements are the same, but the
+   * lengths differ, then the shorter array is considered less.
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical objects).
    */
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>>
       implements Comparator<T[]>, Serializable {
@@ -2945,11 +3016,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     @SuppressWarnings(
@@ -2988,14 +3059,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays lexically (element-by-element).
-   * If all shared elements are the same, but the lengths differ,
-   * then the shorter array is considered less.
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * objects).
+   * Compare two arrays lexically (element-by-element). If all shared elements are the same, but the
+   * lengths differ, then the shorter array is considered less.
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical objects).
    */
   public static final class ObjectArrayComparatorLexical
       implements Comparator<Object[]>, Serializable {
@@ -3003,11 +3072,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     @SuppressWarnings(
@@ -3047,13 +3116,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays first by length (a shorter array is considered
-   * less), and if of equal length compare lexically (element-by-element).
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * numbers).
+   * Compare two arrays first by length (a shorter array is considered less), and if of equal length
+   * compare lexically (element-by-element).
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical numbers).
    */
   public static final class IntArrayComparatorLengthFirst
       implements Comparator<int[]>, Serializable {
@@ -3061,11 +3129,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays by length, then lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     public int compare(int[] a1, int[] a2) {
@@ -3087,13 +3155,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays first by length (a shorter array is considered
-   * less), and if of equal length compare lexically (element-by-element).
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * numbers).
+   * Compare two arrays first by length (a shorter array is considered less), and if of equal length
+   * compare lexically (element-by-element).
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical numbers).
    */
   public static final class LongArrayComparatorLengthFirst
       implements Comparator<long[]>, Serializable {
@@ -3101,11 +3168,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays by length, then lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     public int compare(long[] a1, long[] a2) {
@@ -3127,13 +3194,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays first by length (a shorter array is considered
-   * less), and if of equal length compare lexically (element-by-element).
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * objects).
+   * Compare two arrays first by length (a shorter array is considered less), and if of equal length
+   * compare lexically (element-by-element).
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical objects).
    */
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>>
       implements Comparator<T[]>, Serializable {
@@ -3141,11 +3207,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays by length, then lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     @SuppressWarnings(
@@ -3188,13 +3254,12 @@ public final class ArraysMDE {
   }
 
   /**
-   * Compare two arrays first by length (a shorter array is considered
-   * less), and if of equal length compare lexically (element-by-element).
-   * <p>
-   * Note: this comparator imposes orderings that are inconsistent with
-   * <code>equals()</code>.  That is, it may return 0 if the arrays are not
-   * equal according to <code>equals()</code> (but do contain identical
-   * objects).
+   * Compare two arrays first by length (a shorter array is considered less), and if of equal length
+   * compare lexically (element-by-element).
+   *
+   * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
+   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
+   * contain identical objects).
    */
   public static final class ObjectArrayComparatorLengthFirst
       implements Comparator<Object[]>, Serializable {
@@ -3202,11 +3267,11 @@ public final class ArraysMDE {
 
     /**
      * Compare two arrays by length, then lexically (element-by-element).
+     *
      * @param a1 first array to compare
      * @param a2 first array to compare
-     * @return a negative integer, zero, or a positive integer, depending
-     * on whether the first argument is less than, equal to, or greater
-     * than the second argument
+     * @return a negative integer, zero, or a positive integer, depending on whether the first
+     *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
     @SuppressWarnings(
@@ -3255,6 +3320,7 @@ public final class ArraysMDE {
 
   /**
    * Return true if a contains null.
+   *
    * @param a an array
    * @return true iff some element of a is null (false if a is zero-sized)
    */
@@ -3269,6 +3335,7 @@ public final class ArraysMDE {
 
   /**
    * Return true if all elements of a are null.
+   *
    * @param a an array
    * @return true iff all elements of a are null (unspecified result if a is zero-sized)
    */
@@ -3284,6 +3351,7 @@ public final class ArraysMDE {
 
   /**
    * Return true if a contains null.
+   *
    * @param a an array
    * @return true iff some element of a is null (false if a is zero-sized)
    */
@@ -3298,6 +3366,7 @@ public final class ArraysMDE {
 
   /**
    * Return true if all elements of a are null.
+   *
    * @param a an array
    * @return true iff all elements of a are null (unspecified result if a is zero-sized)
    */

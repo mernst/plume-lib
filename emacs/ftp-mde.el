@@ -3,14 +3,14 @@
 (defadvice browse-url-url-at-point (around maybe-file activate)
   "Replacement for stock `browse-url-url-at-point': perhaps return file: URL."
   (let ((url (let ((file (thing-at-point 'filename)))
-	       ;; symbolic links in dired buffers:  "index.html -> j3TOC.html"
-	       (if (and file (string-match "^\\(.*\\) -> \\(.*\\)$" file))
-		   (setq file (match-string 1 file)))
-	       (if (and file
-			(not (zerop (length file)))
-			(file-exists-p file))
-		   (concat "file:" (expand-file-name file))
-		 (thing-at-point 'url)))))
+               ;; symbolic links in dired buffers:  "index.html -> j3TOC.html"
+               (if (and file (string-match "^\\(.*\\) -> \\(.*\\)$" file))
+                   (setq file (match-string 1 file)))
+               (if (and file
+                        (not (zerop (length file)))
+                        (file-exists-p file))
+                   (concat "file:" (expand-file-name file))
+                 (thing-at-point 'url)))))
     (set-text-properties 0 (length url) nil url)
     (setq ad-return-value url)))
 
@@ -53,7 +53,7 @@
 ;; "foo bar \"baz b+um\"" turns into:
 ;; http://www.altavista.com/cgi-bin/query?pg=q&text=yes&kl=XX&q=foo+bar+%22baz+b%2Bum%22&act=search
 (defun altavista-quote (phrase)
-  (require 'dired)			; for dired-replace-in-string
+  (require 'dired)                      ; for dired-replace-in-string
   (setq phrase (dired-replace-in-string "\"" "%22" phrase))
   (setq phrase (dired-replace-in-string "#" "%23" phrase))
   (setq phrase (dired-replace-in-string "&" "%26" phrase))
@@ -76,11 +76,11 @@
   (require 'browse-url)
   (browse-url
    (concat "http://www.google.com/" searchtype "?q="
-	   (altavista-quote phrase)
-	   "&lr=lang_en&num=100"
-	   (if current-prefix-arg
-	       "&btnI=Lucky"
-	     ""))))
+           (altavista-quote phrase)
+           "&lr=lang_en&num=100"
+           (if current-prefix-arg
+               "&btnI=Lucky"
+             ""))))
 
 (defun wikipedia-lookup (phrase &optional searchtype)
   "Search using Wikipedia."
@@ -88,14 +88,14 @@
   (require 'browse-url)
   (browse-url
    (concat "http://en.wikipedia.org/wiki/"
-	   (altavista-quote phrase))))
+           (altavista-quote phrase))))
 
 (defun wayback-machine (url)
   "Look up a URL in the Internet Archive Wayback Machine."
   (interactive "sWayback Machine: ")
   (require 'browse-url)
   (browse-url (concat "http://waybackmachine.org/*/"
-		      (altavista-quote url))))
+                      (altavista-quote url))))
 
 (defun scholar-google (phrase)
   "Search using Google Scholar."
