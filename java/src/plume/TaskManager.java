@@ -15,31 +15,38 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * TaskManager extracts information about tasks from text files and
- * provides structured output.  For example, it can extract all of
- * the tasks associated with a specific milestone or person and total
- * the amount of work required. <p>
+ * TaskManager extracts information about tasks from text files and provides structured output. For
+ * example, it can extract all of the tasks associated with a specific milestone or person and total
+ * the amount of work required.
  *
- * The command-line arguments are as follows:
+ * <p>The command-line arguments are as follows:
  * <!-- start options doc (DO NOT EDIT BY HAND) -->
+ *
  * <ul>
- *   <li id="option:responsible"><b>-r</b> <b>--responsible=</b><i>string</i>.
- *    Include only those tasks assigned to the specified person</li>
- *   <li id="option:milestone"><b>-m</b> <b>--milestone=</b><i>string</i>.
- *    Include only those tasks required for the specified milestone</li>
- *   <li id="option:completed"><b>-c</b> <b>--completed=</b><i>boolean</i>.
- *    Include only completed tasks [default false]</li>
- *   <li id="option:open"><b>-o</b> <b>--open=</b><i>boolean</i>.
- *    Include only open tasks [default false]</li>
- *   <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>.
- *    Print progress information [default false]</li>
- *   <li id="option:format"><b>-f</b> <b>--format=</b><i>enum</i>.
- *    Specify output format [default short_ascii]<ul><li><b>short_ascii</b></li><li><b>short_html</b></li><li><b>milestone_html</b></li></ul></li>
- *   <li id="option:comment-re"><b>--comment-re=</b><i>string</i>.
- *    Regex that matches an entire comment (not just a comment start) [default ^%.*]</li>
- *   <li id="option:include-re"><b>--include-re=</b><i>string</i>.
- *    Regex that matches an include directive; group 1 is the file name [default \\include\{(.*)\}]</li>
+ *   <li id="option:responsible"><b>-r</b> <b>--responsible=</b><i>string</i>. Include only those
+ *       tasks assigned to the specified person
+ *   <li id="option:milestone"><b>-m</b> <b>--milestone=</b><i>string</i>. Include only those tasks
+ *       required for the specified milestone
+ *   <li id="option:completed"><b>-c</b> <b>--completed=</b><i>boolean</i>. Include only completed
+ *       tasks [default false]
+ *   <li id="option:open"><b>-o</b> <b>--open=</b><i>boolean</i>. Include only open tasks [default
+ *       false]
+ *   <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress information
+ *       [default false]
+ *   <li id="option:format"><b>-f</b> <b>--format=</b><i>enum</i>. Specify output format [default
+ *       short_ascii]
+ *       <ul>
+ *         <li><b>short_ascii</b>
+ *         <li><b>short_html</b>
+ *         <li><b>milestone_html</b>
+ *       </ul>
+ *
+ *   <li id="option:comment-re"><b>--comment-re=</b><i>string</i>. Regex that matches an entire
+ *       comment (not just a comment start) [default ^%.*]
+ *   <li id="option:include-re"><b>--include-re=</b><i>string</i>. Regex that matches an include
+ *       directive; group 1 is the file name [default \\include\{(.*)\}]
  * </ul>
+ *
  * <!-- end options doc -->
  */
 public class TaskManager {
@@ -227,11 +234,7 @@ public class TaskManager {
     public String toString_short_html(double total) {
       return String.format(
           "<tr> <td> %s </td><td> %s </td><td> %s </td><td> %f </td><td> %s </td></tr>",
-          responsible,
-          milestone,
-          completion_str(),
-          total,
-          task);
+          responsible, milestone, completion_str(), total, task);
     }
 
     /*@SideEffectFree*/
@@ -243,13 +246,7 @@ public class TaskManager {
       return String.format(
           "<tr> <td> %s </td><td> %s </td><td> %.1f </td><td>"
               + "<a href=%s?file=%s&line=%d> %s </a></td></tr>",
-          resp_str,
-          completion_str(),
-          total,
-          "show_task_details.php",
-          filename,
-          line_number,
-          task);
+          resp_str, completion_str(), total, "show_task_details.php", filename, line_number, task);
     }
 
     public String all_vals() {
@@ -272,7 +269,9 @@ public class TaskManager {
   /** empty TaskManger. */
   public TaskManager() {}
 
-  /** initializes a task manager with all of the tasks in filenames.
+  /**
+   * initializes a task manager with all of the tasks in filenames.
+   *
    * @param filenames list of files to read tasks from
    * @throws IOException if there is trouble reading a file
    */
@@ -396,7 +395,9 @@ public class TaskManager {
     return (out.toString());
   }
 
-  /** Adds the specified task to the end of the task list.
+  /**
+   * Adds the specified task to the end of the task list.
+   *
    * @param task the task to be queued on the task list
    */
   public void add(Task task) {
@@ -404,9 +405,11 @@ public class TaskManager {
   }
 
   /**
-   * Create a new TaskManger with only those tasks assigned to responsible.
-   * All tasks match a responsible value of null.
-   * @param responsible name of the responsible party, or null; search for tasks assigned to responsible
+   * Create a new TaskManger with only those tasks assigned to responsible. All tasks match a
+   * responsible value of null.
+   *
+   * @param responsible name of the responsible party, or null; search for tasks assigned to
+   *     responsible
    * @return a TaskManger with only those tasks assigned to responsible
    */
   public TaskManager responsible_match(/*@Nullable*/ String responsible) {
@@ -422,7 +425,9 @@ public class TaskManager {
     return tm;
   }
 
-  /** Create a new TaskManger with only those tasks in milestone.
+  /**
+   * Create a new TaskManger with only those tasks in milestone.
+   *
    * @param milestone milestone to search for
    * @return TaskManger with only the tasks in the given milestone
    */
@@ -444,6 +449,7 @@ public class TaskManager {
 
   /**
    * Create a new TaskManger with only completed tasks.
+   *
    * @return a new TaskManger with only completed tasks
    */
   public TaskManager completed_only() {
@@ -461,6 +467,7 @@ public class TaskManager {
 
   /**
    * Create a new TaskManger with only open tasks.
+   *
    * @return a new TaskManger with only completed tasks
    */
   public TaskManager open_only() {

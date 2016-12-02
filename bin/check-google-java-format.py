@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+### NOTE: This script is obsolescent.  For its replacement, see
+###   https://github.com/plume-lib/run-google-java-format
+
 # This script checks whether the files supplied on the command line conform
 # to the Google Java style (as enforced by the google-java-format program,
 # but with improvements to the formatting of annotations in comments).

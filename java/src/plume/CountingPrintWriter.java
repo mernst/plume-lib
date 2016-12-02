@@ -13,12 +13,11 @@ import org.checkerframework.checker.nullness.qual.*;
 // arbitrary Writer.
 
 /**
- * <p> Prints formatted representations of objects to a text-output
- * stream counting the number of bytes and characters printed. </p>
+ * Prints formatted representations of objects to a text-output stream counting the number of bytes
+ * and characters printed.
  *
- * <p> Methods in this class never throw I/O exceptions. The client may
- * inquire as to whether any errors have occurred by invoking
- * checkError(). </p>
+ * <p>Methods in this class never throw I/O exceptions. The client may inquire as to whether any
+ * errors have occurred by invoking {@link #checkError}.
  */
 public class CountingPrintWriter extends PrintWriter {
 
@@ -36,10 +35,9 @@ public class CountingPrintWriter extends PrintWriter {
   // Constructors
 
   /**
-   * Create a new PrintWriter, without automatic line flushing, from
-   * an existing OutputStream. This convenience constructor creates
-   * the necessary intermediate OutputStreamWriter, which will convert
-   * characters into bytes using the default character encoding.
+   * Create a new PrintWriter, without automatic line flushing, from an existing OutputStream. This
+   * convenience constructor creates the necessary intermediate OutputStreamWriter, which will
+   * convert characters into bytes using the default character encoding.
    *
    * @param out an output stream
    */
@@ -52,10 +50,9 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Create a new PrintWriter from an existing OutputStream. This
-   * convenience constructor creates the necessary intermediate
-   * OutputStreamWriter, which will convert characters into bytes
-   * using the default character encoding.
+   * Create a new PrintWriter from an existing OutputStream. This convenience constructor creates
+   * the necessary intermediate OutputStreamWriter, which will convert characters into bytes using
+   * the default character encoding.
    *
    * @param out an output stream
    * @param autoFlush if true, the println() methods will flush the output buffer
@@ -68,8 +65,10 @@ public class CountingPrintWriter extends PrintWriter {
     writtenChars = 0;
   }
 
-  /** Create a new PrintWriter, without automatic line flushing.
-   *  @param out a Writer
+  /**
+   * Create a new PrintWriter, without automatic line flushing.
+   *
+   * @param out a Writer
    */
   public CountingPrintWriter(Writer out) {
     super(out);
@@ -81,6 +80,7 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Create a new PrintWriter, without automatic line flushing.
+   *
    * @param out a writer
    * @param autoFlush if true, the println() methods will flush the output buffer
    */
@@ -95,8 +95,8 @@ public class CountingPrintWriter extends PrintWriter {
   // Public utility methods
 
   /**
-   * Returns the number of bytes contained in a string.
-   * If s is null, returns -1
+   * Returns the number of bytes contained in a string. If s is null, returns -1
+   *
    * @return bytes in the string, or null
    * @param s the String for which to count bytes
    */
@@ -115,6 +115,7 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Returns the number of bytes used to represent a character.
+   *
    * @param c a character
    * @return number of bytes used to represent c
    */
@@ -131,8 +132,9 @@ public class CountingPrintWriter extends PrintWriter {
   // Accessor Methods
 
   /**
-   * Returns the total number of bytes printed using any of the
-   * 'print' or 'println' methods of this CountingPrintBuffer.
+   * Returns the total number of bytes printed using any of the 'print' or 'println' methods of this
+   * CountingPrintBuffer.
+   *
    * @return number of bytes printed so far
    */
   public int getNumberOfPrintedBytes() {
@@ -140,8 +142,9 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Returns the total number of bytes printed using any of the
-   * 'write' methods of this CountingPrintBuffer.
+   * Returns the total number of bytes printed using any of the 'write' methods of this
+   * CountingPrintBuffer.
+   *
    * @return number of bytes written so far
    */
   public int getNumberOfWrittenBytes() {
@@ -149,8 +152,9 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Returns the total number of characters printed using any
-   * of the 'print' or 'println' methods of this CountingPrintBuffer.
+   * Returns the total number of characters printed using any of the 'print' or 'println' methods of
+   * this CountingPrintBuffer.
+   *
    * @return number of characters printed so far
    */
   public int getNumberOfPrintedChars() {
@@ -169,11 +173,10 @@ public class CountingPrintWriter extends PrintWriter {
   // of the following methods are unnecessary except for print(String s).
 
   /**
-   * Print a string. If the argument is null then the string "null" is
-   * printed. Otherwise, the string's characters are converted into
-   * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the write(int)
-   * method.
+   * Print a string. If the argument is null then the string "null" is printed. Otherwise, the
+   * string's characters are converted into bytes according to the platform's default character
+   * encoding, and these bytes are written in exactly the manner of the {@link #write(int)} method.
+   *
    * @param s the string to be printed, or null
    */
   public void print(/*@Nullable*/ String s) {
@@ -188,10 +191,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print a boolean value. The string produced by
-   * String.valueOf(boolean) is translated into bytes according to the
-   * platform's default character encoding, and these bytes are
-   * written in exactly the manner of the write(int) method.
+   * Print a boolean value. The string produced by {@link String#valueOf(boolean)} is translated
+   * into bytes according to the platform's default character encoding, and these bytes are written
+   * in exactly the manner of the {@link #write(int)} method.
+   *
    * @param b the boolean to be printed
    */
   public void print(boolean b) {
@@ -202,10 +205,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print a character. The character is translated into one or more
-   * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the write(int)
-   * method.
+   * Print a character. The character is translated into one or more bytes according to the
+   * platform's default character encoding, and these bytes are written in exactly the manner of the
+   * {@link #write(int)} method.
+   *
    * @param c the char to be printed
    */
   public void print(char c) {
@@ -214,10 +217,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print an array of characters. The characters are converted into
-   * bytes according to the platform's default character encoding, and
-   * these bytes are written in exactly the manner of the write(int)
-   * method.
+   * Print an array of characters. The characters are converted into bytes according to the
+   * platform's default character encoding, and these bytes are written in exactly the manner of the
+   * {@link #write(int)} method.
+   *
    * @param s the char[] to be printed
    */
   public void print(char[] s) {
@@ -229,10 +232,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print a double-precision floating-point number. The string
-   * produced by String.valueOf(double) is translated into bytes
-   * according to the platform's default character encoding, and these
-   * bytes are written in exactly the manner of the write(int) method.
+   * Print a double-precision floating-point number. The string produced by {@link
+   * String#valueOf(double)} is translated into bytes according to the platform's default character
+   * encoding, and these bytes are written in exactly the manner of the {@link #write(int)} method.
+   *
    * @param d the double to be printed
    */
   public void print(double d) {
@@ -243,10 +246,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print a floating-point number. The string produced by
-   * String.valueOf(float) is translated into bytes according to the
-   * platform's default character encoding, and these bytes are
-   * written in exactly the manner of the write(int) method.
+   * Print a floating-point number. The string produced by {@link String#valueOf(float)} is
+   * translated into bytes according to the platform's default character encoding, and these bytes
+   * are written in exactly the manner of the {@link #write(int)} method.
+   *
    * @param f the float to be printed
    */
   public void print(float f) {
@@ -257,10 +260,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   *  Print an integer. The string produced by String.valueOf(int) is
-   *  translated into bytes according to the platform's default
-   *  character encoding, and these bytes are written in exactly the
-   *  manner of the write(int) method.
+   * Print an integer. The string produced by {@link String#valueOf(int)} is translated into bytes
+   * according to the platform's default character encoding, and these bytes are written in exactly
+   * the manner of the {@link #write(int)} method.
+   *
    * @param i the int to be printed
    */
   public void print(int i) {
@@ -270,35 +273,35 @@ public class CountingPrintWriter extends PrintWriter {
     super.print(i);
   }
 
-  /**  Resets all the byte and char counters. */
+  /** Resets all the byte and char counters. */
   public void resetAll() {
     resetPrintedByteCounter();
     resetPrintedCharCounter();
     resetWrittenByteCounter();
     resetWrittenCharCounter();
   }
-  /**  Resets printedByte counter. */
+  /** Resets printedByte counter. */
   public void resetPrintedByteCounter() {
     printedBytes = 0;
   }
-  /**  Resets printedChar counter. */
+  /** Resets printedChar counter. */
   public void resetPrintedCharCounter() {
     printedChars = 0;
   }
-  /**  Resets writtenByte counter. */
+  /** Resets writtenByte counter. */
   public void resetWrittenByteCounter() {
     writtenBytes = 0;
   }
-  /**  Resets writtenChar counter. */
+  /** Resets writtenChar counter. */
   public void resetWrittenCharCounter() {
     writtenChars = 0;
   }
 
   /**
-   *  Print a long integer. The string produced by
-   *  String.valueOf(long) is translated into bytes according to the
-   *  platform's default character encoding, and these bytes are
-   *  written in exactly the manner of the write(int) method.
+   * Print a long integer. The string produced by {@link String#valueOf(long)} is translated into
+   * bytes according to the platform's default character encoding, and these bytes are written in
+   * exactly the manner of the {@link #write(int)} method.
+   *
    * @param l the long to be printed
    */
   public void print(long l) {
@@ -309,10 +312,10 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print an object. The string produced by the
-   * String.valueOf(Object) method is translated into bytes according
-   * to the platform's default character encoding, and these bytes are
-   * written in exactly the manner of the write(int) method.
+   * Print an object. The string produced by the {@link String#valueOf(Object)} method is translated
+   * into bytes according to the platform's default character encoding, and these bytes are written
+   * in exactly the manner of the {@link #write(int)} method.
+   *
    * @param obj the object to be printed
    */
   public void print(/*@Nullable*/ Object obj) {
@@ -326,13 +329,12 @@ public class CountingPrintWriter extends PrintWriter {
   private static final String lineSep = System.getProperty("line.separator");
 
   /**
-   * Terminate the current line by writing the line separator
-   * string.  The line separator string is defined by the system
-   * property line.separator, and is not necessarily a single newline
+   * Terminate the current line by writing the line separator string. The line separator string is
+   * defined by the system property line.separator, and is not necessarily a single newline
    * character ('\n').
-   * <p>
-   * When incrementing the byte count of PrintWriter, also accounts for the
-   * bytes needed to represent the line separator string.
+   *
+   * <p>When incrementing the byte count of PrintWriter, also accounts for the bytes needed to
+   * represent the line separator string.
    */
   public void println() {
     printedBytes += countBytes(lineSep);
@@ -341,8 +343,9 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Print a String and then terminate the line. This method behaves
-   * as though it invokes print(String) and then println().
+   * Print a String and then terminate the line. This method behaves as though it invokes
+   * print(String) and then println().
+   *
    * @param s the string to be printed
    */
   public void println(/*@Nullable*/ String s) {
@@ -351,8 +354,9 @@ public class CountingPrintWriter extends PrintWriter {
   }
 
   /**
-   * Write an array of characters. This method cannot be inherited
-   * from the Writer class because it must suppress I/O exceptions.
+   * Write an array of characters. This method cannot be inherited from the Writer class because it
+   * must suppress I/O exceptions.
+   *
    * @param buf the char[] to be printed
    */
   public void write(char[] buf) {
@@ -380,6 +384,7 @@ public class CountingPrintWriter extends PrintWriter {
 
   /**
    * Write a string.
+   *
    * @param s the string to be printed
    */
   public void write(String s) {

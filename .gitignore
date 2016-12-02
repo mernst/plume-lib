@@ -2,7 +2,8 @@
 *.elc
 *~
 TAGS
-bin/google-java-format-*-all-deps.jar
+bin/google-java-format-1.0-all-deps.jar
+java/.run-google-java-format/
 java/.class-files-timestamp
 java/.javadoc-timestamp
 java/.optionsdoc-timestamp

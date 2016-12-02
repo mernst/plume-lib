@@ -8,7 +8,7 @@
 ;;; Code:
 
 (add-hook 'after-save-hook
-	  'executable-make-buffer-file-executable-if-script-p)
+          'executable-make-buffer-file-executable-if-script-p)
 
 
 (defvar check-parens-previous-try nil)
@@ -18,9 +18,9 @@
 This is good for modes like Perl, where the parser can get confused."
   (if (not (equal check-parens-previous-try (buffer-name)))
       (progn
-	(setq check-parens-previous-try (buffer-name))
-	(check-parens)
-	(setq check-parens-previous-try nil))))
+        (setq check-parens-previous-try (buffer-name))
+        (check-parens)
+        (setq check-parens-previous-try nil))))
 
 
 ;; This causes asynchronous behavior.  I need to decide whether I like that.
@@ -30,13 +30,12 @@ This is good for modes like Perl, where the parser can get confused."
 
 ;; To debug slowness in parsing compilation errors (due to inefficient
 ;; regexes in compilation-error-regexp-alist), edit
-;; `compilation-parse-errors' to add these to the body
-;;    (message "%s compilation-parse-errors: working on %s" (current-time-string))
+;; `compilation-parse-errors' to add these at the top of the dolist loop:
 ;;    (message "%s compilation-parse-errors: working on %s" (current-time-string) item)
 ;;    (message "%s compilation-parse-errors: done with %s" (current-time-string) item)
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (delete 'maven compilation-error-regexp-alist)))
+         (delete 'maven compilation-error-regexp-alist)))
 
 
 
@@ -69,11 +68,11 @@ This is good for modes like Perl, where the parser can get confused."
 ;; (autoload 'objc-mode "cc-mode" "Objective-C editing mode" t)
 ;; (autoload 'java-mode "cc-mode" "Java editing mode" t)
 ;; ;; (setq auto-mode-alist (append '(("\\.C$"  . c++-mode)
-;; ;; 				("\\.cc$" . c++-mode)
-;; ;; 				("\\.c$"  . c-mode)
-;; ;; 				("\\.h$"  . c-mode)
-;; ;; 				("\\.m$"  . objc-mode))
-;; ;; 			      auto-mode-alist))
+;; ;;                           ("\\.cc$" . c++-mode)
+;; ;;                           ("\\.c$"  . c-mode)
+;; ;;                           ("\\.h$"  . c-mode)
+;; ;;                           ("\\.m$"  . objc-mode))
+;; ;;                         auto-mode-alist))
 
 ;; Tell cc-mode not to check for old-style (K&R) function declarations.
 ;; This speeds up indenting a lot.
@@ -87,9 +86,9 @@ This is good for modes like Perl, where the parser can get confused."
   (local-set-key "\C-c\C-c" 'compile)
   (make-local-variable 'page-delimiter)
   (setq page-delimiter
-	(concat "^\f\\|"
-		(regexp-quote "/* ***************************************************************************")
-		"\\|///////////////////////////////////////////////////////////////////////////"))
+        (concat "^\f\\|"
+                (regexp-quote "/* ***************************************************************************")
+                "\\|///////////////////////////////////////////////////////////////////////////"))
   (c-set-compile-command)
   ;; yuck, I don't like this.
   ;; (setq c-tab-always-indent 'not-in-literals)
@@ -101,20 +100,20 @@ This is good for modes like Perl, where the parser can get confused."
   ;; Tab width
   (let ((buf-file-name (buffer-file-name (current-buffer))))
     (if (and buf-file-name
-	     ;; (string-match "/\\(frikqcc\\)/" buf-file-name)
-	     )
-	(progn
-	  (setq tab-width 2)
-	  (make-local-variable 'tab-stop-list)
-	  (set-tab-stop-list-width 2)))
+             ;; (string-match "/\\(frikqcc\\)/" buf-file-name)
+             )
+        (progn
+          (setq tab-width 2)
+          (make-local-variable 'tab-stop-list)
+          (set-tab-stop-list-width 2)))
     (if (and buf-file-name
-	     (or (string-match "/valgrind/fjalar/dwarf.c" buf-file-name)
-		 (string-match "/valgrind/fjalar/readelf.c" buf-file-name))
-	     )
-	(progn
-	  (setq tab-width 8)
-	  (make-local-variable 'tab-stop-list)
-	  (set-tab-stop-list-width 8)))
+             (or (string-match "/valgrind/fjalar/dwarf.c" buf-file-name)
+                 (string-match "/valgrind/fjalar/readelf.c" buf-file-name))
+             )
+        (progn
+          (setq tab-width 8)
+          (make-local-variable 'tab-stop-list)
+          (set-tab-stop-list-width 8)))
     )
 
   (setq indent-tabs-mode nil)
@@ -148,8 +147,8 @@ This is good for modes like Perl, where the parser can get confused."
     (add-hook 'yaml-mode-hook
       '(lambda ()
         (define-key yaml-mode-map "\C-m" 'newline-and-indent)
-	(make-local-variable 'inleft-string)
-	(setq inleft-string "# ")))
+        (make-local-variable 'inleft-string)
+        (setq inleft-string "# ")))
     ))
 
 ;; (require 'guess-offset)
@@ -176,27 +175,27 @@ This is good for modes like Perl, where the parser can get confused."
 ;; ;;     ;; so I should insist that the indentation be found in the body starting with the "{".
 ;; ;;     ;; Insist on space around brace to avoid finding @link{...} in a comment.
 ;; ;;     (if (re-search-forward "\\([ \t\n\r]{[ \t\n\r]\\|{$\\)" nil t)
-;; ;; 	(progn
-;; ;; 	  (while (forward-comment 1)
-;; ;; 	    ;; nothing to do
-;; ;; 	    )
-;; ;; 	  ;; forward-comment actually brings us all the way to non-whitespace
-;; ;; 	  (beginning-of-line)
-;; ;; 	  ;; This isn't quite right:  it could match in comments.  Perhaps demand
-;; ;; 	  ;; a match for c-Java-defun-prompt-regexp or some other keywords.
-;; ;; 	  ;; Forbid a trailing colon to avoid matching labels, which have special
-;; ;; 	  ;; indentation.
-;; ;; 	  (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
-;; ;; 	      (progn
-;; ;; 		(goto-char (match-end 1))
-;; ;; 		(if (looking-back "^\t+")
-;; ;; 		    (progn
-;; ;; 		      (setq tab-width 2)
-;; ;; 		      (make-local-variable 'tab-stop-list)
-;; ;; 		      (set-tab-stop-list-width 2)))
-;; ;; 		;; sanity check
-;; ;; 		(if (<= (current-column) 8)
-;; ;; 		    (setq c-basic-offset (current-column))))))))
+;; ;;   (progn
+;; ;;     (while (forward-comment 1)
+;; ;;       ;; nothing to do
+;; ;;       )
+;; ;;     ;; forward-comment actually brings us all the way to non-whitespace
+;; ;;     (beginning-of-line)
+;; ;;     ;; This isn't quite right:  it could match in comments.  Perhaps demand
+;; ;;     ;; a match for c-Java-defun-prompt-regexp or some other keywords.
+;; ;;     ;; Forbid a trailing colon to avoid matching labels, which have special
+;; ;;     ;; indentation.
+;; ;;     (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
+;; ;;         (progn
+;; ;;           (goto-char (match-end 1))
+;; ;;           (if (looking-back "^\t+")
+;; ;;               (progn
+;; ;;                 (setq tab-width 2)
+;; ;;                 (make-local-variable 'tab-stop-list)
+;; ;;                 (set-tab-stop-list-width 2)))
+;; ;;           ;; sanity check
+;; ;;           (if (<= (current-column) 8)
+;; ;;               (setq c-basic-offset (current-column))))))))
 ;; ;;   (message "Set c-basic-offset to %d" c-basic-offset))
 
 
@@ -222,7 +221,7 @@ This is good for modes like Perl, where the parser can get confused."
   "Don't indent if at left column."
   (interactive "P")
   (if (and (eq ?/ (char-after (- (point) 1)))
-	   (eq ?\n (char-after (- (point) 2))))
+           (eq ?\n (char-after (- (point) 2))))
       (self-insert-command (prefix-numeric-value arg))
     ad-do-it))
 
@@ -252,16 +251,16 @@ if point is not in a function."
       (c-end-of-defun 1)
       (c-beginning-of-defun 1)
       (if (= (point) (point-min))
-	  nil
-	(let ((bod (point)))		; beginning of defun
-	  (c-beginning-of-statement 1)
-	  (if (< orig-point (point))
-	      nil
-	    (if (re-search-forward "\\b\\(\\w+\\)\\s-*(" bod t)
-		(match-string 1)
-	      (progn
-		(message "c-name-of-enclosing-function got confused")
-		nil))))))))
+          nil
+        (let ((bod (point)))            ; beginning of defun
+          (c-beginning-of-statement 1)
+          (if (< orig-point (point))
+              nil
+            (if (re-search-forward "\\b\\(\\w+\\)\\s-*(" bod t)
+                (match-string 1)
+              (progn
+                (message "c-name-of-enclosing-function got confused")
+                nil))))))))
 ;; Here is some test code.
 (defun message-c-name-of-enclosing-function ()
   (if (eq major-mode 'c-mode)
@@ -277,16 +276,16 @@ if point is not in a function."
 
 (setq auto-mode-alist
       (append '(("\\.javax\\'" . java-mode) ; ConstJava uses ".javax" extension
-		("\\.jpp\\'" . java-mode)) ; for preprocessed files; can't specify ".java.jpp"
-	      auto-mode-alist))
+                ("\\.jpp\\'" . java-mode)) ; for preprocessed files; can't specify ".java.jpp"
+              auto-mode-alist))
 (defun java-beginning-of-defun (&optional arg)
   "See `c-beginning-of-defun'.
 With prefix arg, goes to beginning of class; otherwise to beginning of method."
   (interactive "P")
   (let ((c-beginning-of-defun-prefer-second t))
     (if (equal arg '(4))
-	(setq arg 1
-	      c-beginning-of-defun-prefer-second nil))
+        (setq arg 1
+              c-beginning-of-defun-prefer-second nil))
     (c-beginning-of-defun (prefix-numeric-value arg))))
 
 (defun java-end-of-defun (&optional arg)
@@ -295,8 +294,8 @@ With prefix arg, goes to end of class; otherwise to end of method."
   (interactive "P")
   (let ((c-beginning-of-defun-prefer-second t))
     (if (equal arg '(4))
-	(setq arg 1
-	      c-beginning-of-defun-prefer-second nil))
+        (setq arg 1
+              c-beginning-of-defun-prefer-second nil))
     (c-end-of-defun (prefix-numeric-value arg))))
 
 ;; Appears to mean go to beginning of class rather than method.
@@ -328,22 +327,22 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (interactive "p")
     (unless arg (setq arg 1))
     (if (< arg 0)
-	(c-end-of-defun (- arg))
+        (c-end-of-defun (- arg))
       (while (> arg 0)
-	(let ((state (nreverse (c-parse-state)))
-	      prevbod bod)
-	  (while (and state (not bod))
-	    (setq bod (car state)
-		  state (cdr state))
-	    (if (consp bod)
-		(setq prevbod (car bod)
-		      bod nil)))
-	  (cond
-	   (bod (goto-char bod))
-	   (prevbod (goto-char prevbod))
-	   (t (goto-char (point-min))
-	      (setq arg 0)))
-	  (setq arg (1- arg))))
+        (let ((state (nreverse (c-parse-state)))
+              prevbod bod)
+          (while (and state (not bod))
+            (setq bod (car state)
+                  state (cdr state))
+            (if (consp bod)
+                (setq prevbod (car bod)
+                      bod nil)))
+          (cond
+           (bod (goto-char bod))
+           (prevbod (goto-char prevbod))
+           (t (goto-char (point-min))
+              (setq arg 0)))
+          (setq arg (1- arg))))
       (c-keep-region-active)
       (= arg 0)))
 
@@ -356,27 +355,27 @@ With prefix arg, goes to end of class; otherwise to end of method."
   the open-parenthesis that starts a defun; see `beginning-of-defun'."
     (interactive "p")
     (if (not arg)
-	(setq arg 1))
+        (setq arg 1))
     (if (< arg 0)
-	(c-beginning-of-defun (- arg))
+        (c-beginning-of-defun (- arg))
       (while (> arg 0)
-	(let ((pos (point))
-	      eol)
-	  (while (and (c-safe (down-list 1) t)
-		      (not (eq (char-before) ?{)))
-	    ;; skip down into the next defun-block
-	    (forward-char -1)
-	    (c-forward-sexp))
-	  (c-beginning-of-defun 1)
-	  (setq eol (c-point 'eol))
-	  (c-forward-sexp)
-	  (if (< eol (point))
-	      ;; Don't move to next line for one line defuns.
-	      (forward-line 1))
-	  (when (<= (point) pos)
-	    (goto-char (point-max))
-	    (setq arg 0))
-	  (setq arg (1- arg))))
+        (let ((pos (point))
+              eol)
+          (while (and (c-safe (down-list 1) t)
+                      (not (eq (char-before) ?{)))
+            ;; skip down into the next defun-block
+            (forward-char -1)
+            (c-forward-sexp))
+          (c-beginning-of-defun 1)
+          (setq eol (c-point 'eol))
+          (c-forward-sexp)
+          (if (< eol (point))
+              ;; Don't move to next line for one line defuns.
+              (forward-line 1))
+          (when (<= (point) pos)
+            (goto-char (point-max))
+            (setq arg 0))
+          (setq arg (1- arg))))
       (c-keep-region-active)
       (= arg 0)))
   )))
@@ -397,32 +396,32 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (interactive "p")
     (unless arg (setq arg 1))
     (if (< arg 0)
-	(c-end-of-defun (- arg))
+        (c-end-of-defun (- arg))
       (while (> arg 0)
-	(let ((state (nreverse (c-parse-state)))
-	      prevbod bod
-	      prevbod2 bod2)
-	  (while (and state (not bod))
-	    (setq bod (car state)
-		  state (cdr state))
-	    (if (consp bod)
-		(setq prevbod (car bod)
-		      bod nil)))
-	  (if c-beginning-of-defun-prefer-second
-	      (while (and state (not bod2))
-		(setq bod2 (car state)
-		      state (cdr state))
-		(if (consp bod2)
-		    (setq prevbod2 (car bod2)
-			  bod2 nil))))
-	  (cond
-	   (bod2 (goto-char bod2))
-	   (prevbod2 (goto-char prevbod2))
-	   (bod (goto-char bod))
-	   (prevbod (goto-char prevbod))
-	   (t (goto-char (point-min))
-	      (setq arg 0)))
-	  (setq arg (1- arg))))
+        (let ((state (nreverse (c-parse-state)))
+              prevbod bod
+              prevbod2 bod2)
+          (while (and state (not bod))
+            (setq bod (car state)
+                  state (cdr state))
+            (if (consp bod)
+                (setq prevbod (car bod)
+                      bod nil)))
+          (if c-beginning-of-defun-prefer-second
+              (while (and state (not bod2))
+                (setq bod2 (car state)
+                      state (cdr state))
+                (if (consp bod2)
+                    (setq prevbod2 (car bod2)
+                          bod2 nil))))
+          (cond
+           (bod2 (goto-char bod2))
+           (prevbod2 (goto-char prevbod2))
+           (bod (goto-char bod))
+           (prevbod (goto-char prevbod))
+           (t (goto-char (point-min))
+              (setq arg 0)))
+          (setq arg (1- arg))))
       (c-keep-region-active)
       (= arg 0))))
 
@@ -444,8 +443,8 @@ With prefix arg, goes to end of class; otherwise to end of method."
     ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
     ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
     (if (and (buffer-file-name (current-buffer))
-	     (not (string-match "\.jpp$" (buffer-file-name (current-buffer)))))
-	(add-hook 'write-contents-hooks 'check-parens-ignore-on-retry))
+             (not (string-match "\.jpp$" (buffer-file-name (current-buffer)))))
+        (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry))
     (add-hook 'write-contents-hooks 'check-for-string-equality)
     (java-set-compile-command)
 
@@ -455,12 +454,12 @@ With prefix arg, goes to end of class; otherwise to end of method."
     ;; Fill column
     (let ((buf-file-name (buffer-file-name (current-buffer))))
       (if (and buf-file-name
-	       (string-match "/checker-framework\\|/randoop\\|/daikon" buf-file-name))
-	  (progn
-	    ;; Google Java style sets fill column to 100
-	    (setq fill-column 100)
-	    (fci-mode t)		; show fill-column indicator
-	    )))
+               (string-match "/checker-framework\\|/randoop\\|/daikon" buf-file-name))
+          (progn
+            ;; Google Java style sets fill column to 100
+            (setq fill-column 100)
+            (fci-mode t)                ; show fill-column indicator
+            )))
 
     ;; This is orthogonal to dtrt-indent.el, which doesn't set tab-width.
     ;; Really, it shouldn't be necessary:  tabs do not belong in source code files.
@@ -469,12 +468,12 @@ With prefix arg, goes to end of class; otherwise to end of method."
       ;; Dubious, gud: Craig Kaplan
       ;; joie: Geoff Cohen
       (if (and buf-file-name
-	       (string-match "/\\(Dubious\\|gud\\|joie\\|junit\\)/\\|/joie-" buf-file-name))
-	  (progn
-	    (setq tab-width 2)
-	    (make-local-variable 'tab-stop-list)
-	    (set-tab-stop-list-width 2)
-	    (setq indent-tabs-mode t))))
+               (string-match "/\\(Dubious\\|gud\\|joie\\|junit\\)/\\|/joie-" buf-file-name))
+          (progn
+            (setq tab-width 2)
+            (make-local-variable 'tab-stop-list)
+            (set-tab-stop-list-width 2)
+            (setq indent-tabs-mode t))))
     ))
 
 (add-hook 'java-mode-hook 'mde-java-mode-hook)
@@ -491,7 +490,7 @@ Interactively, it's probably better to just set variable `tab-width'."
   (let ((i (* (/ 500 n) n)))
     (while (> i 0)
       (setq tab-stop-list (cons i tab-stop-list)
-	    i (- i n)))))
+            i (- i n)))))
 
 (defun set-tab-width (n)
   (interactive "P")
@@ -503,11 +502,11 @@ Interactively, it's probably better to just set variable `tab-width'."
   "Insert template for a Java `equals' method."
   (interactive)
   (if (not (and buffer-file-name
-		(string-match "/\\([^/]+\\)\\.java$" buffer-file-name)))
+                (string-match "/\\([^/]+\\)\\.java$" buffer-file-name)))
       (error "Not editing a Java file"))
   (let ((class-name (match-string 1 buffer-file-name)))
     (if (not (bolp))
-	(insert "\n"))
+        (insert "\n"))
     (insert "  public boolean equals( Object other )
     {
       if (!(other instanceof " class-name ")) {
@@ -526,38 +525,38 @@ This is disabled on lines with a comment containing the string \"interned\"."
       ;; Look for `=="' or `"==' (likewise for `!=')
       ;; The "[^+]" is to avoid complaining about:   foo + " != " + bar
       (while
-	  ;; (re-search-forward "[^=][=!]= *\".[^+]\\|[^+].\" *[=!]=[^=]" nil t)
-	  (condition-case err
-	      (re-search-forward (concat "[^=\n][=!]= *\"\\(.?\"\\|.[^+\n].*\"\\)"
-					 "\\|"
-					 "\\(\".?\\|\".*[^+\n].\\)\" *[=!]=[^=\n].*\"")
-				 nil t)
-	    (error
-	     (let ((error-message (second err)))
-	       (if (equal error-message "Stack overflow in regexp matcher")
-		   nil
-		 (throw 'error error-message)))))
-	(if (not (or (looking-at ".*//.*interned")
-		     ;; line ends with string ending with "=="
-		     (and (looking-back "=?= *\"") (looking-at ";\n"))
-		     ;; if already in comment, suppress warning
-		     (looking-back "/[/*].*")
-		     (looking-back "^[ \t]*\\*.*") ; Javadoc comment
-		     ;; entire string appears to be "==" or "!=" (as an arg)
-		     (looking-back "\(\"[=!]=\"\).*")
-		     ))
-	    (progn
-	      (sit-for 0)		; perform redisplay
-	      (if (not (y-or-n-p "Strings being compared with pointer equality; save anyway? "))
-		  (progn
-		    (message "\"// interned\" comment suppresses warning")
-		    (setq error-point (point))
-		    (goto-char (point-max)))
-		(message "\"// interned\" comment suppresses warning"))))))
+          ;; (re-search-forward "[^=][=!]= *\".[^+]\\|[^+].\" *[=!]=[^=]" nil t)
+          (condition-case err
+              (re-search-forward (concat "[^=\n][=!]= *\"\\(.?\"\\|.[^+\n].*\"\\)"
+                                         "\\|"
+                                         "\\(\".?\\|\".*[^+\n].\\)\" *[=!]=[^=\n].*\"")
+                                 nil t)
+            (error
+             (let ((error-message (second err)))
+               (if (equal error-message "Stack overflow in regexp matcher")
+                   nil
+                 (throw 'error error-message)))))
+        (if (not (or (looking-at ".*//.*interned")
+                     ;; line ends with string ending with "=="
+                     (and (looking-back "=?= *\"") (looking-at ";\n"))
+                     ;; if already in comment, suppress warning
+                     (looking-back "/[/*].*")
+                     (looking-back "^[ \t]*\\*.*") ; Javadoc comment
+                     ;; entire string appears to be "==" or "!=" (as an arg)
+                     (looking-back "\(\"[=!]=\"\).*")
+                     ))
+            (progn
+              (sit-for 0)               ; perform redisplay
+              (if (not (y-or-n-p "Strings being compared with pointer equality; save anyway? "))
+                  (progn
+                    (message "\"// interned\" comment suppresses warning")
+                    (setq error-point (point))
+                    (goto-char (point-max)))
+                (message "\"// interned\" comment suppresses warning"))))))
     (if error-point
-	(progn
-	  (goto-char error-point)
-	  (error "Strings being compared with pointer equality"))))
+        (progn
+          (goto-char error-point)
+          (error "Strings being compared with pointer equality"))))
   ;; return nil so this can be used as a write-{file,contents}-hook
   nil)
 
@@ -610,7 +609,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
   ;; Find if/for statements that end with a close paren, which suggests the
   ;; body is on the next line.  Also else statements that end a line.
   (let ((tags-regex
-	 "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
+         "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
     (tags-search tags-regex)
     (message "match-data after tags-search: %s" (match-data))
     (while t
@@ -637,48 +636,48 @@ statement.  Does replacement in any file in a currently-visited tags table."
       ;;          (buffer-substring (point)
       ;;                            (min (+ (point) 45) (point-max))))
       (let* ((line (buffer-substring (point) (save-excursion (end-of-line) (point))))
-	     (semicolon-terminated (equal ";" (substring line -1))))
-	(if (and (= (how-many-in-string "(" line) (how-many-in-string ")" line))
-		 (= 0 (how-many-in-string "{" line))
-		 (= 0 (how-many-in-string "//" line))
-		 (let ((leading-spaces (progn (string-match "^ *" line)
-					      (match-string 0 line))))
-		   (if semicolon-terminated
-		       (looking-at (concat leading-spaces "[^ \n].*\n+"
-					   leading-spaces "[^ ]"))
-		     (and (looking-at (concat leading-spaces "[^ \n].*\n"
-					      leading-spaces "[ ]"))
-			  (not (looking-at (concat leading-spaces "[^ \n].*\n"
-						   leading-spaces "[ ]*\\(for\\|if\\|try\\)\\b")))))))
-	    ;; Parens are balanced on the if/for line, and either:
-	    ;;  * line ends with ";" and next line is equally indented, or
-	    ;;  * line does not end with ";" and next line is indented more.
-	    (progn
-	      (cond ((looking-at " *\\(if\\|for\\)")
-		     (forward-sexp 2))
-		    ((looking-at " *\\(}? else\\)")
-		     ;; (message "2 %s" (match-data))
-		     (goto-char (match-end 0)))
-		    (t
-		     (error "This can't happen.  Looking at: %s"
-			    (buffer-substring (point)
-					      (min (+ (point) 45) (point-max))))))
-	      (insert " \{")
-	      (if semicolon-terminated
-		  (newline-and-indent))
-	      (re-search-forward ";\\( *//.*\\)?$")
-	      (while (looking-back "^[^;\n]*//[^\n]*$")
-		(re-search-forward ";\\( *//.*\\)?$"))
-	      (if (looking-at "\n *\\(else\\)")
-		  (progn
-		    ;; (message "3 %s" (match-data))
-		    (goto-char (match-beginning 1))
-		    (insert "} "))
-		(progn
-		  (newline-and-indent)
-		  (insert "}")
-		  (c-indent-line-or-region))))
-	  (next-line)))
+             (semicolon-terminated (equal ";" (substring line -1))))
+        (if (and (= (how-many-in-string "(" line) (how-many-in-string ")" line))
+                 (= 0 (how-many-in-string "{" line))
+                 (= 0 (how-many-in-string "//" line))
+                 (let ((leading-spaces (progn (string-match "^ *" line)
+                                              (match-string 0 line))))
+                   (if semicolon-terminated
+                       (looking-at (concat leading-spaces "[^ \n].*\n+"
+                                           leading-spaces "[^ ]"))
+                     (and (looking-at (concat leading-spaces "[^ \n].*\n"
+                                              leading-spaces "[ ]"))
+                          (not (looking-at (concat leading-spaces "[^ \n].*\n"
+                                                   leading-spaces "[ ]*\\(for\\|if\\|try\\)\\b")))))))
+            ;; Parens are balanced on the if/for line, and either:
+            ;;  * line ends with ";" and next line is equally indented, or
+            ;;  * line does not end with ";" and next line is indented more.
+            (progn
+              (cond ((looking-at " *\\(if\\|for\\)")
+                     (forward-sexp 2))
+                    ((looking-at " *\\(}? else\\)")
+                     ;; (message "2 %s" (match-data))
+                     (goto-char (match-end 0)))
+                    (t
+                     (error "This can't happen.  Looking at: %s"
+                            (buffer-substring (point)
+                                              (min (+ (point) 45) (point-max))))))
+              (insert " \{")
+              (if semicolon-terminated
+                  (newline-and-indent))
+              (re-search-forward ";\\( *//.*\\)?$")
+              (while (looking-back "^[^;\n]*//[^\n]*$")
+                (re-search-forward ";\\( *//.*\\)?$"))
+              (if (looking-at "\n *\\(else\\)")
+                  (progn
+                    ;; (message "3 %s" (match-data))
+                    (goto-char (match-beginning 1))
+                    (insert "} "))
+                (progn
+                  (newline-and-indent)
+                  (insert "}")
+                  (c-indent-line-or-region))))
+          (next-line)))
       (tags-loop-continue)))))
 
 
@@ -707,11 +706,11 @@ Works over the currently-visited tags table."
 (defun downcase-previous-character ()
   "Downcase the character before point."
   (let* ((prev-char (char-before (point)))
-	 (replacement (downcase prev-char)))
+         (replacement (downcase prev-char)))
     (if (not (equal prev-char replacement))
-	(progn
-	  (delete-backward-char 1)
-	  (insert (downcase prev-char))))))
+        (progn
+          (delete-backward-char 1)
+          (insert (downcase prev-char))))))
 
 ;; Be sure to check the changes; occasionally, the first word of a Javadoc
 ;; comment is a proper noun.
@@ -738,12 +737,22 @@ Works over the currently-visited tags table."
       (downcase-previous-character)))
   ;; PROBLEM: the final tags-loop-continue terminates the whole function so
   ;; nothing here or beyond will be executed.
+
+  ;; TODO:
+
+  ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
+  ;; (Run each until it finds no more issues)
+  (tags-query-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|@\\)")
+  ;; Missing period at the end of the main part of the Javadoc:
+  (tags-search "/\\*\\*[^@/]*\\. [^@/]*[^. \n][ \n]*\\*/")
+
   )
    
 (defun improve-javadoc-code-style ()
   "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
 
-  ;; TODO: as I run these, I mad need to convert
+  ;; TODO: as I run these, I may need to convert
   ;;   <code>...</code>
   ;; to
   ;;   {@code ...}
@@ -784,18 +793,18 @@ Works over the currently-visited tags table."
 (defadvice jdb (after set-gud-jdb-sourcepath activate)
   "Hard-code some directories whose bin/jar is on my classpath."
   (setq gud-jdb-sourcepath
-	(mapcar #'expand-file-name
-		'(
-		  "~/research/types/annotation-tools/annotation-file-utilities/src"
-		  "~/research/types/annotation-tools/scene-lib/src"
-		  "~/research/types/annotation-tools/scene-lib/src-devel"
-		  "~/research/types/annotation-tools/asmx/src"
-		  "~/research/types/checker-framework/checker/src"
-		  "~/research/types/jsr308-langtools/src/share/classes"
-		  "~/java/java-6-src"
-		  "~/java/junit-4.5-src"
-		  "~/java/iCal4j/source"
-		  ))))
+        (mapcar #'expand-file-name
+                '(
+                  "~/research/types/annotation-tools/annotation-file-utilities/src"
+                  "~/research/types/annotation-tools/scene-lib/src"
+                  "~/research/types/annotation-tools/scene-lib/src-devel"
+                  "~/research/types/annotation-tools/asmx/src"
+                  "~/research/types/checker-framework/checker/src"
+                  "~/research/types/jsr308-langtools/src/share/classes"
+                  "~/java/java-6-src"
+                  "~/java/junit-4.5-src"
+                  "~/java/iCal4j/source"
+                  ))))
 
 
 
@@ -803,12 +812,12 @@ Works over the currently-visited tags table."
 ;; ;;; I could instead advise gud-jdb-find-source-file.
 ;; ;; (setq gud-jdb-directories
 ;; ;;       (let* ((classpath-elts (split-string (getenv "CLASSPATH") ":"))
-;; ;; 	     (dirs-on-classpath nil))
-;; ;; 	(while classpath-elts
-;; ;; 	  (if (file-directory-p (car classpath-elts))
-;; ;; 	      (setq dirs-on-classpath (cons (car classpath-elts) dirs-on-classpath)))
-;; ;; 	  (setq classpath-elts (cdr classpath-elts)))
-;; ;; 	(nreverse dirs-on-classpath)))
+;; ;;        (dirs-on-classpath nil))
+;; ;;   (while classpath-elts
+;; ;;     (if (file-directory-p (car classpath-elts))
+;; ;;         (setq dirs-on-classpath (cons (car classpath-elts) dirs-on-classpath)))
+;; ;;     (setq classpath-elts (cdr classpath-elts)))
+;; ;;   (nreverse dirs-on-classpath)))
 ;;
 ;;
 ;; ;; As of JDE 2.2.5, I want to use JDEbug, the JDE's own debugger.  But it
@@ -829,8 +838,8 @@ Works over the currently-visited tags table."
 ;;   (interactive)
 ;;   (if jdb-use-jde-db
 ;;       (progn
-;; 	(require 'jde)
-;; 	(jde-db "daikon.Daikon"))
+;;      (require 'jde)
+;;      (jde-db "daikon.Daikon"))
 ;;     (error "Implement jdb-daikon for (not jdb-use-jde-db)")))
 ;;
 ;; (defadvice jde-db (around interactive-spec (app-class) activate)
@@ -838,14 +847,14 @@ Works over the currently-visited tags table."
 ;;   (interactive
 ;;    (list
 ;;     (let ((default (or (and jde-run-application-class
-;; 			    (not (string= jde-run-application-class ""))
-;; 			    jde-run-application-class)
-;; 		       (and (buffer-file-name)
-;; 			    (concat (jde-db-get-package)
-;; 				    (file-name-sans-extension
-;; 				     (file-name-nondirectory (buffer-file-name))))))))
+;;                          (not (string= jde-run-application-class ""))
+;;                          jde-run-application-class)
+;;                     (and (buffer-file-name)
+;;                          (concat (jde-db-get-package)
+;;                                  (file-name-sans-extension
+;;                                   (file-name-nondirectory (buffer-file-name))))))))
 ;;       (read-from-minibuffer "Java class to debug: "
-;; 			    default nil nil nil))))
+;;                          default nil nil nil))))
 ;;   ;; (let ((jde-run-application-class (ad-get-arg 0)))
 ;;   ;;   ;; This setting keeps getting wiped out for reasons I don't understand.
 ;;   ;;   (add-hook 'jde-db-mode-hook 'mde-jde-db-mode-hook)
@@ -861,27 +870,27 @@ Works over the currently-visited tags table."
 ;;   (interactive)
 ;;   (let ((orig-arg (ad-get-arg 0)))
 ;;     (if jdb-use-jde-db
-;; 	(progn
-;; 	  (require 'jde)
-;; 	  (if orig-arg
-;; 	      (jde-db orig-arg)
-;; 	    (call-interactively 'jde-db)))
+;;      (progn
+;;        (require 'jde)
+;;        (if orig-arg
+;;            (jde-db orig-arg)
+;;          (call-interactively 'jde-db)))
 ;;       (progn
-;; 	;; using original jdb, not jde-db
-;; 	(if (equal gud-jdb-directories (list "."))
-;; 	    (progn
-;; 	      (message "Consider setting `gud-jdb-directories'.")
-;; 	      (sit-for 1)))
-;; 	(if (not orig-arg)
-;; 	    ;; original jdb `interactive' specification
-;; 	    (setq orig-arg
-;; 		  (read-from-minibuffer "Run jdb (like this): "
-;; 					(if (consp gud-jdb-history)
-;; 					    (car gud-jdb-history)
-;; 					  (concat gud-jdb-command-name " "))
-;; 					nil nil
-;; 					'(gud-jdb-history . 1))))
-;; 	ad-do-it))))
+;;      ;; using original jdb, not jde-db
+;;      (if (equal gud-jdb-directories (list "."))
+;;          (progn
+;;            (message "Consider setting `gud-jdb-directories'.")
+;;            (sit-for 1)))
+;;      (if (not orig-arg)
+;;          ;; original jdb `interactive' specification
+;;          (setq orig-arg
+;;                (read-from-minibuffer "Run jdb (like this): "
+;;                                      (if (consp gud-jdb-history)
+;;                                          (car gud-jdb-history)
+;;                                        (concat gud-jdb-command-name " "))
+;;                                      nil nil
+;;                                      '(gud-jdb-history . 1))))
+;;      ad-do-it))))
 ;;
 ;;
 ;;
@@ -891,10 +900,10 @@ Works over the currently-visited tags table."
 ;; (defvar jdb-commands-alist
 ;;   (append
 ;;    (mapcar #'list
-;; 	   '("threads" "thread" "suspend" "resume" "where" "wherei" "threadgroups"
-;; 	     "threadgroup" "print" "dump" "locals" "classes" "methods" "stop" "stop"
-;; 	     "up" "down" "clear" "step" "stepi" "next" "cont" "catch" "ignore"
-;; 	     "list" "use" "memory" "gc" "load" "run" "!!"  "help" "exit" "quit"))
+;;         '("threads" "thread" "suspend" "resume" "where" "wherei" "threadgroups"
+;;           "threadgroup" "print" "dump" "locals" "classes" "methods" "stop" "stop"
+;;           "up" "down" "clear" "step" "stepi" "next" "cont" "catch" "ignore"
+;;           "list" "use" "memory" "gc" "load" "run" "!!"  "help" "exit" "quit"))
 ;;    ;; My abbreviations
 ;;    '(("finish" . "step up")
 ;;      ("java" . "run"))))
@@ -911,9 +920,9 @@ Works over the currently-visited tags table."
 ;;   "Wait until all process output has (apparently) appeared."
 ;;   (wait-for-process-output)
 ;;   (while (let ((new-bsize (buffer-size)))
-;; 	   ;; Edebug barfs on "(sleep-for .2)"
-;; 	   (sleep-for 0 200)
-;; 	   (not (= new-bsize (buffer-size))))
+;;         ;; Edebug barfs on "(sleep-for .2)"
+;;         (sleep-for 0 200)
+;;         (not (= new-bsize (buffer-size))))
 ;;     ;; do nothing
 ;;     )
 ;;   )
@@ -923,97 +932,97 @@ Works over the currently-visited tags table."
 ;;   (message "jdb-input-sender: %s" string)
 ;;   (let ((first-word (car (split-string string))))
 ;;     (if first-word
-;; 	(let* ((expanded (try-completion first-word jdb-commands-alist))
-;; 	       (exp-assoc (assoc (if (eq expanded t) first-word expanded)
-;; 				 jdb-commands-alist))
-;; 	       (substitution (and exp-assoc
-;; 				  (or (cdr exp-assoc) (car exp-assoc)))))
-;; 	  (if substitution
-;; 	      (progn
-;; 		(setq string (concat substitution
-;; 				     (substring string (length first-word))))
-;; 		(setq first-word substitution)
-;; 		(message "Expanded \"%s\" to \"%s\"" first-word substitution)))))
+;;      (let* ((expanded (try-completion first-word jdb-commands-alist))
+;;             (exp-assoc (assoc (if (eq expanded t) first-word expanded)
+;;                               jdb-commands-alist))
+;;             (substitution (and exp-assoc
+;;                                (or (cdr exp-assoc) (car exp-assoc)))))
+;;        (if substitution
+;;            (progn
+;;              (setq string (concat substitution
+;;                                   (substring string (length first-word))))
+;;              (setq first-word substitution)
+;;              (message "Expanded \"%s\" to \"%s\"" first-word substitution)))))
 ;;     ;; Expand environment variables
 ;;     (if (member first-word '("run"))
-;; 	;; not the very most efficient implementation (I could keep an
-;; 	;; index instead of modifying remaining), but probably fine.
-;; 	(let ((remaining string)
-;; 	      (new ""))
-;; 	  (while (string-match "\\$\\([a-zA-Z_0-9]+\\)" remaining)
-;; 	    (let* ((var (match-string 1 remaining))
-;; 		   (varval (getenv var)))
-;; 	      (if varval
-;; 		  (setq new (concat new
-;; 				    (substring remaining 0 (match-beginning 0))
-;; 				    (or varval ""))
-;; 			remaining (substring remaining (match-end 0))))))
-;; 	  (setq new (concat new remaining))
-;; 	  (if (not (equal new string))
-;; 	      (progn
-;; 		(message "Expanded \"%s\" to \"%s\"" string new)
-;; 		(setq string new)))))
+;;      ;; not the very most efficient implementation (I could keep an
+;;      ;; index instead of modifying remaining), but probably fine.
+;;      (let ((remaining string)
+;;            (new ""))
+;;        (while (string-match "\\$\\([a-zA-Z_0-9]+\\)" remaining)
+;;          (let* ((var (match-string 1 remaining))
+;;                 (varval (getenv var)))
+;;            (if varval
+;;                (setq new (concat new
+;;                                  (substring remaining 0 (match-beginning 0))
+;;                                  (or varval ""))
+;;                      remaining (substring remaining (match-end 0))))))
+;;        (setq new (concat new remaining))
+;;        (if (not (equal new string))
+;;            (progn
+;;              (message "Expanded \"%s\" to \"%s\"" string new)
+;;              (setq string new)))))
 ;;
 ;;     ;; Expand "*" shell wildcards
 ;;     (if (member first-word '("run"))
-;; 	;; not the very most efficient implementation (I could keep an
-;; 	;; index instead of modifying remaining), but probably fine.
-;; 	(let ((remaining string)
-;; 	      (new ""))
-;; 	  (while (string-match "[ \t]\\(\\([^ \t]*\\)/\\([^ \t/]*\\*[^ \t]*\\)\\)\\b" remaining)
-;; 	    (let* ((exp-beginning (match-beginning 1))
-;; 		   (exp-end (match-end 1))
-;; 		   (unexpanded (match-string 1 remaining))
-;; 		   (expanded (file-expand-wildcards unexpanded)))
-;; 	      (if (null expanded)
-;; 		  (error "Wildcard matches no files: %s" unexpanded))
-;; 	      (setq new (concat new
-;; 				(substring remaining 0 exp-beginning)
-;; 				(join expanded " "))
-;; 			remaining (substring remaining exp-end))))
-;; 	  (setq new (concat new remaining))
-;; 	  (if (not (equal new string))
-;; 	      (progn
-;; 		(message "Expanded \"%s\" to \"%s\"" string new)
-;; 		(setq string new)))))
+;;      ;; not the very most efficient implementation (I could keep an
+;;      ;; index instead of modifying remaining), but probably fine.
+;;      (let ((remaining string)
+;;            (new ""))
+;;        (while (string-match "[ \t]\\(\\([^ \t]*\\)/\\([^ \t/]*\\*[^ \t]*\\)\\)\\b" remaining)
+;;          (let* ((exp-beginning (match-beginning 1))
+;;                 (exp-end (match-end 1))
+;;                 (unexpanded (match-string 1 remaining))
+;;                 (expanded (file-expand-wildcards unexpanded)))
+;;            (if (null expanded)
+;;                (error "Wildcard matches no files: %s" unexpanded))
+;;            (setq new (concat new
+;;                              (substring remaining 0 exp-beginning)
+;;                              (join expanded " "))
+;;                      remaining (substring remaining exp-end))))
+;;        (setq new (concat new remaining))
+;;        (if (not (equal new string))
+;;            (progn
+;;              (message "Expanded \"%s\" to \"%s\"" string new)
+;;              (setq string new)))))
 ;;
 ;;     (let ((bsize (buffer-size))
-;; 	  (old-jde-db-stack-depth jde-db-stack-depth))
+;;        (old-jde-db-stack-depth jde-db-stack-depth))
 ;;       (comint-simple-send proc string)
 ;;       (if (member first-word '("up" "down" "print" "dump" "run"))
-;; 	  (progn
-;; 	    (wait-for-all-process-output)
-;; 	    (cond ((member first-word '("up" "down"))
-;; 		   (if (looking-back comint-prompt-regexp)
-;; 		       (delete-region (match-beginning 0) (match-end 0)))
-;; 		   (comint-simple-send proc "where"))
-;; 		  ((member first-word '("print" "dump"))
-;; 		   (if (not (equal "1" old-jde-db-stack-depth))
-;; 		       (progn
-;; 			 (if (looking-back comint-prompt-regexp)
-;; 			     (delete-region (match-beginning 0) (match-end 0)))
-;; 			 (comint-simple-send proc (concat "up " (int-to-string (1- (string-to-number old-jde-db-stack-depth))))))))
-;; 		  ((member first-word '("run"))
-;; 		   (if (looking-back (concat "VM already running. Use 'cont' to continue after events.\n"
-;; 						comint-prompt-regexp))
-;; 		       (progn
-;; 			 ;; (delete-region (match-beginning 0) (match-end 0))
-;; 			 (comint-simple-send proc "exit")
-;; 			 (wait-for-all-process-output)
-;; 			 ;; call jdb again
-;; 			 (if jdb-use-jde-db
-;; 			     (let* ((bname (buffer-name))
-;; 				    (app-class (and bname
-;; 						    (string-match "^\\*debug-?\\(.*\\)\\*" bname)
-;; 						    (match-string 1 bname))))
-;; 			       (jde-db app-class))
-;; 			   (call-interactively 'jdb))
-;; 			 (while (not (get-buffer-process (current-buffer)))
-;; 			   (message "No process yet.")
-;; 			   (sit-for 1))
-;; 			 (comint-simple-send (get-buffer-process (current-buffer)) string))))
-;; 		  (t
-;; 		   (error "What first-word?")))))))
+;;        (progn
+;;          (wait-for-all-process-output)
+;;          (cond ((member first-word '("up" "down"))
+;;                 (if (looking-back comint-prompt-regexp)
+;;                     (delete-region (match-beginning 0) (match-end 0)))
+;;                 (comint-simple-send proc "where"))
+;;                ((member first-word '("print" "dump"))
+;;                 (if (not (equal "1" old-jde-db-stack-depth))
+;;                     (progn
+;;                       (if (looking-back comint-prompt-regexp)
+;;                           (delete-region (match-beginning 0) (match-end 0)))
+;;                       (comint-simple-send proc (concat "up " (int-to-string (1- (string-to-number old-jde-db-stack-depth))))))))
+;;                ((member first-word '("run"))
+;;                 (if (looking-back (concat "VM already running. Use 'cont' to continue after events.\n"
+;;                                              comint-prompt-regexp))
+;;                     (progn
+;;                       ;; (delete-region (match-beginning 0) (match-end 0))
+;;                       (comint-simple-send proc "exit")
+;;                       (wait-for-all-process-output)
+;;                       ;; call jdb again
+;;                       (if jdb-use-jde-db
+;;                           (let* ((bname (buffer-name))
+;;                                  (app-class (and bname
+;;                                                  (string-match "^\\*debug-?\\(.*\\)\\*" bname)
+;;                                                  (match-string 1 bname))))
+;;                             (jde-db app-class))
+;;                         (call-interactively 'jdb))
+;;                       (while (not (get-buffer-process (current-buffer)))
+;;                         (message "No process yet.")
+;;                         (sit-for 1))
+;;                       (comint-simple-send (get-buffer-process (current-buffer)) string))))
+;;                (t
+;;                 (error "What first-word?")))))))
 ;;   )
 ;;
 ;;
@@ -1077,16 +1086,16 @@ Works over the currently-visited tags table."
 ;;    (while n
 ;;      (let ((path (check-source-path (substring paths m n))))
 ;;        (if path
-;; 	   (setq jde-db-source-directories
-;; 		 (cons path jde-db-source-directories)))
+;;         (setq jde-db-source-directories
+;;               (cons path jde-db-source-directories)))
 ;;        (setq m (+ n 1))
 ;;        (setq n (string-match jde-classpath-separator paths m))))
 ;;    (setq n (length paths))
 ;;    (if (and (> n 0) (< m n))
 ;;        (let ((path (check-source-path (substring paths m n))))
-;; 	 (if path
-;; 	     (setq jde-db-source-directories
-;; 		   (cons path jde-db-source-directories)))))
+;;       (if path
+;;           (setq jde-db-source-directories
+;;                 (cons path jde-db-source-directories)))))
 ;;    (setq jde-db-source-directories (nreverse jde-db-source-directories))))
 
 
@@ -1104,7 +1113,7 @@ Works over the currently-visited tags table."
 (defun mde-xml-mode-hook ()
   "Michael Ernst's XML mode hook."
   (if (and (buffer-file-name)
-	   (string-equal "build.xml" (file-name-nondirectory (buffer-file-name))))
+           (string-equal "build.xml" (file-name-nondirectory (buffer-file-name))))
       (local-set-key "\C-c\C-c" 'compile)))
 (add-hook 'sgml-mode-hook 'mde-xml-mode-hook)
 
@@ -1132,19 +1141,19 @@ Works over the currently-visited tags table."
   (setq inleft-string "# ")
   ;; GNU indentation style for Perl
   (setq perl-indent-level                2
-	perl-continued-statement-offset  2
-	perl-continued-brace-offset      0
-	perl-brace-offset                0
-	perl-brace-imaginary-offset      0
-	perl-label-offset               -2)
+        perl-continued-statement-offset  2
+        perl-continued-brace-offset      0
+        perl-brace-offset                0
+        perl-brace-imaginary-offset      0
+        perl-label-offset               -2)
   ;; Why is this necessary?
   (emacs-22+ (setq perl-brace-offset -2))
   (make-local-variable 'compile-command)
   (if buffer-file-name
       (if (looking-at ".* -[^ ]T")
-	  ;; If shebang line has -T, command line must also
-	  (setq compile-command (concat "perl -cT " buffer-file-name))
-	(setq compile-command (concat "perl -c " buffer-file-name))))
+          ;; If shebang line has -T, command line must also
+          (setq compile-command (concat "perl -cT " buffer-file-name))
+        (setq compile-command (concat "perl -c " buffer-file-name))))
   (local-set-key "\C-c\C-c" 'compile)
   ;; (local-set-key "\C-hf" 'cperl-info-on-command)
   (local-set-key "\C-hf" 'perldoc)
@@ -1164,11 +1173,11 @@ Works over the currently-visited tags table."
   "Provide a default of the thing at point."
   (interactive
    (list (let* ((default (or (thing-at-point 'word)
-			     (thing-at-point 'filename)))
-		(default-prompt (and default (concat " (default " default ")"))))
-	   (completing-read (concat "Perl function or module" default-prompt ": ")
-			    (perldoc-functions-alist) nil nil
-			    nil nil default)))))
+                             (thing-at-point 'filename)))
+                (default-prompt (and default (concat " (default " default ")"))))
+           (completing-read (concat "Perl function or module" default-prompt ": ")
+                            (perldoc-functions-alist) nil nil
+                            nil nil default)))))
 (defadvice perldoc-start-process (after bind-perldoc activate)
   "Set `C-h f' key to run `perldoc'."
   (local-set-key "\C-hf" 'perldoc))
@@ -1176,23 +1185,23 @@ Works over the currently-visited tags table."
 ;; Parse Perl error messages
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (append
-	  (list '("\\bat \\([^ ]+\\) line \\([0-9]+\\)\\($\\|[\\.,]\\)" 1 2)
-		'("^syntax error in file \\([^ ]*\\) at line \\([0-9]+\\)," 1 2)
-		'("\\bfile \\([^ ]*\\) line \\([0-9]+\\)$" 1 2))
-	  compilation-error-regexp-alist)))
+         (append
+          (list '("\\bat \\([^ ]+\\) line \\([0-9]+\\)\\($\\|[\\.,]\\)" 1 2)
+                '("^syntax error in file \\([^ ]*\\) at line \\([0-9]+\\)," 1 2)
+                '("\\bfile \\([^ ]*\\) line \\([0-9]+\\)$" 1 2))
+          compilation-error-regexp-alist)))
 
 (defadvice indent-perl-exp (after unspace-brace-hash activate)
   "Insert no space before a hash (#) immediately following an open brace."
   (save-excursion
     (let ((end (save-excursion
-		 (let ((eol (save-excursion (end-of-line) (point))))
-		   (while (<= (point) eol)
-		     (forward-sexp 1))
-		   (point)))))
+                 (let ((eol (save-excursion (end-of-line) (point))))
+                   (while (<= (point) eol)
+                     (forward-sexp 1))
+                   (point)))))
       (while (re-search-forward "[\{\(]\\(\\s-+\\)#" end t)
-	;; replace first submatch by a single space
-	(replace-match " " t t nil 1)))))
+        ;; replace first submatch by a single space
+        (replace-match " " t t nil 1)))))
 
 (defun perl-in-comment ()
   "Return non-nil if in a Perl comment."
@@ -1200,7 +1209,7 @@ Works over the currently-visited tags table."
     (let ((here (point)))
       (beginning-of-line 1)
       (save-match-data
-	(re-search-forward "\\(^\\|[^\\\$]\\)#" here t)))))
+        (re-search-forward "\\(^\\|[^\\\$]\\)#" here t)))))
 
 
 (defun perl-backup-file-check ()
@@ -1208,20 +1217,20 @@ Works over the currently-visited tags table."
   (save-excursion
     (goto-char (point-min))
     (if (looking-at ".*perl.*-[^ \n]*i[^.]")
-	(if (not (y-or-n-p "Perl script does in-place editing with no backup file; save anyway? "))
-	    (error "Perl script does in-place editing with no backup file")))))
+        (if (not (y-or-n-p "Perl script does in-place editing with no backup file; save anyway? "))
+            (error "Perl script does in-place editing with no backup file")))))
 
 
 (defun shadowed-variables-perl-write-hook ()
   "When in Perl mode, check for shadowed variables before writing file."
   (if (member major-mode '(perl-mode cperl-mode))
       (let ((result (shadowed-variables-perl t)))
-	(while result
-	  (if (not (y-or-n-p (format "%s; save anyway? " (car result))))
-	      (error "%s" (car result))
-	    ;; put it in the *Messages* buffer for later reference
-	    (message "%s" (car result)))
-	  (setq result (cdr result))))))
+        (while result
+          (if (not (y-or-n-p (format "%s; save anyway? " (car result))))
+              (error "%s" (car result))
+            ;; put it in the *Messages* buffer for later reference
+            (message "%s" (car result)))
+          (setq result (cdr result))))))
 
 (defun shadowed-variables-perl (&optional no-err)
   "Look for Perl variables with nested \(\"my\"\) scope.
@@ -1229,119 +1238,119 @@ If NO-ERR is non-nil return a list of error messages;
 otherwise, raise an error after the first problem is encountered."
   (interactive)
   (let ((opoint (point))
-	(result '()))
+        (result '()))
     (goto-char (point-min))
     (search-forward "\n=cut\n" nil t)
     (while (re-search-forward "\\b\\(for\\(each\\)?\\s-*\\(\(\\s-*\\)?\\)?\\bmy\\b\\|use\\s-+vars\\s-+\\('\\|qw\(\\)" nil t)
       (if (perl-in-comment)
-	  (forward-line 1)
-	(let* ((is-my (equal "my" (buffer-substring (- (point) 2) (point))))
-	       (is-for (equal "for" (buffer-substring (match-beginning 0)
-						      (+ (match-beginning 0) 3))))
-	       (vars-string (buffer-substring
-			     (point)
-			     (progn
-			       ;; "foreach my $arg (@args) doesn't declare "@args"
-			       (save-match-data
-				 ;; The re-search-forward forms can fail if
-				 ;; there is a partial statement near file end.
-				 (or (if (looking-at "\\s-*\(")
-					 (re-search-forward "\)" nil t)
-				       (re-search-forward "[;=(]" nil t))
-				     (error "Partial statement"))
-				 (point)))))
-	       (decl-end (point))
-	       (scope-end (let ((end (1- decl-end)))
-			    (if is-for
-				(let ((for-open-paren-pos
-				       (cond ((= (char-after end) ?\()
-					      end)
-					     ((let ((str-3 (match-string 3)))
-						(and str-3
-						     (= ?\( (elt str-3 0))))
-					      (1- (match-end 3))))))
-				  (if for-open-paren-pos
-				      (setq end
-					    (save-excursion
-					      (goto-char for-open-paren-pos)
-					      (no-err (forward-sexp 2))
-					      (point))))))
-			    (while (<= end decl-end)
-			      (setq end
-				    (if (re-search-backward "{" nil t)
-					(if (and (not (bobp))
-						 (or (= ?\\ (char-after (1- (point))))
-						     (= ?$ (char-after (1- (point))))
-						     (perl-in-comment)))
-					    end ; don't change value of end
-					  (condition-case nil
-					      (save-excursion
-						(forward-sexp 1)
-						(point))
-					    (error (point-max))))
-				      (point-max))))
-			    end)))
-	  (goto-char decl-end)
-	  ;; we're now at the end of this declaration
-	  ;; not \\w+\\b because '\w' doesn't include _
-	  (while (string-match "[$@%][a-zA-Z_][a-zA-Z_0-9]*" vars-string)
-	    (let* ((this-var (match-string 0 vars-string))
-		   ;; look for "${i}" as well as "$i"
-		   (this-var-regexp (concat
-				     (regexp-quote (substring this-var 0 1))
-				     "{?"
-				     (regexp-quote (substring this-var 1))))
-		   (this-var-regexp (concat this-var-regexp
-					    "\\($\\|[^a-zA-Z0-9_]\\)")))
-	      (setq vars-string (substring vars-string (match-end 0)))
-	      (goto-char decl-end)
-	      ;; These tests aren't quite right; if they find something in
-	      ;; a comment, they should iterate and look again instead of
-	      ;; just giving up, as they do now.
-	      (let ((msg
-		     (if (and is-my
-			      (save-excursion
-				(and
-				 (not (re-search-forward this-var-regexp scope-end t))
-				 (not (and (= ?\@ (elt this-var 0))
-					   (or
-					    (re-search-forward
-					     (concat "\\$" (substring this-var 1) "\\[")
-					     nil t)
-					    (re-search-forward
-					     (concat "\\$#" (substring this-var 1) "\\b")
-					     nil t))))
-				 (not (and (= ?\% (elt this-var 0))
-					   (re-search-forward
-					    (concat "\\$" (substring this-var 1) "{")
-					    nil t))))))
-			 (format "Local variable %s at line %d is never used"
-				 this-var (count-lines (point-min) decl-end))
-		       (if (let ((case-fold-search nil))
-			     (and (re-search-forward
-				   ;; "{" is for body of "for my ..."
-				   ;; Problem: "# My hack\n}elsif ($tag eq "p")"
-				   ;; looks like a definition of $tag to this.
-				   (concat "\\bmy\\b\\s-*\\(\([^;={)]*\\|[^;={]*\\)"
-					   this-var-regexp)
-				   scope-end t)
-				  (not (perl-in-comment))
-				  ;; Make sure the variable doesn't appear in the ()
-				  ;; section of  foreach my $var (...)
-				  (not (string-match (concat "^my\\s-*[$@%][^;=]*\([^;=()]*"
-							     this-var-regexp)
-						     (match-string 0)))))
-			   (format "Redefinition of variable %s at lines %d and %d"
-				   this-var
-				   (count-lines (point-min) decl-end)
-				   (count-lines (point-min) (point)))))))
-		(if msg
-		    (if no-err
-			(setq result (cons msg result))
-		      (error "%s" msg)))))))))
+          (forward-line 1)
+        (let* ((is-my (equal "my" (buffer-substring (- (point) 2) (point))))
+               (is-for (equal "for" (buffer-substring (match-beginning 0)
+                                                      (+ (match-beginning 0) 3))))
+               (vars-string (buffer-substring
+                             (point)
+                             (progn
+                               ;; "foreach my $arg (@args) doesn't declare "@args"
+                               (save-match-data
+                                 ;; The re-search-forward forms can fail if
+                                 ;; there is a partial statement near file end.
+                                 (or (if (looking-at "\\s-*\(")
+                                         (re-search-forward "\)" nil t)
+                                       (re-search-forward "[;=(]" nil t))
+                                     (error "Partial statement"))
+                                 (point)))))
+               (decl-end (point))
+               (scope-end (let ((end (1- decl-end)))
+                            (if is-for
+                                (let ((for-open-paren-pos
+                                       (cond ((= (char-after end) ?\()
+                                              end)
+                                             ((let ((str-3 (match-string 3)))
+                                                (and str-3
+                                                     (= ?\( (elt str-3 0))))
+                                              (1- (match-end 3))))))
+                                  (if for-open-paren-pos
+                                      (setq end
+                                            (save-excursion
+                                              (goto-char for-open-paren-pos)
+                                              (no-err (forward-sexp 2))
+                                              (point))))))
+                            (while (<= end decl-end)
+                              (setq end
+                                    (if (re-search-backward "{" nil t)
+                                        (if (and (not (bobp))
+                                                 (or (= ?\\ (char-after (1- (point))))
+                                                     (= ?$ (char-after (1- (point))))
+                                                     (perl-in-comment)))
+                                            end ; don't change value of end
+                                          (condition-case nil
+                                              (save-excursion
+                                                (forward-sexp 1)
+                                                (point))
+                                            (error (point-max))))
+                                      (point-max))))
+                            end)))
+          (goto-char decl-end)
+          ;; we're now at the end of this declaration
+          ;; not \\w+\\b because '\w' doesn't include _
+          (while (string-match "[$@%][a-zA-Z_][a-zA-Z_0-9]*" vars-string)
+            (let* ((this-var (match-string 0 vars-string))
+                   ;; look for "${i}" as well as "$i"
+                   (this-var-regexp (concat
+                                     (regexp-quote (substring this-var 0 1))
+                                     "{?"
+                                     (regexp-quote (substring this-var 1))))
+                   (this-var-regexp (concat this-var-regexp
+                                            "\\($\\|[^a-zA-Z0-9_]\\)")))
+              (setq vars-string (substring vars-string (match-end 0)))
+              (goto-char decl-end)
+              ;; These tests aren't quite right; if they find something in
+              ;; a comment, they should iterate and look again instead of
+              ;; just giving up, as they do now.
+              (let ((msg
+                     (if (and is-my
+                              (save-excursion
+                                (and
+                                 (not (re-search-forward this-var-regexp scope-end t))
+                                 (not (and (= ?\@ (elt this-var 0))
+                                           (or
+                                            (re-search-forward
+                                             (concat "\\$" (substring this-var 1) "\\[")
+                                             nil t)
+                                            (re-search-forward
+                                             (concat "\\$#" (substring this-var 1) "\\b")
+                                             nil t))))
+                                 (not (and (= ?\% (elt this-var 0))
+                                           (re-search-forward
+                                            (concat "\\$" (substring this-var 1) "{")
+                                            nil t))))))
+                         (format "Local variable %s at line %d is never used"
+                                 this-var (count-lines (point-min) decl-end))
+                       (if (let ((case-fold-search nil))
+                             (and (re-search-forward
+                                   ;; "{" is for body of "for my ..."
+                                   ;; Problem: "# My hack\n}elsif ($tag eq "p")"
+                                   ;; looks like a definition of $tag to this.
+                                   (concat "\\bmy\\b\\s-*\\(\([^;={)]*\\|[^;={]*\\)"
+                                           this-var-regexp)
+                                   scope-end t)
+                                  (not (perl-in-comment))
+                                  ;; Make sure the variable doesn't appear in the ()
+                                  ;; section of  foreach my $var (...)
+                                  (not (string-match (concat "^my\\s-*[$@%][^;=]*\([^;=()]*"
+                                                             this-var-regexp)
+                                                     (match-string 0)))))
+                           (format "Redefinition of variable %s at lines %d and %d"
+                                   this-var
+                                   (count-lines (point-min) decl-end)
+                                   (count-lines (point-min) (point)))))))
+                (if msg
+                    (if no-err
+                        (setq result (cons msg result))
+                      (error "%s" msg)))))))))
     (goto-char opoint)
     (if (interactive-p)
-	(message "No shadowed variables.")
+        (message "No shadowed variables.")
       (nreverse result))))
 
 
@@ -1450,16 +1459,16 @@ otherwise, raise an error after the first problem is encountered."
 ;; If variable `py-jump-on-exception' is nil, do nothing."
 ;;   ;; It doesn't work to wrap this whole body in save-excursion.
 ;;   (if (and py-jump-on-exception
-;; 	   (looking-back "\n>>> ")
-;; 	   (save-excursion
-;; 	     (forward-line -1)
-;; 	     (looking-at "[A-Za-z]*Error\\b")))
+;;         (looking-back "\n>>> ")
+;;         (save-excursion
+;;           (forward-line -1)
+;;           (looking-at "[A-Za-z]*Error\\b")))
 ;;       (if (save-excursion
-;; 	    (re-search-backward py-traceback-line-re (- (point) 300) 'no-error))
-;; 	  (let ((file (match-string 1))
-;; 		(lineno (string-to-number (match-string 2))))
-;; 	    (if (not (equal file "<stdin>"))
-;; 		(py-jump-to-exception file lineno))))))
+;;          (re-search-backward py-traceback-line-re (- (point) 300) 'no-error))
+;;        (let ((file (match-string 1))
+;;              (lineno (string-to-number (match-string 2))))
+;;          (if (not (equal file "<stdin>"))
+;;              (py-jump-to-exception file lineno))))))
 ;;
 ;; This is gratuitous; I can just use C-c - instead.  (Maybe add that
 ;; binding to next-error, or advise it to sometimes do that instead.)
@@ -1469,17 +1478,17 @@ otherwise, raise an error after the first problem is encountered."
 
 (defun python-symbol-around-point ()
   "Return a string consisting of the symbol that point is within (or near)."
-  (or (symbol-at-point)			; defined in "thingatpt.el"
+  (or (symbol-at-point)                 ; defined in "thingatpt.el"
       (save-excursion
-	;; skip backward over open-parentheses and spaces, then try again
-	(while (and (not (bobp))
-		    (memq (char-syntax (preceding-char)) '(?\( ?\ )))
-	  (forward-char -1))
-	;; also, (symbol-at-point) fails if just after final character.
-	(if (and (not (bobp))
-		 (eq ?\w (char-syntax (preceding-char))))
-	    (forward-char -1))
-	(symbol-at-point))))
+        ;; skip backward over open-parentheses and spaces, then try again
+        (while (and (not (bobp))
+                    (memq (char-syntax (preceding-char)) '(?\( ?\ )))
+          (forward-char -1))
+        ;; also, (symbol-at-point) fails if just after final character.
+        (if (and (not (bobp))
+                 (eq ?\w (char-syntax (preceding-char))))
+            (forward-char -1))
+        (symbol-at-point))))
 
 (defun python-comment-indent ()
   "Choose comment column for Python comments.  Lifted from `lisp-comment-indent'."
@@ -1488,13 +1497,13 @@ otherwise, raise an error after the first problem is encountered."
     (progn
       (skip-chars-backward " \t")
       (max (if (bolp) 0 (1+ (current-column)))
-	   comment-column))))
+           comment-column))))
 
 (defadvice indent-for-tab-command (around move-to-text activate)
   "In Python mode, if at first column, then move to first non-space character."
   (if (and (eq major-mode 'python-mode)
-	   (zerop (current-column))
-	   (looking-at "[ \t]+[^ \t\n]"))
+           (zerop (current-column))
+           (looking-at "[ \t]+[^ \t\n]"))
       (goto-char (1- (match-end 0)))
     ad-do-it))
 
@@ -1506,8 +1515,8 @@ otherwise, raise an error after the first problem is encountered."
 ;; When called interactively, prompts for the symbol (defaults to the function
 ;; point is currently near)."
 ;;   (interactive (list (let* ((default (python-symbol-around-point))
-;; 			    (fn (read-string (format "Describe Python function (default %s): " default))))
-;; 		       (if (string= fn "") default fn))))
+;;                          (fn (read-string (format "Describe Python function (default %s): " default))))
+;;                     (if (string= fn "") default fn))))
 ;;   (if (symbolp function) (setq function (symbol-name function)))
 ;;   (let (message)
 ;;     (save-window-excursion
@@ -1515,17 +1524,17 @@ otherwise, raise an error after the first problem is encountered."
 ;;       ;; was (Info-guess-node 'python-mode); we've partial-evaluated it.
 ;;       (eval-when-compile (require 'info))
 ;;       (if (not (string-match "python-lib" Info-current-file))
-;; 	  (progn
-;; 	    (Info-directory)
-;; 	    (Info-menu "Python-lib")))
+;;        (progn
+;;          (Info-directory)
+;;          (Info-menu "Python-lib")))
 ;;       (setq message (condition-case nil
-;; 			(Info-index function)
-;; 		      (error nil))))
+;;                      (Info-index function)
+;;                    (error nil))))
 ;;     (if message
-;; 	(progn
-;; 	  (switch-to-buffer-other-window "*info*")
-;; 	  (recenter)
-;; 	  (message "%s" message))
+;;      (progn
+;;        (switch-to-buffer-other-window "*info*")
+;;        (recenter)
+;;        (message "%s" message))
 ;;       (error (format "No \"%s\" in index." function)))))
 
 ;; From https://github.com/tsgates/pylookup
@@ -1554,14 +1563,14 @@ otherwise, raise an error after the first problem is encountered."
 ;; (eval-after-load "info"
 ;;   '(progn
 ;;      (setq Info-directory-list
-;; 	   (cons (substitute-in-file-name "$HOME/emacs/auctex-11.85/doc")
-;; 		 Info-directory-list))))
+;;         (cons (substitute-in-file-name "$HOME/emacs/auctex-11.85/doc")
+;;               Info-directory-list))))
 
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (append '(("^ *File \"\\(.*\\)\", line \\([0-9]+\\)" 1 2)
-		   ("^SyntaxError: ('invalid syntax', ('\\(.*\\)', \\([0-9]+\\), " 1 2))
-		 compilation-error-regexp-alist)))
+         (append '(("^ *File \"\\(.*\\)\", line \\([0-9]+\\)" 1 2)
+                   ("^SyntaxError: ('invalid syntax', ('\\(.*\\)', \\([0-9]+\\), " 1 2))
+                 compilation-error-regexp-alist)))
 
 (defadvice py-execute-import-or-reload (before save-first activate)
   "Save current buffer first."
@@ -1577,27 +1586,27 @@ otherwise, raise an error after the first problem is encountered."
 (defadvice py-execute-import-or-reload (around exit-debugger activate)
   "If in Python debugger, offer to quit before importing/reloading a file."
   (let* ((py-process (get-process "Python"))
-	 (py-buffer (and py-process (process-buffer py-process)))
-	 (exit-debugger-p nil))
+         (py-buffer (and py-process (process-buffer py-process)))
+         (exit-debugger-p nil))
     (if (and py-buffer
-	     (with-current-buffer py-buffer
-	       (equal "(Pdb) "
-		      (buffer-substring (max 1 (- (point-max) 6)) (point-max)))))
-	(if (y-or-n-p "Exit Python debugger first? ")
-	    (with-current-buffer py-buffer
-	      (setq exit-debugger-p t)
-	      (goto-char (point-max))
-	      (process-send-string py-process "q\n")
-	      (comint-send-input))
-	  (message "Warning: in Python debugger, effects may be transient")))
+             (with-current-buffer py-buffer
+               (equal "(Pdb) "
+                      (buffer-substring (max 1 (- (point-max) 6)) (point-max)))))
+        (if (y-or-n-p "Exit Python debugger first? ")
+            (with-current-buffer py-buffer
+              (setq exit-debugger-p t)
+              (goto-char (point-max))
+              (process-send-string py-process "q\n")
+              (comint-send-input))
+          (message "Warning: in Python debugger, effects may be transient")))
     ad-do-it
     (if exit-debugger-p
-	;; This seems to be necessary to keep the file evaluation from
-	;; merely being buffered up until the next comint-send-input.
-	;; This is not so great if there is partial input, but since
-	;; we saw the debugger prompt at end of buffer, there isn't.
-	(with-current-buffer py-buffer
-	  (comint-send-input)))
+        ;; This seems to be necessary to keep the file evaluation from
+        ;; merely being buffered up until the next comint-send-input.
+        ;; This is not so great if there is partial input, but since
+        ;; we saw the debugger prompt at end of buffer, there isn't.
+        (with-current-buffer py-buffer
+          (comint-send-input)))
     ))
 
 (defun pyflakes-this-file () (interactive)
@@ -1612,7 +1621,7 @@ otherwise, raise an error after the first problem is encountered."
 ;;;
 
 (defvar lisp-major-modes '(emacs-lisp-mode lisp-mode fi:common-lisp-mode
-					   scheme-mode))
+                                           scheme-mode))
 
 ;;;
 ;;; Lisp
@@ -1648,11 +1657,11 @@ otherwise, raise an error after the first problem is encountered."
   (if (eq major-mode 'lisp-mode)
       ;; Not emacs-lisp-mode, fi::*-mode, etc.
       (progn
-	(if (fboundp 'fi:clman)
-	    (progn
-	      (define-key lisp-mode-map "\C-hf" 'fi:clman)
-	      (define-key lisp-mode-map "\C-ha" 'fi:clman-apropos)))
-	(define-key lisp-mode-map "\C-cl" 'run-lisp))))
+        (if (fboundp 'fi:clman)
+            (progn
+              (define-key lisp-mode-map "\C-hf" 'fi:clman)
+              (define-key lisp-mode-map "\C-ha" 'fi:clman-apropos)))
+        (define-key lisp-mode-map "\C-cl" 'run-lisp))))
 (add-hook 'lisp-mode-hook 'mde-lisp-mode-hook)
 
 (put 'with-open-file 'lisp-indent-function 1)
@@ -1667,7 +1676,7 @@ otherwise, raise an error after the first problem is encountered."
 
 ;;; Documentation checking
 ;; Change this when I trust it more.
-(setq checkdoc-autofix-flag 'query)	; default 'semiautomatic
+(setq checkdoc-autofix-flag 'query)     ; default 'semiautomatic
 ;; May need to do ispell-check-ispell
 (setq checkdoc-spellcheck-documentation-flag 'buffer) ; default nil
 ;; not useful for variable docstrings, though good for function docstrings
@@ -1688,16 +1697,16 @@ If the value is neither nil nor t, then the user is queried first.")
 (defun maybe-checkdoc-current-buffer ()
   "Check documentation/style for current buffer, if not in distribution directory."
   (if (and (or (not (buffer-file-name))
-	       (not (string-match "/emacs[-0-9./]*/lisp" (buffer-file-name))))
-	   (or (eq t maybe-checkdoc-flag)
-	       (and maybe-checkdoc-flag
-		    (y-or-n-p "Check style of buffer? "))))
+               (not (string-match "/emacs[-0-9./]*/lisp" (buffer-file-name))))
+           (or (eq t maybe-checkdoc-flag)
+               (and maybe-checkdoc-flag
+                    (y-or-n-p "Check style of buffer? "))))
       (let ((checkdoc-spellcheck-documentation-flag nil)
-	    (checkdoc-autofix-flag 'never))
-	;; Don't save-window-excursion, as checkdoc will change it when it
-	;; shows the "*Style Warnings*" buffer.
-	(pop-to-buffer (current-buffer))
-	(checkdoc-current-buffer 'take-notes)))
+            (checkdoc-autofix-flag 'never))
+        ;; Don't save-window-excursion, as checkdoc will change it when it
+        ;; shows the "*Style Warnings*" buffer.
+        (pop-to-buffer (current-buffer))
+        (checkdoc-current-buffer 'take-notes)))
   ;; Always return nil; returning t means the buffer has been written
   nil)
 
@@ -1705,7 +1714,7 @@ If the value is neither nil nor t, then the user is queried first.")
 (add-hook 'lisp-mode-hook 'mde-lisp-mode-hook)
 
 (setq auto-mode-alist (append '(("\\.elc$"  . emacs-lisp-mode))
-			      auto-mode-alist))
+                              auto-mode-alist))
 (defun mde-emacs-lisp-mode-hook ()
   "Michael Ernst's Emacs Lisp mode hook."
   (run-hooks 'lisp-mode-hook)
@@ -1715,12 +1724,12 @@ If the value is neither nil nor t, then the user is queried first.")
 (add-hook 'lisp-interaction-mode-hook 'mde-emacs-lisp-mode-hook)
 ;; These define-key's needn't be in the hook, as the map is already defined.
 ;; (Uh, why is it already defined?)
-(define-key emacs-lisp-mode-map	"\M-\C-x" 'eval-or-compile-defun) ; was eval-defun
+(define-key emacs-lisp-mode-map "\M-\C-x" 'eval-or-compile-defun) ; was eval-defun
 (define-key emacs-lisp-mode-map "\C-xx" 'edebug-defun)
 
 ;; This is useful enough to define everywhere.
-;; (define-key emacs-lisp-mode-map "\C-cf" 'find-function)	; like M-. (find-tag)
-(global-set-key "\C-cf" 'find-function)	; like M-. (find-tag)
+;; (define-key emacs-lisp-mode-map "\C-cf" 'find-function)      ; like M-. (find-tag)
+(global-set-key "\C-cf" 'find-function) ; like M-. (find-tag)
 
 
 (eval-after-load "edebug"
@@ -1728,9 +1737,9 @@ If the value is neither nil nor t, then the user is queried first.")
      ;; largely lifted from "let*"
      (def-edebug-spec elib-set-buffer-bind-dll-let*
        (form
-	(&rest
-	 &or symbolp (gate symbolp &optional form))
-	body))
+        (&rest
+         &or symbolp (gate symbolp &optional form))
+        body))
      (def-edebug-spec crypt-save-point
        (body))))
 
@@ -1740,10 +1749,10 @@ If the value is neither nil nor t, then the user is queried first.")
 ;;;
 
 (add-hook 'scheme-mode-hook (function (lambda ()
-					(run-hooks 'lisp-mode-hook)
-					(require 'scheme-mde))))
+                                        (run-hooks 'lisp-mode-hook)
+                                        (require 'scheme-mde))))
 (setq auto-mode-alist (append '(("\\.ss$"  . scheme-mode))
-			      auto-mode-alist))
+                              auto-mode-alist))
 ;; Emacs 19 and 20 use 'scheme-indent-function, not -hook
 (put 'local 'scheme-indent-function 1)
 (put 'when 'scheme-indent-function 1)
@@ -1753,7 +1762,7 @@ If the value is neither nil nor t, then the user is queried first.")
 (add-hook 'xscheme-start-hook 'mde-xscheme-start-hook)
 ;; For some reason, this doesn't seem to work.
 (add-hook 'chez-scheme-mode-hook (function (lambda ()
- 					     (run-hooks 'scheme-mode-hook))))
+                                             (run-hooks 'scheme-mode-hook))))
 
 ;;;
 ;;; Common Lisp
@@ -1763,34 +1772,34 @@ If the value is neither nil nor t, then the user is queried first.")
 ;; ;; Allegro Common Lisp (C-c l  starts ACL)
 ;; (cse
 ;;  (if (and (or (file-exists-p "/projects/ai/emacs/standard.emacs-4.2.el")
-;; 	      (file-exists-p "/projects/ai/emacs/standard.emacs-4.2.elc"))
-;; 	  (file-exists-p "/usr/local/AllegroCL-4.2/lib/emacs/fi"))
+;;            (file-exists-p "/projects/ai/emacs/standard.emacs-4.2.elc"))
+;;        (file-exists-p "/usr/local/AllegroCL-4.2/lib/emacs/fi"))
 ;;      (if (eq system-type 'irix)
-;; 	 ;; ACL doesn't work under Solaris (does work under SunOS 4)
-;; 	 (load (expand-file-name "/projects/ai/emacs/standard.emacs-4.2"))
+;;       ;; ACL doesn't work under Solaris (does work under SunOS 4)
+;;       (load (expand-file-name "/projects/ai/emacs/standard.emacs-4.2"))
 ;;        ;; At least get the documentation advantages.
 ;;        ;; Don't reload if already loaded.
 ;;        (if (not (fboundp 'fi::file-contents))
-;; 	   ;; lisp-mode.el doesn't seem to get loaded, or eval-after-load
-;; 	   ;; doesn't work, so do this unconditionally (it's fast anyway).
-;; 	   (if (fboundp 'lisp-mode)
-;; 	       (let ((fi-dir "/usr/local/AllegroCL-4.2/lib/emacs/fi/"))
-;; 		 (require 'cl)
-;; 		 (setq fi::clman-prog (concat fi-dir "clman"))
-;; 		 (setq fi::clman-data (concat fi-dir "clman.data"))
-;; 		 (setq fi::manual-dir (concat fi-dir "manual/"))
-;; 		 (load (concat fi-dir "fi-version"))
-;; 		 (load (concat fi-dir "fi-utils"))
-;; 		 (load (concat fi-dir "fi-clman")))
-;; 	     (eval-after-load "lisp-mode"
-;; 	       '(let ((fi-dir "/usr/local/AllegroCL-4.2/lib/emacs/fi/"))
-;; 		  (require 'cl)
-;; 		  (setq fi::clman-prog (concat fi-dir "clman"))
-;; 		  (setq fi::clman-data (concat fi-dir "clman.data"))
-;; 		  (setq fi::manual-dir (concat fi-dir "manual/"))
-;; 		  (load (concat fi-dir "fi-version"))
-;; 		  (load (concat fi-dir "fi-utils"))
-;; 		  (load (concat fi-dir "fi-clman")))))))))
+;;         ;; lisp-mode.el doesn't seem to get loaded, or eval-after-load
+;;         ;; doesn't work, so do this unconditionally (it's fast anyway).
+;;         (if (fboundp 'lisp-mode)
+;;             (let ((fi-dir "/usr/local/AllegroCL-4.2/lib/emacs/fi/"))
+;;               (require 'cl)
+;;               (setq fi::clman-prog (concat fi-dir "clman"))
+;;               (setq fi::clman-data (concat fi-dir "clman.data"))
+;;               (setq fi::manual-dir (concat fi-dir "manual/"))
+;;               (load (concat fi-dir "fi-version"))
+;;               (load (concat fi-dir "fi-utils"))
+;;               (load (concat fi-dir "fi-clman")))
+;;           (eval-after-load "lisp-mode"
+;;             '(let ((fi-dir "/usr/local/AllegroCL-4.2/lib/emacs/fi/"))
+;;                (require 'cl)
+;;                (setq fi::clman-prog (concat fi-dir "clman"))
+;;                (setq fi::clman-data (concat fi-dir "clman.data"))
+;;                (setq fi::manual-dir (concat fi-dir "manual/"))
+;;                (load (concat fi-dir "fi-version"))
+;;                (load (concat fi-dir "fi-utils"))
+;;                (load (concat fi-dir "fi-clman")))))))))
 
 (defadvice fi::get-lisp-interactive-arguments (before dont-ask activate)
   "Set `first-time' to nil, so that I'm not prompted for ACL arguments."
@@ -1815,29 +1824,29 @@ If the value is neither nil nor t, then the user is queried first.")
      (add-hook
       'fi:inferior-common-lisp-mode-hook
       #'(lambda ()
-	 (define-key fi:inferior-common-lisp-mode-map "\C-hf" 'fi:clman)
-	 (define-key fi:inferior-common-lisp-mode-map "\ep" 'fi:pop-input)
-	 (define-key fi:inferior-common-lisp-mode-map "\en" 'fi:push-input)
-	 (add-hook 'fi::subprocess-filter-output-preprocess-hook
-		   'mde-fi::subprocess-filter-output-preprocess-hook)
-	 (setq comint-prompt-regexp "^\\(\\[[0-9]+\\] \\)?[-a-zA-Z]+([0-9]+): ")))
+         (define-key fi:inferior-common-lisp-mode-map "\C-hf" 'fi:clman)
+         (define-key fi:inferior-common-lisp-mode-map "\ep" 'fi:pop-input)
+         (define-key fi:inferior-common-lisp-mode-map "\en" 'fi:push-input)
+         (add-hook 'fi::subprocess-filter-output-preprocess-hook
+                   'mde-fi::subprocess-filter-output-preprocess-hook)
+         (setq comint-prompt-regexp "^\\(\\[[0-9]+\\] \\)?[-a-zA-Z]+([0-9]+): ")))
      (add-hook
       'fi:common-lisp-mode-hook
       #'(lambda ()
-	 (define-key fi:common-lisp-mode-map "\C-hf" 'fi:clman)
-	 (define-key fi:common-lisp-mode-map "\C-ha" 'fi:clman-apropos)
-	 ;; Not eval-or-compile-last-sexp, because I want to see the result.
-	 (define-key fi:common-lisp-mode-map "\C-x\C-e" 'fi:lisp-eval-last-sexp)))))
+         (define-key fi:common-lisp-mode-map "\C-hf" 'fi:clman)
+         (define-key fi:common-lisp-mode-map "\C-ha" 'fi:clman-apropos)
+         ;; Not eval-or-compile-last-sexp, because I want to see the result.
+         (define-key fi:common-lisp-mode-map "\C-x\C-e" 'fi:lisp-eval-last-sexp)))))
 
 
 (defvar mde-fi::subprocess-redefinition-regexp
   (mapconcat (function identity)
-	     '("\\(^\\|\n\\)Warning: .*"
-	       "was defined in"
-	       ".*\\.lisp"
-	       "and is now" "being"
-	       "defined \\(at the top level\\|in" ".*\\.lisp\\)\n")
-	     "\\( \\|\n +\\)")
+             '("\\(^\\|\n\\)Warning: .*"
+               "was defined in"
+               ".*\\.lisp"
+               "and is now" "being"
+               "defined \\(at the top level\\|in" ".*\\.lisp\\)\n")
+             "\\( \\|\n +\\)")
   "A separate variable to avoid the `mapconcat' on every execution.
 Output that matches this is swallowed by the filter.")
 
@@ -1847,20 +1856,20 @@ Output that matches this is swallowed by the filter.")
   ;; (message "fi:output[1] = <<%s>>" string)
   (while (string-match mde-fi::subprocess-redefinition-regexp string)
     (setq string (concat (substring string 0 (match-end 1))
-			 (substring string (match-end 0)))))
+                         (substring string (match-end 0)))))
   (if (string-match "\\(^\\|\n\\)Warning: .* was defined in" string)
       (message "Why didn't fi::... match?\n<<<%s>>>" string))
   (if (string-match "was defined in" string)
       (message "WHY didn't fi::... match?\n<<<%s>>>" string))
   (while (string-match "\\(^\\|\n\\);  Note: doing tail merge\n" string)
     (setq string (concat (substring string 0 (match-end 1))
-			 (substring string (match-end 0)))))
+                         (substring string (match-end 0)))))
   (if (string-match "\\(^\\|\n\\); Autoloading for EXCL::COMPLEX-LOOP-EXPANDER:\n" string)
       (setq string (concat (substring string 0 (match-end 1))
-			   (substring string (match-end 0)))))
+                           (substring string (match-end 0)))))
   (if (string-match "\\(^\\|\n\\); Fast loading /projects/null/ai.IRIX/acl4.2/lib/code/loop.fasl.\n" string)
     (setq string (concat (substring string 0 (match-end 1))
-			 (substring string (match-end 0)))))
+                         (substring string (match-end 0)))))
   ;; not concat, as string might contain "%".
   ;; (message "fi:output[2] = <<%s>>" string)
   string)
@@ -1884,9 +1893,9 @@ Interactively, supply optional flag argument COMPILEP."
   (setq comint-prompt-regexp "^\\(\*\\|[0-9]+\\]+\\) ")
   (if (fboundp 'fi:clman)
       (progn
-	(eval-when-compile (require 'inf-lisp))
-	(define-key inferior-lisp-mode-map "\C-hf" 'fi:clman)
-	(define-key inferior-lisp-mode-map "\C-ha" 'fi:clman-apropos))))
+        (eval-when-compile (require 'inf-lisp))
+        (define-key inferior-lisp-mode-map "\C-hf" 'fi:clman)
+        (define-key inferior-lisp-mode-map "\C-ha" 'fi:clman-apropos))))
 (add-hook 'inferior-lisp-mode-hook 'mde-inferior-lisp-mode-hook)
 
 ;; Parse Python (CMUCL) error messages.
@@ -1894,8 +1903,8 @@ Interactively, supply optional flag argument COMPILEP."
 ;;    Reader error at 47821 on #<Stream for file "...">:
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("^Reader error at \\([0-9]+\\) on #<Stream for file \"\\(.*\\)\">:" 2 1)
-	       compilation-error-regexp-alist)))
+         (cons '("^Reader error at \\([0-9]+\\) on #<Stream for file \"\\(.*\\)\">:" 2 1)
+               compilation-error-regexp-alist)))
 
 
 ;; Perhaps I can't use
@@ -1907,23 +1916,23 @@ Interactively, supply optional flag argument COMPILEP."
   "Partially cope with Lisp #|| ... ||# comments.
 This skips over them, but the return value isn't sensible."
   (if (and (memq major-mode lisp-major-modes)
-	   (not ad-return-value)
-	   (looking-at "#||"))
+           (not ad-return-value)
+           (looking-at "#||"))
       (let ((depth 1))
-	(forward-char 3)
-	(while (and (> depth 0)
-		    (re-search-forward "||#\\|#||" nil t))
-	  (cond ((equal "||#" (match-string 0))
-		 (setq depth (1- depth)))
-		((equal "#||" (match-string 0))
-		 (setq depth (1+ depth)))
-		(t
-		 (error "What match? %s" (match-string 0)))))
-	(if (zerop depth)
-	    (progn
-	      (skip-chars-forward " \t\n\r\f")
-	      0)
-	  (error "No closing ||# for #|| comment starter at depth %s" depth)))))
+        (forward-char 3)
+        (while (and (> depth 0)
+                    (re-search-forward "||#\\|#||" nil t))
+          (cond ((equal "||#" (match-string 0))
+                 (setq depth (1- depth)))
+                ((equal "#||" (match-string 0))
+                 (setq depth (1+ depth)))
+                (t
+                 (error "What match? %s" (match-string 0)))))
+        (if (zerop depth)
+            (progn
+              (skip-chars-forward " \t\n\r\f")
+              0)
+          (error "No closing ||# for #|| comment starter at depth %s" depth)))))
 
 
 ;; Reduce indentation in structure definitions.
@@ -1939,15 +1948,15 @@ How does this differ from whatever is built in?"
   (if (looking-at "\\s<\\s<\\s<")
       (current-column)
     (if (looking-at "\\s<\\s<")
-	(let ((tem (calculate-lisp-indent)))
-	  (if (listp tem) (car tem) tem))
+        (let ((tem (calculate-lisp-indent)))
+          (if (listp tem) (car tem) tem))
       (skip-chars-backward " \t")
       (max (if (bolp) 0 (1+ (current-column)))
-	   (save-excursion
-	     (beginning-of-defun)
-	     (if (looking-at "(defstruct")
-		  defstruct-comment-column
-	       comment-column))))))
+           (save-excursion
+             (beginning-of-defun)
+             (if (looking-at "(defstruct")
+                  defstruct-comment-column
+               comment-column))))))
 
 
 ;; For planning problems
@@ -1986,9 +1995,9 @@ Such regexps have very bad performance, especially for long lines
 in compilation output."
   (dolist (cer compilation-error-regexp-alist)
     (if (listp cer)
-	(let ((regexp (car cer)))
-	  (if (string-equal ".*" (substring regexp 0 2))
-	      (error "Element of compilation-error-regexp-alist starts with \".*\": %s" cer))))))
+        (let ((regexp (car cer)))
+          (if (string-equal ".*" (substring regexp 0 2))
+              (error "Element of compilation-error-regexp-alist starts with \".*\": %s" cer))))))
 
 
 (defun next-error-recenter ()
@@ -1996,11 +2005,11 @@ in compilation output."
 explanatory text is probably off-screen."
   (let ((error-win (get-buffer-window next-error-last-buffer)))
     (if error-win
-	(with-selected-window error-win
-	  (if (not (pos-visible-in-window-p (point-max) (selected-window)))
-	      (let ((lines-from-bottom (count-lines (point) (window-end))))
-		(if (< lines-from-bottom 4)
-		    (recenter 2))))))))
+        (with-selected-window error-win
+          (if (not (pos-visible-in-window-p (point-max) (selected-window)))
+              (let ((lines-from-bottom (count-lines (point) (window-end))))
+                (if (< lines-from-bottom 4)
+                    (recenter 2))))))))
 
 (add-hook 'next-error-hook 'next-error-recenter)
 
@@ -2017,14 +2026,14 @@ or null if it does not exist."
   (setq global default-directory)
   (let ((expanded (expand-file-name filename dir)))
     (if (file-exists-p expanded)
-	expanded
+        expanded
       (let ((parent-dir (file-name-directory (directory-file-name dir))))
-	(if (null parent-dir)
-	    ;; If dir = "~/", then directory-file-name = ~ and parent-dir = nil
-	    nil
-	  (if (equal dir parent-dir)
-	      nil
-	    (file-in-super-directory filename parent-dir)))))))
+        (if (null parent-dir)
+            ;; If dir = "~/", then directory-file-name = ~ and parent-dir = nil
+            nil
+          (if (equal dir parent-dir)
+              nil
+            (file-in-super-directory filename parent-dir)))))))
 ;; (file-in-super-directory "prog-modes-mde.el")
 ;; (file-in-super-directory ".emacs")
 ;; (file-in-super-directory "foobarbazunlikely")
@@ -2038,8 +2047,8 @@ or null if it does not exist."
        (memq major-mode '(compilation-mode cvs-mode dired-mode svn-status-mode)))
    ;; Makefile doesn't exist, so we need a different command
    (not (or (file-exists-p (expand-file-name "Makefile"))
-	    (file-exists-p (expand-file-name "makefile"))
-	    (file-exists-p (expand-file-name "GNUmakefile"))))))
+            (file-exists-p (expand-file-name "makefile"))
+            (file-exists-p (expand-file-name "GNUmakefile"))))))
 
 (defun ant-set-compile-command ()
   "Returns true if it set the `compile-command' variable.
@@ -2047,34 +2056,34 @@ Sets the variable to an invocation of \"ant\" if a build.xml file exists
 in this directory or some superdirectory."
   (if (should-set-compile-command)
       (cond ((file-readable-p "build.xml")
-	     (make-local-variable 'compile-command)
-	     (setq compile-command "ant -e "))
-	    ((let ((buildfile (file-in-super-directory
-			       "build.xml" default-directory)))
-	       (and buildfile
-		    ;; hack to account for mysterious directory named build.xml
-		    (not (file-directory-p buildfile))))
-	     (make-local-variable 'compile-command)
-	     (setq compile-command "ant -e -find build.xml "))
-	    ((file-readable-p "build.gradle")
-	     (make-local-variable 'compile-command)
-	     (if (file-readable-p "gradlew")
-		 (setq compile-command "./gradlew ")
-	       (setq compile-command "gradle ")))
-	    ((file-in-super-directory "build.gradle" default-directory)
-	     (let* ((buildfile (file-in-super-directory
-			       "build.gradle" default-directory))
-		    (gradle-command
-		     (let ((gradlew (concat (file-name-directory buildfile)
-					    "gradlew")))
-		       (if (file-readable-p gradlew)
-			   gradlew
-			 "gradle"))))
-	       (make-local-variable 'compile-command)
-	       (setq compile-command (concat gradle-command " -b " buildfile " build"))))
-	    ((file-readable-p "pom.xml")
-	     (make-local-variable 'compile-command)
-	     (setq compile-command "mvn ")))))
+             (make-local-variable 'compile-command)
+             (setq compile-command "ant -e "))
+            ((let ((buildfile (file-in-super-directory
+                               "build.xml" default-directory)))
+               (and buildfile
+                    ;; hack to account for mysterious directory named build.xml
+                    (not (file-directory-p buildfile))))
+             (make-local-variable 'compile-command)
+             (setq compile-command "ant -e -find build.xml "))
+            ((file-readable-p "build.gradle")
+             (make-local-variable 'compile-command)
+             (if (file-readable-p "gradlew")
+                 (setq compile-command "./gradlew ")
+               (setq compile-command "gradle ")))
+            ((file-in-super-directory "build.gradle" default-directory)
+             (let* ((buildfile (file-in-super-directory
+                               "build.gradle" default-directory))
+                    (gradle-command
+                     (let ((gradlew (concat (file-name-directory buildfile)
+                                            "gradlew")))
+                       (if (file-readable-p gradlew)
+                           gradlew
+                         "gradle"))))
+               (make-local-variable 'compile-command)
+               (setq compile-command (concat gradle-command " -b " buildfile " build"))))
+            ((file-readable-p "pom.xml")
+             (make-local-variable 'compile-command)
+             (setq compile-command "mvn ")))))
 (add-hook 'find-file-hooks 'ant-set-compile-command)
 (add-hook 'dired-mode-hook 'ant-set-compile-command)
 (add-hook 'compilation-mode-hook 'ant-set-compile-command)
@@ -2093,11 +2102,11 @@ Use as a hook, like so:
   (add-hook 'c-mode-hook 'c-set-compile-command)"
   (if (should-set-compile-command)
       (let ((file-name (file-name-nondirectory buffer-file-name)))
-	(make-local-variable 'compile-command)
-	(setq compile-command
-	      (concat "gcc -Wall -g -o "
-		      (file-name-sans-extension file-name)
-		      " " file-name)))))
+        (make-local-variable 'compile-command)
+        (setq compile-command
+              (concat "gcc -Wall -g -o "
+                      (file-name-sans-extension file-name)
+                      " " file-name)))))
 
 (defun c++-set-compile-command ()
   "Set `compile-command' appropriately for C++ files.
@@ -2105,75 +2114,75 @@ Use as a hook, like so:
   (add-hook 'c++-mode-hook 'c++-set-compile-command)"
   (if (should-set-compile-command)
       (let ((file-name (file-name-nondirectory buffer-file-name)))
-	(make-local-variable 'compile-command)
-	(setq compile-command
-	      (concat "g++ -Wall -g -o "
-		      (file-name-sans-extension file-name)
-		      " " file-name)))))
+        (make-local-variable 'compile-command)
+        (setq compile-command
+              (concat "g++ -Wall -g -o "
+                      (file-name-sans-extension file-name)
+                      " " file-name)))))
 
 (defun java-set-compile-command ()
   "Set `compile-command' appropriately for Java files.
 Use as a hook, like so:
   (add-hook 'java-mode-hook 'java-set-compile-command)"
   (if (and (should-set-compile-command)
-	   (not (ant-set-compile-command)))
+           (not (ant-set-compile-command)))
       (let ((file-name (file-name-nondirectory buffer-file-name)))
-	(make-local-variable 'compile-command)
-	(setq compile-command (concat "javac -g " file-name)))))
+        (make-local-variable 'compile-command)
+        (setq compile-command (concat "javac -g " file-name)))))
 
 ;; To do: abstract this out to use a variable
 (defun special-case-set-compile-command ()
   "Override default, to set `compile-command' properly for specific projects."
   (cond ((string-match "/eclat/" default-directory)
-	 (make-local-variable 'compile-command)
-	 (setq compile-command "ant -e -find build.xml compile-no-eclipse"))
-	((string-match "/pastry/" default-directory)
-	 (make-local-variable 'compile-command)
-	 (setq compile-command "ant -e -find build.xml -Djsr308.checker.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dorg.checkerframework.checker.interning.InterningChecker checker"))
-	((string-match "/\\(checker\\|framework\\)/tests/\\([^/]*\\)/" default-directory)
-	 (let ((dir (match-string 2 default-directory)))
-	   (if (equal dir "src")
-	       (setq dir "all"))
-	   (setq dir (replace-regexp-in-string "_" "-" dir))
-	   (make-local-variable 'compile-command)
-	   (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
-;; 	((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
-;; 	 (make-local-variable 'compile-command)
-;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
-;; 	((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
-;; 	 (make-local-variable 'compile-command)
-;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
-;; 	((string-match "/annotations/demos/nonnull-interned-demo/junit/" default-directory)
-;; 	 (make-local-variable 'compile-command)
-;; 	 (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
- 	((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotationLocation.java" buffer-file-name))
- 	 (make-local-variable 'compile-command)
- 	 (setq compile-command "ant -e -find build.xml location"))
- 	((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotatedTypeFactory.java" buffer-file-name))
- 	 (make-local-variable 'compile-command)
- 	 (setq compile-command "ant -e -find build.xml factory-old"))
-	((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/org/checkerframework/framework/type/AnnotatedTypeFactory.java" buffer-file-name))
- 	 (make-local-variable 'compile-command)
- 	 (setq compile-command "ant -e -find build.xml factory"))
- 	((and buffer-file-name (string-match "demos/nonnull-interned-demo/junit/tests/JUnitTests.java" buffer-file-name))
- 	 (make-local-variable 'compile-command)
- 	 (setq compile-command "ant -e -find build.xml test-assert"))
-	;; This only works if you delete the buffer and re-visit the file,
-	;; because compile-command is set when the file is first visited.
- 	((and buffer-file-name
-	      (string-match "demos/nonnull-interned-demo/personalblog-demo/src/net/eyde/personalblog/service/PersonalBlogService.java" buffer-file-name)
-	      (save-excursion
-		(goto-char (point-min))
-		(not (search-forward "executeQuery(constructQuery" nil t))))
-	 (make-local-variable 'compile-command)
- 	 (setq compile-command "ant -e -find build.xml pblog-tainting"))
-	((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
-	 (make-local-variable 'compile-command)
-	 (setq compile-command "make -C ../../.. doc/en/user-guide/index.html"))
-	((equal (substitute-in-file-name "$HOME/java/plume/") default-directory)
-	 (make-local-variable 'compile-command)
-	 (setq compile-command "make -C $HOME/bin/src/plume-lib/java"))
-	))
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml compile-no-eclipse"))
+        ((string-match "/pastry/" default-directory)
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml -Djsr308.checker.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dorg.checkerframework.checker.interning.InterningChecker checker"))
+        ((string-match "/\\(checker\\|framework\\)/tests/\\([^/]*\\)/" default-directory)
+         (let ((dir (match-string 2 default-directory)))
+           (if (equal dir "src")
+               (setq dir "all"))
+           (setq dir (replace-regexp-in-string "_" "-" dir))
+           (make-local-variable 'compile-command)
+           (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
+;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
+;;       (make-local-variable 'compile-command)
+;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
+;;      ((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
+;;       (make-local-variable 'compile-command)
+;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
+;;      ((string-match "/annotations/demos/nonnull-interned-demo/junit/" default-directory)
+;;       (make-local-variable 'compile-command)
+;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
+        ((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotationLocation.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml location"))
+        ((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotatedTypeFactory.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml factory-old"))
+        ((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/org/checkerframework/framework/type/AnnotatedTypeFactory.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml factory"))
+        ((and buffer-file-name (string-match "demos/nonnull-interned-demo/junit/tests/JUnitTests.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml test-assert"))
+        ;; This only works if you delete the buffer and re-visit the file,
+        ;; because compile-command is set when the file is first visited.
+        ((and buffer-file-name
+              (string-match "demos/nonnull-interned-demo/personalblog-demo/src/net/eyde/personalblog/service/PersonalBlogService.java" buffer-file-name)
+              (save-excursion
+                (goto-char (point-min))
+                (not (search-forward "executeQuery(constructQuery" nil t))))
+         (make-local-variable 'compile-command)
+         (setq compile-command "ant -e -find build.xml pblog-tainting"))
+        ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
+         (make-local-variable 'compile-command)
+         (setq compile-command "make -C ../../.. doc/en/user-guide/index.html"))
+        ((equal (substitute-in-file-name "$HOME/java/plume/") default-directory)
+         (make-local-variable 'compile-command)
+         (setq compile-command "make -C $HOME/bin/src/plume-lib/java"))
+        ))
 (add-hook 'find-file-hooks 'special-case-set-compile-command 'append)
 (add-hook 'dired-mode-hook 'special-case-set-compile-command 'append)
 (add-hook 'compilation-mode-hook 'special-case-set-compile-command 'append)
@@ -2183,70 +2192,76 @@ Use as a hook, like so:
 ;;; Compilation error regexps
 ;;;
 
-;; omake is said to be inefficient (http://emacs.1067599.n5.nabble.com/bug-13369-24-1-compile-message-parsing-slow-because-of-omake-hack-td274585.html) and I don't know what it is needed for.
+;; omake pattern is said to be inefficient (http://emacs.1067599.n5.nabble.com/bug-13369-24-1-compile-message-parsing-slow-because-of-omake-hack-td274585.html) and I don't know what it is needed for.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (delete 'omake compilation-error-regexp-alist)))
+         (delete 'omake compilation-error-regexp-alist)))
 ;; ... but an equally serious problem is maven, which is very slow on long
 ;; lines, such as those created when building the Daikon manual.
 ;; (I tried re-enabling this in March 2016 and it still made Emacs unusable.)
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (delete 'maven compilation-error-regexp-alist)))
+         (delete 'maven compilation-error-regexp-alist)))
 
 ;; What language is this for??
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("at line \\([0-9]+\\) of file \"\\([^\"]*\\)\"" 2 1)
-	       compilation-error-regexp-alist)))
+         (cons '("at line \\([0-9]+\\) of file \"\\([^\"]*\\)\"" 2 1)
+               compilation-error-regexp-alist)))
 ;; For dmalloc's ra_info output
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("^Line \\([0-9]+\\) of \"\\([^\"]*\\)\"" 2 1)
-	       compilation-error-regexp-alist)))
+         (cons '("^Line \\([0-9]+\\) of \"\\([^\"]*\\)\"" 2 1)
+               compilation-error-regexp-alist)))
 ;; For linkchecker
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("^Parent URL file:\\(.*\\), line \\([0-9]+\\)" 1 2)
-	       compilation-error-regexp-alist)))
+         (cons '("^Parent URL file:\\(.*\\), line \\([0-9]+\\)" 1 2)
+               compilation-error-regexp-alist)))
 ;; For html5validator
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("^\\(?::validate\\)?\\(?:WARNING:html5validator.validator:\\)?\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 1 2 3)
-	       compilation-error-regexp-alist)))
+         (cons '("^\\(?::validate\\)?\\(?:WARNING:html5validator.validator:\\)?\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 1 2 3)
+               compilation-error-regexp-alist)))
 
 ;; I suspect this regexp is extremely inefficient, and I don't understand it.
 ;; ;; ant output, such as
 ;; ;; "    [javac] /afs/athena.mit.edu/user/m/e/mernst/6.170/ps0/src/ps0/Ball.java:18: cannot find symbol"
 ;; (eval-after-load "compile"
 ;;   '(setq compilation-error-regexp-alist
-;; 	 (cons (list
-;; 		(concat "^ *\\[[a-z]+\\] "
-;; 			"\\([a-zA-Z][-a-zA-Z._0-9]+: ?\\)?" ;; what is this for?
-;; 			"\\([a-zA-Z]?:?[^:( \t\n]*[^:( \t\n0-9][^:( \t\n]*\\)[:(][ \t]*\\([0-9]+\\)"
-;; 			"\\([) \t]\\|:\\(\\([0-9]+:\\)\\|[0-9]*[^:0-9]\\)\\)")
-;; 		2 3 6)
-;; 	       compilation-error-regexp-alist)))
+;;       (cons (list
+;;              (concat "^ *\\[[a-z]+\\] "
+;;                      "\\([a-zA-Z][-a-zA-Z._0-9]+: ?\\)?" ;; what is this for?
+;;                      "\\([a-zA-Z]?:?[^:( \t\n]*[^:( \t\n0-9][^:( \t\n]*\\)[:(][ \t]*\\([0-9]+\\)"
+;;                      "\\([) \t]\\|:\\(\\([0-9]+:\\)\\|[0-9]*[^:0-9]\\)\\)")
+;;              2 3 6)
+;;             compilation-error-regexp-alist)))
 
 ;; jdb output, such as
 ;; "  [4] daikon.VarInfo$1GuardingVisitor.visitSlice (VarInfo.java:1,690)"
 ;; Notice the comma!!  Yuck...   [Does that actually mean line 1690?]
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons (list
-		(concat "  \\[[0-9]+\\] [^ \n]+ "
-			"("
-			"\\([a-zA-Z][a-zA-Z._0-9]+.java\\):\\([0-9,]+\\)"
-			")$")
-		1 2)
-	       compilation-error-regexp-alist)))
+         (cons (list
+                (concat "  \\[[0-9]+\\] [^ \n]+ "
+                        "("
+                        "\\([a-zA-Z][a-zA-Z._0-9]+.java\\):\\([0-9,]+\\)"
+                        ")$")
+                1 2)
+               compilation-error-regexp-alist)))
 
 
 ;; JJTree (?): "In file daikon/PrintInvariants.javax: Encountered "const vi =" at line 399, column 13."
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-	 (cons '("^In file \\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+: .* at line \\([0-9]+\\), column \\([0-9]+\\)" 1 2 3)
-	       compilation-error-regexp-alist)))
+         (cons '("^In file \\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+: .* at line \\([0-9]+\\), column \\([0-9]+\\)" 1 2 3)
+               compilation-error-regexp-alist)))
+
+;; gradle leaves text in front of error message
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+         (cons '("^\\(?::compileTestJava\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
+               compilation-error-regexp-alist)))
 
 
 
@@ -2265,7 +2280,7 @@ Use as a hook, like so:
 ;; There might be a cleaner way to do this with local hook variables.
 
 (add-hook 'after-save-hook
-	  'run-mode-specific-after-save-buffer-hooks)
+          'run-mode-specific-after-save-buffer-hooks)
 
 (defvar mode-specific-after-save-buffer-hooks nil "\
 Alist (MAJOR-MODE . HOOK) of after-save-buffer hooks specific to major modes.")
@@ -2277,46 +2292,46 @@ A call to this should be put in `after-save-buffer-hooks'."
   (let ((hooks mode-specific-after-save-buffer-hooks))
     (while hooks
       (let ((hook (car hooks)))
-	(if (eq (car hook) major-mode)
-	    (funcall (cdr hook))))
+        (if (eq (car hook) major-mode)
+            (funcall (cdr hook))))
       (setq hooks (cdr hooks)))))
 
 (setq mode-specific-after-save-buffer-hooks
       '((emacs-lisp-mode . ask-to-byte-compile)
-	(fi:emacs-lisp-mode . ask-to-byte-compile) ; yuck, Franz changes name
-	(scheme-mode . ask-to-scheme-compile)))
+        (fi:emacs-lisp-mode . ask-to-byte-compile) ; yuck, Franz changes name
+        (scheme-mode . ask-to-scheme-compile)))
 
 (defun ask-to-byte-compile ()
   "Ask the user whether to byte compile the current buffer,
 if its name ends in `.el' and the `.elc' file also exists."
   (let ((name (buffer-file-name)))
     (and name (string-match "\\.el$" name)
-	 (file-exists-p (concat name "c"))
-	 (if (y-or-n-p (format "Byte-compile %s? " name))
-	     (byte-compile-file name)
-	   (message ""))
-	 )))
+         (file-exists-p (concat name "c"))
+         (if (y-or-n-p (format "Byte-compile %s? " name))
+             (byte-compile-file name)
+           (message ""))
+         )))
 
 (defun ask-to-scheme-compile ()
   "Ask the user whether to compile the current buffer,
 if its name ends in `.scm' and the `.bin' or `.com' file also exists."
   (let* ((name (buffer-file-name))
-	 (root-name (and name
-			 (string-match "\\(.*\\)\\.scm$" name)
-			 (substring name (match-beginning 1) (match-end 1)))))
+         (root-name (and name
+                         (string-match "\\(.*\\)\\.scm$" name)
+                         (substring name (match-beginning 1) (match-end 1)))))
     (if root-name
-	(cond ((file-exists-p (concat root-name ".com"))
-	       (if (y-or-n-p (format "Compile (via `cf') %s? " name))
-		   (progn
-		     (xscheme-send-string (format "(cf \"%s\")" name))
-		     (message "Producing %s.com...continue at will" root-name))
-		 (message "")))
-	      ((file-exists-p (concat root-name ".bin"))
-	       (if (y-or-n-p (format "Compile (via `sf') %s? " name))
-		   (progn
-		     (xscheme-send-string (format "(sf \"%s\")" name))
-		     (message "Producing %s.bin...continue at will" root-name))
-		 (message "")))))))
+        (cond ((file-exists-p (concat root-name ".com"))
+               (if (y-or-n-p (format "Compile (via `cf') %s? " name))
+                   (progn
+                     (xscheme-send-string (format "(cf \"%s\")" name))
+                     (message "Producing %s.com...continue at will" root-name))
+                 (message "")))
+              ((file-exists-p (concat root-name ".bin"))
+               (if (y-or-n-p (format "Compile (via `sf') %s? " name))
+                   (progn
+                     (xscheme-send-string (format "(sf \"%s\")" name))
+                     (message "Producing %s.bin...continue at will" root-name))
+                 (message "")))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2329,20 +2344,20 @@ if its name ends in `.scm' and the `.bin' or `.com' file also exists."
 (make-variable-buffer-local 'gud-filter-sigsegv-gcfindlimit-state)
 (defadvice gud-filter (before skip-sigsegv-in-gcfindlimit activate)
   "Continue past segmentation faults in procedure GC_find_limit."
-  (let ((str (ad-get-arg 1)))		; not "string" as that's the formal name
+  (let ((str (ad-get-arg 1)))           ; not "string" as that's the formal name
     ;; Leave this in for debugging, for the time being.
     ;; (message "filter (state %s) got <<%s>>" gud-filter-sigsegv-gcfindlimit-state str)
     (cond
      ((and (not gud-filter-sigsegv-gcfindlimit-state)
-	   (equal str "Program received signal SIGSEGV, Segmentation fault.\n"))
+           (equal str "Program received signal SIGSEGV, Segmentation fault.\n"))
       (setq gud-filter-sigsegv-gcfindlimit-state 'saw-sigsegv))
      ((and (eq gud-filter-sigsegv-gcfindlimit-state 'saw-sigsegv)
-	   (string-match "^0x[0-9a-f]* in GC_find_limit ()\n$" str))
+           (string-match "^0x[0-9a-f]* in GC_find_limit ()\n$" str))
       (setq gud-filter-sigsegv-gcfindlimit-state 'saw-sigsegv-in-gcfindlimit))
      ((or (and (eq gud-filter-sigsegv-gcfindlimit-state 'saw-sigsegv-in-gcfindlimit)
-	       (equal str "(gdb) "))
-	  (and (not gud-filter-sigsegv-gcfindlimit-state)
-	       (string-match "\\(^\\|\n\\)Program received signal SIGSEGV, Segmentation fault.\n0x[0-9a-f]* in GC_find_limit ()\n(gdb) $" str)))
+               (equal str "(gdb) "))
+          (and (not gud-filter-sigsegv-gcfindlimit-state)
+               (string-match "\\(^\\|\n\\)Program received signal SIGSEGV, Segmentation fault.\n0x[0-9a-f]* in GC_find_limit ()\n(gdb) $" str)))
       (setq gud-filter-sigsegv-gcfindlimit-state nil)
       ;; (message "Calling gud-cont")
       (gud-cont nil))
@@ -2356,8 +2371,8 @@ if its name ends in `.scm' and the `.bin' or `.com' file also exists."
      ;; compile defines compilation-error-regexp-alist
      (require 'compile)
      (setq compilation-error-regexp-alist
-	   (cons '("\\bat \\([^ \n]+\\):\\([0-9]+\\)$" 1 2)
-		 compilation-error-regexp-alist))))
+           (cons '("\\bat \\([^ \n]+\\):\\([0-9]+\\)$" 1 2)
+                 compilation-error-regexp-alist))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2389,63 +2404,63 @@ If in Python mode, look for a buffer associated with a python process, etc."
   ;;     !! Wrong type argument ((consp nil))
   (eval-when-compile (defvar Info-current-file))
   (cond ((and (or (eq major-mode 'cecil-mode)
-		  ;; I ought to know which mode I should be in when this
-		  ;; search will succeed.
-		  (save-excursion
-		    (goto-char (point-min))
-		    (or (looking-at "#include \"vortex-defs-C\\+\\+\\.h\"\n")
-			(looking-at "#include \"vortex-defs-Cecil\\.h\"\n")
-			(search-forward "\n(** language(\"C++\") **)"
-					;; not just 200 if buffer is narrowed
-					(+ (point-min) 200) t))))
-	      (get-buffer "*vortex*"))
-	 (switch-to-buffer (get-buffer "*vortex*")))
-	((and (memq major-mode '(lisp-mode
-				 fi:common-lisp-mode fi:clman-mode
-				 fi:lisp-listener-mode))
-	      (or (get-buffer "*allegro*")
-		  (get-buffer "*inferior-lisp*")))
-	 (switch-to-buffer (or (get-buffer "*allegro*")
-			       (get-buffer "*inferior-lisp*"))))
-	((and (or (memq major-mode '(python-mode))
-		  (and (eq major-mode 'Info-mode)
-		       (string-match "python" Info-current-file)))
-	      (get-buffer "*Python*"))
-	 (switch-to-buffer (get-buffer "*Python*")))
-	((and (memq major-mode '(comint-mode shell-mode inferior-lisp-mode
-					     fi:inferior-common-lisp-mode))
-	      (not (eobp)))
-	 (goto-char (point-max)))
-	(t
-	 (let ((processes (process-list))
-	       (dir default-directory)
-	       (result nil))
-	   (while processes
-	     (let* ((process (car processes))
-		    (pbuffer (process-buffer process)))
-	       (if (and pbuffer
-			(buffer-live-p pbuffer)
-			(not (eq pbuffer (current-buffer)))
-			(eq 'run (process-status process))
-			(equal default-directory
-			       (with-current-buffer pbuffer
-				 default-directory))
-			(with-current-buffer pbuffer
-			  (and
-			   (memq major-mode '(comint-mode shell-mode inferior-lisp-mode
-					     fi:inferior-common-lisp-mode))
-			   (not (string-equal (buffer-name) "*Async Shell Command*")))))
-		   (setq result pbuffer
-			 processes nil)
-		 (setq processes (cdr processes)))))
-	   (if result
-	       (switch-to-buffer result)
-	     ad-do-it)))))
+                  ;; I ought to know which mode I should be in when this
+                  ;; search will succeed.
+                  (save-excursion
+                    (goto-char (point-min))
+                    (or (looking-at "#include \"vortex-defs-C\\+\\+\\.h\"\n")
+                        (looking-at "#include \"vortex-defs-Cecil\\.h\"\n")
+                        (search-forward "\n(** language(\"C++\") **)"
+                                        ;; not just 200 if buffer is narrowed
+                                        (+ (point-min) 200) t))))
+              (get-buffer "*vortex*"))
+         (switch-to-buffer (get-buffer "*vortex*")))
+        ((and (memq major-mode '(lisp-mode
+                                 fi:common-lisp-mode fi:clman-mode
+                                 fi:lisp-listener-mode))
+              (or (get-buffer "*allegro*")
+                  (get-buffer "*inferior-lisp*")))
+         (switch-to-buffer (or (get-buffer "*allegro*")
+                               (get-buffer "*inferior-lisp*"))))
+        ((and (or (memq major-mode '(python-mode))
+                  (and (eq major-mode 'Info-mode)
+                       (string-match "python" Info-current-file)))
+              (get-buffer "*Python*"))
+         (switch-to-buffer (get-buffer "*Python*")))
+        ((and (memq major-mode '(comint-mode shell-mode inferior-lisp-mode
+                                             fi:inferior-common-lisp-mode))
+              (not (eobp)))
+         (goto-char (point-max)))
+        (t
+         (let ((processes (process-list))
+               (dir default-directory)
+               (result nil))
+           (while processes
+             (let* ((process (car processes))
+                    (pbuffer (process-buffer process)))
+               (if (and pbuffer
+                        (buffer-live-p pbuffer)
+                        (not (eq pbuffer (current-buffer)))
+                        (eq 'run (process-status process))
+                        (equal default-directory
+                               (with-current-buffer pbuffer
+                                 default-directory))
+                        (with-current-buffer pbuffer
+                          (and
+                           (memq major-mode '(comint-mode shell-mode inferior-lisp-mode
+                                             fi:inferior-common-lisp-mode))
+                           (not (string-equal (buffer-name) "*Async Shell Command*")))))
+                   (setq result pbuffer
+                         processes nil)
+                 (setq processes (cdr processes)))))
+           (if result
+               (switch-to-buffer result)
+             ad-do-it)))))
 
 (defadvice shell-directory-tracker (before handle-back activate)
   "Convert \"back\" into \"cd -\", which `shell-directory-tracker' understands."
   (if (and shell-dirtrackp
-	   (string-match "^\\s-*back\\s-*$" (ad-get-arg 0)))
+           (string-match "^\\s-*back\\s-*$" (ad-get-arg 0)))
       (ad-set-arg 0 "cd -")))
 
 
@@ -2457,12 +2472,12 @@ If in Python mode, look for a buffer associated with a python process, etc."
   "If `comment-start' begins with a space and `comment-padding' is 1,
 then set `comment-padding' to nil."
   (let ((comment-padding
-	 (if (and (or (and (numberp comment-padding) (= 1 comment-padding))
-		      (and (stringp comment-padding) (equal " " comment-padding)))
-		  comment-start
-		  (= ?\  (aref comment-start (1- (length comment-start)))))
-	     nil
-	   comment-padding)))
+         (if (and (or (and (numberp comment-padding) (= 1 comment-padding))
+                      (and (stringp comment-padding) (equal " " comment-padding)))
+                  comment-start
+                  (= ?\  (aref comment-start (1- (length comment-start)))))
+             nil
+           comment-padding)))
     ad-do-it))
 
 ;;; Comment indentation
@@ -2475,22 +2490,22 @@ then set `comment-padding' to nil."
       (beginning-of-line)
       (setq end (max beg end))
       (while (< (point) end)
-	(skip-chars-forward " \t")
-	(if (not (= ?\n (char-after)))
-	    (if result
-		(setq result (min result (current-column)))
-	      (setq result (current-column))))
-	(forward-line 1))
+        (skip-chars-forward " \t")
+        (if (not (= ?\n (char-after)))
+            (if result
+                (setq result (min result (current-column)))
+              (setq result (current-column))))
+        (forward-line 1))
       result)))
 
 ;; Implementation 1
 (defadvice comment-region (around indent-comment activate)
   "Place comment characters as far to the right as possible (not in column 0)."
   (let* ((my-beg (ad-get-arg 0))
-	 (my-end (ad-get-arg 1))
-	 (indent (region-indentation my-beg my-end))
-	 (beg-marker (make-marker))
-	 (end-marker (make-marker)))
+         (my-end (ad-get-arg 1))
+         (indent (region-indentation my-beg my-end))
+         (beg-marker (make-marker))
+         (end-marker (make-marker)))
     (set-marker beg-marker (min beg end))
     (set-marker end-marker (max beg end))
     (indent-rigidly beg end (- indent))
@@ -2507,24 +2522,24 @@ then set `comment-padding' to nil."
 ;; (defadvice comment-region (around indent-comment activate)
 ;;   (or comment-start (error "No comment syntax is defined"))
 ;;   (let ((indent (region-indentation (ad-get-arg 0) (ad-get-arg 1)))
-;; 	;; "my-" prefix to avoid advice probs.
-;; 	(my-arg (ad-get-arg 2))
-;; 	(my-cs comment-start)
-;; 	(my-ce comment-end))
+;;      ;; "my-" prefix to avoid advice probs.
+;;      (my-arg (ad-get-arg 2))
+;;      (my-cs comment-start)
+;;      (my-ce comment-end))
 ;;     ;; Lifted directly from comment-region
 ;;     (if (not (consp my-arg))
-;; 	(progn
-;; 	  (setq my-arg (prefix-numeric-value my-arg))
-;; 	  ;; For positive arg > 1, replicate the comment delims now,
-;; 	  ;; then insert the replicated strings just once.
-;; 	  (while (> my-arg 1)
-;; 	    (setq my-cs (concat my-cs comment-start)
-;; 		  my-ce (concat my-ce comment-end))
-;; 	    (setq my-arg (1- my-arg)))
-;; 	  (setq my-cs (concat (make-string indent ? ) my-cs))
-;; 	  (ad-set-arg 2 1)))
+;;      (progn
+;;        (setq my-arg (prefix-numeric-value my-arg))
+;;        ;; For positive arg > 1, replicate the comment delims now,
+;;        ;; then insert the replicated strings just once.
+;;        (while (> my-arg 1)
+;;          (setq my-cs (concat my-cs comment-start)
+;;                my-ce (concat my-ce comment-end))
+;;          (setq my-arg (1- my-arg)))
+;;        (setq my-cs (concat (make-string indent ? ) my-cs))
+;;        (ad-set-arg 2 1)))
 ;;     (let ((comment-start my-cs)
-;; 	  (comment-end my-ce))
+;;        (comment-end my-ce))
 ;;       ad-do-it)))
 
 
@@ -2557,78 +2572,78 @@ then set `comment-padding' to nil."
 ;;   (save-excursion
 ;;     (save-restriction
 ;;       (let ((cs comment-start) (ce comment-end)
-;; 	    (cp (when comment-padding
-;; 		  (make-string comment-padding ? )))
-;; 	    numarg)
-;; 	(if (consp arg) (setq numarg t)
-;; 	  (setq numarg (prefix-numeric-value arg))
-;; 	  ;; For positive arg > 1, replicate the comment delims now,
-;; 	  ;; then insert the replicated strings just once.
-;; 	  (while (> numarg 1)
-;; 	    (setq cs (concat cs comment-start)
-;; 		  ce (concat ce comment-end))
-;; 	    (setq numarg (1- numarg))))
-;; 	;; Loop over all lines from BEG to END.
-;; 	(narrow-to-region beg end)
-;; 	(goto-char beg)
-;; 	(if (or (eq numarg t) (< numarg 0))
-;; 	    (while (not (eobp))
-;; 	      (let (found-comment)
-;; 		;; Delete comment start from beginning of line.
-;; 		(if (eq numarg t)
-;; 		    (while (looking-at (regexp-quote cs))
-;; 		      (setq found-comment t)
-;; 		      (delete-char (length cs)))
-;; 		  (let ((count numarg))
-;; 		    (while (and (> 1 (setq count (1+ count)))
-;; 				(looking-at (regexp-quote cs)))
-;; 		      (setq found-comment t)
-;; 		      (delete-char (length cs)))))
-;; 		;; Delete comment padding from beginning of line
-;; 		(when (and found-comment comment-padding
-;; 			   (looking-at (regexp-quote cp)))
-;; 		  (delete-char comment-padding))
-;; 		;; Delete comment end from end of line.
-;; 		(if (string= "" ce)
-;; 		    nil
-;; 		  (if (eq numarg t)
-;; 		      (progn
-;; 			(end-of-line)
-;; 			;; This is questionable if comment-end ends in
-;; 			;; whitespace.  That is pretty brain-damaged,
-;; 			;; though.
-;; 			(while (progn (skip-chars-backward " \t")
-;; 				      (and (>= (- (point) (point-min)) (length ce))
-;; 					   (save-excursion
-;; 					     (backward-char (length ce))
-;; 					     (looking-at (regexp-quote ce)))))
-;; 			    (delete-char (- (length ce)))))
-;; 		    (let ((count numarg))
-;; 		      (while (> 1 (setq count (1+ count)))
-;; 			(end-of-line)
-;; 			;; this is questionable if comment-end ends in whitespace
-;; 			;; that is pretty brain-damaged though
-;; 			(skip-chars-backward " \t")
-;; 			(if (>= (- (point) (point-min)) (length ce))
-;; 			    (save-excursion
-;; 			      (backward-char (length ce))
-;; 			      (if (looking-at (regexp-quote ce))
-;; 				  (delete-char (length ce)))))))))
-;; 		(forward-line 1)))
+;;          (cp (when comment-padding
+;;                (make-string comment-padding ? )))
+;;          numarg)
+;;      (if (consp arg) (setq numarg t)
+;;        (setq numarg (prefix-numeric-value arg))
+;;        ;; For positive arg > 1, replicate the comment delims now,
+;;        ;; then insert the replicated strings just once.
+;;        (while (> numarg 1)
+;;          (setq cs (concat cs comment-start)
+;;                ce (concat ce comment-end))
+;;          (setq numarg (1- numarg))))
+;;      ;; Loop over all lines from BEG to END.
+;;      (narrow-to-region beg end)
+;;      (goto-char beg)
+;;      (if (or (eq numarg t) (< numarg 0))
+;;          (while (not (eobp))
+;;            (let (found-comment)
+;;              ;; Delete comment start from beginning of line.
+;;              (if (eq numarg t)
+;;                  (while (looking-at (regexp-quote cs))
+;;                    (setq found-comment t)
+;;                    (delete-char (length cs)))
+;;                (let ((count numarg))
+;;                  (while (and (> 1 (setq count (1+ count)))
+;;                              (looking-at (regexp-quote cs)))
+;;                    (setq found-comment t)
+;;                    (delete-char (length cs)))))
+;;              ;; Delete comment padding from beginning of line
+;;              (when (and found-comment comment-padding
+;;                         (looking-at (regexp-quote cp)))
+;;                (delete-char comment-padding))
+;;              ;; Delete comment end from end of line.
+;;              (if (string= "" ce)
+;;                  nil
+;;                (if (eq numarg t)
+;;                    (progn
+;;                      (end-of-line)
+;;                      ;; This is questionable if comment-end ends in
+;;                      ;; whitespace.  That is pretty brain-damaged,
+;;                      ;; though.
+;;                      (while (progn (skip-chars-backward " \t")
+;;                                    (and (>= (- (point) (point-min)) (length ce))
+;;                                         (save-excursion
+;;                                           (backward-char (length ce))
+;;                                           (looking-at (regexp-quote ce)))))
+;;                          (delete-char (- (length ce)))))
+;;                  (let ((count numarg))
+;;                    (while (> 1 (setq count (1+ count)))
+;;                      (end-of-line)
+;;                      ;; this is questionable if comment-end ends in whitespace
+;;                      ;; that is pretty brain-damaged though
+;;                      (skip-chars-backward " \t")
+;;                      (if (>= (- (point) (point-min)) (length ce))
+;;                          (save-excursion
+;;                            (backward-char (length ce))
+;;                            (if (looking-at (regexp-quote ce))
+;;                                (delete-char (length ce)))))))))
+;;              (forward-line 1)))
 ;;
-;; 	  (when comment-padding
-;; 	    (setq cs (concat cs cp)))
-;; 	  (while (not (eobp))
-;; 	    ;; Insert at beginning and at end.
-;; 	    (if (looking-at "[ \t]*$") ()
-;; 	      ;; test added by MDE
-;; 	      (if (and (boundp 'comment-indentation) comment-indentation
-;; 		  (move-to-column-force comment-indentation))
-;; 	      (insert cs)
-;; 	      (if (string= "" ce) ()
-;; 		(end-of-line)
-;; 		(insert ce)))
-;; 	    (search-forward "\n" nil 'move)))))))
+;;        (when comment-padding
+;;          (setq cs (concat cs cp)))
+;;        (while (not (eobp))
+;;          ;; Insert at beginning and at end.
+;;          (if (looking-at "[ \t]*$") ()
+;;            ;; test added by MDE
+;;            (if (and (boundp 'comment-indentation) comment-indentation
+;;                (move-to-column-force comment-indentation))
+;;            (insert cs)
+;;            (if (string= "" ce) ()
+;;              (end-of-line)
+;;              (insert ce)))
+;;          (search-forward "\n" nil 'move)))))))
 
 
 (provide 'prog-modes-mde)

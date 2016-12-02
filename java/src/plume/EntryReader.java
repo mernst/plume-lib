@@ -37,27 +37,30 @@ import org.checkerframework.checker.regex.qual.*;
 //    iterator gets to the end (or the end is otherwise reached).
 
 /**
- * Class that reads "entries" from a file.  In the simplest case, entries
- * can be lines.  It supports:
- *   include files,
- *   comments, and
- *   multi-line entries (paragraphs).
- * The syntax of each of these is customizable.
- * <p>
+ * Class that reads "entries" from a file. In the simplest case, entries can be lines. It supports:
  *
- * Example use:
- * <pre>
- *  // args are filename, comment regexp, include regexp
- *  try (EntryReader er = new EntryReader(filename, "^#.*", null)) {
- *    for (String line : er) {
- *      ...
- *    }
- *  } catch (IOException e) {
- *    System.err.println("Problem reading " + filename + ": " + e.getMessage());
- *    System.exit(2);
- *    throw new Error("This can't happen"); // for definite assignment check
- *  }
- * </pre>
+ * <ul>
+ *   <li>include files,
+ *   <li>comments, and
+ *   <li>multi-line entries (paragraphs).
+ * </ul>
+ *
+ * The syntax of each of these is customizable.
+ *
+ * <p>Example use:
+ *
+ * <pre>{@code
+ * // args are filename, comment regexp, include regexp
+ * try (EntryReader er = new EntryReader(filename, "^#.*", null)) {
+ *   for (String line : er) {
+ *     ...
+ *   }
+ * } catch (IOException e) {
+ *   System.err.println("Problem reading " + filename + ": " + e.getMessage());
+ *   System.exit(2);
+ *   throw new Error("This can't happen"); // for definite assignment check
+ * }
+ * }</pre>
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
  */
@@ -75,28 +78,24 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /**
    * Regular expression that starts a long entry.
-   * <p>
-   * If the first line of an entry matches this regexp, then the entry is
-   * terminated by:  entry_stop_re, another line that matches
-   * entry_start_re (even not following a newline), or the end of the
-   * current file.
-   * <p>
-   * Otherwise, the first line of an entry does NOT match this regexp (or
-   * the regexp is null), in which case the entry is terminated by a blank
-   * line or the end of the current file.
+   *
+   * <p>If the first line of an entry matches this regexp, then the entry is terminated by: {@link
+   * #entry_stop_re}, another line that matches {@code entry_start_re} (even not following a
+   * newline), or the end of the current file.
+   *
+   * <p>Otherwise, the first line of an entry does NOT match this regexp (or the regexp is null), in
+   * which case the entry is terminated by a blank line or the end of the current file.
    */
   public /*@MonotonicNonNull*/ /*@Regex(1)*/ Pattern entry_start_re = null;
 
-  /**
-   * @see #entry_start_re
-   */
+  /** @see #entry_start_re */
   public /*@MonotonicNonNull*/ Pattern entry_stop_re = null;
 
   ///
   /// Internal implementation variables
   ///
 
-  /** Stack of readers.  Used to support include files. */
+  /** Stack of readers. Used to support include files. */
   private final Stack<FlnReader> readers = new Stack<FlnReader>();
 
   /** Line that is pushed back to be reread. */
@@ -110,8 +109,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   ///
 
   /**
-   * Like LineNumberReader, but also has a filename field.
-   * "FlnReader" stands for "Filename and Line Number Reader".
+   * Like LineNumberReader, but also has a filename field. "FlnReader" stands for "Filename and Line
+   * Number Reader".
    */
   private static class FlnReader extends LineNumberReader {
     /** The file being read. */
@@ -119,9 +118,10 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
     /**
      * Create a FlnReader.
+     *
      * @param reader source from which to read entries
-     * @param filename file name corresponding to reader, for use in error messages.
-     *   Must be non-null; if there isn't a name, clients should provide a dummy value.
+     * @param filename file name corresponding to reader, for use in error messages. Must be
+     *     non-null; if there isn't a name, clients should provide a dummy value.
      */
     public FlnReader(Reader reader, String filename) {
       super(reader);
@@ -130,6 +130,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
     /**
      * Create a FlnReader.
+     *
      * @param filename file from which to read
      */
     public FlnReader(String filename) throws IOException {
@@ -151,7 +152,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     /** Line number of first line of entry. */
     long line_number;
 
-    /** Create an entry.
+    /**
+     * Create an entry.
+     *
      * @param first_line first line of the entry
      * @param body complete body of the entry including the first line
      * @param short_entry true if this is a short entry (blank-line-separated)
@@ -167,8 +170,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
 
     /**
-     * Return a substring of the entry body that matches the specified
-     * regular expression.  If no match is found, returns the first_line.
+     * Return a substring of the entry body that matches the specified regular expression. If no
+     * match is found, returns the first_line.
+     *
      * @param re regex to match
      * @return a substring that matches re
      */
@@ -193,17 +197,17 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /// Inputstream and charset constructors
 
-  /** Create a EntryReader that uses the given character set.
+  /**
+   * Create a EntryReader that uses the given character set.
+   *
    * @throws UnsupportedEncodingException if the charset encoding is not supported
    * @param in source from which to read entries
    * @param charsetName the character set to use
    * @param filename non-null file name for stream being read
-   * @param comment_re_string regular expression that matches comments.
-   *                      Any text that matches comment_re is removed.
-   *                      A line that is entirely a comment is ignored.
-   * @param include_re_string regular expression that matches include directives.
-   *                      The expression should define one group that contains
-   *                      the include file name.
+   * @param comment_re_string regular expression that matches comments. Any text that matches
+   *     comment_re is removed. A line that is entirely a comment is ignored.
+   * @param include_re_string regular expression that matches include directives. The expression
+   *     should define one group that contains the include file name.
    * @see #EntryReader(InputStream,String,String,String)
    */
   public EntryReader(
@@ -216,7 +220,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     this(new InputStreamReader(in, charsetName), filename, comment_re_string, include_re_string);
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param in the InputStream
    * @param charsetName the character set to use
    * @param filename the file name
@@ -233,14 +239,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a EntryReader.
    *
-   *    @param in source from which to read entries
-   *    @param filename non-null file name for stream being read
-   *    @param comment_re_string regular expression that matches comments.
-   *                      Any text that matches comment_re is removed.
-   *                      A line that is entirely a comment is ignored.
-   *    @param include_re_string regular expression that matches include directives.
-   *                      The expression should define one group that contains
-   *                      the include file name.
+   * @param in source from which to read entries
+   * @param filename non-null file name for stream being read
+   * @param comment_re_string regular expression that matches comments. Any text that matches
+   *     comment_re is removed. A line that is entirely a comment is ignored.
+   * @param include_re_string regular expression that matches include directives. The expression
+   *     should define one group that contains the include file name.
    */
   public EntryReader(
       InputStream in,
@@ -251,8 +255,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Create a EntryReader that uses the default character set and does not
-   * support comments or include directives.
+   * Create a EntryReader that uses the default character set and does not support comments or
+   * include directives.
+   *
    * @param in the InputStream
    * @param filename the file name
    * @see #EntryReader(InputStream,String,String,String,String)
@@ -261,7 +266,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     this(in, filename, null, null);
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param in the InputStream
    * @see #EntryReader(InputStream,String,String,String)
    */
@@ -326,14 +333,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a EntryReader.
    *
-   *    @param reader source from which to read entries
-   *    @param filename file name corresponding to reader, for use in error messages
-   *    @param comment_re_string regular expression that matches comments.
-   *                      Any text that matches comment_re is removed.
-   *                      A line that is entirely a comment is ignored
-   *    @param include_re_string regular expression that matches include directives.
-   *                      The expression should define one group that contains
-   *                      the include file name
+   * @param reader source from which to read entries
+   * @param filename file name corresponding to reader, for use in error messages
+   * @param comment_re_string regular expression that matches comments. Any text that matches
+   *     comment_re is removed. A line that is entirely a comment is ignored
+   * @param include_re_string regular expression that matches include directives. The expression
+   *     should define one group that contains the include file name
    */
   public EntryReader(
       Reader reader,
@@ -356,7 +361,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param reader source from which to read entries
    * @see #EntryReader(Reader,String,String,String)
    */
@@ -369,13 +376,11 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create an EntryReader.
    *
-   *    @param file       initial file to read
-   *    @param comment_re regular expression that matches comments.
-   *                      Any text that matches comment_re is removed.
-   *                      A line that is entirely a comment is ignored.
-   *    @param include_re regular expression that matches include directives.
-   *                      The expression should define one group that contains
-   *                      the include file name.
+   * @param file initial file to read
+   * @param comment_re regular expression that matches comments. Any text that matches comment_re is
+   *     removed. A line that is entirely a comment is ignored.
+   * @param include_re regular expression that matches include directives. The expression should
+   *     define one group that contains the include file name.
    * @throws IOException if there is a problem reading the file
    */
   public EntryReader(
@@ -386,7 +391,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     this(UtilMDE.fileReader(file), file.toString(), comment_re, include_re);
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param file the file to read
    * @throws IOException if there is a problem reading the file
    * @see #EntryReader(File,String,String)
@@ -395,7 +402,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     this(file, null, null);
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param file the file to read
    * @param charsetName the character set to use
    * @throws IOException if there is a problem reading the file
@@ -410,16 +419,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   /**
    * Create a new EntryReader starting with the specified file.
    *
-   *    @param filename   initial file to read
-   *    @param comment_re regular expression that matches comments.
-   *                      Any text that matches comment_re is removed.
-   *                      A line that is entirely a comment is ignored.
-   *    @param include_re regular expression that matches include directives.
-   *                      The expression should define one group that contains
-   *                      the include file name.
-   *
+   * @param filename initial file to read
+   * @param comment_re regular expression that matches comments. Any text that matches {@code
+   *     comment_re} is removed. A line that is entirely a comment is ignored.
+   * @param include_re regular expression that matches include directives. The expression should
+   *     define one group that contains the include file name.
    * @throws IOException if there is a problem reading the file
-   *
    * @see #EntryReader(File,String,String)
    */
   public EntryReader(
@@ -430,7 +435,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     this(new File(filename), comment_re, include_re);
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param filename source from which to read entries
    * @throws IOException if there is a problem reading the file
    * @see #EntryReader(String,String,String)
@@ -439,7 +446,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     this(filename, null, null);
   }
 
-  /** Create a EntryReader that does not support comments or include directives.
+  /**
+   * Create a EntryReader that does not support comments or include directives.
+   *
    * @param filename source from which to read entries
    * @param charsetName the character set to use
    * @throws IOException if there is a problem reading the file
@@ -454,9 +463,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   ///
 
   /**
-   * Read a line, ignoring comments and processing includes.  Note that
-   * a line that is completely a comment is completely ignored (and
-   * not returned as a blank line).  Returns null at end of file.
+   * Read a line, ignoring comments and processing includes. Note that a line that is completely a
+   * comment is completely ignored (and not returned as a blank line). Returns null at end of file.
+   *
    * @return the string that was read, or null at end of file
    */
   @Override
@@ -523,11 +532,10 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /**
    * Return a line-by-line iterator for this file.
-   * <p>
    *
-   * <b>Warning:</b> This does not return a fresh iterator each time.  The
-   * iterator is a singleton, the same one is returned each time, and a new
-   * one can never be created after it is exhausted.
+   * <p><b>Warning:</b> This does not return a fresh iterator each time. The iterator is a
+   * singleton, the same one is returned each time, and a new one can never be created after it is
+   * exhausted.
    *
    * @return a line-by-line iterator for this file
    */
@@ -537,9 +545,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Returns whether or not there is another line to read.  Any IOExceptions
-   * are turned into errors (because the definition of hasNext() in Iterator
-   * doesn't throw any exceptions).
+   * Returns whether or not there is another line to read. Any IOExceptions are turned into errors
+   * (because the definition of hasNext() in Iterator doesn't throw any exceptions).
+   *
    * @return whether there is another line to read
    */
   @Override
@@ -565,8 +573,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /**
    * Return the next line in the multi-file.
+   *
    * @return the next line in the multi-file
-   * Throws NoSuchElementException at end of file
+   * @throws NoSuchElementException at end of file
    */
   @Override
   public String next() {
@@ -589,10 +598,10 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Returns the next entry (paragraph) in the file.  Entries are separated
-   * by blank lines unless the entry started with {@link #entry_start_re}
-   * (see {@link #set_entry_start_stop}).  If no more entries are
-   * available, returns null.
+   * Returns the next entry (paragraph) in the file. Entries are separated by blank lines unless the
+   * entry started with {@link #entry_start_re} (see {@link #set_entry_start_stop}). If no more
+   * entries are available, returns null.
+   *
    * @return the next entry (paragraph) in the file
    * @throws IOException if there is a problem reading the file
    */
@@ -681,8 +690,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Reads the next line from the current reader.  If EOF is encountered
-   * pop out to the next reader.  Returns null if there is no more input.
+   * Reads the next line from the current reader. If EOF is encountered pop out to the next reader.
+   * Returns null if there is no more input.
+   *
    * @return next line from the reader, or null if there is no more input
    */
   private /*@Nullable*/ String get_next_line() throws IOException {
@@ -706,6 +716,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /**
    * Returns the current filename.
+   *
    * @return the current filename
    */
   public String getFileName() {
@@ -718,6 +729,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /**
    * Return the current line number in the current file.
+   *
    * @return the current line number
    */
   @Override
@@ -729,7 +741,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     return ri.getLineNumber();
   }
 
-  /** Set the current line number in the current file.
+  /**
+   * Set the current line number in the current file.
+   *
    * @param lineNumber new line number for the current file
    */
   @Override
@@ -742,8 +756,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Set the regular expressions for the start and stop of long
-   * entries (multiple lines that are read as a group by get_entry()).
+   * Set the regular expressions for the start and stop of long entries (multiple lines that are
+   * read as a group by get_entry()).
+   *
    * @param entry_start_re regular expression that starts a long entry
    * @param entry_stop_re regular expression that ends a long entry
    */
@@ -754,8 +769,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Set the regular expressions for the start and stop of long
-   * entries (multiple lines that are read as a group by get_entry()).
+   * Set the regular expressions for the start and stop of long entries (multiple lines that are
+   * read as a group by get_entry()).
+   *
    * @param entry_start_re regular expression that starts a long entry
    * @param entry_stop_re regular expression that ends a long entry
    */
@@ -765,8 +781,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
 
   /**
-   * Puts the specified line back in the input.  Only one line can be
-   * put back.
+   * Puts the specified line back in the input. Only one line can be put back.
+   *
    * @param line the line to be put back in the input
    */
   // TODO:  This would probably be better implemented with the "mark" mechanism
@@ -805,6 +821,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /**
    * Simple usage example.
+   *
    * @param args command-line arguments: filename [comment_re [include_re]]
    * @throws IOException if there is a problem reading a file
    */

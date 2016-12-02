@@ -52,16 +52,16 @@
       (error "No known face %s" face-symbol))
   (let ((old-color (face-foreground face-symbol)))
     (if (not old-color)
-	;; This can happen with "emacs -nw"; I don't know why.
-	;; (error "No foreground color for face %s" face-symbol)
-	nil
+        ;; This can happen with "emacs -nw"; I don't know why.
+        ;; (error "No foreground color for face %s" face-symbol)
+        nil
       (set-face-foreground face-symbol (lighten-rgb old-color)))))
 
 (defun lighten-rgb (string)
   "Lighten each of the RGB values for the color."
   (let* ((rgb (color-values string))
-	 (lighter-rgb (mapcar #'lighten-color rgb))
-	 (lighter-string (rgb-to-hex-string lighter-rgb)))
+         (lighter-rgb (mapcar #'lighten-color rgb))
+         (lighter-string (rgb-to-hex-string lighter-rgb)))
     lighter-string))
 ;; (lighten-rgb "#FA5")
 ;; (lighten-rgb "purple")
@@ -77,16 +77,16 @@
       (error "No known face %s" face-symbol))
   (let ((old-color (face-foreground face-symbol)))
     (if (not old-color)
-	;; This can happen with "emacs -nw"; I don't know why.
-	;; (error "No foreground color for face %s" face-symbol)
-	nil
+        ;; This can happen with "emacs -nw"; I don't know why.
+        ;; (error "No foreground color for face %s" face-symbol)
+        nil
       (set-face-foreground face-symbol (darken-rgb old-color)))))
 
 (defun darken-rgb (string)
   "Darken each of the RGB values for the color."
   (let* ((rgb (color-values string))
-	 (darker-rgb (mapcar #'darken-color rgb))
-	 (darker-string (rgb-to-hex-string darker-rgb)))
+         (darker-rgb (mapcar #'darken-color rgb))
+         (darker-string (rgb-to-hex-string darker-rgb)))
     darker-string))
 ;; (darken-rgb "#FA5")
 ;; (darken-rgb "purple")
@@ -98,7 +98,7 @@
 
 (defun rgb-to-hex-string (clist)
   (format "#%04x%04x%04x"
-	  (round (first clist)) (round (second clist)) (round (third clist))))
+          (round (first clist)) (round (second clist)) (round (third clist))))
 ;; (rgb-to-hex-string (color-values "purple"))
 ;; (rgb-to-hex-string (color-values "white"))
 ;; (rgb-to-hex-string (color-values "black"))

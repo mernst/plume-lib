@@ -2,14 +2,13 @@
 # html-toc
 # Michael Ernst <mernst@cs.washington.edu>
 # Thanks to C. Scott Ananian <cscott@cscott.net>
-# Time-stamp: <2010-07-31 22:57:28 mernst>
+# Time-stamp: <2016-10-08 17:45:51 mernst>
 
 # Generate (to standard out) table of contents for an HTML document.
 # The table of contents is based on the header tags (<h1>, <h2>, etc.).
 
 # See html-update-toc for documentation.
-# (Typically, you will not run this program, but will use html-update-toc
-# instead.)
+# (Typically, you will run html-update-toc rather than this program.)
 
 use strict;
 use English;

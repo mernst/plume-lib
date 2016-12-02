@@ -36,22 +36,22 @@ To use, put in your .emacs file:  \(add-hook 'c-mode-hook 'c-set-basic-offset\)"
     ;; so I should insist that the indentation be found in the body starting with the "{".
     ;; Insist on space around brace to avoid finding @link{...} in a comment.
     (if (re-search-forward "\\([ \t\n\r]{[ \t\n\r]\\|{$\\)" nil t)
-	(progn
-	  (while (forward-comment 1)
-	    ;; nothing to do
-	    )
-	  ;; forward-comment actually brings us all the way to non-whitespace
-	  (beginning-of-line)
-	  ;; This isn't quite right:  it could match in comments.  Perhaps demand
-	  ;; a match for c-Java-defun-prompt-regexp or some other keywords.
-	  ;; Forbid a trailing colon to avoid matching labels, which have special
-	  ;; indentation.
-	  (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
-	      (progn
-		(goto-char (match-end 1))
-		(if (looking-back-at "^\t+")
-		    (setq c-basic-offset 8))
-		;; sanity check
-		(if (<= (current-column) 8)
-		    (setq c-basic-offset (current-column))))))))
+        (progn
+          (while (forward-comment 1)
+            ;; nothing to do
+            )
+          ;; forward-comment actually brings us all the way to non-whitespace
+          (beginning-of-line)
+          ;; This isn't quite right:  it could match in comments.  Perhaps demand
+          ;; a match for c-Java-defun-prompt-regexp or some other keywords.
+          ;; Forbid a trailing colon to avoid matching labels, which have special
+          ;; indentation.
+          (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
+              (progn
+                (goto-char (match-end 1))
+                (if (looking-back-at "^\t+")
+                    (setq c-basic-offset 8))
+                ;; sanity check
+                (if (<= (current-column) 8)
+                    (setq c-basic-offset (current-column))))))))
   (message "Set c-basic-offset to %d" c-basic-offset))

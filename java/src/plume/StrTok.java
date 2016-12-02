@@ -12,24 +12,23 @@ import java.io.StreamTokenizer;
 import java.io.StringReader;
 
 /**
- * Provides a somewhat simpler interface for tokenizing strings than
- * does StreamTokenizer.  All tokenizing is done by StreamTokenizer. <p>
+ * Provides a somewhat simpler interface for tokenizing strings than does StreamTokenizer. All
+ * tokenizing is done by StreamTokenizer.
  *
- * The major difference from StreamTokenizer is that all tokens are
- * returned as strings.  EOF returns a null, EOL returns an empty string.
- * A delimiter is returned as a one-character string.  Words and numbers
- * are returned as strings.  Quoted strings are also returned as strings
- * including their quote characters (so they can easily be differentiated
- * from words and numbers).
+ * <p>The major difference from StreamTokenizer is that all tokens are returned as strings. EOF
+ * returns a null, EOL returns an empty string. A delimiter is returned as a one-character string.
+ * Words and numbers are returned as strings. Quoted strings are also returned as strings including
+ * their quote characters (so they can easily be differentiated from words and numbers).
  *
- * Other differences are: <ul>
- *  <li> Automatic setup for tokenizing strings.
- *  <li> Underscores are included in identifiers (words).
- *  <li> I/O errors (which should be impossible when tokenizing strings) are
- *       converted to RuntimeExceptions so that every call doesn't have to
- *       be included in a try block.
- *  <li> Convenience functions isWord(), isQString(), and need().
- *  <li> Returned string tokens are interned for easier comparisons.
+ * <p>Other differences are:
+ *
+ * <ul>
+ *   <li> Automatic setup for tokenizing strings.
+ *   <li> Underscores are included in identifiers (words).
+ *   <li> I/O errors (which should be impossible when tokenizing strings) are converted to
+ *       RuntimeExceptions so that every call doesn't have to be included in a try block.
+ *   <li> Convenience functions isWord(), isQString(), and need().
+ *   <li> Returned string tokens are interned for easier comparisons.
  * </ul>
  */
 public class StrTok {
@@ -43,6 +42,7 @@ public class StrTok {
 
   /**
    * Creates a tokenizer for the specified string.
+   *
    * @param s string to tokenize
    */
   public StrTok(String s) {
@@ -50,8 +50,8 @@ public class StrTok {
   }
 
   /**
-   * Creates a tokenizer for the specified string with the specified
-   * error handler.
+   * Creates a tokenizer for the specified string with the specified error handler.
+   *
    * @param s string to tokenize
    * @param e error handler
    */
@@ -63,8 +63,7 @@ public class StrTok {
   }
 
   /**
-   * Default class for error handling.  Throws a RuntimeException when an
-   * error occurs.
+   * Default class for error handling. Throws a RuntimeException when an error occurs.
    *
    * @see #set_error_handler(ErrorHandler)
    */
@@ -72,6 +71,7 @@ public class StrTok {
 
     /**
      * Called when an unexpected token is found (see {@link #need(String)}).
+     *
      * @param s unexpected token that has been found
      */
     public void tok_error(String s) {
@@ -80,9 +80,9 @@ public class StrTok {
   }
 
   /**
-   * Returns the next token as a string.  EOF returns a null, EOL
-   * returns an empty string.  Delimiters are returned as one character
-   * strings.  Quoted strings and words are returned as strings.
+   * Returns the next token as a string. EOF returns a null, EOL returns an empty string. Delimiters
+   * are returned as one character strings. Quoted strings and words are returned as strings.
+   *
    * @return the next token
    */
   public /*@Nullable*/ /*@Interned*/ String nextToken() {
@@ -105,6 +105,7 @@ public class StrTok {
 
   /**
    * Return the current token.
+   *
    * @return the current token
    * @see #nextToken()
    */
@@ -143,6 +144,7 @@ public class StrTok {
 
   /**
    * Specifies the single line comment character.
+   *
    * @param ch the comment character
    * @see StreamTokenizer#commentChar(int)
    */
@@ -152,6 +154,7 @@ public class StrTok {
 
   /**
    * Specifies that matching pairs of this character delimit string constants.
+   *
    * @param ch the quoting character
    * @see StreamTokenizer#quoteChar(int)
    */
@@ -161,6 +164,7 @@ public class StrTok {
 
   /**
    * Return the type of the current token.
+   *
    * @return the type of the current token
    * @see StreamTokenizer#ttype
    */
@@ -168,7 +172,9 @@ public class StrTok {
     return stok.ttype;
   }
 
-  /** Returns true if the current token is a word (identifier).
+  /**
+   * Returns true if the current token is a word (identifier).
+   *
    * @return true iff the current token is a word (identifier)
    */
   /*@Pure*/
@@ -176,7 +182,9 @@ public class StrTok {
     return (stok.ttype == StreamTokenizer.TT_WORD);
   }
 
-  /** Returns true if the current token is a quoted string.
+  /**
+   * Returns true if the current token is a quoted string.
+   *
    * @return true iff the current token is a quoted string
    */
   /*@Pure*/
@@ -185,8 +193,8 @@ public class StrTok {
   }
 
   /**
-   * Sets the error handler.  The default error handler will throw a
-   * runtime exception on errors.
+   * Sets the error handler. The default error handler will throw a runtime exception on errors.
+   *
    * @param errorHandler the new error handler
    * @see ErrorHandler
    */
@@ -197,10 +205,10 @@ public class StrTok {
   }
 
   /**
-   * Reads the next token and checks that it matches tok.  If it does
-   * not match, calls the current error handling routine (see
-   * {@link #set_error_handler(StrTok.ErrorHandler) set_error_handler()}).
-   * If it does match, just returns.
+   * Reads the next token and checks that it matches tok. If it does not match, calls the current
+   * error handling routine (see {@link #set_error_handler(StrTok.ErrorHandler)
+   * set_error_handler()}). If it does match, just returns.
+   *
    * @param tok string to check next token against
    */
   public void need(String tok) {
@@ -214,9 +222,9 @@ public class StrTok {
   }
 
   /**
-   * Reads the next token and checks to make sure that it is a word (id).
-   * If it is not a word, calls the error handling routine.  If it is,
-   * returns the string of the word.
+   * Reads the next token and checks to make sure that it is a word (id). If it is not a word, calls
+   * the error handling routine. If it is, returns the string of the word.
+   *
    * @return next token, if if it a word; otherwise calls the error handling routine
    */
   public String need_word() {

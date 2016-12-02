@@ -43,13 +43,13 @@
 
 (defun signum (x)
   (cond ((plusp x)
-	 1)
-	((zerop x)
-	 0)
-	((minusp x)
-	 -1)
-	(t
-	 (error "What kind of number is this in signum?"))))
+         1)
+        ((zerop x)
+         0)
+        ((minusp x)
+         -1)
+        (t
+         (error "What kind of number is this in signum?"))))
 ;; ;; Actually correct implementation (which is probably too expensive) is:
 ;; (defun signum (x)
 ;;   (if (zerop x)
@@ -75,34 +75,34 @@ applying FUNCTION to each element of SEQUENCE.  The length of the returned
 sequence is the same as that of SEQUENCE, unless RESULT-TYPE is nil, in
 which case nil is returned."
   (let ((index 0)
-	(maxindex (length sequence))
-	result-list)
+        (maxindex (length sequence))
+        result-list)
     (if (not result-type)
-	;; If the sequence is a list, the "elt" calls may be expensive; is
-	;; it more efficient to do this or to call mapcar and throw away
-	;; the result?
-	(progn
-	  (while (< index maxindex)
-	    (funcall function (elt sequence index))
-	    (setq index (1+ index)))
-	  nil)
+        ;; If the sequence is a list, the "elt" calls may be expensive; is
+        ;; it more efficient to do this or to call mapcar and throw away
+        ;; the result?
+        (progn
+          (while (< index maxindex)
+            (funcall function (elt sequence index))
+            (setq index (1+ index)))
+          nil)
       (progn
-	(if (listp sequence)
-	    (setq result-list (mapcar function sequence))
-	  (progn
-	    (while (< index maxindex)
-	      (setq result-list
-		    (cons (funcall function (elt sequence index)) result-list))
-	      (setq index (1+ index)))
-	    (setq result-list (nreverse result-list))))
-	(cond ((eq 'list result-type)
-	       result-list)
-	      ((eq 'vector result-type)
-	       (vconcat result-list))
-	      ((eq 'string result-type)
-	       (concat result-list))
-	      (t
-	       (error "Unrecognized result-type %s" result-type)))))))
+        (if (listp sequence)
+            (setq result-list (mapcar function sequence))
+          (progn
+            (while (< index maxindex)
+              (setq result-list
+                    (cons (funcall function (elt sequence index)) result-list))
+              (setq index (1+ index)))
+            (setq result-list (nreverse result-list))))
+        (cond ((eq 'list result-type)
+               result-list)
+              ((eq 'vector result-type)
+               (vconcat result-list))
+              ((eq 'string result-type)
+               (concat result-list))
+              (t
+               (error "Unrecognized result-type %s" result-type)))))))
 
 ;;; 3. Modifying sequences
 
@@ -118,13 +118,13 @@ which case nil is returned."
   "Substitute NEWCHAR for instances of OLDCHAR in STRING.
 NEWCHAR and OLDCHAR are characters."
   `(string-substitute-opt ,newchar
-			    (regexp-quote (char-to-string ,oldchar))
-			    ,string))
+                            (regexp-quote (char-to-string ,oldchar))
+                            ,string))
 
 ;; Optimized version.  oldchar-regexp should only match one-character strings.
 (defun string-substitute-opt (newchar oldchar-regexp string)
   (let ((i -1)
-	(case-fold-search nil))
+        (case-fold-search nil))
     (while (setq i (string-match oldchar-regexp string (1+ i)))
       (aset string i newchar))))
 
@@ -136,36 +136,36 @@ NEWCHAR and OLDCHAR are characters."
 ;; (defun find-if (test sequence)
 ;;   "Return the first element satisfying TEST in SEQUENCE, or nil if none do."
 ;;   (let ((limit (length sequence))
-;; 	result
-;; 	(index 0))
+;;      result
+;;      (index 0))
 ;;     (while (< index limit)
 ;;       (if (funcall test (elt sequence index))
-;; 	  (setq result (elt sequence index)
-;; 		index limit)
-;; 	(setq index (1+ index))))
+;;        (setq result (elt sequence index)
+;;              index limit)
+;;      (setq index (1+ index))))
 ;;     result))
 
 (defun mdecl-position (item sequence)
   "Return the first index of ITEM in SEQUENCE, or nil; tests with `equal'."
   (let ((limit (length sequence))
-	result
-	(index 0))
+        result
+        (index 0))
     (while (< index limit)
       (if (equal item (elt sequence index))
-	  (setq result index
-		index limit)
-	(setq index (1+ index))))
+          (setq result index
+                index limit)
+        (setq index (1+ index))))
     result))
 
 ;;; Incompatible with cl.el's version, which accepts optional arguments.
 ;; (defun count (item sequence)
 ;;   "Return the number of times that ITEM appears in SEQUENCE; test with `equal'."
 ;;   (let ((limit (length sequence))
-;; 	(result 0)
-;; 	(index 0))
+;;      (result 0)
+;;      (index 0))
 ;;     (while (< index limit)
 ;;       (if (equal item (elt sequence index))
-;; 	  (setq result (1+ result)))
+;;        (setq result (1+ result)))
 ;;       (setq index (1+ index)))
 ;;     result))
 
@@ -188,13 +188,13 @@ NEWCHAR and OLDCHAR are characters."
 ;;   (if (listp sequence)
 ;;       (mdecl-old-sort sequence predicate)
 ;;     (let ((sorted-seq-as-list (mdecl-old-sort (map-one-sequence
-;; 					 'list (function identity) sequence)
-;; 					predicate))
-;; 	  (index 0)
-;; 	  (maxindex (length sequence)))
+;;                                       'list (function identity) sequence)
+;;                                      predicate))
+;;        (index 0)
+;;        (maxindex (length sequence)))
 ;;       (while (< index maxindex)
-;; 	(aset sequence index (car sorted-seq-as-list))
-;; 	(setq sorted-seq-as-list (cdr sorted-seq-as-list)))
+;;      (aset sequence index (car sorted-seq-as-list))
+;;      (setq sorted-seq-as-list (cdr sorted-seq-as-list)))
 ;;       sequence)))
 
 ;; (defadvice sort (around any-sequence activate)
@@ -202,18 +202,18 @@ NEWCHAR and OLDCHAR are characters."
 ;;   (if (listp (ad-get-arg 0))
 ;;       ad-do-it
 ;;     (let* ((orig-seq (ad-get-arg 0))
-;; 	   (orig-seq-as-list (map-one-sequence
-;; 			      'list (function identity) orig-seq))
-;; 	   (result-as-list (progn
-;; 			     (ad-set-arg 0 orig-seq-as-list)
-;; 			     ad-do-it)))
+;;         (orig-seq-as-list (map-one-sequence
+;;                            'list (function identity) orig-seq))
+;;         (result-as-list (progn
+;;                           (ad-set-arg 0 orig-seq-as-list)
+;;                           ad-do-it)))
 ;;       ;; set the elements of the original sequence
 ;;       (let ((index 0)
-;; 	    (maxindex (length sequence)))
-;; 	(while (< index maxindex)
-;; 	  (aset sequence index (car sorted-seq-as-list))
-;; 	  (setq sorted-seq-as-list (cdr sorted-seq-as-list)))
-;; 	orig-seq))))
+;;          (maxindex (length sequence)))
+;;      (while (< index maxindex)
+;;        (aset sequence index (car sorted-seq-as-list))
+;;        (setq sorted-seq-as-list (cdr sorted-seq-as-list)))
+;;      orig-seq))))
 
 
 
@@ -227,11 +227,11 @@ NEWCHAR and OLDCHAR are characters."
   "Return a list with the same elements as LIST, excepting the last N elements.
 N defaults to 1.  If LIST has fewer than N elements, NIL is returned."
   (let ((copied-elts (- (length list) (or n 1)))
-	result)
+        result)
     (while (and list (plusp copied-elts))
       (setq result (cons (car list) result)
-	    copied-elts (1- copied-elts)
-	    list (cdr list)))
+            copied-elts (1- copied-elts)
+            list (cdr list)))
     (nreverse result)))
 
 ;;; 5. Using lists as sets
@@ -254,7 +254,7 @@ N defaults to 1.  If LIST has fewer than N elements, NIL is returned."
 ;;   (let (result)
 ;;     (while list2
 ;;       (if (memq (car list2) list1)
-;; 	  (setq result (cons (car list2) result)))
+;;        (setq result (cons (car list2) result)))
 ;;       (setq list2 (cdr list2)))
 ;;     result
 ;;     ))
@@ -265,7 +265,7 @@ Uses equal for the comparison."
   (let (result)
     (while list1
       (if (not (member (car list1) list2))
-	  (setq result (cons (car list1) result)))
+          (setq result (cons (car list1) result)))
       (setq list1 (cdr list1)))
     (nreverse result)
     ))
@@ -276,7 +276,7 @@ Uses equal for the comparison."
   (let (result)
     (while list2
       (if (member (car list2) list1)
-	  (setq result (cons (car list2) result)))
+          (setq result (cons (car list2) result)))
       (setq list2 (cdr list2)))
     result
     ))
@@ -348,7 +348,7 @@ beginning and end, of STRING."
   (let ((result ""))
     (while (string-match regexp string)
       (setq result (concat result (substring string 0 (match-beginning 0)))
-	    string (substring string (match-end 0))))
+            string (substring string (match-end 0))))
     (concat result string)))
 
 
@@ -385,15 +385,15 @@ beginning and end, of STRING."
 ;; string or a symbol, with or without a leading colon.
 (defun slotname->index (structurename slotname)
   (let ((index (cdr (assoc (intern-soft
-			    ;; string with colon prepended
-			    (concat ":"
-				    ;; remove leading colon, if any
-				    (string-left-trim ":"
-						      ;; make slotname a string
-						      (format "%s" slotname))))
-			   (get structurename ':structure-indices)))))
+                            ;; string with colon prepended
+                            (concat ":"
+                                    ;; remove leading colon, if any
+                                    (string-left-trim ":"
+                                                      ;; make slotname a string
+                                                      (format "%s" slotname))))
+                           (get structurename ':structure-indices)))))
     (if index
-	(1+ index))))
+        (1+ index))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -442,60 +442,60 @@ and option-value is a symbol, the name that should be used for that
 function instead of the defaults listed above."
 
   (let ((body '())
-	(i 1)
-	(L (length slots))
-	conc-name options
-	name1 name2 makename predname copyname)
+        (i 1)
+        (L (length slots))
+        conc-name options
+        name1 name2 makename predname copyname)
     (if (listp name)
-	(setq options (cdr name)
-	      name (car name)))
+        (setq options (cdr name)
+              name (car name)))
     (setq conc-name (concat (symbol-name name)
-			    def-mdecl-struct-concatenator))
+                            def-mdecl-struct-concatenator))
     (while slots
       (setq name1 (intern (concat conc-name (symbol-name (car slots))))
-	    name2 (intern (concat conc-name "set-" (symbol-name (car slots))))
-	    body (nconc body
-			(list
-			 (list 'defmacro name1 '(vector)
-			       (list 'list ''aref 'vector i))
-			 (list 'defmacro name2 '(vector value)
-			       (list 'list ''aset 'vector i 'value))
-			 (list 'put (list 'quote name1)
-			       ''edebug-form-hook ''(form))
-			 (list 'put (list 'quote name2)
-			       ''edebug-form-hook ''(form form))
-			 ))
-	    slots (cdr slots)
-	    i (1+ i)))
+            name2 (intern (concat conc-name "set-" (symbol-name (car slots))))
+            body (nconc body
+                        (list
+                         (list 'defmacro name1 '(vector)
+                               (list 'list ''aref 'vector i))
+                         (list 'defmacro name2 '(vector value)
+                               (list 'list ''aset 'vector i 'value))
+                         (list 'put (list 'quote name1)
+                               ''edebug-form-hook ''(form))
+                         (list 'put (list 'quote name2)
+                               ''edebug-form-hook ''(form form))
+                         ))
+            slots (cdr slots)
+            i (1+ i)))
     (setq makename (or (car (cdr (assoc ':constructor options)))
-		       (intern (concat "make" def-mdecl-struct-concatenator
-				       (symbol-name name))))
-	  predname (or (car (cdr (assoc ':predicate options)))
-		       (intern (concat conc-name "p")))
-	  copyname (or (car (cdr (assoc ':copier options)))
-		       (intern (concat "copy" def-mdecl-struct-concatenator
-				       (symbol-name name)))))
+                       (intern (concat "make" def-mdecl-struct-concatenator
+                                       (symbol-name name))))
+          predname (or (car (cdr (assoc ':predicate options)))
+                       (intern (concat conc-name "p")))
+          copyname (or (car (cdr (assoc ':copier options)))
+                       (intern (concat "copy" def-mdecl-struct-concatenator
+                                       (symbol-name name)))))
     (setq body (nconc body (list (list 'defconst
-				       (intern (concat conc-name "length"))
-				       L)
-				 (list 'defun makename '()
-				       (list 'let (list (list 'result (list 'make-vector (1+ L) nil)))
-					     (list 'aset 'result 0
-						   (list 'quote name))
-					     'result))
-				 (list 'put (list 'quote makename)
-				       ''edebug-form-hook ''())
-				 (list 'defmacro copyname '(struct)
-				       '(list 'copy-sequence struct))
-				 (list 'put (list 'quote copyname)
-				       ''edebug-form-hook ''(form))
-				 (list 'defun predname '(object)
-				       (concat "T if OBJECT is a "
-					       (symbol-name name) ".")
-				       (list 'and
-					'(vectorp object)
-					(list '= '(length object) (1+ L))
-					(list 'eq '(aref object 0)
-					      (list 'quote name)))))))
+                                       (intern (concat conc-name "length"))
+                                       L)
+                                 (list 'defun makename '()
+                                       (list 'let (list (list 'result (list 'make-vector (1+ L) nil)))
+                                             (list 'aset 'result 0
+                                                   (list 'quote name))
+                                             'result))
+                                 (list 'put (list 'quote makename)
+                                       ''edebug-form-hook ''())
+                                 (list 'defmacro copyname '(struct)
+                                       '(list 'copy-sequence struct))
+                                 (list 'put (list 'quote copyname)
+                                       ''edebug-form-hook ''(form))
+                                 (list 'defun predname '(object)
+                                       (concat "T if OBJECT is a "
+                                               (symbol-name name) ".")
+                                       (list 'and
+                                        '(vectorp object)
+                                        (list '= '(length object) (1+ L))
+                                        (list 'eq '(aref object 0)
+                                              (list 'quote name)))))))
     (cons 'progn body)))
 (put 'def-mdecl-struct 'edebug-form-spec '(&rest form))

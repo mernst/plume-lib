@@ -10,11 +10,11 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * LimitedSizeIntSet stores up to some maximum number of unique
- * integer values, at which point its rep is nulled, in order to save space.
- * <p>
- * The advantage of this class over LimitedSizeSet&lt;Integer&gt; is that
- * it does not autobox the int values, so it takes less memory.
+ * LimitedSizeIntSet stores up to some maximum number of unique integer values, at which point its
+ * rep is nulled, in order to save space.
+ *
+ * <p>The advantage of this class over {@code LimitedSizeSet<Integer>} is that it does not autobox
+ * the int values, so it takes less memory.
  *
  * @see LimitedSizeSet
  */
@@ -30,8 +30,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   // public final int max_values;
 
   /**
-   * If null, then at least num_values distinct values have been seen.
-   * The size is not separately stored, because that would take extra space.
+   * If null, then at least num_values distinct values have been seen. The size is not separately
+   * stored, because that would take extra space.
    */
   protected int /*@Nullable*/ [] values;
   /** The number of active elements (equivalently, the first unused index). */
@@ -39,6 +39,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
 
   /**
    * Create a new LimitedSizeIntSet that can hold max_values values.
+   *
    * @param max_values the maximum number of values this set will be able to hold
    */
   public LimitedSizeIntSet(int max_values) {
@@ -113,9 +114,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /**
-   * A lower bound on the number of elements in the set.  Returns either
-   * the number of elements that have been inserted in the set, or
-   * max_size(), whichever is less.
+   * A lower bound on the number of elements in the set. Returns either the number of elements that
+   * have been inserted in the set, or max_size(), whichever is less.
+   *
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
@@ -124,9 +125,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /**
-   * An upper bound on how many distinct elements can be individually
-   * represented in the set.
+   * An upper bound on how many distinct elements can be individually represented in the set.
    * Returns max_values+1 (where max_values is the argument to the constructor).
+   *
    * @return maximum capacity of the set representation
    */
   public int max_size() {
@@ -159,9 +160,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /**
-   * Merges a list of LimitedSizeIntSet objects into a single object that
-   * represents the values seen by the entire list.  Returns the new
-   * object, whose max_values is the given integer.
+   * Merges a list of LimitedSizeIntSet objects into a single object that represents the values seen
+   * by the entire list. Returns the new object, whose max_values is the given integer.
+   *
    * @param max_values the maximum size for the returned LimitedSizeIntSet
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
    * @return a LimitedSizeIntSet that merges the elements of slist

@@ -15,23 +15,18 @@ import org.checkerframework.checker.regex.qual.*;
 */
 
 /**
- * This class has method {@link #compileFiles(List)}
- * that compiles Java source files.
- * It invokes a user-specified external command, such as <code>javac</code> or
- * <code>jikes</code>.
+ * This class has method {@link #compileFiles(List)} that compiles Java source files. It invokes a
+ * user-specified external command, such as <code>javac</code> or <code>jikes</code>.
  */
 public final class FileCompiler {
 
   /** The Runtime of the JVM. */
   public static Runtime runtime = java.lang.Runtime.getRuntime();
-  /**
-   * Matches the names of Java source files.
-   * Match group 1 is the complete filename.
-   */
+  /** Matches the names of Java source files. Match group 1 is the complete filename. */
   static /*@Regex(1)*/ Pattern java_filename_pattern;
   /**
-   * External command used to compile Java files, and command-line arguments.
-   * Guaranteed to be non-empty.
+   * External command used to compile Java files, and command-line arguments. Guaranteed to be
+   * non-empty.
    */
   private String[] compiler;
   /** Time limit for compilation jobs. */
@@ -59,7 +54,8 @@ public final class FileCompiler {
   }
 
   /**
-   * Creates a new FileCompiler.  Equivalent to FileCompiler("javac", 6000).
+   * Creates a new FileCompiler. Equivalent to FileCompiler("javac", 6000).
+   *
    * @see #FileCompiler(String, long)
    */
   public FileCompiler() {
@@ -67,12 +63,12 @@ public final class FileCompiler {
   }
 
   /**
-   * Creates a new FileCompiler.
-   * Compared to {@link #FileCompiler(String,long)}, this constructor permits
-   * spaces and other special characters in the command and arguments.
-   * @param compiler an array of Strings representing a command that runs a
-   * Java compiler (it could be the full path name or whatever is used on
-   * the commandline), plus any command-line options.
+   * Creates a new FileCompiler. Compared to {@link #FileCompiler(String,long)}, this constructor
+   * permits spaces and other special characters in the command and arguments.
+   *
+   * @param compiler an array of Strings representing a command that runs a Java compiler (it could
+   *     be the full path name or whatever is used on the commandline), plus any command-line
+   *     options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String[] compiler, long timeLimit) {
@@ -85,12 +81,11 @@ public final class FileCompiler {
   }
 
   /**
-   * Creates a new FileCompiler.
-   * Compared to {@link #FileCompiler(String,long)}, this constructor permits
-   * spaces and other special characters in the command and arguments.
-   * @param compiler a list of Strings representing a command that runs a
-   * Java compiler (it could be the full path name or whatever is used on
-   * the commandline), plus any command-line options.
+   * Creates a new FileCompiler. Compared to {@link #FileCompiler(String,long)}, this constructor
+   * permits spaces and other special characters in the command and arguments.
+   *
+   * @param compiler a list of Strings representing a command that runs a Java compiler (it could be
+   *     the full path name or whatever is used on the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(ArrayList<String> compiler, long timeLimit) {
@@ -99,9 +94,10 @@ public final class FileCompiler {
 
   /**
    * Creates a new FileCompiler.
-   * @param compiler a command that runs a Java compiler; for instance, it
-   * could be the full path name or whatever is used on the commandline.
-   * It may contain command-line arguments, and is split on spaces.
+   *
+   * @param compiler a command that runs a Java compiler; for instance, it could be the full path
+   *     name or whatever is used on the commandline. It may contain command-line arguments, and is
+   *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(String compiler, long timeLimit) {
@@ -109,8 +105,8 @@ public final class FileCompiler {
   }
 
   /**
-   * Compiles the files given by fileNames.
-   * Return the error output.
+   * Compiles the files given by fileNames. Returns the error output.
+   *
    * @return the error output from compiling the files
    * @param fileNames paths to the files to be compiled as Strings
    * @throws IOException if there is a problem reading a file
@@ -168,7 +164,7 @@ public final class FileCompiler {
   /**
    * @param filenames the paths of the Java source to be compiled as Strings
    * @return the process that executed the external compile command
-   * @throws Error if an empty list of filenames is provided.
+   * @throws Error if an empty list of filenames is provided
    */
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
@@ -188,14 +184,13 @@ public final class FileCompiler {
   }
 
   /**
-   * Examine the errorString to identify the files that cannot
-   * compile, then recompile all the other files. This function is
-   * necessary when compiling with javac because javac does not
-   * compile all the files supplied to it if some of them contain
-   * errors. So some "good" files end up not being compiled.
+   * Examine the errorString to identify the files that cannot compile, then recompile all the other
+   * files. This function is necessary when compiling with javac because javac does not compile all
+   * the files supplied to it if some of them contain errors. So some "good" files end up not being
+   * compiled.
+   *
    * @param fileNames all the files that were attempted to be compiled
-   * @param errorString the error string that indicates which files
-   *   could not be compiled
+   * @param errorString the error string that indicates which files could not be compiled
    */
   private void recompile_without_errors(List<String> fileNames, String errorString)
       throws IOException {
@@ -236,8 +231,9 @@ public final class FileCompiler {
   }
 
   /**
-   * Return the file path to where a class file for a source
-   * file at sourceFilePath would be generated.
+   * Return the file path to where a class file for a source file at sourceFilePath would be
+   * generated.
+   *
    * @param sourceFilePath the path to the .java file
    * @return the path to the corresponding .class file
    */
@@ -250,7 +246,9 @@ public final class FileCompiler {
     return sourceFilePath.substring(0, index) + ".class";
   }
 
-  /** Returns true if the given file exists.
+  /**
+   * Returns true if the given file exists.
+   *
    * @param pathName path to check for existence
    * @return true iff the file exists
    */
