@@ -15,9 +15,9 @@
 # the Travis access token.
 #
 # Your Travis access token is the text after "Your access token is " in
-# the ouput of these commands:
+# the output of these commands:
 #   travis login && travis token
-# (If the travis program isn't installed, do so with one of these two commands:
+# (If the travis program isn't installed, then use one of these two commands:
 #    gem install travis
 #    sudo apt-get install ruby-dev && sudo gem install travis
 # Don't do "sudo apt-get install travis" which installs a trajectory analyzer.)
@@ -33,7 +33,7 @@
 # The TRAVIS_ACCESS_TOKEN environment variable will be set when Travis runs
 # the job, but won't be visible to anyone browsing https://travis-ci.org/.
 #
-# 2. Add the following before_install and after_script block to your
+# 2. Add the following before_install and after_script blocks to your
 # .travis.yml file, where you replace OTHERGITHUB* by a specific downstream
 # project, but you leave $TRAVIS_ACCESS_TOKEN as literal text:
 #
@@ -42,6 +42,7 @@
 #
 # after_script:
 #   - |
+#       set +e
 #       declare exitCode;
 #       $(npm bin)/travis-after-all
 #       exitCode=$?
@@ -60,7 +61,10 @@
 # Note that Travis does not fail a job if an after_success command fails.
 # If you misspell a GitHub ID or project name, then this script will fail,
 # but Travis won't inform you of the mistake.  So, check the end of the
-# Travis build log the first time that a build succeeds.
+# Travis build log the first time that a build succeeds.  If there is any
+# occurrence of
+#   "@type": "error",
+# then it failed.
 
 # Here is an explanation of the conditional in the after_success block:
 #
@@ -84,6 +88,7 @@
 # adequate, even though the downstream job is triggered even if some job
 # other than the first one fails.
 
+# TODO: take a --branch command-line argument.
 # TODO: enable the script to clone a particular branch rather than master.
 # This would require a way to know the relationships among branches in
 # different GitHub projects.  It's easier to run all your tests within a
@@ -98,7 +103,6 @@
 # Parts of this script were originally taken from
 # http://docs.travis-ci.com/user/triggering-builds/
 
-# TODO: take a --branch command-line argument.
 
 if [ "$#" -lt 3 ] || [ "$#" -ge 7 ]; then
   echo "Wrong number of arguments $# to trigger-travis.sh; run like:"
