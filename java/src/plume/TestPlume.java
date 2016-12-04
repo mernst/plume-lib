@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -1565,6 +1567,7 @@ public final class TestPlume {
 
   /**
    * Throws an assertion unless the paired iterator contains the same values as the argument array.
+   * Requires that size of opi = ints.length.
    *
    * @param opi an iterator over pairs of integers
    * @param ints an array of two-element arrays of integers
@@ -2077,6 +2080,7 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
+          // if the argument to IotaIterator is @IndexFor("a"), so is every output.
           List<Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
@@ -2822,7 +2826,9 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-          f1[j] = f2[i + j];
+          @SuppressWarnings("index") // arithmetic: offset
+          /*@IndexFor("f2")*/ int i2 = i + j;
+          f1[j] = f2[i2];
         }
 
         f1[5] = f2[i] * offhigh;
@@ -2854,7 +2860,7 @@ public final class TestPlume {
 
   /** Initialize f2 to be the same as two copies of f1 */
   @SuppressWarnings("index") // length of f1 is exactly 10, length of f2 is exactly 20
-  void initialize_f1_and_f2(int j, double[] f1, double[] f2) {
+  void initialize_f1_and_f2(int j, double /*@MinLen(10)*/[] f1, double /*@MinLen(20)*/[] f2) {
 
     //start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
@@ -2969,6 +2975,7 @@ public final class TestPlume {
    * @throws ArgException if there is an illegal argument
    */
   @Test
+  @SuppressWarnings("index") // application-specific properties
   public void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
@@ -3270,7 +3277,7 @@ public final class TestPlume {
     String[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
-    assert sa.length == 11;
+    assert sa.length == 11 : "@AssumeAssertion(index)";
     assert sa[0].equals("one");
     assert sa[1].equals("two");
     assert sa[2].equals("three");

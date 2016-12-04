@@ -967,9 +967,7 @@ public final class Intern {
     public /*@NonNegative*/ int start;
     public int end;
 
-    /**
-     * @param seq an interned array
-     */
+    /** @param seq an interned array */
     public SequenceAndIndices(T seq, /*@NonNegative*/ int start, int end) {
       this.seq = seq;
       this.start = start;

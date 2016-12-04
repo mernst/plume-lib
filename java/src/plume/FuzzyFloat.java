@@ -217,6 +217,7 @@ public class FuzzyFloat {
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
+  @SuppressWarnings("index") // arithmetic: offest in array indices
   public int indexOf(double[] a, double[] sub) {
 
     int a_index_max = a.length - sub.length;

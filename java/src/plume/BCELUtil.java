@@ -487,7 +487,10 @@ public final class BCELUtil {
    *
    * @param mg the method whose locals to set
    */
-  @SuppressWarnings("nullness")
+  @SuppressWarnings({
+    "nullness",
+    "upperbound" // same length: getArgumentTypes() and getArgumentNames()
+  })
   public static void setup_init_locals(MethodGen mg) {
 
     // Get the parameter types and names.

@@ -375,6 +375,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
+  @SuppressWarnings("upperbound") // arithmetic: offset; off+len has type @IndexOrHigh("buf")
   public void write(char[] buf, /*@NonNegative*/ int off, /*@NonNegative*/ int len) {
     for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);

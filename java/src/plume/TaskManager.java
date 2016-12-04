@@ -117,6 +117,7 @@ public class TaskManager {
           : "No completed at line " + line_number + " @AssumeAssertion(nullness)";
     }
 
+    @SuppressWarnings("index") // string splitting: string contains a colon
     public Task(String body, String filename, long line_number) throws IOException {
 
       this.filename = filename;

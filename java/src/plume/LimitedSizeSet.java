@@ -46,6 +46,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     num_values = 0;
   }
 
+  @SuppressWarnings("index") // num_values may or may not be an index
   public void add(T elt) {
     if (values == null) {
       return;
@@ -97,7 +98,10 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
   }
 
-  @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
+  @SuppressWarnings({
+    "deterministic", // pure wrt equals() but not ==: throws a new exception
+    "index" // num_values may or may not be an index
+  })
   /*@Pure*/
   public boolean contains(T elt) {
     if (values == null) {

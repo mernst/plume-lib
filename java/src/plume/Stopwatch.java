@@ -3,6 +3,7 @@ package plume;
 import java.text.DecimalFormat;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.initialization.qual.*;
 import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
@@ -88,7 +89,7 @@ public final class Stopwatch {
     return format(1);
   }
 
-  public String format(/*@NonNegative*/ int digits) {
+  public String format(/*@IndexFor("Stopwatch.timeFormat")*/ int digits) {
     long runningMillis = elapsedMillis;
     if (startTime != 0) {
       runningMillis += (System.currentTimeMillis() - startTime);

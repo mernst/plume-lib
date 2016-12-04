@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /*>>>
+import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */
@@ -28,7 +29,7 @@ public final class FileCompiler {
    * External command used to compile Java files, and command-line arguments. Guaranteed to be
    * non-empty.
    */
-  private String[] compiler;
+  private String /*@MinLen(1)*/[] compiler;
   /** Time limit for compilation jobs. */
   private long timeLimit;
 
@@ -71,7 +72,7 @@ public final class FileCompiler {
    *     options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  public FileCompiler(String[] compiler, long timeLimit) {
+  public FileCompiler(String /*@MinLen(1)*/[] compiler, long timeLimit) {
     if (compiler.length == 0) {
       throw new Error("no compile command was provided");
     }
@@ -88,7 +89,7 @@ public final class FileCompiler {
    *     the full path name or whatever is used on the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  public FileCompiler(ArrayList<String> compiler, long timeLimit) {
+  public FileCompiler(/*@MinLen(1)*/ ArrayList<String> compiler, long timeLimit) {
     this(compiler.toArray(new String[0]), timeLimit);
   }
 

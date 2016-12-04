@@ -320,6 +320,8 @@ public class OptionsDoclet {
    *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
+  @SuppressWarnings(
+      "index") // need @MinLen (dependently): options is an array of 1- or 2-element arrays (none is empty)
   public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
@@ -398,6 +400,8 @@ public class OptionsDoclet {
    *
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
+  @SuppressWarnings(
+      "index") // need @MinLen (dependently): options is an array of 1- or 2-element arrays (none is empty)
   public void setOptions(String[][] options) {
     String outFilename = null;
     File destDir = null;

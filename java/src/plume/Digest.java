@@ -63,6 +63,7 @@ public final class Digest {
    * @param bytes the bytes to convert to a String
    * @return a String representation of the input bytes
    */
+  @SuppressWarnings("upperbound") // array length: computed index is within known array length
   public static String hexEncode(byte[] bytes) {
     StringBuffer s = new StringBuffer(bytes.length * 2);
     for (int i = 0; i < bytes.length; i++) {
@@ -85,6 +86,7 @@ public final class Digest {
       int len = s.length();
       byte[] r = new byte[len / 2];
       for (int i = 0; i < r.length; i++) {
+        @SuppressWarnings("index") // correlated length: two arrays with correlated, nonequal length
         int digit1 = s.charAt(i * 2), digit2 = s.charAt(i * 2 + 1);
         if ((digit1 >= '0') && (digit1 <= '9')) {
           digit1 -= '0';

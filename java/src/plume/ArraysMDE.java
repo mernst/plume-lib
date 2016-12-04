@@ -15,7 +15,9 @@ import java.util.Set;
 import java.util.Vector;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lowerbound.qual.*;
+import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.PolyAll;
@@ -311,7 +313,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   @SuppressWarnings("purity.not.sideeffectfree.object.creation") // issue #951
-  public static int[] min_max(int[] a) {
+  public static int /*@MinLen(2)*/[] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(int[])");
@@ -334,7 +336,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   @SuppressWarnings("purity.not.sideeffectfree.object.creation") // issue #951
-  public static long[] min_max(long[] a) {
+  public static long /*@MinLen(2)*/[] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(long[])");
@@ -492,7 +494,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static <T> int indexOf(
-      T[] a, /*@Nullable*/ Object elt, /*@NonNegative*/ int minindex, int indexlimit) {
+      T[] a,
+      /*@Nullable*/ Object elt, /*@IndexFor("a")*/
+      int minindex, /*@IndexOrHigh("a")*/
+      int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -535,9 +540,9 @@ public final class ArraysMDE {
   /*@Pure*/
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
-      /*@Nullable*/ Object elt,
-      /*@NonNegative*/ int minindex,
-      int indexlimit) {
+      Object elt,
+      /*@IndexFor("a")*/ int minindex,
+      /*@IndexOrHigh("a")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -586,8 +591,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       /*@PolyNull*/ Object[] a,
       /*@Nullable*/ Object elt,
-      /*@NonNegative*/ int minindex,
-      int indexlimit) {
+      /*@IndexFor("a")*/ int minindex,
+      /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -633,8 +638,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      /*@NonNegative*/ int minindex,
-      int indexlimit) {
+      /*@IndexFor("a")*/ int minindex,
+      /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
         return i;
@@ -693,7 +698,8 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(int[] a, int elt, /*@NonNegative*/ int minindex, int indexlimit) {
+  public static int indexOf(
+      int[] a, int elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -714,7 +720,8 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(long[] a, long elt, /*@NonNegative*/ int minindex, int indexlimit) {
+  public static int indexOf(
+      long[] a, long elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -774,7 +781,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static int indexOf(
-      boolean[] a, boolean elt, /*@NonNegative*/ int minindex, int indexlimit) {
+      boolean[] a,
+      boolean elt, /*@IndexFor("a")*/
+      int minindex, /*@IndexOrHigh("a")*/
+      int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -1297,6 +1307,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
@@ -1323,6 +1334,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
@@ -1348,6 +1360,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
@@ -1374,6 +1387,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
@@ -1399,6 +1413,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
@@ -1425,6 +1440,7 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1449,6 +1465,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1473,6 +1490,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1497,6 +1515,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1521,6 +1540,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1545,6 +1565,7 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
+  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1621,6 +1642,7 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
+  @SuppressWarnings("index") // arithmetic: offset
   public static <T> T[] concat(T /*@Nullable*/ [] a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -1656,6 +1678,7 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
+  @SuppressWarnings("index") // arithmetic: offset
   public static <T> T[] concat(/*@Nullable*/ List<T> a, T /*@Nullable*/ [] b) {
     if (a == null) {
       if (b != null) {
@@ -1691,6 +1714,7 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
+  @SuppressWarnings("index") // arithmetic: offset
   public static <T> T[] concat(/*@Nullable*/ List<T> a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {

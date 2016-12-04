@@ -719,6 +719,7 @@ public final class UtilMDE {
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
    */
+  @SuppressWarnings("index") // last char cannot be '['
   public static String arglistFromJvm(String arglist) {
     if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -2488,6 +2489,7 @@ public final class UtilMDE {
    * @param orig string to quoto
    * @return quoted version of orig
    */
+  @SuppressWarnings("index") // arithmetic: an index remains after this_esc
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
