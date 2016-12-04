@@ -310,17 +310,21 @@ public final class BCELUtil {
       Throwable t = new Throwable();
       t.fillInStackTrace();
       StackTraceElement[] ste = t.getStackTrace();
-      StackTraceElement caller = ste[1];
-      System.out.printf(
-          "%s.%s (%s line %d)",
-          caller.getClassName(),
-          caller.getMethodName(),
-          caller.getFileName(),
-          caller.getLineNumber());
-      for (int ii = 2; ii < ste.length; ii++) {
-        System.out.printf(" [%s line %d]", ste[ii].getFileName(), ste[ii].getLineNumber());
+      if (ste.length < 2) {
+        System.out.println("No stack trace information available");
+      } else {
+        StackTraceElement caller = ste[1];
+        System.out.printf(
+            "%s.%s (%s line %d)",
+            caller.getClassName(),
+            caller.getMethodName(),
+            caller.getFileName(),
+            caller.getLineNumber());
+        for (int ii = 2; ii < ste.length; ii++) {
+          System.out.printf(" [%s line %d]", ste[ii].getFileName(), ste[ii].getLineNumber());
+        }
+        System.out.printf("%n");
       }
-      System.out.printf("%n");
       dump_methods(gen);
     }
   }
