@@ -37,7 +37,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @param max_values the maximum number of values this set will be able to hold
    */
-  public LimitedSizeSet(int max_values) {
+  public LimitedSizeSet(/*@Positive*/ int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
@@ -134,7 +134,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  public int max_size() {
+  public /*@Positive*/ int max_size() {
     if (values == null) {
       return num_values;
     } else {
@@ -175,7 +175,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a LimitedSizeSet that merges the elements of slist
    */
   public static <T> LimitedSizeSet<T> merge(
-      int max_values, List<LimitedSizeSet<? extends T>> slist) {
+      /*@Positive*/ int max_values, List<LimitedSizeSet<? extends T>> slist) {
     LimitedSizeSet<T> result = new LimitedSizeSet<T>(max_values);
     for (LimitedSizeSet<? extends T> s : slist) {
       result.addAll(s);

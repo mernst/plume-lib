@@ -72,7 +72,7 @@ public final class FileCompiler {
    *     options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  public FileCompiler(String /*@MinLen(1)*/[] compiler, long timeLimit) {
+  public FileCompiler(String /*@MinLen(1)*/[] compiler, /*@Positive*/ long timeLimit) {
     if (compiler.length == 0) {
       throw new Error("no compile command was provided");
     }
@@ -89,7 +89,7 @@ public final class FileCompiler {
    *     the full path name or whatever is used on the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  public FileCompiler(/*@MinLen(1)*/ ArrayList<String> compiler, long timeLimit) {
+  public FileCompiler(/*@MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
     this(compiler.toArray(new String[0]), timeLimit);
   }
 
@@ -101,7 +101,7 @@ public final class FileCompiler {
    *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  public FileCompiler(String compiler, long timeLimit) {
+  public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
     this(compiler.trim().split(" +"), timeLimit);
   }
 
