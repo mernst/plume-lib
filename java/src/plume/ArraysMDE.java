@@ -3082,10 +3082,8 @@ public final class ArraysMDE {
       if (a1 == a2) {
         return 0;
       }
-      int tmp;
-      tmp = a1.length - a2.length;
-      if (tmp != 0) {
-        return tmp;
+      if (a1.length != a2.length) {
+        return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
         if (a1[i] != a2[i]) {
@@ -3121,11 +3119,9 @@ public final class ArraysMDE {
       if (a1 == a2) {
         return 0;
       }
-      int lendiff = a1.length - a2.length;
-      if (lendiff != 0) {
-        return lendiff;
+      if (a1.length != a2.length) {
+        return a1.length - a2.length;
       }
-      long tmp;
       for (int i = 0; i < a1.length; i++) {
         if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
@@ -3166,10 +3162,8 @@ public final class ArraysMDE {
       if (a1 == a2) {
         return 0;
       }
-      int tmp;
-      tmp = a1.length - a2.length;
-      if (tmp != 0) {
-        return tmp;
+      if (a1.length != a2.length) {
+        return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
         T elt1 = a1[i];
@@ -3184,7 +3178,7 @@ public final class ArraysMDE {
         if (elt2 == null) {
           return 1;
         }
-        tmp = elt1.compareTo(elt2);
+        int tmp = elt1.compareTo(elt2);
         if (tmp != 0) {
           return tmp;
         }
@@ -3226,10 +3220,8 @@ public final class ArraysMDE {
       if (a1 == a2) {
         return 0;
       }
-      int tmp;
-      tmp = a1.length - a2.length;
-      if (tmp != 0) {
-        return tmp;
+      if (a1.length != a2.length) {
+        return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
         Object elt1 = a1[i];
@@ -3244,7 +3236,7 @@ public final class ArraysMDE {
         if (elt2 == null) {
           return 1;
         }
-        tmp = elt1.hashCode() - elt2.hashCode();
+        int tmp = elt1.hashCode() - elt2.hashCode();
         if (tmp != 0) {
           return tmp;
         }

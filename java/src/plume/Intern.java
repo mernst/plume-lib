@@ -1035,10 +1035,9 @@ public final class Intern {
   //       return 0;
   //     int[] a1 = (int[])o1;
   //     int[] a2 = (int[])o2;
-  //     int tmp;
-  //     tmp = a1.length - a2.length;
-  //     if (tmp != 0)
-  //       return tmp;
+  //     if (a1.length != a2.length) {
+  //       return a1.length - a2.length;
+  //     }
   //     for (int i=0; i<a1.length; i++) {
   //       tmp = a1[i] - a2[i];
   //       if (tmp != 0)
@@ -1058,10 +1057,9 @@ public final class Intern {
   //       return 0;
   //     Object[] a1 = (Object[])o1;
   //     Object[] a2 = (Object[])o2;
-  //     int tmp;
-  //     tmp = a1.length - a2.length;
-  //     if (tmp != 0)
-  //       return tmp;
+  //     if (a1.length != a2.length) {
+  //       return a1.length - a2.length;
+  //     }
   //     for (int i=0; i<a1.length; i++) {
   //       tmp = a1[i].hashCode() - a2[i].hashCode();
   //       if (tmp != 0)
