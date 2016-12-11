@@ -1243,6 +1243,9 @@ public final class TestPlume {
     assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 8}), new int[] {5, 6, 7});
     assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 5, 6, 8}), new int[] {4, 7});
     assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 6, 8}), new int[] {4, 5, 7});
+    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 5, 5, 6, 7, 8}), new int[] {});
+    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 4, 6, 6, 7, 8}), new int[] {5});
+    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 3, 3}), new int[] {});
 
     // class MissingNumbersIteratorInt
     class TestMissingNumbersIteratorInt {

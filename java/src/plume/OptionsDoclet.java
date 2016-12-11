@@ -36,6 +36,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
+import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -346,7 +347,6 @@ public class OptionsDoclet {
         }
         hasDocFile = true;
       }
-      @SuppressWarnings("index") // Javadoc argument processing: -docfile takes one argument
       if (opt.equals("-outfile")) {
         if (hasOutFile) {
           reporter.printError("-outfile option specified twice");

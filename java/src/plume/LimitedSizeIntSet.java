@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.lowerbound.qual.*;
+import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -34,7 +36,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * If null, then at least num_values distinct values have been seen. The size is not separately
    * stored, because that would take extra space.
    */
-  protected int /*@Nullable*/ [] values;
+  protected int /*@Nullable*/ /*@MinLen(1)*/ [] values;
   /** The number of active elements (equivalently, the first unused index). */
   // Not exactly @IndexOrHigh("values"), because the values field can get
   // nulled.  But that should be permitted by the type system.

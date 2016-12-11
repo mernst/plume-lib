@@ -164,6 +164,8 @@ endif
 ## For testing a single checker, replace the above by:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
 JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -AsuppressWarnings=method.evaluation.exception -processor org.checkerframework.checker.index.IndexChecker
+## To see the most frequent causes of warnings, run:
+# grep -n -i "index TODO: issue #" src/plume/* | sed 's/.*#/#/' | sort | uniq -c | sort -nr
 
 ## For testing a single file:
 # JAVA_FILES = src/plume/RegexUtil.java
