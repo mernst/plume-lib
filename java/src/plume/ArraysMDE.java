@@ -501,7 +501,7 @@ public final class ArraysMDE {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
-    for (int i = minindex; i < indexlimit; i++) {
+    for (int i = minindex; i < indexlimit; i++) { // index TODO: issue #60
       if (elt.equals(a[i])) {
         return i;
       }
@@ -594,7 +594,7 @@ public final class ArraysMDE {
       /*@IndexFor("#1")*/ int minindex,
       /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
-      if (elt == a[i]) {
+      if (elt == a[i]) { // index TODO: issue #60
         return i;
       }
     }
@@ -701,7 +701,7 @@ public final class ArraysMDE {
   public static int indexOf(
       int[] a, int elt, /*@IndexFor("#1")*/ int minindex, /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
-      if (elt == a[i]) {
+      if (elt == a[i]) { // index TODO: issue #60
         return i;
       }
     }
@@ -723,7 +723,7 @@ public final class ArraysMDE {
   public static int indexOf(
       long[] a, long elt, /*@IndexFor("#1")*/ int minindex, /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
-      if (elt == a[i]) {
+      if (elt == a[i]) { // index TODO: issue #60
         return i;
       }
     }
@@ -786,7 +786,7 @@ public final class ArraysMDE {
       /*@IndexFor("#1")*/ int minindex,
       /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
-      if (elt == a[i]) {
+      if (elt == a[i]) { // index TODO: issue #60
         return i;
       }
     }
