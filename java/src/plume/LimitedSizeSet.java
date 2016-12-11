@@ -46,7 +46,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   }
 
   public void add(T elt) {
-    if (values == null) {
+    if (repNulled()) {
       return;
     }
 
@@ -99,7 +99,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
   /*@Pure*/
   public boolean contains(T elt) {
-    if (values == null) {
+    if (repNulled()) {
       throw new UnsupportedOperationException();
     }
     for (int i = 0; i < num_values; i++) {
@@ -130,7 +130,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   public int max_size() {
-    if (values == null) {
+    if (repNulled()) {
       return num_values;
     } else {
       return values.length + 1;
@@ -181,10 +181,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("nullness") // bug in flow; to fix later
   /*@SideEffectFree*/
   public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
-    return ("[size="
-        + size()
-        + "; "
-        + ((values == null) ? "null" : ArraysMDE.toString(values))
-        + "]");
+    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }
 }
