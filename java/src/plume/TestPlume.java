@@ -32,6 +32,7 @@ import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 // run like this:
@@ -2085,7 +2086,7 @@ public final class TestPlume {
             }
           }
           @SuppressWarnings({"lowerbound", "upperbound"}) // if the argument to IotaIterator is @IndexFor("a"), so is every output
-          List</*@IndexFor("totals")*/ Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
+          List</*(at)IndexFor("totals")*/ Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r); // index TODO: issue #65
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
               if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
