@@ -495,9 +495,9 @@ public final class ArraysMDE {
   /*@Pure*/
   public static <T> int indexOf(
       T[] a,
-      /*@Nullable*/ Object elt, /*@IndexFor("a")*/
-      int minindex, /*@IndexOrHigh("a")*/
-      int indexlimit) {
+      /*@Nullable*/ Object elt,
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -541,8 +541,8 @@ public final class ArraysMDE {
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
       Object elt,
-      /*@IndexFor("a")*/ int minindex,
-      /*@IndexOrHigh("a")*/ int indexlimit) {
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -591,8 +591,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       /*@PolyNull*/ Object[] a,
       /*@Nullable*/ Object elt,
-      /*@IndexFor("a")*/ int minindex,
-      /*@IndexOrHigh("a")*/ int indexlimit) {
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -638,8 +638,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      /*@IndexFor("a")*/ int minindex,
-      /*@IndexOrHigh("a")*/ int indexlimit) {
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
         return i;
@@ -699,7 +699,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static int indexOf(
-      int[] a, int elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
+      int[] a, int elt, /*@IndexFor("#1")*/ int minindex, /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -721,7 +721,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static int indexOf(
-      long[] a, long elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
+      long[] a, long elt, /*@IndexFor("#1")*/ int minindex, /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -782,9 +782,9 @@ public final class ArraysMDE {
   /*@Pure*/
   public static int indexOf(
       boolean[] a,
-      boolean elt, /*@IndexFor("a")*/
-      int minindex, /*@IndexOrHigh("a")*/
-      int indexlimit) {
+      boolean elt,
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -2329,7 +2329,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] < a[i]) {    // index TODO: issue #48
+      if (a[i + 1] < a[i]) { // index TODO: issue #48
         return false;
       }
     }
@@ -2345,7 +2345,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] < a[i]) {    // index TODO: issue #48
+      if (a[i + 1] < a[i]) { // index TODO: issue #48
         return false;
       }
     }
@@ -2361,7 +2361,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted_descending(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] > a[i]) {    // index TODO: issue #48
+      if (a[i + 1] > a[i]) { // index TODO: issue #48
         return false;
       }
     }
@@ -2377,7 +2377,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted_descending(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] > a[i]) {    // index TODO: issue #48
+      if (a[i + 1] > a[i]) { // index TODO: issue #48
         return false;
       }
     }
@@ -2752,7 +2752,7 @@ public final class ArraysMDE {
       if (inner == -1) {
         result[i] = -1;
       } else {
-        result[i] = b[inner];   // index TODO: issue #60
+        result[i] = b[inner]; // index TODO: issue #60
       }
     }
     return result;
@@ -3158,7 +3158,7 @@ public final class ArraysMDE {
         return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
-        if (a1[i] != a2[i]) {   // index TODO: issue #49
+        if (a1[i] != a2[i]) { // index TODO: issue #49
           return ((a1[i] > a2[i]) ? 1 : -1);
         }
       }
@@ -3239,7 +3239,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         T elt1 = a1[i];
-        T elt2 = a2[i];     // index TODO: issue #49
+        T elt2 = a2[i]; // index TODO: issue #49
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;
@@ -3297,7 +3297,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         Object elt1 = a1[i];
-        Object elt2 = a2[i];     // index TODO: issue #49
+        Object elt2 = a2[i]; // index TODO: issue #49
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;

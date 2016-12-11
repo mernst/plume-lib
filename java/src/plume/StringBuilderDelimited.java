@@ -68,22 +68,22 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
-  public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq, /*@IndexFor("#1")*/ int start, /*@IndexFor("#1")*/ int end) {
+  public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq, /*@IndexFor("#1")*/ int start, /*@IndexFor("#1")*/ int end) { // index TODO: issue #63
     appendDelimiter();
     delegate.append(csq, start, end);
     return this;
   }
 
-  public char charAt(/*@IndexFor("this")*/ int index) {
+  public char charAt(/*@IndexFor("this")*/ int index) { // index TODO: issue #63
     return delegate.charAt(index);
   }
 
   /*@Pure*/
-  public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
+  public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) { // index TODO: issue #63
     return delegate.length();
   }
 
-  public CharSequence subSequence(/*@IndexFor("this")*/ int start, /*@IndexFor("this")*/ int end) {
+  public CharSequence subSequence(/*@IndexFor("this")*/ int start, /*@IndexFor("this")*/ int end) { // index TODO: issue #63
     return delegate.subSequence(start, end);
   }
 

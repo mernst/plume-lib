@@ -28,6 +28,7 @@ import org.junit.Test;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
@@ -211,7 +212,7 @@ public final class TestPlume {
       assert ArraysMDE.indexOf(a, new Integer(10)) == -1;
       assert ArraysMDE.indexOf(a, new Integer(20)) == -1;
       assert ArraysMDE.indexOf(a, (Object) null) == -1;
-      assert ArraysMDE.indexOf(a, (Object) null, 1, 5) == -1;
+      assert ArraysMDE.indexOf(a, (Object) null, 1, 5) == -1; // index TODO: issue #14
 
       assert ArraysMDE.indexOfEq(a, new Integer(-1)) == -1;
       assert ArraysMDE.indexOfEq(a, new Integer(0)) == -1;
@@ -220,7 +221,7 @@ public final class TestPlume {
       assert ArraysMDE.indexOfEq(a, new Integer(10)) == -1;
       assert ArraysMDE.indexOfEq(a, new Integer(20)) == -1;
       assert ArraysMDE.indexOfEq(a, (Object) null) == -1;
-      assert ArraysMDE.indexOfEq(a, (Object) null, 1, 5) == -1;
+      assert ArraysMDE.indexOfEq(a, (Object) null, 1, 5) == -1; // index TODO: issue #14
       assert ArraysMDE.indexOfEq(a, a[0]) == 0;
       assert ArraysMDE.indexOfEq(a, a[7]) == 7;
       assert ArraysMDE.indexOfEq(a, a[9]) == 9;
@@ -910,7 +911,7 @@ public final class TestPlume {
 
         Random random_gen = new Random();
 
-        int[][] arrays = new int[100][];
+        int /*@ArrayLen(100)*/[]/*@ArrayLen(10)*/[] arrays = new int[100][];
         for (int i = 0; i < arrays.length; i++) {
           int[] a = new int[10];
           for (int j = 0; j < a.length; j++) {
@@ -1576,7 +1577,7 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
+  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[]/*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -1608,8 +1609,8 @@ public final class TestPlume {
       if (args.length != 2) {
         System.err.println("Needs 2 arguments, got " + args.length);
       }
-      int limit = Integer.parseInt(args[0]);
-      int period = Integer.parseInt(args[1]);
+      int limit = Integer.parseInt(args[0]); // index TODO: issue #64
+      int period = Integer.parseInt(args[1]); // index TODO: issue #64
       for (int i = 0; i < limit; i++) {
         System.out.printf("out%d ", i);
         System.err.printf("err%d ", i);
@@ -2083,8 +2084,8 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          // if the argument to IotaIterator is @IndexFor("a"), so is every output.
-          List<Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
+          @SuppressWarnings({"lowerbound", "upperbound"}) // if the argument to IotaIterator is @IndexFor("a"), so is every output
+          List</*@IndexFor("totals")*/ Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
               if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
@@ -3281,10 +3282,10 @@ public final class TestPlume {
   public void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
-    String[] sa = UtilMDE.splitLines(str);
+    @SuppressWarnings("value")  // literal string has 11 lines
+    String /*@ArrayLen(11)*/ [] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
-    assert sa.length == 11 : "@AssumeAssertion(index)";
     assert sa[0].equals("one");
     assert sa[1].equals("two");
     assert sa[2].equals("three");
