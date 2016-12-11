@@ -2525,11 +2525,15 @@ public final class TestPlume {
     assert c1.getNumberOfPrintedBytes() == 9;
     assert c1.getNumberOfWrittenBytes() == 22;
     assert c1.getNumberOfPrintedChars() == 9;
+    c1.write("A long string we will print part of", 5, 10);
+    assert c1.getNumberOfPrintedBytes() == 9;
+    assert c1.getNumberOfWrittenBytes() == 32;
+    assert c1.getNumberOfPrintedChars() == 9;
     c1.println("a b");
     String lineSep = System.getProperty("line.separator");
     int ls_len = lineSep.length();
     assert c1.getNumberOfPrintedBytes() == (12 + ls_len);
-    assert c1.getNumberOfWrittenBytes() == (28);
+    assert c1.getNumberOfWrittenBytes() == (38);
     assert c1.getNumberOfPrintedChars() == (12 + ls_len);
     c1.print((String) null);
     c1.print((Object) null);

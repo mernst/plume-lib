@@ -338,12 +338,12 @@ public class OptionsDoclet {
           reporter.printError("-docfile option specified twice");
           return false;
         }
-        File f = new File(os[1]);
+        docFile = os[1];
+        File f = new File(docFile);
         if (!f.exists()) {
-          reporter.printError("-docfile file not found: " + os[1]);
+          reporter.printError("-docfile file not found: " + docFile);
           return false;
         }
-        docFile = os[1];
         hasDocFile = true;
       }
       @SuppressWarnings("index") // Javadoc argument processing: -docfile takes one argument
@@ -371,8 +371,9 @@ public class OptionsDoclet {
           reporter.printError("-format option specified twice");
           return false;
         }
-        if (!os[1].equals("javadoc") && !os[1].equals("html")) {
-          reporter.printError("unrecognized output format: " + os[1]);
+        String format = os[1];
+        if (!format.equals("javadoc") && !format.equals("html")) {
+          reporter.printError("unrecognized output format: " + format);
           return false;
         }
         hasFormat = true;
