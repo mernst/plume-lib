@@ -885,7 +885,7 @@ public class MultiVersionControl {
       if (pathsSection != null) {
         repository = pathsSection.get("default");
         if (repository != null && repository.endsWith("/")) {
-          repository = repository.substring(0, repository.length() - 1);
+          repository = repository.substring(0, repository.length() - 1); // index TODO: issue #56
         }
       }
     }
@@ -1694,7 +1694,7 @@ public class MultiVersionControl {
    * but don't want them to simply hang.
    */
   static class StreamOfNewlines extends InputStream {
-    public int read() {
+    public /*@GTENegativeOne*/ int read() {
       return (int) '\n';
     }
   }

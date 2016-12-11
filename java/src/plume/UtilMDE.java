@@ -580,7 +580,7 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, sans_array.length() - 2);
+      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -653,7 +653,7 @@ public final class UtilMDE {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
-    String comma_sep_args = arglist.substring(1, arglist.length() - 1);
+    String comma_sep_args = arglist.substring(1, arglist.length() - 1); // index TODO: issue #56
     StringTokenizer args_tokenizer = new StringTokenizer(comma_sep_args, ",", false);
     while (args_tokenizer.hasMoreTokens()) {
       @SuppressWarnings("signature") // substring
@@ -698,7 +698,7 @@ public final class UtilMDE {
     }
     String result;
     if (classname.startsWith("L") && classname.endsWith(";")) {
-      result = classname.substring(1, classname.length() - 1);
+      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56
     } else {
       result = primitiveClassesFromJvm.get(classname);
       if (result == null) {
@@ -2208,7 +2208,7 @@ public final class UtilMDE {
     int lastend = 0;
     int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
-      result.append(target.substring(lastend, pos));
+      result.append(target.substring(lastend, pos)); // index TODO: issue #58
       result.append(newStr);
       lastend = pos + oldStr.length();
     }
@@ -2699,7 +2699,7 @@ public final class UtilMDE {
       }
       return buf.toString() + s;
     } else {
-      return s.substring(0, length);
+      return s.substring(0, length); // index TODO: issue #59
     }
   }
 
@@ -2719,7 +2719,7 @@ public final class UtilMDE {
       }
       return buf.toString();
     } else {
-      return s.substring(0, length);
+      return s.substring(0, length); // index TODO: issue #59
     }
   }
 

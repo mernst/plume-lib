@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /*>>>
+import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
@@ -90,7 +91,7 @@ public final class FileCompiler {
    * @param timeLimit the maximum permitted compilation time, in msec
    */
   public FileCompiler(/*@MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
-    this(compiler.toArray(new String[0]), timeLimit);
+    this(compiler.toArray(new String[0]), timeLimit); // index TODO: issue #54
   }
 
   /**
@@ -101,6 +102,7 @@ public final class FileCompiler {
    *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
+  @SuppressWarnings("minlen")          // issue #54: List.toArray
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
     this(compiler.trim().split(" +"), timeLimit);
   }
@@ -177,7 +179,7 @@ public final class FileCompiler {
     String[] command = new String[num_files + compiler.length];
     System.arraycopy(compiler, 0, command, 0, compiler.length);
     for (int i = 0; i < num_files; i++) {
-      command[i + compiler.length] = filenames.get(i);
+      command[i + compiler.length] = filenames.get(i); // index TODO: issue #50
     }
 
     // System.out.println ("\nexecuting compile command: " + command);

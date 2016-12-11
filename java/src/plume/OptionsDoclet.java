@@ -322,7 +322,7 @@ public class OptionsDoclet {
    */
   @SuppressWarnings(
       "index") // need @MinLen (dependently): options is an array of 1- or 2-element arrays (none is empty)
-  public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
+  public static boolean validOptions(String[] /*@MinLen(1)*/ [] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
     boolean hasDestDir = false;
@@ -346,6 +346,7 @@ public class OptionsDoclet {
         docFile = os[1];
         hasDocFile = true;
       }
+      @SuppressWarnings("index") // Javadoc argument processing: -docfile takes one argument
       if (opt.equals("-outfile")) {
         if (hasOutFile) {
           reporter.printError("-outfile option specified twice");
@@ -402,7 +403,7 @@ public class OptionsDoclet {
    */
   @SuppressWarnings(
       "index") // need @MinLen (dependently): options is an array of 1- or 2-element arrays (none is empty)
-  public void setOptions(String[][] options) {
+  public void setOptions(String[] /*@MinLen(1)*/ [] options) {
     String outFilename = null;
     File destDir = null;
     for (int oi = 0; oi < options.length; oi++) {

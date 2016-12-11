@@ -36,7 +36,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    */
   protected int /*@Nullable*/ [] values;
   /** The number of active elements (equivalently, the first unused index). */
-  /*@NonNegative*/ int num_values;
+  // Not exactly @IndexOrHigh("values"), because the values field can get
+  // nulled.  But that should be permitted by the type system.
+  /*@IndexOrHigh("values")*/ int num_values;
 
   /**
    * Create a new LimitedSizeIntSet that can hold max_values values.

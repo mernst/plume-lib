@@ -87,7 +87,7 @@ public final class RegexUtil {
      * @param index the approximate index in the pattern of the error, or {@code -1} if the index is
      *     not known
      */
-    public CheckedPatternSyntaxException(String desc, String regex, int index) {
+    public CheckedPatternSyntaxException(String desc, String regex, /*@GTENegativeOne*/ int index) {
       this(new PatternSyntaxException(desc, regex, index));
     }
 

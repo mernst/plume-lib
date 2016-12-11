@@ -1291,7 +1291,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (!Objects.equals(sub[i], a[a_offset + i])) {
+      if (!Objects.equals(sub[i], a[a_offset + i])) { // index TODO: issue #50
         return false;
       }
     }
@@ -1307,7 +1307,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
@@ -1317,7 +1316,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (sub[i] != a[a_offset + i]) {
+      if (sub[i] != a[a_offset + i]) { // index TODO: issue #50
         return false;
       }
     }
@@ -1334,7 +1333,6 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
@@ -1344,7 +1342,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (!Objects.equals(sub.get(i), a[a_offset + i])) {
+      if (!Objects.equals(sub.get(i), a[a_offset + i])) { // index TODO: issue #50
         return false;
       }
     }
@@ -1360,7 +1358,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
@@ -1370,7 +1367,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (sub.get(i) != a[a_offset + i]) {
+      if (sub.get(i) != a[a_offset + i]) { // index TODO: issue #50
         return false;
       }
     }
@@ -1490,7 +1487,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1499,7 +1495,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (sub[i] != a[a_offset + i]) {
+      if (sub[i] != a[a_offset + i]) { // index TODO: issue #50
         return false;
       }
     }
@@ -1515,7 +1511,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1524,7 +1519,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (sub[i] != a[a_offset + i]) {
+      if (sub[i] != a[a_offset + i]) { // index TODO: issue #50
         return false;
       }
     }
@@ -1540,7 +1535,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1549,7 +1543,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (sub[i] != a[a_offset + i]) {
+      if (sub[i] != a[a_offset + i]) { // index TODO: issue #50
         return false;
       }
     }
@@ -1565,7 +1559,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.length - a_offset;
@@ -1574,7 +1567,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub_len; i++) {
-      if (sub[i] != a[a_offset + i]) {
+      if (sub[i] != a[a_offset + i]) { // index TODO: issue #50
         return false;
       }
     }
@@ -1642,7 +1635,6 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
-  @SuppressWarnings("index") // arithmetic: offset
   public static <T> T[] concat(T /*@Nullable*/ [] a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -1662,7 +1654,7 @@ public final class ArraysMDE {
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
         for (int i = 0; i < b.size(); i++) {
-          result[i + a.length] = b.get(i);
+          result[i + a.length] = b.get(i); // index TODO: issue #50
         }
         return result;
       }
@@ -1678,7 +1670,6 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
-  @SuppressWarnings("index") // arithmetic: offset
   public static <T> T[] concat(/*@Nullable*/ List<T> a, T /*@Nullable*/ [] b) {
     if (a == null) {
       if (b != null) {
@@ -1697,7 +1688,7 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i = 0; i < a.size(); i++) {
-          result[i] = a.get(i);
+          result[i] = a.get(i); // index TODO: issue #44
         }
         System.arraycopy(b, 0, result, a.size(), b.length);
         return result;
@@ -1733,11 +1724,11 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i = 0; i < a.size(); i++) {
-          result[i] = a.get(i);
+          result[i] = a.get(i); // index TODO: issue #44
         }
         // System.arraycopy(b, 0, result, a.length, b.length);
         for (int i = 0; i < b.size(); i++) {
-          result[i + a.size()] = b.get(i);
+          result[i + a.size()] = b.get(i); // index TODO: issue #50
         }
         return result;
       }
@@ -2338,7 +2329,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] < a[i]) {
+      if (a[i + 1] < a[i]) {    // index TODO: issue #48
         return false;
       }
     }
@@ -2354,7 +2345,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] < a[i]) {
+      if (a[i + 1] < a[i]) {    // index TODO: issue #48
         return false;
       }
     }
@@ -2370,7 +2361,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted_descending(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] > a[i]) {
+      if (a[i + 1] > a[i]) {    // index TODO: issue #48
         return false;
       }
     }
@@ -2386,7 +2377,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted_descending(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] > a[i]) {
+      if (a[i + 1] > a[i]) {    // index TODO: issue #48
         return false;
       }
     }
@@ -2727,7 +2718,7 @@ public final class ArraysMDE {
    * @throws IllegalArgumentException if a value of a is outside of arange
    * @exception UnsupportedOperationException when the function is not invertible
    */
-  public static int[] fn_inverse(int[] a, int arange) {
+  public static int[] fn_inverse(int[] a, /*@Positive*/ int arange) {
     int[] result = new int[arange];
     Arrays.fill(result, -1);
     for (int i = 0; i < a.length; i++) {
@@ -2754,7 +2745,7 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
-  public static int[] fn_compose(/*@NonNegative*/ int[] a, int[] b) {
+  public static int[] fn_compose(/*@IndexFor("#2")*/ int[] a, int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       int inner = a[i];
@@ -3163,13 +3154,11 @@ public final class ArraysMDE {
       if (a1 == a2) {
         return 0;
       }
-      int tmp;
-      tmp = a1.length - a2.length;
-      if (tmp != 0) {
-        return tmp;
+      if (a1.length != a2.length) {
+        return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
-        if (a1[i] != a2[i]) {
+        if (a1[i] != a2[i]) {   // index TODO: issue #49
           return ((a1[i] > a2[i]) ? 1 : -1);
         }
       }
@@ -3254,7 +3243,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         T elt1 = a1[i];
-        T elt2 = a2[i];
+        T elt2 = a2[i];     // index TODO: issue #49
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;
@@ -3314,7 +3303,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         Object elt1 = a1[i];
-        Object elt2 = a2[i];
+        Object elt2 = a2[i];     // index TODO: issue #49
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;

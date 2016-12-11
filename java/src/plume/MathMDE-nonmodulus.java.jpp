@@ -26,7 +26,7 @@ The correct way to build the system is to run 'make'.
     INT min = nums[0];
     INT max = nums[nums.length-1];
     INT[] result = new INT[CastToInt(max - min + 1 - nums.length)];
-    int result_index = 0;
+    /*@IndexFor("result")*/ int result_index = 0;
     INT val = min;
     for (int i=0; i<nums.length; i++) {
       while (val < nums[i]) {
@@ -62,7 +62,7 @@ The correct way to build the system is to run 'make'.
    */
   static final class MissingNumbersIteratorINT implements Iterator<INTEGER> {
     // Exactly one of nums and nums_itor is non-null.
-    INT /*@MonotonicNonNull*/ [] nums;
+    INT /*@MonotonicNonNull*/ /*@MinLen(1)*/ [] nums;
     /*@MonotonicNonNull*/ Iterator<INTEGER> nums_itor;
     INT current_nonmissing;
     INT current_missing;
@@ -84,14 +84,14 @@ The correct way to build the system is to run 'make'.
         nums = nums_copy;
       }
       Arrays.sort(nums);
-      current_index = 0;
+      this.nums = nums;
+      current_index = 0;        // index TODO: issue #57
       current_nonmissing = nums[current_index];
       if (add_ends) {
         current_missing = current_nonmissing - 1;
       } else {
         current_missing = current_nonmissing;
       }
-      this.nums = nums;
     }
 
     // The argument iterator must return the Integers in sorted order

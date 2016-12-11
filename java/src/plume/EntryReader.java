@@ -295,22 +295,22 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
 
     @Override
-    public int read() {
+    public /*@GTENegativeOne*/ int read() {
       throw new Error("DummyReader");
     }
 
     @Override
-    public int read(char[] cbuf) {
+    public /*@GTENegativeOne*/ int read(char[] cbuf) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) {
+    public /*@GTENegativeOne*/ int read(char[] cbuf, int off, int len) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public int read(CharBuffer target) {
+    public /*@GTENegativeOne*/ int read(CharBuffer target) {
       throw new Error("DummyReader");
     }
 
@@ -800,12 +800,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
   /** Read a single character. */
   @Override
-  public int read() {
+  public /*@GTENegativeOne*/ int read() {
     throw new Error("not yet implemented");
   }
   /** Read characters into a portion of an array. */
   @Override
-  public int read(char[] cbuf, int off, int len) {
+  public /*@GTENegativeOne*/ int read(char[] cbuf, int off, int len) {
     throw new Error("not yet implemented");
   }
   /** Reset the stream to the most recent mark. */
