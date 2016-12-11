@@ -52,7 +52,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("index") // num_values may or may not be an index
   public void add(T elt) {
-    if (values == null) {
+    if (repNulled()) {
       return;
     }
 
@@ -60,8 +60,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       return;
     }
     if (num_values == values.length) {
-      values = null;
-      num_values++;
+      nullRep();
       return;
     }
     values[num_values] = elt;
@@ -78,24 +77,23 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       return;
     }
     if (s.repNulled()) {
-      int values_length = values.length;
       // We don't know whether the elements of this and the argument were
       // disjoint.  There might be anywhere from max(size(), s.size()) to
       // (size() + s.size()) elements in the resulting set.
-      if (s.size() > values_length) {
-        num_values = values_length + 1;
-        values = null;
+      if (s.size() > values.length) {
+        nullRep();
         return;
       } else {
         throw new Error(
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
+    // s.values isn't modified by the call to add.  Until
+    // https://github.com/typetools/checker-framework/issues/984 is fixed,
+    // use a local variable which the Checker Framework can tell is not reassigned.
+    T[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
-      assert s.values != null
-          : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
-      assert s.values[i] != null : "@AssumeAssertion(nullness): used portion of array";
-      add(s.values[i]);
+      add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
       }
@@ -108,7 +106,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   })
   /*@Pure*/
   public boolean contains(T elt) {
-    if (values == null) {
+    if (repNulled()) {
       throw new UnsupportedOperationException();
     }
     for (int i = 0; i < num_values; i++) {
@@ -139,17 +137,31 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   public /*@Positive*/ int max_size() {
-    if (values == null) {
+    if (repNulled()) {
       return num_values;
     } else {
       return values.length + 1;
     }
   }
 
+  /**
+   * Returns true if more elements have been added than this set can contain (which is the integer
+   * that was passed to the constructor when creating this set).
+   */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
   public boolean repNulled() {
     return values == null;
+  }
+
+  /**
+   * Null the representation, which happens when a client tries to add more elements to this set
+   * than it can contain (which is the integer that was passed to the constructor when creating this
+   * set).
+   */
+  private void nullRep() {
+    num_values = values.length + 1;
+    values = null;
   }
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
@@ -190,10 +202,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("nullness") // bug in flow; to fix later
   /*@SideEffectFree*/
   public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
-    return ("[size="
-        + size()
-        + "; "
-        + ((values == null) ? "null" : ArraysMDE.toString(values))
-        + "]");
+    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }
 }
