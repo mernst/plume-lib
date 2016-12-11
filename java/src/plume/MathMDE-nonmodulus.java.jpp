@@ -35,9 +35,8 @@ The correct way to build the system is to run 'make'.
       }
     }
     INT[] resultArray = new INT[resultList.size()];
-    int i = 0;
-    for (INTEGER e : resultList) {
-      resultArray[i++] = e.INTValue();
+    for (int i = 0; i < resultArray.length; i++) {
+      resultArray[i] = resultList.get(i);
     }  
     return resultArray;
   }
@@ -100,8 +99,8 @@ The correct way to build the system is to run 'make'.
         current_missing = current_nonmissing;
       }
       this.nums_itor = nums_itor;
-      @SuppressWarnings("lowerbound") // unused
-      /*@NonNegative*/ int unused = Integer.MIN_VALUE;
+      @SuppressWarnings({"lowerbound", "upperbound"}) // unused
+      /*@IndexFor("nums")*/ int unused = Integer.MIN_VALUE;
       current_index = unused;
     }
 

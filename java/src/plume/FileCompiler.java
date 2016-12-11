@@ -102,7 +102,7 @@ public final class FileCompiler {
    *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  @SuppressWarnings("minlen")          // issue #54: List.toArray
+  @SuppressWarnings("minlen") // issue #54: List.toArray
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
     this(compiler.trim().split(" +"), timeLimit);
   }

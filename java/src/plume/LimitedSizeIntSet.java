@@ -36,7 +36,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * If null, then at least num_values distinct values have been seen. The size is not separately
    * stored, because that would take extra space.
    */
-  protected int /*@Nullable*/ /*@MinLen(1)*/ [] values;
+  protected int /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
   // Not exactly @IndexOrHigh("values"), because the values field can get
   // nulled.  But that should be permitted by the type system.
@@ -67,7 +67,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
       nullRep();
       return;
     }
-    values[num_values] = elt;   // index TODO: issue #59
+    values[num_values] = elt; // index TODO: issue #59
     num_values++;
   }
 
@@ -96,7 +96,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     // https://github.com/typetools/checker-framework/issues/984 is fixed,
     // use a local variable which the Checker Framework can tell is not reassigned.
     int[] svalues = s.values;
-    for (int i = 0; i < s.size(); i++) {
+    for (int i = 0; i < svalues.length; i++) {
       add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
@@ -138,6 +138,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
+  @SuppressWarnings("lowerbound") // num_values is positive when rep is nulled
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -161,8 +162,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
+  @SuppressWarnings("upperbound") // nulling the rep, after which no indexing will occur
   private void nullRep() {
-    num_values = values.length + 1;
+    num_values = values.length;
     values = null;
   }
 
@@ -189,7 +191,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
    * @return a LimitedSizeIntSet that merges the elements of slist
    */
-  public static LimitedSizeIntSet merge(/*@Positive*/ int max_values, List<LimitedSizeIntSet> slist) {
+  public static LimitedSizeIntSet merge(
+      /*@Positive*/ int max_values, List<LimitedSizeIntSet> slist) {
     LimitedSizeIntSet result = new LimitedSizeIntSet(max_values);
     for (LimitedSizeIntSet s : slist) {
       result.addAll(s);

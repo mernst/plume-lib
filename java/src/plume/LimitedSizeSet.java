@@ -30,7 +30,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * If null, then at least num_values distinct values have been seen. The size is not separately
    * stored, because that would take extra space.
    */
-  protected /*@Nullable*/ T /*@Nullable*/ /*@MinLen(1)*/ [] values;
+  protected /*@Nullable*/ T /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
   // Not exactly @IndexOrHigh("values"), because the values field can get
   // nulled.  But that should be permitted by the type system.
@@ -63,7 +63,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       nullRep();
       return;
     }
-    values[num_values] = elt;
+    values[num_values] = elt; // index TODO: issue #59
     num_values++;
   }
 
@@ -92,7 +92,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     // https://github.com/typetools/checker-framework/issues/984 is fixed,
     // use a local variable which the Checker Framework can tell is not reassigned.
     T[] svalues = s.values;
-    for (int i = 0; i < s.size(); i++) {
+    for (int i = 0; i < svalues.length; i++) {
       add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
@@ -160,8 +160,9 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * set).
    */
   private void nullRep() {
-    num_values = values.length + 1;
+    int values_length = values.length;
     values = null;
+    num_values = values_length + 1;
   }
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)

@@ -501,8 +501,8 @@ public final class ArraysMDE {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
-    for (int i = minindex; i < indexlimit; i++) { // index TODO: issue #60
-      if (elt.equals(a[i])) {
+    for (int i = minindex; i < indexlimit; i++) {
+      if (elt.equals(a[i])) { // index TODO: issue #60
         return i;
       }
     }

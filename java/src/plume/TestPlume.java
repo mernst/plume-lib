@@ -912,7 +912,7 @@ public final class TestPlume {
 
         Random random_gen = new Random();
 
-        int /*@ArrayLen(100)*/[]/*@ArrayLen(10)*/[] arrays = new int[100][];
+        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100][];
         for (int i = 0; i < arrays.length; i++) {
           int[] a = new int[10];
           for (int j = 0; j < a.length; j++) {
@@ -1578,7 +1578,8 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[]/*@ArrayLen(2)*/[] ints) {
+  public static void compareOrderedPairIterator(
+      OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -2085,8 +2086,12 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          @SuppressWarnings({"lowerbound", "upperbound"}) // if the argument to IotaIterator is @IndexFor("a"), so is every output
-          List</*(at)IndexFor("totals")*/ Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r); // index TODO: issue #65
+          @SuppressWarnings({
+            "lowerbound",
+            "upperbound"
+          }) // if the argument to IotaIterator is @IndexFor("a"), so is every output
+          List</*(at)IndexFor("totals")*/ Integer> chosen =
+              UtilMDE.randomElements(new IotaIterator(itor_size), i, r); // index TODO: issue #65
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
               if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
@@ -3283,8 +3288,8 @@ public final class TestPlume {
   public void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
-    @SuppressWarnings("value")  // literal string has 11 lines
-    String /*@ArrayLen(11)*/ [] sa = UtilMDE.splitLines(str);
+    @SuppressWarnings("value") // literal string has 11 lines
+    String /*@ArrayLen(11)*/[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
     assert sa[0].equals("one");
