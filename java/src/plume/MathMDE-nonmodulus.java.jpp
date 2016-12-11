@@ -13,40 +13,33 @@ The correct way to build the system is to run 'make'.
    * but in the argument's range; that is, bigger than its argument's
    * minimum value and smaller than its argument's maximum value.
    * The result contains no duplicates and is in order.
-   * @param nums numbers to be excluded; length &gt; 0
+   * @param nums numbers to be excluded; length &gt; 0; may contain duplicates
    * @return the set: [min(nums)..max(nums)] - nums
    */
   public static INT[] missing_numbers(INT[] nums) {
-    { // avoid modifying parameter
-      INT[] nums_copy = new INT[nums.length];
-      System.arraycopy(nums, 0, nums_copy, 0, nums.length);
-      nums = nums_copy;
-    }
+    // avoid modifying parameter
+    nums = nums.clone();
     Arrays.sort(nums);
     INT min = nums[0];
     INT max = nums[nums.length-1];
-    INT[] result = new INT[CastToInt(max - min + 1 - nums.length)];
-    int result_index = 0;
+    int sizeEstimate = CastToInt(max - min + 1 - nums.length);
+    List<INTEGER> resultList = new ArrayList<INTEGER>(sizeEstimate < 1 ? 1 : sizeEstimate);
     INT val = min;
     for (int i=0; i<nums.length; i++) {
       while (val < nums[i]) {
-        result[result_index] = val;
-        result_index++;
+        resultList.add(val);
         val++;
       }
       if (val == nums[i]) {
         val++;
       }
     }
-    if (result_index == result.length) {
-      return result;
-    } else {
-      // There were duplicates in the nums array, so we didn't fill up
-      // the result array.
-      INT[] new_result = new INT[result_index];
-      System.arraycopy(result, 0, new_result, 0, result_index);
-      return new_result;
-    }
+    INT[] resultArray = new INT[resultList.size()];
+    int i = 0;
+    for (INTEGER e : resultList) {
+      resultArray[i++] = e.INTValue();
+    }  
+    return resultArray;
   }
 
 
