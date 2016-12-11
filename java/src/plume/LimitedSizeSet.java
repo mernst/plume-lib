@@ -54,8 +54,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       return;
     }
     if (num_values == values.length) {
-      values = null;
-      num_values++;
+      nullRep();
       return;
     }
     values[num_values] = elt;
@@ -72,13 +71,11 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       return;
     }
     if (s.repNulled()) {
-      int values_length = values.length;
       // We don't know whether the elements of this and the argument were
       // disjoint.  There might be anywhere from max(size(), s.size()) to
       // (size() + s.size()) elements in the resulting set.
-      if (s.size() > values_length) {
-        num_values = values_length + 1;
-        values = null;
+      if (s.size() > values.length) {
+        nullRep();
         return;
       } else {
         throw new Error(
@@ -138,10 +135,24 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * Returns true if more elements have been added than this set can contain (which is the integer
+   * that was passed to the constructor when creating this set).
+   */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
   public boolean repNulled() {
     return values == null;
+  }
+
+  /**
+   * Null the representation, which happens when a client tries to add more elements to this set
+   * than it can contain (which is the integer that was passed to the constructor when creating this
+   * set).
+   */
+  private void nullRep() {
+    num_values = values.length + 1;
+    values = null;
   }
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
