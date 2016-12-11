@@ -2640,7 +2640,7 @@ public final class ArraysMDE {
    * Return the inverse of the given function, which is represented as an array.
    *
    * @param a an array representing a function from [0..a.length) to [0..arange); each element of a
-   *     is between 0 and arange inclusive
+   *     is between 0 (inclusive) and arange (exclusive)
    * @param arange length of the argument's range and the result's domain
    * @return function from [0..arange) to [0..a.length) that is the inverse of a
    * @throws IllegalArgumentException if a value of a is outside of arange
