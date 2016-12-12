@@ -143,7 +143,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
-  public boolean repNulled() {
+  public boolean repNulled(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return values == null;
   }
 
@@ -153,6 +153,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * set).
    */
   private void nullRep() {
+    if (repNulled()) {
+      return;
+    }
     num_values = values.length + 1;
     values = null;
   }
