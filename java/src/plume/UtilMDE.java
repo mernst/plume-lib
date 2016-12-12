@@ -2691,7 +2691,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return s truncated or padded to length characters
    */
-  public static String lpad(String s, int length) {
+  public static String lpad(String s, /*@NonNegative*/ int length) {
     if (s.length() < length) {
       StringBuffer buf = new StringBuffer();
       for (int i = s.length(); i < length; i++) {
@@ -2699,7 +2699,7 @@ public final class UtilMDE {
       }
       return buf.toString() + s;
     } else {
-      return s.substring(0, length); // index TODO: issue #59
+      return s.substring(0, length);
     }
   }
 
@@ -2711,7 +2711,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return s truncated or padded to length characters
    */
-  public static String rpad(String s, int length) {
+  public static String rpad(String s, /*@NonNegative*/ int length) {
     if (s.length() < length) {
       StringBuffer buf = new StringBuffer(s);
       for (int i = s.length(); i < length; i++) {
@@ -2719,7 +2719,7 @@ public final class UtilMDE {
       }
       return buf.toString();
     } else {
-      return s.substring(0, length); // index TODO: issue #59
+      return s.substring(0, length);
     }
   }
 
