@@ -91,8 +91,9 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     // s.values isn't modified by the call to add.  Until
     // https://github.com/typetools/checker-framework/issues/984 is fixed,
     // use a local variable which the Checker Framework can tell is not reassigned.
-    T[] svalues = s.values;
-    for (int i = 0; i < svalues.length; i++) {
+    /*@Nullable*/ T[] svalues = s.values;
+    for (int i = 0; i < s.size(); i++) {
+      assert svalues[i] != null : "@AssumeAssertion(nullness): used portion of array";
       add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
@@ -150,7 +151,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
-  public boolean repNulled() {
+  public boolean repNulled(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return values == null;
   }
 
@@ -160,7 +161,10 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * set).
    */
   private void nullRep() {
-    int values_length = values.length;
+    if (repNulled()) {
+      return;
+    }
+    num_values = values.length + 1;
     values = null;
     num_values = values_length + 1;
   }
