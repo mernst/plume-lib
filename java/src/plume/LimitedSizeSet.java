@@ -63,7 +63,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       nullRep();
       return;
     }
-    values[num_values] = elt; // index TODO: issue #59
+    values[num_values] = elt;
     num_values++;
   }
 
@@ -166,7 +166,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
     num_values = values.length + 1;
     values = null;
-    num_values = values_length + 1;
   }
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)

@@ -2329,7 +2329,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] < a[i]) { // index TODO: issue #48
+      if (a[i + 1] < a[i]) {
         return false;
       }
     }
@@ -2345,7 +2345,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] < a[i]) { // index TODO: issue #48
+      if (a[i + 1] < a[i]) {
         return false;
       }
     }
@@ -2361,7 +2361,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted_descending(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] > a[i]) { // index TODO: issue #48
+      if (a[i + 1] > a[i]) {
         return false;
       }
     }
@@ -2377,7 +2377,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean sorted_descending(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
-      if (a[i + 1] > a[i]) { // index TODO: issue #48
+      if (a[i + 1] > a[i]) {
         return false;
       }
     }
