@@ -139,7 +139,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    */
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
-      return num_values;
+      return num_values;        // index TODO: need EnsuresQualifierIf with annotation argument
     } else {
       return values.length + 1;
     }
