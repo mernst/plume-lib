@@ -165,9 +165,9 @@ endif
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
 JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -AsuppressWarnings=method.evaluation.exception -processor org.checkerframework.checker.index.IndexChecker
 ## To filter out warnings for which an issue has been filed, do this in the Emacs *compilation* buffer:
-# (query-replace-regexp "^.*\n.*index TODO: issue #[0-9]+\n .*\n .*\n .*\n" "")
+# (query-replace-regexp "^.*\n.*index TODO: issue [#\"][0-9]+\"?\n .*\n .*\n .*\n" "")
 ## To see the most frequent causes of warnings, run this from the command line:
-# grep -n -i "index TODO: issue #" src/plume/*.java | sed 's/.*#\([0-9][0-9]*\)/#\1    https:\/\/github.com\/kelloggm\/checker-framework\/issues\/\1/' | sort | uniq -c | sort -nr
+# grep -n -i 'index TODO: issue [#"]' src/plume/*.java | sed 's/.*[#"]\([0-9][0-9]*\)"*/#\1    https:\/\/github.com\/kelloggm\/checker-framework\/issues\/\1/' | sort | uniq -c | sort -nr
 
 ## For testing a single file:
 # JAVA_FILES = src/plume/RegexUtil.java
