@@ -67,7 +67,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
       nullRep();
       return;
     }
-    values[num_values] = elt; // index TODO: issue #68
+    values[num_values] = elt; // index TODO: issue #64
     num_values++;
   }
 

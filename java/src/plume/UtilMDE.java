@@ -2208,7 +2208,7 @@ public final class UtilMDE {
     int lastend = 0;
     int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
-      result.append(target.substring(lastend, pos)); // index TODO: issue #58
+      result.append(target.substring(lastend, pos));
       result.append(newStr);
       lastend = pos + oldStr.length();
     }
