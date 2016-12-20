@@ -431,7 +431,9 @@ See documentation of variable `tags-file-name'."
                                        (list 'quote delimited))
                                  ;; the loop is exited if nil is returned
                                  t))
-   (tags-loop-continue (or file-list-form t))))
+   (condition-case nil
+       (tags-loop-continue (or file-list-form t))
+     (user-error nil))))
 
 (xemacs
  (defun tags-replace (from to &optional delimited file-list-form)

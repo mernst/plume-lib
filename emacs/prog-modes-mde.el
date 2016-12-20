@@ -723,29 +723,35 @@ Works over the currently-visited tags table."
   (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
   (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
   ;; Start descriptive text with lowercase letter.
-  (let ((case-fold-search nil))
-    ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
-    ;; seem to work with tags-query-replace, so call downcase-previous-character.
-    ;; We only do so if the capital letter is at the beginning of a word
-    ;; whose other characters are lowercase.
-    (tags-search "\\(?:@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
-    (goto-char (match-end 1))
-    (downcase-previous-character)
-    (while t
-      (tags-loop-continue)
-      (goto-char (match-end 1))
-      (downcase-previous-character)))
-  ;; PROBLEM: the final tags-loop-continue terminates the whole function so
-  ;; nothing here or beyond will be executed.
-
-  ;; TODO:
+  (condition-case nil
+      (let ((case-fold-search nil))
+	;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
+	;; seem to work with tags-query-replace, so call downcase-previous-character.
+	;; We only do so if the capital letter is at the beginning of a word
+	;; whose other characters are lowercase.
+	(tags-search "\\(?:@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+	(goto-char (match-end 1))
+	(downcase-previous-character)
+	(while t
+	  (tags-loop-continue)
+	  (goto-char (match-end 1))
+	  (downcase-previous-character)))
+    (user-error nil))
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
   ;; (Run each until it finds no more issues)
-  (tags-query-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|@\\)")
+  (tags-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+
+  ;; TODO:
+
   ;; Missing period at the end of the main part of the Javadoc:
+  (tags-replace " \\*\\*/" " */")
   (tags-search "/\\*\\*[^@/]*\\. [^@/]*[^. \n][ \n]*\\*/")
+
+  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|\* @\\)")
+
 
   )
    
