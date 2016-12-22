@@ -142,7 +142,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * Returns true if more elements have been added than this set can contain (which is the integer
    * that was passed to the constructor when creating this set).
    *
-   * @returns true if this set has been filled to capacity and its internal representation is nulled
+   * @return true if this set has been filled to capacity and its internal representation is nulled
    */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
