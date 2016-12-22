@@ -2804,7 +2804,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2838,7 +2838,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2873,7 +2873,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2909,7 +2909,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2960,7 +2960,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3016,7 +3016,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3073,7 +3073,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3110,7 +3110,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3147,7 +3147,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3205,7 +3205,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */

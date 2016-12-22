@@ -73,7 +73,7 @@ public class FuzzyFloat {
    * of the fuzzy ratio. This policy accommodates round off errors in floating point values.
    *
    * @param d1 the first value to compare
-   * @param d2 the first value to compare
+   * @param d2 the second value to compare
    * @return true if d1 and d2 are considered equal, false otherwise
    */
 
@@ -123,7 +123,7 @@ public class FuzzyFloat {
    * Test d1 and d2 for non-equality using the current ratio.
    *
    * @param d1 the first value to compare
-   * @param d2 the first value to compare
+   * @param d2 the second value to compare
    * @return whether d1 and d2 are non-equal
    * @see #eq
    */
@@ -136,7 +136,7 @@ public class FuzzyFloat {
    * Test d1 and d2 for d1 &lt; d2. If d1 is equal to d2 using the current ratio this returns false.
    *
    * @param d1 the first value to compare
-   * @param d2 the first value to compare
+   * @param d2 the second value to compare
    * @return whether d1 &lt; d2
    * @see #eq
    */
@@ -149,7 +149,7 @@ public class FuzzyFloat {
    * test d1 and d2 for d1 &le; d2. If d1 is equal to d2 using the current ratio, this returns true.
    *
    * @param d1 the first value to compare
-   * @param d2 the first value to compare
+   * @param d2 the second value to compare
    * @return whether d1 &le; d2
    * @see #eq
    */
@@ -163,7 +163,7 @@ public class FuzzyFloat {
    * false.
    *
    * @param d1 the first value to compare
-   * @param d2 the first value to compare
+   * @param d2 the second value to compare
    * @return whether d1 &gt; d2
    * @see #eq
    */
@@ -176,7 +176,7 @@ public class FuzzyFloat {
    * test d1 and d2 for d1 &gt; d2. If d1 is equal to d2 using the current ratio, this returns true.
    *
    * @param d1 the first value to compare
-   * @param d2 the first value to compare
+   * @param d2 the second value to compare
    * @return whether d1 &gt; d2
    * @see #eq
    */
@@ -240,8 +240,8 @@ public class FuzzyFloat {
    * <p>Note that this implementation is optimized for cases where the elements are actually the
    * same, since it does a sort of both arrays before starting the comparisons.
    *
-   * @param a1 the first value to compare
-   * @param a2 the first value to compare
+   * @param a1 the first set to compare
+   * @param a2 the second set to compare
    * @return true if a1 and a2 are set equivalent, false otherwise
    */
   @SuppressWarnings("purity") // side effect to local state (arrays)
