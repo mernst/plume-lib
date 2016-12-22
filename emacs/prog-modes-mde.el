@@ -719,9 +719,9 @@ Works over the currently-visited tags table."
   (interactive)
   ;; "End the phrase with a period only if another phrase or sentence follows it."
   ;; Do it twice because matches may overlap.
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
   ;; Start descriptive text with lowercase letter.
   (condition-case nil
       (let ((case-fold-search nil))
@@ -729,7 +729,7 @@ Works over the currently-visited tags table."
 	;; seem to work with tags-query-replace, so call downcase-previous-character.
 	;; We only do so if the capital letter is at the beginning of a word
 	;; whose other characters are lowercase.
-	(tags-search "\\(?:@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
 	(goto-char (match-end 1))
 	(downcase-previous-character)
 	(while t
@@ -739,20 +739,19 @@ Works over the currently-visited tags table."
     (user-error nil))
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
-  ;; (Run each until it finds no more issues)
-  (tags-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-
-  ;; TODO:
+  ;; (Run until it finds no more issues)
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
 
   ;; Missing period at the end of the main part of the Javadoc:
   (tags-replace " \\*\\*/" " */")
-  (tags-search "/\\*\\*[^@/]*\\. [^@/]*[^. \n][ \n]*\\*/")
+  ;; TODO: automate this
+  (tags-search "/\\*\\*[^@/]*\\.[)] [^@/]*[^. \n][ \n]*\\*/")
 
-  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|\* @\\)")
-
-
+  ;; Missing period at the end of a Javadoc tag
+  (tags-replace "^\\( *\\* @[^.@/]*\\.[ \n][^.@/]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
+		"\\1.\\2")
   )
    
 (defun improve-javadoc-code-style ()
