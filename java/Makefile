@@ -69,7 +69,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/slf4j-api-1.7.22.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -409,16 +409,16 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
-# ical4j 1.0.6 requrires the legacy library commons-lang-2.6.jar
-	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.4.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/guava-19.0.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/ical4j-2.0.0.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
 # Do not include junit.jar in plume.jar; JUnit is needed only for testing
 #	(cd jar-contents; "${JAR}" xf ../lib/hamcrest-core-1.3.jar)
 #	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
+# ical4j-2.0.0 requrires slf4j
+	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.22.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
