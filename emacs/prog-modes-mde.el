@@ -717,11 +717,13 @@ Works over the currently-visited tags table."
 (defun improve-javadoc-tag-style ()
   "Improve style for Javadoc @param and @return, for files in the current TAGS tables."
   (interactive)
-  ;; "End the phrase with a period only if another phrase or sentence follows it."
+
+  ;; End the phrase with a period only if another phrase or sentence follows it.
   ;; Do it twice because matches may overlap.
-  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
   (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
+
   ;; Start descriptive text with lowercase letter.
   (condition-case nil
       (let ((case-fold-search nil))
@@ -740,17 +742,18 @@ Works over the currently-visited tags table."
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
   ;; (Run until it finds no more issues)
-  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+
+  (tags-replace " \\*\\*/" " */")
 
   ;; Missing period at the end of the main part of the Javadoc:
-  (tags-replace " \\*\\*/" " */")
   ;; TODO: automate this
-  (tags-search "/\\*\\*[^@/]*\\.[)] [^@/]*[^. \n][ \n]*\\*/")
+  (tags-search "/\\*\\*[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\.[)] [^@./]*\\(?:{@link [^}]*}[^@./]*\\)*[^. \n][ \n]*\\*/")
 
   ;; Missing period at the end of a Javadoc tag
-  (tags-replace "^\\( *\\* @[^.@/]*\\.[ \n][^.@/]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
+  (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
 		"\\1.\\2")
   )
    
