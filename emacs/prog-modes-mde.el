@@ -2055,9 +2055,10 @@ or null if it does not exist."
             (file-exists-p (expand-file-name "makefile"))
             (file-exists-p (expand-file-name "GNUmakefile"))))))
 
-(defun ant-set-compile-command ()
+(defun set-compile-command-for-directory ()
   "Returns true if it set the `compile-command' variable.
-Sets the variable to an invocation of \"ant\" if a build.xml file exists
+Sets the variable to an invocation of \"ant\", \"gradle\", \"mvn\", etc.
+depending on whether a build.xml, build.gradle, or pom.xml file exists
 in this directory or some superdirectory."
   (if (should-set-compile-command)
       (cond ((file-readable-p "build.xml")
@@ -2089,14 +2090,14 @@ in this directory or some superdirectory."
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
              (setq compile-command "mvn ")))))
-(add-hook 'find-file-hooks 'ant-set-compile-command)
-(add-hook 'dired-mode-hook 'ant-set-compile-command)
-(add-hook 'compilation-mode-hook 'ant-set-compile-command)
-(add-hook 'cvs-mode-hook 'ant-set-compile-command)
-(add-hook 'svn-status-mode-hook 'ant-set-compile-command)
+(add-hook 'find-file-hooks 'set-compile-command-for-directory)
+(add-hook 'dired-mode-hook 'set-compile-command-for-directory)
+(add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
+(add-hook 'cvs-mode-hook 'set-compile-command-for-directory)
+(add-hook 'svn-status-mode-hook 'set-compile-command-for-directory)
 ;; There was no svn-status-mode-hook before "psvn.el 23079 2007-01-17".
-;; (defadvice svn-status-mode (after ant-set-compile-command activate)
-;;   (ant-set-compile-command))
+;; (defadvice svn-status-mode (after set-compile-command-for-directory activate)
+;;   (set-compile-command-for-directory))
 
 ;; Below are for modes that have a default to use if there is no makefile
 ;; or build.xml file.
@@ -2130,7 +2131,7 @@ Use as a hook, like so:
 Use as a hook, like so:
   (add-hook 'java-mode-hook 'java-set-compile-command)"
   (if (and (should-set-compile-command)
-           (not (ant-set-compile-command)))
+           (not (set-compile-command-for-directory)))
       (let ((file-name (file-name-nondirectory buffer-file-name)))
         (make-local-variable 'compile-command)
         (setq compile-command (concat "javac -g " file-name)))))
