@@ -5,12 +5,12 @@ Most libraries are standard, downloaded from their respective webpages:
 
 backport-util-concurrent-3.1.jar : (used by ical4j) https://sourceforge.net/projects/backport-jsr166/files/backport-jsr166/
 bcel.jar : see below
-checker-qual-2.1.1.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
+checker-qual-2.1.6.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
 commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
 commons-io-2.5.jar : https://commons.apache.org/proper/commons-io/download_io.cgi
-commons-lang3-3.4.jar : https://commons.apache.org/proper/commons-lang/
+commons-lang3-3.5.jar : https://commons.apache.org/proper/commons-lang/
 commons-logging-1.2.jar : https://commons.apache.org/proper/commons-logging/
-guava-19.0.jar : https://github.com/google/guava/releases
+guava-20.0.jar : https://github.com/google/guava/releases
 hamcrest-core-1.3.jar : http://search.maven.org/#search|ga|1|g%3Aorg.hamcrest
 ical4j-2.0.0.jar : clone https://github.com/ical4j/ical4j.git then run ./gradlew jar
 ini4j-0.5.4.jar : https://sourceforge.net/projects/ini4j/files/ini4j-bin/
@@ -19,7 +19,7 @@ junit-4.12.jar : http://search.maven.org/#search|gav|1|g:"junit" AND a:"junit"
 slf4j-api-1.7.22.jar : http://www.slf4j.org/download.html
 slf4j-simple-1.6.6.jar : http://www.slf4j.org/download.html
 svnkit-1.8.10-complete.jar : see below
-tagsoup-1.2.1.jar : http://home.ccil.org/~cowan/tagsoup/
+tagsoup-1.2.1.jar : http://home.ccil.org/~cowan/tagsoup/ (URL is now dead, try https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup instead)
 utilMDE-20091207.jar : do not update
 xom-1.2.10.jar : http://www.xom.nu/
 
