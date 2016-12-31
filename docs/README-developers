@@ -47,7 +47,7 @@ To help writing the changelog text, see the log and/or diffs, using one of:
 
     git push
 
-8. Wait about 2.5 hours and ensure that Travis and Jenkins jobs pass:
+8. Wait about 2.5 hours and ensure that Travis jobs pass:
 at least plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
 The following commands will open the URLs in your browser.
 
@@ -58,14 +58,6 @@ The following commands will open the URLs in your browser.
     xdg-open https://travis-ci.org/typetests/plume-lib-typecheck
     sleep 1
     xdg-open https://travis-ci.org/typetests/daikon-typecheck
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/plume-lib/
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/daikon/
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/plume-lib-typecheck/
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/daikon-typecheck/
 
 9. Run the make-plume-release script located in bin:
 
