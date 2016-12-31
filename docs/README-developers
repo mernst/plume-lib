@@ -67,7 +67,8 @@ The following commands will open the URLs in your browser.
 
 The script requires that $JAVAC or 'javac' point to the JSR 308 compiler.
 If this is the case, then the release is built and the test cases are run.
-The release will be compatible with Java 7.
+The release will be compatible with Java 7, but don't try to use a Java 7
+JDK when making the release.
 
 10. Push the new Git tag created by the script to the repository:
 
