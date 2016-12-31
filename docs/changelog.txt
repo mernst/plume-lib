@@ -5,7 +5,7 @@ by cloning its repository; run:
 
 ===========================================================================
 
-plume-lib 1.1.1, released ??
+plume-lib 1.1.1, released December 31, 2016
 
 The plume-lib homepage has moved to https://mernst.github.io/plume-lib/
 
