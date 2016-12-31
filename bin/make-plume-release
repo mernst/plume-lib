@@ -67,6 +67,7 @@ echo "[1/6] Creating tag 'v$new'."
 if ! git tag v$new &> /dev/null; then
     echo "Failed to create Git tag 'v$new'."
     echo "Run 'git tag' to check if the tag already exists."
+    echo "Run 'git tag -d v$new' to delete the tag."
     exit 1
 fi
 
