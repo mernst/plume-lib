@@ -17,7 +17,7 @@ that are not valid.
 Something like this could work (to avoid doing all of the URLs in one go,
 which might overpower your browser):
   (defun browse-url-checklink (number-prefix)
-    (find-file "bin/checklink-args.txt")
+    (find-file "../bin/checklink-args.txt")
     (goto-char (point-min))
     (browse-url-once-if-matched (concat number-prefix ":\\(http.*\\)") 1))
   (browse-url-checklink "0")
@@ -27,6 +27,7 @@ which might overpower your browser):
   (browse-url-checklink "4")
   (browse-url-checklink "5")
   (browse-url-checklink "6")
+  ;; Just in case the above searches missed something.
   (browse-url-checklink "[^0-6]")
 
 4. Ensure that file index.html documents any new files.
