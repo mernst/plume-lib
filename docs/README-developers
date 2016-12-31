@@ -35,7 +35,7 @@ To find new files, do
 
     git diff --name-status v`cat VERSION` | grep '^A'
 
-5. Update docs/changelog.txt.
+5. Update file changelog.txt
 To help writing the changelog text, see the log and/or diffs, using one of:
 
     git log --name-status v`cat VERSION`..HEAD
