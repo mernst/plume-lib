@@ -55,11 +55,14 @@ else
   endif
 endif
 
-# Hack hard-coded for UW CSE file system
+# Use tools.jar file from JDK 7, so plume.jar can be run on a Java 7 JVM.
+# Hacks hard-coded for developers' file systems.
 ifneq ("$(wildcard /homes/gws/markro/jdk7)","")
   TOOLS_JAR_7 ?= /homes/gws/markro/jdk7/lib/tools.jar
 endif
-# tools.jar file from JDK 7, so plume.jar is can be run on Java 7 JVM.
+ifneq ("$(wildcard $HOME/java/jdk7)","")
+  TOOLS_JAR_7 ?= $HOME/java/jdk7/lib/tools.jar
+endif
 TOOLS_JAR_7 ?= ${TOOLS_JAR}
 ifeq (cygwin,$(OSTYPE))
   TOOLS_JAR_7 := $(shell cygpath -w $(TOOLS_JAR_7))
