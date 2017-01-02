@@ -109,7 +109,7 @@ done_release() {
         echo "   * tag is: v$new"
         echo "   * Release title is: plume-lib version $new"
         echo "   * description from docs/changelog.txt, with hard line breaks removed"
-        echo "   * attach ${PWD}${release_tar}"
+        echo "   * attach ${PWD}/${release_tar}"
     fi
     exit 0
 }
