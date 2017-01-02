@@ -21,7 +21,25 @@ ifndef JAVA_HOME
   I_set_JAVA_HOME := true
 endif
 
-TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
+# Use tools.jar file from JDK 7, so plume.jar can be run on a Java 7 JVM.
+# Hacks hard-coded for developers' file systems.
+ifneq ("$(wildcard /homes/gws/markro/jdk7)","")
+  TOOLS_JAR_7 ?= /homes/gws/markro/jdk7/lib/tools.jar
+endif
+ifneq ("$(wildcard ${HOME}/java/jdk7)","")
+  TOOLS_JAR_7 ?= ${HOME}/java/jdk7/lib/tools.jar
+endif
+ifdef TOOLS_JAR_7
+  ifeq (cygwin,$(OSTYPE))
+    TOOLS_JAR_7 := $(shell cygpath -w $(TOOLS_JAR_7))
+  endif
+endif
+
+ifdef TOOLS_JAR_7
+  TOOLS_JAR ?= ${TOOLS_JAR_7}
+else
+  TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
+endif
 
 ifeq ($(UNAME_S),Darwin)
   READLINK_F := readlink
@@ -54,20 +72,6 @@ else
     OSTYPE := cygwin
   endif
 endif
-
-# Use tools.jar file from JDK 7, so plume.jar can be run on a Java 7 JVM.
-# Hacks hard-coded for developers' file systems.
-ifneq ("$(wildcard /homes/gws/markro/jdk7)","")
-  TOOLS_JAR_7 ?= /homes/gws/markro/jdk7/lib/tools.jar
-endif
-ifneq ("$(wildcard $HOME/java/jdk7)","")
-  TOOLS_JAR_7 ?= $HOME/java/jdk7/lib/tools.jar
-endif
-TOOLS_JAR_7 ?= ${TOOLS_JAR}
-ifeq (cygwin,$(OSTYPE))
-  TOOLS_JAR_7 := $(shell cygpath -w $(TOOLS_JAR_7))
-endif
-
 
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
@@ -344,7 +348,7 @@ endif
 # The make program has serious problems with filenames containing spaces, unfortunately.
 ${TOOLS_JAR}:
 	@echo "Cannot find tools.jar at ${TOOLS_JAR}"
-	@echo "Please set JAVA_HOME and/or TOOLS_JAR"
+	@echo "Please set one of JAVA_HOME, TOOLS_JAR, or TOOLS_JAR_7"
 # Cause the Make job to fail
 	@false
 
@@ -357,6 +361,7 @@ showvars:
 	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
 	@echo JAVACHECK_COMMAND = $(JAVACHECK_COMMAND)
 	@echo JDK_HOME = $(JDK_HOME)
+	@echo TOOLS_JAR_7 = $(TOOLS_JAR_7)
 	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
 # Long output
@@ -426,7 +431,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
-	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_7)" com/sun/javadoc)
+	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
