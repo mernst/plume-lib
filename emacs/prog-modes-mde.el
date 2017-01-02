@@ -731,7 +731,7 @@ Works over the currently-visited tags table."
 	;; seem to work with tags-query-replace, so call downcase-previous-character.
 	;; We only do so if the capital letter is at the beginning of a word
 	;; whose other characters are lowercase.
-	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
 	(goto-char (match-end 1))
 	(downcase-previous-character)
 	(while t
