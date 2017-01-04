@@ -66,7 +66,7 @@ public class TimeLimitProcess extends Process {
    *
    * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
-   * @param cacheStdout If true, causes the TimeLimitProcess to consume the standard output of the
+   * @param cacheStdout if true, causes the TimeLimitProcess to consume the standard output of the
    *     underlying process, and to cache it. After the process terminates (on its own or by being
    *     timed out), the output is available via the cached_stdout method. This is necessary because
    *     when a Java process is terminated, its standard output is no longer available.

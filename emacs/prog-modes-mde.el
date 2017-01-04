@@ -717,36 +717,44 @@ Works over the currently-visited tags table."
 (defun improve-javadoc-tag-style ()
   "Improve style for Javadoc @param and @return, for files in the current TAGS tables."
   (interactive)
-  ;; "End the phrase with a period only if another phrase or sentence follows it."
-  ;; Do it twice because matches may overlap.
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
-  ;; Start descriptive text with lowercase letter.
-  (let ((case-fold-search nil))
-    ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
-    ;; seem to work with tags-query-replace, so call downcase-previous-character.
-    ;; We only do so if the capital letter is at the beginning of a word
-    ;; whose other characters are lowercase.
-    (tags-search "\\(?:@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
-    (goto-char (match-end 1))
-    (downcase-previous-character)
-    (while t
-      (tags-loop-continue)
-      (goto-char (match-end 1))
-      (downcase-previous-character)))
-  ;; PROBLEM: the final tags-loop-continue terminates the whole function so
-  ;; nothing here or beyond will be executed.
 
-  ;; TODO:
+  ;; End the phrase with a period only if another phrase or sentence follows it.
+  ;; Do it twice because matches may overlap.
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
+
+  ;; Start descriptive text with lowercase letter.
+  (condition-case nil
+      (let ((case-fold-search nil))
+	;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
+	;; seem to work with tags-query-replace, so call downcase-previous-character.
+	;; We only do so if the capital letter is at the beginning of a word
+	;; whose other characters are lowercase.
+	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+	(goto-char (match-end 1))
+	(downcase-previous-character)
+	(while t
+	  (tags-loop-continue)
+	  (goto-char (match-end 1))
+	  (downcase-previous-character)))
+    (user-error nil))
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
-  ;; (Run each until it finds no more issues)
-  (tags-query-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|@\\)")
-  ;; Missing period at the end of the main part of the Javadoc:
-  (tags-search "/\\*\\*[^@/]*\\. [^@/]*[^. \n][ \n]*\\*/")
+  ;; (Run until it finds no more issues)
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
 
+  (tags-replace " \\*\\*/" " */")
+
+  ;; Missing period at the end of the main part of the Javadoc:
+  ;; TODO: automate this
+  (tags-search "/\\*\\*[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\.[)] [^@./]*\\(?:{@link [^}]*}[^@./]*\\)*[^. \n][ \n]*\\*/")
+
+  ;; Missing period at the end of a Javadoc tag
+  (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
+		"\\1.\\2")
   )
    
 (defun improve-javadoc-code-style ()
@@ -2050,9 +2058,10 @@ or null if it does not exist."
             (file-exists-p (expand-file-name "makefile"))
             (file-exists-p (expand-file-name "GNUmakefile"))))))
 
-(defun ant-set-compile-command ()
+(defun set-compile-command-for-directory ()
   "Returns true if it set the `compile-command' variable.
-Sets the variable to an invocation of \"ant\" if a build.xml file exists
+Sets the variable to an invocation of \"ant\", \"gradle\", \"mvn\", etc.
+depending on whether a build.xml, build.gradle, or pom.xml file exists
 in this directory or some superdirectory."
   (if (should-set-compile-command)
       (cond ((file-readable-p "build.xml")
@@ -2084,14 +2093,14 @@ in this directory or some superdirectory."
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
              (setq compile-command "mvn ")))))
-(add-hook 'find-file-hooks 'ant-set-compile-command)
-(add-hook 'dired-mode-hook 'ant-set-compile-command)
-(add-hook 'compilation-mode-hook 'ant-set-compile-command)
-(add-hook 'cvs-mode-hook 'ant-set-compile-command)
-(add-hook 'svn-status-mode-hook 'ant-set-compile-command)
+(add-hook 'find-file-hooks 'set-compile-command-for-directory)
+(add-hook 'dired-mode-hook 'set-compile-command-for-directory)
+(add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
+(add-hook 'cvs-mode-hook 'set-compile-command-for-directory)
+(add-hook 'svn-status-mode-hook 'set-compile-command-for-directory)
 ;; There was no svn-status-mode-hook before "psvn.el 23079 2007-01-17".
-;; (defadvice svn-status-mode (after ant-set-compile-command activate)
-;;   (ant-set-compile-command))
+;; (defadvice svn-status-mode (after set-compile-command-for-directory activate)
+;;   (set-compile-command-for-directory))
 
 ;; Below are for modes that have a default to use if there is no makefile
 ;; or build.xml file.
@@ -2125,7 +2134,7 @@ Use as a hook, like so:
 Use as a hook, like so:
   (add-hook 'java-mode-hook 'java-set-compile-command)"
   (if (and (should-set-compile-command)
-           (not (ant-set-compile-command)))
+           (not (set-compile-command-for-directory)))
       (let ((file-name (file-name-nondirectory buffer-file-name)))
         (make-local-variable 'compile-command)
         (setq compile-command (concat "javac -g " file-name)))))

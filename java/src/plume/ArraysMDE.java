@@ -1285,12 +1285,10 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (!Objects.equals(sub[i], a[a_offset + i])) { // index TODO: issue #75
         return false;
       }
@@ -1310,12 +1308,10 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1336,12 +1332,10 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (!Objects.equals(sub.get(i), a[a_offset + i])) { // index TODO: issue #75
         return false;
       }
@@ -1361,12 +1355,10 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (sub.get(i) != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1388,12 +1380,10 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean isSubarray(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (!Objects.equals(sub[i], a.get(a_offset + i))) {
         return false;
       }
@@ -1414,12 +1404,10 @@ public final class ArraysMDE {
   /*@Pure*/
   public static boolean isSubarrayEq(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a.get(a_offset + i)) {
         return false;
       }
@@ -1440,12 +1428,10 @@ public final class ArraysMDE {
   @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (!Objects.equals(sub.get(i), a.get(a_offset + i))) {
         return false;
       }
@@ -1465,12 +1451,10 @@ public final class ArraysMDE {
   @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (sub.get(i) != a.get(a_offset + i)) {
         return false;
       }
@@ -1489,12 +1473,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1513,12 +1495,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1537,12 +1517,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1561,12 +1539,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -2876,7 +2852,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2910,7 +2886,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2945,7 +2921,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2981,7 +2957,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3032,7 +3008,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3088,7 +3064,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3145,7 +3121,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3182,7 +3158,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3219,7 +3195,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3277,7 +3253,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */

@@ -13,8 +13,9 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * LimitedSizeIntSet stores up to some maximum number of unique integer values, at which point its
- * rep is nulled, in order to save space.
+ * LimitedSizeIntSet stores up to some maximum number of unique values. If more than that many
+ * elements are added, then functionality is degraded: most operations return a conservative
+ * estimate (because the internal representation is nulled, in order to save space).
  *
  * <p>The advantage of this class over {@code LimitedSizeSet<Integer>} is that it does not autobox
  * the int values, so it takes less memory.
@@ -150,6 +151,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   /**
    * Returns true if more elements have been added than this set can contain (which is the integer
    * that was passed to the constructor when creating this set).
+   *
+   * @return true if this set has been filled to capacity and its internal representation is nulled
    */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
