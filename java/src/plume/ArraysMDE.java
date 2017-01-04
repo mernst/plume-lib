@@ -3158,7 +3158,7 @@ public final class ArraysMDE {
         return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
-        if (a1[i] != a2[i]) { // index TODO: issue #49
+        if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
         }
       }
@@ -3239,7 +3239,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         T elt1 = a1[i];
-        T elt2 = a2[i]; // index TODO: issue #49
+        T elt2 = a2[i];
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;
@@ -3297,7 +3297,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         Object elt1 = a1[i];
-        Object elt2 = a2[i]; // index TODO: issue #49
+        Object elt2 = a2[i];
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;
