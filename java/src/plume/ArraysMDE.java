@@ -1094,7 +1094,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ Object[] subarray(
-      /*@PolyAll*/ Object[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      /*@PolyAll*/ Object[] a, /*@IndexFor("#1")*/ int startindex, /*@IndexOrHigh("#1")*/ int length) {
     /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
