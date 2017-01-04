@@ -1112,7 +1112,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static <T> List<T> subarray(
-      List<T> a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      List<T> a, /*@IndexFor("#1")*/ int startindex, /*@IndexOrHigh("#1")*/ int length) {
     return a.subList(startindex, startindex + length);
   }
 
@@ -1284,7 +1284,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(
-      /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, /*@NonNegative*/ int a_offset) {
+      /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1307,7 +1307,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
-      /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
+      /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1331,7 +1331,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(
-      /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
+      /*@PolyAll*/ Object[] a, List<?> sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.size() > a.length) {
       return false;
     }
@@ -1354,7 +1354,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
-      /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
+      /*@PolyAll*/ Object[] a, List<?> sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.size() > a.length) {
       return false;
     }
@@ -1379,7 +1379,7 @@ public final class ArraysMDE {
   @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(
-      List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
+      List<?> a, /*@PolyAll*/ Object[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.size()) {
       return false;
     }
@@ -1403,7 +1403,7 @@ public final class ArraysMDE {
   @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
-      List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
+      List<?> a, /*@PolyAll*/ Object[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.size()) {
       return false;
     }
@@ -1427,7 +1427,7 @@ public final class ArraysMDE {
    */
   @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
-  public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
+  public static boolean isSubarray(List<?> a, List<?> sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.size() > a.size()) {
       return false;
     }
@@ -1450,7 +1450,7 @@ public final class ArraysMDE {
    */
   @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
-  public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
+  public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.size() > a.size()) {
       return false;
     }
@@ -1472,7 +1472,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
+  public static boolean isSubarray(int[] a, int[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1494,7 +1494,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
+  public static boolean isSubarray(long[] a, long[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1516,7 +1516,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
+  public static boolean isSubarray(double[] a, double[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1538,7 +1538,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
+  public static boolean isSubarray(boolean[] a, boolean[] sub, /*@IndexFor("#1")*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
