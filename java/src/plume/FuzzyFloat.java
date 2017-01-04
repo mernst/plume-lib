@@ -225,7 +225,7 @@ public class FuzzyFloat {
     outer:
     for (int i = 0; i <= a_index_max; i++) {
       for (int j = 0; j < sub.length; j++) {
-        if (ne(a[i + j], sub[j])) { // index TODO: issue #50
+        if (ne(a[i + j], sub[j])) { // index TODO: issue #75
           continue outer;
         }
       }
