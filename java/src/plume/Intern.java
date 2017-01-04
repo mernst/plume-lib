@@ -832,7 +832,7 @@ public final class Intern {
       return lookup.get();
     } else {
       @SuppressWarnings("lowerbound") // end > start
-      int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #50
+      int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #76
       int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
       internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
       return subseq;
@@ -858,7 +858,7 @@ public final class Intern {
       return lookup.get();
     } else {
       @SuppressWarnings("lowerbound") // end > start
-      long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #50
+      long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #76
       long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
       return subseq;
@@ -884,7 +884,7 @@ public final class Intern {
       return lookup.get();
     } else {
       @SuppressWarnings("lowerbound") // end > start
-      double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #50
+      double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #76
       double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
       return subseq;
@@ -912,7 +912,7 @@ public final class Intern {
       return lookup.get();
     } else {
       @SuppressWarnings("lowerbound") // end > start
-      /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #50
+      /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #76
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
       Object
@@ -945,7 +945,7 @@ public final class Intern {
       return lookup.get();
     } else {
       @SuppressWarnings("lowerbound") // end > start
-      /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #50
+      /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start); // index TODO: issue #76
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
       Object
