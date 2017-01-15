@@ -76,6 +76,7 @@
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://courses.cs.washington.edu/courses/cse599e1/16au/csenetid/books/experimentation-in-software-engineering-2012.pdf
 --suppress-broken 403:https://galois.com/team/joe-kiniry/
+--suppress-broken 403:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip	
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 403:https://wiki.gnome.org/Apps/Dia
