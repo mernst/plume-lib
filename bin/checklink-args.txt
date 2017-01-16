@@ -17,8 +17,10 @@
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
 # Old releases contain numerous broken links that are fixed in the current release
---exclude-docs http://checker-framework.com/dev/releases/
 --exclude-docs http://checker-framework.com/releases/
+--exclude-docs http://checker-framework.com/dev/releases/
+--exclude-docs http://checker-framework.com/jsr308/releases/
+--exclude-docs http://checker-framework.com/dev/jsr308/releases/
 --exclude-docs http://types.cs.washington.edu/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/dev/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/list-archives/
