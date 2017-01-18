@@ -1216,7 +1216,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1239,7 +1240,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1262,7 +1264,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
@@ -1285,7 +1288,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1305,9 +1309,10 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using the equals method.
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
@@ -1328,9 +1333,10 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using == (not the equals method).
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1350,9 +1356,10 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using the equals method.
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
@@ -1373,9 +1380,10 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using == (not the equals method).
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1397,7 +1405,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1419,7 +1428,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1441,7 +1451,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
@@ -1463,7 +1474,8 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
