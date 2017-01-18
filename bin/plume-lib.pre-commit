@@ -6,5 +6,21 @@
 # Fail if any command fails
 set -e
 
-make -C java check-format
+# First, a fast check for trailing whitespace in any changed file.
+CHANGED_STYLE_FILES=`git diff --staged --name-only --diff-filter=ACM` || true
+if [ ! -z "$CHANGED_STYLE_FILES" ]; then
+    FILES_WITH_TRAILING_SPACES=`grep -l -s '[[:blank:]]$' ${CHANGED_STYLE_FILES} 2>&1` || true
+    if [ ! -z "$FILES_WITH_TRAILING_SPACES" ]; then
+        echo "Some files have trailing whitespace: ${FILES_WITH_TRAILING_SPACES}" && exit 1
+    fi
+fi
+
+# Only check format of changed .java files, which is faster than "make -C java check-format".
+CHANGED_JAVA_FILES=`git diff --staged --name-only --diff-filter=ACM | grep '\.java$'` || true
+if [ ! -z "$CHANGED_JAVA_FILES" ]; then
+    make -C java get-run-google-java-format
+    ./java/.run-google-java-format/check-google-java-format.py ${CHANGED_JAVA_FILES}
+fi
+
+# Compile and run tests
 make all-but-emacs
