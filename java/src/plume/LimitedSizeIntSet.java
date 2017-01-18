@@ -50,7 +50,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     assert max_values > 0;
     // this.max_values = max_values;
     values = new int[max_values]; // index TODO: issue #66
-    num_values = 0; // index TODO: issue #14
+    num_values = 0;
   }
 
   @SuppressWarnings("index") // num_values may or may not be an index

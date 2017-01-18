@@ -137,8 +137,8 @@ public class TaskManager {
         if (line.matches("^[_a-zA-Z]+:.*")) {
           @SuppressWarnings("value") // line has a ":", so split() returns array of length=2
           String /*@ArrayLen(2)*/[] sa = line.split(" *: *", 2);
-          item = sa[0]; // index TODO: issue #14
-          value = sa[1]; // index TODO: issue #14
+          item = sa[0];
+          value = sa[1];
           if (value.length() == 0) {
             value = null;
           }

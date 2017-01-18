@@ -77,7 +77,7 @@ The correct way to build the system is to run 'make'.
       }
       Arrays.sort(nums);
       this.nums = nums;
-      current_index = 0;        // index TODO: issue #14
+      current_index = 0;
       current_nonmissing = nums[current_index];
       if (add_ends) {
         current_missing = current_nonmissing - 1;

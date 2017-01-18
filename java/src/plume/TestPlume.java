@@ -211,7 +211,7 @@ public final class TestPlume {
       assert ArraysMDE.indexOf(a, new Integer(10)) == -1;
       assert ArraysMDE.indexOf(a, new Integer(20)) == -1;
       assert ArraysMDE.indexOf(a, (Object) null) == -1;
-      assert ArraysMDE.indexOf(a, (Object) null, 1, 5) == -1; // index TODO: issue #14
+      assert ArraysMDE.indexOf(a, (Object) null, 1, 5) == -1;
 
       assert ArraysMDE.indexOfEq(a, new Integer(-1)) == -1;
       assert ArraysMDE.indexOfEq(a, new Integer(0)) == -1;
@@ -220,7 +220,7 @@ public final class TestPlume {
       assert ArraysMDE.indexOfEq(a, new Integer(10)) == -1;
       assert ArraysMDE.indexOfEq(a, new Integer(20)) == -1;
       assert ArraysMDE.indexOfEq(a, (Object) null) == -1;
-      assert ArraysMDE.indexOfEq(a, (Object) null, 1, 5) == -1; // index TODO: issue #14
+      assert ArraysMDE.indexOfEq(a, (Object) null, 1, 5) == -1;
       assert ArraysMDE.indexOfEq(a, a[0]) == 0;
       assert ArraysMDE.indexOfEq(a, a[7]) == 7;
       assert ArraysMDE.indexOfEq(a, a[9]) == 9;
