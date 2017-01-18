@@ -53,7 +53,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /*>>>
-import org.checkerframework.checker.lowerbound.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;

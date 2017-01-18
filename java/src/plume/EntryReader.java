@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 /*>>>
 import org.checkerframework.checker.lock.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */

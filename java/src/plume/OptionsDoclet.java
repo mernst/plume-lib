@@ -36,7 +36,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */

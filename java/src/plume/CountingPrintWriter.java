@@ -6,7 +6,6 @@ import java.io.Writer;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 

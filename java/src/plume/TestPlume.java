@@ -28,8 +28,6 @@ import org.junit.Test;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 import org.checkerframework.common.value.qual.*;

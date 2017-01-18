@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.interning.qual.*;
 import org.checkerframework.checker.lock.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */

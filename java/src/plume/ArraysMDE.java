@@ -16,8 +16,6 @@ import java.util.Vector;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.PolyAll;
