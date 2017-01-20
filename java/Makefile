@@ -455,6 +455,10 @@ verify-plume-jar-classfile-version:
 	if [ -s jar-contents/version-52-files.txt ] ; then echo "Version 52.0 files exist: see list in jar-contents/version-52-files.txt"; exit 1; fi
 	rm -rf jar-contents
 
+# Ensure that plume.jar does not contain JDK 8 or 9 classfiles
+verify-plume.jar:
+	echo "TODO"
+
 
 ###
 ### Lookup targets

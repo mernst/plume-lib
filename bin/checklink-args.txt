@@ -17,6 +17,10 @@
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
 # Old releases contain numerous broken links that are fixed in the current release
+--exclude-docs http://checker-framework.com/releases/
+--exclude-docs http://checker-framework.com/dev/releases/
+--exclude-docs http://checker-framework.com/jsr308/releases/
+--exclude-docs http://checker-framework.com/dev/jsr308/releases/
 --exclude-docs http://types.cs.washington.edu/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/dev/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/list-archives/
@@ -43,6 +47,7 @@
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
+--suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip
 # 303 errors may belong in the --suppress-redirect section rather than here
 --suppress-broken 303:http://dx.doi.org/10.1109/WODA.2007.3
 --suppress-broken 303:http://hdl.handle.net/2142/54893
@@ -75,6 +80,7 @@
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://courses.cs.washington.edu/courses/cse599e1/16au/csenetid/books/experimentation-in-software-engineering-2012.pdf
 --suppress-broken 403:https://galois.com/team/joe-kiniry/
+--suppress-broken 403:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip	
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 403:https://wiki.gnome.org/Apps/Dia
@@ -87,11 +93,13 @@
 --suppress-broken 403:https://www.mercurial-scm.org/wiki/NotifyExtension
 #--suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
 --suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90
+--suppress-broken 404:http://types.cs.washington.edu/plume-lib/api/resources/fonts/dejavu.css	
+--suppress-broken 404:http://types.cs.washington.edu/plume-lib/guide/collections/index.html
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles
---suppress-broken 404:https://www.happycow.net/north_america/usa/washington/seattle/
 --suppress-broken 404:http://www.juliasoft.com/
 --suppress-broken 404:https://calendar.google.com/calendar/embed?src=mernst%40cs.washington.edu&title=Michael%20Ernst&mode=WEEK
 --suppress-broken 404:https://www.google.com/calendar/embed?mode=WEEK&src=mernst%40cs.washington.edu&ctz=America/Los_Angeles
+--suppress-broken 404:https://www.happycow.net/north_america/usa/washington/seattle/
 --suppress-broken 405:http://dx.doi.org/10.1109/WODA.2007.3
 --suppress-broken 405:http://ieeexplore.ieee.org/document/4273458/?reload=true&arnumber=4273458
 --suppress-broken 405:http://aws.amazon.com/datasets
