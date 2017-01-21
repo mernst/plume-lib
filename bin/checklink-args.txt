@@ -21,6 +21,10 @@
 --exclude-docs http://checker-framework.com/dev/releases/
 --exclude-docs http://checker-framework.com/jsr308/releases/
 --exclude-docs http://checker-framework.com/dev/jsr308/releases/
+--exclude-docs https://checker-framework.com/releases/
+--exclude-docs https://checker-framework.com/dev/releases/
+--exclude-docs https://checker-framework.com/jsr308/releases/
+--exclude-docs https://checker-framework.com/dev/jsr308/releases/
 --exclude-docs http://types.cs.washington.edu/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/dev/checker-framework/releases/
 --exclude-docs http://types.cs.washington.edu/list-archives/
@@ -80,7 +84,7 @@
 --suppress-broken 403:http://www.topcoder.com/
 --suppress-broken 403:https://courses.cs.washington.edu/courses/cse599e1/16au/csenetid/books/experimentation-in-software-engineering-2012.pdf
 --suppress-broken 403:https://galois.com/team/joe-kiniry/
---suppress-broken 403:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip	
+--suppress-broken 403:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip
 --suppress-broken 403:https://norfolk.cs.washington.edu/mycse
 --suppress-broken 403:https://ugradnews.cs.washington.edu/category/research/
 --suppress-broken 403:https://wiki.gnome.org/Apps/Dia
@@ -93,7 +97,7 @@
 --suppress-broken 403:https://www.mercurial-scm.org/wiki/NotifyExtension
 #--suppress-broken 404:file://afs/csail/group/pag/software/pkg/freshmeat-submit-1.6/freshmeat-submit.html
 --suppress-broken 404:http://parks.state.wa.us/459/Blewett-I-90
---suppress-broken 404:http://types.cs.washington.edu/plume-lib/api/resources/fonts/dejavu.css	
+--suppress-broken 404:http://types.cs.washington.edu/plume-lib/api/resources/fonts/dejavu.css
 --suppress-broken 404:http://types.cs.washington.edu/plume-lib/guide/collections/index.html
 --suppress-broken 404:http://www.google.com/calendar/hosted/cs.washington.edu/embed?title=Michael%20Ernst&showPrint=0&mode=WEEK&height=600&wkst=1&bgcolor=%23FFFFFF&src=mernst%40cs.washington.edu&color=%23A32929&ctz=America%2FLos_Angeles
 --suppress-broken 404:http://www.juliasoft.com/
@@ -269,10 +273,6 @@
 # URL rather than the one it redirects to.
 --suppress-redirect http://2006.ecoop.org/->http://www.emn.fr/x-info/ecoop2006/
 --suppress-redirect http://cascade.org/->http://cascade.org/Home/
-# Temporary until checkerframework.org is the canonical website
---suppress-redirect http://checkerframework.org/->http://types.cs.washington.edu/checker-framework/
-# Don't redirect http://checker-framework.org/ because we shouldn't even be using it; it exists to catch typos.
-# --suppress-redirect http://checker-framework.org/->http://types.cs.washington.edu/checker-framework/
 --suppress-redirect http://defects4j.org/->https://github.com/rjust/defects4j
 --suppress-redirect http://doi.ieeecomputersociety.org/10.1109/TSE.2006.90->http://www.computer.org/csdl/trans/ts/2006/09/e0718-abs.html
 --suppress-redirect http://download.java.net/jdk7/binaries/->http://dlc.sun.com.edgesuite.net/jdk7/binaries/index.html
