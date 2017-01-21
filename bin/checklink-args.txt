@@ -17,14 +17,15 @@
 --exclude-docs http://homes.cs.washington.edu/~mernst/advice/agre-networking-on-the-network-20050814.html
 --exclude-docs http://types.cs.washington.edu/checker-framework/jdk-api/(javac|jdk)/
 # Old releases contain numerous broken links that are fixed in the current release
---exclude-docs http://checker-framework.com/releases/
---exclude-docs http://checker-framework.com/dev/releases/
---exclude-docs http://checker-framework.com/jsr308/releases/
---exclude-docs http://checker-framework.com/dev/jsr308/releases/
---exclude-docs http://types.cs.washington.edu/checker-framework/releases/
---exclude-docs http://types.cs.washington.edu/dev/checker-framework/releases/
---exclude-docs http://types.cs.washington.edu/list-archives/
---exclude-docs http://types.cs.washington.edu/sparta/release/versions/
+--exclude-docs https://checkerframework.org/releases/
+--exclude-docs https://checkerframework.org/dev/releases/
+--exclude-docs https://checkerframework.org/jsr308/releases/
+--exclude-docs https://checkerframework.org/dev/jsr308/releases/
+--exclude-docs https://types.cs.washington.edu/checker-framework/releases/
+--exclude-docs https://types.cs.washington.edu/dev/checker-framework/releases/
+--exclude-docs https://types.cs.washington.edu/list-archives/
+--exclude-docs https://types.cs.washington.edu/sparta/release/versions/
+--exclude-docs https://checkerframework.org/sparta/release/versions/
 --exclude-docs https://groups.csail.mit.edu/pag/cert/
 --exclude-docs mernst/(public_html/)?(meetings/ir95/|meetings/paste2005/|advice/conference/)
 --exclude-docs http://www.w3.org/1999/xhtml/vocab/
@@ -169,6 +170,9 @@
 --suppress-broken 503:https://blogs.oracle.com/jrose/entry/notes_on_an_architecture_for
 --suppress-broken 503:https://www.expedia.com/
 --suppress-broken 503:https://www.microsoft.com/mspress/books/770.aspx
+
+## Temporary:
+--suppress-fragment https://checkerframework.org/manual/#index-checker
 
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.checkerframework%22
 --suppress-fragment http://search.maven.org/#search%7Cga%7C1%7Corg.checkerframework
