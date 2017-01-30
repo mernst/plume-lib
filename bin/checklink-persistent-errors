@@ -33,9 +33,11 @@ pp = pprint.PrettyPrinter()
 
 DEBUG_PARSING = False
 DEBUG_PRINTING = False
+DEBUG_INTERSECTION = False
 # For debugging
 # DEBUG_PARSING = True
 # DEBUG_PRINTING = True
+# DEBUG_INTERSECTION = True
 
 def main():
     """Main routine for checklink-persistent-errors.
@@ -61,8 +63,11 @@ Takes 2 arguments, a basename and a number of files to read."""
         results.append(parse_checklink_output_file(this_file))
 
     urls = set(results[0].keys())
+    if DEBUG_INTERSECTION: print("initial urls = %s" % urls)
     for r in results:
+        if DEBUG_INTERSECTION: print("merging in %s" % set(r.keys()))
         urls = urls & set(r.keys())
+        if DEBUG_INTERSECTION: print("intersection (new urls) = %s" % urls)
 
     for url in sorted(urls):
         if DEBUG_PRINTING: print("processing URL: %s" % url)
