@@ -37,7 +37,7 @@ elif os.path.isfile(os.path.join(os.path.dirname(script_dir), "lib", gjf_jar_nam
 else:
     gjf_jar_path = os.path.join(script_dir, gjf_jar_name)
     urllib.urlretrieve("https://github.com/google/google-java-format/releases/download/google-java-format-1.0/google-java-format-1.0-all-deps.jar", gjf_jar_path)
-    # urllib.urlretrieve("http://types.cs.washington.edu/" + gjf_jar_name, gjf_jar_path)
+    # urllib.urlretrieve("https://types.cs.washington.edu/" + gjf_jar_name, gjf_jar_path)
 
 # For some reason, the "git ls-files" must be run from the root.
 # (I can run "git ls-files" from the command line in any directory.)

@@ -286,7 +286,7 @@ javadoc: .javadoc-timestamp
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
 
-# Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
+# Puts Javadoc at https://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
 	chgrp -R types_www api
 	chmod -R o+r api

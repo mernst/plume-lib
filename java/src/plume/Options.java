@@ -189,7 +189,7 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <p>Example clients of the Options library include {@link plume.Lookup}, <a
  * href="https://randoop.github.io/randoop/manual/#command-line-options">Randoop</a>, and <a
- * href="http://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among
+ * href="https://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among
  * many others.
  *
  * <p><b>Limitations</b>
