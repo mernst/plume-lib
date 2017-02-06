@@ -140,7 +140,6 @@
 # w3.org delays responses dramatically
 --suppress-broken 500:http://www.w3.org/TR/html4/loose.dtd
 --suppress-broken 500:http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
---suppress-broken 500:https://www.brown.edu/
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_Spring_2014
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_spring_2014_proposal_pairs
 --suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
@@ -152,7 +151,9 @@
 --suppress-broken 500:https://web.mit.edu/6.033/www/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/
 --suppress-broken 500:https://web.mit.edu/6.170/staff/staging/www/
+--suppress-broken 500:https://www.brown.edu/
 --suppress-broken 500:https://www.cs.rutgers.edu/~vinodg/papers/tdsc2011/tdsc2011.pdf
+--suppress-broken 500:https://www.dwheeler.com/sloccount/
 --suppress-broken 500:https://www.enthought.com/accounts/register/?next=/licenses/academic
 --suppress-broken 501:http://www.bizrate.com/
 --suppress-broken 501:https://web.mit.edu/21.guide/www/l-rec-wr.htm
