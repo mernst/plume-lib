@@ -808,10 +808,11 @@ public class OptionsDoclet {
     StringBuilder b = new StringBuilder();
     Tag[] tags = doc.inlineTags();
     for (Tag tag : tags) {
+      String text = tag.text().replace('#', '.'); // is this replacement always desirable?
       if (tag instanceof SeeTag) {
-        b.append("<code>" + tag.text() + "</code>");
+        b.append("<code>" + text + "</code>");
       } else {
-        b.append(tag.text());
+        b.append(text);
       }
     }
     SeeTag[] seetags = doc.seeTags();
