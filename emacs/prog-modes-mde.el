@@ -685,7 +685,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
   "Investigate Java code that does not use curly braces for compound statements.
 Works over the currently-visited tags table."
   (interactive)
-  
+
   ;; Clean up formatting of curly braces.
   ;; For example, don't put curly braces before if or else on their own line.
   (tags-query-replace "^\\( *\\)}\n *else" "\\1} else")
@@ -756,7 +756,7 @@ Works over the currently-visited tags table."
   (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
 		"\\1.\\2")
   )
-   
+
 (defun improve-javadoc-code-style ()
   "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
 
@@ -2266,10 +2266,10 @@ Use as a hook, like so:
          (cons '("^In file \\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+: .* at line \\([0-9]+\\), column \\([0-9]+\\)" 1 2 3)
                compilation-error-regexp-alist)))
 
-;; gradle leaves text in front of error message
+;; gradle leaves text in front of error message.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (cons '("^\\(?::compileTestJava\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
+         (cons '("^\\(?::compileTestJava\\|:javadoc\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
                compilation-error-regexp-alist)))
 
 
