@@ -2205,7 +2205,7 @@ public final class UtilMDE {
     }
 
     StringBuffer result = new StringBuffer();
-    /*@IndexFor("target")*/ int lastend = 0;
+    /*@ IndexFor("target")*/ int lastend = 0; // Index: TODO: issue 80 string support
     /*TODO: IndexOrLow("target")*/ int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
       result.append(target.substring(lastend, pos));
