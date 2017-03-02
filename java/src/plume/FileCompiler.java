@@ -10,8 +10,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /*>>>
-import org.checkerframework.checker.lowerbound.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */
@@ -90,8 +89,9 @@ public final class FileCompiler {
    *     the full path name or whatever is used on the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  public FileCompiler(/*@MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
-    this(compiler.toArray(new String[0]), timeLimit); // index TODO: issue #54
+    @SuppressWarnings("index") // index TODO: list support
+  public FileCompiler(/*@ MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
+    this(compiler.toArray(new String[0]), timeLimit); // index TODO: list support
   }
 
   /**
@@ -102,7 +102,7 @@ public final class FileCompiler {
    *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  @SuppressWarnings("minlen") // issue #54: List.toArray
+    @SuppressWarnings("index") // Index TODO: issue 73
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
     this(compiler.trim().split(" +"), timeLimit);
   }

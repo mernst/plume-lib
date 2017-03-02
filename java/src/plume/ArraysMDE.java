@@ -16,8 +16,6 @@ import java.util.Vector;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.PolyAll;
@@ -541,8 +539,8 @@ public final class ArraysMDE {
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
       Object elt,
-      /*@IndexFor("#1")*/ int minindex,
-      /*@IndexOrHigh("#1")*/ int indexlimit) {
+      /*@ IndexFor("#1")*/ int minindex,
+      /*@ IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -638,8 +636,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      /*@IndexFor("#1")*/ int minindex,
-      /*@IndexOrHigh("#1")*/ int indexlimit) {
+      /*@ IndexFor("#1")*/ int minindex,
+      /*@ IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
         return i;
@@ -1094,7 +1092,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ Object[] subarray(
-      /*@PolyAll*/ Object[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      /*@PolyAll*/ Object[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1127,7 +1125,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ String[] subarray(
-      /*@PolyAll*/ String[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      /*@PolyAll*/ String[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1144,7 +1142,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static byte[] subarray(
-      byte[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      byte[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     byte[] result = new byte[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1161,7 +1159,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static boolean[] subarray(
-      boolean[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      boolean[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     boolean[] result = new boolean[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1178,7 +1176,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static char[] subarray(
-      char[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      char[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     char[] result = new char[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1195,7 +1193,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static double[] subarray(
-      double[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      double[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     double[] result = new double[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1212,7 +1210,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static float[] subarray(
-      float[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      float[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     float[] result = new float[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1229,7 +1227,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static int[] subarray(
-      int[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      int[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     int[] result = new int[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1246,7 +1244,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static long[] subarray(
-      long[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      long[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     long[] result = new long[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1263,7 +1261,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static short[] subarray(
-      short[] a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      short[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     short[] result = new short[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1384,7 +1382,6 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
@@ -1410,7 +1407,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
@@ -1437,7 +1433,6 @@ public final class ArraysMDE {
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1462,7 +1457,6 @@ public final class ArraysMDE {
    * @param a_offset first index at which to search
    * @return true iff sub is a contiguous subarray of a
    */
-  @SuppressWarnings("index") // arithmetic: offset
   /*@Pure*/
   public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     int a_len = a.size() - a_offset;
@@ -1648,13 +1642,15 @@ public final class ArraysMDE {
       if (b == null) {
         return a;
       } else {
-        @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
         T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.length + b.size()];
 
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
         for (int i = 0; i < b.size(); i++) {
-          result[i + a.length] = b.get(i); // index TODO: issue #50
+	  @SuppressWarnings("index") // index TODO: list support
+	  /*@IndexFor("result")*/ int index = i + a.length;
+          result[index] = b.get(i);
         }
         return result;
       }
@@ -1683,12 +1679,14 @@ public final class ArraysMDE {
       if (b == null) {
         return toTArray(a);
       } else {
-        @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
         T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.size() + b.length];
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i = 0; i < a.size(); i++) {
-          result[i] = a.get(i); // index TODO: issue #44
+	  @SuppressWarnings("index") // index TODO: list support
+	  /*@IndexFor("result")*/ int index = i;
+          result[index] = a.get(i);
         }
         System.arraycopy(b, 0, result, a.size(), b.length);
         return result;
@@ -1705,7 +1703,6 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
-  @SuppressWarnings("index") // arithmetic: offset
   public static <T> T[] concat(/*@Nullable*/ List<T> a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -1724,11 +1721,15 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i = 0; i < a.size(); i++) {
-          result[i] = a.get(i); // index TODO: issue #44
+	  @SuppressWarnings("index") // index TODO: list support
+	  /*@IndexFor("result")*/ int index = i;
+          result[index] = a.get(i);
         }
         // System.arraycopy(b, 0, result, a.length, b.length);
         for (int i = 0; i < b.size(); i++) {
-          result[i + a.size()] = b.get(i); // index TODO: issue #50
+	  @SuppressWarnings("index") // index TODO: list support
+	  /*@IndexFor("result")*/ int index = i + a.size();
+          result[index] = b.get(i); 
         }
         return result;
       }
@@ -2745,14 +2746,14 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
-  public static int[] fn_compose(/*@IndexFor("#2")*/ int[] a, int[] b) {
+  public static int[] fn_compose(/*@IndexOrLow("#2")*/int[] a, int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       int inner = a[i];
       if (inner == -1) {
         result[i] = -1;
       } else {
-        result[i] = b[inner];
+	  result[i] = b[inner];
       }
     }
     return result;

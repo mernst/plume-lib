@@ -217,7 +217,7 @@ public class FuzzyFloat {
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
-  @SuppressWarnings("index") // arithmetic: offest in array indices
+  @SuppressWarnings("index") // Index todo: Imprecision with offsets
   public int indexOf(double[] a, double[] sub) {
 
     int a_index_max = a.length - sub.length;
@@ -225,7 +225,7 @@ public class FuzzyFloat {
     outer:
     for (int i = 0; i <= a_index_max; i++) {
       for (int j = 0; j < sub.length; j++) {
-        if (ne(a[i + j], sub[j])) { // index TODO: issue #75
+        if (ne(a[i + j], sub[j])) {
           continue outer;
         }
       }

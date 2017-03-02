@@ -53,7 +53,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /*>>>
-import org.checkerframework.checker.lowerbound.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
@@ -91,7 +91,7 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
+  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, /*@NonNegative*/int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
     // 1. a.clone().and(b).cardinality()
@@ -127,7 +127,7 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
+  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, /*@NonNegative*/int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -2730,7 +2730,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
    */
-  public static String rpad(int num, int length) {
+    public static String rpad(int num, /*@NonNegative*/ int length) {
     return rpad(String.valueOf(num), length);
   }
 
@@ -2741,7 +2741,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
    */
-  public static String rpad(double num, int length) {
+    public static String rpad(double num, /*@NonNegative*/ int length) {
     return rpad(String.valueOf(num), length);
   }
 

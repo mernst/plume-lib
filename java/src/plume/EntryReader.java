@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 /*>>>
 import org.checkerframework.checker.lock.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 */
@@ -301,12 +301,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
 
     @Override
-    public /*@GTENegativeOne*/ int read(char[] cbuf) {
+    public /*@IndexOrLow("#1")*/ int read(char[] cbuf) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public /*@GTENegativeOne*/ int read(char[] cbuf, int off, int len) {
+    public /*@IndexOrLow("#1")*/ int read(char[] cbuf, int off, int len) {
       throw new Error("DummyReader");
     }
 
@@ -734,7 +734,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return the current line number
    */
   @Override
-  public int getLineNumber() {
+  public /*@NonNegative*/ int getLineNumber() {
     FlnReader ri = readers.peek();
     if (ri == null) {
       throw new Error("Past end of input");
@@ -748,7 +748,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param lineNumber new line number for the current file
    */
   @Override
-  public void setLineNumber(int lineNumber) {
+  public void setLineNumber(/*@NonNegative*/ int lineNumber) {
     FlnReader ri = readers.peek();
     if (ri == null) {
       throw new Error("Past end of input");
@@ -806,7 +806,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   }
   /** Read characters into a portion of an array. */
   @Override
-  public /*@GTENegativeOne*/ int read(char[] cbuf, int off, int len) {
+  public /*@IndexOrLow("#1")*/ int read(char[] cbuf, int off, int len) {
     throw new Error("not yet implemented");
   }
   /** Reset the stream to the most recent mark. */

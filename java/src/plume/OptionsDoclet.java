@@ -36,7 +36,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -221,6 +221,7 @@ public class OptionsDoclet {
    * @param root the root document
    * @return true if processing completed without an error
    */
+  @SuppressWarnings("index") // com.sun.javadoc.RootDoc#options needs an annotation
   public static boolean start(RootDoc root) {
     List<Object> objs = new ArrayList<Object>();
     for (ClassDoc doc : root.specifiedClasses()) {
@@ -611,6 +612,7 @@ public class OptionsDoclet {
    * @param refillWidth the number of columns to fit the text into, by breaking lines
    * @return the HTML documentation for the underlying options instance
    */
+  @SuppressWarnings("index") // com.sun.javadoc.RootDoc#classes needs an annotation
   public String optionsToHtml(int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 

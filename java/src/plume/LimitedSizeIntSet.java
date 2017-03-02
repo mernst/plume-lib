@@ -6,8 +6,6 @@ import java.util.List;
 /*>>>
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -47,14 +45,14 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @param max_values the maximum number of values this set will be able to hold
    */
+    @SuppressWarnings("index") // index TODO: issue #66
   public LimitedSizeIntSet(/*@Positive*/ int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
     values = new int[max_values]; // index TODO: issue #66
-    num_values = 0; // index TODO: issue #14
+    num_values = 0;
   }
 
-  @SuppressWarnings("index") // num_values may or may not be an index
   public void add(int elt) {
     if (repNulled()) {
       return;
@@ -67,7 +65,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
       nullRep();
       return;
     }
-    values[num_values] = elt; // index TODO: issue #64
+    values[num_values] = elt;
     num_values++;
   }
 

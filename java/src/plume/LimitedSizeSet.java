@@ -6,8 +6,6 @@ import java.util.List;
 /*>>>
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
-import org.checkerframework.checker.minlen.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
@@ -34,19 +32,20 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   /** The number of active elements (equivalently, the first unused index). */
   // Not exactly @IndexOrHigh("values"), because the values field can get
   // nulled.  But that should be permitted by the type system.
-  /*@IndexOrHigh("values")*/ int num_values;
+  /*@IndexOrHigh("this.values")*/ int num_values;
 
   /**
    * Create a new LimitedSizeSet that can hold max_values values.
    *
    * @param max_values the maximum number of values this set will be able to hold
    */
+    @SuppressWarnings("index") //Index: TODO: issue #66
   public LimitedSizeSet(/*@Positive*/ int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
     /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
-    values = new_values_array;
+    values = new_values_array; //Index: TODO: issue #66
     num_values = 0;
   }
 
@@ -127,7 +126,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
-  public int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+    public @IndexOrHigh("this.values") int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return num_values;
   }
 
@@ -137,6 +136,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
+  @SuppressWarnings("index")  // index TODO: need EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;        // index TODO: need EnsuresQualifierIf with annotation argument
@@ -160,6 +160,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
+    @SuppressWarnings("index") // nulling the rep breaks the invariant
   private void nullRep() {
     if (repNulled()) {
       return;

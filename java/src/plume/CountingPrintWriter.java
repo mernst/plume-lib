@@ -6,7 +6,6 @@ import java.io.Writer;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.checker.lowerbound.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
@@ -404,8 +403,8 @@ public class CountingPrintWriter extends PrintWriter {
    * @param len number of characters to write
    */
   public void write(
-      String s, /*@IndexFor("#1")*/ int off, /*@IndexFor("#1")*/ int len) { // index TODO: issue #61
-    writtenBytes += countBytes(s.substring(off, off + len)); // index TODO: issue #53
+      String s, /*@ IndexFor("#1")*/ int off, /*@ IndexFor("#1")*/ int len) { // index TODO: issue #80
+    writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);
   }
