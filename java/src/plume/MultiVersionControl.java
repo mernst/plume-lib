@@ -25,6 +25,7 @@ import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNWCClient;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.initialization.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.index.qual.*;
@@ -651,7 +652,7 @@ public class MultiVersionControl {
           currentRootIsRepos = false;
           // If the CVSROOT is remote, try to make it local.
           if (currentRoot.startsWith(":ext:")) {
-            @SuppressWarnings("minlen") // substring check ensures split returns non-empty array
+            @SuppressWarnings("index") // substring check ensures split returns non-empty array
             String /*@MinLen(1)*/[] rootWords = currentRoot.split(":");
             String possibleRoot = rootWords[rootWords.length - 1];
             if (new File(possibleRoot).isDirectory()) {

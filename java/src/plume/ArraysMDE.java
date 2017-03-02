@@ -1110,7 +1110,7 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static <T> List<T> subarray(
-      List<T> a, /*@NonNegative*/ int startindex, /*@NonNegative*/ int length) {
+      List<T> a, /*@IndexFor("#1")*/ int startindex, /*@IndexOrHigh("#1")*/ int length) {
     return a.subList(startindex, startindex + length);
   }
 
@@ -1277,18 +1277,17 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (!Objects.equals(sub[i], a[a_offset + i])) { // index TODO: issue #75
         return false;
       }
@@ -1302,18 +1301,17 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1327,19 +1325,18 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
   /*@Pure*/
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (!Objects.equals(sub.get(i), a[a_offset + i])) { // index TODO: issue #75
         return false;
       }
@@ -1353,18 +1350,17 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (sub.get(i) != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1376,21 +1372,20 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using the equals method.
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
   /*@Pure*/
   public static boolean isSubarray(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (!Objects.equals(sub[i], a.get(a_offset + i))) {
         return false;
       }
@@ -1402,20 +1397,19 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using == (not the equals method).
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
       List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a.get(a_offset + i)) {
         return false;
       }
@@ -1427,20 +1421,19 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using the equals method.
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
    */
   /*@Pure*/
   public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (!Objects.equals(sub.get(i), a.get(a_offset + i))) {
         return false;
       }
@@ -1452,19 +1445,18 @@ public final class ArraysMDE {
    * Determines whether the second array is a subarray of the first, starting at the specified index
    * of the first, testing for equality using == (not the equals method).
    *
-   * @param a an array
+   * @param a a list
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.size() - a_offset;
-    int sub_len = sub.size();
-    if (a_len < sub_len) {
+    if (a_offset + sub.size() > a.size()) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.size(); i++) {
       if (sub.get(i) != a.get(a_offset + i)) {
         return false;
       }
@@ -1478,17 +1470,16 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1502,17 +1493,16 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1526,17 +1516,16 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -1550,17 +1539,16 @@ public final class ArraysMDE {
    *
    * @param a an array
    * @param sub subsequence to search for
-   * @param a_offset first index at which to search
+   * @param a_offset first index at which to search. Must be non-negative. The routine works and
+   *     returns false even if {@code a_affset} is too large to be a valid index for {@code a}.
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
   public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
-    int a_len = a.length - a_offset;
-    int sub_len = sub.length;
-    if (a_len < sub_len) {
+    if (a_offset + sub.length > a.length) {
       return false;
     }
-    for (int i = 0; i < sub_len; i++) {
+    for (int i = 0; i < sub.length; i++) {
       if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
         return false;
       }
@@ -2877,7 +2865,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2911,7 +2899,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2946,7 +2934,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -2982,7 +2970,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3033,7 +3021,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3089,7 +3077,7 @@ public final class ArraysMDE {
      * Compare two arrays lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3146,7 +3134,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3159,7 +3147,7 @@ public final class ArraysMDE {
         return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
-        if (a1[i] != a2[i]) { // index TODO: issue #49
+        if (a1[i] != a2[i]) {
           return ((a1[i] > a2[i]) ? 1 : -1);
         }
       }
@@ -3183,7 +3171,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3220,7 +3208,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3240,7 +3228,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         T elt1 = a1[i];
-        T elt2 = a2[i]; // index TODO: issue #49
+        T elt2 = a2[i];
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;
@@ -3278,7 +3266,7 @@ public final class ArraysMDE {
      * Compare two arrays by length, then lexically (element-by-element).
      *
      * @param a1 first array to compare
-     * @param a2 first array to compare
+     * @param a2 second array to compare
      * @return a negative integer, zero, or a positive integer, depending on whether the first
      *     argument is less than, equal to, or greater than the second argument
      */
@@ -3298,7 +3286,7 @@ public final class ArraysMDE {
       }
       for (int i = 0; i < a1.length; i++) {
         Object elt1 = a1[i];
-        Object elt2 = a2[i]; // index TODO: issue #49
+        Object elt2 = a2[i];
         // Make null compare smaller than anything else
         if ((elt1 == null) && (elt2 == null)) {
           continue;

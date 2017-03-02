@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
@@ -27,6 +26,7 @@ import net.fortuna.ical4j.model.PeriodList;
 import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
 import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
+import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VFreeBusy;
 import net.fortuna.ical4j.model.parameter.FbType;
@@ -441,15 +441,15 @@ public final class ICalAvailable {
       if (debug) {
         System.out.println("Request = " + request);
       }
-      ComponentList busyTimes = new ComponentList();
+      ComponentList<CalendarComponent> busyTimes = new ComponentList<CalendarComponent>();
       // Problem:  any all-day events will be treated as UTC.
       // Instead, they should be converted to local time (tz1).
       // But VFreeBusy does not support this, so I may need to convert
       // daily events into a different format before inserting them.
       for (Calendar calendar : calendars) {
         // getComponents() returns a raw ArrayList.  Expose its element type.
-        ArrayList</*@NonNull*/ Component> clist = calendar.getComponents();
-        for (Component c : clist) {
+        ArrayList</*@NonNull*/ CalendarComponent> clist = calendar.getComponents();
+        for (CalendarComponent c : clist) {
           if (c instanceof VEvent) {
             VEvent v = (VEvent) c;
             DtStart dts = v.getStartDate();

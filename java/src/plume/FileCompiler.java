@@ -104,7 +104,7 @@ public final class FileCompiler {
    */
     @SuppressWarnings("index") // Index TODO: issue 73
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
-    this(compiler.trim().split(" +"), timeLimit);
+    this(compiler.trim().split(" +"), timeLimit); // index TODO: issue #54
   }
 
   /**

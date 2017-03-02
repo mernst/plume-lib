@@ -21,7 +21,25 @@ ifndef JAVA_HOME
   I_set_JAVA_HOME := true
 endif
 
-TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
+# Use tools.jar file from JDK 7, so plume.jar can be run on a Java 7 JVM.
+# Hacks hard-coded for developers' file systems.
+ifneq ("$(wildcard /homes/gws/markro/jdk7)","")
+  TOOLS_JAR_7 ?= /homes/gws/markro/jdk7/lib/tools.jar
+endif
+ifneq ("$(wildcard ${HOME}/java/jdk7)","")
+  TOOLS_JAR_7 ?= ${HOME}/java/jdk7/lib/tools.jar
+endif
+ifdef TOOLS_JAR_7
+  ifeq (cygwin,$(OSTYPE))
+    TOOLS_JAR_7 := $(shell cygpath -w $(TOOLS_JAR_7))
+  endif
+endif
+
+ifdef TOOLS_JAR_7
+  TOOLS_JAR ?= ${TOOLS_JAR_7}
+else
+  TOOLS_JAR ?= ${JAVA_HOME}/lib/tools.jar
+endif
 
 ifeq ($(UNAME_S),Darwin)
   READLINK_F := readlink
@@ -55,21 +73,10 @@ else
   endif
 endif
 
-# Hack hard-coded for UW CSE file system
-ifneq ("$(wildcard /homes/gws/markro/jdk7)","")
-  TOOLS_JAR_7 ?= /homes/gws/markro/jdk7/lib/tools.jar
-endif
-# tools.jar file from JDK 7, so plume.jar is can be run on Java 7 JVM.
-TOOLS_JAR_7 ?= ${TOOLS_JAR}
-ifeq (cygwin,$(OSTYPE))
-  TOOLS_JAR_7 := $(shell cygpath -w $(TOOLS_JAR_7))
-endif
-
-
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.1.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang-2.6.jar:lib/commons-lang3-3.4.jar:lib/commons-logging-1.2.jar:lib/guava-19.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-1.0.6.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.6.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.5.jar:lib/commons-logging-1.2.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/slf4j-api-1.7.22.jar:lib/slf4j-simple-1.6.6.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -159,7 +166,7 @@ endif
 # and -AsuggestPureMethods are fixed, they can be run on plume-lib and Daikon and this
 # can be removed. This warning is issued by the Lock Checker when a method calls another
 # method with a weaker side effect guarantee.
-# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.index.IndexChecker
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.index.IndexChecker
 
 ## For testing a single checker, replace the above by:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
@@ -347,7 +354,7 @@ endif
 # The make program has serious problems with filenames containing spaces, unfortunately.
 ${TOOLS_JAR}:
 	@echo "Cannot find tools.jar at ${TOOLS_JAR}"
-	@echo "Please set JAVA_HOME and/or TOOLS_JAR"
+	@echo "Please set one of JAVA_HOME, TOOLS_JAR, or TOOLS_JAR_7"
 # Cause the Make job to fail
 	@false
 
@@ -360,6 +367,7 @@ showvars:
 	@echo JAVAC_COMMAND = $(JAVAC_COMMAND)
 	@echo JAVACHECK_COMMAND = $(JAVACHECK_COMMAND)
 	@echo JDK_HOME = $(JDK_HOME)
+	@echo TOOLS_JAR_7 = $(TOOLS_JAR_7)
 	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
 # Long output
@@ -412,23 +420,24 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.1.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
-# ical4j 1.0.6 requrires the legacy library commons-lang-2.6.jar
-	(cd jar-contents; "${JAR}" xf ../lib/commons-lang-2.6.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.4.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.5.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/guava-19.0.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/ical4j-1.0.6.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/guava-20.0.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/ical4j-2.0.0.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
 # Do not include junit.jar in plume.jar; JUnit is needed only for testing
 #	(cd jar-contents; "${JAR}" xf ../lib/hamcrest-core-1.3.jar)
 #	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
+# ical4j-2.0.0 requrires slf4j
+	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.22.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.6.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
-	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR_7)" com/sun/javadoc)
+	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
@@ -445,6 +454,10 @@ verify-plume-jar-classfile-version:
 	(cd jar-contents; find . -type f -name '*.class' | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
 	if [ -s jar-contents/version-52-files.txt ] ; then echo "Version 52.0 files exist: see list in jar-contents/version-52-files.txt"; exit 1; fi
 	rm -rf jar-contents
+
+# Ensure that plume.jar does not contain JDK 8 or 9 classfiles
+verify-plume.jar:
+	echo "TODO"
 
 
 ###

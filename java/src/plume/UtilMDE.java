@@ -91,7 +91,7 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, /*@NonNegative*/int i) {
+  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, /*@NonNegative*/ int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
     // 1. a.clone().and(b).cardinality()
@@ -2205,8 +2205,8 @@ public final class UtilMDE {
     }
 
     StringBuffer result = new StringBuffer();
-    int lastend = 0;
-    int pos;
+    /*@IndexFor("target")*/ int lastend = 0;
+    /*TODO: IndexOrLow("target")*/ int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
       result.append(target.substring(lastend, pos));
       result.append(newStr);
@@ -2730,7 +2730,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
    */
-    public static String rpad(int num, /*@NonNegative*/ int length) {
+  public static String rpad(int num, /*@NonNegative*/ int length) {
     return rpad(String.valueOf(num), length);
   }
 
@@ -2741,7 +2741,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
    */
-    public static String rpad(double num, /*@NonNegative*/ int length) {
+  public static String rpad(double num, /*@NonNegative*/ int length) {
     return rpad(String.valueOf(num), length);
   }
 
