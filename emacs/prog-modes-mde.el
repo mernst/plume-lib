@@ -2269,7 +2269,7 @@ Use as a hook, like so:
 ;; gradle leaves text in front of error message.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (cons '("^\\(?::compileTestJava\\|:javadoc\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
+         (cons '("^\\(?::[a-zA-Z]+\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
                compilation-error-regexp-alist)))
 
 
