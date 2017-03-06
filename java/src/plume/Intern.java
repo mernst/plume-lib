@@ -69,7 +69,7 @@ public final class Intern {
       // nothing to do
       return true;
     } else if (value instanceof String) {
-      @SuppressWarnings("index") // Index TODO: Issue 112
+      @SuppressWarnings("index") // Index TODO: issue 112
       boolean res = (value == ((String) value).intern());
       return res;
     } else if (value instanceof String[]) {
