@@ -85,7 +85,7 @@ public final class Stopwatch {
   }
 
   public String format() {
-    return format(1); // index TODO: issue #67
+    return format(1);
   }
 
   public String format(/*@IndexFor("Stopwatch.timeFormat")*/ int digits) {

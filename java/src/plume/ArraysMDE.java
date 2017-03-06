@@ -1288,7 +1288,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.length; i++) {
-      if (!Objects.equals(sub[i], a[a_offset + i])) { // index TODO: issue #75
+      if (!Objects.equals(sub[i], a[a_offset + i])) {
         return false;
       }
     }
@@ -1312,7 +1312,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.length; i++) {
-      if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
+      if (sub[i] != a[a_offset + i]) {
         return false;
       }
     }
@@ -1337,7 +1337,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.size(); i++) {
-      if (!Objects.equals(sub.get(i), a[a_offset + i])) { // index TODO: issue #75
+      if (!Objects.equals(sub.get(i), a[a_offset + i])) {
         return false;
       }
     }
@@ -1361,7 +1361,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.size(); i++) {
-      if (sub.get(i) != a[a_offset + i]) { // index TODO: issue #75
+      if (sub.get(i) != a[a_offset + i]) {
         return false;
       }
     }
@@ -1480,7 +1480,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.length; i++) {
-      if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
+      if (sub[i] != a[a_offset + i]) {
         return false;
       }
     }
@@ -1503,7 +1503,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.length; i++) {
-      if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
+      if (sub[i] != a[a_offset + i]) {
         return false;
       }
     }
@@ -1526,7 +1526,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.length; i++) {
-      if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
+      if (sub[i] != a[a_offset + i]) {
         return false;
       }
     }
@@ -1549,7 +1549,7 @@ public final class ArraysMDE {
       return false;
     }
     for (int i = 0; i < sub.length; i++) {
-      if (sub[i] != a[a_offset + i]) { // index TODO: issue #75
+      if (sub[i] != a[a_offset + i]) {
         return false;
       }
     }
