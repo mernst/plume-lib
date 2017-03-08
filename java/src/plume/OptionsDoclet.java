@@ -628,15 +628,14 @@ public class OptionsDoclet {
         b.append("      <ul>");
         b.append(optionListToHtml(gi.optionList, 12, 8, refillWidth));
         b.append("      </ul>");
-        b.append("");
         // b.append("  </li>");
       }
     }
     b.append("</ul>");
-    b.append("");
 
     for (Options.OptionInfo oi : options.getOptions()) {
       if (oi.list != null && !oi.unpublicized) {
+        b.append("");
         b.append(LIST_HELP);
         break;
       }
@@ -788,7 +787,7 @@ public class OptionsDoclet {
         // b.append("</li>");
         b.append(eol);
       }
-      b.append("</ul>").append(eol).append(eol);
+      b.append("</ul>").append(eol);
     }
     return b.toString();
   }
