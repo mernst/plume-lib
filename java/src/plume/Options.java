@@ -195,19 +195,19 @@ import org.checkerframework.dataflow.qual.*;
  * <p><b>Limitations</b>
  *
  * <ul>
- *   <li> Short options are only supported as separate entries (e.g., "-a -b") and not as a single
+ *   <li>Short options are only supported as separate entries (e.g., "-a -b") and not as a single
  *       group (e.g., "-ab").
- *   <li> Not all primitive types are supported.
- *   <li> Types without a constructor that takes a single <code>String</code> argument are not
+ *   <li>Not all primitive types are supported.
+ *   <li>Types without a constructor that takes a single <code>String</code> argument are not
  *       supported.
- *   <li> The "--no-long" option to turn off a boolean option named "long" is not supported; use
+ *   <li>The "--no-long" option to turn off a boolean option named "long" is not supported; use
  *       "--long=false" instead.
  * </ul>
  *
  * <p><b>Possible enhancements</b>
  *
  * <ul>
- *   <li> Positional arguments (non-options that must be provided in a given order) could be
+ *   <li>Positional arguments (non-options that must be provided in a given order) could be
  *       supported.
  * </ul>
  *

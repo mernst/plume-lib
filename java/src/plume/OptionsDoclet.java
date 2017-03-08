@@ -54,7 +54,7 @@ import org.checkerframework.checker.signature.qual.*;
  * <p>The following doclet options are supported:
  *
  * <ul>
- *   <li> <b>-docfile</b> <i>file</i> When specified, the output of this doclet is the result of
+ *   <li><b>-docfile</b> <i>file</i> When specified, the output of this doclet is the result of
  *       replacing everything between the two lines
  *       <pre>&lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
  *       and
@@ -62,20 +62,20 @@ import org.checkerframework.checker.signature.qual.*;
  *       in <i>file</i> with the options documentation. This can be used for inserting option
  *       documentation into an existing manual. The existing docfile is not modified; output goes to
  *       the <code>-outfile</code> argument, or to standard out.
- *   <li> <b>-outfile</b> <i>file</i> The destination for the output (the default is standard out).
+ *   <li><b>-outfile</b> <i>file</i> The destination for the output (the default is standard out).
  *       If both <code>-outfile</code> and <code>-docfile</code> are specified, they must be
  *       different. When <code>-d</code> is used, the output is written to a file with the given
  *       name relative to that destination directory.
- *   <li> <b>-d</b> <i>directory</i> The destination directory for the output file. Only used if
+ *   <li><b>-d</b> <i>directory</i> The destination directory for the output file. Only used if
  *       <code>-outfile</code> is used, in which case, the file is written in this directory.
  *       Otherwise, this option is ignored.
- *   <li> <b>-i</b> Specifies that the docfile should be edited in-place. This option can only be
+ *   <li><b>-i</b> Specifies that the docfile should be edited in-place. This option can only be
  *       used if the <code>-docfile</code> option is used, and may not be used at the same time as
  *       the <code>-outfile</code> option.
- *   <li> <b>-format</b> <i>format</i> This option sets the output format of this doclet. Currently,
+ *   <li><b>-format</b> <i>format</i> This option sets the output format of this doclet. Currently,
  *       the following values for <i>format</i> are supported:
  *       <ul>
- *         <li> <b>javadoc</b> When this format is specified, the output of this doclet is formatted
+ *         <li><b>javadoc</b> When this format is specified, the output of this doclet is formatted
  *             as a Javadoc comment. This is useful for including option documentation inside Java
  *             source code. When this format is used with the <code>-docfile</code> option, the
  *             generated documentation is inserted between the lines
@@ -84,14 +84,13 @@ import org.checkerframework.checker.signature.qual.*;
  *             <pre>* &lt;!-- end options doc --&gt;</pre>
  *             using the same indentation. Inline {@code @link} and {@code @see} tags in the Javadoc
  *             input are left untouched.
- *         <li> <b>html</b> This format outputs HTML for general-purpose use, meaning inline
+ *         <li><b>html</b> This format outputs HTML for general-purpose use, meaning inline
  *             {@code @link} and {@code @see} tags in the Javadoc input are suitably replaced. This
  *             is the default output format and does not need to be specified explicitly.
  *       </ul>
- *
- *   <li> <b>-classdoc</b> When specified, the output of this doclet includes the class
- *       documentation of the first class specified on the command-line.
- *   <li> <b>-singledash</b> When specified, <code>use_single_dash(true)</code> is called on the
+ *   <li><b>-classdoc</b> When specified, the output of this doclet includes the class documentation
+ *       of the first class specified on the command-line.
+ *   <li><b>-singledash</b> When specified, <code>use_single_dash(true)</code> is called on the
  *       underlying instance of Options used to generate documentation. See {@link
  *       plume.Options#use_single_dash(boolean)}.
  * </ul>
