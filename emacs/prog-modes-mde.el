@@ -2092,7 +2092,7 @@ in this directory or some superdirectory."
                (setq compile-command (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn ")))))
+             (setq compile-command "mvn package")))))
 (add-hook 'find-file-hooks 'set-compile-command-for-directory)
 (add-hook 'dired-mode-hook 'set-compile-command-for-directory)
 (add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
