@@ -907,13 +907,13 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly. This method splits the argument string
-   * into command-line arguments, respecting single and double quotes, then calls {@link
-   * #parse(String[])}.
+   * Parses a command line and sets the options accordingly.
    *
    * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
    * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
-   * the <code>premain</code> method of a Java agent.
+   * the <code>premain</code> method of a Java agent. This method splits the argument string into
+   * command-line arguments, respecting single and double quotes, then calls {@link
+   * #parse(String[])}.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -962,9 +962,11 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly. If an error occurs, prints the usage
-   * message and terminates the program. The program is terminated rather than throwing an error to
-   * create cleaner output.
+   * Parses a command line and sets the options accordingly. Returns non-option arguments.
+   *
+   * <p>If an error occurs, prints the usage message that was passed into the constructor, then
+   * terminates the program. The program is terminated rather than throwing an error to create
+   * cleaner output.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -990,16 +992,17 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly. If an error occurs, prints the usage
-   * message and terminates the program. The program is terminated rather than throwing an error to
-   * create cleaner output.
+   * Parses a command line and sets the options accordingly. Returns non-option arguments.
    *
-   * <p>This method splits the argument string into command-line arguments, respecting single and
-   * double quotes, then calls {@link #parse_or_usage(String[])}.
+   * <p>If an error occurs, prints the usage message that was passed into the constructor, then
+   * terminates the program. The program is terminated rather than throwing an error to create
+   * cleaner output.
    *
-   * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
-   * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
-   * the <code>premain</code> method of a Java agent.
+   * <p>{@link #parse_or_usage(String[])} is usually a better method to call. This one is
+   * appropriate when the <code>String[]</code> version of the arguments is not available &mdash;
+   * for example, for the <code>premain</code> method of a Java agent. This method splits the
+   * argument string into command-line arguments, respecting single and double quotes, then calls
+   * {@link #parse_or_usage(String[])}.
    *
    * @param args the command line to parse
    * @return all non-option arguments
