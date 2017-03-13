@@ -2076,9 +2076,10 @@ in this directory or some superdirectory."
              (setq compile-command "ant -e -find build.xml "))
             ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
-             (if (file-readable-p "gradlew")
-                 (setq compile-command "./gradlew ")
-               (setq compile-command "gradle ")))
+	     (let ((gradle-command (if (file-readable-p "gradlew")
+				       (setq compile-command "./gradlew ")
+				     (setq compile-command "gradle "))))
+	       (setq compile-command (concat gradle-command " build"))))
             ((file-in-super-directory "build.gradle" default-directory)
              (let* ((buildfile (file-in-super-directory
                                "build.gradle" default-directory))
@@ -2089,7 +2090,8 @@ in this directory or some superdirectory."
                            gradlew
                          "gradle"))))
                (make-local-variable 'compile-command)
-               (setq compile-command (concat gradle-command " -b " buildfile " build"))))
+               (setq compile-command
+		     (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
              (setq compile-command "mvn package")))))
