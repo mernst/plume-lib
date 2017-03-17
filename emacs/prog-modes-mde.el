@@ -2077,8 +2077,8 @@ in this directory or some superdirectory."
             ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
 	     (let ((gradle-command (if (file-readable-p "gradlew")
-				       (setq compile-command "./gradlew ")
-				     (setq compile-command "gradle "))))
+				       (setq compile-command "./gradlew")
+				     (setq compile-command "gradle"))))
 	       (setq compile-command (concat gradle-command " build"))))
             ((file-in-super-directory "build.gradle" default-directory)
              (let* ((buildfile (file-in-super-directory
