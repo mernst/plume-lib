@@ -27,9 +27,10 @@ import org.checkerframework.framework.qual.IgnoreInWholeProgramInference;
  *       type (e.g., '&lt;filename&gt;' if the variable's type is String). The less-than and
  *       greater-than symbols are required.
  *   <li>'description' is a short (one-line) description of the option suitable for a usage message.
- *       By convention, it does not end with a period. The field's Javadoc comment should contain a
- *       longer description appropriate for a manual or manpage. The Javadoc comment often repeats
- *       something similar to the <code>@Option</code> description.
+ *       By convention, it starts with a capital letter but does not end with a period. The field's
+ *       Javadoc comment should contain a longer description appropriate for a manual or manpage.
+ *       The Javadoc comment often repeats something similar to the <code>@Option</code>
+ *       description.
  * </ul>
  *
  * <p>The command-line options are processed by the {@link plume.Options} class. For example usage,
