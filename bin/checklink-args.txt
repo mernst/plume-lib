@@ -41,16 +41,17 @@
 --suppress-broken 302:http://dx.doi.org/10.1109/2.59
 --suppress-broken 302:http://dx.doi.org/10.1109/WODA.2007.3
 --suppress-broken 302:http://ieeexplore.ieee.org/
+--suppress-broken 302:http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7387744
 --suppress-broken 302:http://www.dofactory.com/net/design-patterns
 --suppress-broken 302:http://www.edwardxwu.com/
 --suppress-broken 302:http://www.facebook.com/note.php?note_id=469716398919
---suppress-broken 302:http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7387744
 --suppress-broken 302:http://www.nytimes.com/2011/04/03/business/03stream.html
 --suppress-broken 302:http://www.nytimes.com/2011/09/30/science/30twitter.html
 --suppress-broken 302:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
+--suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.10/randoop-3.0.10.zip
 --suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip
 --suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.9/randoop-3.0.9.zip
---suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.10/randoop-3.0.10.zip
+--suppress-broken 302:https://www.mpi-sws.org/~roseh/JobSearch.html
 # 303 errors may belong in the --suppress-redirect section rather than here
 --suppress-broken 303:http://dx.doi.org/10.1109/WODA.2007.3
 --suppress-broken 303:http://hdl.handle.net/2142/54893
