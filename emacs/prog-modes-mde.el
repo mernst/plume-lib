@@ -792,6 +792,13 @@ Works over the currently-visited tags table."
   (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
   )
 
+;; Java stack trace, as printed by a program
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+         (append
+          (list '("\\(?:^[ ][ ]\\|; Stack trace: \\)[A-Za-z0-9_.]+(\\([A-Za-z0-9_.]+\\):\\([0-9]+\\))$" 1 2))
+          compilation-error-regexp-alist)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Java debugging
@@ -1574,6 +1581,7 @@ otherwise, raise an error after the first problem is encountered."
 ;;         (cons (substitute-in-file-name "$HOME/emacs/auctex-11.85/doc")
 ;;               Info-directory-list))))
 
+;; Python error messages
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (append '(("^ *File \"\\(.*\\)\", line \\([0-9]+\\)" 1 2)
