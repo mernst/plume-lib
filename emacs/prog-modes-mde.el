@@ -2165,6 +2165,7 @@ Use as a hook, like so:
            (setq dir (replace-regexp-in-string "_" "-" dir))
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
+	;; Checker Framework demos
 ;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
 ;;       (make-local-variable 'compile-command)
 ;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
@@ -2195,6 +2196,12 @@ Use as a hook, like so:
                 (not (search-forward "executeQuery(constructQuery" nil t))))
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml pblog-tainting"))
+        ((and buffer-file-name
+              (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "make typecheck-only"))
+	;; end of Checker Framework demos
+
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
          (make-local-variable 'compile-command)
          (setq compile-command "make -C ../../.. doc/en/user-guide/index.html"))
