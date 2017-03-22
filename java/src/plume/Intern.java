@@ -433,10 +433,10 @@ public final class Intern {
   }
 
   /**
-   * Interns a String. Delegates to the builtin String.intern() method. Provided for completeness.
+   * Interns a String. Delegates to the builtin String.intern() method, but handles {@code null}.
    *
-   * @param a the string to intern
-   * @return an interned version of the argument
+   * @param a the string to intern; may be null
+   * @return an interned version of the argument, or null if the argument was null
    */
   /*@Pure*/
   public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
