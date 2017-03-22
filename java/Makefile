@@ -541,6 +541,12 @@ typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
 # Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
 	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}"
 
+# This does pluggable type-checking without compiling the code.
+typecheck-only checkers-only check-types-only: ${JAVA_AND_CPP_FILES}
+	\rm -f .class-files-timestamp
+# Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
+	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}" .class-files-timestamp
+
 # I have not found this tool very useful.
 checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
