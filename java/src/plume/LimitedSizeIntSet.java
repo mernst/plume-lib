@@ -10,8 +10,9 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * LimitedSizeIntSet stores up to some maximum number of unique integer values, at which point its
- * rep is nulled, in order to save space.
+ * LimitedSizeIntSet stores up to some maximum number of unique values. If more than that many
+ * elements are added, then functionality is degraded: most operations return a conservative
+ * estimate (because the internal representation is nulled, in order to save space).
  *
  * <p>The advantage of this class over {@code LimitedSizeSet<Integer>} is that it does not autobox
  * the int values, so it takes less memory.
@@ -50,7 +51,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   public void add(int elt) {
-    if (values == null) {
+    if (repNulled()) {
       return;
     }
 
@@ -58,8 +59,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
       return;
     }
     if (num_values == values.length) {
-      values = null;
-      num_values++;
+      nullRep();
       return;
     }
     values[num_values] = elt;
@@ -76,23 +76,23 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
       return;
     }
     if (s.repNulled()) {
-      int values_length = values.length;
       // We don't know whether the elements of this and the argument were
       // disjoint.  There might be anywhere from max(size(), s.size()) to
       // (size() + s.size()) elements in the resulting set.
-      if (s.size() > values_length) {
-        num_values = values_length + 1;
-        values = null;
+      if (s.size() > values.length) {
+        nullRep();
         return;
       } else {
         throw new Error(
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
+    // s.values isn't modified by the call to add.  Until
+    // https://github.com/typetools/checker-framework/issues/984 is fixed,
+    // use a local variable which the Checker Framework can tell is not reassigned.
+    int[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
-      assert s.values != null
-          : "@AssumeAssertion(nullness): no relevant side effect:  add's side effects do not affect s.values";
-      add(s.values[i]);
+      add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
       }
@@ -102,7 +102,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
   /*@Pure*/
   public boolean contains(int elt) {
-    if (values == null) {
+    if (repNulled()) {
       throw new UnsupportedOperationException();
     }
     for (int i = 0; i < num_values; i++) {
@@ -131,17 +131,36 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   public int max_size() {
-    if (values == null) {
+    if (repNulled()) {
       return num_values;
     } else {
       return values.length + 1;
     }
   }
 
+  /**
+   * Returns true if more elements have been added than this set can contain (which is the integer
+   * that was passed to the constructor when creating this set).
+   *
+   * @return true if this set has been filled to capacity and its internal representation is nulled
+   */
   /*@EnsuresNonNullIf(result=false, expression="values")*/
   /*@Pure*/
-  public boolean repNulled() {
+  public boolean repNulled(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return values == null;
+  }
+
+  /**
+   * Null the representation, which happens when a client tries to add more elements to this set
+   * than it can contain (which is the integer that was passed to the constructor when creating this
+   * set).
+   */
+  private void nullRep() {
+    if (repNulled()) {
+      return;
+    }
+    num_values = values.length + 1;
+    values = null;
   }
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
@@ -160,8 +179,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /**
-   * Merges a list of LimitedSizeIntSet objects into a single object that represents the values seen
-   * by the entire list. Returns the new object, whose max_values is the given integer.
+   * Merges a list of {@code LimitedSizeIntSet} objects into a single object that represents the
+   * values seen by the entire list. Returns the new object, whose max_values is the given integer.
    *
    * @param max_values the maximum size for the returned LimitedSizeIntSet
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
@@ -177,10 +196,6 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
 
   /*@SideEffectFree*/
   public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
-    return ("[size="
-        + size()
-        + "; "
-        + ((values == null) ? "null" : ArraysMDE.toString(values))
-        + "]");
+    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }
 }

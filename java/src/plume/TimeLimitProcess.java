@@ -30,11 +30,11 @@ import org.checkerframework.checker.nullness.qual.*;
  * this problem:
  *
  * <ul>
- *   <li> The client of TimeLimitProcess can send the process output to a file (or
+ *   <li>The client of TimeLimitProcess can send the process output to a file (or
  *       ByteArrayOutputStream, etc.), which can be read after the process terminates. This is easy
  *       to do in Java 7, for example via ProcessBuilder.redirectOutput(tempFile). There does not
  *       appear to be an easy way to do it in Java 6.
- *   <li> This class provides a workaround, in which it busy-waits reading the standard and error
+ *   <li>This class provides a workaround, in which it busy-waits reading the standard and error
  *       outputs and stores them away. Use ...
  * </ul>
  */
@@ -66,7 +66,7 @@ public class TimeLimitProcess extends Process {
    *
    * @param p non-null Process to limit the execution of
    * @param timeLimit in milliseconds
-   * @param cacheStdout If true, causes the TimeLimitProcess to consume the standard output of the
+   * @param cacheStdout if true, causes the TimeLimitProcess to consume the standard output of the
    *     underlying process, and to cache it. After the process terminates (on its own or by being
    *     timed out), the output is available via the cached_stdout method. This is necessary because
    *     when a Java process is terminated, its standard output is no longer available.

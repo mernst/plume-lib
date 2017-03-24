@@ -685,7 +685,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
   "Investigate Java code that does not use curly braces for compound statements.
 Works over the currently-visited tags table."
   (interactive)
-  
+
   ;; Clean up formatting of curly braces.
   ;; For example, don't put curly braces before if or else on their own line.
   (tags-query-replace "^\\( *\\)}\n *else" "\\1} else")
@@ -717,38 +717,46 @@ Works over the currently-visited tags table."
 (defun improve-javadoc-tag-style ()
   "Improve style for Javadoc @param and @return, for files in the current TAGS tables."
   (interactive)
-  ;; "End the phrase with a period only if another phrase or sentence follows it."
-  ;; Do it twice because matches may overlap.
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\) +[^@./]*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
-  (tags-replace "\\(@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
-  ;; Start descriptive text with lowercase letter.
-  (let ((case-fold-search nil))
-    ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
-    ;; seem to work with tags-query-replace, so call downcase-previous-character.
-    ;; We only do so if the capital letter is at the beginning of a word
-    ;; whose other characters are lowercase.
-    (tags-search "\\(?:@\\(?:param +[A-Za-z0-9_]+\\|return\\)\\ +\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
-    (goto-char (match-end 1))
-    (downcase-previous-character)
-    (while t
-      (tags-loop-continue)
-      (goto-char (match-end 1))
-      (downcase-previous-character)))
-  ;; PROBLEM: the final tags-loop-continue terminates the whole function so
-  ;; nothing here or beyond will be executed.
 
-  ;; TODO:
+  ;; End the phrase with a period only if another phrase or sentence follows it.
+  ;; Do it twice because matches may overlap.
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\) +[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\)\\.\\(\n *\\*/\\|\n *\\\* *@\\)" "\\1\\2")
+  (tags-replace "\\(@\\(?:param[ \t\n*]+[A-Za-z0-9_]+\\|return\\)\\) +- +" "\\1 ")
+
+  ;; Start descriptive text with lowercase letter.
+  (condition-case nil
+      (let ((case-fold-search nil))
+	;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
+	;; seem to work with tags-query-replace, so call downcase-previous-character.
+	;; We only do so if the capital letter is at the beginning of a word
+	;; whose other characters are lowercase.
+	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+	(goto-char (match-end 1))
+	(downcase-previous-character)
+	(while t
+	  (tags-loop-continue)
+	  (goto-char (match-end 1))
+	  (downcase-previous-character)))
+    (user-error nil))
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
-  ;; (Run each until it finds no more issues)
-  (tags-query-replace "\\(^ *\\* @[^.@/]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
-  (tags-search "^ *\\* @[^.@/]*\\.[ \n][^.@/]*\\(\\*/\\|@\\)")
-  ;; Missing period at the end of the main part of the Javadoc:
-  (tags-search "/\\*\\*[^@/]*\\. [^@/]*[^. \n][ \n]*\\*/")
+  ;; (Run until it finds no more issues)
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
+  (tags-replace "\\(^ *\\* @\\(?:param\\|return\\|throws\\|exception\\)[^@./]*\\)\\.\\([ \n]*\\([* \n]* @\\|[* \n]*\\*/\\)\\)" "\\1\\2")
 
+  (tags-replace " \\*\\*/" " */")
+
+  ;; Missing period at the end of the main part of the Javadoc:
+  ;; TODO: automate this
+  (tags-search "/\\*\\*[^@./]*\\(?:{@link [^}]*}[^@./]*\\)*\\.[)] [^@./]*\\(?:{@link [^}]*}[^@./]*\\)*[^. \n][ \n]*\\*/")
+
+  ;; Missing period at the end of a Javadoc tag
+  (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
+		"\\1.\\2")
   )
-   
+
 (defun improve-javadoc-code-style ()
   "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
 
@@ -783,6 +791,13 @@ Works over the currently-visited tags table."
   "Move commented declaration annotations to their own line, for files in the current TAGS tables."
   (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
   )
+
+;; Java stack trace, as printed by a program
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+         (append
+          (list '("\\(?:^[ ][ ]\\|; Stack trace: \\)[A-Za-z0-9_.]+(\\([A-Za-z0-9_.]+\\):\\([0-9]+\\))$" 1 2))
+          compilation-error-regexp-alist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1566,6 +1581,7 @@ otherwise, raise an error after the first problem is encountered."
 ;;         (cons (substitute-in-file-name "$HOME/emacs/auctex-11.85/doc")
 ;;               Info-directory-list))))
 
+;; Python error messages
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (append '(("^ *File \"\\(.*\\)\", line \\([0-9]+\\)" 1 2)
@@ -2050,9 +2066,10 @@ or null if it does not exist."
             (file-exists-p (expand-file-name "makefile"))
             (file-exists-p (expand-file-name "GNUmakefile"))))))
 
-(defun ant-set-compile-command ()
+(defun set-compile-command-for-directory ()
   "Returns true if it set the `compile-command' variable.
-Sets the variable to an invocation of \"ant\" if a build.xml file exists
+Sets the variable to an invocation of \"ant\", \"gradle\", \"mvn\", etc.
+depending on whether a build.xml, build.gradle, or pom.xml file exists
 in this directory or some superdirectory."
   (if (should-set-compile-command)
       (cond ((file-readable-p "build.xml")
@@ -2067,9 +2084,10 @@ in this directory or some superdirectory."
              (setq compile-command "ant -e -find build.xml "))
             ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
-             (if (file-readable-p "gradlew")
-                 (setq compile-command "./gradlew ")
-               (setq compile-command "gradle ")))
+	     (let ((gradle-command (if (file-readable-p "gradlew")
+				       (setq compile-command "./gradlew")
+				     (setq compile-command "gradle"))))
+	       (setq compile-command (concat gradle-command " build"))))
             ((file-in-super-directory "build.gradle" default-directory)
              (let* ((buildfile (file-in-super-directory
                                "build.gradle" default-directory))
@@ -2080,18 +2098,19 @@ in this directory or some superdirectory."
                            gradlew
                          "gradle"))))
                (make-local-variable 'compile-command)
-               (setq compile-command (concat gradle-command " -b " buildfile " build"))))
+               (setq compile-command
+		     (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn ")))))
-(add-hook 'find-file-hooks 'ant-set-compile-command)
-(add-hook 'dired-mode-hook 'ant-set-compile-command)
-(add-hook 'compilation-mode-hook 'ant-set-compile-command)
-(add-hook 'cvs-mode-hook 'ant-set-compile-command)
-(add-hook 'svn-status-mode-hook 'ant-set-compile-command)
+             (setq compile-command "mvn package")))))
+(add-hook 'find-file-hooks 'set-compile-command-for-directory)
+(add-hook 'dired-mode-hook 'set-compile-command-for-directory)
+(add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
+(add-hook 'cvs-mode-hook 'set-compile-command-for-directory)
+(add-hook 'svn-status-mode-hook 'set-compile-command-for-directory)
 ;; There was no svn-status-mode-hook before "psvn.el 23079 2007-01-17".
-;; (defadvice svn-status-mode (after ant-set-compile-command activate)
-;;   (ant-set-compile-command))
+;; (defadvice svn-status-mode (after set-compile-command-for-directory activate)
+;;   (set-compile-command-for-directory))
 
 ;; Below are for modes that have a default to use if there is no makefile
 ;; or build.xml file.
@@ -2125,7 +2144,7 @@ Use as a hook, like so:
 Use as a hook, like so:
   (add-hook 'java-mode-hook 'java-set-compile-command)"
   (if (and (should-set-compile-command)
-           (not (ant-set-compile-command)))
+           (not (set-compile-command-for-directory)))
       (let ((file-name (file-name-nondirectory buffer-file-name)))
         (make-local-variable 'compile-command)
         (setq compile-command (concat "javac -g " file-name)))))
@@ -2146,6 +2165,7 @@ Use as a hook, like so:
            (setq dir (replace-regexp-in-string "_" "-" dir))
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
+	;; Checker Framework demos
 ;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
 ;;       (make-local-variable 'compile-command)
 ;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
@@ -2176,6 +2196,12 @@ Use as a hook, like so:
                 (not (search-forward "executeQuery(constructQuery" nil t))))
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml pblog-tainting"))
+        ((and buffer-file-name
+              (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "make typecheck-only"))
+	;; end of Checker Framework demos
+
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
          (make-local-variable 'compile-command)
          (setq compile-command "make -C ../../.. doc/en/user-guide/index.html"))
@@ -2257,10 +2283,10 @@ Use as a hook, like so:
          (cons '("^In file \\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+: .* at line \\([0-9]+\\), column \\([0-9]+\\)" 1 2 3)
                compilation-error-regexp-alist)))
 
-;; gradle leaves text in front of error message
+;; gradle leaves text in front of error message.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (cons '("^\\(?::compileTestJava\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
+         (cons '("^\\(?::[a-zA-Z]+\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
                compilation-error-regexp-alist)))
 
 

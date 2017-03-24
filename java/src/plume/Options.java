@@ -189,25 +189,25 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <p>Example clients of the Options library include {@link plume.Lookup}, <a
  * href="https://randoop.github.io/randoop/manual/#command-line-options">Randoop</a>, and <a
- * href="http://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among
+ * href="https://types.cs.washington.edu/javari/javarifier/#command-line-opts">Javarifier</a>, among
  * many others.
  *
  * <p><b>Limitations</b>
  *
  * <ul>
- *   <li> Short options are only supported as separate entries (e.g., "-a -b") and not as a single
+ *   <li>Short options are only supported as separate entries (e.g., "-a -b") and not as a single
  *       group (e.g., "-ab").
- *   <li> Not all primitive types are supported.
- *   <li> Types without a constructor that takes a single <code>String</code> argument are not
+ *   <li>Not all primitive types are supported.
+ *   <li>Types without a constructor that takes a single <code>String</code> argument are not
  *       supported.
- *   <li> The "--no-long" option to turn off a boolean option named "long" is not supported; use
+ *   <li>The "--no-long" option to turn off a boolean option named "long" is not supported; use
  *       "--long=false" instead.
  * </ul>
  *
  * <p><b>Possible enhancements</b>
  *
  * <ul>
- *   <li> Positional arguments (non-options that must be provided in a given order) could be
+ *   <li>Positional arguments (non-options that must be provided in a given order) could be
  *       supported.
  * </ul>
  *
@@ -907,13 +907,13 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly. This method splits the argument string
-   * into command-line arguments, respecting single and double quotes, then calls {@link
-   * #parse(String[])}.
+   * Parses a command line and sets the options accordingly.
    *
    * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
    * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
-   * the <code>premain</code> method of a Java agent.
+   * the <code>premain</code> method of a Java agent. This method splits the argument string into
+   * command-line arguments, respecting single and double quotes, then calls {@link
+   * #parse(String[])}.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -962,9 +962,11 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly. If an error occurs, prints the usage
-   * message and terminates the program. The program is terminated rather than throwing an error to
-   * create cleaner output.
+   * Parses a command line and sets the options accordingly. Returns non-option arguments.
+   *
+   * <p>If an error occurs, prints the usage message that was passed into the constructor, then
+   * terminates the program. The program is terminated rather than throwing an error to create
+   * cleaner output.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -990,16 +992,17 @@ public class Options {
   }
 
   /**
-   * Parses a command line and sets the options accordingly. If an error occurs, prints the usage
-   * message and terminates the program. The program is terminated rather than throwing an error to
-   * create cleaner output.
+   * Parses a command line and sets the options accordingly. Returns non-option arguments.
    *
-   * <p>This method splits the argument string into command-line arguments, respecting single and
-   * double quotes, then calls {@link #parse_or_usage(String[])}.
+   * <p>If an error occurs, prints the usage message that was passed into the constructor, then
+   * terminates the program. The program is terminated rather than throwing an error to create
+   * cleaner output.
    *
-   * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
-   * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
-   * the <code>premain</code> method of a Java agent.
+   * <p>{@link #parse_or_usage(String[])} is usually a better method to call. This one is
+   * appropriate when the <code>String[]</code> version of the arguments is not available &mdash;
+   * for example, for the <code>premain</code> method of a Java agent. This method splits the
+   * argument string into command-line arguments, respecting single and double quotes, then calls
+   * {@link #parse_or_usage(String[])}.
    *
    * @param args the command line to parse
    * @return all non-option arguments

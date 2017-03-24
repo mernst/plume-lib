@@ -17,7 +17,7 @@ that are not valid.
 Something like this could work (to avoid doing all of the URLs in one go,
 which might overpower your browser):
   (defun browse-url-checklink (number-prefix)
-    (find-file "bin/checklink-args.txt")
+    (find-file "../bin/checklink-args.txt")
     (goto-char (point-min))
     (browse-url-once-if-matched (concat number-prefix ":\\(http.*\\)") 1))
   (browse-url-checklink "0")
@@ -27,6 +27,7 @@ which might overpower your browser):
   (browse-url-checklink "4")
   (browse-url-checklink "5")
   (browse-url-checklink "6")
+  ;; Just in case the above searches missed something.
   (browse-url-checklink "[^0-6]")
 
 4. Ensure that file index.html documents any new files.
@@ -34,7 +35,7 @@ To find new files, do
 
     git diff --name-status v`cat VERSION` | grep '^A'
 
-5. Update docs/changelog.txt.
+5. Update file changelog.txt
 To help writing the changelog text, see the log and/or diffs, using one of:
 
     git log --name-status v`cat VERSION`..HEAD
@@ -46,7 +47,7 @@ To help writing the changelog text, see the log and/or diffs, using one of:
 
     git push
 
-8. Wait about 2.5 hours and ensure that Travis and Jenkins jobs pass:
+8. Wait about 2.5 hours and ensure that Travis jobs pass:
 at least plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
 The following commands will open the URLs in your browser.
 
@@ -57,14 +58,6 @@ The following commands will open the URLs in your browser.
     xdg-open https://travis-ci.org/typetests/plume-lib-typecheck
     sleep 1
     xdg-open https://travis-ci.org/typetests/daikon-typecheck
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/plume-lib/
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/daikon/
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/plume-lib-typecheck/
-    sleep 1
-    xdg-open http://tern.cs.washington.edu:8080/job/daikon-typecheck/
 
 9. Run the make-plume-release script located in bin:
 
@@ -74,7 +67,8 @@ The following commands will open the URLs in your browser.
 
 The script requires that $JAVAC or 'javac' point to the JSR 308 compiler.
 If this is the case, then the release is built and the test cases are run.
-The release will be compatible with Java 7.
+The release will be compatible with Java 7, but don't try to use a Java 7
+JDK when making the release.
 
 10. Push the new Git tag created by the script to the repository:
 
@@ -95,6 +89,6 @@ CSE file system:
     cd plume-lib/java
     git pull
     make javadoc-publish
-    $pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` http://types.cs.washington.edu/plume-lib/
+    $pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` https://types.cs.washington.edu/plume-lib/
 
 This step can be done even without making a new release.

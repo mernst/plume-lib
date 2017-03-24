@@ -11,6 +11,7 @@ import java.util.List;
 import org.checkerframework.checker.initialization.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
@@ -40,7 +41,6 @@ import org.checkerframework.dataflow.qual.*;
  *         <li><b>short_html</b>
  *         <li><b>milestone_html</b>
  *       </ul>
- *
  *   <li id="option:comment-re"><b>--comment-re=</b><i>string</i>. Regex that matches an entire
  *       comment (not just a comment start) [default ^%.*]
  *   <li id="option:include-re"><b>--include-re=</b><i>string</i>. Regex that matches an include
@@ -133,7 +133,8 @@ public class TaskManager {
         /*@NonNull*/ String item;
         String value;
         if (line.matches("^[_a-zA-Z]+:.*")) {
-          String[] sa = line.split(" *: *", 2);
+          @SuppressWarnings("value") // line has a ":", so split() returns array of length=2
+          String /*@ArrayLen(2)*/[] sa = line.split(" *: *", 2);
           item = sa[0];
           value = sa[1];
           if (value.length() == 0) {

@@ -401,7 +401,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param len number of characters to write
    */
   public void write(String s, int off, int len) {
-    writtenBytes += countBytes(s.substring(off, len));
+    writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);
   }

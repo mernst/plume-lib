@@ -1241,6 +1241,9 @@ public final class TestPlume {
     assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 8}), new int[] {5, 6, 7});
     assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 5, 6, 8}), new int[] {4, 7});
     assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 6, 8}), new int[] {4, 5, 7});
+    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 5, 5, 6, 7, 8}), new int[] {});
+    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 4, 6, 6, 7, 8}), new int[] {5});
+    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 3, 3}), new int[] {});
 
     // class MissingNumbersIteratorInt
     class TestMissingNumbersIteratorInt {
@@ -1601,6 +1604,7 @@ public final class TestPlume {
     public static void main(String[] args) {
       if (args.length != 2) {
         System.err.println("Needs 2 arguments, got " + args.length);
+        System.exit(1);
       }
       int limit = Integer.parseInt(args[0]);
       int period = Integer.parseInt(args[1]);
@@ -2521,11 +2525,15 @@ public final class TestPlume {
     assert c1.getNumberOfPrintedBytes() == 9;
     assert c1.getNumberOfWrittenBytes() == 22;
     assert c1.getNumberOfPrintedChars() == 9;
+    c1.write("A long string we will print part of", 5, 10);
+    assert c1.getNumberOfPrintedBytes() == 9;
+    assert c1.getNumberOfWrittenBytes() == 32;
+    assert c1.getNumberOfPrintedChars() == 9;
     c1.println("a b");
     String lineSep = System.getProperty("line.separator");
     int ls_len = lineSep.length();
     assert c1.getNumberOfPrintedBytes() == (12 + ls_len);
-    assert c1.getNumberOfWrittenBytes() == (28);
+    assert c1.getNumberOfWrittenBytes() == (38);
     assert c1.getNumberOfPrintedChars() == (12 + ls_len);
     c1.print((String) null);
     c1.print((Object) null);
@@ -2906,6 +2914,9 @@ public final class TestPlume {
     Integer i0 = new Integer(0);
     Integer i1 = new Integer(1);
     Integer i2 = new Integer(2);
+    Integer i10 = new Integer(10);
+    Integer i11 = new Integer(11);
+    Integer i12 = new Integer(12);
 
     List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations(1, 0, 2);
     assert combo3.size() == 3;
@@ -2921,6 +2932,15 @@ public final class TestPlume {
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i1}));
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i2}));
     assert combo4.contains(Arrays.asList(new Integer[] {i2, i2}));
+
+    List<ArrayList<Integer>> combo5 = UtilMDE.create_combinations(2, 10, 12);
+    assert combo5.size() == 6;
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i10}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i11}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i12}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i11, i11}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i11, i12}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i12, i12}));
   }
 
   @Test

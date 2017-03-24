@@ -16,6 +16,8 @@ import org.checkerframework.dataflow.qual.*;
  * <p>Does not extend StringBuilder because that would probably break, due to the possibility of
  * calling the wrong version of append. Also, I don't (yet) want to override all the methods; this
  * simpler version seems sufficient for the time being.
+ *
+ * <p>Obsoleted by the Java 8 StringJoiner class.
  */
 public class StringBuilderDelimited implements Appendable, CharSequence {
 

@@ -8,6 +8,8 @@
 #   # csh
 #   setenv PATH `echo $PATH | .../plume-lib/bin/path-remove`
 #   # sh
+#   export PATH=`echo $PATH | .../plume-lib/bin/path-remove`
+#   ## Does this even work??
 #   set path = (`echo $path | .../plume-lib/bin/path-remove`)
 
 my $debug = 0;
