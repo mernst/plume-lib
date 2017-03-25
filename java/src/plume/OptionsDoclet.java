@@ -142,12 +142,13 @@ import org.checkerframework.checker.signature.qual.*;
  * around this problem, the default value should be hidden; instead the Javadoc for this field
  * should indicate a special default as follows.
  *
- * <pre>
+ * <pre>{@code
  * &#47;**
- *  * &lt;other stuff...&gt;  This option defaults to the system timezone.
+ *  * <other stuff...>  This option defaults to the system timezone.
  *  *&#47;
- * &#64;Option(value="&lt;timezone&gt; Set the timezone", noDocDefault=true)
- * public static String timezone = TimeZone.getDefault().getID();</pre>
+ * &#64;Option(value="<timezone> Set the timezone", noDocDefault=true)
+ * public static String timezone = TimeZone.getDefault().getID();
+ * }</pre>
  *
  * This keeps the documentation system-agnostic.
  *

@@ -55,28 +55,30 @@ import org.checkerframework.dataflow.qual.*;
  * <p>The main entry point is {@link #parse_or_usage(String[])}. Typical use is:
  * <!-- Example needs some more words of explanation and example command lines. -->
  *
- * <pre>
- *  import plume.*;
+ * <pre>{@code
+ * import plume.*;
  *
- *  public class MyProgram {
+ * public class MyProgram {
  *
- *    &#64;Option("-o &lt;filename&gt; the output file ")
- *    public static File outfile = new File("/tmp/foobar");
+ *   &#64;Option("-o <filename> the output file ")
+ *   public static File outfile = new File("/tmp/foobar");
  *
- *    &#64;Option("-i ignore case")
- *    public static boolean ignore_case;
+ *   &#64;Option("-i ignore case")
+ *   public static boolean ignore_case;
  *
- *    &#64;Option("set the initial temperature")
- *    public static double temperature = 75.0;
+ *   &#64;Option("set the initial temperature")
+ *   public static double temperature = 75.0;
  *
- *    public static void main(String[] args) {
- *      MyProgram myInstance = new MyProgram();
- *      Options options = new Options("MyProgram [options] infile outfile",
- *                                    myInstance, MyUtilityClass.class);
- *      String[] remaining_args = options.parse_or_usage(args);
- *      ...
- *    }
- *  }</pre>
+ *   public static void main(String[] args) {
+ *     MyProgram myInstance = new MyProgram();
+ *     Options options = new Options("MyProgram [options] infile outfile",
+ *                                   myInstance, MyUtilityClass.class);
+ *     String[] remaining_args = options.parse_or_usage(args);
+ *     ...
+ *   }
+ * }
+ *
+ * }</pre>
  *
  * A user may invoke the program using the command-line arguments <code>-o</code>, <code>--outfile
  * </code>, <code>-i</code>, <code>--ignore-case</code>, and <code>--temperature</code>.
@@ -422,8 +424,8 @@ public class Options {
     }
 
     /**
-     * Returns a short synopsis of the option in the form <code>-s --long=&lt;type&gt;</code>
-     * <strong>or</strong> (if use_single_dash is true) <code>-s -long=&lt;type&gt;</code> .
+     * Returns a short synopsis of the option in the form {@code -s --long=<type>}
+     * <strong>or</strong> (if use_single_dash is true) {@code-s -long=<type>} .
      */
     public String synopsis() {
       String prefix = use_single_dash ? "-" : "--";

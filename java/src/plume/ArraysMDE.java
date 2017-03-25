@@ -446,9 +446,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -487,9 +486,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the list
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -537,9 +535,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -581,9 +578,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the list
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -645,8 +641,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -666,8 +662,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -725,8 +721,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/

@@ -2805,8 +2805,8 @@ public final class UtilMDE {
    * Return a Vector of the Strings returned by {@link
    * java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
    *
-   * <p>The static type is Vector&lt;Object&gt; because StringTokenizer extends
-   * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should (probably due to
+   * <p>The static type is {@code Vector<Object>} because StringTokenizer extends {@code
+   * Enumeration<Object>} instead of {@code Enumeration<String>} as it should (probably due to
    * backward-compatibility).
    *
    * @param str a string to be parsed
@@ -3010,8 +3010,8 @@ public final class UtilMDE {
 
   /**
    * Returns a list of lists of each combination (with repetition, but not permutations) of the
-   * specified objects starting at index {@code start} over {@code dims} dimensions, for {@code
-   * dims} &gt; 0.
+   * specified objects starting at index {@code start} over {@code dims} dimensions, for {@code dims
+   * > 0}.
    *
    * <p>For example, create_combinations (1, 0, {a, b, c}) returns:
    *

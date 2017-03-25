@@ -34,10 +34,10 @@ import org.checkerframework.checker.regex.qual.*;
  * <ul>
  *   <li>A short entry is a single paragraph (delimited from the next entry by a blank line). Lookup
  *       searches all of a short entry.
- *   <li>A long entry is introduced by a line that begins with '&gt;entry'. The remainder of that
- *       line is a one-line description of the entry. A long entry is terminated by '&lt;entry', by
- *       the start of a new long entry, or by the start of a new file. Lookup searches only the
- *       first line of a long entry.
+ *   <li>A long entry is introduced by a line that begins with '{@code >entry}'. The remainder of
+ *       that line is a one-line description of the entry. A long entry is terminated by '{@code
+ *       <entry}', by the start of a new long entry, or by the start of a new file. Lookup searches
+ *       only the first line of a long entry.
  * </ul>
  *
  * If multiple entries match, the first line of each is printed. If only one entry matches, then
