@@ -807,11 +807,16 @@ public class OptionsDoclet {
     StringBuilder b = new StringBuilder();
     Tag[] tags = doc.inlineTags();
     for (Tag tag : tags) {
-      String text = tag.text().replace('#', '.'); // is this replacement always desirable?
+      String kind = tag.kind();
+      String text = tag.text();
       if (tag instanceof SeeTag) {
-        b.append("<code>" + text + "</code>");
+        b.append("<code>" + text.replace('#', '.') + "</code>");
       } else {
-        b.append(text);
+        if (kind.equals("@code")) {
+          b.append("<code>" + StringEscapeUtils.escapeHtml4(text) + "</code>");
+        } else {
+          b.append(text);
+        }
       }
     }
     SeeTag[] seetags = doc.seeTags();
