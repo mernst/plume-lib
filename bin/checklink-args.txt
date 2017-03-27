@@ -159,6 +159,7 @@
 --suppress-broken 500:https://www.cs.rutgers.edu/~vinodg/papers/tdsc2011/tdsc2011.pdf
 --suppress-broken 500:https://www.dwheeler.com/sloccount/
 --suppress-broken 500:https://www.enthought.com/accounts/register/?next=/licenses/academic
+--suppress-broken 500:https://www.mpi-sws.org/~roseh/JobSearch.html
 --suppress-broken 501:http://www.bizrate.com/
 --suppress-broken 501:https://web.mit.edu/21.guide/www/l-rec-wr.htm
 --suppress-broken 501:https://web.mit.edu/21.guide/www/toc.htm
