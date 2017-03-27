@@ -759,6 +759,7 @@ Works over the currently-visited tags table."
 
 (defun improve-javadoc-code-style ()
   "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
+  (interactive)
 
   ;; TODO: as I run these, I may need to convert
   ;;   <code>...</code>
