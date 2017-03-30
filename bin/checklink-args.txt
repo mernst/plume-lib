@@ -147,6 +147,7 @@
 --suppress-broken 500:https://cubist.cs.washington.edu/wiki/index.php/CSE403_spring_2014_proposal_pairs
 --suppress-broken 500:https://groups.csail.mit.edu/pag/cert/
 --suppress-broken 500:https://hkn.mit.edu/
+--suppress-broken 500:https://support.apple.com/kb/ph11523?locale=en_US
 --suppress-broken 500:https://ugradnews.cs.washington.edu/category/research/
 # https://web.mit.edu/21.guide/www requires a client certificate
 --suppress-broken 500:https://web.mit.edu/21.guide/www/l-rec-ob.htm
