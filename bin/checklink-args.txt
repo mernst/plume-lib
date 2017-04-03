@@ -51,6 +51,7 @@
 --suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.10/randoop-3.0.10.zip
 --suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.8/randoop-3.0.8.zip
 --suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.0.9/randoop-3.0.9.zip
+--suppress-broken 302:https://github.com/randoop/randoop/releases/download/v3.1.2/randoop-3.1.2.zip
 --suppress-broken 302:https://www.mpi-sws.org/~roseh/JobSearch.html
 # 303 errors may belong in the --suppress-redirect section rather than here
 --suppress-broken 303:http://dx.doi.org/10.1109/WODA.2007.3
