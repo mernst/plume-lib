@@ -59,7 +59,6 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the iterator contains fewer than 3 elements
    * @see #modulus(INT[])
    */
-  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT /*@Nullable*/ [] modulus_INT(Iterator<INTEGER> itor) {
     if (!itor.hasNext()) {
       return null;
@@ -169,7 +168,6 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the iterator contains fewer than 3 elements
    * @see #modulus_strict(int[], boolean)
    */
-  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT /*@Nullable*/ [] modulus_strict_INT(Iterator<INTEGER> itor, boolean nonstrict_ends) {
     if (!itor.hasNext()) {
       return null;

@@ -16,8 +16,9 @@ import java.util.Vector;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
-import org.checkerframework.framework.qual.PolyAll;
+import org.checkerframework.framework.qual.*;
 */
 
 /**
@@ -284,6 +285,9 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int[] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
@@ -305,6 +309,9 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static long[] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
@@ -326,6 +333,9 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int element_range(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(int[])");
@@ -341,6 +351,9 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static long element_range(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(long[])");
@@ -355,6 +368,8 @@ public final class ArraysMDE {
    * @param a an array
    * @return the sum of an array of integers
    */
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int sum(int[] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -369,6 +384,8 @@ public final class ArraysMDE {
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of integers
    */
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int sum(int[][] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -385,6 +402,8 @@ public final class ArraysMDE {
    * @param a an array
    * @return the sum of an array of doubles
    */
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static double sum(double[] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -399,6 +418,8 @@ public final class ArraysMDE {
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of doubles
    */
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static double sum(double[][] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
