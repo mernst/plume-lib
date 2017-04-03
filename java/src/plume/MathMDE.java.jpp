@@ -18,6 +18,8 @@ import java.util.NoSuchElementException;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.common.value.qual.*;
+import org.checkerframework.dataflow.qual.*;
 */
 
 /** Mathematical utilities. */
@@ -37,6 +39,7 @@ public final class MathMDE {
    * @param a value to negate
    * @return negative of a
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int negate(int a) {
     return -a;
   }
@@ -45,6 +48,7 @@ public final class MathMDE {
    * @param a value to negate
    * @return negative of a
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long negate(long a) {
     return -a;
   }
@@ -53,6 +57,7 @@ public final class MathMDE {
    * @param a value to negate
    * @return negative of a
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static double negate(double a) {
     return -a;
   }
@@ -61,6 +66,7 @@ public final class MathMDE {
    * @param a value to bitwise-complement
    * @return ~a, the bitwise complement of a
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int bitwiseComplement(int a) {
     return ~a;
   }
@@ -69,6 +75,7 @@ public final class MathMDE {
    * @param a value to bitwise-complement
    * @return ~a, the bitwise complement of a
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long bitwiseComplement(long a) {
     return ~a;
   }
@@ -78,6 +85,7 @@ public final class MathMDE {
    * @param y second multiplicand
    * @return x * y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int mul(int x, int y) {
     return x * y;
   }
@@ -87,6 +95,7 @@ public final class MathMDE {
    * @param y second multiplicand
    * @return x * y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long mul(long x, long y) {
     return x * y;
   }
@@ -96,6 +105,7 @@ public final class MathMDE {
    * @param y second multiplicand
    * @return x * y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static double mul(double x, double y) {
     return x * y;
   }
@@ -105,6 +115,7 @@ public final class MathMDE {
    * @param y divisor
    * @return x / y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int div(int x, int y) {
     return x / y;
   }
@@ -114,6 +125,7 @@ public final class MathMDE {
    * @param y divisor
    * @return x / y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long div(long x, long y) {
     return x / y;
   }
@@ -123,6 +135,7 @@ public final class MathMDE {
    * @param y divisor
    * @return x / y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static double div(double x, double y) {
     return x / y;
   }
@@ -132,6 +145,7 @@ public final class MathMDE {
    * @param y modulus
    * @return x % y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int mod(int x, int y) {
     return x % y;
   }
@@ -141,6 +155,7 @@ public final class MathMDE {
    * @param y modulus
    * @return x % y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long mod(long x, long y) {
     return x % y;
   }
@@ -150,6 +165,7 @@ public final class MathMDE {
    * @param y magnitude of the left-shift
    * @return x &lt;&lt; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int lshift(int x, int y) {
     return x << y;
   }
@@ -159,6 +175,7 @@ public final class MathMDE {
    * @param y magnitude of the left-shift
    * @return x &lt;&lt; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long lshift(long x, long y) {
     return x << y;
   }
@@ -168,6 +185,7 @@ public final class MathMDE {
    * @param y magnitude of the right-shift
    * @return x &gt;&gt; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int rshiftSigned(int x, int y) {
     return x >> y;
   }
@@ -177,6 +195,7 @@ public final class MathMDE {
    * @param y magnitude of the right-shift
    * @return x &gt;&gt; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long rshiftSigned(long x , long y) {
     return x >> y;
   }
@@ -186,6 +205,7 @@ public final class MathMDE {
    * @param y magnitude of the right-shift
    * @return x &gt;&gt;&gt; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int rshiftUnsigned(int x, int y) {
     return x >>> y;
   }
@@ -195,6 +215,7 @@ public final class MathMDE {
    * @param y magnitude of the right-shift
    * @return x &gt;&gt;&gt; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long rshiftUnsigned(long x, long y) {
     return x >>> y;
   }
@@ -204,6 +225,7 @@ public final class MathMDE {
    * @param y second operand
    * @return x &amp; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int bitwiseAnd(int x, int y) {
     return x & y;
   }
@@ -213,6 +235,7 @@ public final class MathMDE {
    * @param y second operand
    * @return x &amp; y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long bitwiseAnd(long x, long y) {
     return x & y;
   }
@@ -222,6 +245,7 @@ public final class MathMDE {
    * @param y second operand
    * @return the logical and of x and y; the result is always 0 or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int logicalAnd(int x, int y) {
     return ((x!=0) && (y!=0)) ? 1 : 0;
   }
@@ -231,6 +255,7 @@ public final class MathMDE {
    * @param y second operand
    * @return the logical and of x and y; the result is always 0 or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long logicalAnd(long x, long y) {
     return ((x!=0) && (y!=0)) ? 1 : 0;
   }
@@ -240,6 +265,7 @@ public final class MathMDE {
    * @param y second operand
    * @return x ^ y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int bitwiseXor(int x, int y) {
     return x ^ y;
   }
@@ -249,6 +275,7 @@ public final class MathMDE {
    * @param y second operand
    * @return x ^ y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long bitwiseXor(long x, long y) {
     return x ^ y;
   }
@@ -258,6 +285,7 @@ public final class MathMDE {
    * @param y second operand
    * @return the logical xor of x and y; the result is always 0 or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int logicalXor(int x, int y) {
     return ((x!=0) ^ (y!=0)) ? 1 : 0;
   }
@@ -267,6 +295,7 @@ public final class MathMDE {
    * @param y second operand
    * @return the logical xor of x and y; the result is always 0 or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long logicalXor(long x, long y) {
     return ((x!=0) ^ (y!=0)) ? 1 : 0;
   }
@@ -276,6 +305,7 @@ public final class MathMDE {
    * @param y second operand
    * @return x | y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int bitwiseOr(int x, int y) {
     return x | y;
   }
@@ -285,6 +315,7 @@ public final class MathMDE {
    * @param y second operand
    * @return x | y
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long bitwiseOr(long x, long y) {
     return x | y;
   }
@@ -294,6 +325,7 @@ public final class MathMDE {
    * @param y second operand
    * @return the logical or of x and y; the result is always 0 or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int logicalOr(int x, int y) {
     return ((x!=0) || (y!=0)) ? 1 : 0;
   }
@@ -303,6 +335,7 @@ public final class MathMDE {
    * @param y second operand
    * @return the logical or of x and y; the result is always 0 or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long logicalOr(long x, long y) {
     return ((x!=0) || (y!=0)) ? 1 : 0;
   }
@@ -316,6 +349,7 @@ public final class MathMDE {
    * @param a value to have its sign taken
    * @return the sign of a: -1, 0, or 1
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int sign(int a) {
     if (a==0) {
       return 0;
@@ -333,12 +367,13 @@ public final class MathMDE {
 
   /**
    * Returns of value of the first argument raised to the
-   * power of the second argument.  The argument are integers.
+   * power of the second argument.  The arguments are integers.
    * @param base the base
    * @param expt the exponent
    * @return base to the expt power
    * @see Math#pow(double, double)
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static int pow(int base, int expt) throws ArithmeticException {
     return pow_fast(base, expt);
   }
@@ -351,10 +386,12 @@ public final class MathMDE {
    * @return base to the expt power
    * @see Math#pow(double, double)
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static long pow(long base, long expt) throws ArithmeticException {
     return pow_fast(base, expt);
   }
 
+  /*@Pure*/ /*@StaticallyExecutable*/
   private static int pow_fast(int base, int expt) throws ArithmeticException {
     if (expt < 0) {
       throw new ArithmeticException("Negative exponent passed to pow");
@@ -372,6 +409,7 @@ public final class MathMDE {
     return result;
   }
 
+  /*@Pure*/ /*@StaticallyExecutable*/
   private static long pow_fast(long base, long expt) throws ArithmeticException {
     if (expt < 0) {
       throw new ArithmeticException("Negative exponent passed to pow");
@@ -389,6 +427,7 @@ public final class MathMDE {
     return result;
   }
 
+  /*@Pure*/ /*@StaticallyExecutable*/
   private static int pow_slow(int base, int expt) throws ArithmeticException {
     if (expt < 0) {
       throw new ArithmeticException("Negative exponent passed to pow");
