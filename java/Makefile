@@ -224,7 +224,7 @@ clean-except-jar:
 # Remove most generated files.
 # The goal is to cause all code to be remade and and tests to be run.
 clean: clean-except-jar
-	rm -f plume.jar lookup.jar task_manager.jar
+	rm -f plume.jar plume-core.jar lookup.jar task_manager.jar
 
 very-clean: very_clean
 
@@ -394,7 +394,7 @@ ifeq "$(I_set_JAVA_HOME)" "true"
 	@echo "WARNING: JAVA_HOME is not set, assuming $(JAVA_HOME)"
 endif
 
-jar: checkenv plume.jar lookup.jar task_manager.jar
+jar: checkenv plume.jar plume-core.jar lookup.jar task_manager.jar
 
 # This should depend on all the included .jar files, too.
 plume.jar: ${JAVA_AND_CPP_FILES} lib
