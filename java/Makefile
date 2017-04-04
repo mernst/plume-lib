@@ -437,6 +437,9 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
 # Temporarily commented out so that plume-lib can be built with Java 8;
 # but I need to find a good way to double-check most builds.
+# TODO: The above comment isn't clear - what has been commented out?
+# Should there be a version of verify-plume here that doesn't unpack
+# the files again? Neither of the verify-plume targets seems to be used.
 	(cd jar-contents; "${JAR}" cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
@@ -452,6 +455,33 @@ verify-plume-jar-classfile-version:
 # Ensure that plume.jar does not contain JDK 8 or 9 classfiles
 verify-plume.jar:
 	echo "TODO"
+
+###
+### build plume-core.jar file
+###
+
+# Files that depend on the jar files in java/lib and shouldn't be
+# included in plume-core
+PLUME_CORE_REMOVE = \
+	core-jar-contents/plume/ICalAvailable*.class \
+	core-jar-contents/plume/HtmlPrettyPrint*.class \
+	core-jar-contents/plume/TimeLimitProcess*.class \
+	core-jar-contents/plume/DeclarationAnnotations*.class \
+	core-jar-contents/plume/BCELUtil*.class \
+
+plume-core.jar: ${JAVA_AND_CPP_FILES} lib
+	$(MAKE) tools_jar_exists
+	$(MAKE) clean optionsdoc
+	$(MAKE) compile
+	-rm -rf core-jar-contents
+	mkdir core-jar-contents
+	mkdir core-jar-contents/plume
+	cp -p src/plume/*.class core-jar-contents/plume
+	rm ${PLUME_CORE_REMOVE}
+# Put contents in alphabetical order.
+	(cd core-jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > core-jar-contents.txt)
+	(cd core-jar-contents; "${JAR}" cf ../plume-core.jar @core-jar-contents.txt)
+	rm -rf core-jar-contents
 
 
 ###
