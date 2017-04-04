@@ -71,13 +71,13 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   public StringBuilderDelimited append(
       /*@Nullable*/ CharSequence csq,
       /*@ IndexFor("#1")*/ int start,
-      /*@ IndexFor("#1")*/ int end) { // index TODO: issue #63
+      /*@ IndexFor("#1")*/ int end) {
     appendDelimiter();
     delegate.append(csq, start, end);
     return this;
   }
 
-  public char charAt(/*@ IndexFor("this")*/ int index) { // index TODO: issue #63
+  public char charAt(/*@ IndexFor("this")*/ int index) {
     return delegate.charAt(index);
   }
 
@@ -88,7 +88,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   }
 
   public CharSequence subSequence(
-      /*@ IndexFor("this")*/ int start, /*@ IndexFor("this")*/ int end) { // index TODO: issue #63
+      /*@ IndexFor("this")*/ int start, /*@ IndexFor("this")*/ int end) {
     return delegate.subSequence(start, end);
   }
 

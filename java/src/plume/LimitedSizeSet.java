@@ -40,13 +40,13 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @param max_values the maximum number of values this set will be able to hold
    */
-    @SuppressWarnings("index") //Index: TODO: issue #66
+  @SuppressWarnings("index") // Index TODO: issue 66
   public LimitedSizeSet(/*@Positive*/ int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
     /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
-    values = new_values_array; //Index: TODO: issue #66
+    values = new_values_array; // Index TODO: issue 66
     num_values = 0;
   }
 

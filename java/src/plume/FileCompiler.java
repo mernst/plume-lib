@@ -104,7 +104,7 @@ public final class FileCompiler {
    */
     @SuppressWarnings("index") // Index TODO: issue 73
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
-    this(compiler.trim().split(" +"), timeLimit); // index TODO: issue #54
+    this(compiler.trim().split(" +"), timeLimit);
   }
 
   /**
@@ -179,7 +179,7 @@ public final class FileCompiler {
     String[] command = new String[num_files + compiler.length];
     System.arraycopy(compiler, 0, command, 0, compiler.length);
     for (int i = 0; i < num_files; i++) {
-      command[i + compiler.length] = filenames.get(i); // index TODO: issue #50
+      command[i + compiler.length] = filenames.get(i);
     }
 
     // System.out.println ("\nexecuting compile command: " + command);

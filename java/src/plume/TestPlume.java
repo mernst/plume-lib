@@ -2106,7 +2106,7 @@ public final class TestPlume {
             "upperbound"
           }) // if the argument to IotaIterator is @IndexFor("a"), so is every output
           List</*(at)IndexFor("totals")*/ Integer> chosen =
-              UtilMDE.randomElements(new IotaIterator(itor_size), i, r); // index TODO: issue #65
+              UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
               if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
