@@ -506,39 +506,29 @@ public final class TestPlume {
 
     // public static int[] fn_compose(int[] a, int[] b)
 
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b1 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {0, 1, 2, 3},
-					      new int[] {0, 1, 2, 3}),
-			 new int[] {0, 1, 2, 3});
+    int[] arr1 = {0,1,2,3};
+    /*@IndexFor("arr1")*/ int[] b1 = {0,1,2,3};
+    assert_arrays_equals(ArraysMDE.fn_compose(b1, arr1), new int[] {0, 1, 2, 3});
+
+    int[] arr2 = {1,2,3,0};
+    /*@IndexFor("arr2")*/ int[] b2 = {1,2,3,0};			 
+    assert_arrays_equals(ArraysMDE.fn_compose(b2,arr2),new int[] {2, 3, 0, 1});
+
+    int[] arr3 = {3,2,1,0};
+    /*@IndexFor("arr3")*/ int[] b3 = {3,2,1,0};
+    assert_arrays_equals(ArraysMDE.fn_compose(b3,arr3), new int[] {0, 1, 2, 3});
     
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b2 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {1, 2, 3, 0},
-					      new int[] {1, 2, 3, 0}),
-			 new int[] {2, 3, 0, 1});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b3 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {3, 2, 1, 0},
-					      new int[] {3, 2, 1, 0}),
-			 new int[] {0, 1, 2, 3});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b4 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {0, 1, 0, 3},
-					      new int[] {0, 5, 2, 1}),
-			 new int[] {0, 5, 0, 1});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b5 = assert_arrays_equals(ArraysMDE.fn_compose(new int[] {0}, new int[] {5}),
-			 new int[] {5});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b6 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {1, 2, 3, 5},
-					      new int[] {1, 2, 3, 5, -1, -1}),
-			 new int[] {2, 3, 5, -1});
+    int[] arr4 = {0,5,2,1};
+    /*@IndexFor("arr4")*/ int[] b4 = {0,1,0,3};
+    assert_arrays_equals(ArraysMDE.fn_compose(b4,arr4), new int[] {0, 5, 0, 1});
+
+    int[] arr5 = {5};
+    /*@IndexFor("arr5")*/ int[] b5 = {0};
+    assert_arrays_equals(ArraysMDE.fn_compose(b5,arr5),new int[] {5});
+
+    int[] arr6 = {1,2,3,5,-1,-1};
+    /*@IndexFor("arr6")*/ int[] b6 = {1,2,3,5};
+    assert_arrays_equals(ArraysMDE.fn_compose(b6,arr6),new int[] {2, 3, 5, -1});
 
     
 	
@@ -557,7 +547,6 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-	    @SuppressWarnings("index") // Index TODO: issue 108
 	    /*@IndexFor("f2")*/ int index = i + j;
 	    f1[j] = f2[index];
         }
@@ -1602,7 +1591,7 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-    @SuppressWarnings("index") // Index TODO: issue 109. The arrays contained in ints are all @MinLen(2)
+    @SuppressWarnings("index") // pairno always stays less than the length of ints
   public static void compareOrderedPairIterator(
 						OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
@@ -2879,7 +2868,6 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-          @SuppressWarnings("index") // Index TODO: issue 108
           /*@IndexFor("f2")*/ int i2 = i + j;
           f1[j] = f2[i2];
         }
@@ -2917,7 +2905,6 @@ public final class TestPlume {
     //start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
       f1[i] = j + i * 10;
-      @SuppressWarnings("index") // Index TODO: issue 108: f2's MinLen is greater than f1's so, a valid index for f1 should always be valid for f2
       /*@IndexFor("f2")*/ int index = i;
       f2[index] = j + i * 10;
     }
