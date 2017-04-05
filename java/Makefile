@@ -471,7 +471,7 @@ PLUME_CORE_REMOVE = \
 
 plume-core.jar: ${JAVA_AND_CPP_FILES} lib
 	$(MAKE) tools_jar_exists
-	$(MAKE) clean optionsdoc
+	$(MAKE) clean-except-jar optionsdoc
 	$(MAKE) compile
 	-rm -rf core-jar-contents
 	mkdir core-jar-contents
