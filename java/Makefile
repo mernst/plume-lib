@@ -435,8 +435,6 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
-# Temporarily commented out so that plume-lib can be built with Java 8;
-# but I need to find a good way to double-check most builds.
 	(cd jar-contents; "${JAR}" cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
