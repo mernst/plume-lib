@@ -36,7 +36,16 @@ This is good for modes like Perl, where the parser can get confused."
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (delete 'maven compilation-error-regexp-alist)))
+;; If I am using Maven, run:
+;; (setq compilation-error-regexp-alist (cons 'maven compilation-error-regexp-alist))
 
+;; Is this necessary when I use the above commented-out line?
+;; ;; Maven error messages such as:
+;; ;; [ERROR] /home/mernst/tmp/safer-spring-petclinic/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:[30,8] [initialization.fields.uninitialized] the constructor does not initialize fields: name
+;; (eval-after-load "compile"
+;;   '(setq compilation-error-regexp-alist
+;; 	 (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
+;; 	       compilation-error-regexp-alist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
