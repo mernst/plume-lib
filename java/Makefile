@@ -502,6 +502,7 @@ $(pag)/software/pkg/lookup.jar: lookup.jar
 TASKMANAGER_JAVA_FILES := $(shell find . -name '*.java')
 task-manager : task_manager.jar
 task_manager.jar: plume.jar task_manager.manifest
+	echo "Make task_manager.jar"
 	-rm -rf jar-contents
 	mkdir jar-contents
 	(cd jar-contents; "${JAR}" xf ../plume.jar)
@@ -509,6 +510,7 @@ task_manager.jar: plume.jar task_manager.manifest
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents-list.txt)
 	(cd jar-contents; "${JAR}" cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
 	rm -rf jar-contents
+	echo "Done making task_manager.jar"
 
 install-task-manager: $(pag)/software/pkg/task_manager.jar
 $(pag)/software/pkg/task_manager.jar: task_manager.jar
