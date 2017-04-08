@@ -140,8 +140,12 @@ public final class TestPlume {
   /// Now the actual testing
   ///
 
+  ///////////////////////////////////////////////////////////////////////////
+  /// ArraysMDE
+  ///
+
   @Test
-  public void testArraysMDE() {
+  public void testArraysMDE_min_max() {
 
     // public static int min(int[] a)
     assert ArraysMDE.min(new int[] {1, 2, 3}) == 1;
@@ -171,6 +175,16 @@ public final class TestPlume {
     } catch (ArrayIndexOutOfBoundsException e) {
     }
 
+    // public static int element_range(int[] a)
+    assert ArraysMDE.element_range(new int[] {1, 2, 3}) == 2;
+    assert ArraysMDE.element_range(new int[] {2, 33, 1}) == 32;
+    assert ArraysMDE.element_range(new int[] {3, -2, 1}) == 5;
+    assert ArraysMDE.element_range(new int[] {3}) == 0;
+  }
+
+  @Test
+  public void testArraysMDE_sum() {
+
     // public static int sum(int[] a)
     assert 0 == ArraysMDE.sum(new int[0]);
     assert 10 == ArraysMDE.sum(new int[] {10});
@@ -190,12 +204,10 @@ public final class TestPlume {
     assert 0 == ArraysMDE.sum(new double[0][0]);
     assert 79.5
         == ArraysMDE.sum(new double[][] {{1.1, 2.2, 3.3, 4.4}, {5.5, 6, 7, 8}, {9, 10, 11, 12}});
+  }
 
-    // public static int element_range(int[] a)
-    assert ArraysMDE.element_range(new int[] {1, 2, 3}) == 2;
-    assert ArraysMDE.element_range(new int[] {2, 33, 1}) == 32;
-    assert ArraysMDE.element_range(new int[] {3, -2, 1}) == 5;
-    assert ArraysMDE.element_range(new int[] {3}) == 0;
+  @Test
+  public void testArraysMDE_indexOf() {
 
     // public static int indexOf(Object[] a, Object elt)
     // public static int indexOfEq(Object[] a, Object elt)
@@ -359,6 +371,10 @@ public final class TestPlume {
       assert ArraysMDE.indexOf(postTheArray, origTheArray) == -1;
       assert ArraysMDE.indexOf(origTheArray, postTheArray) == -1;
     }
+  }
+
+  @Test
+  public void testArraysMDE_subarray() {
 
     // public static int indexOf(boolean[] a, boolean[] sub)
     // [I'm punting on this for now; deal with it later...]
@@ -379,6 +395,10 @@ public final class TestPlume {
     // public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset)
     // (The subarray tests are missing; I hope that the indexOf(..., array)
     // operations above test them sufficiently.)
+  }
+
+  @Test
+  public void testArraysMDE_printing() {
 
     // public static String toString(Object /*@Nullable*/ [] a)
     // public static String toStringQuoted(Object /*@Nullable*/ [] a)
@@ -399,6 +419,10 @@ public final class TestPlume {
     assert ArraysMDE.toString(new int[] {}).equals("[]");
     assert ArraysMDE.toString(new int[] {0}).equals("[0]");
     assert ArraysMDE.toString(new int[] {0, 1, 2}).equals("[0, 1, 2]");
+  }
+
+  @Test
+  public void testArraysMDE_sorting() {
 
     // public static boolean sorted(int[] a)
     assert ArraysMDE.sorted(new int[] {0, 1, 2});
@@ -465,6 +489,10 @@ public final class TestPlume {
     assert ArraysMDE.fn_is_total(new int[] {0, 2, 3, -1}) == false;
     assert ArraysMDE.fn_is_total(new int[] {0, 1, 2, 4}) == true;
     assert ArraysMDE.fn_is_total(new int[] {0, 0, 0, 0}) == true;
+  }
+
+  @Test
+  public void testArraysMDE_functions() {
 
     // public static int[] fn_identity(int length)
     assert_arrays_equals(ArraysMDE.fn_identity(0), new int[] {});
@@ -525,6 +553,10 @@ public final class TestPlume {
       assert_arrays_equals(ArraysMDE.fn_compose(a7, a8), new int[] {5});
       assert_arrays_equals(ArraysMDE.fn_compose(a9, a10), new int[] {2, 3, 5, -1});
     }
+  }
+
+  @Test
+  public void testArraysMDE_set_operations() {
 
     // public static boolean isSubset(long[] smaller, long[] bigger)
     // public static boolean isSubset(double[] smaller, double[] bigger)
@@ -569,6 +601,10 @@ public final class TestPlume {
       assert ArraysMDE.isSubset(a6, a1);
       assert !ArraysMDE.isSubset(a1, a6);
     }
+  }
+
+  @Test
+  public void testArraysMDE_comparators() {
 
     // public static class IntArrayComparatorLexical implements Comparator
     // public static class IntArrayComparatorLengthFirst implements Comparator
@@ -827,6 +863,10 @@ public final class TestPlume {
       assert cacl.compare(a3, a8) > 0;
       assert caclf.compare(a3, a8) > 0;
     }
+  }
+
+  @Test
+  public void testArraysMDE_nullness() {
 
     // public static boolean any_null(Object[] a)
     {

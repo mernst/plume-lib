@@ -389,6 +389,10 @@ public final class ArraysMDE {
     return min_max[1] - min_max[0];
   }
 
+  ///////////////////////////////////////////////////////////////////////////
+  /// sum
+  ///
+
   /**
    * Returns the sum of an array of integers.
    *
