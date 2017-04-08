@@ -1568,6 +1568,7 @@ public final class TestPlume {
 
   /**
    * Throws an assertion unless the paired iterator contains the same values as the argument array.
+   * Requires that size of opi = ints.length.
    *
    * @param opi an iterator over pairs of integers
    * @param ints an array of two-element arrays of integers
