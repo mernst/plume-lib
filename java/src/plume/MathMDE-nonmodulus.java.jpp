@@ -37,9 +37,8 @@ The correct way to build the system is to run 'make'.
       }
     }
     INT[] resultArray = new INT[resultList.size()];
-    int i = 0;
-    for (INTEGER e : resultList) {
-      resultArray[i++] = e.INTValue();
+    for (int i = 0; i < resultArray.length; i++) {
+      resultArray[i] = resultList.get(i).INTValue();
     }
     return resultArray;
   }

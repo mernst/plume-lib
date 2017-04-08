@@ -501,22 +501,24 @@ public final class TestPlume {
     }
 
     // public static int[] fn_compose(int[] a, int[] b)
-    assert_arrays_equals(
-        ArraysMDE.fn_compose(new int[] {0, 1, 2, 3}, new int[] {0, 1, 2, 3}),
-        new int[] {0, 1, 2, 3});
-    assert_arrays_equals(
-        ArraysMDE.fn_compose(new int[] {1, 2, 3, 0}, new int[] {1, 2, 3, 0}),
-        new int[] {2, 3, 0, 1});
-    assert_arrays_equals(
-        ArraysMDE.fn_compose(new int[] {3, 2, 1, 0}, new int[] {3, 2, 1, 0}),
-        new int[] {0, 1, 2, 3});
-    assert_arrays_equals(
-        ArraysMDE.fn_compose(new int[] {0, 1, 0, 3}, new int[] {0, 5, 2, 1}),
-        new int[] {0, 5, 0, 1});
-    assert_arrays_equals(ArraysMDE.fn_compose(new int[] {0}, new int[] {5}), new int[] {5});
-    assert_arrays_equals(
-        ArraysMDE.fn_compose(new int[] {1, 2, 3, 5}, new int[] {1, 2, 3, 5, -1, -1}),
-        new int[] {2, 3, 5, -1});
+    {
+      int[] a1 = new int[] {0, 1, 2, 3};
+      int[] a2 = new int[] {1, 2, 3, 0};
+      int[] a3 = new int[] {3, 2, 1, 0};
+      int[] a4 = new int[] {0, 1, 0, 3};
+      int[] a5 = new int[] {0, 5, 2, 1};
+      int[] a7 = new int[] {0};
+      int[] a8 = new int[] {5};
+      int[] a9 = new int[] {1, 2, 3, 5};
+      int[] a10 = new int[] {1, 2, 3, 5, -1, -1};
+
+      assert_arrays_equals(ArraysMDE.fn_compose(a1, a1), a1);
+      assert_arrays_equals(ArraysMDE.fn_compose(a2, a2), new int[] {2, 3, 0, 1});
+      assert_arrays_equals(ArraysMDE.fn_compose(a3, a3), a1);
+      assert_arrays_equals(ArraysMDE.fn_compose(a4, a5), new int[] {0, 5, 0, 1});
+      assert_arrays_equals(ArraysMDE.fn_compose(a7, a8), new int[] {5});
+      assert_arrays_equals(ArraysMDE.fn_compose(a9, a10), new int[] {2, 3, 5, -1});
+    }
 
     // public static boolean isSubset(long[] smaller, long[] bigger)
     // public static boolean isSubset(double[] smaller, double[] bigger)

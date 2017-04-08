@@ -2678,7 +2678,24 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
-  public static int[] fn_compose(int[] a, int[] b) {
+  public static /*@PolyAll*/ int[] fn_compose(int[] a, /*@PolyAll*/ int[] b) {
+    int[] result = new int[a.length];
+    for (int i = 0; i < a.length; i++) {
+      result[i] = b[a[i]];
+    }
+    return result;
+  }
+
+  /**
+   * Return the composition of the given two (possibly partial) functions, all of which are
+   * represented as arrays.
+   *
+   * @param a function from [0..a.length) to [-1..b.length)
+   * @param b function from [0..b.length) to range R
+   * @return function from [0..a.length) to {range R} union {-1}, that is the composition of a and
+   *     b.
+   */
+  public static /*@PolyAll*/ int[] partial_fn_compose(int[] a, /*@PolyAll*/ int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       int inner = a[i];

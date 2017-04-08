@@ -6,10 +6,13 @@ The correct way to build the system is to run 'make'.
 
 #include "MathMDE-help.java.jpp"
 
-  /** Return z such that <code>(z == x mod y) &amp;&amp; (0 &le; z &lt; abs(y))</code>.
+  /**
+   * Return z such that <code>(z == x mod y) &amp;&amp; (0 &le; z &lt; abs(y))</code>.
+   * This should really be named {@code mod_nonnegative} rather than {@code mod_positive}.
+   *
    * @param x value to be modded
    * @param y modulus
-   * @return x % y, where the result is constrained to be positive
+   * @return x % y, where the result is constrained to be non-negative
    */
   /*@Pure*/ /*@StaticallyExecutable*/
   public static INT mod_positive(INT x, INT y) {
