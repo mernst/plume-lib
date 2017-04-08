@@ -506,41 +506,22 @@ public final class TestPlume {
 
     // public static int[] fn_compose(int[] a, int[] b)
 
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b1 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {0, 1, 2, 3},
-					      new int[] {0, 1, 2, 3}),
-			 new int[] {0, 1, 2, 3});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b2 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {1, 2, 3, 0},
-					      new int[] {1, 2, 3, 0}),
-			 new int[] {2, 3, 0, 1});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b3 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {3, 2, 1, 0},
-					      new int[] {3, 2, 1, 0}),
-			 new int[] {0, 1, 2, 3});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b4 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {0, 1, 0, 3},
-					      new int[] {0, 5, 2, 1}),
-			 new int[] {0, 5, 0, 1});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b5 = assert_arrays_equals(ArraysMDE.fn_compose(new int[] {0}, new int[] {5}),
-			 new int[] {5});
-    
-    @SuppressWarnings("index") // Index TODO: issue 109
-    boolean b6 = assert_arrays_equals(
-			 ArraysMDE.fn_compose(new int[] {1, 2, 3, 5},
-					      new int[] {1, 2, 3, 5, -1, -1}),
-			 new int[] {2, 3, 5, -1});
-
-    
+    assert_arrays_equals(
+        ArraysMDE.fn_compose(new int[] {0, 1, 2, 3}, new int[] {0, 1, 2, 3}),
+        new int[] {0, 1, 2, 3});
+    assert_arrays_equals(
+        ArraysMDE.fn_compose(new int[] {1, 2, 3, 0}, new int[] {1, 2, 3, 0}),
+        new int[] {2, 3, 0, 1});
+    assert_arrays_equals(
+        ArraysMDE.fn_compose(new int[] {3, 2, 1, 0}, new int[] {3, 2, 1, 0}),
+        new int[] {0, 1, 2, 3});
+    assert_arrays_equals(
+        ArraysMDE.fn_compose(new int[] {0, 1, 0, 3}, new int[] {0, 5, 2, 1}),
+        new int[] {0, 5, 0, 1});
+    assert_arrays_equals(ArraysMDE.fn_compose(new int[] {0}, new int[] {5}), new int[] {5});
+    assert_arrays_equals(
+        ArraysMDE.fn_compose(new int[] {1, 2, 3, 5}, new int[] {1, 2, 3, 5, -1, -1}),
+        new int[] {2, 3, 5, -1});
 	
     // public static boolean isSubset(long[] smaller, long[] bigger)
     // public static boolean isSubset(double[] smaller, double[] bigger)
@@ -1602,7 +1583,7 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-    @SuppressWarnings("index") // Index TODO: issue 109. The arrays contained in ints are all @MinLen(2)
+  @SuppressWarnings("index") // Index TODO: while loop with ++ on index
   public static void compareOrderedPairIterator(
 						OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
@@ -2112,10 +2093,8 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          @SuppressWarnings({
-            "lowerbound",
-            "upperbound"
-          }) // if the argument to IotaIterator is @IndexFor("a"), so is every output
+          @SuppressWarnings("index") // if arg to IotaIterator is @IndexFor("a"), so is every output
+          // Cannot currently annotate primitive wrappers such as Integer, only primitives like int.
           List</*(at)IndexFor("totals")*/ Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
@@ -2126,8 +2105,8 @@ public final class TestPlume {
             }
           }
           for (int k = 0; k < chosen.size(); k++) {
-	    @SuppressWarnings("index") // Index TODO: issue 73: intValue() needs a polymorphic qualifier
-	    /*@IndexFor("totals")*/ int index = chosen.get(k).intValue();
+            @SuppressWarnings("index") // Index TODO: issue 73 polymorphic qualifier; prim. wrappers
+            /*@IndexFor("totals")*/ int index = chosen.get(k).intValue();
             totals[index]++;
           }
         }
@@ -2588,34 +2567,23 @@ public final class TestPlume {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a2 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a3 = Intern.intern(new int[] {2, 3, 4, 5, 6, 7});
-    int i = 2;
-    int j = 4;
-    int k = 5;
 
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    int[] s1 = Intern.internSubsequence(a1, i, j);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    int[] s2 = Intern.internSubsequence(a2, i, j);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    int[] s3 = Intern.internSubsequence(a1, j, k);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    int[] s4 = Intern.internSubsequence(a1, j, k);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    int[] s5 = Intern.internSubsequence(a3, j - 1, k - 1);
+    int[] s1 = Intern.internSubsequence(a1, 2, 4);
+    int[] s2 = Intern.internSubsequence(a2, 2, 4);
+    int[] s3 = Intern.internSubsequence(a1, 4, 5);
+    int[] s4 = Intern.internSubsequence(a1, 4, 5);
+    int[] s5 = Intern.internSubsequence(a3, 3, 4);
 
     assert a1 == a2;
     assert s1 == s2;
     assert s3 == s4;
     assert s3 == s5;
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    boolean b1 = ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, i, j - i), 0);
+    boolean b1 = ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, 2, 3), 0);
     assert b1;
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    boolean b2 = ArraysMDE.isSubarray(ArraysMDE.subarray(a1, i, j - i), s1, 0);
+    boolean b2 = ArraysMDE.isSubarray(ArraysMDE.subarray(a1, 2, 3), s1, 0);
     assert b2;
 
     long[] l1 = Intern.intern(new long[] {1, 2, 3, 4, 5, 6});
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
     boolean b3 = l1 == Intern.internSubsequence(l1, 0, l1.length);
     assert b3;
   }
@@ -2879,7 +2847,6 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-          @SuppressWarnings("index") // Index TODO: issue 108
           /*@IndexFor("f2")*/ int i2 = i + j;
           f1[j] = f2[i2];
         }
@@ -2912,12 +2879,11 @@ public final class TestPlume {
   }
 
   /** Initialize f2 to be the same as two copies of f1 */
-  void initialize_f1_and_f2(int j, double /*@MinLen(10)*/[] f1, double /*@MinLen(20)*/[] f2) {
+  void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
 
     //start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
       f1[i] = j + i * 10;
-      @SuppressWarnings("index") // Index TODO: issue 108: f2's MinLen is greater than f1's so, a valid index for f1 should always be valid for f2
       /*@IndexFor("f2")*/ int index = i;
       f2[index] = j + i * 10;
     }

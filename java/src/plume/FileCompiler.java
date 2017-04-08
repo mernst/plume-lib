@@ -102,7 +102,6 @@ public final class FileCompiler {
    *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-    @SuppressWarnings("index") // Index TODO: issue 73
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
     this(compiler.trim().split(" +"), timeLimit);
   }

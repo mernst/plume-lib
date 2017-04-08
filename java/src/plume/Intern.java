@@ -11,6 +11,7 @@ import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -69,7 +70,6 @@ public final class Intern {
       // nothing to do
       return true;
     } else if (value instanceof String) {
-      @SuppressWarnings("index") // Index TODO: issue 112
       boolean res = (value == ((String) value).intern());
       return res;
     } else if (value instanceof String[]) {
@@ -577,7 +577,7 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static int /*@Interned*/ [] intern(int[] a) {
+  public static int /*@Interned*/ /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] intern(int /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
@@ -781,7 +781,6 @@ public final class Intern {
     if (a == null) {
       return null;
     } else if (a instanceof String) {
-      @SuppressWarnings("index") // Index TODO: issue 112
       Object o = intern((String) a);
       return o;
     } else if (a instanceof String[]) {
