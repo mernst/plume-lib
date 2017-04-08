@@ -2759,6 +2759,7 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
+  @SuppressWarnings("index") // issue 153 (and maybe other issues)
   public static /*@PolyAll*/ int /*@SameLen("#1")*/[] fn_compose(
       /*@IndexFor("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
     int[] result = new int[a.length];
@@ -2777,6 +2778,7 @@ public final class ArraysMDE {
    * @return function from [0..a.length) to {range R} union {-1}, that is the composition of a and
    *     b.
    */
+  @SuppressWarnings("index") // issue 153 (and maybe other issues)
   public static /*@PolyAll*/ int /*@SameLen("#1")*/[] partial_fn_compose(
       /*@IndexOrLow("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
     int[] result = new int[a.length];

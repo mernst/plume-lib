@@ -504,7 +504,11 @@ public final class TestPlume {
 
     // public static int[] fn_compose(int[] a, int[] b)
     {
-      int[] a1 = new int[] {0, 1, 2, 3};
+      // Once https://github.com/typetools/checker-framework/issues/1229 is
+      // resolved, only one annotation is needed per line rather than one
+      // on both the left-hand side and the right-hand-side.
+
+      /*@IntVal({0,1,2,3})*/ int[] a1 = new /*@IntVal({0,1,2,3})*/ int[] {0, 1, 2, 3};
       int[] a2 = new int[] {1, 2, 3, 0};
       int[] a3 = new int[] {3, 2, 1, 0};
       int[] a4 = new int[] {0, 1, 0, 3};
