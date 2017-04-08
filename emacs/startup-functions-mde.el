@@ -363,17 +363,6 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
            (string-match "\n$" (ad-get-arg 0)))
       (ad-set-arg 0 (substring (ad-get-arg 0) 0 (match-beginning 0)))))
 
-;; ;; originally from Greg Badros
-;; (defun vc-update ()
-;;   "Refresh and then update buffers."
-;;   (interactive)
-;;   (vc-clear-context)
-;;   (let ((dir default-directory)          ; pop-to-buffer might change current buffer
-;;      (output-buffer (generate-new-buffer "*cvs update output*")))
-;;     (pop-to-buffer output-buffer)
-;;     (shell-command (concat "cd " (shell-quote-argument dir) "; cvs update") t))
-;;   (update-all-buffers))
-
 ;; originally from Greg Badros
 (defun update-all-buffers ()
   "Revert all unmodified buffers from disk."

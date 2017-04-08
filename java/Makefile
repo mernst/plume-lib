@@ -231,7 +231,7 @@ clean-except-jar:
 # Remove most generated files.
 # The goal is to cause all code to be remade and and tests to be run.
 clean: clean-except-jar
-	rm -f plume.jar lookup.jar task_manager.jar
+	rm -f plume.jar plume-core.jar lookup.jar task_manager.jar
 
 very-clean: very_clean
 
@@ -293,7 +293,7 @@ javadoc: .javadoc-timestamp
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
 
-# Puts Javadoc at http://types.cs.washington.edu/plume-lib/api/
+# Puts Javadoc at https://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
 	chgrp -R types_www api
 	chmod -R o+r api
@@ -401,7 +401,7 @@ ifeq "$(I_set_JAVA_HOME)" "true"
 	@echo "WARNING: JAVA_HOME is not set, assuming $(JAVA_HOME)"
 endif
 
-jar: checkenv plume.jar lookup.jar task_manager.jar
+jar: checkenv plume.jar plume-core.jar lookup.jar task_manager.jar
 
 # This should depend on all the included .jar files, too.
 plume.jar: ${JAVA_AND_CPP_FILES} lib
@@ -442,8 +442,6 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
-# Temporarily commented out so that plume-lib can be built with Java 8;
-# but I need to find a good way to double-check most builds.
 	(cd jar-contents; "${JAR}" cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
@@ -459,6 +457,33 @@ verify-plume-jar-classfile-version:
 # Ensure that plume.jar does not contain JDK 8 or 9 classfiles
 verify-plume.jar:
 	echo "TODO"
+
+###
+### build plume-core.jar file
+###
+
+# Files that depend on the jar files in java/lib and shouldn't be
+# included in plume-core.
+PLUME_CORE_REMOVE = \
+	core-jar-contents/plume/ICalAvailable*.class \
+	core-jar-contents/plume/HtmlPrettyPrint*.class \
+	core-jar-contents/plume/TimeLimitProcess*.class \
+	core-jar-contents/plume/DeclarationAnnotations*.class \
+	core-jar-contents/plume/BCELUtil*.class \
+
+plume-core.jar: ${JAVA_AND_CPP_FILES} lib
+	$(MAKE) tools_jar_exists
+	$(MAKE) clean-except-jar optionsdoc
+	$(MAKE) compile
+	-rm -rf core-jar-contents
+	mkdir core-jar-contents
+	mkdir core-jar-contents/plume
+	cp -p src/plume/*.class core-jar-contents/plume
+	rm ${PLUME_CORE_REMOVE}
+# Put contents in alphabetical order.
+	(cd core-jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > core-jar-contents.txt)
+	(cd core-jar-contents; "${JAR}" cf ../plume-core.jar @core-jar-contents.txt)
+	rm -rf core-jar-contents
 
 
 ###
@@ -509,6 +534,7 @@ $(pag)/software/pkg/lookup.jar: lookup.jar
 TASKMANAGER_JAVA_FILES := $(shell find . -name '*.java')
 task-manager : task_manager.jar
 task_manager.jar: plume.jar task_manager.manifest
+	echo "Make task_manager.jar"
 	-rm -rf jar-contents
 	mkdir jar-contents
 	(cd jar-contents; "${JAR}" xf ../plume.jar)
@@ -516,6 +542,7 @@ task_manager.jar: plume.jar task_manager.manifest
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents-list.txt)
 	(cd jar-contents; "${JAR}" cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
 	rm -rf jar-contents
+	echo "Done making task_manager.jar"
 
 install-task-manager: $(pag)/software/pkg/task_manager.jar
 $(pag)/software/pkg/task_manager.jar: task_manager.jar
@@ -547,6 +574,12 @@ typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
 	\rm -f .class-files-timestamp
 # Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
 	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}"
+
+# This does pluggable type-checking without compiling the code.
+typecheck-only checkers-only check-types-only: ${JAVA_AND_CPP_FILES}
+	\rm -f .class-files-timestamp
+# Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
+	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}" .class-files-timestamp
 
 # I have not found this tool very useful.
 checkstyle: ${JAVA_AND_CPP_FILES}

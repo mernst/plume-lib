@@ -2806,8 +2806,8 @@ public final class UtilMDE {
    * Return a Vector of the Strings returned by {@link
    * java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
    *
-   * <p>The static type is Vector&lt;Object&gt; because StringTokenizer extends
-   * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should (probably due to
+   * <p>The static type is {@code Vector<Object>} because StringTokenizer extends {@code
+   * Enumeration<Object>} instead of {@code Enumeration<String>} as it should (probably due to
    * backward-compatibility).
    *
    * @param str a string to be parsed
@@ -3011,7 +3011,8 @@ public final class UtilMDE {
 
   /**
    * Returns a list of lists of each combination (with repetition, but not permutations) of the
-   * specified objects starting at index start over dims dimensions, for dims &gt; 0.
+   * specified objects starting at index {@code start} over {@code dims} dimensions, for {@code dims
+   * > 0}.
    *
    * <p>For example, create_combinations (1, 0, {a, b, c}) returns:
    *
@@ -3030,7 +3031,7 @@ public final class UtilMDE {
    * @param <T> type of the input list elements, and type of the innermost output list elements
    * @param dims number of dimensions: that is, size of each innermost list
    * @param start initial index
-   * @param objs list of elements to
+   * @param objs list of elements to create combinations of
    * @return list of lists of length dims, each of which combines elements from objs
    */
   public static <T> List<List<T>> create_combinations(
@@ -3071,12 +3072,12 @@ public final class UtilMDE {
    *    {0}, {1}, {2}
    * </pre>
    *
-   * And create_combinations (2, 0, 2) returns:
+   * And create_combinations (2, 10, 2) returns:
    *
    * <pre>
-   *    {0, 0}, {0, 1}, {0, 2}
-   *    {1, 1}  {1, 2},
-   *    {2, 2}
+   *    {10, 10}, {10, 11}, {10, 12}
+   *    {11, 11}  {11, 12},
+   *    {12, 12}
    * </pre>
    *
    * @param arity size of each innermost list

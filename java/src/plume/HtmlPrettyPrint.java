@@ -13,7 +13,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * Pretty-prints an HTML file, after converting it to valid XML. To use:
  *
- * <pre>java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
+ * <pre>{@code java plume.HtmlPrettyPrint file.html > filepp.html}</pre>
  */
 public final class HtmlPrettyPrint {
 

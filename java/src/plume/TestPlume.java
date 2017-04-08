@@ -2932,6 +2932,9 @@ public final class TestPlume {
     Integer i0 = new Integer(0);
     Integer i1 = new Integer(1);
     Integer i2 = new Integer(2);
+    Integer i10 = new Integer(10);
+    Integer i11 = new Integer(11);
+    Integer i12 = new Integer(12);
 
     List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations(1, 0, 2);
     assert combo3.size() == 3;
@@ -2947,6 +2950,15 @@ public final class TestPlume {
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i1}));
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i2}));
     assert combo4.contains(Arrays.asList(new Integer[] {i2, i2}));
+
+    List<ArrayList<Integer>> combo5 = UtilMDE.create_combinations(2, 10, 12);
+    assert combo5.size() == 6;
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i10}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i11}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i12}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i11, i11}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i11, i12}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i12, i12}));
   }
 
   @Test

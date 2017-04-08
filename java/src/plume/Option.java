@@ -19,17 +19,18 @@ import org.checkerframework.framework.qual.IgnoreInWholeProgramInference;
 
 /**
  * Indicates that the annotated field is set via command-line option. Takes a single string argument
- * that describes the option. The string is in the format '[-c] [&lt;type&gt;] description':
+ * that describes the option. The string is in the format '{@code [-c] [<type>] description}':
  *
  * <ul>
  *   <li>'-c' is an optional single-character short name for the option.
- *   <li>'&lt;type&gt;' is an optional description of the option type more specific than its Java
- *       type (e.g., '&lt;filename&gt;' if the variable's type is String). The less-than and
+ *   <li>'{@code <type>}' is an optional description of the option type more specific than its Java
+ *       type (e.g., '{@code <filename>}' if the variable's type is String). The less-than and
  *       greater-than symbols are required.
  *   <li>'description' is a short (one-line) description of the option suitable for a usage message.
- *       By convention, it does not end with a period. The field's Javadoc comment should contain a
- *       longer description appropriate for a manual or manpage. The Javadoc comment often repeats
- *       something similar to the <code>@Option</code> description.
+ *       By convention, it starts with a capital letter but does not end with a period. The field's
+ *       Javadoc comment should contain a longer description appropriate for a manual or manpage.
+ *       The Javadoc comment often repeats something similar to the <code>@Option</code>
+ *       description.
  * </ul>
  *
  * <p>The command-line options are processed by the {@link plume.Options} class. For example usage,

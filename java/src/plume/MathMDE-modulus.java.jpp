@@ -12,6 +12,7 @@ The correct way to build the system is to run 'make'.
    * @return x % y, where the result is constrained to be positive
    */
   @SuppressWarnings("lowerbound") // result is positive because abs(non-zero) is positive
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static /*@Positive*/ INT mod_positive(INT x, INT y) {
     INT result = x % y;
     if (result < 0) {
@@ -30,6 +31,7 @@ The correct way to build the system is to run 'make'.
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m),
    *   or null if no such exists or the iterator contains fewer than 3 elements
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT /*@Nullable*/ /*@MinLen(2)*/ [] modulus(INT[] nums) {
     if (nums.length < 3) {
       return null;
@@ -113,6 +115,7 @@ The correct way to build the system is to run 'make'.
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m),
    *   or null if no such exists or the array contains fewer than 3 elements
    */
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT /*@Nullable*/ [] modulus_strict(INT /*@MinLen(2)*/ [] nums, boolean nonstrict_ends) {
     if (nums.length < 3) {
       return null;

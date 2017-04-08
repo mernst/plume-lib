@@ -17,8 +17,9 @@ import java.util.Vector;
 /*>>>
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
-import org.checkerframework.framework.qual.PolyAll;
+import org.checkerframework.framework.qual.*;
 */
 
 /**
@@ -309,8 +310,9 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  /*@SideEffectFree*/
-  @SuppressWarnings("purity.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int /*@MinLen(2)*/[] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
@@ -332,8 +334,9 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  /*@SideEffectFree*/
-  @SuppressWarnings("purity.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static long /*@MinLen(2)*/[] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
@@ -355,8 +358,9 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  /*@Pure*/
   @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int element_range(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(int[])");
@@ -373,8 +377,9 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  /*@Pure*/
   @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  /*@Pure*/
+  /*@StaticallyExecutable*/
   public static long element_range(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(long[])");
@@ -391,6 +396,7 @@ public final class ArraysMDE {
    * @return the sum of an array of integers
    */
   /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int sum(int[] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -406,6 +412,7 @@ public final class ArraysMDE {
    * @return the sum of all the elements of a 2d array of integers
    */
   /*@Pure*/
+  /*@StaticallyExecutable*/
   public static int sum(int[][] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -423,6 +430,7 @@ public final class ArraysMDE {
    * @return the sum of an array of doubles
    */
   /*@Pure*/
+  /*@StaticallyExecutable*/
   public static double sum(double[] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -438,6 +446,7 @@ public final class ArraysMDE {
    * @return the sum of all the elements of a 2d array of doubles
    */
   /*@Pure*/
+  /*@StaticallyExecutable*/
   public static double sum(double[][] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -485,9 +494,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the array
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -530,9 +538,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the list
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the list
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -580,9 +587,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -627,9 +633,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in that section
-   *     of the list
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in that section of the list
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -691,8 +696,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -713,8 +718,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
@@ -773,8 +778,8 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @param minindex first index at which to search
    * @param indexlimit first index at which not to search
-   * @return the first index i containing the specified element, such that <code>
-   *     minindex &le; i &lt; indexlimit</code>, or -1 if the element is not found in the array
+   * @return the first index i containing the specified element, such that {@code minindex &le; i <
+   *     indexlimit}, or -1 if the element is not found in the array
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/

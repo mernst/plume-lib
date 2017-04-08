@@ -89,6 +89,6 @@ CSE file system:
     cd plume-lib/java
     git pull
     make javadoc-publish
-    $pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` http://types.cs.washington.edu/plume-lib/
+    $pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` https://types.cs.washington.edu/plume-lib/
 
 This step can be done even without making a new release.

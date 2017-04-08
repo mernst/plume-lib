@@ -16,6 +16,8 @@ The correct way to build the system is to run 'make'.
    * @param nums numbers to be excluded; length &gt; 0; may contain duplicates
    * @return the set: [min(nums)..max(nums)] - nums
    */
+  @SuppressWarnings("purity")
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT[] missing_numbers(INT /*@MinLen(1)*/ [] nums) {
     // avoid modifying parameter
     nums = nums.clone();
@@ -171,6 +173,8 @@ The correct way to build the system is to run 'make'.
    * @param nums the list of operands
    * @return a (remainder, modulus) pair that fails to match elements of nums
    */
+  @SuppressWarnings("purity")
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT /*@Nullable*/ /*@MinLen(2)*/ [] nonmodulus_strict(INT[] nums) {
     // This implementation is particularly inefficient; find a better way to
     // compute this.  Perhaps obtain the new modulus numbers incrementally
@@ -253,6 +257,8 @@ The correct way to build the system is to run 'make'.
    */
   // This seems to give too many false positives (or maybe my probability
   // model was wrong); use nonmodulus_strict instead.
+  @SuppressWarnings("purity")
+  /*@Pure*/ /*@StaticallyExecutable*/
   public static INT /*@Nullable*/ /*@MinLen(2)*/ [] nonmodulus_nonstrict(INT[] nums) {
     if (nums.length < 4) {
       return null;
