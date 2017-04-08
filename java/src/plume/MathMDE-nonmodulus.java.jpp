@@ -79,6 +79,7 @@ The correct way to build the system is to run 'make'.
         nums = nums_copy;
       }
       Arrays.sort(nums);
+      this.nums = nums;
       current_index = 0;
       current_nonmissing = nums[current_index];
       if (add_ends) {
@@ -86,7 +87,6 @@ The correct way to build the system is to run 'make'.
       } else {
         current_missing = current_nonmissing;
       }
-      this.nums = nums;
     }
 
     // The argument iterator must return the Integers in sorted order
