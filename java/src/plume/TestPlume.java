@@ -76,7 +76,7 @@ public final class TestPlume {
   //     System.out.println("All plume tests succeeded.");
   //   }
 
-  public static boolean assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
+  public static void assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
       System.out.println(
@@ -85,17 +85,15 @@ public final class TestPlume {
     assert result;
     //      assert(Arrays.equals(a1, a2),
     //         "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
-    return result;
   }
 
-  public static boolean assert_arrays_equals(double[] a1, double[] a2) {
+  public static void assert_arrays_equals(double[] a1, double[] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
       System.out.println(
           "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
     }
     assert result;
-    return result;
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -522,7 +520,7 @@ public final class TestPlume {
     assert_arrays_equals(
         ArraysMDE.fn_compose(new int[] {1, 2, 3, 5}, new int[] {1, 2, 3, 5, -1, -1}),
         new int[] {2, 3, 5, -1});
-	
+
     // public static boolean isSubset(long[] smaller, long[] bigger)
     // public static boolean isSubset(double[] smaller, double[] bigger)
     // public static boolean isSubset(String[] smaller, String[] bigger)
@@ -538,9 +536,7 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-	    @SuppressWarnings("index") // Index TODO: issue 108
-	    /*@IndexFor("f2")*/ int index = i + j;
-	    f1[j] = f2[index];
+          f1[j] = f2[i + j];
         }
 
         f1[5] = f2[i];
@@ -915,8 +911,7 @@ public final class TestPlume {
 
         Random random_gen = new Random();
 
-	@SuppressWarnings("value")
-        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100][];
+        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100] /*@ArrayLen(10)*/[];
         for (int i = 0; i < arrays.length; i++) {
           int[] a = new int[10];
           for (int j = 0; j < a.length; j++) {
@@ -1001,7 +996,6 @@ public final class TestPlume {
 
   // Tests the method "Object intern(Object)" in Intern.java
   @Test
-  @SuppressWarnings("index") // Index TODO: Several parsing errors in this function: see issue 111
   public void testInternObject() {
     Object nIntern = Intern.intern((/*@Nullable*/ Object) null);
     assert nIntern == null;
@@ -1125,7 +1119,7 @@ public final class TestPlume {
   }
 
   // Create a LimitedSizeSet of the given size, and add elements to it.
-    private static void lsis_test(/*@Positive*/int max_size) {
+  private static void lsis_test(/*@Positive*/ int max_size) {
     LimitedSizeSet<Integer> s = new LimitedSizeSet<Integer>(max_size);
     for (int i = 1; i < 2 * max_size; i++) {
       lsis_add_elts(i, s);
@@ -1583,9 +1577,9 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-  @SuppressWarnings("index") // Index TODO: while loop with ++ on index
+  @SuppressWarnings("index") // iterator of same size as array, and while loop with ++ on index
   public static void compareOrderedPairIterator(
-						OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
+      OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -1695,7 +1689,7 @@ public final class TestPlume {
   /// UtilMDE
   ///
 
-    private static BitSet randomBitSet(/*@NonNegative*/int length, Random r) {
+  private static BitSet randomBitSet(/*@NonNegative*/ int length, Random r) {
     BitSet result = new BitSet(length);
     for (int i = 0; i < length; i++) {
       result.set(i, r.nextBoolean());
@@ -2567,25 +2561,25 @@ public final class TestPlume {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a2 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
     int[] a3 = Intern.intern(new int[] {2, 3, 4, 5, 6, 7});
+    int i = 2;
+    int j = 4;
+    int k = 5;
 
-    int[] s1 = Intern.internSubsequence(a1, 2, 4);
-    int[] s2 = Intern.internSubsequence(a2, 2, 4);
-    int[] s3 = Intern.internSubsequence(a1, 4, 5);
-    int[] s4 = Intern.internSubsequence(a1, 4, 5);
-    int[] s5 = Intern.internSubsequence(a3, 3, 4);
+    int[] s1 = Intern.internSubsequence(a1, i, j);
+    int[] s2 = Intern.internSubsequence(a2, i, j);
+    int[] s3 = Intern.internSubsequence(a1, j, k);
+    int[] s4 = Intern.internSubsequence(a1, j, k);
+    int[] s5 = Intern.internSubsequence(a3, j - 1, k - 1);
 
     assert a1 == a2;
     assert s1 == s2;
     assert s3 == s4;
     assert s3 == s5;
-    boolean b1 = ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, 2, 3), 0);
-    assert b1;
-    boolean b2 = ArraysMDE.isSubarray(ArraysMDE.subarray(a1, 2, 3), s1, 0);
-    assert b2;
+    assert ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, i, j - i), 0);
+    assert ArraysMDE.isSubarray(ArraysMDE.subarray(a1, i, j - i), s1, 0);
 
     long[] l1 = Intern.intern(new long[] {1, 2, 3, 4, 5, 6});
-    boolean b3 = l1 == Intern.internSubsequence(l1, 0, l1.length);
-    assert b3;
+    assert l1 == Intern.internSubsequence(l1, 0, l1.length);
   }
 
   // To do
@@ -2847,8 +2841,7 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-          /*@IndexFor("f2")*/ int i2 = i + j;
-          f1[j] = f2[i2];
+          f1[j] = f2[i + j];
         }
 
         f1[5] = f2[i] * offhigh;
@@ -2879,13 +2872,13 @@ public final class TestPlume {
   }
 
   /** Initialize f2 to be the same as two copies of f1 */
+  @SuppressWarnings("index") // issue 147
   void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
 
     //start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
       f1[i] = j + i * 10;
-      /*@IndexFor("f2")*/ int index = i;
-      f2[index] = j + i * 10;
+      f2[i] = j + i * 10;
     }
 
     //fill out the second half of f2 with dup of f1
@@ -3306,10 +3299,11 @@ public final class TestPlume {
   public void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
-    @SuppressWarnings("value") // literal string has 11 lines
+    @SuppressWarnings("value") // method that returns an array is not StaticallyExecutable
     String /*@ArrayLen(11)*/[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
+    assert sa.length == 11;
     assert sa[0].equals("one");
     assert sa[1].equals("two");
     assert sa[2].equals("three");

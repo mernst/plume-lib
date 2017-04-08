@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -130,7 +131,7 @@ public final class ClassFileVersion {
    * @param is input stream from which to read a class
    * @return array of three version numbers
    */
-  public static double /*@Nullable*/ /*@MinLen(3)*/[] versionNumbers(InputStream is) {
+  public static double /*@Nullable*/ /*@ArrayLen(3)*/[] versionNumbers(InputStream is) {
     try {
       DataInputStream dis = new DataInputStream(is);
       int magic = dis.readInt();

@@ -46,7 +46,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @param max_values the maximum number of values this set will be able to hold
    */
-    @SuppressWarnings("index") // Index TODO: issue 66
+  @SuppressWarnings("index") // Index TODO: issue 66
   public LimitedSizeIntSet(/*@Positive*/ int max_values) {
     assert max_values > 0;
     // this.max_values = max_values;
@@ -140,7 +140,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   @SuppressWarnings("lowerbound") // num_values is positive when rep is nulled
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
-      return num_values;        // index TODO: need EnsuresQualifierIf with annotation argument
+      return num_values; // index TODO: need EnsuresQualifierIf with annotation argument
     } else {
       return values.length + 1;
     }

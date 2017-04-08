@@ -70,8 +70,7 @@ public final class Intern {
       // nothing to do
       return true;
     } else if (value instanceof String) {
-      boolean res = (value == ((String) value).intern());
-      return res;
+      return (value == ((String) value).intern());
     } else if (value instanceof String[]) {
       return (value == intern((String[]) value));
     } else if (value instanceof Integer) {
@@ -579,12 +578,15 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static int /*@Interned*/ /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] intern(int /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] a) {
+  public static int /*@Interned*/ /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] intern(
+      int /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
 
-    WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
+    @SuppressWarnings("index") // need PolyMinLen annotations on Map.get
+    WeakReference<int /*@Interned*/ /*@PolyMinLen*/ []> lookup = internedIntArrays.get(a);
+    @SuppressWarnings("index") // need PolyMinLen annotations on WeakReference.get
     int[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
@@ -783,8 +785,7 @@ public final class Intern {
     if (a == null) {
       return null;
     } else if (a instanceof String) {
-      Object o = intern((String) a);
-      return o;
+      return intern((String) a);
     } else if (a instanceof String[]) {
       @SuppressWarnings("interning")
       /*@Interned*/ String[] asArray = (/*@Interned*/ String[]) a;
@@ -829,7 +830,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static int /*@Interned*/ [] internSubsequence(
-      int /*@Interned*/ [] seq, /*@IndexFor("#1")*/ int start, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
+      int /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<int /*@Interned*/ []> sai =
         new SequenceAndIndices<int /*@Interned*/ []>(seq, start, end);
@@ -856,7 +859,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static long /*@Interned*/ [] internSubsequence(
-							long /*@Interned*/ [] seq, /*@IndexFor("#1")*/ int start, @NonNegative @LTLengthOf(value="#1", offset="#2 - 1") int end) {
+      long /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#2 - 1")*/ int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<long /*@Interned*/ []> sai =
         new SequenceAndIndices<long /*@Interned*/ []>(seq, start, end);
@@ -883,7 +888,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static double /*@Interned*/ [] internSubsequence(
-							  double /*@Interned*/ [] seq, /*@IndexFor("#1")*/ int start, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
+      double /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices<double /*@Interned*/ []> sai =
         new SequenceAndIndices<double /*@Interned*/ []>(seq, start, end);
@@ -910,7 +917,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(
-										      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, /*@IndexFor("#1")*/ int start, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
+      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> sai =
         new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(seq, start, end);
@@ -944,7 +953,9 @@ public final class Intern {
   /*@Pure*/
   @SuppressWarnings("purity") // interning logic
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(
-										      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, /*@IndexFor("#1")*/ int start, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
+      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     assert Intern.isInterned(seq);
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> sai =
         new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(seq, start, end);

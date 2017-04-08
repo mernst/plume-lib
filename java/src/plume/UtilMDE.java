@@ -57,6 +57,7 @@ import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
@@ -127,7 +128,8 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, /*@NonNegative*/int i) {
+  public static boolean intersectionCardinalityAtLeast(
+      BitSet a, BitSet b, BitSet c, /*@NonNegative*/ int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -580,7 +582,7 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56
+      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56 string
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -698,7 +700,7 @@ public final class UtilMDE {
     }
     String result;
     if (classname.startsWith("L") && classname.endsWith(";")) {
-      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56
+      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56 strings
     } else {
       result = primitiveClassesFromJvm.get(classname);
       if (result == null) {
@@ -2275,6 +2277,8 @@ public final class UtilMDE {
    * @param s the string to split
    * @return an array of Strings, one for each line in the argument
    */
+  /*@SideEffectFree*/
+  /*@StaticallyExecutable*/
   public static String[] splitLines(String s) {
     return s.split("\r\n?|\n\r?", -1);
   }

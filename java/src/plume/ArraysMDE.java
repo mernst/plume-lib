@@ -313,7 +313,7 @@ public final class ArraysMDE {
   @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
   /*@Pure*/
   /*@StaticallyExecutable*/
-  public static int /*@MinLen(2)*/[] min_max(int[] a) {
+  public static int /*@ArrayLen(2)*/[] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(int[])");
@@ -337,7 +337,7 @@ public final class ArraysMDE {
   @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
   /*@Pure*/
   /*@StaticallyExecutable*/
-  public static long /*@MinLen(2)*/[] min_max(long[] a) {
+  public static long /*@ArrayLen(2)*/[] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(long[])");
@@ -1097,7 +1097,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ Object[] subarray(
-      /*@PolyAll*/ Object[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      /*@PolyAll*/ Object[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1130,7 +1132,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ String[] subarray(
-      /*@PolyAll*/ String[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      /*@PolyAll*/ String[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1147,7 +1151,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static byte[] subarray(
-      byte[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      byte[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     byte[] result = new byte[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1164,7 +1170,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static boolean[] subarray(
-      boolean[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      boolean[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     boolean[] result = new boolean[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1181,7 +1189,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static char[] subarray(
-      char[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      char[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     char[] result = new char[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1198,7 +1208,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static double[] subarray(
-      double[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      double[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     double[] result = new double[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1215,7 +1227,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static float[] subarray(
-      float[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      float[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     float[] result = new float[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1232,7 +1246,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static int[] subarray(
-      int[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      int[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     int[] result = new int[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1249,7 +1265,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static long[] subarray(
-      long[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      long[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     long[] result = new long[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1266,7 +1284,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static short[] subarray(
-      short[] a, /*@NonNegative*/ int startindex, /*@NonNegative @LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
+      short[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     short[] result = new short[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1635,14 +1655,14 @@ public final class ArraysMDE {
       if (b == null) {
         return a;
       } else {
-	@SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.length + b.size()];
 
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
         for (int i = 0; i < b.size(); i++) {
-	  @SuppressWarnings("index") // index TODO: list support
-	  /*@IndexFor("result")*/ int index = i + a.length;
+          @SuppressWarnings("index") // index TODO: list support
+          /*@IndexFor("result")*/ int index = i + a.length;
           result[index] = b.get(i);
         }
         return result;
@@ -1672,13 +1692,13 @@ public final class ArraysMDE {
       if (b == null) {
         return toTArray(a);
       } else {
-	@SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) new /*@MonotonicNonNull*/ Object[a.size() + b.length];
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i = 0; i < a.size(); i++) {
-	  @SuppressWarnings("index") // index TODO: list support
-	  /*@IndexFor("result")*/ int index = i;
+          @SuppressWarnings("index") // index TODO: list support
+          /*@IndexFor("result")*/ int index = i;
           result[index] = a.get(i);
         }
         System.arraycopy(b, 0, result, a.size(), b.length);
@@ -1714,15 +1734,15 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i = 0; i < a.size(); i++) {
-	  @SuppressWarnings("index") // index TODO: list support
-	  /*@IndexFor("result")*/ int index = i;
+          @SuppressWarnings("index") // index TODO: list support
+          /*@IndexFor("result")*/ int index = i;
           result[index] = a.get(i);
         }
         // System.arraycopy(b, 0, result, a.length, b.length);
         for (int i = 0; i < b.size(); i++) {
-	  @SuppressWarnings("index") // index TODO: list support
-	  /*@IndexFor("result")*/ int index = i + a.size();
-          result[index] = b.get(i); 
+          @SuppressWarnings("index") // index TODO: list support
+          /*@IndexFor("result")*/ int index = i + a.size();
+          result[index] = b.get(i);
         }
         return result;
       }
@@ -2739,14 +2759,33 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
-  public static int[] fn_compose(/*@IndexOrLow("#2")*/int[] a, int[] b) {
+  public static /*@PolyAll*/ int /*@SameLen("#1")*/[] fn_compose(
+      /*@IndexFor("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
+    int[] result = new int[a.length];
+    for (int i = 0; i < a.length; i++) {
+      result[i] = b[a[i]];
+    }
+    return result;
+  }
+
+  /**
+   * Return the composition of the given two (possibly partial) functions, all of which are
+   * represented as arrays.
+   *
+   * @param a function from [0..a.length) to [-1..b.length)
+   * @param b function from [0..b.length) to range R
+   * @return function from [0..a.length) to {range R} union {-1}, that is the composition of a and
+   *     b.
+   */
+  public static /*@PolyAll*/ int /*@SameLen("#1")*/[] partial_fn_compose(
+      /*@IndexOrLow("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       int inner = a[i];
       if (inner == -1) {
         result[i] = -1;
       } else {
-	  result[i] = b[inner];
+        result[i] = b[inner];
       }
     }
     return result;
