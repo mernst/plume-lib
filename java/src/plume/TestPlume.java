@@ -491,6 +491,7 @@ public final class TestPlume {
     assert ArraysMDE.fn_is_total(new int[] {0, 0, 0, 0}) == true;
   }
 
+  @SuppressWarnings("index") // issue 147
   @Test
   public void testArraysMDE_functions() {
 
@@ -2601,6 +2602,7 @@ public final class TestPlume {
    * Test the intering of subsequences as triples of the original sequence, the start and the end
    * indices.
    */
+  @SuppressWarnings("index") // needs @PolyArrayLen annotation on Intern.intern()
   @Test
   public void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
