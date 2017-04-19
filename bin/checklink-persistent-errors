@@ -79,7 +79,7 @@ Takes 2 arguments, a basename and a number of files to read."""
             persistent = [x for x in persistent if x in r[url]]
             if DEBUG_PRINTING: print("persistent at end of loop = %s" % persistent)
         if DEBUG_PRINTING: print("final persistent = %s" % persistent)
-        if len(persistent) > 0:
+        if persistent:             # equivalent to "if len(persistent > 0)"
             print("")
             print("----------------------------------------")
             print("")
