@@ -86,6 +86,7 @@ The mapping is created by the javadoc-index-to-alist program.")
 	(re-search-forward "^class\\|^import\\|^public\\|^static" nil t)
 	(beginning-of-line)
 	(insert "import " class ";\n")))))
+(fset 'jimport 'java-insert-import)
 
 (defun ref-to-class (str)
   "Given \"java/math/BigInteger.html#abs()\", return \"java.math.BigInteger.abs()\"."
