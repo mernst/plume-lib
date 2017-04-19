@@ -914,7 +914,7 @@ public final class TestPlume {
       return false;
     }
     for (int i = 0; i < elts.size(); i++) {
-      if (!elts.get(i).toString().equals(strings.get(i))) {
+      if (!String.valueOf(elts.get(i)).equals(strings.get(i))) {
         return false;
       }
     }
