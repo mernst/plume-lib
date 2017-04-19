@@ -3428,14 +3428,7 @@ public final class ArraysMDE {
 
     /** Copy constructor. */
     Partitioning(Partitioning<T> other) {
-      for (List<T> part : other) {
-        this.add(new ArrayList<T>(part));
-      }
-    }
-
-    /** Shorthand for the copy constructor. */
-    Partitioning<T> copy() {
-      return new Partitioning<T>(this);
+      super(other);
     }
 
     /** The set that has being partitioned. */
@@ -3456,7 +3449,7 @@ public final class ArraysMDE {
 
     /** Returns a new partition just like this one, but with elt added to the ith part. */
     Partitioning<T> addToPart(int i, T elt) {
-      Partitioning<T> result = this.copy();
+      Partitioning<T> result = new Partitioning<T>(this);
       if (size() == i) {
         ArrayList<T> newPart = newArrayList(elt);
         result.add(newPart);
