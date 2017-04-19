@@ -908,6 +908,53 @@ public final class TestPlume {
     }
   }
 
+  /** Return true if the toString of each element in elts equals the corresponding string. */
+  private static boolean equalElementStrings(List<?> elts, List<String> strings) {
+    if (elts.size() != strings.size()) {
+      return false;
+    }
+    for (int i = 0; i < elts.size(); i++) {
+      if (!elts.get(i).toString().equals(strings.get(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @Test
+  public void testArraysMDE_partitioning() {
+
+    assert equalElementStrings(
+        ArraysMDE.partitionInto(Arrays.asList("a"), 1), Arrays.asList("[[a]]"));
+    assert equalElementStrings(
+        ArraysMDE.partitionInto(Arrays.asList("a", "b"), 1), Arrays.asList("[[a, b]]"));
+    assert equalElementStrings(
+        ArraysMDE.partitionInto(Arrays.asList("a", "b"), 2), Arrays.asList("[[a], [b]]"));
+    assert equalElementStrings(
+        ArraysMDE.partitionInto(Arrays.asList("a", "b", "c"), 1), Arrays.asList("[[a, b, c]]"));
+    assert equalElementStrings(
+        ArraysMDE.partitionInto(Arrays.asList("a", "b", "c"), 2),
+        Arrays.asList("[[a, b], [c]]", "[[a, c], [b]]", "[[a], [b, c]]"));
+    assert equalElementStrings(
+        ArraysMDE.partitionInto(Arrays.asList("a", "b", "c", "d", "e"), 2),
+        Arrays.asList(
+            "[[a, b, c, d], [e]]",
+            "[[a, b, c, e], [d]]",
+            "[[a, b, c], [d, e]]",
+            "[[a, b, d, e], [c]]",
+            "[[a, b, e], [c, d]]",
+            "[[a, b, d], [c, e]]",
+            "[[a, b], [c, d, e]]",
+            "[[a, c, d, e], [b]]",
+            "[[a, d, e], [b, c]]",
+            "[[a, c, e], [b, d]]",
+            "[[a, e], [b, c, d]]",
+            "[[a, c, d], [b, e]]",
+            "[[a, d], [b, c, e]]",
+            "[[a, c], [b, d, e]]",
+            "[[a], [b, c, d, e]]"));
+  }
+
   // This cannot be static because it instantiates an inner class.
   @Test
   public void testHasher() {

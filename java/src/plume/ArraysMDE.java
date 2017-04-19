@@ -4,13 +4,16 @@
 package plume;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 
@@ -3338,6 +3341,146 @@ public final class ArraysMDE {
       }
     }
     return true;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  /// Partitioning
+  ///
+
+  /**
+   * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
+   * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
+   * of such partitionings.
+   */
+  public static <T> List<Partitioning<T>> partitionInto(Collection<T> elts, int k) {
+    return partitionInto(new LinkedList<T>(elts), k);
+  }
+
+  /**
+   * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
+   * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
+   * of such partitionings.
+   */
+  public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, int k) {
+    if (elts.size() < k) {
+      throw new IllegalArgumentException();
+    }
+    return partitionIntoHelper(elts, Arrays.asList(new Partitioning<T>()), k, 0);
+  }
+
+  /**
+   * Returns a set of partitionings, each of size numEmptyParts + numNonemptyParts. A helper method
+   * for {@link #partitionInto}.
+   *
+   * @param elts the elements that remain to be added to the partitionings
+   * @param resultSoFar a list of partitionings, each of which has numNonemptyParts parts
+   */
+  public static <T> List<Partitioning<T>> partitionIntoHelper(
+      Queue<T> elts, List<Partitioning<T>> resultSoFar, int numEmptyParts, int numNonemptyParts) {
+
+    if (numEmptyParts > elts.size()) {
+      throw new IllegalArgumentException(numEmptyParts + " > " + elts.size());
+    }
+
+    if (elts.isEmpty()) {
+      return resultSoFar;
+    }
+
+    Queue<T> eltsRemaining = new LinkedList<T>(elts);
+    T elt = eltsRemaining.remove();
+
+    List<Partitioning<T>> result = new ArrayList<Partitioning<T>>();
+
+    // Put elt in an existing part in the partitioning.
+    if (elts.size() > numEmptyParts) {
+      List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
+      for (int i = 0; i < numNonemptyParts; i++) {
+        for (Partitioning<T> p : resultSoFar) {
+          resultSoFar_augmented.add(p.addToPart(i, elt));
+        }
+      }
+      result.addAll(
+          partitionIntoHelper(
+              eltsRemaining, resultSoFar_augmented, numEmptyParts, numNonemptyParts));
+    }
+
+    // Put elt in a newly-created part in the partitioning.
+    if (numEmptyParts > 0) {
+      List<T> part = newArrayList(elt);
+      List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
+      for (Partitioning<T> p : resultSoFar) {
+        resultSoFar_augmented.add(p.addToPart(numNonemptyParts, elt));
+      }
+      result.addAll(
+          partitionIntoHelper(
+              eltsRemaining, resultSoFar_augmented, numEmptyParts - 1, numNonemptyParts + 1));
+    }
+
+    return result;
+  }
+
+  static class Partitioning<T> extends ArrayList<ArrayList<T>> {
+
+    static final long serialVersionUID = 20170418;
+
+    /** Empty constructor. */
+    Partitioning() {}
+
+    /** Copy constructor. */
+    Partitioning(Partitioning<T> other) {
+      for (List<T> part : other) {
+        this.add(new ArrayList<T>(part));
+      }
+    }
+
+    /** Shorthand for the copy constructor. */
+    Partitioning<T> copy() {
+      return new Partitioning<T>(this);
+    }
+
+    /** The set that has being partitioned. */
+    List<T> partitionedSet() {
+      List<T> result = new ArrayList<T>();
+      for (List<T> part : this) {
+        result.addAll(part);
+      }
+      return result;
+    }
+
+    /** True if this is a partition for {@code elts}. */
+    boolean isPartitioningFor(List<T> elts) {
+      // Inefficient O(n^2) implementation.  We can do O(n log n) if desired.
+      List<T> ps = partitionedSet();
+      return ps.size() == elts.size() && ps.containsAll(elts);
+    }
+
+    /** Returns a new partition just like this one, but with elt added to the ith part. */
+    Partitioning<T> addToPart(int i, T elt) {
+      Partitioning<T> result = this.copy();
+      if (size() == i) {
+        ArrayList<T> newPart = newArrayList(elt);
+        result.add(newPart);
+      } else {
+        ArrayList<T> newPart = new ArrayList<T>(result.get(i));
+        newPart.add(elt);
+        result.set(i, newPart);
+      }
+      return result;
+    }
+  }
+
+  /** Return a singleton ArrayList containing the given element. */
+  private static <T> ArrayList<T> newArrayList(T elt) {
+    ArrayList<T> result = new ArrayList<T>(1);
+    result.add(elt);
+    return result;
+  }
+
+  /** Return a singleton LinkedList containing the given element. */
+  private static <T> LinkedList<T> newLinkedList(T elt) {
+    LinkedList<T> result = new LinkedList<T>();
+    result.add(elt);
+    return result;
   }
 
   ///////////////////////////////////////////////////////////////////////////
