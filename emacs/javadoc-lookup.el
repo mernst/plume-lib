@@ -83,7 +83,7 @@ The mapping is created by the javadoc-index-to-alist program.")
     (let ((class (ref-to-class ref)))
       (save-excursion
 	(goto-char (point-min))
-	(re-search-forward "^class\\|^import\\|^public\\|^static" nil t)
+	(re-search-forward "^/\\*\\|^class\\|^import\\|^public\\|^static" nil t)
 	(beginning-of-line)
 	(insert "import " class ";\n")))))
 (fset 'jimport 'java-insert-import)
