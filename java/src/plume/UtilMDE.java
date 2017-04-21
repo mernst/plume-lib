@@ -2763,6 +2763,43 @@ public final class UtilMDE {
     }
   }
 
+  // This could test the types of the elemets, and do something more sophisticated based on the
+  // types.
+  /**
+   * Attempt to order Objects. Puts null at the beginning. Returns 0 for equal elements. Otherwise,
+   * orders by the result of {@code toString()}.
+   *
+   * <p>Note: if toString returns a nondeterministic value, such as one that depends on the result
+   * of {@code hashCode()}, then this comparator may yield different orderings from run to run of a
+   * program.
+   */
+  public static class ObjectComparator implements Comparator</*@Nullable*/ Object>, Serializable {
+    static final long serialVersionUID = 20170420L;
+
+    @SuppressWarnings(
+        "purity.not.deterministic.call") // toString is being used in a deterministic way
+    /*@Pure*/
+    public int compare(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
+      // Make null compare smaller than anything else
+      if ((o1 == o2)) {
+        return 0;
+      }
+      if (o1 == null) {
+        return -1;
+      }
+      if (o2 == null) {
+        return 1;
+      }
+      if (o1.equals(o2)) {
+        return 0;
+      }
+      // Don't compare output of hashCode() because it is non-deterministic from run to run.
+      String s1 = o1.toString();
+      String s2 = o2.toString();
+      return s1.compareTo(s2);
+    }
+  }
+
   /**
    * Return the number of times the character appears in the string.
    *

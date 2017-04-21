@@ -2823,8 +2823,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()} (which tests reference equality).
    */
   public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
     static final long serialVersionUID = 20150812L;
@@ -2857,8 +2857,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()} (which tests reference equality).
    */
   public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
     static final long serialVersionUID = 20150812L;
@@ -2891,8 +2891,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()} (which tests reference equality).
    */
   public static final class DoubleArrayComparatorLexical
       implements Comparator<double[]>, Serializable {
@@ -2927,8 +2927,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical Strings).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()}.
    */
   public static final class StringArrayComparatorLexical
       implements Comparator<String[]>, Serializable {
@@ -2978,8 +2978,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain identical elemetns but are not equal according
+   * to {@code equals()} (which tests reference equality).
    */
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>>
       implements Comparator<T[]>, Serializable {
@@ -3034,8 +3034,12 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain equal objects but are not equal according to
+   * {@code equals()}.
+   *
+   * <p>Note: if toString returns a nondeterministic value, such as one that depends on the result
+   * of {@code hashCode()}, then this comparator may yield different orderings from run to run of a
+   * program.
    */
   public static final class ObjectArrayComparatorLexical
       implements Comparator<Object[]>, Serializable {
@@ -3062,25 +3066,10 @@ public final class ArraysMDE {
       }
       int len = Math.min(a1.length, a2.length);
       for (int i = 0; i < len; i++) {
-        Object elt1 = a1[i];
-        Object elt2 = a2[i];
-        // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null)) {
-          continue;
-        }
-        if (elt1 == null) {
-          return -1;
-        }
-        if (elt2 == null) {
-          return 1;
-        }
-        int tmp = elt1.hashCode() - elt2.hashCode();
+        int tmp = objectComparator.compare(a1[i], a2[i]);
         if (tmp != 0) {
           return tmp;
         }
-        // I'm counting on the fact that hashCode returns a different
-        // number for each Object in the system.  This checks that assumption.
-        assert elt1.equals(elt2);
       }
       return a1.length - a2.length;
     }
@@ -3091,8 +3080,8 @@ public final class ArraysMDE {
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()}.
    */
   public static final class IntArrayComparatorLengthFirst
       implements Comparator<int[]>, Serializable {
@@ -3128,8 +3117,8 @@ public final class ArraysMDE {
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()}.
    */
   public static final class LongArrayComparatorLengthFirst
       implements Comparator<long[]>, Serializable {
@@ -3165,8 +3154,8 @@ public final class ArraysMDE {
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain identical objects but are not equal according to
+   * {@code equals()}.
    */
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>>
       implements Comparator<T[]>, Serializable {
@@ -3218,13 +3207,19 @@ public final class ArraysMDE {
     }
   }
 
+  private static final UtilMDE.ObjectComparator objectComparator = new UtilMDE.ObjectComparator();
+
   /**
    * Compare two arrays first by length (a shorter array is considered less), and if of equal length
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain identical objects but are not equal according to
+   * {@code equals()}.
+   *
+   * <p>Note: if toString returns a nondeterministic value, such as one that depends on the result
+   * of {@code hashCode()}, then this comparator may yield different orderings from run to run of a
+   * program.
    */
   public static final class ObjectArrayComparatorLengthFirst
       implements Comparator<Object[]>, Serializable {
@@ -3253,25 +3248,10 @@ public final class ArraysMDE {
         return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
-        Object elt1 = a1[i];
-        Object elt2 = a2[i];
-        // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null)) {
-          continue;
-        }
-        if (elt1 == null) {
-          return -1;
-        }
-        if (elt2 == null) {
-          return 1;
-        }
-        int tmp = elt1.hashCode() - elt2.hashCode();
+        int tmp = objectComparator.compare(a1[i], a2[i]);
         if (tmp != 0) {
           return tmp;
         }
-        // I'm counting on the fact that hashCode returns a different
-        // number for each Object in the system.  This checks that assumption.
-        assert elt1.equals(elt2);
       }
       return 0;
     }
