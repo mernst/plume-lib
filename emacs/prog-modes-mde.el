@@ -44,8 +44,8 @@ This is good for modes like Perl, where the parser can get confused."
 ;; ;; [ERROR] /home/mernst/tmp/safer-spring-petclinic/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:[30,8] [initialization.fields.uninitialized] the constructor does not initialize fields: name
 ;; (eval-after-load "compile"
 ;;   '(setq compilation-error-regexp-alist
-;; 	 (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
-;; 	       compilation-error-regexp-alist)))
+;;       (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
+;;             compilation-error-regexp-alist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -736,17 +736,17 @@ Works over the currently-visited tags table."
   ;; Start descriptive text with lowercase letter.
   (condition-case nil
       (let ((case-fold-search nil))
-	;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
-	;; seem to work with tags-query-replace, so call downcase-previous-character.
-	;; We only do so if the capital letter is at the beginning of a word
-	;; whose other characters are lowercase.
-	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
-	(goto-char (match-end 1))
-	(downcase-previous-character)
-	(while t
-	  (tags-loop-continue)
-	  (goto-char (match-end 1))
-	  (downcase-previous-character)))
+        ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
+        ;; seem to work with tags-query-replace, so call downcase-previous-character.
+        ;; We only do so if the capital letter is at the beginning of a word
+        ;; whose other characters are lowercase.
+        (tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+        (goto-char (match-end 1))
+        (downcase-previous-character)
+        (while t
+          (tags-loop-continue)
+          (goto-char (match-end 1))
+          (downcase-previous-character)))
     (user-error nil))
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
@@ -763,7 +763,7 @@ Works over the currently-visited tags table."
 
   ;; Missing period at the end of a Javadoc tag
   (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
-		"\\1.\\2")
+                "\\1.\\2")
   )
 
 (defun improve-javadoc-code-style ()
@@ -2094,13 +2094,13 @@ in this directory or some superdirectory."
              (setq compile-command "ant -e -find build.xml "))
             ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
-	     (let ((gradle-command (if (file-readable-p "gradlew")
-				       (setq compile-command "./gradlew")
-				     (setq compile-command "gradle"))))
-	       (setq compile-command (concat gradle-command " build"))))
+             (let ((gradle-command (if (file-readable-p "gradlew")
+                                       (setq compile-command "./gradlew")
+                                     (setq compile-command "gradle"))))
+               (setq compile-command (concat gradle-command " build"))))
             ((file-in-super-directory "build.gradle" default-directory)
              (let* ((buildfile (file-in-super-directory
-                               "build.gradle" default-directory))
+                                "build.gradle" default-directory))
                     (gradle-command
                      (let ((gradlew (concat (file-name-directory buildfile)
                                             "gradlew")))
@@ -2109,10 +2109,18 @@ in this directory or some superdirectory."
                          "gradle"))))
                (make-local-variable 'compile-command)
                (setq compile-command
-		     (concat gradle-command " -b " buildfile " build"))))
+                     (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn package")))))
+             (setq compile-command "mvn package"))
+            ((file-in-super-directory "pom.xml" default-directory)
+             (let* ((buildfile (file-in-super-directory
+                                "pom.xml" default-directory)))
+
+               (make-local-variable 'compile-command)
+               (setq compile-command
+                     (concat "mvn" " -f " buildfile " package"))))
+            )))
 (add-hook 'find-file-hooks 'set-compile-command-for-directory)
 (add-hook 'dired-mode-hook 'set-compile-command-for-directory)
 (add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
@@ -2175,7 +2183,7 @@ Use as a hook, like so:
            (setq dir (replace-regexp-in-string "_" "-" dir))
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
-	;; Checker Framework demos
+        ;; Checker Framework demos
 ;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
 ;;       (make-local-variable 'compile-command)
 ;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
@@ -2210,7 +2218,7 @@ Use as a hook, like so:
               (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "make typecheck-only"))
-	;; end of Checker Framework demos
+        ;; end of Checker Framework demos
 
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
          (make-local-variable 'compile-command)
