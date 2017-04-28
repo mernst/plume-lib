@@ -2282,6 +2282,8 @@ public final class UtilMDE {
    * Concatenate the string representations of the array elements, placing the delimiter between
    * them.
    *
+   * <p>If you are using Java 8 or later, then use the {@code String.join()} method instead.
+   *
    * @see plume.ArraysMDE#toString(int[])
    * @param a array of values to concatenate
    * @param delim delimiter to place between printed representations
