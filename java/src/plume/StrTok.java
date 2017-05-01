@@ -23,12 +23,12 @@ import java.io.StringReader;
  * <p>Other differences are:
  *
  * <ul>
- *   <li> Automatic setup for tokenizing strings.
- *   <li> Underscores are included in identifiers (words).
- *   <li> I/O errors (which should be impossible when tokenizing strings) are converted to
+ *   <li>Automatic setup for tokenizing strings.
+ *   <li>Underscores are included in identifiers (words).
+ *   <li>I/O errors (which should be impossible when tokenizing strings) are converted to
  *       RuntimeExceptions so that every call doesn't have to be included in a try block.
- *   <li> Convenience functions isWord(), isQString(), and need().
- *   <li> Returned string tokens are interned for easier comparisons.
+ *   <li>Convenience functions isWord(), isQString(), and need().
+ *   <li>Returned string tokens are interned for easier comparisons.
  * </ul>
  */
 public class StrTok {

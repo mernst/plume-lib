@@ -34,10 +34,10 @@ import org.checkerframework.checker.regex.qual.*;
  * <ul>
  *   <li>A short entry is a single paragraph (delimited from the next entry by a blank line). Lookup
  *       searches all of a short entry.
- *   <li>A long entry is introduced by a line that begins with '&gt;entry'. The remainder of that
- *       line is a one-line description of the entry. A long entry is terminated by '&lt;entry', by
- *       the start of a new long entry, or by the start of a new file. Lookup searches only the
- *       first line of a long entry.
+ *   <li>A long entry is introduced by a line that begins with '{@code >entry}'. The remainder of
+ *       that line is a one-line description of the entry. A long entry is terminated by '{@code
+ *       <entry}', by the start of a new long entry, or by the start of a new file. Lookup searches
+ *       only the first line of a long entry.
  * </ul>
  *
  * If multiple entries match, the first line of each is printed. If only one entry matches, then
@@ -61,7 +61,6 @@ import org.checkerframework.checker.regex.qual.*;
  *         <li id="option:verbose"><b>-v</b> <b>--verbose=</b><i>boolean</i>. Print progress
  *             information [default false]
  *       </ul>
- *
  *   <li id="optiongroup:Where-to-search">Where to search
  *       <ul>
  *         <li id="option:entry-file"><b>-f</b> <b>--entry-file=</b><i>string</i>. Specify the
@@ -72,7 +71,6 @@ import org.checkerframework.checker.regex.qual.*;
  *             body of long entries in addition to the entry's description. The bodies of short
  *             entries are always searched. [default false]
  *       </ul>
- *
  *   <li id="optiongroup:What-to-search-for">What to search for
  *       <ul>
  *         <li id="option:regular-expressions"><b>-e</b>
@@ -85,7 +83,6 @@ import org.checkerframework.checker.regex.qual.*;
  *             text keyword only as a separate word, not as a substring of a word. This option is
  *             ignored if regular_expressions is true. [default false]
  *       </ul>
- *
  *   <li id="optiongroup:How-to-print-matches">How to print matches
  *       <ul>
  *         <li id="option:print-all"><b>-a</b> <b>--print-all=</b><i>boolean</i>. By default, if
@@ -98,7 +95,6 @@ import org.checkerframework.checker.regex.qual.*;
  *         <li id="option:show-location"><b>-l</b> <b>--show-location=</b><i>boolean</i>. If true,
  *             show the filename/line number of each matching entry in the output. [default false]
  *       </ul>
- *
  *   <li id="optiongroup:Customizing-format-of-files-to-be-searched">Customizing format of files to
  *       be searched
  *       <ul>
@@ -113,7 +109,6 @@ import org.checkerframework.checker.regex.qual.*;
  *         <li id="option:include-re"><b>--include-re=</b><i>string</i>. Regex that matches an
  *             include directive; group 1 is the file name [default \\include\{(.*)\}]
  *       </ul>
- *
  * </ul>
  *
  * <!-- end options doc -->

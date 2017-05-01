@@ -33,7 +33,7 @@ import org.checkerframework.checker.nullness.qual.*;
  * set intersection/difference instead.
  *
  * @param <T> the element type of the component iterator; this OrderedPairIterator has elements of
- *     type Pair&lt;T,T&gt;
+ *     type {@code Pair<T,T>}
  */
 // T need not extend Comparable<T>, because a comparator can be passed in.
 public class OrderedPairIterator<T>

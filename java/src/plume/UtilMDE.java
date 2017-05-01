@@ -57,6 +57,7 @@ import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
@@ -127,7 +128,8 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, /*@NonNegative*/int i) {
+  public static boolean intersectionCardinalityAtLeast(
+      BitSet a, BitSet b, BitSet c, /*@NonNegative*/ int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -580,7 +582,7 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56
+      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56 string
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -698,7 +700,7 @@ public final class UtilMDE {
     }
     String result;
     if (classname.startsWith("L") && classname.endsWith(";")) {
-      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56
+      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56 strings
     } else {
       result = primitiveClassesFromJvm.get(classname);
       if (result == null) {
@@ -2275,6 +2277,8 @@ public final class UtilMDE {
    * @param s the string to split
    * @return an array of Strings, one for each line in the argument
    */
+  /*@SideEffectFree*/
+  /*@StaticallyExecutable*/
   public static String[] splitLines(String s) {
     return s.split("\r\n?|\n\r?", -1);
   }
@@ -2806,8 +2810,8 @@ public final class UtilMDE {
    * Return a Vector of the Strings returned by {@link
    * java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
    *
-   * <p>The static type is Vector&lt;Object&gt; because StringTokenizer extends
-   * Enumeration&lt;Object&gt; instead of Enumeration&lt;String&gt; as it should (probably due to
+   * <p>The static type is {@code Vector<Object>} because StringTokenizer extends {@code
+   * Enumeration<Object>} instead of {@code Enumeration<String>} as it should (probably due to
    * backward-compatibility).
    *
    * @param str a string to be parsed
@@ -3011,7 +3015,8 @@ public final class UtilMDE {
 
   /**
    * Returns a list of lists of each combination (with repetition, but not permutations) of the
-   * specified objects starting at index start over dims dimensions, for dims &gt; 0.
+   * specified objects starting at index {@code start} over {@code dims} dimensions, for {@code dims
+   * > 0}.
    *
    * <p>For example, create_combinations (1, 0, {a, b, c}) returns:
    *
@@ -3030,7 +3035,7 @@ public final class UtilMDE {
    * @param <T> type of the input list elements, and type of the innermost output list elements
    * @param dims number of dimensions: that is, size of each innermost list
    * @param start initial index
-   * @param objs list of elements to
+   * @param objs list of elements to create combinations of
    * @return list of lists of length dims, each of which combines elements from objs
    */
   public static <T> List<List<T>> create_combinations(
@@ -3071,12 +3076,12 @@ public final class UtilMDE {
    *    {0}, {1}, {2}
    * </pre>
    *
-   * And create_combinations (2, 0, 2) returns:
+   * And create_combinations (2, 10, 2) returns:
    *
    * <pre>
-   *    {0, 0}, {0, 1}, {0, 2}
-   *    {1, 1}  {1, 2},
-   *    {2, 2}
+   *    {10, 10}, {10, 11}, {10, 12}
+   *    {11, 11}  {11, 12},
+   *    {12, 12}
    * </pre>
    *
    * @param arity size of each innermost list

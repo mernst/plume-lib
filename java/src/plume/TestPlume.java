@@ -76,7 +76,7 @@ public final class TestPlume {
   //     System.out.println("All plume tests succeeded.");
   //   }
 
-  public static boolean assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
+  public static void assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
       System.out.println(
@@ -85,17 +85,15 @@ public final class TestPlume {
     assert result;
     //      assert(Arrays.equals(a1, a2),
     //         "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
-    return result;
   }
 
-  public static boolean assert_arrays_equals(double[] a1, double[] a2) {
+  public static void assert_arrays_equals(double[] a1, double[] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
       System.out.println(
           "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
     }
     assert result;
-    return result;
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -142,8 +140,12 @@ public final class TestPlume {
   /// Now the actual testing
   ///
 
+  ///////////////////////////////////////////////////////////////////////////
+  /// ArraysMDE
+  ///
+
   @Test
-  public void testArraysMDE() {
+  public void testArraysMDE_min_max() {
 
     // public static int min(int[] a)
     assert ArraysMDE.min(new int[] {1, 2, 3}) == 1;
@@ -173,6 +175,16 @@ public final class TestPlume {
     } catch (ArrayIndexOutOfBoundsException e) {
     }
 
+    // public static int element_range(int[] a)
+    assert ArraysMDE.element_range(new int[] {1, 2, 3}) == 2;
+    assert ArraysMDE.element_range(new int[] {2, 33, 1}) == 32;
+    assert ArraysMDE.element_range(new int[] {3, -2, 1}) == 5;
+    assert ArraysMDE.element_range(new int[] {3}) == 0;
+  }
+
+  @Test
+  public void testArraysMDE_sum() {
+
     // public static int sum(int[] a)
     assert 0 == ArraysMDE.sum(new int[0]);
     assert 10 == ArraysMDE.sum(new int[] {10});
@@ -192,12 +204,10 @@ public final class TestPlume {
     assert 0 == ArraysMDE.sum(new double[0][0]);
     assert 79.5
         == ArraysMDE.sum(new double[][] {{1.1, 2.2, 3.3, 4.4}, {5.5, 6, 7, 8}, {9, 10, 11, 12}});
+  }
 
-    // public static int element_range(int[] a)
-    assert ArraysMDE.element_range(new int[] {1, 2, 3}) == 2;
-    assert ArraysMDE.element_range(new int[] {2, 33, 1}) == 32;
-    assert ArraysMDE.element_range(new int[] {3, -2, 1}) == 5;
-    assert ArraysMDE.element_range(new int[] {3}) == 0;
+  @Test
+  public void testArraysMDE_indexOf() {
 
     // public static int indexOf(Object[] a, Object elt)
     // public static int indexOfEq(Object[] a, Object elt)
@@ -361,6 +371,10 @@ public final class TestPlume {
       assert ArraysMDE.indexOf(postTheArray, origTheArray) == -1;
       assert ArraysMDE.indexOf(origTheArray, postTheArray) == -1;
     }
+  }
+
+  @Test
+  public void testArraysMDE_subarray() {
 
     // public static int indexOf(boolean[] a, boolean[] sub)
     // [I'm punting on this for now; deal with it later...]
@@ -381,6 +395,10 @@ public final class TestPlume {
     // public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset)
     // (The subarray tests are missing; I hope that the indexOf(..., array)
     // operations above test them sufficiently.)
+  }
+
+  @Test
+  public void testArraysMDE_printing() {
 
     // public static String toString(Object /*@Nullable*/ [] a)
     // public static String toStringQuoted(Object /*@Nullable*/ [] a)
@@ -401,6 +419,10 @@ public final class TestPlume {
     assert ArraysMDE.toString(new int[] {}).equals("[]");
     assert ArraysMDE.toString(new int[] {0}).equals("[0]");
     assert ArraysMDE.toString(new int[] {0, 1, 2}).equals("[0, 1, 2]");
+  }
+
+  @Test
+  public void testArraysMDE_sorting() {
 
     // public static boolean sorted(int[] a)
     assert ArraysMDE.sorted(new int[] {0, 1, 2});
@@ -467,6 +489,11 @@ public final class TestPlume {
     assert ArraysMDE.fn_is_total(new int[] {0, 2, 3, -1}) == false;
     assert ArraysMDE.fn_is_total(new int[] {0, 1, 2, 4}) == true;
     assert ArraysMDE.fn_is_total(new int[] {0, 0, 0, 0}) == true;
+  }
+
+  @SuppressWarnings("index") // issue 147
+  @Test
+  public void testArraysMDE_functions() {
 
     // public static int[] fn_identity(int length)
     assert_arrays_equals(ArraysMDE.fn_identity(0), new int[] {});
@@ -505,33 +532,33 @@ public final class TestPlume {
     }
 
     // public static int[] fn_compose(int[] a, int[] b)
+    {
+      // Once https://github.com/typetools/checker-framework/issues/1229 is
+      // resolved, only one annotation is needed per line rather than one
+      // on both the left-hand side and the right-hand-side.
 
-    int[] arr1 = {0,1,2,3};
-    /*@IndexFor("arr1")*/ int[] b1 = {0,1,2,3};
-    assert_arrays_equals(ArraysMDE.fn_compose(b1, arr1), new int[] {0, 1, 2, 3});
+      /*@IntVal({0,1,2,3})*/ int[] a1 = new /*@IntVal({0,1,2,3})*/ int[] {0, 1, 2, 3};
+      int[] a2 = new int[] {1, 2, 3, 0};
+      int[] a3 = new int[] {3, 2, 1, 0};
+      int[] a4 = new int[] {0, 1, 0, 3};
+      int[] a5 = new int[] {0, 5, 2, 1};
+      int[] a7 = new int[] {0};
+      int[] a8 = new int[] {5};
+      int[] a9 = new int[] {1, 2, 3, 5};
+      int[] a10 = new int[] {1, 2, 3, 5, -1, -1};
 
-    int[] arr2 = {1,2,3,0};
-    /*@IndexFor("arr2")*/ int[] b2 = {1,2,3,0};			 
-    assert_arrays_equals(ArraysMDE.fn_compose(b2,arr2),new int[] {2, 3, 0, 1});
+      assert_arrays_equals(ArraysMDE.fn_compose(a1, a1), a1);
+      assert_arrays_equals(ArraysMDE.fn_compose(a2, a2), new int[] {2, 3, 0, 1});
+      assert_arrays_equals(ArraysMDE.fn_compose(a3, a3), a1);
+      assert_arrays_equals(ArraysMDE.fn_compose(a4, a5), new int[] {0, 5, 0, 1});
+      assert_arrays_equals(ArraysMDE.fn_compose(a7, a8), new int[] {5});
+      assert_arrays_equals(ArraysMDE.fn_compose(a9, a10), new int[] {2, 3, 5, -1});
+    }
+  }
 
-    int[] arr3 = {3,2,1,0};
-    /*@IndexFor("arr3")*/ int[] b3 = {3,2,1,0};
-    assert_arrays_equals(ArraysMDE.fn_compose(b3,arr3), new int[] {0, 1, 2, 3});
-    
-    int[] arr4 = {0,5,2,1};
-    /*@IndexFor("arr4")*/ int[] b4 = {0,1,0,3};
-    assert_arrays_equals(ArraysMDE.fn_compose(b4,arr4), new int[] {0, 5, 0, 1});
+  @Test
+  public void testArraysMDE_set_operations() {
 
-    int[] arr5 = {5};
-    /*@IndexFor("arr5")*/ int[] b5 = {0};
-    assert_arrays_equals(ArraysMDE.fn_compose(b5,arr5),new int[] {5});
-
-    int[] arr6 = {1,2,3,5,-1,-1};
-    /*@IndexFor("arr6")*/ int[] b6 = {1,2,3,5};
-    assert_arrays_equals(ArraysMDE.fn_compose(b6,arr6),new int[] {2, 3, 5, -1});
-
-    
-	
     // public static boolean isSubset(long[] smaller, long[] bigger)
     // public static boolean isSubset(double[] smaller, double[] bigger)
     // public static boolean isSubset(String[] smaller, String[] bigger)
@@ -547,8 +574,7 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-	    /*@IndexFor("f2")*/ int index = i + j;
-	    f1[j] = f2[index];
+	    f1[j] = f2[i + j];
         }
 
         f1[5] = f2[i];
@@ -576,6 +602,10 @@ public final class TestPlume {
       assert ArraysMDE.isSubset(a6, a1);
       assert !ArraysMDE.isSubset(a1, a6);
     }
+  }
+
+  @Test
+  public void testArraysMDE_comparators() {
 
     // public static class IntArrayComparatorLexical implements Comparator
     // public static class IntArrayComparatorLengthFirst implements Comparator
@@ -834,6 +864,10 @@ public final class TestPlume {
       assert cacl.compare(a3, a8) > 0;
       assert caclf.compare(a3, a8) > 0;
     }
+  }
+
+  @Test
+  public void testArraysMDE_nullness() {
 
     // public static boolean any_null(Object[] a)
     {
@@ -923,8 +957,7 @@ public final class TestPlume {
 
         Random random_gen = new Random();
 
-	@SuppressWarnings("value")
-        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100][];
+        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100] /*@ArrayLen(10)*/[];
         for (int i = 0; i < arrays.length; i++) {
           int[] a = new int[10];
           for (int j = 0; j < a.length; j++) {
@@ -1009,7 +1042,6 @@ public final class TestPlume {
 
   // Tests the method "Object intern(Object)" in Intern.java
   @Test
-  @SuppressWarnings("index") // Index TODO: Several parsing errors in this function: see issue 111
   public void testInternObject() {
     Object nIntern = Intern.intern((/*@Nullable*/ Object) null);
     assert nIntern == null;
@@ -1133,7 +1165,7 @@ public final class TestPlume {
   }
 
   // Create a LimitedSizeSet of the given size, and add elements to it.
-    private static void lsis_test(/*@Positive*/int max_size) {
+  private static void lsis_test(/*@Positive*/ int max_size) {
     LimitedSizeSet<Integer> s = new LimitedSizeSet<Integer>(max_size);
     for (int i = 1; i < 2 * max_size; i++) {
       lsis_add_elts(i, s);
@@ -1591,9 +1623,9 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-    @SuppressWarnings("index") // pairno always stays less than the length of ints
+  @SuppressWarnings("index") // iterator of same size as array, and while loop with ++ on index
   public static void compareOrderedPairIterator(
-						OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
+      OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -1703,7 +1735,7 @@ public final class TestPlume {
   /// UtilMDE
   ///
 
-    private static BitSet randomBitSet(/*@NonNegative*/int length, Random r) {
+  private static BitSet randomBitSet(/*@NonNegative*/ int length, Random r) {
     BitSet result = new BitSet(length);
     for (int i = 0; i < length; i++) {
       result.set(i, r.nextBoolean());
@@ -2101,10 +2133,8 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          @SuppressWarnings({
-            "lowerbound",
-            "upperbound"
-          }) // if the argument to IotaIterator is @IndexFor("a"), so is every output
+          @SuppressWarnings("index") // if arg to IotaIterator is @IndexFor("a"), so is every output
+          // Cannot currently annotate primitive wrappers such as Integer, only primitives like int.
           List</*(at)IndexFor("totals")*/ Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
@@ -2115,8 +2145,8 @@ public final class TestPlume {
             }
           }
           for (int k = 0; k < chosen.size(); k++) {
-	    @SuppressWarnings("index") // Index TODO: issue 73: intValue() needs a polymorphic qualifier
-	    /*@IndexFor("totals")*/ int index = chosen.get(k).intValue();
+            @SuppressWarnings("index") // Index TODO: issue 73 polymorphic qualifier; prim. wrappers
+            /*@IndexFor("totals")*/ int index = chosen.get(k).intValue();
             totals[index]++;
           }
         }
@@ -2572,6 +2602,7 @@ public final class TestPlume {
    * Test the intering of subsequences as triples of the original sequence, the start and the end
    * indices.
    */
+  @SuppressWarnings("index") // needs @PolyArrayLen annotation on Intern.intern()
   @Test
   public void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
@@ -2581,32 +2612,21 @@ public final class TestPlume {
     int j = 4;
     int k = 5;
 
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
     int[] s1 = Intern.internSubsequence(a1, i, j);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
     int[] s2 = Intern.internSubsequence(a2, i, j);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
     int[] s3 = Intern.internSubsequence(a1, j, k);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
     int[] s4 = Intern.internSubsequence(a1, j, k);
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
     int[] s5 = Intern.internSubsequence(a3, j - 1, k - 1);
 
     assert a1 == a2;
     assert s1 == s2;
     assert s3 == s4;
     assert s3 == s5;
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    boolean b1 = ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, i, j - i), 0);
-    assert b1;
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    boolean b2 = ArraysMDE.isSubarray(ArraysMDE.subarray(a1, i, j - i), s1, 0);
-    assert b2;
+    assert ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, i, j - i), 0);
+    assert ArraysMDE.isSubarray(ArraysMDE.subarray(a1, i, j - i), s1, 0);
 
     long[] l1 = Intern.intern(new long[] {1, 2, 3, 4, 5, 6});
-    @SuppressWarnings("index") // Index TODO: issue 73 intern needs a polymorphic qualifier
-    boolean b3 = l1 == Intern.internSubsequence(l1, 0, l1.length);
-    assert b3;
+    assert l1 == Intern.internSubsequence(l1, 0, l1.length);
   }
 
   // To do
@@ -2868,8 +2888,7 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-          /*@IndexFor("f2")*/ int i2 = i + j;
-          f1[j] = f2[i2];
+          f1[j] = f2[i + j];
         }
 
         f1[5] = f2[i] * offhigh;
@@ -2900,13 +2919,13 @@ public final class TestPlume {
   }
 
   /** Initialize f2 to be the same as two copies of f1 */
-  void initialize_f1_and_f2(int j, double /*@MinLen(10)*/[] f1, double /*@MinLen(20)*/[] f2) {
+  @SuppressWarnings("index") // issue 147
+  void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
 
     //start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
       f1[i] = j + i * 10;
-      /*@IndexFor("f2")*/ int index = i;
-      f2[index] = j + i * 10;
+      f2[i] = j + i * 10;
     }
 
     //fill out the second half of f2 with dup of f1
@@ -2953,6 +2972,9 @@ public final class TestPlume {
     Integer i0 = new Integer(0);
     Integer i1 = new Integer(1);
     Integer i2 = new Integer(2);
+    Integer i10 = new Integer(10);
+    Integer i11 = new Integer(11);
+    Integer i12 = new Integer(12);
 
     List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations(1, 0, 2);
     assert combo3.size() == 3;
@@ -2968,6 +2990,15 @@ public final class TestPlume {
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i1}));
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i2}));
     assert combo4.contains(Arrays.asList(new Integer[] {i2, i2}));
+
+    List<ArrayList<Integer>> combo5 = UtilMDE.create_combinations(2, 10, 12);
+    assert combo5.size() == 6;
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i10}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i11}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i10, i12}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i11, i11}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i11, i12}));
+    assert combo5.contains(Arrays.asList(new Integer[] {i12, i12}));
   }
 
   @Test
@@ -3315,10 +3346,11 @@ public final class TestPlume {
   public void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
-    @SuppressWarnings("value") // literal string has 11 lines
+    @SuppressWarnings("value") // method that returns an array is not StaticallyExecutable
     String /*@ArrayLen(11)*/[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
+    assert sa.length == 11;
     assert sa[0].equals("one");
     assert sa[1].equals("two");
     assert sa[2].equals("three");

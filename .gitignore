@@ -17,6 +17,7 @@ java/lookup.jar
 java/lookup.txt
 java/plume.jar
 java/plume.tar.gz
+java/plume-core.jar
 java/src/plume/.javadoc-timestamp
 java/src/plume/MathMDE.java
 java/src/plume/WeakIdentityHashMap.java-JDK6

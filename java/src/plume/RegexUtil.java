@@ -20,8 +20,8 @@ import org.checkerframework.framework.qual.EnsuresQualifierIf;
  * expression.
  *
  * <p>For an example of intended use, see section <a
- * href="http://types.cs.washington.edu/checker-framework/current/checker-framework-manual.html#regexutil-methods">Testing
- * whether a string is a regular expression</a> in the Checker Framework manual.
+ * href="https://checkerframework.org/manual/#regexutil-methods">Testing whether a string is a
+ * regular expression</a> in the Checker Framework manual.
  */
 // The Purity Checker cannot show for most methods in this class that
 // they are pure, even though they are.

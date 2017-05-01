@@ -91,7 +91,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     // s.values isn't modified by the call to add.  Until
     // https://github.com/typetools/checker-framework/issues/984 is fixed,
     // use a local variable which the Checker Framework can tell is not reassigned.
-    /*@Nullable*/ T /*@SameLen("s.values")*/ [] svalues = s.values;
+    /*@Nullable*/ T /*@SameLen("s.values")*/[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
       assert svalues[i] != null : "@AssumeAssertion(nullness): used portion of array";
       add(svalues[i]);
@@ -127,7 +127,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
-    public @IndexOrHigh("this.values") int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+  public @IndexOrHigh("this.values") int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return num_values;
   }
 
@@ -137,10 +137,10 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("index")  // index TODO: need EnsuresQualifierIf with annotation argument
+  @SuppressWarnings("index") // index TODO: need EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
-      return num_values;        // index TODO: need EnsuresQualifierIf with annotation argument
+      return num_values; // index TODO: need EnsuresQualifierIf with annotation argument
     } else {
       return values.length + 1;
     }
@@ -163,7 +163,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
-    @SuppressWarnings("index") // nulling the rep breaks the invariant
+  @SuppressWarnings("index") // nulling the rep breaks the invariant
   private void nullRep() {
     if (repNulled()) {
       return;

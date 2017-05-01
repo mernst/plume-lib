@@ -402,8 +402,8 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
-  public void write(
-      String s, /*@ IndexFor("#1")*/ int off, /*@ IndexFor("#1")*/ int len) { // index TODO: issue #80
+  // index TODO: issue #80 string support
+  public void write(String s, int off, int len) {
     writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);

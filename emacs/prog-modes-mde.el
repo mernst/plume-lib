@@ -36,7 +36,16 @@ This is good for modes like Perl, where the parser can get confused."
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (delete 'maven compilation-error-regexp-alist)))
+;; If I am using Maven, run:
+;; (setq compilation-error-regexp-alist (cons 'maven compilation-error-regexp-alist))
 
+;; Is this necessary when I use the above commented-out line?
+;; ;; Maven error messages such as:
+;; ;; [ERROR] /home/mernst/tmp/safer-spring-petclinic/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:[30,8] [initialization.fields.uninitialized] the constructor does not initialize fields: name
+;; (eval-after-load "compile"
+;;   '(setq compilation-error-regexp-alist
+;; 	 (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
+;; 	       compilation-error-regexp-alist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -685,7 +694,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
   "Investigate Java code that does not use curly braces for compound statements.
 Works over the currently-visited tags table."
   (interactive)
-  
+
   ;; Clean up formatting of curly braces.
   ;; For example, don't put curly braces before if or else on their own line.
   (tags-query-replace "^\\( *\\)}\n *else" "\\1} else")
@@ -756,9 +765,10 @@ Works over the currently-visited tags table."
   (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
 		"\\1.\\2")
   )
-   
+
 (defun improve-javadoc-code-style ()
   "Improve style for inline code in Javadoc comments, for files in the current TAGS table."
+  (interactive)
 
   ;; TODO: as I run these, I may need to convert
   ;;   <code>...</code>
@@ -791,6 +801,13 @@ Works over the currently-visited tags table."
   "Move commented declaration annotations to their own line, for files in the current TAGS tables."
   (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
   )
+
+;; Java stack trace, as printed by a program
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+         (append
+          (list '("\\(?:^[ ][ ]\\|; Stack trace: \\)[A-Za-z0-9_.]+(\\([A-Za-z0-9_.]+\\):\\([0-9]+\\))$" 1 2))
+          compilation-error-regexp-alist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1574,6 +1591,7 @@ otherwise, raise an error after the first problem is encountered."
 ;;         (cons (substitute-in-file-name "$HOME/emacs/auctex-11.85/doc")
 ;;               Info-directory-list))))
 
+;; Python error messages
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (append '(("^ *File \"\\(.*\\)\", line \\([0-9]+\\)" 1 2)
@@ -2076,9 +2094,10 @@ in this directory or some superdirectory."
              (setq compile-command "ant -e -find build.xml "))
             ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
-             (if (file-readable-p "gradlew")
-                 (setq compile-command "./gradlew ")
-               (setq compile-command "gradle ")))
+	     (let ((gradle-command (if (file-readable-p "gradlew")
+				       (setq compile-command "./gradlew")
+				     (setq compile-command "gradle"))))
+	       (setq compile-command (concat gradle-command " build"))))
             ((file-in-super-directory "build.gradle" default-directory)
              (let* ((buildfile (file-in-super-directory
                                "build.gradle" default-directory))
@@ -2089,10 +2108,11 @@ in this directory or some superdirectory."
                            gradlew
                          "gradle"))))
                (make-local-variable 'compile-command)
-               (setq compile-command (concat gradle-command " -b " buildfile " build"))))
+               (setq compile-command
+		     (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn ")))))
+             (setq compile-command "mvn package")))))
 (add-hook 'find-file-hooks 'set-compile-command-for-directory)
 (add-hook 'dired-mode-hook 'set-compile-command-for-directory)
 (add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
@@ -2155,6 +2175,7 @@ Use as a hook, like so:
            (setq dir (replace-regexp-in-string "_" "-" dir))
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
+	;; Checker Framework demos
 ;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
 ;;       (make-local-variable 'compile-command)
 ;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
@@ -2185,6 +2206,12 @@ Use as a hook, like so:
                 (not (search-forward "executeQuery(constructQuery" nil t))))
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml pblog-tainting"))
+        ((and buffer-file-name
+              (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command "make typecheck-only"))
+	;; end of Checker Framework demos
+
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
          (make-local-variable 'compile-command)
          (setq compile-command "make -C ../../.. doc/en/user-guide/index.html"))
@@ -2266,10 +2293,10 @@ Use as a hook, like so:
          (cons '("^In file \\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+: .* at line \\([0-9]+\\), column \\([0-9]+\\)" 1 2 3)
                compilation-error-regexp-alist)))
 
-;; gradle leaves text in front of error message
+;; gradle leaves text in front of error message.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (cons '("^\\(?::compileTestJava\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
+         (cons '("^\\(?::[a-zA-Z]+\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
                compilation-error-regexp-alist)))
 
 

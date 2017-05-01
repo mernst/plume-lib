@@ -41,7 +41,6 @@ import org.checkerframework.dataflow.qual.*;
  *         <li><b>short_html</b>
  *         <li><b>milestone_html</b>
  *       </ul>
- *
  *   <li id="option:comment-re"><b>--comment-re=</b><i>string</i>. Regex that matches an entire
  *       comment (not just a comment start) [default ^%.*]
  *   <li id="option:include-re"><b>--include-re=</b><i>string</i>. Regex that matches an include

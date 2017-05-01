@@ -89,8 +89,8 @@ public final class FileCompiler {
    *     the full path name or whatever is used on the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-    @SuppressWarnings("index") // index TODO: list support
-  public FileCompiler(/*@ MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
+  @SuppressWarnings("index") // index TODO: list support
+  public FileCompiler(/*(at)MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
     this(compiler.toArray(new String[0]), timeLimit); // index TODO: list support
   }
 
@@ -102,7 +102,6 @@ public final class FileCompiler {
    *     split on spaces.
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-    @SuppressWarnings("index") // Index TODO: issue 73
   public FileCompiler(String compiler, /*@Positive*/ long timeLimit) {
     this(compiler.trim().split(" +"), timeLimit);
   }
