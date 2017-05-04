@@ -3331,6 +3331,11 @@ public final class ArraysMDE {
    * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
    * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
    * of such partitionings.
+   *
+   * @param <T> type of items to be partitioned
+   * @param elts items to be partitioned
+   * @param k number of subsets into which to partition {@code elts}
+   * @return a list of partitionings, where each contains exactly k subsets
    */
   public static <T> List<Partitioning<T>> partitionInto(Collection<T> elts, int k) {
     return partitionInto(new LinkedList<T>(elts), k);
@@ -3340,6 +3345,11 @@ public final class ArraysMDE {
    * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
    * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
    * of such partitionings.
+   *
+   * @param <T> type of items to be partitioned
+   * @param elts items to be partitioned
+   * @param k number of subsets into which to partition {@code elts}
+   * @return a list of partitionings, where each contains exactly k subsets
    */
   public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, int k) {
     if (elts.size() < k) {
@@ -3352,8 +3362,10 @@ public final class ArraysMDE {
    * Returns a set of partitionings, each of size numEmptyParts + numNonemptyParts. A helper method
    * for {@link #partitionInto}.
    *
+   * @param <T> type of items to be partitioned
    * @param elts the elements that remain to be added to the partitionings
    * @param resultSoFar a list of partitionings, each of which has numNonemptyParts parts
+   * @return a list of partitionings, where each contains exactly k subsets
    */
   public static <T> List<Partitioning<T>> partitionIntoHelper(
       Queue<T> elts, List<Partitioning<T>> resultSoFar, int numEmptyParts, int numNonemptyParts) {
