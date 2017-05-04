@@ -340,7 +340,11 @@ public final class ICalAvailable {
     System.out.println("iCal_URL: " + iCal_URL);
   }
 
-  /** Main entry point; see class documentation. */
+  /**
+   * Main entry point; see class documentation.
+   *
+   * @param args command-line arguments; see class documentation
+   */
   public static void main(String[] args) {
 
     processOptions(args);
