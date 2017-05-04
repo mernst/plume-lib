@@ -48,6 +48,13 @@ This is good for modes like Perl, where the parser can get confused."
 ;;             compilation-error-regexp-alist)))
 
 
+(defmacro beginning-of-line-point ()
+  "Return the location of the beginning of the line."
+  `(save-excursion
+     (beginning-of-line)
+     (point)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Key maps
 ;;;
@@ -197,7 +204,7 @@ This is good for modes like Perl, where the parser can get confused."
 ;; ;;     (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
 ;; ;;         (progn
 ;; ;;           (goto-char (match-end 1))
-;; ;;           (if (looking-back "^\t+")
+;; ;;           (if (looking-back "^\t+" (beginning-of-line-point))
 ;; ;;               (progn
 ;; ;;                 (setq tab-width 2)
 ;; ;;                 (make-local-variable 'tab-stop-list)
@@ -545,15 +552,17 @@ This is disabled on lines with a comment containing the string \"interned\"."
                (if (equal error-message "Stack overflow in regexp matcher")
                    nil
                  (throw 'error error-message)))))
-        (if (not (or (looking-at ".*//.*interned")
-                     ;; line ends with string ending with "=="
-                     (and (looking-back "=?= *\"") (looking-at ";\n"))
-                     ;; if already in comment, suppress warning
-                     (looking-back "/[/*].*")
-                     (looking-back "^[ \t]*\\*.*") ; Javadoc comment
-                     ;; entire string appears to be "==" or "!=" (as an arg)
-                     (looking-back "\(\"[=!]=\"\).*")
-                     ))
+        (if (let ((bol-point (beginning-of-line-point)))
+	      (not (or (looking-at ".*//.*interned")
+		       ;; line ends with string ending with "=="
+		       (and (looking-back "=?= *\"" bol-point)
+			    (looking-at ";\n"))
+		       ;; if already in comment, suppress warning
+		       (looking-back "/[/*].*" bol-point)
+		       (looking-back "^[ \t]*\\*.*" bol-point) ; Javadoc comment
+		       ;; entire string appears to be "==" or "!=" (as an arg)
+		       (looking-back "\(\"[=!]=\"\).*" bol-point)
+		       )))
             (progn
               (sit-for 0)               ; perform redisplay
               (if (not (y-or-n-p "Strings being compared with pointer equality; save anyway? "))
@@ -675,7 +684,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
               (if semicolon-terminated
                   (newline-and-indent))
               (re-search-forward ";\\( *//.*\\)?$")
-              (while (looking-back "^[^;\n]*//[^\n]*$")
+              (while (looking-back "^[^;\n]*//[^\n]*$" nil)
                 (re-search-forward ";\\( *//.*\\)?$"))
               (if (looking-at "\n *\\(else\\)")
                   (progn
@@ -1484,7 +1493,7 @@ otherwise, raise an error after the first problem is encountered."
 ;; If variable `py-jump-on-exception' is nil, do nothing."
 ;;   ;; It doesn't work to wrap this whole body in save-excursion.
 ;;   (if (and py-jump-on-exception
-;;         (looking-back "\n>>> ")
+;;         (looking-back "\n>>> " (1- (beginning-of-line-point))
 ;;         (save-excursion
 ;;           (forward-line -1)
 ;;           (looking-at "[A-Za-z]*Error\\b")))
