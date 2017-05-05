@@ -32,13 +32,23 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   /** The number of active elements (equivalently, the first unused index). */
   int num_values;
 
+  /** Whether assertions are enabled. */
+  private static boolean assertsEnabled = false;
+
+  static {
+    assert assertsEnabled = true; // Intentional side-effect!!!
+    // Now assertsEnabled is set to the correct value
+  }
+
   /**
    * Create a new LimitedSizeSet that can hold max_values values.
    *
-   * @param max_values the maximum number of values this set will be able to hold
+   * @param max_values the maximum number of values this set will be able to hold; must be positive
    */
   public LimitedSizeSet(int max_values) {
-    assert max_values > 0;
+    if (assertsEnabled && !(max_values > 0)) {
+      throw new IllegalArgumentException("max_values should be positive, is " + max_values);
+    }
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
     /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
