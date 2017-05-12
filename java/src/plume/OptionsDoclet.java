@@ -39,6 +39,7 @@ import org.checkerframework.checker.formatter.qual.*;
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -271,7 +272,9 @@ public class OptionsDoclet {
     }
 
     OptionsDoclet o = new OptionsDoclet(root, options);
-    o.setOptions(root.options());
+    @SuppressWarnings("value") // com.sun.javadoc.RootDoc needs annotations
+    String[] @MinLen(1) [] root_options = root.options();
+    o.setOptions(root_options);
     o.processJavadoc();
     try {
       o.write();

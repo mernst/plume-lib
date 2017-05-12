@@ -644,11 +644,13 @@ public final class BCELUtil {
    * @param new_type the element to add to the beginning of the types array
    * @return the array (or a new one), with new_type at the beginning
    */
-  @SuppressWarnings("index") // Index TODO: issue 66 @MinLen and lower bounds
+  @SuppressWarnings("index") // new_types[0] is safe b/c new_types is
+  // @MinLen(1) except in the presence of overflow. Error reported
+  // because the length of types might overflow.
   public static Type[] insert_type(Type new_type, Type[] types) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
-    new_types[0] = new_type; // Index TODO: issue 66 @MinLen and lower bounds
+    new_types[0] = new_type;
     Type[] new_types_cast = new_types;
     return (new_types_cast);
   }

@@ -32,6 +32,7 @@ import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 // A related program is the "mr" program (http://kitenet.net/~joey/code/mr/).

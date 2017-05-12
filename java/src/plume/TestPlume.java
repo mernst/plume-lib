@@ -574,7 +574,7 @@ public final class TestPlume {
 
         //fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
-	    f1[j] = f2[i + j];
+          f1[j] = f2[i + j];
         }
 
         f1[5] = f2[i];

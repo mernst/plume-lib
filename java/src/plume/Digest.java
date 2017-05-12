@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 
+/*>>>
+import org.checkerframework.common.value.qual.*;
+*/
+
 /**
  * Computes a message digest for a file. The primary entry point into this class is {@link
  * #getFileDigest(String,MessageDigest)}.
@@ -98,7 +102,9 @@ public final class Digest {
         } else if ((digit2 >= 'a') && (digit2 <= 'f')) {
           digit2 -= 'a' - 10;
         }
-        r[i] = (byte) ((digit1 << 4) + digit2);
+        @SuppressWarnings("cast.unsafe") // Value Checker issue 1264
+        /*@IntRange(from = -128, to = 127)*/ byte r_i = (byte) ((digit1 << 4) + digit2);
+        r[i] = r_i;
       }
       return r;
     } catch (Exception e) {

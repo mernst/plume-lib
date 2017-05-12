@@ -578,14 +578,13 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static int /*@Interned*/ /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] intern(
-      int /*(at)PolyArrayLen*/ /*@PolyMinLen*/ [] a) {
+  public static int /*@Interned*/ /*(at)PolyArrayLen*/[] intern(int /*(at)PolyArrayLen*/[] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
 
     @SuppressWarnings("index") // need PolyMinLen annotations on Map.get
-    WeakReference<int /*@Interned*/ /*@PolyMinLen*/ []> lookup = internedIntArrays.get(a);
+    WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
     @SuppressWarnings("index") // need PolyMinLen annotations on WeakReference.get
     int[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
