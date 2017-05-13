@@ -587,7 +587,7 @@ This is disabled on lines with a comment containing the string \"interned\"."
   "Clean up whitespace in Java code."
   (interactive)
   ;; avoid matching urls (http://...) and strings ("//")
-  (tags-query-replace "\\([^:\"]//\\)\\([^ /\n\t]\\)" "\\1 \\2" nil nil)
+  (tags-query-replace "\\(\\(?:\\`\\|[^:\"]\\)//\\)\\([^ /\n\t]\\)" "\\1 \\2" nil nil)
   ;; omit "switch" from this regexp
   (tags-query-replace "\\([^_]\\)\\b\\(for\\|if\\|return\\)(" "\\1\\2 (" nil nil)
   (tags-query-replace "){" ") {" nil nil)
@@ -627,7 +627,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
   ;; Find if/for statements that end with a close paren, which suggests the
   ;; body is on the next line.  Also else statements that end a line.
   (let ((tags-regex
-         "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
+         "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\|while\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
     (tags-search tags-regex)
     (message "match-data after tags-search: %s" (match-data))
     (while t
@@ -806,8 +806,10 @@ Works over the currently-visited tags table."
 
 
 
+;; Not needed any more -- just run google-java-code-format
 (defun declaration-annotations-to-their-own-line ()
   "Move commented declaration annotations to their own line, for files in the current TAGS tables."
+  (interactive)
   (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
   )
 
