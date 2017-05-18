@@ -9,7 +9,6 @@ sudo: false
 
 before_install:
   - pip install --user pylint
-  - npm install --save-dev travis-after-all
 
 script: set -e && make USE_CODECOV=1 all-but-emacs check
 
