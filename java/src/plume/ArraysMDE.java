@@ -3365,6 +3365,9 @@ public final class ArraysMDE {
    * @param <T> type of items to be partitioned
    * @param elts the elements that remain to be added to the partitionings
    * @param resultSoFar a list of partitionings, each of which has numNonemptyParts parts
+   * @param numEmptyParts the number of partitions in the partitioning that are empty so far
+   * @param numNonemptyParts the number of partitions in the partitioning that have at least one
+   *     member so far
    * @return a list of partitionings, where each contains exactly k subsets
    */
   public static <T> List<Partitioning<T>> partitionIntoHelper(
