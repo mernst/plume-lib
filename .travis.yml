@@ -16,6 +16,7 @@ script: set -e && make USE_CODECOV=1 all-but-emacs check
 jobs:
   include:
     - stage: trigger downstream
+      jdk: oraclejdk8
       script: |
         if [[ ($TRAVIS_BRANCH == master) &&
               ($TRAVIS_PULL_REQUEST == false) ]] ; then
