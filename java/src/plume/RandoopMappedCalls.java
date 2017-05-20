@@ -2,7 +2,7 @@ package plume;
 
 import java.awt.Component;
 
-/** A helper class for running <a href="http://code.google.com/p/randoop/">Randoop</a>. */
+/** A helper class for running <a href="https://randoop.github.io/randoop/">Randoop</a>. */
 public final class RandoopMappedCalls {
 
   /** This class is a collection of methods; it does not represent anything. */
