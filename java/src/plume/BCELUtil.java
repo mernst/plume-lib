@@ -621,13 +621,13 @@ public final class BCELUtil {
   }
 
   /**
-   * Returns a type array with new_type added to the end of types.
+   * Returns a copy of the given type array, with new_type added to the end.
    *
    * @param types the array to extend
-   * @param new_type the element to add to the end of the types array
-   * @return the array (or a new one), with new_type at the end
+   * @param new_type the element to add to the end of the array
+   * @return a new array, with new_type at the end
    */
-  public static Type[] add_type(Type[] types, Type new_type) {
+  public static Type[] postpendToArray(Type[] types, Type new_type) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 0, types.length);
     new_types[types.length] = new_type;
@@ -636,13 +636,26 @@ public final class BCELUtil {
   }
 
   /**
-   * Returns a type array with new_type inserted at the beginning.
+   * Returns a copy of the given type array, with new_type added to the end.
+   *
+   * @deprecated use {@link #postpendToArray}
+   * @param types the array to extend
+   * @param new_type the element to add to the end of the array
+   * @return a new array, with new_type at the end
+   */
+  @Deprecated
+  public static Type[] add_type(Type[] types, Type new_type) {
+    return postpendToArray(types, new_type);
+  }
+
+  /**
+   * Returns a copy of the given type array, with new_type inserted at the beginning.
    *
    * @param types the array to extend
-   * @param new_type the element to add to the beginning of the types array
-   * @return the array (or a new one), with new_type at the beginning
+   * @param new_type the element to add to the beginning of the array
+   * @return a new array, with new_type at the beginning
    */
-  public static Type[] insert_type(Type new_type, Type[] types) {
+  public static Type[] prependToArray(Type new_type, Type[] types) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
     new_types[0] = new_type;
@@ -651,9 +664,22 @@ public final class BCELUtil {
   }
 
   /**
-   * Return the type corresponding to a given class name.
+   * Returns a copy of the given type array, with new_type inserted at the beginning.
    *
-   * @param classname the class to convert to a type
+   * @deprecated use {@link #prependToArray}
+   * @param types the array to extend
+   * @param new_type the element to add to the beginning of the array
+   * @return a new array, with new_type at the beginning
+   */
+  @Deprecated
+  public static Type[] insert_type(Type new_type, Type[] types) {
+    return prependToArray(new_type, types);
+  }
+
+  /**
+   * Return the type corresponding to a given fully-qualified class name.
+   *
+   * @param classname the fully-qualified name of a class
    * @return the type corresponding to the given class name
    */
   public static Type classname_to_type(String classname) {
