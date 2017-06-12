@@ -456,6 +456,11 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (setq paragraph-separate (concat ".*<p>\\|" paragraph-separate))
     (define-key java-mode-map "\C-hf" 'javadoc-lookup)
     (make-local-variable 'write-contents-hooks)
+    (if (string-match "/\\(checker-framework\\|plume-lib\\|randoop\\)/"
+		      (directory-file-name default-directory))
+	(progn
+	  (make-variable-buffer-local 'before-save-hook)
+	  (add-hook 'before-save-hook 'delete-trailing-whitespace)))
     ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
     ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
     (if (and (buffer-file-name (current-buffer))
@@ -1691,6 +1696,11 @@ otherwise, raise an error after the first problem is encountered."
   ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
   (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry)
 
+  (if (string-match "/plume-lib/"
+		    (directory-file-name default-directory))
+      (progn
+	(make-variable-buffer-local 'before-save-hook)
+	(add-hook 'before-save-hook 'delete-trailing-whitespace)))
   (if (eq major-mode 'lisp-mode)
       ;; Not emacs-lisp-mode, fi::*-mode, etc.
       (progn
