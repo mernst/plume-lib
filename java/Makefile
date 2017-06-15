@@ -590,7 +590,7 @@ reformat:
 # Requires Java 8
 check-format:
 	${MAKE} get-run-google-java-format
-	@.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+	@./.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE} || (echo "Try running:  make reformat" && /bin/false)
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format
 
