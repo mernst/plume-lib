@@ -2141,6 +2141,9 @@ in this directory or some superdirectory."
                (make-local-variable 'compile-command)
                (setq compile-command
                      (concat "mvn" " -f " buildfile " package"))))
+	    ((file-readable-p "Rakefile")
+             (make-local-variable 'compile-command)
+             (setq compile-command "rake"))
             )))
 (add-hook 'find-file-hooks 'set-compile-command-for-directory)
 (add-hook 'dired-mode-hook 'set-compile-command-for-directory)
