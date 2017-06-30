@@ -1,34 +1,40 @@
 These libraries are included in plume-lib and in the plume.jar file in
 order to make plume-lib self-contained.  (They do make it large, though.)
 
+TODO: To avoid the hassle of updating libraries, I should make plume-lib use Maven instead.
+
 Most libraries are standard, downloaded from their respective webpages:
 
 backport-util-concurrent-3.1.jar : https://sourceforge.net/projects/backport-jsr166/files/backport-jsr166/
   (used by ICalAvailable)
 bcel.jar : see below
   (used by BCELUtil)
-checker-qual-2.1.6.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
+checker-qual-2.1.12.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
 commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
   (used by ICalAvailable, transitively, because ical4j uses it)
 commons-io-2.5.jar : https://commons.apache.org/proper/commons-io/download_io.cgi
-commons-lang3-3.5.jar : https://commons.apache.org/proper/commons-lang/
+commons-lang3-3.6.jar : https://commons.apache.org/proper/commons-lang/
 commons-logging-1.2.jar : https://commons.apache.org/proper/commons-logging/
-guava-20.0.jar : https://github.com/google/guava/releases
+commons-text-1.1.jar : https://commons.apache.org/proper/commons-text/
+guava-20.0.jar : https://github.com/google/guava/releases but jar files
   (used by DeclarationAnnotations)
+  Guava 21 and 22 require Java 8.
+  I could use guava "22.0-android" which supports Java 7.
 hamcrest-core-1.3.jar : http://search.maven.org/#search|ga|1|g%3Aorg.hamcrest
-ical4j-2.0.0.jar : clone https://github.com/ical4j/ical4j.git then run ./gradlew jar
+ical4j-2.0.0.jar : run:
+  git clone https://github.com/ical4j/ical4j.git && cd ical4j && ./gradlew jar && mv build/libs/ical4j-2.0.1-develop-SNAPSHOT.jar $pl/java/lib/
   (used by ICalAvailable)
 ini4j-0.5.4.jar : https://sourceforge.net/projects/ini4j/files/ini4j-bin/
   (used by MultiVersionControl)
-jacocoagent-0.7.8.jar : http://www.eclemma.org/jacoco/
+jacocoagent-0.7.9.jar : http://www.eclemma.org/jacoco/
   (used by Makefile when testing coverage.  Does not need to be in jar file.)
 junit-4.12.jar : http://search.maven.org/#search|gav|1|g:"junit" AND a:"junit"
   only used when running tests, does not need to be in .jar file
-slf4j-api-1.7.22.jar : http://www.slf4j.org/download.html
-slf4j-simple-1.6.6.jar : http://www.slf4j.org/download.html
-svnkit-1.8.10-complete.jar : see below
+slf4j-api-1.7.25.jar : http://www.slf4j.org/download.html
+slf4j-simple-1.7.25.jar : http://www.slf4j.org/download.html
+svnkit-1.8.15-complete.jar : see below
   (used by MultiVersionControl)
-tagsoup-1.2.1.jar : http://home.ccil.org/~cowan/tagsoup/ (URL is now dead, try https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup instead)
+tagsoup-1.2.1.jar : https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup  (previously http://home.ccil.org/~cowan/tagsoup/)
   (used by HtmlPrettyPrint)
 utilMDE-20091207.jar : do not update
 xom-1.2.10.jar : http://www.xom.nu/
@@ -39,11 +45,15 @@ Two libraries are nonstandard:
 BCEL (bcel.jar)
 - Java class file reader/writer
 - Git repository: https://github.com/typetools/commons-bcel.git
-- contains type annotations compared to upstream repository at
-  https://github.com/codespecs/commons-bcel, which contains a bug fix compared
-  to its upstream repository at https://github.com/apache/commons-bcel
+   - Explanation of repositories:
+      https://github.com/typetools/commons-bcel.git
+     contains type annotations compared to its upstream repository at
+      https://github.com/codespecs/commons-bcel
+     which contains bug fixes compared to its upstream repository at
+      https://github.com/apache/commons-bcel
 - to build (must be done using JDK 7, not JDK 8):
-    git clone https://github.com/typetools/commons-bcel.git
+    git clone git@github.com:typetools/commons-bcel.git
+    # or: git clone https://github.com/typetools/commons-bcel.git
     cd commons-bcel
     git pull https://github.com/codespecs/commons-bcel.git
     # Now, resolve any conflicts before running the next command.
@@ -54,25 +64,27 @@ BCEL (bcel.jar)
     #   mvn versions:use-latest-versions -Dincludes="org.checkerframework:*"
     #   mvn clean verify
     mvn clean verify -P checkerframework-local
-    \cp -pf target/commons-bcel6-6.0-SNAPSHOT.jar ../bcel.jar
+    \cp -pf target/bcel-6.1-SNAPSHOT.jar ../bcel.jar
     cd ..
     rm -rf commons-bcel
 
-svnkit-1.8.10-complete.jar: for use by MultiVersionControl program
-To create the file, I ran the following commands:
+svnkit-1.8.15-complete.jar: for use by MultiVersionControl program
+Check for latest version at: https://svnkit.com/
+To create the file, I ran the following commands, using JDK 7, not JDK 8:
   cd ~/tmp
-  wget http://www.svnkit.com/org.tmatesoft.svn_1.8.10.standalone.zip
-  unzip org.tmatesoft.svn_1.8.10.standalone.zip
-  cd svnkit-1.8.10/lib
+  VER=1.8.15
+  wget http://www.svnkit.com/org.tmatesoft.svn_${VER}.standalone.zip
+  unzip org.tmatesoft.svn_${VER}.standalone.zip
+  cd svnkit-${VER}/lib
   mkdir jar-contents
   cd jar-contents
   for file in ../*.jar; do
     jar xf $file;
   done
   find * -type f | $pl/bin/sort-directory-order > jar-contents.txt
-  jar cf ../svnkit-1.8.10-complete.jar @jar-contents.txt
+  jar cf ../svnkit-${VER}-complete.jar @jar-contents.txt
   cd ..
-  /rm -rf jar-contents
-  mv svnkit-1.8.10-complete.jar $pl/java/lib
+  mv svnkit-${VER}-complete.jar $pl/java/lib
+  \rm -rf jar-contents
   cd ~/tmp
-  \rm -rf org.tmatesoft.svn_1.8.10.standalone.zip svnkit-1.8.10
+  \rm -rf org.tmatesoft.svn_${VER}.standalone.zip svnkit-${VER}

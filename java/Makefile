@@ -76,7 +76,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.6.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.5.jar:lib/commons-logging-1.2.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/slf4j-api-1.7.22.jar:lib/slf4j-simple-1.6.6.jar:lib/svnkit-1.8.10-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -254,7 +254,7 @@ test: .test-timestamp
 .test-timestamp: .class-files-timestamp
 # CLASSPATH is set in this file; it is not an external dependency
 ifdef USE_CODECOV
-	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.8.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
+	set JAVA_COMPILER=NONE; ${JAVA} -javaagent:lib/jacocoagent-0.7.9.jar='excludes=plume.OrderedPairIterator',destfile=../jacoco.exec  -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 else
 	set JAVA_COMPILER=NONE; ${JAVA} -cp ${CLASSPATH}:lib/junit-4.12.jar:lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore plume.TestPlume
 endif
@@ -414,11 +414,12 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.6.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.5.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-text-1.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/guava-20.0.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ical4j-2.0.0.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/ini4j-0.5.4.jar)
@@ -426,9 +427,9 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 #	(cd jar-contents; "${JAR}" xf ../lib/hamcrest-core-1.3.jar)
 #	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 # ical4j-2.0.0 requrires slf4j
-	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.22.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.6.6.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.10-complete.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.25.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.7.25.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.15-complete.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
@@ -579,17 +580,17 @@ checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
 
-get-run-google-java-format:
-	@-(cd .run-google-java-format && git pull -q) || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
+update-run-google-java-format:
+	@[ -d .run-google-java-format ] && (cd .run-google-java-format && git pull -q) || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
 
 # Requires Java 8
 reformat:
-	${MAKE} get-run-google-java-format
+	${MAKE} update-run-google-java-format
 	@.run-google-java-format/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
 
 # Requires Java 8
 check-format:
-	${MAKE} get-run-google-java-format
+	${MAKE} update-run-google-java-format
 	@./.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE} || (echo "Try running:  make reformat" && /bin/false)
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format

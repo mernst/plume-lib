@@ -10,7 +10,9 @@ To make a plume-lib release and upload it to GitHub:
 
 2. Visit URLs in ../java/lib/README to determine if more recent .jar files
 for ../java/lib/ are available.  Here is Emacs code to do so:
-  (while (re-search-forward "http[^ \n]*" nil t) (browse-url (match-string 0)))
+ (progn
+  (find-file "../java/lib/README")
+  (while (re-search-forward "http[^ \n]*" nil t) (browse-url (match-string 0))))
 When you replace any out-of-date ones,
 update file names in files java/.classpath and (in 2 places) java/Makefile .
 
