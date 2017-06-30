@@ -9,8 +9,10 @@ To make a plume-lib release and upload it to GitHub:
 1. Commit or stash any changes in your copy of the plume-lib repository.
 
 2. Visit URLs in ../java/lib/README to determine if more recent .jar files
-for ../java/lib/ are available.  If so, replace the out-of-date one.
-Update file names in files java/.classpath and (in 2 places) java/Makefile .
+for ../java/lib/ are available.  Here is Emacs code to do so:
+  (while (re-search-forward "http[^ \n]*" nil t) (browse-url (match-string 0)))
+When you replace any out-of-date ones,
+update file names in files java/.classpath and (in 2 places) java/Makefile .
 
 3. Ensure that file index.html documents any new files.
 To find new files, do
