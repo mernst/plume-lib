@@ -5,6 +5,15 @@ by cloning its repository; run:
 
 ===========================================================================
 
+plume-lib 1.1.2, released June 30, 2017
+
+Add a new plume-core.jar target, which is substantially smaller than
+plume.jar.
+
+Many other bug fixes and minor enhancements, but no major new features.
+
+===========================================================================
+
 plume-lib 1.1.1, released January 2, 2017
 
 The plume-lib homepage has moved to https://mernst.github.io/plume-lib/
