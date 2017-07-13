@@ -2254,6 +2254,8 @@ Use as a hook, like so:
 (add-hook 'find-file-hooks 'special-case-set-compile-command 'append)
 (add-hook 'dired-mode-hook 'special-case-set-compile-command 'append)
 (add-hook 'compilation-mode-hook 'special-case-set-compile-command 'append)
+(add-hook 'shell-mode-hook 'special-case-set-compile-command 'append)
+(add-hook 'magit-mode-hook 'special-case-set-compile-command 'append)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
