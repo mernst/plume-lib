@@ -42,6 +42,7 @@ use strict;
 use English;
 $WARNING = 1;
 
+use Cwd 'abs_path';
 use File::Find;
 
 # use "-debug" switch to set
@@ -126,10 +127,11 @@ chomp($pwd);
 for my $arg (@ARGV) {
   if ($arg eq ".") { $arg = $pwd; }
   $arg =~ s|^\./|$pwd/|;
+  # Occurrences of abs_path() are because -f doesn't work on relative paths.
   if (-d $arg) {
-    find(\&collect, $arg);
-  } elsif (-f $arg) {
-    push @filelist, $arg;
+    find(\&collect, abs_path($arg));
+  } elsif (-f abs_path($arg)) {
+    push @filelist, abs_path($arg);
   } else {
     print STDERR "argument $arg is neither a file nor a directory\n";
   }
