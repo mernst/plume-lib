@@ -60,13 +60,21 @@ public final class SimpleLog {
     this(true);
   }
 
+  /** @param filename file name, or use "-" for standard output */
   public SimpleLog(String filename, boolean enabled) {
     this(enabled);
-    try {
-      logfile = new PrintStream(filename);
-    } catch (Exception e) {
-      throw new RuntimeException("Can't open " + filename, e);
+    if (!filename.equals("-")) {
+      try {
+        logfile = new PrintStream(filename);
+      } catch (Exception e) {
+        throw new RuntimeException("Can't open " + filename, e);
+      }
     }
+  }
+
+  /** @param filename file name, or use "-" for standard output */
+  public SimpleLog(String filename) {
+    this(filename, true);
   }
 
   public boolean enabled() {
