@@ -178,9 +178,9 @@ import org.checkerframework.dataflow.qual.*;
  * <p>A field with an @{@link Option} annotation may be of the following types:
  *
  * <ul>
- *   <li>Primitive types: boolean, int, long, float, double. (Primitives can also be represented as
- *       wrappers: Boolean, Integer, Long, Float, Double. Use of a wrapper type allows the argument
- *       to have no default value.)
+ *   <li>Primitive types: boolean, int, long, float, double.
+ *   <li>Primitive type wrappers: Boolean, Integer, Long, Float, Double. Use of a wrapper type
+ *       allows the argument to have no default value.
  *   <li>Reference types that have a constructor with a single string parameter.
  *   <li>java.util.regex.Pattern.
  *   <li>enums.
