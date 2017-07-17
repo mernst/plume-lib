@@ -826,6 +826,32 @@ Works over the currently-visited tags table."
           compilation-error-regexp-alist)))
 
 
+(autoload 'bdiff-revert-buffer-maybe "bdiff")
+
+(defun update-java-mode-hook-for-gjf ()
+  (add-hook 'after-save-hook 'run-google-java-format nil 'local))
+(add-hook 'java-mode-hook 'update-java-mode-hook-for-gjf)
+
+(defun run-google-java-format ()
+  "Run external program run-google-java-format.py on the file."
+  (interactive)
+  (let ((cmd "run-google-java-format.py "))
+    (cond
+     ((string-match-p "/checker-framework" (buffer-file-name))
+      (setq cmd (concat cmd "-a ")))
+     ((string-match-p "/\\(daikon\\|randoop\\)" (buffer-file-name))
+      ;; nothing to do
+      )
+     (t
+      (setq cmd nil)))
+    (if cmd
+      (progn
+        ;; I would like to avoid the "(Shell command succeeded with no output)"
+        ;; message.
+        (shell-command (concat cmd (buffer-file-name)))
+	(bdiff-revert-buffer-maybe)))))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Java debugging
 ;;;
