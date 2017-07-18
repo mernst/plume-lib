@@ -837,7 +837,8 @@ Works over the currently-visited tags table."
   (interactive)
   (let ((cmd "run-google-java-format.py "))
     (cond
-     ((string-match-p "/checker-framework" (buffer-file-name))
+     ((and (string-match-p "/checker-framework" (buffer-file-name))
+	   (not (string-match-p "/checker/jdk/" (buffer-file-name))))
       (setq cmd (concat cmd "-a ")))
      ((string-match-p "/\\(daikon\\|randoop\\)" (buffer-file-name))
       ;; nothing to do
@@ -2281,7 +2282,7 @@ Use as a hook, like so:
 (add-hook 'dired-mode-hook 'special-case-set-compile-command 'append)
 (add-hook 'compilation-mode-hook 'special-case-set-compile-command 'append)
 (add-hook 'shell-mode-hook 'special-case-set-compile-command 'append)
-(add-hook 'magit-mode-hook 'special-case-set-compile-command 'append)
+(add-hook 'magit-status-mode-hook 'special-case-set-compile-command 'append)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
