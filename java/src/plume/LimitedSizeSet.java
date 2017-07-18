@@ -113,7 +113,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       throw new UnsupportedOperationException();
     }
     for (int i = 0; i < num_values; i++) {
-      @SuppressWarnings("nullness") // object invariant: used portion of array
+      @SuppressWarnings("nullness") // object invariant: used portion of array is non-null
       T value = values[i];
       if (value == elt || (value != null && value.equals(elt))) {
         return true;
