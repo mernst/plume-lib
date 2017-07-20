@@ -175,6 +175,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
+  @Override
   public LimitedSizeIntSet clone(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
@@ -205,6 +206,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }

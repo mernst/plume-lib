@@ -336,8 +336,8 @@ public final class Intern {
     internedDoubles =
         new WeakHasherMap</*@Interned*/ Double, WeakReference</*@Interned*/ Double>>(
             new DoubleHasher());
-    internedDoubleNaN = new /*@Interned*/ Double(Double.NaN);
-    internedDoubleZero = new /*@Interned*/ Double(0);
+    internedDoubleNaN = Double.NaN;
+    internedDoubleZero = 0.0;
     internedDoubleArrays =
         new WeakHasherMap<double /*@Interned*/ [], WeakReference<double /*@Interned*/ []>>(
             new DoubleArrayHasher());
@@ -714,6 +714,7 @@ public final class Intern {
    */
   @SuppressWarnings({
     "interning", // interns its argument
+    "ReferenceEquality",
     "purity",
     "cast"
   }) // cast is redundant (except in JSR 308)
@@ -991,32 +992,35 @@ public final class Intern {
 
     @SuppressWarnings("unchecked")
     /*@Pure*/
+    @Override
     public boolean equals(
         /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
         /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
-        return equals(other_sai);
+        return equalsSequenceAndIndices(other_sai);
       } else {
         return false;
       }
     }
 
     /*@Pure*/
-    public boolean equals(
+    public boolean equalsSequenceAndIndices(
         /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
         /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
       return ((this.seq == other.seq) && this.start == other.start && this.end == other.end);
     }
 
     /*@Pure*/
+    @Override
     public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return seq.hashCode() + start * 30 - end * 2;
     }
 
     // For debugging
     /*@SideEffectFree*/
+    @Override
     public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
     }
@@ -1029,6 +1033,7 @@ public final class Intern {
    */
   private static final class SequenceAndIndicesHasher<T extends /*@Interned*/ Object>
       implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       @SuppressWarnings("unchecked")
       SequenceAndIndices<T> sai1 = (SequenceAndIndices<T>) a1;
@@ -1038,6 +1043,7 @@ public final class Intern {
       return sai1.equals(sai2);
     }
 
+    @Override
     public int hashCode(Object o) {
       return o.hashCode();
     }

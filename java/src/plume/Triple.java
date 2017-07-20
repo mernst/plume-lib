@@ -40,12 +40,14 @@ public class Triple<T1, T2, T3> {
   }
 
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied Triple<T1,T2,T3> this*/) {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + "," + String.valueOf(c) + ">";
   }
 
   @SuppressWarnings("interning") // equality testing optimization
   /*@Pure*/
+  @Override
   public boolean equals(
       /*>>>@GuardSatisfied Triple<T1,T2,T3> this,*/
       /*@GuardSatisfied*/ /*@Nullable*/ Object obj) {
@@ -63,6 +65,7 @@ public class Triple<T1, T2, T3> {
 
   // See coment at Pair.hashCode.
   /*@Pure*/
+  @Override
   public int hashCode(/*>>>@GuardSatisfied Triple<T1,T2,T3> this*/) {
     return (((a == null) ? 0 : a.hashCode())
         + ((b == null) ? 0 : b.hashCode())

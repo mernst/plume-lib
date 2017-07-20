@@ -3,6 +3,10 @@
 
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -12,7 +16,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +32,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -264,7 +270,7 @@ public final class UtilMDE {
     InputStream in = new FileInputStream(file);
     InputStreamReader file_reader;
     if (charsetName == null) {
-      file_reader = new InputStreamReader(in);
+      file_reader = new InputStreamReader(in, UTF_8);
     } else {
       file_reader = new InputStreamReader(in, charsetName);
     }
@@ -426,14 +432,16 @@ public final class UtilMDE {
   // Question:  should this be rewritten as a wrapper around bufferedFileOutputStream?
   public static BufferedWriter bufferedFileWriter(String filename, boolean append)
       throws IOException {
-    Writer file_writer;
     if (filename.endsWith(".gz")) {
-      file_writer =
-          new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(filename, append)));
+      return new BufferedWriter(
+          new OutputStreamWriter(
+              new GZIPOutputStream(new FileOutputStream(filename, append)), UTF_8));
     } else {
-      file_writer = new FileWriter(filename, append);
+      return Files.newBufferedWriter(
+          Paths.get(filename),
+          UTF_8,
+          append ? new StandardOpenOption[] {CREATE, APPEND} : new StandardOpenOption[] {CREATE});
     }
-    return new BufferedWriter(file_writer);
   }
 
   /**
@@ -1083,6 +1091,7 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public boolean accept(File dir, String name) {
       return name.startsWith(prefix) && name.endsWith(suffix);
     }
@@ -1099,7 +1108,7 @@ public final class UtilMDE {
   public static File expandFilename(File name) {
     String path = name.getPath();
     String newname = expandFilename(path);
-    @SuppressWarnings("interning")
+    @SuppressWarnings({"interning", "ReferenceEquality"})
     boolean changed = (newname != path);
     if (changed) {
       return new File(newname);
@@ -1241,7 +1250,7 @@ public final class UtilMDE {
   public static void writeFile(File file, String contents) {
 
     try {
-      FileWriter writer = new FileWriter(file);
+      Writer writer = Files.newBufferedWriter(file.toPath(), UTF_8);
       writer.write(contents, 0, contents.length());
       writer.close();
     } catch (Exception e) {
@@ -1495,14 +1504,17 @@ public final class UtilMDE {
       this.e = e;
     }
 
+    @Override
     public boolean hasNext() {
       return e.hasMoreElements();
     }
 
+    @Override
     public T next() {
       return e.nextElement();
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1516,10 +1528,12 @@ public final class UtilMDE {
       this.itor = itor;
     }
 
+    @Override
     public boolean hasMoreElements() {
       return itor.hasNext();
     }
 
+    @Override
     public T nextElement() {
       return itor.next();
     }
@@ -1539,10 +1553,12 @@ public final class UtilMDE {
       this.itor2 = itor2_;
     }
 
+    @Override
     public boolean hasNext() {
       return (itor1.hasNext() || itor2.hasNext());
     }
 
+    @Override
     public T next() {
       if (itor1.hasNext()) {
         return itor1.next();
@@ -1553,6 +1569,7 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1574,6 +1591,7 @@ public final class UtilMDE {
     // an empty iterator to prime the pump
     Iterator<T> current = new ArrayList<T>().iterator();
 
+    @Override
     public boolean hasNext() {
       while ((!current.hasNext()) && (itorOfItors.hasNext())) {
         current = itorOfItors.next();
@@ -1581,11 +1599,13 @@ public final class UtilMDE {
       return current.hasNext();
     }
 
+    @Override
     public T next() {
       hasNext(); // for side effect
       return current.next();
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1608,6 +1628,7 @@ public final class UtilMDE {
     T current = invalid_t;
     boolean current_valid = false;
 
+    @Override
     public boolean hasNext() {
       while ((!current_valid) && itor.hasNext()) {
         current = itor.next();
@@ -1616,6 +1637,7 @@ public final class UtilMDE {
       return current_valid;
     }
 
+    @Override
     public T next() {
       if (hasNext()) {
         current_valid = false;
@@ -1628,6 +1650,7 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1658,10 +1681,12 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public boolean hasNext() {
       return itor.hasNext();
     }
 
+    @Override
     public T next() {
       if (!itor.hasNext()) {
         throw new NoSuchElementException();
@@ -1690,6 +1715,7 @@ public final class UtilMDE {
       return current;
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1778,7 +1804,7 @@ public final class UtilMDE {
     } else {
       new_total = old.intValue() + count;
     }
-    return m.put(key, new Integer(new_total));
+    return m.put(key, new_total);
   }
 
   /**
@@ -2751,6 +2777,7 @@ public final class UtilMDE {
     static final long serialVersionUID = 20150812L;
 
     /*@Pure*/
+    @Override
     public int compare(String s1, String s2) {
       if (s1 == null && s2 == null) {
         return 0;
@@ -2781,6 +2808,7 @@ public final class UtilMDE {
     @SuppressWarnings(
         "purity.not.deterministic.call") // toString is being used in a deterministic way
     /*@Pure*/
+    @Override
     public int compare(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
       // Make null compare smaller than anything else
       if ((o1 == o2)) {
@@ -3136,7 +3164,7 @@ public final class UtilMDE {
       ArrayList<ArrayList<Integer>> combos = create_combinations(arity - 1, i, cnt);
       for (ArrayList<Integer> li : combos) {
         ArrayList<Integer> simple = new ArrayList<Integer>();
-        simple.add(new Integer(i));
+        simple.add(i);
         simple.addAll(li);
         results.add(simple);
       }

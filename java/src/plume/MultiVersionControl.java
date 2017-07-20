@@ -1,10 +1,12 @@
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -812,6 +814,7 @@ public class MultiVersionControl {
 
   /** Accept only directories that are not symbolic links. */
   static class IsDirectoryFilter implements FileFilter {
+    @Override
     public boolean accept(File pathname) {
       try {
         return pathname.isDirectory() && pathname.getPath().equals(pathname.getCanonicalPath());
@@ -874,7 +877,7 @@ public class MultiVersionControl {
     // There also exist Hg commands that will do this same thing.
     if (hgrcFile.exists()) {
       try {
-        ini = new Ini(new FileReader(hgrcFile));
+        ini = new Ini(Files.newBufferedReader(hgrcFile.toPath(), UTF_8));
       } catch (IOException e) {
         throw new Error("Problem reading file " + hgrcFile);
       }
@@ -1692,6 +1695,7 @@ public class MultiVersionControl {
    * but don't want them to simply hang.
    */
   static class StreamOfNewlines extends InputStream {
+    @Override
     public int read() {
       return (int) '\n';
     }

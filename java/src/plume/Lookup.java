@@ -1,5 +1,6 @@
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static plume.EntryReader.Entry;
 
 import java.io.BufferedReader;
@@ -229,7 +230,7 @@ public final class Lookup {
         System.out.println("Unable to find resource 'lookup.txt' with help text.");
         System.exit(1);
       }
-      BufferedReader help_stream = new BufferedReader(new InputStreamReader(is));
+      BufferedReader help_stream = new BufferedReader(new InputStreamReader(is, UTF_8));
       String line = help_stream.readLine();
       while (line != null) {
         System.out.println(line);

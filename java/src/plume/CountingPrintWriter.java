@@ -179,6 +179,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param s the string to be printed, or null
    */
+  @Override
   public void print(/*@Nullable*/ String s) {
     if (s == null) {
       printedBytes += countBytes("null");
@@ -197,6 +198,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param b the boolean to be printed
    */
+  @Override
   public void print(boolean b) {
     String s = String.valueOf(b);
     printedBytes += countBytes(s);
@@ -211,6 +213,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param c the char to be printed
    */
+  @Override
   public void print(char c) {
     printedBytes += countBytes(c);
     printedChars++;
@@ -223,6 +226,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param s the char[] to be printed
    */
+  @Override
   public void print(char[] s) {
     for (int i = 0; i < s.length; i++) {
       printedBytes += countBytes(s[i]);
@@ -238,6 +242,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param d the double to be printed
    */
+  @Override
   public void print(double d) {
     String s = String.valueOf(d);
     printedBytes += countBytes(s);
@@ -252,6 +257,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param f the float to be printed
    */
+  @Override
   public void print(float f) {
     String s = String.valueOf(f);
     printedBytes += countBytes(s);
@@ -266,6 +272,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param i the int to be printed
    */
+  @Override
   public void print(int i) {
     String s = String.valueOf(i);
     printedBytes += countBytes(s);
@@ -304,6 +311,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param l the long to be printed
    */
+  @Override
   public void print(long l) {
     String s = String.valueOf(l);
     printedBytes += countBytes(s);
@@ -318,6 +326,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param obj the object to be printed
    */
+  @Override
   public void print(/*@Nullable*/ Object obj) {
     String s = String.valueOf(obj);
     printedBytes += countBytes(s);
@@ -336,6 +345,7 @@ public class CountingPrintWriter extends PrintWriter {
    * <p>When incrementing the byte count of PrintWriter, also accounts for the bytes needed to
    * represent the line separator string.
    */
+  @Override
   public void println() {
     printedBytes += countBytes(lineSep);
     printedChars += lineSep.length();
@@ -348,6 +358,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param s the string to be printed
    */
+  @Override
   public void println(/*@Nullable*/ String s) {
     print(s);
     println();
@@ -359,6 +370,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param buf the char[] to be printed
    */
+  @Override
   public void write(char[] buf) {
     for (int i = 0; i < buf.length; i++) {
       writtenBytes += countBytes(buf[i]);
@@ -374,6 +386,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
+  @Override
   public void write(char[] buf, int off, int len) {
     for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);
@@ -387,6 +400,7 @@ public class CountingPrintWriter extends PrintWriter {
    *
    * @param s the string to be printed
    */
+  @Override
   public void write(String s) {
     writtenBytes += countBytes(s);
     writtenChars += s.length();
@@ -400,6 +414,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
+  @Override
   public void write(String s, int off, int len) {
     writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
