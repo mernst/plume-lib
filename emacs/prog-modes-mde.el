@@ -835,15 +835,19 @@ Works over the currently-visited tags table."
 (defun run-google-java-format ()
   "Run external program run-google-java-format.py on the file."
   (interactive)
-  (let ((cmd "run-google-java-format.py "))
+  (let (cmd)
     (cond
+     ((or (string-match-p "/\\(daikon\\|randoop\\)" (buffer-file-name))
+	  (and (string-match-p "/toradocu" (buffer-file-name))
+	       (not (string-match-p "/src/test/resources/" (buffer-file-name)))))
+      ;; normal formatting
+      (setq cmd "run-google-java-format.py "))
      ((and (string-match-p "/checker-framework" (buffer-file-name))
 	   (not (string-match-p "/checker/jdk/" (buffer-file-name))))
-      (setq cmd (concat cmd "-a ")))
-     ((string-match-p "/\\(daikon\\|randoop\\)" (buffer-file-name))
-      ;; nothing to do
-      )
+      ;; non-standard cammand-line arguments
+      (setq cmd "run-google-java-format.py -a "))
      (t
+      ;; for all other projects, don't automatically reformat
       (setq cmd nil)))
     (if cmd
       (progn
