@@ -283,6 +283,7 @@ public class FileIOException extends IOException {
   ///
 
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied FileIOException this*/) {
     String result = super.toString();
     if (fileName != null) {

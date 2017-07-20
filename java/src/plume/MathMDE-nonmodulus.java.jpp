@@ -104,6 +104,7 @@ The correct way to build the system is to run 'make'.
       current_index = Integer.MIN_VALUE;
     }
 
+    @Override
     public boolean hasNext() {
       if (current_missing < current_nonmissing) {
         return true;
@@ -149,15 +150,17 @@ The correct way to build the system is to run 'make'.
       }
     }
 
+    @Override
     public INTEGER next() {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
-      INTEGER result = new INTEGER(current_missing);
+      INTEGER result = current_missing;
       current_missing++;
       return result;
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }

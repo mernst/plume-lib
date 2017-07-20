@@ -682,6 +682,7 @@ public final class BCELUtil {
    * @param classname the fully-qualified name of a class
    * @return the type corresponding to the given class name
    */
+  @SuppressWarnings("ReferenceEquality")
   public static Type classname_to_type(String classname) {
 
     // Get the array depth (if any)

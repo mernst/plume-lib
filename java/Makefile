@@ -117,7 +117,7 @@ endif
 # A user can add flags like "-source 7" or "-target 7" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-options -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
-JAVAC_COMMAND = ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
+JAVAC_COMMAND ?= ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 
@@ -562,6 +562,14 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ###########################################################################
 ### Code quality
 ###
+
+error-prone: errorprone
+errorprone:
+	${MAKE} lib/error_prone_ant-2.0.21.jar
+	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-2.0.21.jar com.google.errorprone.ErrorProneCompiler -Werror"
+
+lib/error_prone_ant-2.0.21.jar:
+	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/2.0.21/error_prone_ant-2.0.21.jar)
 
 # This compiles the code as well as does pluggable type-checking.
 typecheck checkers check-types: ${JAVA_AND_CPP_FILES}

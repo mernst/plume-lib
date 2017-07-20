@@ -8,6 +8,8 @@
 
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.DocErrorReporter;
@@ -18,13 +20,12 @@ import com.sun.javadoc.Tag;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.LinkedHashMap;
@@ -456,13 +457,13 @@ public class OptionsDoclet {
     String output = output();
 
     if (outFile != null) {
-      out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
+      out = new PrintWriter(Files.newBufferedWriter(outFile.toPath(), UTF_8));
     } else if (inPlace) {
       assert docFile != null
           : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
-      out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
+      out = new PrintWriter(Files.newBufferedWriter(docFile.toPath(), UTF_8));
     } else {
-      out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+      out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out, UTF_8)));
     }
 
     out.println(output);
@@ -493,7 +494,7 @@ public class OptionsDoclet {
   /*@RequiresNonNull("docFile")*/
   private String newDocFileText() throws Exception {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
-    BufferedReader doc = new BufferedReader(new FileReader(docFile));
+    BufferedReader doc = Files.newBufferedReader(docFile.toPath(), UTF_8);
     String docline;
     boolean replacing = false;
     boolean replaced_once = false;

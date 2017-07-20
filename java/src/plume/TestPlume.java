@@ -204,6 +204,7 @@ public final class TestPlume {
         == ArraysMDE.sum(new double[][] {{1.1, 2.2, 3.3, 4.4}, {5.5, 6, 7, 8}, {9, 10, 11, 12}});
   }
 
+  @SuppressWarnings("BoxedPrimitiveConstructor")
   @Test
   public void testArraysMDE_indexOf() {
 
@@ -290,7 +291,7 @@ public final class TestPlume {
     {
       Integer[] a = new Integer[10];
       for (int i = 0; i < a.length; i++) {
-        a[i] = new Integer(i);
+        a[i] = i;
       }
       Integer[] b = new Integer[] {};
       Integer[] c = new Integer[] {a[0], a[1], a[2]};
@@ -1081,6 +1082,7 @@ public final class TestPlume {
   }
 
   // Tests the method "Object intern(Object)" in Intern.java
+  @SuppressWarnings("BoxedPrimitiveConstructor")
   @Test
   public void testInternObject() {
     Object nIntern = Intern.intern((/*@Nullable*/ Object) null);
@@ -1501,15 +1503,15 @@ public final class TestPlume {
 
     Vector<Integer> ones = new Vector<Integer>();
     for (int i = 1; i <= 30; i++) {
-      ones.add(new Integer(i));
+      ones.add(i);
     }
     Vector<Integer> twos = new Vector<Integer>();
     for (int i = 2; i <= 30; i += 2) {
-      twos.add(new Integer(i));
+      twos.add(i);
     }
     Vector<Integer> threes = new Vector<Integer>();
     for (int i = 3; i <= 30; i += 3) {
-      threes.add(new Integer(i));
+      threes.add(i);
     }
 
     // I've replaced the nulls by 0 in order to permit the array elements
@@ -1825,6 +1827,7 @@ public final class TestPlume {
   }
 
   // This cannot be static because it instantiates an inner class.
+  @SuppressWarnings("ArrayEquals")
   @Test
   public void testUtilMDE() {
 
@@ -2021,7 +2024,7 @@ public final class TestPlume {
       Vector<Integer> iota0 = new Vector<Integer>();
       Vector<Integer> iota10 = new Vector<Integer>();
       for (int i = 0; i < 10; i++) {
-        iota10.add(new Integer(i));
+        iota10.add(i);
       }
       Vector<Integer> iota10_twice = new Vector<Integer>();
       iota10_twice.addAll(iota10);
@@ -2080,6 +2083,7 @@ public final class TestPlume {
       class OddFilter implements Filter<Integer> {
         public OddFilter() {}
 
+        @Override
         public boolean accept(Integer i) {
           return i.intValue() % 2 != 0;
         }
@@ -2090,7 +2094,7 @@ public final class TestPlume {
       Vector<Integer> iota10_odd = new Vector<Integer>();
       for (int i = 0; i < iota10.size(); i++) {
         if (i % 2 != 0) {
-          iota10_odd.add(new Integer(i));
+          iota10_odd.add(i);
         }
       }
       assert iota10_odd.equals(
@@ -2101,18 +2105,18 @@ public final class TestPlume {
     {
       Vector<Integer> iota5 = new Vector<Integer>();
       for (int i = 0; i < 5; i++) {
-        iota5.add(new Integer(i));
+        iota5.add(i);
       }
       Vector<Integer> iota5middle = new Vector<Integer>();
       for (int i = 1; i < 4; i++) {
-        iota5middle.add(new Integer(i));
+        iota5middle.add(i);
       }
       UtilMDE.RemoveFirstAndLastIterator<Integer> rfali =
           new UtilMDE.RemoveFirstAndLastIterator<Integer>(iota5.iterator());
       Vector<Integer> rfali_vector = toVector(rfali);
       assert iota5middle.equals(rfali_vector);
-      assert rfali.getFirst().equals(new Integer(0));
-      assert rfali.getLast().equals(new Integer(4));
+      assert rfali.getFirst().equals(0);
+      assert rfali.getLast().equals(4);
     }
 
     // public static ArrayList randomElements(Iterator itor, int num_elts)
@@ -2137,7 +2141,7 @@ public final class TestPlume {
         if (!hasNext()) {
           throw new NoSuchElementException();
         }
-        return new Integer(i++);
+        return i++;
       }
 
       @Override
@@ -2268,15 +2272,10 @@ public final class TestPlume {
     assert UtilMDE.join(new String[] {"foo", "bar", "baz"}, ", ").equals("foo, bar, baz");
     assert UtilMDE.join(new String[] {"foo"}, ", ").equals("foo");
     assert UtilMDE.join(new String[] {}, ", ").equals("");
-    assert UtilMDE.join(
-            new Integer[] {
-              new Integer(0), new Integer(1), new Integer(2), new Integer(3), new Integer(4)
-            },
-            "")
-        .equals("01234");
+    assert UtilMDE.join(new Integer[] {0, 1, 2, 3, 4}, "").equals("01234");
     Vector<Object> potpourri = new Vector<Object>();
     potpourri.add("day");
-    potpourri.add(new Integer(2));
+    potpourri.add(2);
     potpourri.add("day");
     assert UtilMDE.join(potpourri, " ").equals("day 2 day");
 
@@ -3001,12 +3000,12 @@ public final class TestPlume {
     assert combo2.contains(cc);
 
     // public static List create_combinations (int arity, int start, int cnt)
-    Integer i0 = new Integer(0);
-    Integer i1 = new Integer(1);
-    Integer i2 = new Integer(2);
-    Integer i10 = new Integer(10);
-    Integer i11 = new Integer(11);
-    Integer i12 = new Integer(12);
+    Integer i0 = 0;
+    Integer i1 = 1;
+    Integer i2 = 2;
+    Integer i10 = 10;
+    Integer i11 = 11;
+    Integer i12 = 12;
 
     List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations(1, 0, 2);
     assert combo3.size() == 3;
@@ -3408,8 +3407,8 @@ public final class TestPlume {
     preds1 = new LinkedHashMap<Integer, List<Integer>>();
     succs1 = new LinkedHashMap<Integer, List<Integer>>();
     for (int i = 0; i <= 7; i++) {
-      preds1.put(new Integer(i), new ArrayList<Integer>());
-      succs1.put(new Integer(i), new ArrayList<Integer>());
+      preds1.put(i, new ArrayList<Integer>());
+      succs1.put(i, new ArrayList<Integer>());
     }
     succs1.get(0).add(1);
     preds1.get(1).add(0);

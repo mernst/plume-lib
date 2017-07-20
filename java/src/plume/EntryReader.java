@@ -1,5 +1,7 @@
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -64,6 +66,7 @@ import org.checkerframework.checker.regex.qual.*;
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
  */
+@SuppressWarnings("IterableAndIterator")
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
 
   ///
@@ -251,7 +254,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       String filename,
       /*@Nullable*/ /*@Regex*/ String comment_re_string,
       /*@Nullable*/ /*@Regex(1)*/ String include_re_string) {
-    this(new InputStreamReader(in), filename, comment_re_string, include_re_string);
+    this(new InputStreamReader(in, UTF_8), filename, comment_re_string, include_re_string);
   }
 
   /**

@@ -2363,7 +2363,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Byte n = new Byte(a[i]);
+      Byte n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2387,7 +2387,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Character n = new Character(a[i]);
+      Character n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2411,7 +2411,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Float n = new Float(a[i]);
+      Float n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2435,7 +2435,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Short n = new Short(a[i]);
+      Short n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2459,7 +2459,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Integer n = new Integer(a[i]);
+      Integer n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2484,7 +2484,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
       // but that would make the code much less readable.
-      Double n = new Double(a[i]);
+      Double n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2508,7 +2508,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
       // but that would make the code much less readable.
-      Long n = new Long(a[i]);
+      Long n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2738,11 +2738,11 @@ public final class ArraysMDE {
     Set<Long> setBigger = new HashSet<Long>();
 
     for (int i = 0; i < bigger.length; i++) {
-      setBigger.add(new Long(bigger[i]));
+      setBigger.add(bigger[i]);
     }
 
     for (int i = 0; i < smaller.length; i++) {
-      Long elt = new Long(smaller[i]);
+      Long elt = smaller[i];
       if (!setBigger.contains(elt)) {
         return false;
       }
@@ -2770,11 +2770,11 @@ public final class ArraysMDE {
     Set<Double> setBigger = new HashSet<Double>();
 
     for (int i = 0; i < bigger.length; i++) {
-      setBigger.add(new Double(bigger[i]));
+      setBigger.add(bigger[i]);
     }
 
     for (int i = 0; i < smaller.length; i++) {
-      Double elt = new Double(smaller[i]);
+      Double elt = smaller[i];
       if (!setBigger.contains(elt)) {
         return false;
       }
@@ -2838,6 +2838,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(int[] a1, int[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2872,6 +2873,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(long[] a1, long[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2907,6 +2909,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2949,6 +2952,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ String[] a1, /*@PolyAll*/ String[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3000,6 +3004,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3060,6 +3065,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3096,6 +3102,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(int[] a1, int[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3133,6 +3140,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(long[] a1, long[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3176,6 +3184,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3240,6 +3249,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;

@@ -57,38 +57,45 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
+  @Override
   public StringBuilderDelimited append(char c) {
     appendDelimiter();
     delegate.append(c);
     return this;
   }
 
+  @Override
   public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq) {
     appendDelimiter();
     delegate.append(csq);
     return this;
   }
 
+  @Override
   public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq, int start, int end) {
     appendDelimiter();
     delegate.append(csq, start, end);
     return this;
   }
 
+  @Override
   public char charAt(int index) {
     return delegate.charAt(index);
   }
 
   /*@Pure*/
+  @Override
   public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
 
+  @Override
   public CharSequence subSequence(int start, int end) {
     return delegate.subSequence(start, end);
   }
 
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.toString();
   }

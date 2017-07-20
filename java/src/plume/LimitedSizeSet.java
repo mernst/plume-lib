@@ -174,6 +174,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
+  @Override
   public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
@@ -209,6 +210,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }
