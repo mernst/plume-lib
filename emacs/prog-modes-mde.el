@@ -837,9 +837,12 @@ Works over the currently-visited tags table."
   (interactive)
   (let (cmd)
     (cond
-     ((or (string-match-p "/\\(daikon\\|plume-lib\\|randoop\\)" (buffer-file-name))
+     ((or (string-match-p "/\\(daikon\\|randoop\\)" (buffer-file-name))
 	  (and (string-match-p "/toradocu" (buffer-file-name))
-	       (not (string-match-p "/src/test/resources/" (buffer-file-name)))))
+	       (not (string-match-p "/src/test/resources/" (buffer-file-name))))
+	  (and (string-match-p "/plume-lib" (buffer-file-name))
+	       (not (string-match-p "WeakHasherMap.java$\\|WeakIdentityHashMap.java$"
+				    (buffer-file-name)))))
       ;; normal formatting
       (setq cmd "run-google-java-format.py "))
      ((and (string-match-p "/checker-framework" (buffer-file-name))
