@@ -2210,6 +2210,24 @@ public final class UtilMDE {
     return baos.toString();
   }
 
+  /**
+   * Reads all lines from the stream and returns them in a {@code List<String>}.
+   *
+   * @param stream the stream to read from
+   * @return the list of lines read from the stream
+   * @throws IOException if there is an error reading from the stream
+   */
+  public static List<String> streamLines(InputStream stream) throws IOException {
+    List<String> outputLines = new ArrayList<>();
+    try (BufferedReader rdr = new BufferedReader(new InputStreamReader(stream, UTF_8))) {
+      String line;
+      while ((line = rdr.readLine()) != null) {
+        outputLines.add(line);
+      }
+    }
+    return outputLines;
+  }
+
   ///////////////////////////////////////////////////////////////////////////
   /// String
   ///
