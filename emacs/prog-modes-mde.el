@@ -2130,7 +2130,7 @@ or null if it does not exist."
   (and
    ;; editing a file or directory
    (or buffer-file-name
-       (memq major-mode '(compilation-mode cvs-mode dired-mode svn-status-mode shell-mode)))
+       (memq major-mode '(compilation-mode cvs-mode dired-mode magit-status-mode shell-mode svn-status-mode)))
    ;; Makefile doesn't exist, so we need a different command
    (not (or (file-exists-p (expand-file-name "Makefile"))
             (file-exists-p (expand-file-name "makefile"))
@@ -2189,6 +2189,7 @@ in this directory or some superdirectory."
 (add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
 (add-hook 'cvs-mode-hook 'set-compile-command-for-directory)
 (add-hook 'svn-status-mode-hook 'set-compile-command-for-directory)
+(add-hook 'magit-status-mode-hook 'set-compile-command-for-directory)
 ;; There was no svn-status-mode-hook before "psvn.el 23079 2007-01-17".
 ;; (defadvice svn-status-mode (after set-compile-command-for-directory activate)
 ;;   (set-compile-command-for-directory))
