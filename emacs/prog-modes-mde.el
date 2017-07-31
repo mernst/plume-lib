@@ -837,7 +837,9 @@ Works over the currently-visited tags table."
   (interactive)
   (let (cmd)
     (cond
-     ((or (string-match-p "/\\(daikon\\|randoop\\)" (buffer-file-name))
+     ((or (string-match-p "/\\(randoop\\)" (buffer-file-name))
+	  (and (string-match-p "/daikon" (buffer-file-name))
+	       (not (string-match-p "\\.jpp$" (buffer-file-name))))
 	  (and (string-match-p "/toradocu" (buffer-file-name))
 	       (not (string-match-p "/src/test/resources/" (buffer-file-name))))
 	  (and (string-match-p "/plume-lib" (buffer-file-name))
