@@ -861,6 +861,18 @@ public final class UtilMDE {
     return count;
   }
 
+  /** Return the contents of the file, as a list of strings, one per line. */
+  public static List<String> fileLines(String filename) throws IOException {
+    List<String> textList = new ArrayList<>();
+    try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        textList.add(line);
+      }
+    }
+    return textList;
+  }
+
   /**
    * Tries to infer the line separator used in a file.
    *
