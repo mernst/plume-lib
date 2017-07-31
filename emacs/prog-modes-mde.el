@@ -2080,6 +2080,11 @@ in compilation output."
           (if (string-equal ".*" (substring regexp 0 2))
               (error "Element of compilation-error-regexp-alist starts with \".*\": %s" cer))))))
 
+(defadvice compile (before recompute-compile-command activate)
+  "In certain modes, re-compute `compile-command'."
+  (if (memq major-mode '(shell-mode))
+      (set-compile-command-for-directory)))
+
 
 (defun next-error-recenter ()
   "Move point to top of screen, if point is so close to bottom that some
@@ -2125,7 +2130,7 @@ or null if it does not exist."
   (and
    ;; editing a file or directory
    (or buffer-file-name
-       (memq major-mode '(compilation-mode cvs-mode dired-mode svn-status-mode)))
+       (memq major-mode '(compilation-mode cvs-mode dired-mode svn-status-mode shell-mode)))
    ;; Makefile doesn't exist, so we need a different command
    (not (or (file-exists-p (expand-file-name "Makefile"))
             (file-exists-p (expand-file-name "makefile"))
