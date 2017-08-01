@@ -26,6 +26,9 @@ public final class SimpleLog {
   /** If false, do no output. */
   public boolean enabled;
 
+  /** Always provide a backtrace (traceback) when calling {@code log()}. */
+  public boolean always_traceback = false;
+
   /** Where to write logging output. */
   public PrintStream logfile = System.out;
 
@@ -33,9 +36,6 @@ public final class SimpleLog {
   public String indent_str = "";
   /** Indentation string for one level of indentation. */
   public final String INDENT_STR_ONE_LEVEL = "  ";
-
-  /** Always provide a backtrace (traceback) when calling log. */
-  public boolean always_traceback = false;
 
   /**
    * True if every log call is made with a complete line of text. False if a log call may contain
@@ -46,6 +46,13 @@ public final class SimpleLog {
 
   public Stack<Long> start_times = new Stack<Long>();
 
+  /**
+   * Create a new SimpleLog object.
+   *
+   * @param enabled whether the logger starts out enabled
+   * @param always_traceback whether to always provide a backtrace (traceback) when calling {@code
+   *     log()}
+   */
   public SimpleLog(boolean enabled, boolean always_traceback) {
     this.enabled = enabled;
     this.always_traceback = always_traceback;
@@ -60,7 +67,12 @@ public final class SimpleLog {
     this(true);
   }
 
-  /** @param filename file name, or use "-" for standard output */
+  /**
+   * Create a new SimpleLog object.
+   *
+   * @param filename file name, or use "-" for standard output
+   * @param enabled whether the logger starts out enabled
+   */
   public SimpleLog(String filename, boolean enabled) {
     this(enabled);
     if (!filename.equals("-")) {

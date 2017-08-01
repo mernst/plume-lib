@@ -861,7 +861,13 @@ public final class UtilMDE {
     return count;
   }
 
-  /** Return the contents of the file, as a list of strings, one per line. */
+  /**
+   * Return the contents of the file, as a list of strings, one per line.
+   *
+   * @param filename the file whose contents to return
+   * @return the contents of {@code filename}, one string per line
+   * @throws IOException if there was a problem reading the file
+   */
   public static List<String> fileLines(String filename) throws IOException {
     List<String> textList = new ArrayList<>();
     try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
