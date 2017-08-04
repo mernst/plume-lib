@@ -37,3 +37,4 @@ syntax: regexp
 # Not a glob because it starts with # which looks like a comment.
 (.*/)?\#[^/]*\#$
 (.*/)?\.\#.*
+plume-lib-[0-9.]*.tar.gz
