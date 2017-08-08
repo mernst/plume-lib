@@ -225,9 +225,9 @@ public class StrTok {
    * Reads the next token and checks to make sure that it is a word (id). If it is not a word, calls
    * the error handling routine. If it is, returns the string of the word.
    *
-   * @return next token, if if it a word; otherwise calls the error handling routine
+   * @return next token, if if it is a word; otherwise calls the error handling routine
    */
-  public String need_word() {
+  public /*@Interned*/ String need_word() {
     String t = nextToken();
     if (!isWord()) {
       errorHandler.tok_error(String.format("'%s' found where identifier expected", t));
