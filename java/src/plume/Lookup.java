@@ -209,7 +209,7 @@ public final class Lookup {
   private static final String lineSep = System.getProperty("line.separator");
 
   /** One line synopsis of usage. */
-  private static String usage_string = "lookup [options] <keyword> ...";
+  private static final String usage_string = "lookup [options] <keyword> ...";
 
   /**
    * Look for the specified keywords in the file(s) and print the corresponding entries.

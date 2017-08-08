@@ -83,7 +83,7 @@ public class TaskManager {
   @Option("Regex that matches an include directive; group 1 is the file name")
   public static /*@Regex(1)*/ String include_re = "\\\\include\\{(.*)\\}";
 
-  private static String usage_string = "TaskManger [options] <task-file> <task_file> ...";
+  private static final String usage_string = "TaskManger [options] <task-file> <task_file> ...";
 
   @SuppressWarnings("regex") // line.separator property is a legal regex
   public static final /*@Regex*/ String lineSep = System.getProperty("line.separator");
