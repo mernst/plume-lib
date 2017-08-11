@@ -2382,22 +2382,22 @@ public final class UtilMDE {
    * Concatenate the string representations of the objects, placing the delimiter between them.
    *
    * @see java.util.AbstractCollection#toString()
-   * @param v list of values to concatenate
+   * @param v collection of values to concatenate
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter
    *     between
    */
-  public static String join(List<?> v, String delim) {
-    if (v.size() == 0) {
-      return "";
-    }
-    if (v.size() == 1) {
-      return Objects.toString(v.get(0));
-    }
-    // This should perhaps use an iterator rather than get(), for efficiency.
-    StringBuffer sb = new StringBuffer(Objects.toString(v.get(0)));
-    for (int i = 1; i < v.size(); i++) {
-      sb.append(delim).append(v.get(i));
+  public static String join(Iterable<? extends Object> v, String delim) {
+    StringBuffer sb = new StringBuffer();
+    boolean first = true;
+    Iterator<?> itor = v.iterator();
+    while (itor.hasNext()) {
+      if (first) {
+        first = false;
+      } else {
+        sb.append(delim);
+      }
+      sb.append(itor.next());
     }
     return sb.toString();
   }
