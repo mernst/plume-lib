@@ -204,7 +204,36 @@ public final class TestPlume {
         == ArraysMDE.sum(new double[][] {{1.1, 2.2, 3.3, 4.4}, {5.5, 6, 7, 8}, {9, 10, 11, 12}});
   }
 
-  @SuppressWarnings("BoxedPrimitiveConstructor")
+  /**
+   * Like Integer in that it has a constructor that takes an int and creates a non-interned object,
+   * so == and equals() differ.
+   *
+   * <p>The Integer(int) constructor is discouraged because it does not do interning, and later
+   * versions of the JDK even deprecate it. One might imagine using this class instead, but the
+   * interning methods have hard-coded knowledge of the real Integer class. So, I cannot use this
+   * class, and instead I suppress deprecation warnings.
+   */
+  static class MyInteger {
+    int value;
+
+    public MyInteger(int value) {
+      this.value = value;
+    }
+
+    public boolean equals(Object other) {
+      if (!(other instanceof MyInteger)) {
+        return false;
+      }
+      MyInteger that = (MyInteger) other;
+      return this.value == that.value;
+    }
+
+    public int hashCode() {
+      return value;
+    }
+  }
+
+  @SuppressWarnings({"deprecation", "BoxedPrimitiveConstructor"}) // interning tests
   @Test
   public void testArraysMDE_indexOf() {
 
@@ -1082,7 +1111,7 @@ public final class TestPlume {
   }
 
   // Tests the method "Object intern(Object)" in Intern.java
-  @SuppressWarnings("BoxedPrimitiveConstructor")
+  @SuppressWarnings({"deprecation", "BoxedPrimitiveConstructor"}) // interning test
   @Test
   public void testInternObject() {
     Object nIntern = Intern.intern((/*@Nullable*/ Object) null);

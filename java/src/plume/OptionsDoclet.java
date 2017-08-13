@@ -174,6 +174,7 @@ import org.checkerframework.checker.signature.qual.*;
 // This doesn't itself use plume.Options for its command-line option
 // processing because a Doclet is required to implement the optionLength
 // and validOptions methods.
+@SuppressWarnings("deprecation") // JDK 9 deprecates com.sun.javadoc package
 public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
