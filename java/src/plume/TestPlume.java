@@ -222,7 +222,9 @@ public final class TestPlume {
     }
 
     @Override
-    public boolean equals(/*>>>@GuardSatisfied MyInteger this,*//*@Nullable*/ Object other) {
+    public boolean equals(
+        /*>>>@GuardSatisfied MyInteger this,*/
+        /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (!(other instanceof MyInteger)) {
         return false;
       }
