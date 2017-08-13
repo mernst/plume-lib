@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 /*>>>
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -220,7 +221,8 @@ public final class TestPlume {
       this.value = value;
     }
 
-    public boolean equals(Object other) {
+    @Override
+    public boolean equals(/*>>>@GuardSatisfied MyInteger this,*//*@Nullable*/ Object other) {
       if (!(other instanceof MyInteger)) {
         return false;
       }
@@ -228,7 +230,8 @@ public final class TestPlume {
       return this.value == that.value;
     }
 
-    public int hashCode() {
+    @Override
+    public int hashCode(/*>>>@GuardSatisfied MyInteger this*/) {
       return value;
     }
   }
