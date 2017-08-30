@@ -97,9 +97,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    // s.values isn't modified by the call to add.  Until
-    // https://github.com/typetools/checker-framework/issues/984 is fixed,
-    // use a local variable which the Checker Framework can tell is not reassigned.
+    // TODO: s.values isn't modified by the call to add.  Use a local variable Until
+    // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
       add(svalues[i]);

@@ -911,8 +911,7 @@ public final class TestPlume {
       assert ArraysMDE.any_null(new Object[] {null, o, o}) == true;
       assert ArraysMDE.any_null(new Object[][] {}) == false;
       assert ArraysMDE.any_null(new Object[][] {null}) == true;
-      // Extraneous @Nullable on the following lines are due to CF issue #599:
-      // https://github.com/typetools/checker-framework/issues/599
+      // Extraneous @Nullable on the following lines are due to https://tinyurl.com/cfissue/599
       assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
       assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == true;
       assert ArraysMDE.any_null(

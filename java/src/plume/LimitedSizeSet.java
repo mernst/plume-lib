@@ -93,9 +93,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    // s.values isn't modified by the call to add.  Until
-    // https://github.com/typetools/checker-framework/issues/984 is fixed,
-    // use a local variable which the Checker Framework can tell is not reassigned.
+    // TODO: s.values isn't modified by the call to add.  Use a local variable until
+    // https://tinyurl.com/cfissue/984 is fixed.
     /*@Nullable*/ T[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
       assert svalues[i] != null : "@AssumeAssertion(nullness): used portion of array";
