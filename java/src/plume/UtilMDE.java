@@ -2293,8 +2293,6 @@ public final class UtilMDE {
       s = s.substring(delimpos + 1);
     }
     result_list.add(s);
-    @SuppressWarnings(
-        "nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2320,8 +2318,6 @@ public final class UtilMDE {
       s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
-    @SuppressWarnings(
-        "nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
