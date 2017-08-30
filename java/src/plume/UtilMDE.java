@@ -774,7 +774,7 @@ public final class UtilMDE {
      * @see ClassLoader#defineClass(String,byte[],int,int)
      * @param className the expected binary name of the class to define, or null if not known
      * @param pathname the file from which to load the class
-     * @return the <code>Class</code> object that was created
+     * @return the {@code Class} object that was created
      */
     public Class<?> defineClassFromFile(
         /*@BinaryName*/ String className, String pathname)

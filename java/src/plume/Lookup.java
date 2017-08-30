@@ -18,10 +18,9 @@ import org.checkerframework.checker.regex.qual.*;
 */
 
 /**
- * Lookup searches a set of files, much like <code>grep</code> does. However, Lookup searches by
- * entry (by default, paragraphs) rather than by line, respects comments (ignores matches within
- * them), respects <code>\include</code> directives (searches the named file), and has other
- * features.
+ * Lookup searches a set of files, much like {@code grep} does. However, Lookup searches by entry
+ * (by default, paragraphs) rather than by line, respects comments (ignores matches within them),
+ * respects {@code \include} directives (searches the named file), and has other features.
  *
  * <p>Each search criterion is a keyword or regular expression. Lookup outputs each <em>entry</em>
  * that matches all the search criteria.

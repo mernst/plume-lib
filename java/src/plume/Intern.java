@@ -16,7 +16,7 @@ import org.checkerframework.dataflow.qual.*;
  * returns a single representative object that {@link Object#equals} the object, and the client
  * discards the argument and uses the result instead. Since only one object exists for every set of
  * equal objects, space usage is reduced. Time may also be reduced, since it is possible to use
- * <code>==</code> instead of <code>.equals()</code> for comparisons.
+ * {@code ==} instead of {@code .equals()} for comparisons.
  *
  * <p>Java builds in interning for Strings, but not for other objects. The methods in this class
  * extend interning to all Java objects.
