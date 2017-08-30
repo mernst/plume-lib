@@ -61,7 +61,7 @@ import org.checkerframework.dataflow.qual.*;
  *   clone     -- Clone (check out) all repositories.
  *   checkout  -- Same as clone
  *   pull      -- Pull and update all clones.
- *   update    -- Same as update.
+ *   update    -- Same as pull.
  *   status    -- Show files that are changed but not committed, or committed
  *                but not pushed, or have shelved/stashed changes.
  *   list      -- List the clones/checkouts that this program is aware of.
