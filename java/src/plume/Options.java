@@ -55,12 +55,12 @@ import org.checkerframework.dataflow.qual.*;
  * <p>The main entry point is {@link #parse_or_usage(String[])}. Typical use is:
  * <!-- Example needs some more words of explanation and example command lines. -->
  *
- * <pre>{@code
+ * <pre>
  * import plume.*;
  *
  * public class MyProgram {
  *
- *   &#64;Option("-o <filename> the output file ")
+ *   &#64;Option("-o &lt;filename&gt; the output file ")
  *   public static File outfile = new File("/tmp/foobar");
  *
  *   &#64;Option("-i ignore case")
@@ -77,8 +77,7 @@ import org.checkerframework.dataflow.qual.*;
  *     ...
  *   }
  * }
- *
- * }</pre>
+ * </pre>
  *
  * A user may invoke the program using the command-line arguments {@code -o}, {@code --outfile},
  * {@code -i}, {@code --ignore-case}, and {@code --temperature}.
