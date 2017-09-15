@@ -37,7 +37,10 @@ This is good for modes like Perl, where the parser can get confused."
   '(setq compilation-error-regexp-alist
          (delete 'maven compilation-error-regexp-alist)))
 ;; If I am using Maven, run:
-;; (setq compilation-error-regexp-alist (cons 'maven compilation-error-regexp-alist))
+;; (use-maven-compilation-error-regexp)
+(defun use-maven-compilation-error-regexp ()
+  (interactive)
+  (add-to-list 'compilation-error-regexp-alist 'maven))
 
 ;; Is this necessary when I use the above commented-out line?
 ;; ;; Maven error messages such as:
