@@ -2141,6 +2141,8 @@ or null if it does not exist."
             (file-exists-p (expand-file-name "makefile"))
             (file-exists-p (expand-file-name "GNUmakefile"))))))
 
+;; I would like this to work for shell mode, but I would need to make it run
+;; as part of M-x compile instead of when the mode is set.
 (defun set-compile-command-for-directory ()
   "Returns true if it set the `compile-command' variable.
 Sets the variable to an invocation of \"ant\", \"gradle\", \"mvn\", etc.
