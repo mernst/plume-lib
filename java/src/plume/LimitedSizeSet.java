@@ -136,7 +136,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
-  public @IndexOrHigh("this.values") int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+  public /*@IndexOrHigh("this.values")*/ int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return num_values;
   }
 
