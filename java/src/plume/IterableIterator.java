@@ -65,6 +65,7 @@ public class IterableIterator<T> implements Iterable<T> {
    *
    * @return the iterator
    */
+  @Override
   public Iterator<T> iterator() {
     return iter;
   }

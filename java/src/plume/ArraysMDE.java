@@ -4,13 +4,16 @@
 package plume;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 
@@ -2441,7 +2444,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Byte n = new Byte(a[i]);
+      Byte n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2465,7 +2468,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Character n = new Character(a[i]);
+      Character n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2489,7 +2492,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Float n = new Float(a[i]);
+      Float n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2513,7 +2516,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Short n = new Short(a[i]);
+      Short n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2537,7 +2540,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to add the last element,
       // but that would make the code much less readable.
-      Integer n = new Integer(a[i]);
+      Integer n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2562,7 +2565,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
       // but that would make the code much less readable.
-      Double n = new Double(a[i]);
+      Double n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2586,7 +2589,7 @@ public final class ArraysMDE {
     for (int i = 0; i < a.length; i++) {
       // Could be optimized not to create the last element,
       // but that would make the code much less readable.
-      Long n = new Long(a[i]);
+      Long n = a[i];
       if (hs.contains(n)) {
         return false;
       }
@@ -2818,11 +2821,11 @@ public final class ArraysMDE {
     Set<Long> setBigger = new HashSet<Long>();
 
     for (int i = 0; i < bigger.length; i++) {
-      setBigger.add(new Long(bigger[i]));
+      setBigger.add(bigger[i]);
     }
 
     for (int i = 0; i < smaller.length; i++) {
-      Long elt = new Long(smaller[i]);
+      Long elt = smaller[i];
       if (!setBigger.contains(elt)) {
         return false;
       }
@@ -2850,11 +2853,11 @@ public final class ArraysMDE {
     Set<Double> setBigger = new HashSet<Double>();
 
     for (int i = 0; i < bigger.length; i++) {
-      setBigger.add(new Double(bigger[i]));
+      setBigger.add(bigger[i]);
     }
 
     for (int i = 0; i < smaller.length; i++) {
-      Double elt = new Double(smaller[i]);
+      Double elt = smaller[i];
       if (!setBigger.contains(elt)) {
         return false;
       }
@@ -2903,8 +2906,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()} (which tests reference equality).
    */
   public static final class IntArrayComparatorLexical implements Comparator<int[]>, Serializable {
     static final long serialVersionUID = 20150812L;
@@ -2918,6 +2921,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(int[] a1, int[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2937,8 +2941,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()} (which tests reference equality).
    */
   public static final class LongArrayComparatorLexical implements Comparator<long[]>, Serializable {
     static final long serialVersionUID = 20150812L;
@@ -2952,6 +2956,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(long[] a1, long[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2971,8 +2976,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()} (which tests reference equality).
    */
   public static final class DoubleArrayComparatorLexical
       implements Comparator<double[]>, Serializable {
@@ -2987,6 +2992,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3007,8 +3013,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical Strings).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()}.
    */
   public static final class StringArrayComparatorLexical
       implements Comparator<String[]>, Serializable {
@@ -3029,6 +3035,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ String[] a1, /*@PolyAll*/ String[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3058,8 +3065,8 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain identical elemetns but are not equal according
+   * to {@code equals()} (which tests reference equality).
    */
   public static final class ComparableArrayComparatorLexical<T extends Comparable<T>>
       implements Comparator<T[]>, Serializable {
@@ -3080,6 +3087,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3114,8 +3122,12 @@ public final class ArraysMDE {
    * lengths differ, then the shorter array is considered less.
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain equal objects but are not equal according to
+   * {@code equals()}.
+   *
+   * <p>Note: if toString returns a nondeterministic value, such as one that depends on the result
+   * of {@code hashCode()}, then this comparator may yield different orderings from run to run of a
+   * program.
    */
   public static final class ObjectArrayComparatorLexical
       implements Comparator<Object[]>, Serializable {
@@ -3136,31 +3148,17 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
       }
       int len = Math.min(a1.length, a2.length);
       for (int i = 0; i < len; i++) {
-        Object elt1 = a1[i];
-        Object elt2 = a2[i];
-        // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null)) {
-          continue;
-        }
-        if (elt1 == null) {
-          return -1;
-        }
-        if (elt2 == null) {
-          return 1;
-        }
-        int tmp = elt1.hashCode() - elt2.hashCode();
+        int tmp = objectComparator.compare(a1[i], a2[i]);
         if (tmp != 0) {
           return tmp;
         }
-        // I'm counting on the fact that hashCode returns a different
-        // number for each Object in the system.  This checks that assumption.
-        assert elt1.equals(elt2);
       }
       return a1.length - a2.length;
     }
@@ -3171,8 +3169,8 @@ public final class ArraysMDE {
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()}.
    */
   public static final class IntArrayComparatorLengthFirst
       implements Comparator<int[]>, Serializable {
@@ -3187,6 +3185,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(int[] a1, int[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3208,8 +3207,8 @@ public final class ArraysMDE {
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical numbers).
+   * That is, it may return 0 if the arrays contain identical numbers but are not equal according to
+   * {@code equals()}.
    */
   public static final class LongArrayComparatorLengthFirst
       implements Comparator<long[]>, Serializable {
@@ -3224,6 +3223,7 @@ public final class ArraysMDE {
      *     argument is less than, equal to, or greater than the second argument
      */
     /*@Pure*/
+    @Override
     public int compare(long[] a1, long[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3245,8 +3245,8 @@ public final class ArraysMDE {
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain identical objects but are not equal according to
+   * {@code equals()}.
    */
   public static final class ComparableArrayComparatorLengthFirst<T extends Comparable<T>>
       implements Comparator<T[]>, Serializable {
@@ -3267,6 +3267,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3298,13 +3299,19 @@ public final class ArraysMDE {
     }
   }
 
+  private static final UtilMDE.ObjectComparator objectComparator = new UtilMDE.ObjectComparator();
+
   /**
    * Compare two arrays first by length (a shorter array is considered less), and if of equal length
    * compare lexically (element-by-element).
    *
    * <p>Note: this comparator imposes orderings that are inconsistent with {@link Object#equals}.
-   * That is, it may return 0 if the arrays are not equal according to {@code equals()} (but do
-   * contain identical objects).
+   * That is, it may return 0 if the arrays contain identical objects but are not equal according to
+   * {@code equals()}.
+   *
+   * <p>Note: if toString returns a nondeterministic value, such as one that depends on the result
+   * of {@code hashCode()}, then this comparator may yield different orderings from run to run of a
+   * program.
    */
   public static final class ObjectArrayComparatorLengthFirst
       implements Comparator<Object[]>, Serializable {
@@ -3325,6 +3332,7 @@ public final class ArraysMDE {
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    @Override
     public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3333,25 +3341,10 @@ public final class ArraysMDE {
         return a1.length - a2.length;
       }
       for (int i = 0; i < a1.length; i++) {
-        Object elt1 = a1[i];
-        Object elt2 = a2[i];
-        // Make null compare smaller than anything else
-        if ((elt1 == null) && (elt2 == null)) {
-          continue;
-        }
-        if (elt1 == null) {
-          return -1;
-        }
-        if (elt2 == null) {
-          return 1;
-        }
-        int tmp = elt1.hashCode() - elt2.hashCode();
+        int tmp = objectComparator.compare(a1[i], a2[i]);
         if (tmp != 0) {
           return tmp;
         }
-        // I'm counting on the fact that hashCode returns a different
-        // number for each Object in the system.  This checks that assumption.
-        assert elt1.equals(elt2);
       }
       return 0;
     }
@@ -3421,6 +3414,154 @@ public final class ArraysMDE {
       }
     }
     return true;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  /// Partitioning
+  ///
+
+  /**
+   * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
+   * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
+   * of such partitionings.
+   *
+   * @param <T> type of items to be partitioned
+   * @param elts items to be partitioned
+   * @param k number of subsets into which to partition {@code elts}
+   * @return a list of partitionings, where each contains exactly k subsets
+   */
+  public static <T> List<Partitioning<T>> partitionInto(Collection<T> elts, int k) {
+    return partitionInto(new LinkedList<T>(elts), k);
+  }
+
+  /**
+   * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
+   * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
+   * of such partitionings.
+   *
+   * @param <T> type of items to be partitioned
+   * @param elts items to be partitioned
+   * @param k number of subsets into which to partition {@code elts}
+   * @return a list of partitionings, where each contains exactly k subsets
+   */
+  public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, int k) {
+    if (elts.size() < k) {
+      throw new IllegalArgumentException();
+    }
+    return partitionIntoHelper(elts, Arrays.asList(new Partitioning<T>()), k, 0);
+  }
+
+  /**
+   * Returns a set of partitionings, each of size numEmptyParts + numNonemptyParts. A helper method
+   * for {@link #partitionInto}.
+   *
+   * @param <T> type of items to be partitioned
+   * @param elts the elements that remain to be added to the partitionings
+   * @param resultSoFar a list of partitionings, each of which has numNonemptyParts parts
+   * @param numEmptyParts the number of partitions in the partitioning that are empty so far
+   * @param numNonemptyParts the number of partitions in the partitioning that have at least one
+   *     member so far
+   * @return a list of partitionings, where each contains exactly k subsets
+   */
+  public static <T> List<Partitioning<T>> partitionIntoHelper(
+      Queue<T> elts, List<Partitioning<T>> resultSoFar, int numEmptyParts, int numNonemptyParts) {
+
+    if (numEmptyParts > elts.size()) {
+      throw new IllegalArgumentException(numEmptyParts + " > " + elts.size());
+    }
+
+    if (elts.isEmpty()) {
+      return resultSoFar;
+    }
+
+    Queue<T> eltsRemaining = new LinkedList<T>(elts);
+    T elt = eltsRemaining.remove();
+
+    List<Partitioning<T>> result = new ArrayList<Partitioning<T>>();
+
+    // Put elt in an existing part in the partitioning.
+    if (elts.size() > numEmptyParts) {
+      List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
+      for (int i = 0; i < numNonemptyParts; i++) {
+        for (Partitioning<T> p : resultSoFar) {
+          resultSoFar_augmented.add(p.addToPart(i, elt));
+        }
+      }
+      result.addAll(
+          partitionIntoHelper(
+              eltsRemaining, resultSoFar_augmented, numEmptyParts, numNonemptyParts));
+    }
+
+    // Put elt in a newly-created part in the partitioning.
+    if (numEmptyParts > 0) {
+      List<T> part = newArrayList(elt);
+      List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
+      for (Partitioning<T> p : resultSoFar) {
+        resultSoFar_augmented.add(p.addToPart(numNonemptyParts, elt));
+      }
+      result.addAll(
+          partitionIntoHelper(
+              eltsRemaining, resultSoFar_augmented, numEmptyParts - 1, numNonemptyParts + 1));
+    }
+
+    return result;
+  }
+
+  static class Partitioning<T> extends ArrayList<ArrayList<T>> {
+
+    static final long serialVersionUID = 20170418;
+
+    /** Empty constructor. */
+    Partitioning() {}
+
+    /** Copy constructor. */
+    Partitioning(Partitioning<T> other) {
+      super(other);
+    }
+
+    /** The set that has being partitioned. */
+    List<T> partitionedSet() {
+      List<T> result = new ArrayList<T>();
+      for (List<T> part : this) {
+        result.addAll(part);
+      }
+      return result;
+    }
+
+    /** True if this is a partition for {@code elts}. */
+    boolean isPartitioningFor(List<T> elts) {
+      // Inefficient O(n^2) implementation.  We can do O(n log n) if desired.
+      List<T> ps = partitionedSet();
+      return ps.size() == elts.size() && ps.containsAll(elts);
+    }
+
+    /** Returns a new partition just like this one, but with elt added to the ith part. */
+    Partitioning<T> addToPart(int i, T elt) {
+      Partitioning<T> result = new Partitioning<T>(this);
+      if (size() == i) {
+        ArrayList<T> newPart = newArrayList(elt);
+        result.add(newPart);
+      } else {
+        ArrayList<T> newPart = new ArrayList<T>(result.get(i));
+        newPart.add(elt);
+        result.set(i, newPart);
+      }
+      return result;
+    }
+  }
+
+  /** Return a singleton ArrayList containing the given element. */
+  private static <T> ArrayList<T> newArrayList(T elt) {
+    ArrayList<T> result = new ArrayList<T>(1);
+    result.add(elt);
+    return result;
+  }
+
+  /** Return a singleton LinkedList containing the given element. */
+  private static <T> LinkedList<T> newLinkedList(T elt) {
+    LinkedList<T> result = new LinkedList<T>();
+    result.add(elt);
+    return result;
   }
 
   ///////////////////////////////////////////////////////////////////////////

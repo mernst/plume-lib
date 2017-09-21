@@ -338,6 +338,7 @@ public class FuzzyFloat {
      * @return positive if o1 &gt; 02, 0 if o1 == o2, negative if o1 &lt; o2
      */
     /*@Pure*/
+    @Override
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2) {
         return 0;

@@ -41,15 +41,15 @@
         (insert "\n")
         (delete-blank-lines)
         (insert "\n" (date-string) "\n")))
-  (if (looking-back "-[0-9][0-9][0-9][0-9]\n?")
+  (if (looking-back "-[0-9][0-9][0-9][0-9]\n?" (- (point) 6))
       (delete-region (match-beginning 0) (point)))
-  (if (looking-back "[0-9][0-9][0-9][0-9]\n")
+  (if (looking-back "[0-9][0-9][0-9][0-9]\n" (- (point) 5))
       (backward-char))
   (if (not (looking-back (rounded-current-time-string)))
       (progn
-        (if (looking-back "\n[0-9][0-9][0-9][0-9]")
+        (if (looking-back "\n[0-9][0-9][0-9][0-9]" (- (point) 5))
             (insert "-"))
-        (if (not (looking-back "[-\n]"))
+        (if (not (looking-back "[-\n]" (- (point) 1)))
             (insert "\n"))
         (insert (rounded-current-time-string))))
   (message (current-time-string)))
@@ -152,7 +152,7 @@
       (forward-line 1))
     (if (not first-day)
         (error "Didn't find any days in region"))
-    (if (not (looking-back "\n\n"))
+    (if (not (looking-back "\n\n" (- (point) 2)))
         (insert "\n"))
     (insert (format (concat
                      "Week of %s-%s:\n"

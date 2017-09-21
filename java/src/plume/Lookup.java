@@ -1,5 +1,6 @@
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static plume.EntryReader.Entry;
 
 import java.io.BufferedReader;
@@ -17,10 +18,9 @@ import org.checkerframework.checker.regex.qual.*;
 */
 
 /**
- * Lookup searches a set of files, much like <code>grep</code> does. However, Lookup searches by
- * entry (by default, paragraphs) rather than by line, respects comments (ignores matches within
- * them), respects <code>\include</code> directives (searches the named file), and has other
- * features.
+ * Lookup searches a set of files, much like {@code grep} does. However, Lookup searches by entry
+ * (by default, paragraphs) rather than by line, respects comments (ignores matches within them),
+ * respects {@code \include} directives (searches the named file), and has other features.
  *
  * <p>Each search criterion is a keyword or regular expression. Lookup outputs each <em>entry</em>
  * that matches all the search criteria.
@@ -208,7 +208,7 @@ public final class Lookup {
   private static final String lineSep = System.getProperty("line.separator");
 
   /** One line synopsis of usage. */
-  private static String usage_string = "lookup [options] <keyword> ...";
+  private static final String usage_string = "lookup [options] <keyword> ...";
 
   /**
    * Look for the specified keywords in the file(s) and print the corresponding entries.
@@ -229,7 +229,7 @@ public final class Lookup {
         System.out.println("Unable to find resource 'lookup.txt' with help text.");
         System.exit(1);
       }
-      BufferedReader help_stream = new BufferedReader(new InputStreamReader(is));
+      BufferedReader help_stream = new BufferedReader(new InputStreamReader(is, UTF_8));
       String line = help_stream.readLine();
       while (line != null) {
         System.out.println(line);

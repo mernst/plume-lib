@@ -29,24 +29,26 @@ The mapping is created by the javadoc-index-to-alist program.")
     "public" "return" "short" "static" "super" "switch" "synchronized"
     "throw" "throws" "transient" "try" "void" "volatile" "while"))
 
-(defun javadoc-lookup (id)
-  "Visit, via WWW browser, Javadoc documentation for a Java class or method."
-  (interactive
+(defun javadoc-read-id ()
+  "Read a string identifier for a Java class or method."
    ;; Setting completion-ignore-case to t is tempting, because Java code
    ;; has strange capitalization.  When using an unpatched version of
    ;; partial completion (from the Emacs 22 pre-test as of June, 2006),
    ;; there are negative consequences, such as typing "Iterato" and having
    ;; it complete to "iterator".  But my fixes correct that.
-   (list (let ((completion-ignore-case t))
-           (completing-read "Javadoc for: " javadoc-html-refs nil
-                            t ; require match
-                            (let* ((raw-guess (current-word))
-                                   (guess (if (or (null raw-guess)
-                                                  (member raw-guess java-keywords))
-                                              ""
-                                            raw-guess))
-                                   (try (try-completion guess javadoc-html-refs)))
-                              (if (eq try t) guess try))))))
+  (let ((completion-ignore-case t))
+    (completing-read "Javadoc for: " javadoc-html-refs nil
+		     t			; require match
+		     (let* ((raw-guess (current-word))
+			    (guess (if (or (null raw-guess)
+					   (member raw-guess java-keywords))
+				       ""
+				     raw-guess))
+			    (try (try-completion guess javadoc-html-refs)))
+		       (if (eq try t) guess try)))))
+
+(defun javadoc-get-url (id)
+  "Determine a URL for Javadoc documentation for a Java class or method."
   (let* ((refs (cdr (or (assoc id javadoc-html-refs)
                         ;; If exact match failed, try case-insensitive
                         (assoc-string id javadoc-html-refs t))))
@@ -66,7 +68,26 @@ The mapping is created by the javadoc-index-to-alist program.")
                                            (try-completion "" refs-as-lists))))
                   (cdr (or (assoc choice refs-as-lists)
                            (assoc-string choice refs-as-lists t)))))))
+    ref))
+
+(defun javadoc-lookup (id)
+  "Visit, via WWW browser, Javadoc documentation for a Java class or method."
+  (interactive (list (javadoc-read-id)))
+  (let ((ref (javadoc-get-url id)))
     (funcall browse-url-browser-function ref)))
+
+(defun java-insert-import (id)
+  "Insert an import statement for a Java class."
+  (interactive (list (javadoc-read-id)))
+  (let ((ref (javadoc-get-url id)))
+    (let ((class (ref-to-class ref)))
+      (save-excursion
+	(goto-char (point-min))
+	(or (re-search-forward "^import\\b\\|^class\\b\\|^public\\b\\|^static\\b\\|^@SuppressWarnings\\b" nil t)
+	    (re-search-forward "^/\\*" nil t))
+	(beginning-of-line)
+	(insert "import " class ";\n")))))
+(fset 'jimport 'java-insert-import)
 
 (defun ref-to-class (str)
   "Given \"java/math/BigInteger.html#abs()\", return \"java.math.BigInteger.abs()\"."

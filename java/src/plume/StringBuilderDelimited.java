@@ -58,18 +58,21 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
+  @Override
   public StringBuilderDelimited append(char c) {
     appendDelimiter();
     delegate.append(c);
     return this;
   }
 
+  @Override
   public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq) {
     appendDelimiter();
     delegate.append(csq);
     return this;
   }
 
+  @Override
   public StringBuilderDelimited append(
       /*@Nullable*/ CharSequence csq,
       /*@ IndexFor("#1")*/ int start,
@@ -79,22 +82,24 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
+  @Override
   public char charAt(/*@ IndexFor("this")*/ int index) {
     return delegate.charAt(index);
   }
 
   /*@Pure*/
-  @SuppressWarnings("index") // Index TODO: issue 80 (needs string support)
+  @Override
   public /*@NonNegative*/ int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
 
-  public CharSequence subSequence(
-      /*@ IndexFor("this")*/ int start, /*@ IndexFor("this")*/ int end) {
+  @Override
+  public CharSequence subSequence(/*@IndexFor("this")*/ int start, /*@IndexFor("this")*/ int end) {
     return delegate.subSequence(start, end);
   }
 
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.toString();
   }

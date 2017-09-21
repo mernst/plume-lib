@@ -1,5 +1,7 @@
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -65,6 +67,7 @@ import org.checkerframework.checker.regex.qual.*;
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
  */
+@SuppressWarnings("IterableAndIterator")
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
 
   ///
@@ -252,7 +255,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       String filename,
       /*@Nullable*/ /*@Regex*/ String comment_re_string,
       /*@Nullable*/ /*@Regex(1)*/ String include_re_string) {
-    this(new InputStreamReader(in), filename, comment_re_string, include_re_string);
+    this(new InputStreamReader(in, UTF_8), filename, comment_re_string, include_re_string);
   }
 
   /**
@@ -635,7 +638,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       // Remove entry match from the line
       if (entry_match.groupCount() > 0) {
         @SuppressWarnings(
-            "nullness") // dependent: just checked that group 1 exists via groupCount(); https://code.google.com/p/checker-framework/issues/detail?id=291
+            "nullness") // dependent: just checked that group 1 exists via groupCount(); https://tinyurl.com/cfissue/291
         /*@NonNull*/ String match_group_1 = entry_match.group(1);
         line = entry_match.replaceFirst(match_group_1);
       }

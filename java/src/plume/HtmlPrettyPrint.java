@@ -15,6 +15,10 @@ import org.xml.sax.helpers.XMLReaderFactory;
  *
  * <pre>{@code java plume.HtmlPrettyPrint file.html > filepp.html}</pre>
  */
+// XMLReaderFactory has been deprecated in favor of SAXParserFactory.
+// However, it's not clear that the old, but solid, XOM library will be
+// upgraded accordingly.  So, ignore the deprecation warnings for now.
+@SuppressWarnings("deprecation")
 public final class HtmlPrettyPrint {
 
   /** This class is a collection of methods; it does not represent anything. */

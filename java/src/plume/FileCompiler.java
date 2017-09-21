@@ -18,7 +18,7 @@ import org.checkerframework.checker.regex.qual.*;
 
 /**
  * This class has method {@link #compileFiles(List)} that compiles Java source files. It invokes a
- * user-specified external command, such as <code>javac</code> or <code>jikes</code>.
+ * user-specified external command, such as {@code javac} or {@code jikes}.
  */
 public final class FileCompiler {
 

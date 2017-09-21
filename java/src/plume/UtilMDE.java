@@ -3,6 +3,10 @@
 
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -12,7 +16,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +32,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -267,7 +273,7 @@ public final class UtilMDE {
     InputStream in = new FileInputStream(file);
     InputStreamReader file_reader;
     if (charsetName == null) {
-      file_reader = new InputStreamReader(in);
+      file_reader = new InputStreamReader(in, UTF_8);
     } else {
       file_reader = new InputStreamReader(in, charsetName);
     }
@@ -429,14 +435,16 @@ public final class UtilMDE {
   // Question:  should this be rewritten as a wrapper around bufferedFileOutputStream?
   public static BufferedWriter bufferedFileWriter(String filename, boolean append)
       throws IOException {
-    Writer file_writer;
     if (filename.endsWith(".gz")) {
-      file_writer =
-          new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(filename, append)));
+      return new BufferedWriter(
+          new OutputStreamWriter(
+              new GZIPOutputStream(new FileOutputStream(filename, append)), UTF_8));
     } else {
-      file_writer = new FileWriter(filename, append);
+      return Files.newBufferedWriter(
+          Paths.get(filename),
+          UTF_8,
+          append ? new StandardOpenOption[] {CREATE, APPEND} : new StandardOpenOption[] {CREATE});
     }
-    return new BufferedWriter(file_writer);
   }
 
   /**
@@ -769,7 +777,7 @@ public final class UtilMDE {
      * @see ClassLoader#defineClass(String,byte[],int,int)
      * @param className the expected binary name of the class to define, or null if not known
      * @param pathname the file from which to load the class
-     * @return the <code>Class</code> object that was created
+     * @return the {@code Class} object that was created
      */
     public Class<?> defineClassFromFile(
         /*@BinaryName*/ String className, String pathname)
@@ -854,6 +862,24 @@ public final class UtilMDE {
       }
     }
     return count;
+  }
+
+  /**
+   * Return the contents of the file, as a list of strings, one per line.
+   *
+   * @param filename the file whose contents to return
+   * @return the contents of {@code filename}, one string per line
+   * @throws IOException if there was a problem reading the file
+   */
+  public static List<String> fileLines(String filename) throws IOException {
+    List<String> textList = new ArrayList<>();
+    try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        textList.add(line);
+      }
+    }
+    return textList;
   }
 
   /**
@@ -1086,6 +1112,7 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public boolean accept(File dir, String name) {
       return name.startsWith(prefix) && name.endsWith(suffix);
     }
@@ -1102,7 +1129,7 @@ public final class UtilMDE {
   public static File expandFilename(File name) {
     String path = name.getPath();
     String newname = expandFilename(path);
-    @SuppressWarnings("interning")
+    @SuppressWarnings({"interning", "ReferenceEquality"})
     boolean changed = (newname != path);
     if (changed) {
       return new File(newname);
@@ -1244,7 +1271,7 @@ public final class UtilMDE {
   public static void writeFile(File file, String contents) {
 
     try {
-      FileWriter writer = new FileWriter(file);
+      Writer writer = Files.newBufferedWriter(file.toPath(), UTF_8);
       writer.write(contents, 0, contents.length());
       writer.close();
     } catch (Exception e) {
@@ -1498,14 +1525,17 @@ public final class UtilMDE {
       this.e = e;
     }
 
+    @Override
     public boolean hasNext() {
       return e.hasMoreElements();
     }
 
+    @Override
     public T next() {
       return e.nextElement();
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1519,10 +1549,12 @@ public final class UtilMDE {
       this.itor = itor;
     }
 
+    @Override
     public boolean hasMoreElements() {
       return itor.hasNext();
     }
 
+    @Override
     public T nextElement() {
       return itor.next();
     }
@@ -1542,10 +1574,12 @@ public final class UtilMDE {
       this.itor2 = itor2_;
     }
 
+    @Override
     public boolean hasNext() {
       return (itor1.hasNext() || itor2.hasNext());
     }
 
+    @Override
     public T next() {
       if (itor1.hasNext()) {
         return itor1.next();
@@ -1556,6 +1590,7 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1577,6 +1612,7 @@ public final class UtilMDE {
     // an empty iterator to prime the pump
     Iterator<T> current = new ArrayList<T>().iterator();
 
+    @Override
     public boolean hasNext() {
       while ((!current.hasNext()) && (itorOfItors.hasNext())) {
         current = itorOfItors.next();
@@ -1584,11 +1620,13 @@ public final class UtilMDE {
       return current.hasNext();
     }
 
+    @Override
     public T next() {
       hasNext(); // for side effect
       return current.next();
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1611,6 +1649,7 @@ public final class UtilMDE {
     T current = invalid_t;
     boolean current_valid = false;
 
+    @Override
     public boolean hasNext() {
       while ((!current_valid) && itor.hasNext()) {
         current = itor.next();
@@ -1619,6 +1658,7 @@ public final class UtilMDE {
       return current_valid;
     }
 
+    @Override
     public T next() {
       if (hasNext()) {
         current_valid = false;
@@ -1631,6 +1671,7 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1661,10 +1702,12 @@ public final class UtilMDE {
       }
     }
 
+    @Override
     public boolean hasNext() {
       return itor.hasNext();
     }
 
+    @Override
     public T next() {
       if (!itor.hasNext()) {
         throw new NoSuchElementException();
@@ -1693,6 +1736,7 @@ public final class UtilMDE {
       return current;
     }
 
+    @Override
     public void remove() {
       throw new UnsupportedOperationException();
     }
@@ -1781,7 +1825,7 @@ public final class UtilMDE {
     } else {
       new_total = old.intValue() + count;
     }
-    return m.put(key, new Integer(new_total));
+    return m.put(key, new_total);
   }
 
   /**
@@ -2187,6 +2231,24 @@ public final class UtilMDE {
     return baos.toString();
   }
 
+  /**
+   * Reads all lines from the stream and returns them in a {@code List<String>}.
+   *
+   * @param stream the stream to read from
+   * @return the list of lines read from the stream
+   * @throws IOException if there is an error reading from the stream
+   */
+  public static List<String> streamLines(InputStream stream) throws IOException {
+    List<String> outputLines = new ArrayList<>();
+    try (BufferedReader rdr = new BufferedReader(new InputStreamReader(stream, UTF_8))) {
+      String line;
+      while ((line = rdr.readLine()) != null) {
+        outputLines.add(line);
+      }
+    }
+    return outputLines;
+  }
+
   ///////////////////////////////////////////////////////////////////////////
   /// String
   ///
@@ -2234,8 +2296,6 @@ public final class UtilMDE {
       s = s.substring(delimpos + 1);
     }
     result_list.add(s);
-    @SuppressWarnings(
-        "nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2261,8 +2321,6 @@ public final class UtilMDE {
       s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
-    @SuppressWarnings(
-        "nullness:new.array.type.invalid") // Checker Framework bug: issue 153 (also @NonNull annotation on next line)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2286,6 +2344,8 @@ public final class UtilMDE {
   /**
    * Concatenate the string representations of the array elements, placing the delimiter between
    * them.
+   *
+   * <p>If you are using Java 8 or later, then use the {@code String.join()} method instead.
    *
    * @see plume.ArraysMDE#toString(int[])
    * @param a array of values to concatenate
@@ -2323,22 +2383,22 @@ public final class UtilMDE {
    * Concatenate the string representations of the objects, placing the delimiter between them.
    *
    * @see java.util.AbstractCollection#toString()
-   * @param v list of values to concatenate
+   * @param v collection of values to concatenate
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter
    *     between
    */
-  public static String join(List<?> v, String delim) {
-    if (v.size() == 0) {
-      return "";
-    }
-    if (v.size() == 1) {
-      return Objects.toString(v.get(0));
-    }
-    // This should perhaps use an iterator rather than get(), for efficiency.
-    StringBuffer sb = new StringBuffer(Objects.toString(v.get(0)));
-    for (int i = 1; i < v.size(); i++) {
-      sb.append(delim).append(v.get(i));
+  public static String join(Iterable<? extends Object> v, String delim) {
+    StringBuffer sb = new StringBuffer();
+    boolean first = true;
+    Iterator<?> itor = v.iterator();
+    while (itor.hasNext()) {
+      if (first) {
+        first = false;
+      } else {
+        sb.append(delim);
+      }
+      sb.append(itor.next());
     }
     return sb.toString();
   }
@@ -2754,6 +2814,7 @@ public final class UtilMDE {
     static final long serialVersionUID = 20150812L;
 
     /*@Pure*/
+    @Override
     public int compare(String s1, String s2) {
       if (s1 == null && s2 == null) {
         return 0;
@@ -2764,6 +2825,44 @@ public final class UtilMDE {
       if (s1 != null && s2 == null) {
         return -1;
       }
+      return s1.compareTo(s2);
+    }
+  }
+
+  // This could test the types of the elemets, and do something more sophisticated based on the
+  // types.
+  /**
+   * Attempt to order Objects. Puts null at the beginning. Returns 0 for equal elements. Otherwise,
+   * orders by the result of {@code toString()}.
+   *
+   * <p>Note: if toString returns a nondeterministic value, such as one that depends on the result
+   * of {@code hashCode()}, then this comparator may yield different orderings from run to run of a
+   * program.
+   */
+  public static class ObjectComparator implements Comparator</*@Nullable*/ Object>, Serializable {
+    static final long serialVersionUID = 20170420L;
+
+    @SuppressWarnings(
+        "purity.not.deterministic.call") // toString is being used in a deterministic way
+    /*@Pure*/
+    @Override
+    public int compare(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
+      // Make null compare smaller than anything else
+      if ((o1 == o2)) {
+        return 0;
+      }
+      if (o1 == null) {
+        return -1;
+      }
+      if (o2 == null) {
+        return 1;
+      }
+      if (o1.equals(o2)) {
+        return 0;
+      }
+      // Don't compare output of hashCode() because it is non-deterministic from run to run.
+      String s1 = o1.toString();
+      String s2 = o2.toString();
       return s1.compareTo(s2);
     }
   }
@@ -3104,7 +3203,7 @@ public final class UtilMDE {
       ArrayList<ArrayList<Integer>> combos = create_combinations(arity - 1, i, cnt);
       for (ArrayList<Integer> li : combos) {
         ArrayList<Integer> simple = new ArrayList<Integer>();
-        simple.add(new Integer(i));
+        simple.add(i);
         simple.addAll(li);
         results.add(simple);
       }

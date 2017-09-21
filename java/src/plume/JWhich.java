@@ -45,25 +45,23 @@ import org.checkerframework.checker.nullness.qual.*;
 // class appears at the beginning of the real classpath.
 
 /**
- * <code>JWhich</code> is a utility that takes a Java class name and displays the absolute pathname
- * of the class file that would be loaded first by the class loader, as prescribed by the class
- * path.
+ * {@code JWhich} is a utility that takes a Java class name and displays the absolute pathname of
+ * the class file that would be loaded first by the class loader, as prescribed by the class path.
  *
- * <p><code>JWhich</code> also validates the class path and reports any non-existent or invalid
- * class path entries.
+ * <p>{@code JWhich} also validates the class path and reports any non-existent or invalid class
+ * path entries.
  *
- * <p>Usage is similar to the UNIX <code>which</code> command.
+ * <p>Usage is similar to the UNIX {@code which} command.
  *
  * <p>Example uses:
  *
  * <blockquote>
  *
- * To find the absolute pathname of <code>MyClass.class</code> not in a package:
+ * To find the absolute pathname of {@code MyClass.class} not in a package:
  *
  * <pre>java JWhich MyClass</pre>
  *
- * To find the absolute pathname of <code>MyClass.class</code> in the <code>my.package</code>
- * package:
+ * To find the absolute pathname of {@code MyClass.class} in the {@code my.package} package:
  *
  * <pre>java JWhich my.package.MyClass</pre>
  *
@@ -127,8 +125,7 @@ public final class JWhich {
   /**
    * Validates the class path and reports any non-existent or invalid class path entries.
    *
-   * <p>Valid class path entries include directories, <code>.zip</code> files, and <code>.jar</code>
-   * files.
+   * <p>Valid class path entries include directories, {@code .zip} files, and {@code .jar} files.
    */
   /*@EnsuresNonNull("CLASSPATH")*/
   public static void validate() {

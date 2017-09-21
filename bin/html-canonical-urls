@@ -16,7 +16,7 @@
 # broken link.
 # 2nd Eclipse Technology Exchange Workshop (eTX) http://www.comlab.ox.ac.uk/people/oege.demoor/etxpage/eclipse.html
 36th International Conference on Very Large Data Bases http://vldb2010.org/
-AADEBUG 2003 http://aadebug2003.elis.rug.ac.be/
+AADEBUG 2003 http://aadebug2003.elis.ugent.be/
 #OLD: ACM SIGPLAN Notices http://portal.acm.org/sigplan/newsletter/
 ACM SIGPLAN Notices http://dl.acm.org/citation.cfm?id=J706
 Adam Kiezun http://people.csail.mit.edu/akiezun/
@@ -83,7 +83,7 @@ ECOOP 2004 http://www.ifi.uio.no/ecoop2004/
 ECOOP 2008 https://ecoop08.cs.ucy.ac.cy/
 # Webpage works, but link checker gives 500 error that I can't figure out how to resolve:
 # Edward X. Wu https://www.edwardxwu.com/
-Elizabeth L. Wilmer https://new.oberlin.edu/arts-and-sciences/departments/mathematics/faculty_detail.dot?id=21297
+Elizabeth L. Wilmer https://www.oberlin.edu/elizabeth-wilmer
 Elwyn Berlekamp https://math.berkeley.edu/~berlek/
 Emina Torlak https://homes.cs.washington.edu/~emina/
 Erik Poll http://www.cs.ru.nl/~erikpoll/
@@ -113,9 +113,13 @@ Hao Lü https://www.linkedin.com/in/hao-lu-86704177
 ICSE 2000 http://web.archive.org/web/20160405001534/http://www3.ul.ie/~icse2000/
 # ICSE 2001 http://www.cs.uvic.ca/icse2001/
 ICSE 2001 http://www.icse-conferences.org/2001/
+ICSE 2003 http://www.icse-conferences.org/2003/
 ICSE'03 http://www.icse-conferences.org/2003/
+ICSE 2004 http://www.icse-conferences.org/2004/
 ICSE'04 http://www.icse-conferences.org/2004/
+ICSE 2005 http://www.icse-conferences.org/2005/Home/
 ICSE'05 http://www.icse-conferences.org/2005/Home/
+ICSE 2007 http://www.cs.ucl.ac.uk/icse07/
 ICSE'07 http://www.cs.ucl.ac.uk/icse07/
 ICSM 2001 http://www.dsi.unifi.it/icsm2001/
 ICSM 2004 http://www.cs.iit.edu/~icsm2004/
@@ -157,7 +161,8 @@ Lilian Burdy http://www-sop.inria.fr/everest/personnel/Lilian.Burdy/
 Magdalena Balazinska http://www.cs.washington.edu/people/faculty/magda/
 Mahmood Ali: http://www.notnoop.com/
 Mahmut Kandemir http://www.cse.psu.edu/~mtk2/
-Manos Renieris http://cs.brown.edu/~er/
+# Manos Renieris http://cs.brown.edu/~er/
+Manos Renieris https://www.linkedin.com/in/manos-renieris-99b5531
 Marcelo d'Amorim http://www.cin.ufpe.br/~damorim/
 Martin Rinard http://people.csail.mit.edu/rinard/
 #Deceased: Mary Jean Harrold http://www.cc.gatech.edu/~harrold/
@@ -194,7 +199,7 @@ PASTE 2005 http://homes.cs.washington.edu/~mernst/meetings/paste2005/
 Paul Vines http://homes.cs.washington.edu/~plvines/
 Paulo Barros http://www.cin.ufpe.br/~pbsf/
 Pavel Panchekha https://pavpanchekha.com/
-Peter Müller http://www.pm.inf.ethz.ch/
+Peter Müller http://www.pm.inf.ethz.ch/people/person-detail.html?persid=112017
 Philip J. Guo http://www.pgbovine.net/
 Philip Jia Guo http://www.pgbovine.net/
 Philip Koopman http://users.ece.cmu.edu/~koopman/

@@ -40,7 +40,7 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <ul>
  *   <li>parses command-line options and sets fields in your program accordingly,
- *   <li>creates usage messages (such as printed by a <code>--help</code> option), and
+ *   <li>creates usage messages (such as printed by a {@code --help} option), and
  *   <li>creates documentation suitable for a manual or manpage.
  * </ul>
  *
@@ -55,12 +55,12 @@ import org.checkerframework.dataflow.qual.*;
  * <p>The main entry point is {@link #parse_or_usage(String[])}. Typical use is:
  * <!-- Example needs some more words of explanation and example command lines. -->
  *
- * <pre>{@code
+ * <pre>
  * import plume.*;
  *
  * public class MyProgram {
  *
- *   &#64;Option("-o <filename> the output file ")
+ *   &#64;Option("-o &lt;filename&gt; the output file ")
  *   public static File outfile = new File("/tmp/foobar");
  *
  *   &#64;Option("-i ignore case")
@@ -77,11 +77,10 @@ import org.checkerframework.dataflow.qual.*;
  *     ...
  *   }
  * }
+ * </pre>
  *
- * }</pre>
- *
- * A user may invoke the program using the command-line arguments <code>-o</code>, <code>--outfile
- * </code>, <code>-i</code>, <code>--ignore-case</code>, and <code>--temperature</code>.
+ * A user may invoke the program using the command-line arguments {@code -o}, {@code --outfile},
+ * {@code -i}, {@code --ignore-case}, and {@code --temperature}.
  *
  * <p>The call to {@link #parse_or_usage} sets fields in object myInstance, and sets static fields
  * in class MyUtilityClass. It returns the original command line, with all options removed.
@@ -102,9 +101,8 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <p>All arguments that start with '-' are processed as options. To terminate option processing at
  * the first non-option argument, see {@link #parse_options_after_arg(boolean)}. Also, the special
- * option '--' terminates option processing; method <code>parse_or_usage</code> returns all
- * subsequent arguments (along with any preceding non-option arguments) without scanning them for
- * options.
+ * option '--' terminates option processing; method {@code parse_or_usage} returns all subsequent
+ * arguments (along with any preceding non-option arguments) without scanning them for options.
  *
  * <p>A user may provide an option multiple times on the command line. If the field is a list, each
  * entry is added to the list. If the field is not a list, then only the last occurrence is used
@@ -127,8 +125,8 @@ import org.checkerframework.dataflow.qual.*;
  * the same heading in usage texts.
  *
  * <p>The @{@link OptionGroup} annotation must be specified on a field in addition to an @{@link
- * Option} annotation. Note that, due to a deficiency in Javadoc, an <code>@OptionGroup</code>
- * annotation must appear underneath any Javadoc comment for the field it applies to.
+ * Option} annotation. Note that, due to a deficiency in Javadoc, an {@code @OptionGroup} annotation
+ * must appear underneath any Javadoc comment for the field it applies to.
  *
  * <p>The {@code @OptionGroup} annotation acts like a delimiter &mdash; all
  * {@code @Option}-annotated fields up to the next {@code @OptionGroup} annotation belong to the
@@ -153,8 +151,8 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <p><b>Option aliases</b>
  *
- * <p>The @{@link Option} annotation has an optional parameter <code>aliases</code>, which accepts
- * an array of strings. Each string in the array is an alias for the option being defined and can be
+ * <p>The @{@link Option} annotation has an optional parameter {@code aliases}, which accepts an
+ * array of strings. Each string in the array is an alias for the option being defined and can be
  * used in place of an option's long name or short name. For example:
  *
  * <pre>
@@ -178,9 +176,9 @@ import org.checkerframework.dataflow.qual.*;
  * <p>A field with an @{@link Option} annotation may be of the following types:
  *
  * <ul>
- *   <li>Primitive types: boolean, int, long, float, double. (Primitives can also be represented as
- *       wrappers: Boolean, Integer, Long, Float, Double. Use of a wrapper type allows the argument
- *       to have no default value.)
+ *   <li>Primitive types: boolean, int, long, float, double.
+ *   <li>Primitive type wrappers: Boolean, Integer, Long, Float, Double. Use of a wrapper type
+ *       allows the argument to have no default value.
  *   <li>Reference types that have a constructor with a single string parameter.
  *   <li>java.util.regex.Pattern.
  *   <li>enums.
@@ -200,8 +198,7 @@ import org.checkerframework.dataflow.qual.*;
  *   <li>Short options are only supported as separate entries (e.g., "-a -b") and not as a single
  *       group (e.g., "-ab").
  *   <li>Not all primitive types are supported.
- *   <li>Types without a constructor that takes a single <code>String</code> argument are not
- *       supported.
+ *   <li>Types without a constructor that takes a single {@code String} argument are not supported.
  *   <li>The "--no-long" option to turn off a boolean option named "long" is not supported; use
  *       "--long=false" instead.
  * </ul>
@@ -912,8 +909,8 @@ public class Options {
    * Parses a command line and sets the options accordingly.
    *
    * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
-   * the <code>String[]</code> version of the arguments is not available &mdash; for example, for
-   * the <code>premain</code> method of a Java agent. This method splits the argument string into
+   * the {@code String[]} version of the arguments is not available &mdash; for example, for the
+   * {@code premain} method of a Java agent. This method splits the argument string into
    * command-line arguments, respecting single and double quotes, then calls {@link
    * #parse(String[])}.
    *
@@ -1001,10 +998,10 @@ public class Options {
    * cleaner output.
    *
    * <p>{@link #parse_or_usage(String[])} is usually a better method to call. This one is
-   * appropriate when the <code>String[]</code> version of the arguments is not available &mdash;
-   * for example, for the <code>premain</code> method of a Java agent. This method splits the
-   * argument string into command-line arguments, respecting single and double quotes, then calls
-   * {@link #parse_or_usage(String[])}.
+   * appropriate when the {@code String[]} version of the arguments is not available &mdash; for
+   * example, for the {@code premain} method of a Java agent. This method splits the argument string
+   * into command-line arguments, respecting single and double quotes, then calls {@link
+   * #parse_or_usage(String[])}.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -1393,8 +1390,8 @@ public class Options {
   }
 
   /**
-   * Behaves like {@link java.lang.Enum#valueOf}, except that <code>name</code> is case-insensitive
-   * and hyphen-insensitive (hyphens can be used in place of underscores). This allows for greater
+   * Behaves like {@link java.lang.Enum#valueOf}, except that {@code name} is case-insensitive and
+   * hyphen-insensitive (hyphens can be used in place of underscores). This allows for greater
    * flexibility when specifying enum types as command-line arguments.
    *
    * @param <T> the enum type

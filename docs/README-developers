@@ -9,45 +9,31 @@ To make a plume-lib release and upload it to GitHub:
 1. Commit or stash any changes in your copy of the plume-lib repository.
 
 2. Visit URLs in ../java/lib/README to determine if more recent .jar files
-for ../java/lib/ are available.  If so, replace the out-of-date one.
-Update file names in files java/.classpath and (in 2 places) java/Makefile .
+for ../java/lib/ are available.  Here is Emacs code to do so:
+ (progn
+  (find-file "../java/lib/README")
+  (while (re-search-forward "http[^ \n]*" nil t) (browse-url (match-string 0))))
+When you replace any out-of-date ones,
+update file names in files java/.classpath and (in 2 places) java/Makefile .
 
-3. Browse to each URL in bin/checklink-args.txt and remove any
-that are not valid.
-Something like this could work (to avoid doing all of the URLs in one go,
-which might overpower your browser):
-  (defun browse-url-checklink (number-prefix)
-    (find-file "../bin/checklink-args.txt")
-    (goto-char (point-min))
-    (browse-url-once-if-matched (concat number-prefix ":\\(http.*\\)") 1))
-  (browse-url-checklink "0")
-  (browse-url-checklink "1")
-  (browse-url-checklink "2")
-  (browse-url-checklink "3")
-  (browse-url-checklink "4")
-  (browse-url-checklink "5")
-  (browse-url-checklink "6")
-  ;; Just in case the above searches missed something.
-  (browse-url-checklink "[^0-6]")
-
-4. Ensure that file index.html documents any new files.
+3. Ensure that file index.html documents any new files.
 To find new files, do
 
     git diff --name-status v`cat VERSION` | grep '^A'
 
-5. Update file changelog.txt
+4. Update file changelog.txt
 To help writing the changelog text, see the log and/or diffs, using one of:
 
     git log --name-status v`cat VERSION`..HEAD
     git diff v`cat VERSION`...HEAD
 
-6. Update the VERSION file.
+5. Update the VERSION file.
 
-7. Commit and push the changes in your copy of the plume-lib repository.
+6. Commit and push the changes in your copy of the plume-lib repository.
 
     git push
 
-8. Wait about 2.5 hours and ensure that Travis jobs pass:
+7. Wait about 2.5 hours and ensure that Travis jobs pass:
 at least plume-lib, plume-lib-typecheck, daikon, and daikon-typecheck.
 The following commands will open the URLs in your browser.
 
@@ -59,7 +45,7 @@ The following commands will open the URLs in your browser.
     sleep 1
     xdg-open https://travis-ci.org/typetests/daikon-typecheck
 
-9. Run the make-plume-release script located in bin:
+8. Run the make-plume-release script located in bin:
 
     cd ..
     export JAVAC=$CHECKERFRAMEWORK/checker/bin-devel/javac
@@ -70,11 +56,11 @@ If this is the case, then the release is built and the test cases are run.
 The release will be compatible with Java 7, but don't try to use a Java 7
 JDK when making the release.
 
-10. Push the new Git tag created by the script to the repository:
+9. Push the new Git tag created by the script to the repository:
 
     git push --tags
 
-11. Make a new release on GitHub.
+10. Make a new release on GitHub.
 The exact steps are displayed at the end of the make-plume-release script. They
 are repeated below, but you must replace x.y.z with the correct version number.
  * browse to https://github.com/mernst/plume-lib/releases/new
@@ -83,7 +69,7 @@ are repeated below, but you must replace x.y.z with the correct version number.
  * description from docs/changelog.txt, with hard line breaks removed
  * attach plume-lib-x.y.z.tar.gz
 
-12. Update the web version of the Javadoc.  On a machine connected to the UW
+11. Update the web version of the Javadoc.  On a machine connected to the UW
 CSE file system:
 
     cd plume-lib/java

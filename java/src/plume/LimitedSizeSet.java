@@ -36,14 +36,23 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   // nulled.  But that should be permitted by the type system.
   /*@IndexOrHigh("this.values")*/ int num_values;
 
+  /** Whether assertions are enabled. */
+  private static boolean assertsEnabled = false;
+
+  static {
+    assert assertsEnabled = true; // Intentional side-effect!!!
+    // Now assertsEnabled is set to the correct value
+  }
+
   /**
    * Create a new LimitedSizeSet that can hold max_values values.
    *
-   * @param max_values the maximum number of values this set will be able to hold
+   * @param max_values the maximum number of values this set will be able to hold; must be positive
    */
-  @SuppressWarnings("value") // Cast isn't polymorphic
   public LimitedSizeSet(/*@Positive*/ int max_values) {
-    assert max_values > 0;
+    if (assertsEnabled && !(max_values > 0)) {
+      throw new IllegalArgumentException("max_values should be positive, is " + max_values);
+    }
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
     /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
@@ -89,9 +98,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    // s.values isn't modified by the call to add.  Until
-    // https://github.com/typetools/checker-framework/issues/984 is fixed,
-    // use a local variable which the Checker Framework can tell is not reassigned.
+    // TODO: s.values isn't modified by the call to add.  Use a local variable until
+    // https://tinyurl.com/cfissue/984 is fixed.
     /*@Nullable*/ T /*@SameLen("s.values")*/[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
       assert svalues[i] != null : "@AssumeAssertion(nullness): used portion of array";
@@ -112,7 +120,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       throw new UnsupportedOperationException();
     }
     for (int i = 0; i < num_values; i++) {
-      @SuppressWarnings("nullness") // object invariant: used portion of array
+      @SuppressWarnings("nullness") // object invariant: used portion of array is non-null
       T value = values[i];
       if (value == elt || (value != null && value.equals(elt))) {
         return true;
@@ -175,6 +183,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
+  @Override
   public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
@@ -210,6 +219,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
 
   @SuppressWarnings("nullness") // bug in flow; to fix later
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }

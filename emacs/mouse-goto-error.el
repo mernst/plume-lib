@@ -21,6 +21,11 @@
   `(if running-xemacs
          (progn ,@body)))
 
+(defmacro beginning-of-line-point ()
+  "Return the location of the beginning of the line."
+  `(save-excursion
+     (beginning-of-line)
+     (point)))
 
 ;;;
 ;;; Installation in shell mode
@@ -246,7 +251,7 @@ this mouseclick."
                      (if (re-search-forward "\\s-" nil t)
                          (progn
                            (forward-char -1)
-                           (if (looking-back hex-re)
+                           (if (looking-back hex-re (beginning-of-line-point))
                                (match-string 0)))))))))
     (if hex-at-point
         (let* ((command (concat "dump " hex-at-point))

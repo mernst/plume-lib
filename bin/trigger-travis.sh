@@ -15,16 +15,16 @@
 # the Travis access token.
 #
 # Your Travis access token is the text after "Your access token is " in
-# the output of these commands:
+# the output of this compound command:
 #   travis login && travis token
-# (If the travis program isn't installed, then use one of these two commands:
+# (If the travis program isn't installed, then use either of these two commands:
 #    gem install travis
 #    sudo apt-get install ruby-dev && sudo gem install travis
 # Don't do "sudo apt-get install travis" which installs a trajectory analyzer.)
 # Note that the Travis access token output by `travis token` differs from the
 # Travis token available at https://travis-ci.org/profile .
 # If you store it in in a file, make sure the file is not readable by others,
-# for example by running:  chmod og-rwx ~/private
+# for example by running:  chmod og-rwx ~/private/.travis-access-token
 
 # To use this script to trigger a dependent build in Travis, do two things:
 #
@@ -33,63 +33,24 @@
 # The TRAVIS_ACCESS_TOKEN environment variable will be set when Travis runs
 # the job, but won't be visible to anyone browsing https://travis-ci.org/.
 #
-# 2. Add the following before_install and after_script blocks to your
-# .travis.yml file, where you replace OTHERGITHUB* by a specific downstream
-# project, but you leave $TRAVIS_ACCESS_TOKEN as literal text:
+# 2. Add the following to your .travis.yml file, where you replace
+# OTHERGITHUB* by a specific downstream project, but you leave
+# $TRAVIS_ACCESS_TOKEN as literal text:
 #
-# before_install:
-#   - npm install --save-dev travis-after-all
-#
-# after_script:
-#   - |
-#       set +e
-#       declare exitCode;
-#       $(npm bin)/travis-after-all
-#       exitCode=$?
-#
-#       if [ "$exitCode" -eq 0 ]; then
+# jobs:
+#   include:
+#     - stage: trigger downstream
+#       jdk: oraclejdk8
+#       script: |
+#         echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 #         if [[ ($TRAVIS_BRANCH == master) &&
 #               ($TRAVIS_PULL_REQUEST == false) ]] ; then
 #           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
 #           sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 #         fi
-#       fi
-#
-# Your .travis.yml file must not use `language: generic` because then
-# npm won't be installed.
-#
-# Note that Travis does not fail a job if an after_success command fails.
-# If you misspell a GitHub ID or project name, then this script will fail,
-# but Travis won't inform you of the mistake.  So, check the end of the
-# Travis build log the first time that a build succeeds.  If there is any
-# occurrence of
-#   "@type": "error",
-# then it failed.
 
-# Here is an explanation of the conditional in the after_success block:
-#
-# 1. Downstream projects are triggered only for builds of the mainline, not
-# branches or pull requests.  The reason is that typically a downstream
-# project clones and uses the mainline.  You could enhance this script to
-# accept pass an environment variable for the upstream project; the
-# downstream project's build script would need to read and use that
-# environment variable.  If you make this enhancement, feel free to submit
-# a pull request so that others can benefit from it.
-#
-# 2. Downstream projects are triggered only if the Travis job number
-# contains no "." or ends with ".1".  In other words, if your .travis.yml
-# defines a build matrix
-# (https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix)
-# that runs the same job using different configurations, then the
-# "after_success:" block is run only for the first configuration.
-# By default an after_success: block is run for every build in the matrix,
-# but you really want it to run once if all the builds in the matrix
-# succeed.  Running if the first job succeeds is simple and it is usually
-# adequate, even though the downstream job is triggered even if some job
-# other than the first one fails.
-
-# TODO: take a --branch command-line argument.
-# TODO: enable the script to clone a particular branch rather than master.
+# TODO: Show how to use the --branch command-line argument.
+# TODO: Enable the script to clone a particular branch rather than master.
 # This would require a way to know the relationships among branches in
 # different GitHub projects.  It's easier to run all your tests within a
 # single Travis job, if they fit within Travis's 50-minute time limit.

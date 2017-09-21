@@ -340,7 +340,11 @@ public final class ICalAvailable {
     System.out.println("iCal_URL: " + iCal_URL);
   }
 
-  /** Main entry point; see class documentation. */
+  /**
+   * Main entry point; see class documentation.
+   *
+   * @param args command-line arguments; see class documentation
+   */
   public static void main(String[] args) {
 
     processOptions(args);
@@ -477,7 +481,10 @@ public final class ICalAvailable {
         }
         continue;
       }
-      @SuppressWarnings("interning") // interned fields from a library, but not annotated so
+      @SuppressWarnings({
+        "interning",
+        "ReferenceEquality"
+      }) // interned fields from a library, but not annotated so
       boolean isFree = (freefb.getParameter(Parameter.FBTYPE) == FbType.FREE);
       assert isFree;
       PeriodList freePeriods = freefb.getPeriods();

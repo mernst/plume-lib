@@ -12,6 +12,7 @@ java/Makefile.user
 java/api
 java/ical4j.properties
 java/jacoco.exec
+java/lib/error_prone_ant-2.0.21.jar
 java/lookup.html
 java/lookup.jar
 java/lookup.txt
@@ -36,3 +37,4 @@ syntax: regexp
 # Not a glob because it starts with # which looks like a comment.
 (.*/)?\#[^/]*\#$
 (.*/)?\.\#.*
+plume-lib-[0-9.]*.tar.gz

@@ -19,7 +19,7 @@ import org.checkerframework.common.value.qual.*;
  * returns a single representative object that {@link Object#equals} the object, and the client
  * discards the argument and uses the result instead. Since only one object exists for every set of
  * equal objects, space usage is reduced. Time may also be reduced, since it is possible to use
- * <code>==</code> instead of <code>.equals()</code> for comparisons.
+ * {@code ==} instead of {@code .equals()} for comparisons.
  *
  * <p>Java builds in interning for Strings, but not for other objects. The methods in this class
  * extend interning to all Java objects.
@@ -29,6 +29,14 @@ public final class Intern {
   /** This class is a collection of methods; it does not represent anything. */
   private Intern() {
     throw new Error("do not instantiate");
+  }
+
+  /** Whether assertions are enabled. */
+  private static boolean assertsEnabled = false;
+
+  static {
+    assert assertsEnabled = true; // Intentional side-effect!!!
+    // Now assertsEnabled is set to the correct value
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -331,8 +339,8 @@ public final class Intern {
     internedDoubles =
         new WeakHasherMap</*@Interned*/ Double, WeakReference</*@Interned*/ Double>>(
             new DoubleHasher());
-    internedDoubleNaN = new /*@Interned*/ Double(Double.NaN);
-    internedDoubleZero = new /*@Interned*/ Double(0);
+    internedDoubleNaN = Double.NaN;
+    internedDoubleZero = 0.0;
     internedDoubleArrays =
         new WeakHasherMap<double /*@Interned*/ [], WeakReference<double /*@Interned*/ []>>(
             new DoubleArrayHasher());
@@ -490,9 +498,9 @@ public final class Intern {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ Integer result2 = (/*@Interned*/ Integer) a;
-      internedIntegers.put(result2, new WeakReference</*@Interned*/ Integer>(result2));
-      return result2;
+      /*@Interned*/ Integer result = (/*@Interned*/ Integer) a;
+      internedIntegers.put(result, new WeakReference</*@Interned*/ Integer>(result));
+      return result;
     }
   }
 
@@ -704,14 +712,14 @@ public final class Intern {
 
   /**
    * Intern (canonicalize) an String[]. Return a canonical representation for the String[] array.
-   * Arrays are compared according to their elements. The elements should themselves already be
-   * interned; they are compared using their equals() methods.
+   * Arrays are compared according to their elements' equals() methods.
    *
-   * @param a the array to canonicalize
+   * @param a the array to canonicalize. Its elements should already be interned.
    * @return a canonical representation for the String[] array
    */
   @SuppressWarnings({
     "interning", // interns its argument
+    "ReferenceEquality",
     "purity",
     "cast"
   }) // cast is redundant (except in JSR 308)
@@ -720,8 +728,12 @@ public final class Intern {
       /*@PolyNull*/ /*@Interned*/ String[] a) {
 
     // Make sure each element is already interned
-    for (int k = 0; k < a.length; k++) {
-      assert a[k] == Intern.intern(a[k]);
+    if (assertsEnabled) {
+      for (int k = 0; k < a.length; k++) {
+        if (!(a[k] == Intern.intern(a[k]))) {
+          throw new IllegalArgumentException();
+        }
+      }
     }
 
     WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []> lookup =
@@ -812,27 +824,28 @@ public final class Intern {
   }
 
   /**
-   * Return the subsequence of seq from start (inclusive) to end (exclusive) that is interned.
-   * What's different about this method from manually finding the subsequence and interning the
-   * subsequence is that if the subsequence is already interned, we can avoid having to compute the
-   * sequence. Since derived variables in Daikon compute the subsequence many times, this shortcut
-   * saves quite a bit of computation. It saves even more when there may be many derived variables
-   * that are non-canonical, since they are guaranteed to be ==.
+   * Return an interned subsequence of seq from start (inclusive) to end (exclusive). The argument
+   * seq should already be interned.
    *
-   * <p>Requires that seq is already interned.
+   * <p>The result is the same as computing the subsequence and then interning it, but this method
+   * is more efficient: if the subsequence is already interned, it avoids computing the subsequence.
    *
-   * @param seq the sequence whose subsequence should be interned
-   * @param start the index of the start of the subsequence to be interned
-   * @param end the index of the end of the subsequence to be interned
+   * <p>For example, since derived variables in Daikon compute the subsequence many times, this
+   * shortcut saves quite a bit of computation. It saves even more when there may be many derived
+   * variables that are non-canonical, since they are guaranteed to be ==.
+   *
+   * @param seq the interned sequence whose subsequence should be computed and interned
+   * @param start the index of the start of the subsequence to compute and intern
+   * @param end the index of the end of the subsequence to compute and intern
    * @return a subsequence of seq from start to end that is interned
    */
-  @SuppressWarnings("purity") // interning logic
-  /*@Pure*/
   public static int /*@Interned*/ [] internSubsequence(
       int /*@Interned*/ [] seq,
       /*@IndexFor("#1")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
-    assert Intern.isInterned(seq);
+    if (assertsEnabled && !Intern.isInterned(seq)) {
+      throw new IllegalArgumentException();
+    }
     SequenceAndIndices<int /*@Interned*/ []> sai =
         new SequenceAndIndices<int /*@Interned*/ []>(seq, start, end);
     WeakReference<int /*@Interned*/ []> lookup = internedIntSequenceAndIndices.get(sai);
@@ -849,9 +862,9 @@ public final class Intern {
   }
 
   /**
-   * @param seq the sequence whose subsequence should be interned
-   * @param start the index of the start of the subsequence to be interned
-   * @param end the index of the end of the subsequence to be interned
+   * @param seq the interned sequence whose subsequence should be computed and interned
+   * @param start the index of the start of the subsequence to compute and intern
+   * @param end the index of the end of the subsequence to compute and intern
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
@@ -861,7 +874,9 @@ public final class Intern {
       long /*@Interned*/ [] seq,
       /*@IndexFor("#1")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#2 - 1")*/ int end) {
-    assert Intern.isInterned(seq);
+    if (assertsEnabled && !Intern.isInterned(seq)) {
+      throw new IllegalArgumentException();
+    }
     SequenceAndIndices<long /*@Interned*/ []> sai =
         new SequenceAndIndices<long /*@Interned*/ []>(seq, start, end);
     WeakReference<long /*@Interned*/ []> lookup = internedLongSequenceAndIndices.get(sai);
@@ -878,9 +893,9 @@ public final class Intern {
   }
 
   /**
-   * @param seq the sequence whose subsequence should be interned
-   * @param start the index of the start of the subsequence to be interned
-   * @param end the index of the end of the subsequence to be interned
+   * @param seq the interned sequence whose subsequence should be computed and interned
+   * @param start the index of the start of the subsequence to compute and intern
+   * @param end the index of the end of the subsequence to compute and intern
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
@@ -890,7 +905,9 @@ public final class Intern {
       double /*@Interned*/ [] seq,
       /*@IndexFor("#1")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
-    assert Intern.isInterned(seq);
+    if (assertsEnabled && !Intern.isInterned(seq)) {
+      throw new IllegalArgumentException();
+    }
     SequenceAndIndices<double /*@Interned*/ []> sai =
         new SequenceAndIndices<double /*@Interned*/ []>(seq, start, end);
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleSequenceAndIndices.get(sai);
@@ -907,9 +924,9 @@ public final class Intern {
   }
 
   /**
-   * @param seq the sequence whose subsequence should be interned
-   * @param start the index of the start of the subsequence to be interned
-   * @param end the index of the end of the subsequence to be interned
+   * @param seq the interned sequence whose subsequence should be computed and interned
+   * @param start the index of the start of the subsequence to compute and intern
+   * @param end the index of the end of the subsequence to compute and intern
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
@@ -919,7 +936,9 @@ public final class Intern {
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq,
       /*@IndexFor("#1")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
-    assert Intern.isInterned(seq);
+    if (assertsEnabled && !Intern.isInterned(seq)) {
+      throw new IllegalArgumentException();
+    }
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []> sai =
         new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ []>(seq, start, end);
     @SuppressWarnings("nullness") // same nullness as key
@@ -943,9 +962,9 @@ public final class Intern {
   }
 
   /**
-   * @param seq the sequence whose subsequence should be interned
-   * @param start the index of the start of the subsequence to be interned
-   * @param end the index of the end of the subsequence to be interned
+   * @param seq the interned sequence whose subsequence should be computed and interned
+   * @param start the index of the start of the subsequence to compute and intern
+   * @param end the index of the end of the subsequence to compute and intern
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
@@ -955,7 +974,9 @@ public final class Intern {
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq,
       /*@IndexFor("#1")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
-    assert Intern.isInterned(seq);
+    if (assertsEnabled && !Intern.isInterned(seq)) {
+      throw new IllegalArgumentException();
+    }
     SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []> sai =
         new SequenceAndIndices</*@PolyNull*/ /*@Interned*/ String /*@Interned*/ []>(seq, start, end);
     @SuppressWarnings("nullness") // same nullness as key
@@ -990,40 +1011,45 @@ public final class Intern {
 
     /** @param seq an interned array */
     public SequenceAndIndices(T seq, /*@NonNegative*/ int start, int end) {
+      if (assertsEnabled && !Intern.isInterned(seq)) {
+        throw new IllegalArgumentException();
+      }
       this.seq = seq;
       this.start = start;
       this.end = end;
-      assert isInterned(seq);
     }
 
     @SuppressWarnings("unchecked")
     /*@Pure*/
+    @Override
     public boolean equals(
         /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
         /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
       if (other instanceof SequenceAndIndices<?>) {
         @SuppressWarnings("unchecked")
         SequenceAndIndices<T> other_sai = (SequenceAndIndices<T>) other;
-        return equals(other_sai);
+        return equalsSequenceAndIndices(other_sai);
       } else {
         return false;
       }
     }
 
     /*@Pure*/
-    public boolean equals(
+    public boolean equalsSequenceAndIndices(
         /*>>>@GuardSatisfied SequenceAndIndices<T> this,*/
         /*@GuardSatisfied*/ SequenceAndIndices<T> other) {
       return ((this.seq == other.seq) && this.start == other.start && this.end == other.end);
     }
 
     /*@Pure*/
+    @Override
     public int hashCode(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return seq.hashCode() + start * 30 - end * 2;
     }
 
     // For debugging
     /*@SideEffectFree*/
+    @Override
     public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
       return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
     }
@@ -1036,6 +1062,7 @@ public final class Intern {
    */
   private static final class SequenceAndIndicesHasher<T extends /*@Interned*/ Object>
       implements Hasher {
+    @Override
     public boolean equals(Object a1, Object a2) {
       @SuppressWarnings("unchecked")
       SequenceAndIndices<T> sai1 = (SequenceAndIndices<T>) a1;
@@ -1045,6 +1072,7 @@ public final class Intern {
       return sai1.equals(sai2);
     }
 
+    @Override
     public int hashCode(Object o) {
       return o.hashCode();
     }

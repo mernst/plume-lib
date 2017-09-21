@@ -8,6 +8,8 @@
 
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.DocErrorReporter;
@@ -18,21 +20,20 @@ import com.sun.javadoc.Tag;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
@@ -63,24 +64,24 @@ import org.checkerframework.common.value.qual.*;
  *       <pre>&lt;!-- end options doc --&gt;</pre>
  *       in <i>file</i> with the options documentation. This can be used for inserting option
  *       documentation into an existing manual. The existing docfile is not modified; output goes to
- *       the <code>-outfile</code> argument, or to standard out.
+ *       the {@code -outfile} argument, or to standard out.
  *   <li><b>-outfile</b> <i>file</i> The destination for the output (the default is standard out).
- *       If both <code>-outfile</code> and <code>-docfile</code> are specified, they must be
- *       different. When <code>-d</code> is used, the output is written to a file with the given
- *       name relative to that destination directory.
+ *       If both {@code -outfile} and {@code -docfile} are specified, they must be different. When
+ *       {@code -d} is used, the output is written to a file with the given name relative to that
+ *       destination directory.
  *   <li><b>-d</b> <i>directory</i> The destination directory for the output file. Only used if
- *       <code>-outfile</code> is used, in which case, the file is written in this directory.
- *       Otherwise, this option is ignored.
+ *       {@code -outfile} is used, in which case, the file is written in this directory. Otherwise,
+ *       this option is ignored.
  *   <li><b>-i</b> Specifies that the docfile should be edited in-place. This option can only be
- *       used if the <code>-docfile</code> option is used, and may not be used at the same time as
- *       the <code>-outfile</code> option.
+ *       used if the {@code -docfile} option is used, and may not be used at the same time as the
+ *       {@code -outfile} option.
  *   <li><b>-format</b> <i>format</i> This option sets the output format of this doclet. Currently,
  *       the following values for <i>format</i> are supported:
  *       <ul>
  *         <li><b>javadoc</b> When this format is specified, the output of this doclet is formatted
  *             as a Javadoc comment. This is useful for including option documentation inside Java
- *             source code. When this format is used with the <code>-docfile</code> option, the
- *             generated documentation is inserted between the lines
+ *             source code. When this format is used with the {@code -docfile} option, the generated
+ *             documentation is inserted between the lines
  *             <pre>* &lt;!-- start options doc (DO NOT EDIT BY HAND) --&gt;</pre>
  *             and
  *             <pre>* &lt;!-- end options doc --&gt;</pre>
@@ -92,7 +93,7 @@ import org.checkerframework.common.value.qual.*;
  *       </ul>
  *   <li><b>-classdoc</b> When specified, the output of this doclet includes the class documentation
  *       of the first class specified on the command-line.
- *   <li><b>-singledash</b> When specified, <code>use_single_dash(true)</code> is called on the
+ *   <li><b>-singledash</b> When specified, {@code use_single_dash(true)} is called on the
  *       underlying instance of Options used to generate documentation. See {@link
  *       plume.Options#use_single_dash(boolean)}.
  * </ul>
@@ -111,14 +112,14 @@ import org.checkerframework.common.value.qual.*;
  * javadoc -quiet -doclet plume.OptionsDoclet -i -docfile Lookup.java -format javadoc Lookup.java
  * </pre>
  *
- * <p>For a more extensive example, see file <code>java/Makefile</code> in plume-lib itself.
+ * <p>For a more extensive example, see file {@code java/Makefile} in plume-lib itself.
  *
  * <p><b>Requirements</b>
  *
- * <p>Classes passed to OptionsDoclet that have <code>@</code>{@link Option} annotations on
- * non-static fields should have a nullary (no-argument) constructor. The nullary constructor may be
- * private or public. This is required because an object instance is needed to get the default value
- * of a non-static field. It is cleaner to require a nullary constructor instead of trying to guess
+ * <p>Classes passed to OptionsDoclet that have {@code @}{@link Option} annotations on non-static
+ * fields should have a nullary (no-argument) constructor. The nullary constructor may be private or
+ * public. This is required because an object instance is needed to get the default value of a
+ * non-static field. It is cleaner to require a nullary constructor instead of trying to guess
  * arguments to pass to another constructor.
  *
  * <p><b>Hiding default value strings</b>
@@ -126,8 +127,8 @@ import org.checkerframework.common.value.qual.*;
  * <p>By default, the documentation generated by OptionsDoclet includes a default value string for
  * each option in square brackets after the option's description, similar to the usage messages
  * generated by {@link plume.Options#usage(String...)}. The {@link plume.Option#noDocDefault} field
- * in the {@code @Option} annotation can be set to <code>true</code> to omit the default value
- * string from the generated documentation for that option.
+ * in the {@code @Option} annotation can be set to {@code true} to omit the default value string
+ * from the generated documentation for that option.
  *
  * <p>Omitting the generated default value string is useful for options that have system-dependent
  * defaults. Such options are not an issue for usage messages that are generated at runtime.
@@ -139,7 +140,7 @@ import org.checkerframework.common.value.qual.*;
  * &#64;Option(value="&lt;timezone&gt; Set the time zone")
  * public static String timezone = TimeZone.getDefault().getID();</pre>
  *
- * The default value for <code>timezone</code> depends on the system's timezone setting. HTML
+ * The default value for {@code timezone} depends on the system's timezone setting. HTML
  * documentation of this option generated in Chicago would not apply to a user in New York. To work
  * around this problem, the default value should be hidden; instead the Javadoc for this field
  * should indicate a special default as follows.
@@ -162,8 +163,8 @@ import org.checkerframework.common.value.qual.*;
  *
  * <p><b>Troubleshooting</b>
  *
- * <p>If you get an error such as "<code>ARGH! @Option</code>", then you are using a buggy version
- * of gjdoc, the GNU Classpath implementation of Javadoc. To avoid the problem, upgrade or use a
+ * <p>If you get an error such as "{@code ARGH! @Option}", then you are using a buggy version of
+ * gjdoc, the GNU Classpath implementation of Javadoc. To avoid the problem, upgrade or use a
  * different Javadoc implementation.
  *
  * @see plume.Option
@@ -175,6 +176,7 @@ import org.checkerframework.common.value.qual.*;
 // This doesn't itself use plume.Options for its command-line option
 // processing because a Doclet is required to implement the optionLength
 // and validOptions methods.
+@SuppressWarnings("deprecation") // JDK 9 deprecates com.sun.javadoc package
 public class OptionsDoclet {
 
   private static String eol = System.getProperty("line.separator");
@@ -469,13 +471,13 @@ public class OptionsDoclet {
     String output = output();
 
     if (outFile != null) {
-      out = new PrintWriter(new BufferedWriter(new FileWriter(outFile)));
+      out = new PrintWriter(Files.newBufferedWriter(outFile.toPath(), UTF_8));
     } else if (inPlace) {
       assert docFile != null
           : "@AssumeAssertion(nullness): dependent: docFile is non-null if inPlace is true";
-      out = new PrintWriter(new BufferedWriter(new FileWriter(docFile)));
+      out = new PrintWriter(Files.newBufferedWriter(docFile.toPath(), UTF_8));
     } else {
-      out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+      out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out, UTF_8)));
     }
 
     out.println(output);
@@ -506,7 +508,7 @@ public class OptionsDoclet {
   /*@RequiresNonNull("docFile")*/
   private String newDocFileText() throws Exception {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
-    BufferedReader doc = new BufferedReader(new FileReader(docFile));
+    BufferedReader doc = Files.newBufferedReader(docFile.toPath(), UTF_8);
     String docline;
     boolean replacing = false;
     boolean replaced_once = false;
@@ -575,7 +577,7 @@ public class OptionsDoclet {
     }
   }
 
-  /** Initializes {@link Options.OptionInfo.enum_jdoc} for the given <code>OptionInfo</code>. */
+  /** Initializes {@link Options.OptionInfo.enum_jdoc} for the given {@code OptionInfo}. */
   private void processEnumJavadoc(Options.OptionInfo oi) {
     Enum<?>[] constants = (Enum<?>[]) oi.base_type.getEnumConstants();
     if (constants == null) {
@@ -722,7 +724,8 @@ public class OptionsDoclet {
     }
 
     String compressedSpaces = in.replaceAll("[ \n\r]+", " ");
-    // google-java-format bug: https://github.com/google/google-java-format/issues/84
+    // Accommodate google-java-format bug: https://github.com/google/google-java-format/issues/84 .
+    // In general, prefer {@code ...} to <code>...</code>.
     compressedSpaces = compressedSpaces.replaceAll("<code> ", "<code>");
     if (compressedSpaces.startsWith(" ")) {
       compressedSpaces = compressedSpaces.substring(1);

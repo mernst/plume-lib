@@ -42,13 +42,23 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   // nulled.  But that should be permitted by the type system.
   /*@IndexOrHigh("values")*/ int num_values;
 
+  /** Whether assertions are enabled. */
+  private static boolean assertsEnabled = false;
+
+  static {
+    assert assertsEnabled = true; // Intentional side-effect!!!
+    // Now assertsEnabled is set to the correct value
+  }
+
   /**
    * Create a new LimitedSizeIntSet that can hold max_values values.
    *
-   * @param max_values the maximum number of values this set will be able to hold
+   * @param max_values the maximum number of values this set will be able to hold; must be positive
    */
   public LimitedSizeIntSet(/*@Positive*/ int max_values) {
-    assert max_values > 0;
+    if (assertsEnabled && !(max_values > 0)) {
+      throw new IllegalArgumentException("max_values should be positive, is " + max_values);
+    }
     // this.max_values = max_values;
     values = new int[max_values];
     num_values = 0;
@@ -91,9 +101,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    // s.values isn't modified by the call to add.  Until
-    // https://github.com/typetools/checker-framework/issues/984 is fixed,
-    // use a local variable which the Checker Framework can tell is not reassigned.
+    // TODO: s.values isn't modified by the call to add.  Use a local variable Until
+    // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
     for (int i = 0; i < svalues.length; i++) {
       add(svalues[i]);
@@ -174,6 +183,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
 
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
+  @Override
   public LimitedSizeIntSet clone(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
@@ -205,6 +215,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   /*@SideEffectFree*/
+  @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }

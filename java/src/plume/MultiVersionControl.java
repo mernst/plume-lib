@@ -1,10 +1,12 @@
 package plume;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -62,14 +64,14 @@ import org.checkerframework.common.value.qual.*;
  *   clone     -- Clone (check out) all repositories.
  *   checkout  -- Same as clone
  *   pull      -- Pull and update all clones.
- *   update    -- Same as update.
+ *   update    -- Same as pull.
  *   status    -- Show files that are changed but not committed, or committed
  *                but not pushed, or have shelved/stashed changes.
  *   list      -- List the clones/checkouts that this program is aware of.
  * </pre>
  *
- * (The <code>commit</code> action is not supported, because that is not something that should be
- * done in an automated way -- it needs a user-written commit message.)
+ * (The {@code commit} action is not supported, because that is not something that should be done in
+ * an automated way -- it needs a user-written commit message.)
  *
  * <p>You can specify the set of checkouts/clones for the program to manage, or it can search your
  * directory structure to find all of your checkouts, or both. To list all un-committed changed
@@ -85,7 +87,7 @@ import org.checkerframework.common.value.qual.*;
  * <ul>
  *   <li id="option:home"><b>--home=</b><i>string</i>. User home directory
  *   <li id="option:checkouts"><b>--checkouts=</b><i>string</i>. File with list of checkouts. Set it
- *       to /dev/null to suppress reading. Defaults to <code>$HOME/.mvc-checkouts</code>. [default
+ *       to /dev/null to suppress reading. Defaults to {@code $HOME/.mvc-checkouts}. [default
  *       ~/.mvc-checkouts]
  *   <li id="option:dir"><b>--dir=</b><i>string</i> <code>[+]</code>. Directory under which to
  *       search for checkouts; default=home dir
@@ -134,17 +136,16 @@ import org.checkerframework.common.value.qual.*;
  * <code>[+]</code> marked option can be specified multiple times
  * <!-- end options doc -->
  *
- * <p><b>File format for <code>.mvc-checkouts</code> file</b>
+ * <p><b>File format for {@code .mvc-checkouts} file</b>
  *
- * <p>The remainder of this document describes the file format for the <code>.mvc-checkouts</code>
- * file.
+ * <p>The remainder of this document describes the file format for the {@code .mvc-checkouts} file.
  *
- * <p>(Note: because mvc can search for all checkouts in your directory, you don't need a <code>
- * .mvc-checkouts</code> file. Using a <code>.mvc-checkouts</code> file makes the program faster
- * because it does not have to search all of your directories. It also permits you to process only a
- * certain set of checkouts.)
+ * <p>(Note: because mvc can search for all checkouts in your directory, you don't need a {@code
+ * .mvc-checkouts} file. Using a {@code .mvc-checkouts} file makes the program faster because it
+ * does not have to search all of your directories. It also permits you to process only a certain
+ * set of checkouts.)
  *
- * <p>The <code>.mvc-checkouts</code> file contains a list of <em>sections</em>. Each section names
+ * <p>The {@code .mvc-checkouts} file contains a list of <em>sections</em>. Each section names
  * either a root from which a sub-part (e.g., a module or a subdirectory) will be checked out, or a
  * repository all of which will be checked out. Examples include:
  *
@@ -254,8 +255,8 @@ public class MultiVersionControl {
   public static String home = System.getProperty("user.home");
 
   /**
-   * File with list of checkouts. Set it to /dev/null to suppress reading. Defaults to <code>
-   * $HOME/.mvc-checkouts</code>.
+   * File with list of checkouts. Set it to /dev/null to suppress reading. Defaults to {@code
+   * $HOME/.mvc-checkouts}.
    */
   @Option("File with list of checkouts.  Set it to /dev/null to suppress reading.")
   public String checkouts = "~/.mvc-checkouts";
@@ -815,6 +816,7 @@ public class MultiVersionControl {
 
   /** Accept only directories that are not symbolic links. */
   static class IsDirectoryFilter implements FileFilter {
+    @Override
     public boolean accept(File pathname) {
       try {
         return pathname.isDirectory() && pathname.getPath().equals(pathname.getCanonicalPath());
@@ -877,7 +879,7 @@ public class MultiVersionControl {
     // There also exist Hg commands that will do this same thing.
     if (hgrcFile.exists()) {
       try {
-        ini = new Ini(new FileReader(hgrcFile));
+        ini = new Ini(Files.newBufferedReader(hgrcFile.toPath(), UTF_8));
       } catch (IOException e) {
         throw new Error("Problem reading file " + hgrcFile);
       }
@@ -1695,6 +1697,7 @@ public class MultiVersionControl {
    * but don't want them to simply hang.
    */
   static class StreamOfNewlines extends InputStream {
+    @Override
     public /*@GTENegativeOne*/ int read() {
       return (int) '\n';
     }

@@ -129,6 +129,7 @@ public class TimeLimitProcess extends Process {
    *
    * @see Process#destroy()
    */
+  @Override
   public void destroy() {
     p.destroy();
   }
@@ -139,6 +140,7 @@ public class TimeLimitProcess extends Process {
    * @return the exit value for the subprocess
    * @see Process#getErrorStream()
    */
+  @Override
   public int exitValue() {
     // I'm not sure whether this is necessary; the Process.destroy()
     // documentation doesn't specify the effect on the exit value.
@@ -155,6 +157,7 @@ public class TimeLimitProcess extends Process {
    * @return the error stream
    * @see Process#getErrorStream()
    */
+  @Override
   public InputStream getErrorStream() {
     if (cached_stderr == null) {
       @SuppressWarnings("nullness") // non-null because we didn't redirect the error stream
@@ -178,6 +181,7 @@ public class TimeLimitProcess extends Process {
    * @return the input stream
    * @see Process#getInputStream()
    */
+  @Override
   public InputStream getInputStream() {
     if (cached_stdout == null) {
       @SuppressWarnings("nullness") // non-null because we didn't redirect the input stream
@@ -205,6 +209,7 @@ public class TimeLimitProcess extends Process {
    * @see Process#getOutputStream()
    */
   @SuppressWarnings("nullness") // non-null because we didn't redirect the output stream
+  @Override
   public OutputStream getOutputStream() {
     return p.getOutputStream();
   }
@@ -216,6 +221,7 @@ public class TimeLimitProcess extends Process {
    * @return the exit value of the subprocess
    * @see Process#waitFor()
    */
+  @Override
   public int waitFor() throws InterruptedException {
     return p.waitFor();
   }
@@ -242,6 +248,7 @@ public class TimeLimitProcess extends Process {
       this.timeLimit = timeLimit;
     }
 
+    @Override
     public void run() {
       // If exitValue is queried while the process is still running,
       // the IllegalThreadStateException will be thrown.  If that
@@ -274,6 +281,7 @@ public class TimeLimitProcess extends Process {
     @SuppressWarnings(
         "nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
     /*@RequiresNonNull("cached_stdout")*/
+    @Override
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.
@@ -289,6 +297,7 @@ public class TimeLimitProcess extends Process {
     @SuppressWarnings(
         "nullness") // checker bug: NonNullOnEntry cannot access a variable in an enclosing class
     /*@RequiresNonNull("cached_stderr")*/
+    @Override
     public void run() {
       // This thread will block as the process produces output.  That's OK,
       // because the blocking is happening in a separate thread.

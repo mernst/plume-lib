@@ -1,6 +1,12 @@
 ;; ffap-mde
 ;; Enhancements to ffap (find-file-at-point).
 
+(defmacro beginning-of-line-point ()
+  "Return the location of the beginning of the line."
+  `(save-excursion
+     (beginning-of-line)
+     (point)))
+
 ;; "If you use ange-ftp, browse-url, complete, efs, or w3, it is best to load
 ;; or autoload them before ffap.  If you use ff-paths, load it afterwards."
 (require 'ffap)
@@ -60,7 +66,7 @@ Sets `ffap-string-at-point' and `ffap-string-at-point-region'."
              (save-excursion
                (skip-chars-backward (car args))
                ;; ADDED BY MDE
-               (while (looking-back "\\${[a-zA-Z0-9_]+}/?")
+               (while (looking-back "\\${[a-zA-Z0-9_]+}/?" (beginning-of-line-point))
                  (goto-char (match-beginning 0))
                  (skip-chars-backward (car args)))
                (skip-chars-forward (nth 1 args) pt)
@@ -68,7 +74,7 @@ Sets `ffap-string-at-point' and `ffap-string-at-point-region'."
              (save-excursion
                (skip-chars-forward (car args))
                ;; ADDED BY MDE
-               (while (and (looking-back "\\$")
+               (while (and (looking-back "\\$" (- (point) 2))
                            (looking-at "{[a-zA-Z0-9_]+}"))
                  (goto-char (match-end 0))
                  (skip-chars-forward (car args)))

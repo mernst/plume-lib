@@ -387,4 +387,14 @@ A nil filename argument specifies the visited file."
 	(set-visited-file-modtime))
     modified))
 
+(defun bdiff-revert-buffer-maybe ()
+  "Revert the buffer if it has changed on disk.
+This can be used after saving and then running a process on the file."
+  ;; It's not enough to check verify-visited-file-modtime, because we may
+  ;; have run a process as soon as the file was written:  even if it
+  ;; changes the file, it is unlikely to change the file's modtime.
+  (if (bdiff-p)
+      (revert-buffer nil t)))
+
+
 (provide 'bdiff)

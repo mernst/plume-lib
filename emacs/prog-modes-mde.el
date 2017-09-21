@@ -37,15 +37,25 @@ This is good for modes like Perl, where the parser can get confused."
   '(setq compilation-error-regexp-alist
          (delete 'maven compilation-error-regexp-alist)))
 ;; If I am using Maven, run:
-;; (setq compilation-error-regexp-alist (cons 'maven compilation-error-regexp-alist))
+;; (use-maven-compilation-error-regexp)
+(defun use-maven-compilation-error-regexp ()
+  (interactive)
+  (add-to-list 'compilation-error-regexp-alist 'maven))
 
 ;; Is this necessary when I use the above commented-out line?
 ;; ;; Maven error messages such as:
 ;; ;; [ERROR] /home/mernst/tmp/safer-spring-petclinic/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:[30,8] [initialization.fields.uninitialized] the constructor does not initialize fields: name
 ;; (eval-after-load "compile"
 ;;   '(setq compilation-error-regexp-alist
-;; 	 (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
-;; 	       compilation-error-regexp-alist)))
+;;       (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
+;;             compilation-error-regexp-alist)))
+
+
+(defmacro beginning-of-line-point ()
+  "Return the location of the beginning of the line."
+  `(save-excursion
+     (beginning-of-line)
+     (point)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -197,7 +207,7 @@ This is good for modes like Perl, where the parser can get confused."
 ;; ;;     (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
 ;; ;;         (progn
 ;; ;;           (goto-char (match-end 1))
-;; ;;           (if (looking-back "^\t+")
+;; ;;           (if (looking-back "^\t+" (beginning-of-line-point))
 ;; ;;               (progn
 ;; ;;                 (setq tab-width 2)
 ;; ;;                 (make-local-variable 'tab-stop-list)
@@ -449,6 +459,11 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (setq paragraph-separate (concat ".*<p>\\|" paragraph-separate))
     (define-key java-mode-map "\C-hf" 'javadoc-lookup)
     (make-local-variable 'write-contents-hooks)
+    (if (string-match "/\\(checker-framework\\|plume-lib\\|randoop\\)/"
+		      (directory-file-name default-directory))
+	(progn
+	  (make-variable-buffer-local 'before-save-hook)
+	  (add-hook 'before-save-hook 'delete-trailing-whitespace)))
     ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
     ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
     (if (and (buffer-file-name (current-buffer))
@@ -545,15 +560,17 @@ This is disabled on lines with a comment containing the string \"interned\"."
                (if (equal error-message "Stack overflow in regexp matcher")
                    nil
                  (throw 'error error-message)))))
-        (if (not (or (looking-at ".*//.*interned")
-                     ;; line ends with string ending with "=="
-                     (and (looking-back "=?= *\"") (looking-at ";\n"))
-                     ;; if already in comment, suppress warning
-                     (looking-back "/[/*].*")
-                     (looking-back "^[ \t]*\\*.*") ; Javadoc comment
-                     ;; entire string appears to be "==" or "!=" (as an arg)
-                     (looking-back "\(\"[=!]=\"\).*")
-                     ))
+        (if (let ((bol-point (beginning-of-line-point)))
+	      (not (or (looking-at ".*//.*interned")
+		       ;; line ends with string ending with "=="
+		       (and (looking-back "=?= *\"" bol-point)
+			    (looking-at ";\n"))
+		       ;; if already in comment, suppress warning
+		       (looking-back "/[/*].*" bol-point)
+		       (looking-back "^[ \t]*\\*.*" bol-point) ; Javadoc comment
+		       ;; entire string appears to be "==" or "!=" (as an arg)
+		       (looking-back "\(\"[=!]=\"\).*" bol-point)
+		       )))
             (progn
               (sit-for 0)               ; perform redisplay
               (if (not (y-or-n-p "Strings being compared with pointer equality; save anyway? "))
@@ -578,7 +595,7 @@ This is disabled on lines with a comment containing the string \"interned\"."
   "Clean up whitespace in Java code."
   (interactive)
   ;; avoid matching urls (http://...) and strings ("//")
-  (tags-query-replace "\\([^:\"]//\\)\\([^ /\n\t]\\)" "\\1 \\2" nil nil)
+  (tags-query-replace "\\(\\(?:\\`\\|[^:\"]\\)//\\)\\([^ /\n\t]\\)" "\\1 \\2" nil nil)
   ;; omit "switch" from this regexp
   (tags-query-replace "\\([^_]\\)\\b\\(for\\|if\\|return\\)(" "\\1\\2 (" nil nil)
   (tags-query-replace "){" ") {" nil nil)
@@ -618,7 +635,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
   ;; Find if/for statements that end with a close paren, which suggests the
   ;; body is on the next line.  Also else statements that end a line.
   (let ((tags-regex
-         "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
+         "^ *\\(?:}? else *\\)?\\(\\(if\\|for\\|while\\) (.*)\\|}? else\\( //.*\\)?\\)\\(.*;\\)?$"))
     (tags-search tags-regex)
     (message "match-data after tags-search: %s" (match-data))
     (while t
@@ -675,7 +692,7 @@ statement.  Does replacement in any file in a currently-visited tags table."
               (if semicolon-terminated
                   (newline-and-indent))
               (re-search-forward ";\\( *//.*\\)?$")
-              (while (looking-back "^[^;\n]*//[^\n]*$")
+              (while (looking-back "^[^;\n]*//[^\n]*$" nil)
                 (re-search-forward ";\\( *//.*\\)?$"))
               (if (looking-at "\n *\\(else\\)")
                   (progn
@@ -736,17 +753,17 @@ Works over the currently-visited tags table."
   ;; Start descriptive text with lowercase letter.
   (condition-case nil
       (let ((case-fold-search nil))
-	;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
-	;; seem to work with tags-query-replace, so call downcase-previous-character.
-	;; We only do so if the capital letter is at the beginning of a word
-	;; whose other characters are lowercase.
-	(tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
-	(goto-char (match-end 1))
-	(downcase-previous-character)
-	(while t
-	  (tags-loop-continue)
-	  (goto-char (match-end 1))
-	  (downcase-previous-character)))
+        ;; Emacs can convert case when doing {query-}replace-regexp, but it doesn't
+        ;; seem to work with tags-query-replace, so call downcase-previous-character.
+        ;; We only do so if the capital letter is at the beginning of a word
+        ;; whose other characters are lowercase.
+        (tags-search "\\(?:@\\(?:param[ \t\n*]+<?[A-Za-z0-9_]+>?\\|return\\)[ \t\n*]+\\(?:\n +\* +\\)?\\)\\([A-Z]\\)[a-z]*\\b")
+        (goto-char (match-end 1))
+        (downcase-previous-character)
+        (while t
+          (tags-loop-continue)
+          (goto-char (match-end 1))
+          (downcase-previous-character)))
     (user-error nil))
 
   ;; To detect incorrect end-of-clause punctuation for @param, @return, @throws, @exception:
@@ -763,7 +780,7 @@ Works over the currently-visited tags table."
 
   ;; Missing period at the end of a Javadoc tag
   (tags-replace "^\\( *\\* @[^@./]*\\.[ \n][^@./]*[A-Za-z0-9]\\)\\(\n[ \n*]*\\(\\*/\\|\* @\\)\\)"
-		"\\1.\\2")
+                "\\1.\\2")
   )
 
 (defun improve-javadoc-code-style ()
@@ -797,8 +814,10 @@ Works over the currently-visited tags table."
 
 
 
+;; Not needed any more -- just run google-java-code-format
 (defun declaration-annotations-to-their-own-line ()
   "Move commented declaration annotations to their own line, for files in the current TAGS tables."
+  (interactive)
   (tags-query-replace "^\\( *\\)/\\*\\(@SideEffectFree\\|@Pure\\|@Deterministic\\)\\*/ \\(public\\|private\\|protected\\|boolean\\|int\\|static\\)" "\\1/*\\2*/\n\\1\\3")
   )
 
@@ -808,6 +827,42 @@ Works over the currently-visited tags table."
          (append
           (list '("\\(?:^[ ][ ]\\|; Stack trace: \\)[A-Za-z0-9_.]+(\\([A-Za-z0-9_.]+\\):\\([0-9]+\\))$" 1 2))
           compilation-error-regexp-alist)))
+
+
+(autoload 'bdiff-revert-buffer-maybe "bdiff")
+
+(defun update-java-mode-hook-for-gjf ()
+  (add-hook 'after-save-hook 'run-google-java-format nil 'local))
+(add-hook 'java-mode-hook 'update-java-mode-hook-for-gjf)
+
+(defun run-google-java-format ()
+  "Run external program run-google-java-format.py on the file."
+  (interactive)
+  (let (cmd)
+    (cond
+     ((or (string-match-p "/\\(randoop\\)" (buffer-file-name))
+	  (and (string-match-p "/daikon" (buffer-file-name))
+	       (not (string-match-p "\\.jpp$" (buffer-file-name))))
+	  (and (string-match-p "/toradocu" (buffer-file-name))
+	       (not (string-match-p "/src/test/resources/" (buffer-file-name))))
+	  (and (string-match-p "/plume-lib" (buffer-file-name))
+	       (not (string-match-p "WeakHasherMap.java$\\|WeakIdentityHashMap.java$"
+				    (buffer-file-name)))))
+      ;; normal formatting
+      (setq cmd "run-google-java-format.py "))
+     ((and (string-match-p "/checker-framework" (buffer-file-name))
+	   (not (string-match-p "/checker/jdk/" (buffer-file-name))))
+      ;; non-standard cammand-line arguments
+      (setq cmd "run-google-java-format.py -a "))
+     (t
+      ;; for all other projects, don't automatically reformat
+      (setq cmd nil)))
+    (if cmd
+      (progn
+        ;; I would like to avoid the "(Shell command succeeded with no output)"
+        ;; message.
+        (shell-command (concat cmd (buffer-file-name)))
+	(bdiff-revert-buffer-maybe)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1484,7 +1539,7 @@ otherwise, raise an error after the first problem is encountered."
 ;; If variable `py-jump-on-exception' is nil, do nothing."
 ;;   ;; It doesn't work to wrap this whole body in save-excursion.
 ;;   (if (and py-jump-on-exception
-;;         (looking-back "\n>>> ")
+;;         (looking-back "\n>>> " (1- (beginning-of-line-point))
 ;;         (save-excursion
 ;;           (forward-line -1)
 ;;           (looking-at "[A-Za-z]*Error\\b")))
@@ -1680,6 +1735,11 @@ otherwise, raise an error after the first problem is encountered."
   ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
   (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry)
 
+  (if (string-match "/plume-lib/"
+		    (directory-file-name default-directory))
+      (progn
+	(make-variable-buffer-local 'before-save-hook)
+	(add-hook 'before-save-hook 'delete-trailing-whitespace)))
   (if (eq major-mode 'lisp-mode)
       ;; Not emacs-lisp-mode, fi::*-mode, etc.
       (progn
@@ -2025,6 +2085,11 @@ in compilation output."
           (if (string-equal ".*" (substring regexp 0 2))
               (error "Element of compilation-error-regexp-alist starts with \".*\": %s" cer))))))
 
+(defadvice compile (before recompute-compile-command activate)
+  "In certain modes, re-compute `compile-command'."
+  (if (memq major-mode '(shell-mode))
+      (set-compile-command-for-directory)))
+
 
 (defun next-error-recenter ()
   "Move point to top of screen, if point is so close to bottom that some
@@ -2070,12 +2135,14 @@ or null if it does not exist."
   (and
    ;; editing a file or directory
    (or buffer-file-name
-       (memq major-mode '(compilation-mode cvs-mode dired-mode svn-status-mode)))
+       (memq major-mode '(compilation-mode cvs-mode dired-mode magit-status-mode shell-mode svn-status-mode)))
    ;; Makefile doesn't exist, so we need a different command
    (not (or (file-exists-p (expand-file-name "Makefile"))
             (file-exists-p (expand-file-name "makefile"))
             (file-exists-p (expand-file-name "GNUmakefile"))))))
 
+;; I would like this to work for shell mode, but I would need to make it run
+;; as part of M-x compile instead of when the mode is set.
 (defun set-compile-command-for-directory ()
   "Returns true if it set the `compile-command' variable.
 Sets the variable to an invocation of \"ant\", \"gradle\", \"mvn\", etc.
@@ -2094,13 +2161,13 @@ in this directory or some superdirectory."
              (setq compile-command "ant -e -find build.xml "))
             ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
-	     (let ((gradle-command (if (file-readable-p "gradlew")
-				       (setq compile-command "./gradlew")
-				     (setq compile-command "gradle"))))
-	       (setq compile-command (concat gradle-command " build"))))
+             (let ((gradle-command (if (file-readable-p "gradlew")
+                                       (setq compile-command "./gradlew")
+                                     (setq compile-command "gradle"))))
+               (setq compile-command (concat gradle-command " build"))))
             ((file-in-super-directory "build.gradle" default-directory)
              (let* ((buildfile (file-in-super-directory
-                               "build.gradle" default-directory))
+                                "build.gradle" default-directory))
                     (gradle-command
                      (let ((gradlew (concat (file-name-directory buildfile)
                                             "gradlew")))
@@ -2109,15 +2176,27 @@ in this directory or some superdirectory."
                          "gradle"))))
                (make-local-variable 'compile-command)
                (setq compile-command
-		     (concat gradle-command " -b " buildfile " build"))))
+                     (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn package")))))
+             (setq compile-command "mvn package"))
+            ((file-in-super-directory "pom.xml" default-directory)
+             (let* ((buildfile (file-in-super-directory
+                                "pom.xml" default-directory)))
+
+               (make-local-variable 'compile-command)
+               (setq compile-command
+                     (concat "mvn" " -f " buildfile " package"))))
+	    ((file-readable-p "Rakefile")
+             (make-local-variable 'compile-command)
+             (setq compile-command "rake"))
+            )))
 (add-hook 'find-file-hooks 'set-compile-command-for-directory)
 (add-hook 'dired-mode-hook 'set-compile-command-for-directory)
 (add-hook 'compilation-mode-hook 'set-compile-command-for-directory)
 (add-hook 'cvs-mode-hook 'set-compile-command-for-directory)
 (add-hook 'svn-status-mode-hook 'set-compile-command-for-directory)
+(add-hook 'magit-status-mode-hook 'set-compile-command-for-directory)
 ;; There was no svn-status-mode-hook before "psvn.el 23079 2007-01-17".
 ;; (defadvice svn-status-mode (after set-compile-command-for-directory activate)
 ;;   (set-compile-command-for-directory))
@@ -2175,7 +2254,7 @@ Use as a hook, like so:
            (setq dir (replace-regexp-in-string "_" "-" dir))
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
-	;; Checker Framework demos
+        ;; Checker Framework demos
 ;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
 ;;       (make-local-variable 'compile-command)
 ;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
@@ -2210,7 +2289,7 @@ Use as a hook, like so:
               (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "make typecheck-only"))
-	;; end of Checker Framework demos
+        ;; end of Checker Framework demos
 
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
          (make-local-variable 'compile-command)
@@ -2218,10 +2297,15 @@ Use as a hook, like so:
         ((equal (substitute-in-file-name "$HOME/java/plume/") default-directory)
          (make-local-variable 'compile-command)
          (setq compile-command "make -C $HOME/bin/src/plume-lib/java"))
+	((string-match "^\\(.*commons-io-fork-nikshinde1996[^/]*/\\)" default-directory)
+         (make-local-variable 'compile-command)
+         (setq compile-command (concat "cd " (match-string 1 default-directory) " && mvn install")))
         ))
 (add-hook 'find-file-hooks 'special-case-set-compile-command 'append)
 (add-hook 'dired-mode-hook 'special-case-set-compile-command 'append)
 (add-hook 'compilation-mode-hook 'special-case-set-compile-command 'append)
+(add-hook 'shell-mode-hook 'special-case-set-compile-command 'append)
+(add-hook 'magit-status-mode-hook 'special-case-set-compile-command 'append)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
