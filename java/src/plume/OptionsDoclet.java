@@ -275,7 +275,7 @@ public class OptionsDoclet {
 
     OptionsDoclet o = new OptionsDoclet(root, options);
     @SuppressWarnings("value") // com.sun.javadoc.RootDoc needs annotations
-    String[] @MinLen(1) [] root_options = root.options();
+    String[] /*@MinLen(1)*/[] root_options = root.options();
     o.setOptions(root_options);
     o.processJavadoc();
     try {
