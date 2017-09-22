@@ -21,8 +21,8 @@ jobs:
         if [[ ($TRAVIS_BRANCH == master) &&
               ($TRAVIS_PULL_REQUEST == false) ]] ; then
           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-          sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
-          sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+          sh trigger-travis.sh codespecs daikon $TRAVIS_ACCESS_TOKEN
+          sh trigger-travis.sh typetests plume-lib-typecheck $TRAVIS_ACCESS_TOKEN
         fi
 
 git:
