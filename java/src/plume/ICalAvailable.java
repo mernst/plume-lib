@@ -149,7 +149,7 @@ public final class ICalAvailable {
 
   static DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
   static DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
-  static DateFormat dffull = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+  static DateFormat dfDayOfWeek = new SimpleDateFormat("EEE");
 
   /// Procedures
 
@@ -538,7 +538,7 @@ public final class ICalAvailable {
     // Remove trailing year, such as ", 1952".
     // result = result.substring(0, result.length() - 6);
     // Prepend day of week.
-    result = dffull.format(d).substring(0, 3) + " " + result;
+    result = dfDayOfWeek.format(d) + " " + result;
     return result;
   }
 }
