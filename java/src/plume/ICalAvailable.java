@@ -535,8 +535,6 @@ public final class ICalAvailable {
     df.setTimeZone(tz);
     String result = df.format(d);
     // Don't remove trailing year; it's a good double-check.
-    // Remove trailing year, such as ", 1952".
-    // result = result.substring(0, result.length() - 6);
     // Prepend day of week.
     result = dfDayOfWeek.format(d) + " " + result;
     return result;
