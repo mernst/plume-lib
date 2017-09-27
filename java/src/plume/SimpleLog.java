@@ -210,8 +210,15 @@ public final class SimpleLog {
   /** Exdents: reduces indentation and pops a start time. */
   public void exdent() {
     if (enabled) {
-      indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
-      pop_start_time();
+      if (start_times.isEmpty()) {
+        boolean old_always_traceback = always_traceback;
+        always_traceback = true;
+        log("Called exdent when indentation was 0.");
+        always_traceback = old_always_traceback;
+      } else {
+        indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
+        pop_start_time();
+      }
     }
   }
 
