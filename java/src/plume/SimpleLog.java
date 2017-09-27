@@ -33,7 +33,7 @@ public final class SimpleLog {
   public PrintStream logfile = System.out;
 
   /** The current indentation string. */
-  public String indent_str = "";
+  private String indent_str = "";
   /** Indentation string for one level of indentation. */
   public final String INDENT_STR_ONE_LEVEL = "  ";
 
@@ -161,6 +161,7 @@ public final class SimpleLog {
   /// Indentation
   ///
 
+  /** Indents by one level and pushes a corresponding start time. */
   public void indent() {
     if (enabled) {
       indent_str += INDENT_STR_ONE_LEVEL;
@@ -168,9 +169,12 @@ public final class SimpleLog {
     }
   }
 
+  /**
+   * Prints to the log, then indents.
+   *
+   * @see #indent()
+   */
   /*@FormatMethod*/
-  @SuppressWarnings(
-      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void indent(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log(format, args);
@@ -188,7 +192,7 @@ public final class SimpleLog {
   }
 
   /**
-   * Calls clear() and then logs the specified message
+   * Calls {@link #clear()} and then logs the specified message
    *
    * @param format format string for message
    * @param args values to be substituted into format
@@ -203,17 +207,23 @@ public final class SimpleLog {
     }
   }
 
+  /** Exdents: reduces indentation and pops a start time. */
   public void exdent() {
     if (enabled) {
-      // TODO: Bug here (IndexOutOfBoundsException) that's revealed by the Index Checker: no check
-      // on whether currently indented.
-      indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
-      pop_start_time();
+      if (start_times.isEmpty()) {
+        boolean old_always_traceback = always_traceback;
+        always_traceback = true;
+        log("Called exdent when indentation was 0.");
+        always_traceback = old_always_traceback;
+      } else {
+        indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
+        pop_start_time();
+      }
     }
   }
 
   /**
-   * Prints the time and then exdents.
+   * Prints the time (showing the time for the nested timer) and then calls {@link #exdent()}.
    *
    * @param format format string for message
    * @param args values to be substituted into format
@@ -250,6 +260,7 @@ public final class SimpleLog {
     }
   }
 
+  /** Pops a start time from the stack. */
   public void pop_start_time() {
     start_times.pop();
   }
