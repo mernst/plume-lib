@@ -819,6 +819,7 @@ public class Options {
    * @return all non-option arguments
    * @throws ArgException if the command line contains unknown option or misused options
    */
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/169
   public String[] parse(String[] args) throws ArgException {
 
     List<String> non_options = new ArrayList<String>();

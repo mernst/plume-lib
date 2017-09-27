@@ -3536,7 +3536,7 @@ public final class ArraysMDE {
     }
 
     /** Returns a new partition just like this one, but with elt added to the ith part. */
-    Partitioning<T> addToPart(int i, T elt) {
+    Partitioning<T> addToPart(/*@IndexOrHigh("this")*/ int i, T elt) {
       Partitioning<T> result = new Partitioning<T>(this);
       if (size() == i) {
         ArrayList<T> newPart = newArrayList(elt);

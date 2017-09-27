@@ -416,8 +416,12 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/170
   @Override
-  public void write(String s, int off, int len) {
+  public void write(
+      String s,
+      @NonNegative @LTLengthOf(value = "#1", offset = "#3") int off,
+      @IndexOrHigh("#1") int len) {
     writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);
