@@ -75,6 +75,7 @@ The mapping is created by the javadoc-index-to-alist program.")
   (interactive (list (javadoc-read-id)))
   (let ((ref (javadoc-get-url id)))
     (funcall browse-url-browser-function ref)))
+(fset 'jlookup `javadoc-lookup)
 
 (defun java-insert-import (id)
   "Insert an import statement for a Java class."
@@ -88,6 +89,43 @@ The mapping is created by the javadoc-index-to-alist program.")
 	(beginning-of-line)
 	(insert "import " class ";\n")))))
 (fset 'jimport 'java-insert-import)
+
+(defun compilation-java-insert-imports ()
+  "Insert an import for every class mentioned in the *compilation* buffer."
+  (interactive)
+  (with-current-buffer "*compilation*"
+    (goto-char (point-min))
+    (while (re-search-forward
+	    "^\\(.*\\.java\\):[0-9]+: error: cannot find symbol.*\n.*\n.*\n  symbol:   variable \\([A-Za-z0-9_]+\\)\n"
+	    nil t)
+      (let ((filename (match-string 1))
+	    (class-to-import (match-string 2)))
+	(save-excursion
+	  ;; Requires that compilation is run at top level; makefile must not do "cd", for example.
+	  (find-file filename)
+	  (jimport class-to-import)
+	  )))))
+
+
+;; ;; I cannot get this to work; the current buffer stays at *compilation* after compile-goto-error.
+;; (defun compilation-java-insert-imports ()
+;;   "Insert an import for every class mentioned in the *compilation* buffer."
+;;   (interactive)
+;;   (save-excursion
+;;     (set-buffer "*compilation*")
+;;     (goto-char (point-min))
+;;     (while (re-search-forward
+;; 	    "error: cannot find symbol.*\n.*\n.*\n  symbol:   variable \\([A-Za-z0-9_]+\\)"
+;; 	    nil t)
+;;       (goto-char (match-beginning 0))
+;;       (compile-goto-error)
+;;       (message "after compile-goto-error, (current-buffer)=%s" (current-buffer))
+;;       (jimport (match-string 1))
+;;       (set-buffer "*compilation*")
+;;       (forward-line 1)
+;;       )))
+
+
 
 (defun ref-to-class (str)
   "Given \"java/math/BigInteger.html#abs()\", return \"java.math.BigInteger.abs()\"."
