@@ -20,9 +20,15 @@ jobs:
         echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
         if [[ ($TRAVIS_BRANCH == master) &&
               ($TRAVIS_PULL_REQUEST == false) ]] ; then
-          curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-          sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
-          sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+          SLUGOWNER=${TRAVIS_REPO_SLUG%/*}
+          if [[ "$SLUGOWNER" == "" ]]; then
+            SLUGOWNER=typetools
+          fi
+          if [[ "${SLUGOWNER}" == "typetools" ]]; then
+            curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+            sh trigger-travis.sh codespecs daikon $TRAVISTOKEN
+            sh trigger-travis.sh typetests plume-lib-typecheck $TRAVISTOKEN
+          fi
         fi
 
 git:
