@@ -120,6 +120,9 @@ JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-
 JAVAC_COMMAND ?= ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
 JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
+# A string like "18" for "1.8", because `test` can only do < and > on integers
+JAVA_VERSION := $(shell ${JAVA} -version 2>&1 | sed -n ';s/.* version "\(.*\)\.\(.*\)\..*"/\1\2/p;')
+JAVA_8_OR_HIGHER := $(shell test $(JAVA_VERSION) -gt 17; echo $$?)
 
 # Leading "./" is for consistency with output of "find", so that names are
 # identical and "sort" can remove duplicates.
@@ -361,7 +364,7 @@ ${TOOLS_JAR}:
 
 
 showvars:
-# Short output
+# Produces short output
 	@echo OSTYPE = $(OSTYPE)
 	@echo JAVA_HOME = "$(JAVA_HOME)"
 	@echo javac_cmd = $(javac_cmd)
@@ -371,7 +374,10 @@ showvars:
 	@echo TOOLS_JAR_7 = $(TOOLS_JAR_7)
 	@echo TOOLS_JAR = $(TOOLS_JAR)
 	@echo I_set_TOOLS_JAR = $(I_set_TOOLS_JAR)
-# Long output
+	@echo JAVA_VERSION = $(JAVA_VERSION)
+	@echo JAVA_8_OR_HIGHER = $(JAVA_8_OR_HIGHER)
+# Produces long output
+	@echo JAVADOC_VERSION = "$(JAVADOC_VERSION)"
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
@@ -457,7 +463,7 @@ verify-plume-jar-classfile-version:
 
 # Ensure that plume.jar does not contain JDK 8 or 9 classfiles
 verify-plume.jar:
-	echo "TODO"
+	echo "TODO: Ensure that plume.jar does not contain JDK 8 or 9 classfiles"
 
 ###
 ### build plume-core.jar file
@@ -579,16 +585,26 @@ lib/error_prone_ant-2.0.21.jar:
 	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/2.0.21/error_prone_ant-2.0.21.jar)
 
 # This compiles the code as well as does pluggable type-checking.
+# Requires Java 8.
 typecheck checkers check-types: ${JAVA_AND_CPP_FILES}
+ifeq ($(JAVA_8_OR_HIGHER),0)
 	\rm -f .class-files-timestamp
 # Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
 	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}"
+else
+	echo "Skipping typecheck job, which requires Java 8 or higher"
+endif
 
 # This does pluggable type-checking without compiling the code.
+# Requires Java 8.
 typecheck-only checkers-only check-types-only: ${JAVA_AND_CPP_FILES}
+ifeq ($(JAVA_8_OR_HIGHER),0)
 	\rm -f .class-files-timestamp
 # Possible quoting problem if JAVACHECK_COMMAND contains double-quote characters.
 	${MAKE} JAVAC_COMMAND="${JAVACHECK_COMMAND}" .class-files-timestamp
+else
+	echo "Skipping typecheck-only job, which requires Java 8 or higher"
+endif
 
 # I have not found this tool very useful.
 checkstyle: ${JAVA_AND_CPP_FILES}
@@ -598,15 +614,23 @@ checkstyle: ${JAVA_AND_CPP_FILES}
 update-run-google-java-format:
 	@[ -d .run-google-java-format ] && (cd .run-google-java-format && git pull -q) || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
 
-# Requires Java 8
+# Requires Java 8.
 reformat:
+ifeq ($(JAVA_8_OR_HIGHER),0)
 	${MAKE} update-run-google-java-format
 	@.run-google-java-format/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
+else
+	echo "Skipping reformat job, which requires Java 8 or higher"
+endif
 
-# Requires Java 8
+# Requires Java 8.
 check-format:
+ifeq ($(JAVA_8_OR_HIGHER),0)
 	${MAKE} update-run-google-java-format
 	@./.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE} || (echo "Try running:  make reformat" && /bin/false)
+else
+	echo "Skipping check-format job, which requires Java 8 or higher"
+endif
 
 .PHONY: typecheck checkers check-types checkstyle reformat check-format
 
