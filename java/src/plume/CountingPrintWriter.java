@@ -420,8 +420,8 @@ public class CountingPrintWriter extends PrintWriter {
   @Override
   public void write(
       String s,
-      @NonNegative @LTLengthOf(value = "#1", offset = "#3") int off,
-      @IndexOrHigh("#1") int len) {
+      /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#3")*/ int off,
+      /*@IndexOrHigh("#1")*/ int len) {
     writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);

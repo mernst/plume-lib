@@ -3444,7 +3444,7 @@ public final class ArraysMDE {
    * @param k number of subsets into which to partition {@code elts}
    * @return a list of partitionings, where each contains exactly k subsets
    */
-  public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, int k) {
+  public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, /*@NonNegative*/ int k) {
     if (elts.size() < k) {
       throw new IllegalArgumentException();
     }
@@ -3467,8 +3467,8 @@ public final class ArraysMDE {
   public static <T> List<Partitioning<T>> partitionIntoHelper(
       Queue<T> elts,
       List</*@ LengthIs("#3")*/ Partitioning<T>> resultSoFar,
-      int numEmptyParts,
-      int numNonemptyParts) {
+      /*@NonNegative*/ int numEmptyParts,
+      /*@NonNegative*/ int numNonemptyParts) {
 
     if (numEmptyParts > elts.size()) {
       throw new IllegalArgumentException(numEmptyParts + " > " + elts.size());
@@ -3488,7 +3488,11 @@ public final class ArraysMDE {
       List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
       for (int i = 0; i < numNonemptyParts; i++) {
         for (Partitioning<T> p : resultSoFar) {
-          resultSoFar_augmented.add(p.addToPart(i, elt));
+          // i is < numNonemptyParts, and the size of p is always = numNonemptyParts + numEmptyParts, both of which are NN
+          // The result is a false positive.
+          /*@SuppressWarnings("index")*/
+          /*@LTLengthOf("p")*/ int i1 = i;
+          resultSoFar_augmented.add(p.addToPart(i1, elt));
         }
       }
       result.addAll(
