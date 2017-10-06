@@ -1,7 +1,7 @@
 language: java
 
 jdk:
-  - openjdk7
+#  - openjdk7
 #  - oraclejdk7
   - oraclejdk8
 
@@ -10,9 +10,11 @@ sudo: false
 before_install:
   - pip install --user pylint
 
-script: set -e && make USE_CODECOV=1 all-but-emacs check
+script: travis_wait 120 ./.travis-build.sh
 
-## Temporary; do not merge with master.
+## Temporarily commented out; do not merge with master.
+# script: set -e && make USE_CODECOV=1 all-but-emacs check
+# 
 # jobs:
 #   include:
 #     - stage: trigger downstream
