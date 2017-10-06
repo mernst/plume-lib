@@ -94,7 +94,8 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   }
 
   @Override
-  public CharSequence subSequence(/*@IndexFor("this")*/ int start, /*@IndexFor("this")*/ int end) {
+  public CharSequence subSequence(
+      /*@IndexFor("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {
     return delegate.subSequence(start, end);
   }
 
