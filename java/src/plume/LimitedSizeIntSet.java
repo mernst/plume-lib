@@ -184,7 +184,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   @Override
-  public LimitedSizeIntSet clone(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
+  public @PolySameLen LimitedSizeIntSet clone(
+      /*>>>@GuardSatisfied @PolySameLen LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
       result = (LimitedSizeIntSet) super.clone();

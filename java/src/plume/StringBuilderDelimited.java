@@ -75,8 +75,8 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   @Override
   public StringBuilderDelimited append(
       /*@Nullable*/ CharSequence csq,
-      /*@ IndexFor("#1")*/ int start,
-      /*@ IndexFor("#1")*/ int end) {
+      /*@IndexOrHigh("#1")*/ int start,
+      /*@IndexOrHigh("#1")*/ int end) {
     appendDelimiter();
     delegate.append(csq, start, end);
     return this;

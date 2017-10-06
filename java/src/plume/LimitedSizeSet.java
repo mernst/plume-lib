@@ -55,7 +55,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
     // this.max_values = max_values;
     @SuppressWarnings("unchecked")
-    /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
+    /*@Nullable*/ T /*@MinLen(1)*/[] new_values_array =
+        (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
     values = new_values_array;
     num_values = 0;
   }
@@ -184,7 +185,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   @Override
-  public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+  public @PolySameLen LimitedSizeSet<T> clone(
+      /*>>>@GuardSatisfied @PolySameLen LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
       @SuppressWarnings("unchecked")

@@ -3463,8 +3463,12 @@ public final class ArraysMDE {
    *     member so far
    * @return a list of partitionings, where each contains exactly k subsets
    */
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/152
   public static <T> List<Partitioning<T>> partitionIntoHelper(
-      Queue<T> elts, List<Partitioning<T>> resultSoFar, int numEmptyParts, int numNonemptyParts) {
+      Queue<T> elts,
+      List</*@ LengthIs("#3")*/ Partitioning<T>> resultSoFar,
+      int numEmptyParts,
+      int numNonemptyParts) {
 
     if (numEmptyParts > elts.size()) {
       throw new IllegalArgumentException(numEmptyParts + " > " + elts.size());
