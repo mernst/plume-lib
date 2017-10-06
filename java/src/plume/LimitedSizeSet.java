@@ -185,7 +185,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   @Override
-  public @PolySameLen LimitedSizeSet<T> clone(
+  public /*@PolySameLen*/ LimitedSizeSet<T> clone(
       /*>>>@GuardSatisfied @PolySameLen LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
