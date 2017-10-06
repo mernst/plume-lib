@@ -3430,7 +3430,8 @@ public final class ArraysMDE {
    * @param k number of subsets into which to partition {@code elts}
    * @return a list of partitionings, where each contains exactly k subsets
    */
-  public static <T> List<Partitioning<T>> partitionInto(Collection<T> elts, int k) {
+  public static <T> List<Partitioning<T>> partitionInto(
+      Collection<T> elts, /*@NonNegative*/ int k) {
     return partitionInto(new LinkedList<T>(elts), k);
   }
 
