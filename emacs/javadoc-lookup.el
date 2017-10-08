@@ -74,7 +74,7 @@ The mapping is created by the javadoc-index-to-alist program.")
 					    (try-completion "" refs-as-lists))))
 		   (cdr (or (assoc choice refs-as-lists)
 			    (assoc-string choice refs-as-lists t)))))))
-     (puthash id javadoc-get-url-hashtable)
+     (puthash id ref javadoc-get-url-hashtable)
      ref)))
 
 (defun javadoc-lookup (id)
