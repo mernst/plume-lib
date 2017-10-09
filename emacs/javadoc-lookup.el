@@ -48,7 +48,7 @@ The mapping is created by the javadoc-index-to-alist program.")
 		       (if (eq try t) guess try)))))
 
 ;; Map from Java class/method name to fully-qualified class name, both as strings
-(defvar javadoc-get-url-hashtable (make-hash-table))
+(defvar javadoc-get-url-hashtable (make-hash-table :test 'equal))
 
 ;; TODO: add a cache to avoid repeated queries about the same class
 (defun javadoc-get-url (id)
