@@ -54,8 +54,9 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       throw new IllegalArgumentException("max_values should be positive, is " + max_values);
     }
     // this.max_values = max_values;
-    @SuppressWarnings("unchecked")
-    /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
+    @SuppressWarnings({"unchecked", "index", "value"}) // Index: kelloggm#174
+    /*@Nullable*/ T /*@MinLen(1)*/[] new_values_array =
+        (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
     values = new_values_array;
     num_values = 0;
   }

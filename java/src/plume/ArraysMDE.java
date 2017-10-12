@@ -3430,7 +3430,8 @@ public final class ArraysMDE {
    * @param k number of subsets into which to partition {@code elts}
    * @return a list of partitionings, where each contains exactly k subsets
    */
-  public static <T> List<Partitioning<T>> partitionInto(Collection<T> elts, int k) {
+  public static <T> List<Partitioning<T>> partitionInto(
+      Collection<T> elts, /*@NonNegative*/ int k) {
     return partitionInto(new LinkedList<T>(elts), k);
   }
 
@@ -3543,7 +3544,7 @@ public final class ArraysMDE {
     }
 
     /** Returns a new partition just like this one, but with elt added to the ith part. */
-    Partitioning<T> addToPart(/*@IndexOrHigh("this")*/ int i, T elt) {
+    Partitioning<T> addToPart(/*@NonNegative*/ int i, T elt) {
       Partitioning<T> result = new Partitioning<T>(this);
       if (size() == i) {
         ArrayList<T> newPart = newArrayList(elt);

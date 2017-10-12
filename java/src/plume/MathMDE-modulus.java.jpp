@@ -124,31 +124,34 @@ The correct way to build the system is to run 'make'.
       return null;
     }
 
+    // The Index Checker somehow loses this type in the code below.
+    INT /*@MinLen(2)*/ [] nums2 = nums;
+
     int first_index = 0;
-    int last_index = nums.length-1;
+    int last_index = nums2.length-1;
     INT first_nonstrict = 0; // arbitrary initial value
     INT last_nonstrict = 0; // arbitrary initial value
     if (nonstrict_ends) {
-      first_nonstrict = nums[first_index];
+      first_nonstrict = nums2[first_index];
       first_index++;
-      last_nonstrict = nums[last_index];
+      last_nonstrict = nums2[last_index];
       last_index--;
     }
     if (last_index - first_index < 2) {
       return null;
     }
 
-    INT modulus = nums[first_index+1] - nums[first_index];
+    INT modulus = nums2[first_index+1] - nums2[first_index];
     if (modulus == 1) {
       return null;
     }
     for (int i=first_index+2; i<=last_index; i++) {
-      if (nums[i] - nums[i-1] != modulus) {
+      if (nums2[i] - nums2[i-1] != modulus) {
         return null;
       }
     }
 
-    INT r = mod_positive(nums[first_index], modulus);
+    INT r = mod_positive(nums2[first_index], modulus);
     if (nonstrict_ends) {
       if ((r != mod_positive(first_nonstrict, modulus))
           || (r != mod_positive(last_nonstrict, modulus))) {
