@@ -1505,7 +1505,10 @@ public class Options {
     return out.toString();
   }
 
-  /** Exceptions encountered during argument processing. */
+  /**
+   * Indicates an exception encountered during argument processing. Contains no information other
+   * than the message string.
+   */
   public static class ArgException extends Exception {
     static final long serialVersionUID = 20051223L;
 
@@ -1513,7 +1516,7 @@ public class Options {
       super(s);
     }
 
-    @SuppressWarnings("formatter") // acts as format method wrapper
+    /*@FormatMethod*/
     public ArgException(String format, /*@Nullable*/ Object... args) {
       super(String.format(format, args));
     }
