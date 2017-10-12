@@ -1515,7 +1515,7 @@ public class Options {
       super(s);
     }
 
-    @FormatMethod
+    /*@FormatMethod*/
     public ArgException(String format, /*@Nullable*/ Object... args) {
       super(String.format(format, args));
     }
