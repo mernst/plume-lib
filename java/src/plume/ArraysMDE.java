@@ -3490,7 +3490,7 @@ public final class ArraysMDE {
         for (Partitioning<T> p : resultSoFar) {
           // i is < numNonemptyParts, and the size of p is always = numNonemptyParts + numEmptyParts, both of which are NN
           // The result is a false positive.
-          /*@SuppressWarnings("index")*/
+          @SuppressWarnings("index") // lists
           /*@LTLengthOf("p")*/ int i1 = i;
           resultSoFar_augmented.add(p.addToPart(i1, elt));
         }
