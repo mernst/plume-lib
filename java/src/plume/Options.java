@@ -671,7 +671,7 @@ public class Options {
         }
 
         @SuppressWarnings(
-            "initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
+            "initialization") // new C(underInit) yields @UnderInitialization; @Initialized is safe
         /*@Initialized*/ OptionInfo oi =
             new OptionInfo(f, option, is_class ? null : obj, unpublicized);
         options.add(oi);
@@ -781,7 +781,7 @@ public class Options {
       System.out.printf(
           "Exception in call to f.getAnnotation(%s)%n  for f=%s%n  %s%nClasspath =%n",
           annotationClass, f, e.getMessage());
-      //e.printStackTrace();
+      // e.printStackTrace();
       JWhich.printClasspath();
       annotation = null;
     }

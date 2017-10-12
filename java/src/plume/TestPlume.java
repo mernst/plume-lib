@@ -607,7 +607,7 @@ public final class TestPlume {
       }
       for (int i = 0; i < f2.length - f1.length; i++) {
 
-        //fill up f1 with elements of f2
+        // fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
           f1[j] = f2[i + j];
         }
@@ -841,7 +841,8 @@ public final class TestPlume {
       String[] a6 = new String[] {"0", "1", "5", "3", "4"};
       String[] a7 = new String[] {"1", "2", "3", "4"};
       @SuppressWarnings(
-          "nullness") // accommodates poor annotation on ComparableArrayComparatorLexical.compare() and ComparableArrayComparatorLengthFirst.compare()
+          "nullness") // accommodates poor annotation on ComparableArrayComparatorLexical.compare()
+      // and ComparableArrayComparatorLengthFirst.compare()
       String[] a8 = new String[] {"0", "1", null, "3", "4"};
 
       assert cacl.compare(a0, a1) == 0;
@@ -1711,7 +1712,8 @@ public final class TestPlume {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
-      // System.out.println("Iterator: <" + pair.a + "," + pair.b + ">, array: <" + ints[pairno][0] + "," + ints[pairno][1] + ">");
+      // System.out.println("Iterator: <" + pair.a + "," + pair.b + ">, array: <" + ints[pairno][0]
+      //     + "," + ints[pairno][1] + ">");
       assert (pair.a == null) || (pair.a.intValue() == ints[pairno][0]);
       assert (pair.b == null) || (pair.b.intValue() == ints[pairno][1]);
       pairno++;
@@ -1977,7 +1979,8 @@ public final class TestPlume {
     assert UtilMDE.fieldDescriptorToBinaryName("[[LJava/lang/Integer;")
         .equals("Java.lang.Integer[][]");
 
-    // public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(/*FieldDescriptor*/ String fd)
+    // public static /*@ClassGetName*/ String
+    //     fieldDescriptorToClassGetName(/*FieldDescriptor*/ String fd)
     assert UtilMDE.fieldDescriptorToClassGetName("Z").equals("boolean");
     assert UtilMDE.fieldDescriptorToClassGetName("B").equals("byte");
     assert UtilMDE.fieldDescriptorToClassGetName("C").equals("char");
@@ -2253,8 +2256,10 @@ public final class TestPlume {
     // public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
     // public static <K,V> String mapToString(Map<K,V> m) {
     // public static <K,V> void mapToString(Appendable sb, Map<K,V> m, String linePrefix) {
-    // public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m) {
-    // public static <K,V> Collection</*@KeyFor("#1")*/ K> sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
+    // public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K>
+    //     sortedKeySet(Map<K,V> m) {
+    // public static <K,V> Collection</*@KeyFor("#1")*/ K>
+    //     sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
 
     // public static Method methodForName(String methodname) throws ClassNotFoundException
     //
@@ -2724,7 +2729,7 @@ public final class TestPlume {
     double offhigh2 = 1 + 2 * offset;
     double offlow2 = 1 - 2 * offset;
 
-    //test equality for a variety of postive and negative numbers
+    // test equality for a variety of postive and negative numbers
     for (double d = -20000; d < 20000; d += 1000.36) {
       assert ff.eq(d, d * offhigh);
       assert ff.eq(d, d * offlow);
@@ -2736,25 +2741,25 @@ public final class TestPlume {
       assert ff.ne(d, d * offlow2);
     }
 
-    //make sure nothing is equal to zero
+    // make sure nothing is equal to zero
     assert ff.eq(0, Double.MIN_VALUE);
     assert ff.eq(0, -Double.MIN_VALUE);
     assert !ff.ne(0, Double.MIN_VALUE);
     assert !ff.ne(0, -Double.MIN_VALUE);
 
-    //make sure that 0 equals 0
+    // make sure that 0 equals 0
     assert ff.eq(0, 0);
     assert !ff.ne(0, 0);
 
-    //make sure that NaNs are not equal
+    // make sure that NaNs are not equal
     assert !ff.eq(Double.NaN, Double.NaN);
 
-    //make sure that various unusual values are equal
+    // make sure that various unusual values are equal
     assert ff.eq(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
     assert ff.eq(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
 
-    //rudimentary checks on the comparison operators (since they all just
-    //use eq and ne anyway)
+    // rudimentary checks on the comparison operators (since they all just
+    // use eq and ne anyway)
     {
       double d = 2563.789;
       assert !ff.gt(d, d * offlow);
@@ -2858,11 +2863,11 @@ public final class TestPlume {
 
         initialize_f1_and_f2(j, f1, f2);
 
-        //make two elements off just a little
+        // make two elements off just a little
         f2[7] = f2[7] * (1 + offset);
         f2[8] = f2[8] * (1 - offset);
 
-        //test with each array the bigger one
+        // test with each array the bigger one
         if ((j % 2) == 0) {
           assert ff.isElemMatch(f1, f2);
         } else {
@@ -2873,11 +2878,11 @@ public final class TestPlume {
 
         initialize_f1_and_f2(j, f1, f2);
 
-        //make two elements off just a little
+        // make two elements off just a little
         f2[7] = f2[7] * (1 + 2 * offset);
         f2[8] = f2[8] * (1 - 2 * offset);
 
-        //test with each array the bigger one
+        // test with each array the bigger one
         double[] f1_copy = f1.clone();
         double[] f2_copy = f2.clone();
         if ((j % 2) == 0) {
@@ -2965,7 +2970,7 @@ public final class TestPlume {
       }
       for (int i = 0; i < f2.length - f1.length; i++) {
 
-        //fill up f1 with elements of f2
+        // fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
           f1[j] = f2[i + j];
         }
@@ -3001,13 +3006,13 @@ public final class TestPlume {
   @SuppressWarnings("index") // issue 147
   void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
 
-    //start two arrays out exactly equal
+    // start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
       f1[i] = j + i * 10;
       f2[i] = j + i * 10;
     }
 
-    //fill out the second half of f2 with dup of f1
+    // fill out the second half of f2 with dup of f1
     for (int i = 10; i < f2.length; i++) {
       f2[i] = j + (i - 10) * 10;
     }
@@ -3443,7 +3448,8 @@ public final class TestPlume {
     assert sa[10].equals("");
   }
 
-  // Figure 1 from http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
+  // Figure 1 from
+  // http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
   private static /*@Nullable*/ Map<Integer, List</*@KeyFor("preds1")*/ Integer>> preds1;
   private static /*@Nullable*/ Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
 

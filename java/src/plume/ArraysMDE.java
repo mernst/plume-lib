@@ -3030,7 +3030,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
@@ -3082,7 +3082,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
@@ -3143,7 +3143,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
@@ -3262,7 +3262,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
@@ -3327,7 +3327,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
@@ -3489,7 +3489,8 @@ public final class ArraysMDE {
       List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
       for (int i = 0; i < numNonemptyParts; i++) {
         for (Partitioning<T> p : resultSoFar) {
-          // i is < numNonemptyParts, and the size of p is always = numNonemptyParts + numEmptyParts, both of which are NN
+          // i is < numNonemptyParts, and p.size() = numNonemptyParts + numEmptyParts,
+          // both of which are NN.
           // The result is a false positive.
           /*@SuppressWarnings("index")*/
           /*@LTLengthOf("p")*/ int i1 = i;

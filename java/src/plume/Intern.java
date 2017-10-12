@@ -615,7 +615,7 @@ public final class Intern {
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
   public static long /*@Interned*/ [] intern(long[] a) {
-    //System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
+    // System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
     long[] result1 = (lookup != null) ? lookup.get() : null;
@@ -745,7 +745,7 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
     }
     @SuppressWarnings(
-        "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] polyresult = result;
     return polyresult;
   }
@@ -767,7 +767,7 @@ public final class Intern {
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(
       /*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings(
-        "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup =
         internedObjectArrays.get(a);
     /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [] result = (lookup != null) ? lookup.get() : null;
@@ -777,7 +777,7 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
     }
     @SuppressWarnings(
-        "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] polyresult = result;
     return polyresult;
   }

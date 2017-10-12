@@ -2685,7 +2685,8 @@ public final class UtilMDE {
       // if (non_ws_index == arg.length()) {
       //   System.out.println("No nonspace character at end of: " + arg);
       // } else {
-      //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " + non_ws_index + " in: " + arg);
+      //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " +
+      //       non_ws_index + " in: " + arg);
       // }
       if (non_ws_index != delim_index + delim_len) {
         arg = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
@@ -2714,7 +2715,8 @@ public final class UtilMDE {
       // if (non_ws_index == -1) {
       //   System.out.println("No nonspace character at front of: " + arg);
       // } else {
-      //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " + non_ws_index + " in: " + arg);
+      //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " +
+      //       non_ws_index + " in: " + arg);
       // }
       if (non_ws_index != delim_index - 1) {
         arg = arg.substring(0, non_ws_index + 1) + arg.substring(delim_index);

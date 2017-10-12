@@ -60,7 +60,7 @@ public class FuzzyFloat {
     min_ratio = 1 - rel_diff;
     max_ratio = 1 + rel_diff;
     off = (rel_diff == 0.0);
-    //System.out.println ("min_ratio = " + min_ratio + ", max_ratio = "
+    // System.out.println ("min_ratio = " + min_ratio + ", max_ratio = "
     //                    + max_ratio);
 
   }
@@ -250,7 +250,7 @@ public class FuzzyFloat {
   /*@Pure*/
   public boolean isElemMatch(double[] a1, double[] a2) {
 
-    //don't change our parameters
+    // don't change our parameters
     a1 = a1.clone();
     a2 = a2.clone();
 
@@ -368,7 +368,7 @@ public class FuzzyFloat {
   /*@Pure*/
   public boolean isSubset(double[] smaller, double[] bigger) {
 
-    //don't change our parameters
+    // don't change our parameters
     smaller = smaller.clone();
     bigger = bigger.clone();
 
