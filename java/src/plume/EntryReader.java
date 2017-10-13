@@ -638,7 +638,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       // Remove entry match from the line
       if (entry_match.groupCount() > 0) {
         @SuppressWarnings(
-            "nullness") // dependent: just checked that group 1 exists via groupCount(); https://tinyurl.com/cfissue/291
+            "nullness") // dependent: groupCount() checked group; https://tinyurl.com/cfissue/291
         /*@NonNull*/ String match_group_1 = entry_match.group(1);
         line = entry_match.replaceFirst(match_group_1);
       }

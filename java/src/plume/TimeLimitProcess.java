@@ -82,7 +82,7 @@ public class TimeLimitProcess extends Process {
     @SuppressWarnings({
       "rawness",
       "initialization"
-    }) // tptt won't do anything with this until this is fully initialized; can FBC avoid the @SuppressWarnings?
+    }) // FBC false positive: tptt won't do anything with this until this is fully initialized
     /*@Initialized*/ TPTimerTask tptt = new TPTimerTask(this, timeLimit);
     timer.schedule(tptt, timeLimit);
     if (cacheStdout) {

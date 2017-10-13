@@ -1,7 +1,7 @@
 language: java
 
 jdk:
-  - openjdk7
+#  - openjdk7
 #  - oraclejdk7
   - oraclejdk8
 
@@ -10,22 +10,25 @@ sudo: false
 before_install:
   - pip install --user pylint
 
-script: set -e && make USE_CODECOV=1 all-but-emacs check
+script: ./.travis-build.sh
 
-jobs:
-  include:
-    - stage: trigger downstream
-      jdk: oraclejdk8
-      script: |
-        echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
-        if [[ ($TRAVIS_BRANCH == master) &&
-              ($TRAVIS_PULL_REQUEST == false) ]] ; then
-          curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
-          sh trigger-travis.sh codespecs daikon $TRAVIS_ACCESS_TOKEN
-          sh trigger-travis.sh typetests plume-lib-typecheck $TRAVIS_ACCESS_TOKEN
-          # Temporary
-          sh trigger-travis.sh mernst plume-lib-check-index-new $TRAVIS_ACCESS_TOKEN
-        fi
+## Temporarily commented out; do not merge with master.
+# script: set -e && make USE_CODECOV=1 all-but-emacs check
+# 
+# jobs:
+#   include:
+#     - stage: trigger downstream
+#       jdk: oraclejdk8
+#       script: |
+#         echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
+#         if [[ ($TRAVIS_BRANCH == master) &&
+#               ($TRAVIS_PULL_REQUEST == false) ]] ; then
+#           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+#           sh trigger-travis.sh codespecs daikon $TRAVIS_ACCESS_TOKEN
+#           sh trigger-travis.sh typetests plume-lib-typecheck $TRAVIS_ACCESS_TOKEN
+#           # Temporary
+#           sh trigger-travis.sh mernst plume-lib-check-index-new $TRAVIS_ACCESS_TOKEN
+#         fi
 
 git:
   depth: 9

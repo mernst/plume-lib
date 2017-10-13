@@ -5,7 +5,8 @@
 //   javac -g DeclarationAnnotations.java -cp $pl/java/lib/guava-20.0.jar
 // Run with:
 //   java -cp ..:$pl/java/lib/guava-20.0.jar plume.DeclarationAnnotations
-//   java -cp $pl/java/lib/guava-20.0.jar:$ch/dist/checker.jar:$ch/dist/javac.jar:${CLASSPATH}:.. plume.DeclarationAnnotations
+//   java -cp $pl/java/lib/guava-20.0.jar:$ch/dist/checker.jar:$ch/dist/javac.jar:${CLASSPATH}:.. \
+//       plume.DeclarationAnnotations
 // However, the latter invocation is problematic because Guava contains
 // declaration versions of annotations such as @NonNull.  I don't want to
 // have to determine the package of each annotation, so I won't use this.

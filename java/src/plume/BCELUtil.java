@@ -445,7 +445,7 @@ public final class BCELUtil {
     // not generic because BCEL is not generic
     for (Iterator i = il.iterator(); i.hasNext(); ) {
       @SuppressWarnings(
-          "nullness") // BCEL's InstructionList is raw (non-generic) but contains only non-null elements
+          "nullness") // BCEL's InstructionList is not generic but contains only non-null elements
       /*@NonNull*/ InstructionHandle handle = (InstructionHandle) i.next();
       out.append(handle.getInstruction().toString(pool.getConstantPool()) + "\n");
     }
