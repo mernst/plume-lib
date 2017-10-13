@@ -314,7 +314,8 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Expunge stale entries from the table.
      */
-    @SuppressWarnings("purity") // actually has side effects due to weak pointers
+    @SuppressWarnings({"purity", // actually has side effects due to weak pointers
+                "ReferenceEquality"}) // suppress Error Prone warning
     /*@SideEffectFree*/
     private void expungeStaleEntries() {
 	Entry<K,V> e;
@@ -359,6 +360,7 @@ public class WeakIdentityHashMap<K,V>
      * because they are no longer referenced.
      */
     /*@Pure*/
+    @Override
     public int size() {
         if (size == 0)
             return 0;
@@ -373,6 +375,7 @@ public class WeakIdentityHashMap<K,V>
      * because they are no longer referenced.
      */
     /*@Pure*/
+    @Override
     public boolean isEmpty() {
         return size() == 0;
     }
@@ -392,6 +395,7 @@ public class WeakIdentityHashMap<K,V>
      * @see #put(Object, Object)
      */
     /*@Pure*/
+    @Override
     public /*@Nullable*/ V get(/*@Nullable*/ Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
@@ -415,6 +419,7 @@ public class WeakIdentityHashMap<K,V>
      *          <code>false</code> otherwise
      */
     /*@Pure*/
+    @Override
     public boolean containsKey(/*@Nullable*/ Object key) {
         return getEntry(key) != null;
     }
@@ -447,6 +452,8 @@ public class WeakIdentityHashMap<K,V>
      *	       also indicate that the HashMap previously associated
      *	       <code>null</code> with the specified key.
      */
+    @SuppressWarnings("NonAtomicVolatileUpdate")
+    @Override
     public /*@Nullable*/ V put(K key, V value) {
         @SuppressWarnings("unchecked")
         K k = (K) maskNull(key);
@@ -542,6 +549,7 @@ public class WeakIdentityHashMap<K,V>
      * @param m mappings to be stored in this map
      * @throws  NullPointerException if the specified map is null
      */
+    @Override
     public void putAll(Map<? extends K, ? extends V> m) {
         int numKeysToBeAdded = m.size();
         if (numKeysToBeAdded == 0)
@@ -582,6 +590,8 @@ public class WeakIdentityHashMap<K,V>
      *	       also indicate that the map previously associated <code>null</code>
      *	       with the specified key.
      */
+    @SuppressWarnings({"NonAtomicVolatileUpdate", "ReferenceEquality"})
+    @Override
     public /*@Nullable*/ V remove(Object key) {
         Object k = maskNull(key);
         int h = hasher (k);
@@ -611,6 +621,7 @@ public class WeakIdentityHashMap<K,V>
 
 
     /** Special version of remove needed by Entry set */
+    @SuppressWarnings({"NonAtomicVolatileUpdate", "ReferenceEquality"})
     /*@Nullable*/ Entry<K,V> removeMapping(/*@Nullable*/ Object o) {
         if (!(o instanceof Map.Entry))
             return null;
@@ -643,6 +654,8 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Removes all mappings from this map.
      */
+    @SuppressWarnings("NonAtomicVolatileUpdate")
+    @Override
     public void clear() {
         // clear out ref queue. We don't need to expunge entries
         // since table is getting cleared.
@@ -671,6 +684,7 @@ public class WeakIdentityHashMap<K,V>
      *         specified value.
      */
     /*@Pure*/
+    @Override
     public boolean containsValue(/*@Nullable*/ Object value) {
 	if (value==null)
             return containsNullValue();
@@ -717,15 +731,18 @@ public class WeakIdentityHashMap<K,V>
         }
 
         /*@Pure*/
+        @Override
         public K getKey() {
             return WeakIdentityHashMap.<K>unmaskNull(get());
         }
 
         /*@Pure*/
+        @Override
         public V getValue() {
             return value;
         }
 
+        @Override
         public V setValue(V newValue) {
 	    V oldValue = value;
             value = newValue;
@@ -734,6 +751,7 @@ public class WeakIdentityHashMap<K,V>
 
         @SuppressWarnings("purity") // side effects on local state
         /*@Pure*/
+        @Override
         public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -751,6 +769,7 @@ public class WeakIdentityHashMap<K,V>
 
         @SuppressWarnings("purity") // side effects on local state
         /*@Pure*/
+        @Override
         public int hashCode() {
             Object k = getKey();
             Object v = getValue();
@@ -759,6 +778,7 @@ public class WeakIdentityHashMap<K,V>
         }
 
         /*@SideEffectFree*/
+        @Override
         public String toString() {
             return getKey() + "=" + getValue();
         }
@@ -786,6 +806,7 @@ public class WeakIdentityHashMap<K,V>
             index = (size() != 0 ? table.length : 0);
         }
 
+        @Override
         public boolean hasNext() {
             /*@Nullable*/ Entry<K,V>[] t = table;
 
@@ -821,6 +842,7 @@ public class WeakIdentityHashMap<K,V>
             return lastReturned;
         }
 
+        @Override
         public void remove() {
             if (lastReturned == null)
                 throw new IllegalStateException();
@@ -836,18 +858,21 @@ public class WeakIdentityHashMap<K,V>
     }
 
     private class ValueIterator extends HashIterator<V> {
+        @Override
         public V next() {
             return nextEntry().value;
         }
     }
 
     private class KeyIterator extends HashIterator<K> {
+        @Override
         public K next() {
             return nextEntry().getKey();
         }
     }
 
     private class EntryIterator extends HashIterator<Map.Entry<K,V>> {
+        @Override
         public Map.Entry<K,V> next() {
             return nextEntry();
         }
@@ -870,26 +895,31 @@ public class WeakIdentityHashMap<K,V>
      * @return a set view of the keys contained in this map
      */
     /*@SideEffectFree*/
+        @Override
     public Set<K> keySet() {
         Set<K> ks = our_keySet;
         return (ks != null ? ks : (our_keySet = new KeySet()));
     }
 
     private class KeySet extends AbstractSet<K> {
+        @Override
         public Iterator<K> iterator() {
             return new KeyIterator();
         }
 
         /*@Pure*/
+        @Override
         public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
         /*@Pure*/
+        @Override
         public boolean contains(/*@Nullable*/ Object o) {
             return containsKey(o);
         }
 
+        @Override
         public boolean remove(/*@Nullable*/ Object o) {
             if (containsKey(o)) {
                 WeakIdentityHashMap.this.remove(o);
@@ -899,10 +929,12 @@ public class WeakIdentityHashMap<K,V>
                 return false;
         }
 
+        @Override
         public void clear() {
             WeakIdentityHashMap.this.clear();
         }
 
+        @Override
         public Object[] toArray() {
             Collection<K> c = new ArrayList<K>(size());
             for (Iterator<K> i = iterator(); i.hasNext(); )
@@ -910,6 +942,7 @@ public class WeakIdentityHashMap<K,V>
             return c.toArray();
         }
 
+        @Override
         public <T> T[] toArray(T[] a) {
             Collection<K> c = new ArrayList<K>(size());
             for (Iterator<K> i = iterator(); i.hasNext(); )
@@ -932,30 +965,36 @@ public class WeakIdentityHashMap<K,V>
      * @return a collection view of the values contained in this map
      */
     /*@SideEffectFree*/
+    @Override
     public Collection<V> values() {
         Collection<V> vs = our_values;
         return (vs != null ?  vs : (our_values = new Values()));
     }
 
     private class Values extends AbstractCollection<V> {
+        @Override
         public Iterator<V> iterator() {
             return new ValueIterator();
         }
 
         /*@Pure*/
+        @Override
         public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
         /*@Pure*/
+        @Override
         public boolean contains(/*@Nullable*/ Object o) {
             return containsValue(o);
         }
 
+        @Override
         public void clear() {
             WeakIdentityHashMap.this.clear();
         }
 
+        @Override
         public Object[] toArray() {
             Collection<V> c = new ArrayList<V>(size());
             for (Iterator<V> i = iterator(); i.hasNext(); )
@@ -963,6 +1002,7 @@ public class WeakIdentityHashMap<K,V>
             return c.toArray();
         }
 
+        @Override
         public <T> T[] toArray(T[] a) {
             Collection<V> c = new ArrayList<V>(size());
             for (Iterator<V> i = iterator(); i.hasNext(); )
@@ -985,17 +1025,20 @@ public class WeakIdentityHashMap<K,V>
      * @see java.util.Map.Entry
      */
     /*@SideEffectFree*/
+    @Override
     public Set<Map.Entry<K,V>> entrySet() {
         Set<Map.Entry<K,V>> es = entrySet;
         return (es != null ? es : (entrySet = new EntrySet()));
     }
 
     private class EntrySet extends AbstractSet<Map.Entry<K,V>> {
+        @Override
         public Iterator<Map.Entry<K,V>> iterator() {
             return new EntryIterator();
         }
 
         /*@Pure*/
+        @Override
         public boolean contains(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -1005,19 +1048,23 @@ public class WeakIdentityHashMap<K,V>
             return candidate != null && candidate.equals(e);
         }
 
+        @Override
         public boolean remove(/*@Nullable*/ Object o) {
             return removeMapping(o) != null;
         }
 
         /*@Pure*/
+        @Override
         public int size() {
             return WeakIdentityHashMap.this.size();
         }
 
+        @Override
         public void clear() {
             WeakIdentityHashMap.this.clear();
         }
 
+        @Override
         public Object[] toArray() {
             Collection<Map.Entry<K,V>> c = new ArrayList<Map.Entry<K,V>>(size());
             for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); )
@@ -1025,6 +1072,7 @@ public class WeakIdentityHashMap<K,V>
             return c.toArray();
         }
 
+        @Override
         public <T> T[] toArray(T[] a) {
             Collection<Map.Entry<K,V>> c = new ArrayList<Map.Entry<K,V>>(size());
             for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); )
@@ -1049,15 +1097,18 @@ public class WeakIdentityHashMap<K,V>
         }
 
         /*@Pure*/
+        @Override
         public K getKey() {
             return key;
         }
 
         /*@Pure*/
+        @Override
         public V getValue() {
             return value;
         }
 
+        @Override
         public V setValue(V value) {
             V oldValue = this.value;
             this.value = value;
@@ -1065,6 +1116,7 @@ public class WeakIdentityHashMap<K,V>
         }
 
         /*@Pure*/
+        @Override
         public boolean equals(/*@Nullable*/ Object o) {
             if (!(o instanceof Map.Entry))
             return false;
@@ -1074,12 +1126,14 @@ public class WeakIdentityHashMap<K,V>
         }
 
         /*@Pure*/
+        @Override
         public int hashCode() {
             return ((key   == null)   ? 0 :   key.hashCode()) ^
                ((value == null)   ? 0 : value.hashCode());
         }
 
         /*@SideEffectFree*/
+        @Override
         public String toString() {
             return key + "=" + value;
         }
