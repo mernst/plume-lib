@@ -10,5 +10,5 @@ set -e
 (cd $ROOT/checker-framework/ && ./.travis-build-without-test.sh downloadjdk)
 export CHECKERFRAMEWORK=$ROOT/checker-framework
 
-## Obtain plume-lib
+make -C java error-prone
 make -C java check-types

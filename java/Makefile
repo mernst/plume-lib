@@ -576,13 +576,16 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
+# See version numbers at https://github.com/google/error-prone/releases
+ERRORPRONE_VERSION := 2.1.1
+
 error-prone: errorprone
 errorprone:
-	${MAKE} lib/error_prone_ant-2.0.21.jar
-	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-2.0.21.jar com.google.errorprone.ErrorProneCompiler -Werror"
+	${MAKE} lib/error_prone_ant-${ERRORPRONE_VERSION}.jar
+	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-${ERRORPRONE_VERSION}.jar com.google.errorprone.ErrorProneCompiler -Werror"
 
-lib/error_prone_ant-2.0.21.jar:
-	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/2.0.21/error_prone_ant-2.0.21.jar)
+lib/error_prone_ant-${ERRORPRONE_VERSION}.jar:
+	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/${ERRORPRONE_VERSION}/error_prone_ant-${ERRORPRONE_VERSION}.jar)
 
 # This compiles the code as well as does pluggable type-checking.
 # Requires Java 8.
