@@ -739,10 +739,16 @@ public final class UtilMDE {
       int nonarray_pos = pos;
       while (arglist.charAt(nonarray_pos) == '[') {
         nonarray_pos++;
+        if (nonarray_pos >= arglist.length()) {
+          throw new Error("Malformed arglist: " + arglist);
+        }
       }
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
         int semi_pos = arglist.indexOf(";", nonarray_pos);
+        if (semi_pos == -1) {
+          throw new Error("Malformed arglist: " + arglist);
+        }
         result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
         pos = semi_pos + 1;
       } else {
