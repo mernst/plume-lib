@@ -185,8 +185,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   @Override
-  public LimitedSizeSet<T> clone(
-      /*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+  public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
       @SuppressWarnings("unchecked")
