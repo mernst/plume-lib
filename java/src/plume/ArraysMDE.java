@@ -3492,7 +3492,7 @@ public final class ArraysMDE {
           // i is < numNonemptyParts, and p.size() = numNonemptyParts + numEmptyParts,
           // both of which are NN.
           // The result is a false positive.
-          /*@SuppressWarnings("index")*/
+          @SuppressWarnings("index") // lists
           /*@LTLengthOf("p")*/ int i1 = i;
           resultSoFar_augmented.add(p.addToPart(i1, elt));
         }
@@ -3546,7 +3546,7 @@ public final class ArraysMDE {
     }
 
     /** Returns a new partition just like this one, but with elt added to the ith part. */
-    Partitioning<T> addToPart(/*@IndexOrHigh("this")*/ int i, T elt) {
+    Partitioning<T> addToPart(/*@NonNegative*/ int i, T elt) {
       Partitioning<T> result = new Partitioning<T>(this);
       if (size() == i) {
         ArrayList<T> newPart = newArrayList(elt);

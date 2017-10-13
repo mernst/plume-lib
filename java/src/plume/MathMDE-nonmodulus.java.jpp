@@ -114,7 +114,9 @@ The correct way to build the system is to run 'make'.
       // This loop ("while" instead of "if") permits duplicates in nums.
       while (current_missing == current_nonmissing) {
         if (nums != null) {
-          current_index++;
+          @SuppressWarnings("index") // This does actually break the invariant, but it's checked right below and the function exits.
+          /*@IndexFor("nums")*/ int current_index_temp = current_index + 1;
+          current_index = current_index_temp;
           if (current_index >= nums.length) {
             if (add_ends) {
               current_missing++;

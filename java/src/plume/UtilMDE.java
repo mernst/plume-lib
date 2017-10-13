@@ -590,7 +590,9 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56 string
+      @SuppressWarnings("index") // index TODO: panacekcz#4?
+      /*@NonNegative*/ int salm2 = sans_array.length() - 2;
+      sans_array = sans_array.substring(0, salm2);
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -704,7 +706,9 @@ public final class UtilMDE {
     int dims = 0;
     while (classname.startsWith("[")) {
       dims++;
-      classname = classname.substring(1);
+      @SuppressWarnings("index") // panacekcz#4
+      /*@LTEqLengthOf("classname")*/ int one = 1;
+      classname = classname.substring(one);
     }
     String result;
     if (classname.startsWith("L") && classname.endsWith(";")) {
@@ -734,19 +738,26 @@ public final class UtilMDE {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
-    int pos = 1;
+    /*@Positive*/ int pos = 1;
     while (pos < arglist.length() - 1) {
       if (pos > 1) {
         result += ", ";
       }
       int nonarray_pos = pos;
       while (arglist.charAt(nonarray_pos) == '[') {
-        nonarray_pos++;
+        @SuppressWarnings(
+            "index") // The LTLengthOf annotation is invalidated by the ++, which relies on a [ not being the last character
+        /*@LTLengthOf("arglist")*/ int temp = nonarray_pos + 1;
+        nonarray_pos = temp;
       }
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
-        int semi_pos = arglist.indexOf(";", nonarray_pos);
-        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
+        @SuppressWarnings(
+            "index") // assumption in this code is that there will be a ; in the string after nonarray_pos
+        /*@NonNegative*/ int semi_pos = arglist.indexOf(";", nonarray_pos);
+        @SuppressWarnings("index") // panacekcz#4
+        String addToResult = fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
+        result += addToResult;
         pos = semi_pos + 1;
       } else {
         String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos + 1));
@@ -1106,7 +1117,10 @@ public final class UtilMDE {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
-      suffix = filename.substring(astloc + 1);
+      @SuppressWarnings(
+          "index") // this code assumes that the asterisk is not the last character in the string
+      String suffixTemp = filename.substring(astloc + 1);
+      suffix = suffixTemp;
       if (filename.indexOf("*") != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
       }
@@ -1272,7 +1286,9 @@ public final class UtilMDE {
 
     try {
       Writer writer = Files.newBufferedWriter(file.toPath(), UTF_8);
-      writer.write(contents, 0, contents.length());
+      @SuppressWarnings("index") // kelloggm#172
+      /*@LTLengthOf("contents")*/ int zero = 0;
+      writer.write(contents, zero, contents.length());
       writer.close();
     } catch (Exception e) {
       throw new Error("Unexpected error in writeFile(" + file + ")", e);
@@ -2268,12 +2284,15 @@ public final class UtilMDE {
     }
 
     StringBuffer result = new StringBuffer();
-    /*@ IndexFor("target")*/ int lastend = 0; // Index: TODO: issue 80 string support
-    /*TODO: IndexOrLow("target")*/ int pos;
+    @SuppressWarnings("index") // panacekcz#4
+    /*@IndexOrHigh("target")*/ int lastend = 0;
+    int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
       result.append(target.substring(lastend, pos));
       result.append(newStr);
-      lastend = pos + oldStr.length();
+      @SuppressWarnings("index") // panacekcz#4
+      /*@IndexOrHigh("target")*/ int lastEndTemp = pos + oldStr.length();
+      lastend = lastEndTemp;
     }
     result.append(target.substring(lastend));
     return result.toString();
@@ -2318,9 +2337,13 @@ public final class UtilMDE {
     Vector<String> result_list = new Vector<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
-      s = s.substring(delimpos + delimlen);
+      @SuppressWarnings(
+          "index") // index checker can't reason out that delimlen is the length of delim, and that indexof means that it must be present in the stringint
+      /*@LTEqLengthOf("s")*/ int delimindex = delimpos + delimlen;
+      s = s.substring(delimindex);
     }
     result_list.add(s);
+    @SuppressWarnings("index") // IC can't reason about the length of vectors
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2461,7 +2484,10 @@ public final class UtilMDE {
     if (sb.length() == 0) {
       return orig;
     }
-    sb.append(orig.substring(post_esc));
+    @SuppressWarnings(
+        "index") // Index Checker cannot reason through the code above - it doesn't make the connection between i and orig
+    /*@LTLengthOf("orig")*/ int post_esc_final = post_esc;
+    sb.append(orig.substring(post_esc_final));
     return sb.toString();
   }
 
@@ -2555,7 +2581,7 @@ public final class UtilMDE {
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
-    int post_esc = 0;
+    /*@LTEqLengthOf("orig")*/ int post_esc = 0;
     int this_esc = orig.indexOf('\\');
     while (this_esc != -1) {
       if (this_esc == orig.length() - 1) {
@@ -2689,7 +2715,10 @@ public final class UtilMDE {
       //       non_ws_index + " in: " + arg);
       // }
       if (non_ws_index != delim_index + delim_len) {
-        arg = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
+        @SuppressWarnings(
+            "index") // IC can't reason through the invariant here: it depends on a bunch of properties of the String
+        String argTemp = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
+        arg = argTemp;
       }
       delim_index = arg.indexOf(delimiter, delim_index + 1);
     }

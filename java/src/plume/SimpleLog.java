@@ -100,8 +100,6 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings(
-      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void log(String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
@@ -121,8 +119,6 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings(
-      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void log_tb(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       log(format, args);
@@ -198,8 +194,6 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings(
-      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void clear(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       clear();
@@ -217,7 +211,11 @@ public final class SimpleLog {
         log("Called exdent when indentation was 0.");
         always_traceback = old_always_traceback;
       } else {
-        indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
+        @SuppressWarnings(
+            "index") // IC can't reason that start_times being non-empty implies that the string has an indent's worth of available characters
+        String indent_str_temp =
+            indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
+        indent_str = indent_str_temp;
         pop_start_time();
       }
     }
@@ -230,8 +228,6 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings(
-      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void exdent_time(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
       // This puts the time inside, not outside, the indentation.
@@ -274,8 +270,6 @@ public final class SimpleLog {
    * @param args values to be substituted into format
    */
   /*@FormatMethod*/
-  @SuppressWarnings(
-      "formatter") // call to format method is correct because of @FormatMethod annotation
   public void log_time(String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
