@@ -600,7 +600,7 @@ public final class TestPlume {
       }
       for (int i = 0; i < f2.length - f1.length; i++) {
 
-        //fill up f1 with elements of f2
+        // fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
           f1[j] = f2[i + j];
         }
@@ -2714,7 +2714,7 @@ public final class TestPlume {
     double offhigh2 = 1 + 2 * offset;
     double offlow2 = 1 - 2 * offset;
 
-    //test equality for a variety of postive and negative numbers
+    // test equality for a variety of postive and negative numbers
     for (double d = -20000; d < 20000; d += 1000.36) {
       assert ff.eq(d, d * offhigh);
       assert ff.eq(d, d * offlow);
@@ -2726,25 +2726,25 @@ public final class TestPlume {
       assert ff.ne(d, d * offlow2);
     }
 
-    //make sure nothing is equal to zero
+    // make sure nothing is equal to zero
     assert ff.eq(0, Double.MIN_VALUE);
     assert ff.eq(0, -Double.MIN_VALUE);
     assert !ff.ne(0, Double.MIN_VALUE);
     assert !ff.ne(0, -Double.MIN_VALUE);
 
-    //make sure that 0 equals 0
+    // make sure that 0 equals 0
     assert ff.eq(0, 0);
     assert !ff.ne(0, 0);
 
-    //make sure that NaNs are not equal
+    // make sure that NaNs are not equal
     assert !ff.eq(Double.NaN, Double.NaN);
 
-    //make sure that various unusual values are equal
+    // make sure that various unusual values are equal
     assert ff.eq(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
     assert ff.eq(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
 
-    //rudimentary checks on the comparison operators (since they all just
-    //use eq and ne anyway)
+    // rudimentary checks on the comparison operators (since they all just
+    // use eq and ne anyway)
     {
       double d = 2563.789;
       assert !ff.gt(d, d * offlow);
@@ -2848,11 +2848,11 @@ public final class TestPlume {
 
         initialize_f1_and_f2(j, f1, f2);
 
-        //make two elements off just a little
+        // make two elements off just a little
         f2[7] = f2[7] * (1 + offset);
         f2[8] = f2[8] * (1 - offset);
 
-        //test with each array the bigger one
+        // test with each array the bigger one
         if ((j % 2) == 0) {
           assert ff.isElemMatch(f1, f2);
         } else {
@@ -2863,11 +2863,11 @@ public final class TestPlume {
 
         initialize_f1_and_f2(j, f1, f2);
 
-        //make two elements off just a little
+        // make two elements off just a little
         f2[7] = f2[7] * (1 + 2 * offset);
         f2[8] = f2[8] * (1 - 2 * offset);
 
-        //test with each array the bigger one
+        // test with each array the bigger one
         double[] f1_copy = f1.clone();
         double[] f2_copy = f2.clone();
         if ((j % 2) == 0) {
@@ -2955,7 +2955,7 @@ public final class TestPlume {
       }
       for (int i = 0; i < f2.length - f1.length; i++) {
 
-        //fill up f1 with elements of f2
+        // fill up f1 with elements of f2
         for (int j = 0; j < f1.length; j++) {
           f1[j] = f2[i + j];
         }

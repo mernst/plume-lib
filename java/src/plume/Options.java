@@ -781,7 +781,7 @@ public class Options {
       System.out.printf(
           "Exception in call to f.getAnnotation(%s)%n  for f=%s%n  %s%nClasspath =%n",
           annotationClass, f, e.getMessage());
-      //e.printStackTrace();
+      // e.printStackTrace();
       JWhich.printClasspath();
       annotation = null;
     }
@@ -1026,8 +1026,7 @@ public class Options {
     return (non_options);
   }
 
-  /// This is a lot of methods, but it does save a tad of typing for the
-  /// programmer.
+  // This is a lot of methods, but it does save a tad of typing for the programmer.
 
   /**
    * Prints usage information. Uses the usage synopsis passed into the constructor, if any.
