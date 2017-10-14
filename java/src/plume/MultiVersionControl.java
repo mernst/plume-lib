@@ -431,7 +431,7 @@ public class MultiVersionControl {
   public void parseArgs(
       /*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
     @SuppressWarnings(
-        "initialization") // "new MyClass(underInitialization)" yields @UnderInitialization even when @Initialized would be safe
+        "initialization") // new C(underInit) yields @UnderInitialization; @Initialized is safe
     /*@Initialized*/ Options options =
         new Options("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse_or_usage(args);
@@ -791,7 +791,8 @@ public class MultiVersionControl {
     }
 
     @SuppressWarnings(
-        "nullness") // dependent: listFiles => non-null because dir is a directory, and we don't know that checkouts.add etc do not affect dir
+        "nullness") // dependent: listFiles => non-null because dir is a directory, and
+    // the checker doesn't know that checkouts.add etc do not affect dir
     File /*@NonNull*/ [] childdirs = dir.listFiles(idf);
     if (childdirs == null) {
       System.err.printf(
@@ -909,8 +910,8 @@ public class MultiVersionControl {
     // For SVN, do
     //   svn info
     // and grep out these lines:
-    //   URL: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/reCrash/repository/trunk/www
-    //   Repository Root: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/reCrash/repository
+    // URL: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/myProj/repository/trunk/www
+    // Repository Root: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/myProj/repository
 
     // Use SVNKit?
     // Con: introduces dependency on external library.
@@ -931,11 +932,12 @@ public class MultiVersionControl {
       return null;
     }
     // getFile is null when operating on a working copy, as I am
-    // String relativeFile = info.getPath(); // relative to repository root -- can use to determine root of checkout
+    // String relativeFile = info.getPath(); // relative to repository root; use to determine root
     // getFile is just the (absolute) local file name for local items -- same as "dir"
     // File relativeFile = info.getFile();
     SVNURL url = info.getURL();
-    // This can be null (example: dir /afs/csail.mit.edu/u/m/mernst/.snapshot/class/6170/2006-spring/3dphysics).  I don't know under what circumstances.
+    // This can be null, but I don't know under what circumstances. (example: dir
+    // /afs/csail.mit.edu/u/m/mernst/.snapshot/class/6170/2006-spring/3dphysics)
     SVNURL repoRoot = info.getRepositoryRootURL();
     if (repoRoot == null) {
       System.err.println("Problem:  old svn working copy in " + dir.toString());
@@ -1219,7 +1221,8 @@ public class MultiVersionControl {
               //         # For the last perl command, this also works:
               //         #   perl -p -e 'chomp(\$cwd = `pwd`); s/^Index: /\$cwd\\//'";
               //         # but the one we use is briefer and uses the abbreviated directory name.
-              //         $filter = "grep -v \"unrecognized keyword 'UseNewInfoFmtStrings'\" | grep \"^Index:\" | perl -p -e 's|^Index: |$dir\\/|'";
+              //         $filter = "grep -v \"unrecognized keyword 'UseNewInfoFmtStrings'\"
+              //               . " | grep \"^Index:\" | perl -p -e 's|^Index: |$dir\\/|'";
               String removeRegexp =
                   ("\n=+"
                       + "\nRCS file: .*" // no trailing ,v for newly-created files
@@ -1340,7 +1343,7 @@ public class MultiVersionControl {
               replacers.add(
                   new Replacer(
                       "^\\n?comparing with .*\\nsearching for changes\\nno changes found\n", ""));
-              // TODO:  Shelve is an optional extension, and so this should make no report if it is not installed.
+              // TODO:  Shelve is an optional extension, so don't print anything if not installed.
               pb3.command(hg_executable, "shelve", "-l");
               addArgs(pb3, hg_arg);
               replacers3.add(new Replacer("^hg: unknown command 'shelve'\\n(.*\\n)+", ""));
@@ -1349,7 +1352,7 @@ public class MultiVersionControl {
               break;
             case SVN:
               // Handle some changes.
-              // "svn status" also outputs an eighth column, only if you pass the --show-updates switch: [* ]
+              // "svn status" outputs an eighth column, if you pass the --show-updates switch: [* ]
               replacers.add(
                   new Replacer("(^|\\n)([ACDIMRX?!~ ][CM ][L ][+ ][$ ]) *", "$1$2 " + dir + "/"));
               pb.command(svn_executable, "status");
@@ -1400,7 +1403,7 @@ public class MultiVersionControl {
               replacers.add(new Replacer("(^|\\n)([ACDMRU]\t)", "$1$2" + dir + "/"));
               pb.command(git_executable, "pull", "-q");
               addArgs(pb, git_arg);
-              // prune branches; alternately can do "git remote prune origin"; "git gc" does not do this.
+              // prune branches; alternately do "git remote prune origin"; "git gc" doesn't do this.
               pb2.command(git_executable, "fetch", "-p");
               break;
             case HG:
@@ -1586,7 +1589,8 @@ public class MultiVersionControl {
       // Try printing always, to better understand this question.
       if (show_normal_output || p.exitValue() != 0 || debug_replacers || debug_process_output) {
         // Filter then print the output.
-        // String output = UtilMDE.readerContents(new BufferedReader(new InputStreamReader(p.getInputStream())));
+        // String output = UtilMDE.readerContents(new BufferedReader(new
+        //     InputStreamReader(p.getInputStream())));
         // String output = UtilMDE.streamString(p.getInputStream());
         String output = UtilMDE.streamString(p.getInputStream());
         if (debug_replacers || debug_process_output) {
@@ -1677,7 +1681,8 @@ public class MultiVersionControl {
   //       }
   //       if ($debug && $show_directory) {
   //         print "show-directory: $dir:\n";
-  //         printf "tmpfile size: %d, zeroness: %d, non-zeroness %d%n", (-s $tmpfile), (-z $tmpfile), (! -z $tmpfile);
+  //         printf "tmpfile size: %d, zeroness: %d, non-zeroness %d%n",
+  //                (-s $tmpfile), (-z $tmpfile), (! -z $tmpfile);
   //       }
   //       if ((! -z $tmpfile) && $show_directory) {
   //         print "$dir:\n";

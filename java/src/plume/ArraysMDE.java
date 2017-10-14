@@ -288,7 +288,8 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int[] min_max(int[] a) {
@@ -312,7 +313,8 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long[] min_max(long[] a) {
@@ -336,7 +338,8 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int element_range(int[] a) {
@@ -354,7 +357,8 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation")
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long element_range(long[] a) {
@@ -2947,7 +2951,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
@@ -2999,7 +3003,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
@@ -3060,7 +3064,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
@@ -3179,7 +3183,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
@@ -3244,7 +3248,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the

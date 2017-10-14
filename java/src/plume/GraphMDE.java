@@ -58,7 +58,8 @@ public final class GraphMDE {
    */
   public static <T> Map<T, List<T>> dominators(Map<T, List</*@KeyFor("#1")*/ T>> predecessors) {
 
-    // Map</*@KeyFor({"preds","dom"})*/ T,List</*@KeyFor({"preds","dom"})*/ T>> dom = new HashMap</*@KeyFor({"preds","dom"})*/ T,List</*@KeyFor({"preds","dom"})*/ T>>();
+    // Map</*@KeyFor({"preds","dom"})*/ T,List</*@KeyFor({"preds","dom"})*/ T>> dom
+    //   = new HashMap</*@KeyFor({"preds","dom"})*/ T,List</*@KeyFor({"preds","dom"})*/ T>>();
     Map<T, List<T>> dom = new HashMap<T, List<T>>();
 
     @SuppressWarnings("keyfor") // every element of pred's value will be a key for dom

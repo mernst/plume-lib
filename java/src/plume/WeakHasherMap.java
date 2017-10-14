@@ -181,6 +181,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
         /* A WeakKey is equal to another WeakKey iff they both refer to objects
 	   that are, in turn, equal according to their own equals methods */
 	/*@Pure*/
+  @Override
   public boolean equals(/*@Nullable*/ Object o) {
             if (o == null) return false; // never happens
 	    if (this == o) return true;
@@ -197,6 +198,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	}
 
 	/*@Pure*/
+  @Override
   public int hashCode() {
 	    return hash;
 	}
@@ -289,6 +291,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * linear in the size of the map.</em>
      */
     /*@Pure*/
+    @Override
     public int size() {
 	return entrySet().size();
     }
@@ -297,6 +300,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * Returns <code>true</code> if this map contains no key-value mappings.
      */
     /*@Pure*/
+    @Override
     public boolean isEmpty() {
 	return entrySet().isEmpty();
     }
@@ -308,6 +312,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @param   key   the key whose presence in this map is to be tested
      */
     /*@Pure*/
+    @Override
     public boolean containsKey(Object key) {
         @SuppressWarnings("unchecked")
         K kkey = (K) key;
@@ -325,6 +330,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @param  key  the key whose associated value, if any, is to be returned
      */
     /*@Pure*/
+    @Override
     public /*@Nullable*/ V get(Object key) {  // type of argument is Object, not K
         @SuppressWarnings("unchecked")
         K kkey = (K) key;
@@ -345,6 +351,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @return  the previous value to which this key was mapped, or
      *          <code>null</code> if if there was no mapping for the key
      */
+    @Override
     public V put(K key, V value) {
 	processQueue();
 	return hash.put(WeakKeyCreate(key, queue), value);
@@ -359,6 +366,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * @return  the value to which this key was mapped, or <code>null</code> if
      *          there was no mapping for the key
      */
+    @Override
     public V remove(Object key) { // type of argument is Object, not K
 	processQueue();
         @SuppressWarnings("unchecked")
@@ -369,6 +377,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     /**
      * Removes all mappings from this map.
      */
+    @Override
     public void clear() {
 	processQueue();
 	hash.clear();
@@ -380,6 +389,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 
     /* Internal class for entries */
     // This can't be static, again because of dependence on hasher.
+    @SuppressWarnings("TypeParameterShadowing")
     private final class Entry<K,V> implements Map.Entry<K,V> {
 	private Map.Entry<WeakKey,V> ent;
 	private K key;	/* Strong reference to key, so that the GC
@@ -392,15 +402,18 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	}
 
 	/*@Pure*/
+  @Override
   public K getKey() {
 	    return key;
 	}
 
 	/*@Pure*/
+  @Override
   public V getValue() {
 	    return ent.getValue();
 	}
 
+  @Override
 	public V setValue(V value) {
 	    return ent.setValue(value);
 	}
@@ -416,6 +429,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	}
 
         /*@Pure*/
+        @SuppressWarnings("NonOverridingEquals")
         public boolean equals(Map.Entry<K,V> e /* Object o*/) {
             // if (! (o instanceof Map.Entry)) return false;
             // Map.Entry<K,V> e = (Map.Entry<K,V>)o;
@@ -424,6 +438,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	}
 
 	/*@Pure*/
+  @Override
   public int hashCode() {
 	    V v;
 	    return (((key == null) ? 0 : keyHashCode(key))
@@ -437,12 +452,14 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
     private final class EntrySet extends AbstractSet<Map.Entry<K,V>> {
 	Set<Map.Entry<WeakKey,V>> hashEntrySet = hash.entrySet();
 
+  @Override
 	public Iterator<Map.Entry<K,V>> iterator() {
 
 	    return new Iterator<Map.Entry<K,V>>() {
 		Iterator<Map.Entry<WeakKey,V>> hashIterator = hashEntrySet.iterator();
 		Map.Entry<K,V> next = null;
 
+    @Override
 		public boolean hasNext() {
 		    while (hashIterator.hasNext()) {
 			Map.Entry<WeakKey,V> ent = hashIterator.next();
@@ -458,6 +475,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 		    return false;
 		}
 
+    @Override
 		public Map.Entry<K,V> next() {
 		    if ((next == null) && !hasNext())
 			throw new NoSuchElementException();
@@ -466,6 +484,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 		    return e;
 		}
 
+    @Override
 		public void remove() {
 		    hashIterator.remove();
 		}
@@ -474,17 +493,20 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	}
 
 	/*@Pure*/
+  @Override
   public boolean isEmpty() {
 	    return !(iterator().hasNext());
 	}
 
 	/*@Pure*/
+  @Override
   public int size() {
 	    int j = 0;
 	    for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); i.next()) j++;
 	    return j;
 	}
 
+  @Override
 	public boolean remove(Object o) {
 	    processQueue();
 	    if (!(o instanceof Map.Entry<?,?>)) return false;
@@ -502,6 +524,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
 	}
 
 	/*@Pure*/
+  @Override
   public int hashCode() {
 	    int h = 0;
 	    for (Iterator<Map.Entry<WeakKey,V>> i = hashEntrySet.iterator(); i.hasNext(); ) {
@@ -524,6 +547,7 @@ public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,
      * Returns a <code>Set</code> view of the mappings in this map.
      */
     /*@SideEffectFree*/
+    @Override
     public Set<Map.Entry<K,V>> entrySet() {
 	if (entrySet == null) entrySet = new EntrySet();
 	return entrySet;

@@ -200,7 +200,7 @@ public final class FileCompiler {
       Matcher m = java_filename_pattern.matcher(errorString);
       while (m.find()) {
         @SuppressWarnings(
-            "nullness") // Regex Checker imprecision:  find() guarantees that group 1 exists in regexp
+            "nullness") // Regex Checker imprecision: find() guarantees that group 1 exists
         /*@NonNull*/ String sansExtension = m.group(1);
         errorClasses.add(sansExtension);
       }

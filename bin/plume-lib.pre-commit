@@ -16,7 +16,7 @@ if [ ! -z "$CHANGED_STYLE_FILES" ]; then
 fi
 
 # Only check format of changed .java files, which is faster than "make -C java check-format".
-CHANGED_JAVA_FILES=`git diff --staged --name-only --diff-filter=ACM | grep '\.java$'` || true
+CHANGED_JAVA_FILES=`git diff --staged --name-only --diff-filter=ACM | grep '\.java$' | grep -v WeakHasherMap.java | grep -v WeakIdentityHashMap.java` || true
 if [ ! -z "$CHANGED_JAVA_FILES" ]; then
     make -C java update-run-google-java-format
     ./java/.run-google-java-format/check-google-java-format.py ${CHANGED_JAVA_FILES}

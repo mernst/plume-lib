@@ -740,7 +740,7 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
     }
     @SuppressWarnings(
-        "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] polyresult = result;
     return polyresult;
   }
@@ -762,7 +762,7 @@ public final class Intern {
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(
       /*@PolyNull*/ /*@Interned*/ Object[] a) {
     @SuppressWarnings(
-        "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup =
         internedObjectArrays.get(a);
     /*@Nullable*/ /*@Interned*/ Object /*@Interned*/ [] result = (lookup != null) ? lookup.get() : null;
@@ -772,7 +772,7 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
     }
     @SuppressWarnings(
-        "nullness") // Polynull because value = parameter a, so same type & nullness as for parameter a
+        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] polyresult = result;
     return polyresult;
   }
@@ -859,6 +859,8 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
   public static long /*@Interned*/ [] internSubsequence(
       long /*@Interned*/ [] seq, int start, int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
@@ -885,6 +887,8 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
   public static double /*@Interned*/ [] internSubsequence(
       double /*@Interned*/ [] seq, int start, int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
@@ -911,6 +915,8 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  @SuppressWarnings("purity") // interning logic
+  /*@Pure*/
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
@@ -944,6 +950,8 @@ public final class Intern {
    * @return a subsequence of seq from start to end that is interned
    * @see #internSubsequence(int[], int, int)
    */
+  /*@Pure*/
+  @SuppressWarnings("purity") // interning logic
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
