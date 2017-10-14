@@ -211,11 +211,7 @@ public final class SimpleLog {
         log("Called exdent when indentation was 0.");
         always_traceback = old_always_traceback;
       } else {
-        @SuppressWarnings(
-            "index") // IC can't reason that start_times being non-empty implies that the string has an indent's worth of available characters
-        String indent_str_temp =
-            indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
-        indent_str = indent_str_temp;
+        indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
         pop_start_time();
       }
     }

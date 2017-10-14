@@ -92,7 +92,7 @@ public final class FileCompiler {
    */
   @SuppressWarnings("value") // index TODO: list support
   public FileCompiler(/*(at)MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
-    this(compiler.toArray(new String[0]), timeLimit); // index TODO: list support
+    this(compiler.toArray(new String[0]), timeLimit);
   }
 
   /**

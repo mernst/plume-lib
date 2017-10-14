@@ -102,9 +102,7 @@ public final class Digest {
         } else if ((digit2 >= 'a') && (digit2 <= 'f')) {
           digit2 -= 'a' - 10;
         }
-        @SuppressWarnings("cast.unsafe") // Value Checker issue 1264
-        /*@IntRange(from = -128, to = 127)*/ byte r_i = (byte) ((digit1 << 4) + digit2);
-        r[i] = r_i;
+        r[i] = (byte) ((digit1 << 4) + digit2);
       }
       return r;
     } catch (Exception e) {

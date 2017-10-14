@@ -526,7 +526,7 @@ public final class TestPlume {
     assert ArraysMDE.fn_is_total(new int[] {0, 0, 0, 0}) == true;
   }
 
-  @SuppressWarnings("index") // issue 147
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/147
   @Test
   public void testArraysMDE_functions() {
 
@@ -568,11 +568,7 @@ public final class TestPlume {
 
     // public static int[] fn_compose(int[] a, int[] b)
     {
-      // Once https://github.com/typetools/checker-framework/issues/1229 is
-      // resolved, only one annotation is needed per line rather than one
-      // on both the left-hand side and the right-hand-side.
-
-      /*@IntVal({0,1,2,3})*/ int[] a1 = new /*@IntVal({0,1,2,3})*/ int[] {0, 1, 2, 3};
+      int[] a1 = new int[] {0, 1, 2, 3};
       int[] a2 = new int[] {1, 2, 3, 0};
       int[] a3 = new int[] {3, 2, 1, 0};
       int[] a4 = new int[] {0, 1, 0, 3};
@@ -2232,9 +2228,7 @@ public final class TestPlume {
             }
           }
           for (int k = 0; k < chosen.size(); k++) {
-            @SuppressWarnings("index") // Index TODO: issue 73 polymorphic qualifier; prim. wrappers
-            /*@IndexFor("totals")*/ int index = chosen.get(k).intValue();
-            totals[index]++;
+            totals[chosen.get(k).intValue()]++;
           }
         }
         int i_truncated = Math.min(itor_size, i);
@@ -3003,7 +2997,7 @@ public final class TestPlume {
   }
 
   /** Initialize f2 to be the same as two copies of f1 */
-  @SuppressWarnings("index") // issue 147
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/147
   void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
 
     // start two arrays out exactly equal

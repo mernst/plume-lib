@@ -224,7 +224,7 @@ public class OptionsDoclet {
    * @param root the root document
    * @return true if processing completed without an error
    */
-  @SuppressWarnings("index") // com.sun.javadoc.RootDoc#options needs an annotation
+  @SuppressWarnings({"index", "value"}) // com.sun.javadoc.RootDoc#options needs an annotation
   public static boolean start(RootDoc root) {
     List<Object> objs = new ArrayList<Object>();
     for (ClassDoc doc : root.specifiedClasses()) {
@@ -274,9 +274,7 @@ public class OptionsDoclet {
     }
 
     OptionsDoclet o = new OptionsDoclet(root, options);
-    @SuppressWarnings("value") // com.sun.javadoc.RootDoc needs annotations
-    String[] /*@MinLen(1)*/[] root_options = root.options();
-    o.setOptions(root_options);
+    o.setOptions(root.options());
     o.processJavadoc();
     try {
       o.write();
@@ -719,7 +717,7 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      @SuppressWarnings("index") // panacekcz#4
+      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/4
       String suffix_temp = in.substring(ulPos + eol.length());
       suffix = suffix_temp;
       in = in.substring(0, ulPos);

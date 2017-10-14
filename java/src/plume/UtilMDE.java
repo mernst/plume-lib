@@ -590,7 +590,7 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      @SuppressWarnings("index") // index TODO: panacekcz#4?
+      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/2 ?
       /*@NonNegative*/ int salm2 = sans_array.length() - 2;
       sans_array = sans_array.substring(0, salm2);
     }
@@ -665,7 +665,7 @@ public final class UtilMDE {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
-    String comma_sep_args = arglist.substring(1, arglist.length() - 1); // index TODO: issue #56
+    String comma_sep_args = arglist.substring(1, arglist.length() - 1);
     StringTokenizer args_tokenizer = new StringTokenizer(comma_sep_args, ",", false);
     while (args_tokenizer.hasMoreTokens()) {
       @SuppressWarnings("signature") // substring
@@ -698,7 +698,10 @@ public final class UtilMDE {
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
-  @SuppressWarnings("signature") // conversion routine
+  @SuppressWarnings({
+    "signature", // conversion routine
+    "index"
+  }) // https://github.com/panacekcz/checker-framework/issues/4
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
       throw new Error("Empty string passed to fieldDescriptorToBinaryName");
@@ -706,13 +709,11 @@ public final class UtilMDE {
     int dims = 0;
     while (classname.startsWith("[")) {
       dims++;
-      @SuppressWarnings("index") // panacekcz#4
-      /*@LTEqLengthOf("classname")*/ int one = 1;
-      classname = classname.substring(one);
+      classname = classname.substring(1);
     }
     String result;
     if (classname.startsWith("L") && classname.endsWith(";")) {
-      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56 strings
+      result = classname.substring(1, classname.length() - 1);
     } else {
       result = primitiveClassesFromJvm.get(classname);
       if (result == null) {
@@ -1281,13 +1282,12 @@ public final class UtilMDE {
    * @param file the file to write to
    * @param contents the text to put in the file
    */
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/172
   public static void writeFile(File file, String contents) {
 
     try {
       Writer writer = Files.newBufferedWriter(file.toPath(), UTF_8);
-      @SuppressWarnings("index") // kelloggm#172
-      /*@LTLengthOf("contents")*/ int zero = 0;
-      writer.write(contents, zero, contents.length());
+      writer.write(contents, 0, contents.length());
       writer.close();
     } catch (Exception e) {
       throw new Error("Unexpected error in writeFile(" + file + ")", e);
@@ -2277,21 +2277,19 @@ public final class UtilMDE {
    * @param newStr the replacement
    * @return target with all instances of oldStr replaced by newStr
    */
+  @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/4
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) {
       throw new IllegalArgumentException();
     }
 
     StringBuffer result = new StringBuffer();
-    @SuppressWarnings("index") // panacekcz#4
     /*@IndexOrHigh("target")*/ int lastend = 0;
     int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
       result.append(target.substring(lastend, pos));
       result.append(newStr);
-      @SuppressWarnings("index") // panacekcz#4
-      /*@IndexOrHigh("target")*/ int lastEndTemp = pos + oldStr.length();
-      lastend = lastEndTemp;
+      lastend = pos + oldStr.length();
     }
     result.append(target.substring(lastend));
     return result.toString();
@@ -2337,12 +2335,12 @@ public final class UtilMDE {
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
       @SuppressWarnings(
-          "index") // index checker can't reason out that delimlen is the length of delim, and that indexof means that it must be present in the stringint
+          "index") // delimlen is the length of delim, and indexOf means that it must be present in the string
       /*@LTEqLengthOf("s")*/ int delimindex = delimpos + delimlen;
       s = s.substring(delimindex);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // IC can't reason about the length of vectors
+    @SuppressWarnings("index") // vectors
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2446,6 +2444,7 @@ public final class UtilMDE {
    * @param orig string to quote
    * @return quoted version of orig
    */
+  @SuppressWarnings("index")
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen right before this position.
@@ -2483,10 +2482,7 @@ public final class UtilMDE {
     if (sb.length() == 0) {
       return orig;
     }
-    @SuppressWarnings(
-        "index") // Index Checker cannot reason through the code above - it doesn't make the connection between i and orig
-    /*@LTLengthOf("orig")*/ int post_esc_final = post_esc;
-    sb.append(orig.substring(post_esc_final));
+    sb.append(orig.substring(post_esc));
     return sb.toString();
   }
 
@@ -2698,6 +2694,7 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
    */
+  @SuppressWarnings("index")
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
     int delim_len = delimiter.length();
@@ -2714,10 +2711,7 @@ public final class UtilMDE {
       //       non_ws_index + " in: " + arg);
       // }
       if (non_ws_index != delim_index + delim_len) {
-        @SuppressWarnings(
-            "index") // IC can't reason through the invariant here: it depends on a bunch of properties of the String
-        String argTemp = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
-        arg = argTemp;
+        arg = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
       }
       delim_index = arg.indexOf(delimiter, delim_index + 1);
     }

@@ -889,7 +889,7 @@ public class MultiVersionControl {
       if (pathsSection != null) {
         repository = pathsSection.get("default");
         if (repository != null && repository.endsWith("/")) {
-          repository = repository.substring(0, repository.length() - 1); // index TODO: issue #56
+          repository = repository.substring(0, repository.length() - 1);
         }
       }
     }
@@ -939,9 +939,8 @@ public class MultiVersionControl {
     // getFile is just the (absolute) local file name for local items -- same as "dir"
     // File relativeFile = info.getFile();
     SVNURL url = info.getURL();
-    // This can be null (example: dir
-    // /afs/csail.mit.edu/u/m/mernst/.snapshot/class/6170/2006-spring/3dphysics).  I don't know
-    // under what circumstances.
+    // This can be null, but I don't know under what circumstances. (example: dir
+    // /afs/csail.mit.edu/u/m/mernst/.snapshot/class/6170/2006-spring/3dphysics)
     SVNURL repoRoot = info.getRepositoryRootURL();
     if (repoRoot == null) {
       System.err.println("Problem:  old svn working copy in " + dir.toString());
