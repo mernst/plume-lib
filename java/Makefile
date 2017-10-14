@@ -172,7 +172,7 @@ endif
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.index.IndexChecker
 
 ## For testing a single checker, replace the above by:
-# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -processor org.checkerframework.checker.regex.RegexChecker
 JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -AsuppressWarnings=method.evaluation.exception -processor org.checkerframework.checker.index.IndexChecker
 ## To filter out warnings for which an issue has been filed, do this in the Emacs *compilation* buffer:
 # (query-replace-regexp "^.*\n.*index TODO: issue [#\"][0-9]+\"?\n .*\n .*\n .*\n" "")
