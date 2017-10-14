@@ -172,7 +172,13 @@ endif
 JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker
 
 ## For testing a single checker, replace the above by:
-# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -processor org.checkerframework.checker.regex.RegexChecker
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -processor org.checkerframework.checker.regex.RegexChecker
+## To filter out warnings for which an issue has been filed, do this in the Emacs *compilation* buffer:
+# (query-replace-regexp "^.*\n.*index TODO: issue [#\"][0-9]+\"?\n .*\n .*\n .*\n" "")
+## To see the most frequent causes of warnings, run these from the command line:
+# grep -n -i 'index TODO: issue [#"]' src/plume/*.java | sed 's/.*[#"]\([0-9][0-9]*\)"*/#\1    https:\/\/github.com\/kelloggm\/checker-framework\/issues\/\1/' | sort | uniq -c | sort -nr
+# grep -n -i '@SuppressWarnings("index")' src/plume/*.java | sed 's/.*\/\/ //' | sort | uniq -c | sort -nr
+
 ## For testing a single file:
 # JAVA_FILES = src/plume/RegexUtil.java
 
@@ -569,13 +575,16 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ### Code quality
 ###
 
+# See version numbers at https://github.com/google/error-prone/releases
+ERRORPRONE_VERSION := 2.1.1
+
 error-prone: errorprone
 errorprone:
-	${MAKE} lib/error_prone_ant-2.0.21.jar
-	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-2.0.21.jar com.google.errorprone.ErrorProneCompiler -Werror"
+	${MAKE} lib/error_prone_ant-${ERRORPRONE_VERSION}.jar
+	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-${ERRORPRONE_VERSION}.jar com.google.errorprone.ErrorProneCompiler -Werror"
 
-lib/error_prone_ant-2.0.21.jar:
-	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/2.0.21/error_prone_ant-2.0.21.jar)
+lib/error_prone_ant-${ERRORPRONE_VERSION}.jar:
+	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/${ERRORPRONE_VERSION}/error_prone_ant-${ERRORPRONE_VERSION}.jar)
 
 # This compiles the code as well as does pluggable type-checking.
 # Requires Java 8.
