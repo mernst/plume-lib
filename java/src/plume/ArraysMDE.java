@@ -346,6 +346,7 @@ public final class ArraysMDE {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(int[])");
     }
+    @SuppressWarnings("purity.not.deterministic.call") // use deterministic parts of object
     int[] min_max = min_max(a);
     return min_max[1] - min_max[0];
   }
@@ -365,6 +366,7 @@ public final class ArraysMDE {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to element_range(long[])");
     }
+    @SuppressWarnings("purity.not.deterministic.call") // use deterministic parts of object
     long[] min_max = min_max(a);
     return min_max[1] - min_max[0];
   }
