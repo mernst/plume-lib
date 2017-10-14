@@ -168,6 +168,8 @@ public final class SimpleLog {
   /**
    * Prints to the log, then indents.
    *
+   * @param format format string for message
+   * @param args values to be substituted into format
    * @see #indent()
    */
   /*@FormatMethod*/

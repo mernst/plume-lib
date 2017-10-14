@@ -1097,7 +1097,7 @@ public final class UtilMDE {
   // Someone must have already written this.  Right?
 
   /**
-   * A FilenameFilter that accepts files whose name matches the given wildcard. The wildcard may
+   * A FilenameFilter that accepts files whose name matches the given wildcard. The wildcard must
    * contain exactly one "*".
    */
   public static final class WildcardFilter implements FilenameFilter {
