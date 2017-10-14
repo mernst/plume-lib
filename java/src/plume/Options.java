@@ -1027,8 +1027,7 @@ public class Options {
     return (non_options);
   }
 
-  /// This is a lot of methods, but it does save a tad of typing for the
-  /// programmer.
+  // This is a lot of methods, but it does save a tad of typing for the programmer.
 
   /**
    * Prints usage information. Uses the usage synopsis passed into the constructor, if any.
