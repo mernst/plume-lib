@@ -745,19 +745,18 @@ public final class UtilMDE {
       }
       int nonarray_pos = pos;
       while (arglist.charAt(nonarray_pos) == '[') {
-        @SuppressWarnings(
-            "index") // The LTLengthOf annotation is invalidated by the ++, which relies on a [ not being the last character
-        /*@LTLengthOf("arglist")*/ int temp = nonarray_pos + 1;
-        nonarray_pos = temp;
+        nonarray_pos++;
+        if (nonarray_pos >= arglist.length()) {
+          throw new Error("Malformed arglist: " + arglist);
+        }
       }
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
-        @SuppressWarnings(
-            "index") // assumption in this code is that there will be a ; in the string after nonarray_pos
-        /*@NonNegative*/ int semi_pos = arglist.indexOf(";", nonarray_pos);
-        @SuppressWarnings("index") // panacekcz#4
-        String addToResult = fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
-        result += addToResult;
+        int semi_pos = arglist.indexOf(";", nonarray_pos);
+        if (semi_pos == -1) {
+          throw new Error("Malformed arglist: " + arglist);
+        }
+        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
         pos = semi_pos + 1;
       } else {
         String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos + 1));
