@@ -2340,7 +2340,7 @@ public final class UtilMDE {
       s = s.substring(delimindex);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // vectors
+    @SuppressWarnings("index") // index TODO: list support (vectors)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }

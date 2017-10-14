@@ -2216,8 +2216,7 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          @SuppressWarnings("index") // if arg to IotaIterator is @IndexFor("a"), so is every output
-          // Cannot currently annotate primitive wrappers such as Integer, only primitives like int.
+          @SuppressWarnings("index") // IotaIterator needs @PolyIndexFor annotation
           List</*(at)IndexFor("totals")*/ Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
