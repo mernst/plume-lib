@@ -1514,7 +1514,8 @@ public class Options {
       super(s);
     }
 
-    // TODO: re-enable by removing the space, after Nov 1 2017.
+    // TODO: re-enable by removing the @SuppressWarnings() and the space, after Nov 1 2017.
+    @SuppressWarnings("format.string.invalid")
     /*@ FormatMethod*/
     public ArgException(String format, /*@Nullable*/ Object... args) {
       super(String.format(format, args));
