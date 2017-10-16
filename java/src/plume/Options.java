@@ -1514,7 +1514,8 @@ public class Options {
       super(s);
     }
 
-    /*@FormatMethod*/
+    // TODO: re-enable by removing the space, after Nov 1 2017.
+    /*@ FormatMethod*/
     public ArgException(String format, /*@Nullable*/ Object... args) {
       super(String.format(format, args));
     }
