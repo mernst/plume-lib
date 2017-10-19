@@ -410,7 +410,8 @@ public class OptionsDoclet {
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
   @SuppressWarnings({
-    "index", // dependent @MinLen: options is an array of 1- or 2-element arrays (none is empty)
+    "index", // dependent @MinLen: options is an array of 1- or 2-element arrays (none is empty), &
+    // javadoc has already validated them via the optionLength() method before calling this method.
     "upperbound" // indices are legal because of literal command-line options that precede them
   })
   public void setOptions(String[] /*@MinLen(1)*/[] options) {
