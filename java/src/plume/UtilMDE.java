@@ -590,9 +590,7 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/2 ?
-      /*@NonNegative*/ int salm2 = sans_array.length() - 2;
-      sans_array = sans_array.substring(0, salm2);
+      sans_array = sans_array.substring(0, sans_array.length() - 2);
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -698,11 +696,7 @@ public final class UtilMDE {
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
-  @SuppressWarnings( //{
-      "signature" //, // conversion routine
-  //"index"
-  //}
-  ) // https://github.com/panacekcz/checker-framework/issues/4
+  @SuppressWarnings("signature") // conversion routine
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
       throw new Error("Empty string passed to fieldDescriptorToBinaryName");
@@ -754,7 +748,7 @@ public final class UtilMDE {
       }
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
-        int semi_pos = arglist.indexOf(";", nonarray_pos);
+        int semi_pos = arglist.indexOf(';', nonarray_pos);
         if (semi_pos == -1) {
           throw new Error("Malformed arglist: " + arglist);
         }
@@ -2280,7 +2274,6 @@ public final class UtilMDE {
    * @param newStr the replacement
    * @return target with all instances of oldStr replaced by newStr
    */
-  //@ SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/4
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) {
       throw new IllegalArgumentException();
@@ -2337,9 +2330,7 @@ public final class UtilMDE {
     Vector<String> result_list = new Vector<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
-      @SuppressWarnings(
-          "index") // delimlen is the length of delim, and indexOf means that it must be present in the string
-      /*@LTEqLengthOf("s")*/ int delimindex = delimpos + delimlen;
+      int delimindex = delimpos + delimlen;
       s = s.substring(delimindex);
     }
     result_list.add(s);
@@ -2447,11 +2438,10 @@ public final class UtilMDE {
    * @param orig string to quote
    * @return quoted version of orig
    */
-  @SuppressWarnings("index")
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen right before this position.
-    int post_esc = 0;
+    /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int orig_len = orig.length();
     for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);

@@ -722,8 +722,7 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      @SuppressWarnings(
-          "index") // Relies on ulPos + eol.length < in.length, which is true because of the indexOf call above, which is searching for a string that eol is a substring of.
+      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/23
       String suffix_temp = in.substring(ulPos + eol.length());
       suffix = suffix_temp;
       in = in.substring(0, ulPos);
