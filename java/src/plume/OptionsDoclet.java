@@ -224,7 +224,6 @@ public class OptionsDoclet {
    * @param root the root document
    * @return true if processing completed without an error
    */
-  @SuppressWarnings({"index", "value"}) // com.sun.javadoc.RootDoc#options needs an annotation
   public static boolean start(RootDoc root) {
     List<Object> objs = new ArrayList<Object>();
     for (ClassDoc doc : root.specifiedClasses()) {
@@ -325,11 +324,6 @@ public class OptionsDoclet {
    *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
-  @SuppressWarnings({
-    "index", // dependent @MinLen: options is an array of 1- or 2-element arrays (none is empty), &
-    // javadoc has already validated them via the optionLength() method before calling this method.
-    "upperbound" // indices are legal because of literal command-line options that precede them
-  })
   public static boolean validOptions(String[] /*@MinLen(1)*/[] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
@@ -344,6 +338,10 @@ public class OptionsDoclet {
       if (opt.equals("-docfile")) {
         if (hasDocFile) {
           reporter.printError("-docfile option specified twice");
+          return false;
+        }
+        if (os.length < 2) {
+          reporter.printError("-docfile requires an argument");
           return false;
         }
         docFile = os[1];
@@ -363,6 +361,10 @@ public class OptionsDoclet {
           reporter.printError("-i and -outfile can not be used at the same time");
           return false;
         }
+        if (os.length < 2) {
+          reporter.printError("-outfile requires an argument");
+          return false;
+        }
         outFile = os[1];
         hasOutFile = true;
       }
@@ -376,6 +378,10 @@ public class OptionsDoclet {
       if (opt.equals("-format")) {
         if (hasFormat) {
           reporter.printError("-format option specified twice");
+          return false;
+        }
+        if (os.length < 2) {
+          reporter.printError("-format requries an argument");
           return false;
         }
         String format = os[1];
@@ -409,10 +415,9 @@ public class OptionsDoclet {
    *
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
-  @SuppressWarnings({
-    "index", // dependent @MinLen: options is an array of 1- or 2-element arrays (none is empty)
-    "upperbound" // indices are legal because of literal command-line options that precede them
-  })
+  @SuppressWarnings(
+      "index" // all literal 1s as indices are safe assuming well-formed command line options. See #validOptions(String[][], DocErrorReporter)
+  )
   public void setOptions(String[] /*@MinLen(1)*/[] options) {
     String outFilename = null;
     File destDir = null;
@@ -616,7 +621,6 @@ public class OptionsDoclet {
    * @param refillWidth the number of columns to fit the text into, by breaking lines
    * @return the HTML documentation for the underlying options instance
    */
-  @SuppressWarnings("index") // com.sun.javadoc.RootDoc#classes needs an annotation
   public String optionsToHtml(int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
@@ -718,7 +722,8 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/4
+      @SuppressWarnings(
+          "index") // Relies on ulPos + eol.length < in.length, which is true because of the indexOf call above, which is searching for a string that eol is a substring of.
       String suffix_temp = in.substring(ulPos + eol.length());
       suffix = suffix_temp;
       in = in.substring(0, ulPos);

@@ -2216,8 +2216,9 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          @SuppressWarnings("index") // IotaIterator needs @PolyIndexFor annotation
-          List</*(at)IndexFor("totals")*/ Integer> chosen =
+          @SuppressWarnings(
+              "index") // Because IotaIterator stores its maximum size as a field, there is no annotation that expresses that the argument to the constructor's type is the same type as the result of its outputs
+          List</*@IndexFor("totals")*/ Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {

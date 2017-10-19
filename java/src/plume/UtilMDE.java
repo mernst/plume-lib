@@ -698,10 +698,11 @@ public final class UtilMDE {
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
-  @SuppressWarnings({
-    "signature", // conversion routine
-    "index"
-  }) // https://github.com/panacekcz/checker-framework/issues/4
+  @SuppressWarnings( //{
+      "signature" //, // conversion routine
+  //"index"
+  //}
+  ) // https://github.com/panacekcz/checker-framework/issues/4
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
       throw new Error("Empty string passed to fieldDescriptorToBinaryName");
@@ -757,7 +758,9 @@ public final class UtilMDE {
         if (semi_pos == -1) {
           throw new Error("Malformed arglist: " + arglist);
         }
-        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
+        @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/176
+        String fieldDescriptor = arglist.substring(pos, semi_pos + 1);
+        result += fieldDescriptorToBinaryName(fieldDescriptor);
         pos = semi_pos + 1;
       } else {
         String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos + 1));
@@ -2277,7 +2280,7 @@ public final class UtilMDE {
    * @param newStr the replacement
    * @return target with all instances of oldStr replaced by newStr
    */
-  @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/4
+  //@ SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/4
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) {
       throw new IllegalArgumentException();

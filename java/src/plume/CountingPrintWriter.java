@@ -388,8 +388,8 @@ public class CountingPrintWriter extends PrintWriter {
    * @param len number of characters to write
    */
   @Override
-  @SuppressWarnings("upperbound") // arithmetic: offset; off+len has type @IndexOrHigh("buf")
-  public void write(char[] buf, /*@NonNegative*/ int off, /*@NonNegative*/ int len) {
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/144
+  public void write(char[] buf, /*@IndexOrHigh("#1")*/ int off, /*@IndexOrHigh("#1")*/ int len) {
     for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);
     }

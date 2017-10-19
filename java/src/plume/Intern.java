@@ -450,7 +450,8 @@ public final class Intern {
    * @return an interned version of the argument, or null if the argument was null
    */
   /*@Pure*/
-  public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
+  public static /*@Interned*/ /*@PolyNull*/ /*@PolyLength*/ String intern(
+      /*@PolyNull*/ /*@PolyLength*/ String a) {
     // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
     if (a == null) {
       return null;
@@ -586,20 +587,21 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static int /*@Interned*/ /*(at)PolyArrayLen*/[] intern(int /*(at)PolyArrayLen*/[] a) {
+  public static int /*@Interned*/ /*@PolyLength*/ [] intern(int /*@PolyLength*/ [] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
 
-    @SuppressWarnings("index") // need PolyMinLen annotations on Map.get
     WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
-    @SuppressWarnings("index") // need PolyMinLen annotations on WeakReference.get
-    int[] result1 = (lookup != null) ? lookup.get() : null;
+    @SuppressWarnings({
+      "index", "value"
+    }) // https://github.com/kelloggm/checker-framework/issues/177
+    int /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ int[] result = (int /*@Interned*/ []) a;
+      /*@Interned*/ int[] result = (int /*@Interned*/ /*@PolyLength*/ []) a;
       internedIntArrays.put(result, new WeakReference<int /*@Interned*/ []>(result));
       return result;
     }
@@ -614,16 +616,19 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static long /*@Interned*/ [] intern(long[] a) {
+  public static long /*@Interned*/ /*@PolyLength*/ [] intern(long /*@PolyLength*/ [] a) {
     // System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
-    long[] result1 = (lookup != null) ? lookup.get() : null;
+    @SuppressWarnings({
+      "index", "value"
+    }) // https://github.com/kelloggm/checker-framework/issues/177
+    long /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ long[] result = (long /*@Interned*/ []) a;
+      /*@Interned*/ long[] result = (long /*@Interned*/ /*@PolyLength*/ []) a;
       internedLongArrays.put(result, new WeakReference<long /*@Interned*/ []>(result));
       return result;
     }
@@ -697,14 +702,17 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static double /*@Interned*/ [] intern(double[] a) {
+  public static double /*@Interned*/ /*@PolyLength*/ [] intern(double /*@PolyLength*/ [] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
-    double[] result1 = (lookup != null) ? lookup.get() : null;
+    @SuppressWarnings({
+      "index", "value"
+    }) // https://github.com/kelloggm/checker-framework/issues/177
+    double /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ double[] result = (double /*@Interned*/ []) a;
+      /*@Interned*/ double[] result = (double /*@Interned*/ /*@PolyLength*/ []) a;
       internedDoubleArrays.put(result, new WeakReference<double /*@Interned*/ []>(result));
       return result;
     }
@@ -724,8 +732,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(
-      /*@PolyNull*/ /*@Interned*/ String[] a) {
+  public static /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@Interned*/ /*@PolyLength*/ []
+      intern(/*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@PolyLength*/ [] a) {
 
     // Make sure each element is already interned
     if (assertsEnabled) {
@@ -744,9 +752,12 @@ public final class Intern {
       internedStringArrays.put(
           result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
     }
-    @SuppressWarnings(
-        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
-    /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] polyresult = result;
+    @SuppressWarnings({
+      "nullness",
+      "index",
+      "value"
+    }) // PolyNull/PolyLength:  value = parameter a, so same type & nullness as for parameter a
+    /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
     return polyresult;
   }
 
@@ -764,8 +775,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(
-      /*@PolyNull*/ /*@Interned*/ Object[] a) {
+  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ /*@PolyLength*/ [] intern(
+      /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object[] a) {
     @SuppressWarnings(
         "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup =
@@ -776,9 +787,12 @@ public final class Intern {
       internedObjectArrays.put(
           result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
     }
-    @SuppressWarnings(
-        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
-    /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] polyresult = result;
+    @SuppressWarnings({
+      "nullness",
+      "index",
+      "value"
+    }) // PolyNull/PolyLength:  value = parameter a, so same type & nullness as for parameter a
+    /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
     return polyresult;
   }
 
@@ -853,7 +867,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // end > start
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start);
       int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
       internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
@@ -884,7 +898,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // end > start
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
@@ -915,7 +929,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // end > start
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
@@ -948,7 +962,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // end > start
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
@@ -986,7 +1000,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // end > start
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
