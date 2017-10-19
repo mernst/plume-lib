@@ -1860,6 +1860,10 @@ If called interactively, prompt for which index."
 ;; Tags
 (eval-after-load "etags" '(load "etags-mde"))
 (setq tags-find-related-names-functions '(mit-scheme-tags-find-related-names))
+(setq tags-add-tables nil)              ; always use just one TAGS table at a time
+;; To temporarily use multiple TAGS tables:
+;; (setq tags-add-tables 'ask-user)
+;; (setq tags-add-tables t)
 
 ;; Fiddle with window title, in particular shorten system name
 (let ((frame-name (cdr (assoc 'name (frame-parameters (selected-frame))))))
