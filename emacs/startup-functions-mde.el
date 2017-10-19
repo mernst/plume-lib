@@ -406,8 +406,10 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 ;; (setq ack-default-flags "-i")
 
 
-(require 'ag nil 'noerror)
+(autoload 'ag "ag" "Search using ag in a given DIRECTORY for a given search term STRING." t)
 (setq ag-regexp-default t)              ; default to regexp search
+(setq ag-group-matches nil)             ; don't add filename header lines
+
 ;; Some VCS ignore files (such as .gitignore) indicate generated files that
 ;; should be ignored, but others should be searched; ag's default of ignoring
 ;; everything mentioned in an ignore file is too extreme.
