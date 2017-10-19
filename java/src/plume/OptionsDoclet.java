@@ -624,8 +624,9 @@ public class OptionsDoclet {
   public String optionsToHtml(int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
-    if (includeClassDoc && root.classes().length > 0) {
-      b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
+    ClassDoc[] classes = root.classes();
+    if (includeClassDoc && classes.length > 0) {
+      b.append(OptionsDoclet.javadocToHtml(classes[0]));
       b.append("<p>Command line options:</p>");
     }
 
