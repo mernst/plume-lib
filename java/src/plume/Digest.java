@@ -67,7 +67,7 @@ public final class Digest {
    * @param bytes the bytes to convert to a String
    * @return a String representation of the input bytes
    */
-  @SuppressWarnings("upperbound") // array length: computed index is within known array length
+  @SuppressWarnings("upperbound") // index TODO
   public static String hexEncode(byte[] bytes) {
     StringBuffer s = new StringBuffer(bytes.length * 2);
     for (int i = 0; i < bytes.length; i++) {
