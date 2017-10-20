@@ -106,15 +106,21 @@ public class TaskManager {
     /*@EnsuresNonNull({"filename", "task", "responsible", "duration", "completed"})*/
     private void checkRep(
         /*>>> @UnderInitialization(Object.class) @Raw(Object.class) Task this*/) {
-      assert filename != null
-          : "No filename at line " + line_number + " @AssumeAssertion(nullness)";
-      assert task != null : "No task at line " + line_number + " @AssumeAssertion(nullness)";
-      assert responsible != null
-          : "No responsible at line " + line_number + " @AssumeAssertion(nullness)";
-      assert duration != null
-          : "No duration at line " + line_number + " @AssumeAssertion(nullness)";
-      assert completed != null
-          : "No completed at line " + line_number + " @AssumeAssertion(nullness)";
+      if (filename == null) {
+        throw new Error("No filename at line " + line_number);
+      }
+      if (task == null) {
+        throw new Error("No task at line " + line_number);
+      }
+      if (responsible == null) {
+        throw new Error("No responsible at line " + line_number);
+      }
+      if (duration == null) {
+        throw new Error("No duration at line " + line_number);
+      }
+      if (completed == null) {
+        throw new Error("No completed at line " + line_number);
+      }
     }
 
     public Task(String body, String filename, long line_number) throws IOException {

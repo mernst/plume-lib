@@ -80,9 +80,9 @@ public class TimeLimitProcess extends Process {
           "new timelimit process, timeLimit=%s, cacheStdout=%s%n", timeLimit, cacheStdout);
     }
     @SuppressWarnings({
-      "rawness",
-      "initialization"
-    }) // FBC false positive: tptt won't do anything with this until this is fully initialized
+      "rawness", // tptt won't do anything with this until this is fully initialized
+      "initialization" // tptt won't do anything with this until this is fully initialized
+    })
     /*@Initialized*/ TPTimerTask tptt = new TPTimerTask(this, timeLimit);
     timer.schedule(tptt, timeLimit);
     if (cacheStdout) {
@@ -160,7 +160,7 @@ public class TimeLimitProcess extends Process {
   @Override
   public InputStream getErrorStream() {
     if (cached_stderr == null) {
-      @SuppressWarnings("nullness") // non-null because we didn't redirect the error stream
+      @SuppressWarnings("nullness") // didn't redirect stream, so getter returns non-null
       /*@NonNull*/ InputStream errorStream = p.getErrorStream();
       return errorStream;
     } else {
@@ -184,7 +184,7 @@ public class TimeLimitProcess extends Process {
   @Override
   public InputStream getInputStream() {
     if (cached_stdout == null) {
-      @SuppressWarnings("nullness") // non-null because we didn't redirect the input stream
+      @SuppressWarnings("nullness") // didn't redirect stream, so getter returns non-null
       /*@NonNull*/ InputStream inputStream = p.getInputStream();
       return inputStream;
     } else {
@@ -208,7 +208,7 @@ public class TimeLimitProcess extends Process {
    * @return the output stream
    * @see Process#getOutputStream()
    */
-  @SuppressWarnings("nullness") // non-null because we didn't redirect the output stream
+  @SuppressWarnings("nullness") // didn't redirect stream, so getter returns non-null
   @Override
   public OutputStream getOutputStream() {
     return p.getOutputStream();

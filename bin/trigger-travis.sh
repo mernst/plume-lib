@@ -45,7 +45,7 @@
 #         echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 #         if [[ ($TRAVIS_BRANCH == master) &&
 #               ($TRAVIS_PULL_REQUEST == false) ]] ; then
-#           curl -LO https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+#           curl -LO --retry 3 https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
 #           sh trigger-travis.sh OTHERGITHUBID OTHERGITHUBPROJECT $TRAVIS_ACCESS_TOKEN
 #         fi
 

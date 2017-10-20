@@ -25,6 +25,8 @@
 
 ;; * Add tags-replace, like tags-query-replace.
 
+;; * Add tags-query-replace-noerror, which throws no error.
+
 ;; * Make tags-verify-table never query the user, always use latest TAGS table.
 
 ;; Use this code by placing
@@ -455,6 +457,13 @@ See documentation of variable `tag-table-alist'."
                                  ;; the loop is exited if nil is returned
                                  t))
    (tags-loop-continue (or file-list-form t))))
+
+
+(defun tags-query-replace-noerror (from to &optional delimited file-list-form)
+  "Like `tags-query-replace-noerror', but does not throw user-error when done."
+  (condition-case nil
+      (tags-query-replace from to delimited file-list-form)
+    (user-error nil)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

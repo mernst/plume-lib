@@ -1101,7 +1101,7 @@ public final class UtilMDE {
   // Someone must have already written this.  Right?
 
   /**
-   * A FilenameFilter that accepts files whose name matches the given wildcard. The wildcard may
+   * A FilenameFilter that accepts files whose name matches the given wildcard. The wildcard must
    * contain exactly one "*".
    */
   public static final class WildcardFilter implements FilenameFilter {
@@ -2034,8 +2034,7 @@ public final class UtilMDE {
     // TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
     try {
       Process p = pb.start();
-      @SuppressWarnings(
-          "nullness") // input stream is non-null because we didn't redirect the input stream
+      @SuppressWarnings("nullness") // didn't redirect stream, so getter returns non-null
       String output = UtilMDE.streamString(p.getInputStream());
       return output;
     } catch (IOException e) {
