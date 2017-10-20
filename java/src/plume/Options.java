@@ -765,8 +765,6 @@ public class Options {
   /**
    * Like getAnnotation, but returns null (and prints a warning) rather than throwing an exception.
    */
-  @SuppressWarnings(
-      "initialization") // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
   private static <T extends Annotation> /*@Nullable*/ T safeGetAnnotation(
       Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
@@ -1376,7 +1374,7 @@ public class Options {
         if (oi.factory == null) {
           throw new Error("No constructor or factory for argument " + arg_name);
         }
-        @SuppressWarnings("nullness") // oi.factory is a static method, so null first argument is OK
+        @SuppressWarnings("nullness") // static method, so null first arg is OK: oi.factory
         /*@NonNull*/ Object tmpVal = oi.factory.invoke(null, arg_value);
         val = tmpVal;
       }
