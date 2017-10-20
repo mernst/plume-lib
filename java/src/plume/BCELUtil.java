@@ -658,7 +658,7 @@ public final class BCELUtil {
    * @return a new array, with new_type at the beginning
    */
   @SuppressWarnings(
-      "index") // overflow:  new_types[0]: new_types is @MinLen(1) except in the presence of overflow
+      "index") // new_types is @MinLen(1) except in the presence of overflow, which the value checker accounts for, but the index checker does not
   public static Type[] prependToArray(Type new_type, Type[] types) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
