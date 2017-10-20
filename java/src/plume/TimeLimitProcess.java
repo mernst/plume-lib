@@ -80,9 +80,9 @@ public class TimeLimitProcess extends Process {
           "new timelimit process, timeLimit=%s, cacheStdout=%s%n", timeLimit, cacheStdout);
     }
     @SuppressWarnings({
-      "rawness",
-      "initialization"
-    }) // FBC false positive: tptt won't do anything with this until this is fully initialized
+      "rawness", // tptt won't do anything with this until this is fully initialized
+      "initialization" // tptt won't do anything with this until this is fully initialized
+    })
     /*@Initialized*/ TPTimerTask tptt = new TPTimerTask(this, timeLimit);
     timer.schedule(tptt, timeLimit);
     if (cacheStdout) {

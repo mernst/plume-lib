@@ -1063,7 +1063,7 @@ public final class TestPlume {
           throw new Error();
         }
         for (int i = 10; i < arrays.length; i++) {
-          @SuppressWarnings("nullness")
+          @SuppressWarnings("nullness") // test code: permit garbage collection to test interning
           int /*@NonNull*/ [] reset_value = null;
           arrays[i] = reset_value;
         }
@@ -3173,7 +3173,8 @@ public final class TestPlume {
     // Test list with no default
     args = options.parse(new String[] {"--ls", "hello", "--ls", "world"});
     assert args.length == 0;
-    assert t.ls != null : "@AssumeAssertion(nullness)";
+    assert t.ls != null
+        : "@AssumeAssertion(nullness): application invariant: parsed string with --ls just above";
     assert t.ls.size() == 2;
     assert t.ls.get(0).equals("hello");
     assert t.ls.get(1).equals("world");
@@ -3436,7 +3437,7 @@ public final class TestPlume {
   private static /*@Nullable*/ Map<Integer, List</*@KeyFor("preds1")*/ Integer>> preds1;
   private static /*@Nullable*/ Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
 
-  @SuppressWarnings({"keyfor", "nullness"})
+  @SuppressWarnings({"keyfor", "nullness"}) // test code
   /*@EnsuresNonNull({"preds1", "succs1"})*/
   private static void initializePreds1AndSucc1() {
     if (preds1 != null) {
@@ -3469,7 +3470,7 @@ public final class TestPlume {
     preds1.get(4).add(6);
   }
 
-  @SuppressWarnings("nullness")
+  @SuppressWarnings("nullness") // test code
   @Test
   public void testGraphMDE() {
 

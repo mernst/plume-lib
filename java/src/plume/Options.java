@@ -629,9 +629,9 @@ public class Options {
       String current_group = null;
 
       @SuppressWarnings({
-        "rawness",
-        "initialization"
-      }) // if is_class is true, obj is a non-null initialized Class
+        "rawness", // if is_class is true, obj is a non-null initialized Class
+        "initialization" // if is_class is true, obj is a non-null initialized Class
+      })
       /*@Initialized*/ /*@NonRaw*/ /*@NonNull*/ Class<?> clazz =
           (is_class ? (/*@Initialized*/ /*@NonRaw*/ /*@NonNull*/ Class<?>) obj : obj.getClass());
       if (main_class == Void.TYPE) {
@@ -1364,7 +1364,7 @@ public class Options {
   private /*@NonNull*/ Object get_ref_arg(OptionInfo oi, String arg_name, String arg_value)
       throws ArgException {
 
-    Object val = null;
+    Object val;
     try {
       if (oi.constructor != null) {
         val = oi.constructor.newInstance(new Object[] {arg_value});
@@ -1377,14 +1377,13 @@ public class Options {
           throw new Error("No constructor or factory for argument " + arg_name);
         }
         @SuppressWarnings("nullness") // oi.factory is a static method, so null first argument is OK
-        Object tmpVal = oi.factory.invoke(null, arg_value);
+        /*@NonNull*/ Object tmpVal = oi.factory.invoke(null, arg_value);
         val = tmpVal;
       }
     } catch (Exception e) {
       throw new ArgException("Invalid argument (%s) for argument %s", arg_value, arg_name);
     }
 
-    assert val != null : "@AssumeAssertion(nullness)";
     return val;
   }
 
