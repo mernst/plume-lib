@@ -1684,7 +1684,7 @@ public final class ArraysMDE {
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
         for (int i = 0; i < b.size(); i++) {
-          @SuppressWarnings("index") // index TODO: list support
+          @SuppressWarnings("index") // index checker has no list support
           /*@IndexFor("result")*/ int index = i + a.length;
           result[index] = b.get(i);
         }
@@ -1720,7 +1720,7 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i = 0; i < a.size(); i++) {
-          @SuppressWarnings("index") // index TODO: list support
+          @SuppressWarnings("index") // index checker has no list support
           /*@IndexFor("result")*/ int index = i;
           result[index] = a.get(i);
         }
@@ -1757,13 +1757,13 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i = 0; i < a.size(); i++) {
-          @SuppressWarnings("index") // index TODO: list support
+          @SuppressWarnings("index") // index checker has no list support
           /*@IndexFor("result")*/ int index = i;
           result[index] = a.get(i);
         }
         // System.arraycopy(b, 0, result, a.length, b.length);
         for (int i = 0; i < b.size(); i++) {
-          @SuppressWarnings("index") // index TODO: list support
+          @SuppressWarnings("index") // index checker has no list support
           /*@IndexFor("result")*/ int index = i + a.size();
           result[index] = b.get(i);
         }

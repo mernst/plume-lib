@@ -151,7 +151,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("index") // index TODO: need EnsuresQualifierIf with annotation argument
+  @SuppressWarnings("index") // needs EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
