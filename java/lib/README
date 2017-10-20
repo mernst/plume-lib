@@ -56,7 +56,7 @@ BCEL (bcel.jar)
     # or: git clone https://github.com/typetools/commons-bcel.git
     cd commons-bcel
     git pull https://github.com/codespecs/commons-bcel.git
-    # Now, resolve any conflicts before running the next command.
+    # Resolve any conflicts before running the next command.
     git push
     # The below command uses the the current Checker Framework from the
     # version control repository.  To use the latest released version of the
