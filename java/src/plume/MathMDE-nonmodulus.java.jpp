@@ -279,7 +279,7 @@ The correct way to build the system is to run 'make'.
       boolean[] has_modulus = new boolean[m]; // initialized to false?
       int num_nonmodulus = m;
       for (int i=0; i<nums.length; i++) {
-        @SuppressWarnings("upperbound") // integer comparison: mod_positive returns a value < m
+        @SuppressWarnings("upperbound") // https://github.com/kelloggm/checker-framework/issues/158 : mod_positive returns a value < m
         /*@IndexFor("has_modulus")*/ int rem = CastToInt(mod_positive(nums[i], m));
         if (!has_modulus[rem]) {
           has_modulus[rem] = true;
