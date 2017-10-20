@@ -52,7 +52,7 @@ public final class Intern {
    * @see String#intern
    */
   @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
-  public static /*@Interned*/ String[] internStrings(String[] a) {
+  public static /*@Interned*/ String /*@PolyLength*/ [] internStrings(String /*@PolyLength*/ [] a) {
     for (int i = 0; i < a.length; i++) {
       if (a[i] != null) {
         a[i] = a[i].intern();
@@ -594,8 +594,9 @@ public final class Intern {
 
     WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
     @SuppressWarnings({
-      "index", "value"
-    }) // https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
     int /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
@@ -621,8 +622,9 @@ public final class Intern {
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
     @SuppressWarnings({
-      "index", "value"
-    }) // https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
     long /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
@@ -705,8 +707,9 @@ public final class Intern {
   public static double /*@Interned*/ /*@PolyLength*/ [] intern(double /*@PolyLength*/ [] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
     @SuppressWarnings({
-      "index", "value"
-    }) // https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
     double /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
@@ -732,8 +735,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@Interned*/ /*@PolyLength*/ []
-      intern(/*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@PolyLength*/ [] a) {
+  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ /*@PolyLength*/ [] intern(
+      /*@PolyNull*/ /*@Interned*/ String /*@PolyLength*/ [] a) {
 
     // Make sure each element is already interned
     if (assertsEnabled) {
@@ -753,10 +756,10 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
     }
     @SuppressWarnings({
-      "nullness",
-      "index",
-      "value"
-    }) // PolyNull/PolyLength:  value = parameter a, so same type & nullness as for parameter a
+      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
     /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
     return polyresult;
   }

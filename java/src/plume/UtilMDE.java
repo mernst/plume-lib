@@ -1114,8 +1114,7 @@ public final class UtilMDE {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
-      @SuppressWarnings(
-          "index") // this code assumes that the asterisk is not the last character in the string
+      @SuppressWarnings("index") // index TODO
       String suffixTemp = filename.substring(astloc + 1);
       suffix = suffixTemp;
       if (filename.indexOf("*") != -1) {
