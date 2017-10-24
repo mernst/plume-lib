@@ -627,7 +627,7 @@ This is disabled on lines with a comment containing the string \"interned\"."
       (progn
         ;; I would like to avoid the "(Shell command succeeded with no output)"
         ;; message.
-        (shell-command (concat cmd (buffer-file-name)))
+        (shell-command (concat cmd (buffer-file-name)) "*run-google-java-format*")
 	(bdiff-revert-buffer-maybe)))))
 
 
