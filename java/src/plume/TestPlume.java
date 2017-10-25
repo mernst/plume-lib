@@ -2680,7 +2680,7 @@ public final class TestPlume {
    * Test the intering of subsequences as triples of the original sequence, the start and the end
    * indices.
    */
-  @SuppressWarnings("index") // needs @PolyArrayLen annotation on Intern.intern()
+  @SuppressWarnings("index") // test code which relies on assumptions about what is being tested
   @Test
   public void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});

@@ -2332,7 +2332,7 @@ public final class UtilMDE {
       s = s.substring(delimindex);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // index TODO: list support (vectors)
+    @SuppressWarnings("index") // index checker has no list support (vectors)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2685,7 +2685,6 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
    */
-  @SuppressWarnings("index")
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
     int delim_len = delimiter.length();
