@@ -204,6 +204,7 @@ public final class SimpleLog {
   }
 
   /** Exdents: reduces indentation and pops a start time. */
+  @SuppressWarnings("index") // correlated fields:  indent_str is non-empty if start_times is
   public void exdent() {
     if (enabled) {
       if (start_times.isEmpty()) {

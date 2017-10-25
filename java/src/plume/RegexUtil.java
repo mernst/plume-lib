@@ -6,7 +6,9 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -86,7 +88,7 @@ public final class RegexUtil {
      * @param index the approximate index in the pattern of the error, or {@code -1} if the index is
      *     not known
      */
-    public CheckedPatternSyntaxException(String desc, String regex, int index) {
+    public CheckedPatternSyntaxException(String desc, String regex, /*@GTENegativeOne*/ int index) {
       this(new PatternSyntaxException(desc, regex, index));
     }
 

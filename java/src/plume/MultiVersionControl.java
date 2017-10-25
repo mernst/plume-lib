@@ -27,11 +27,14 @@ import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNWCClient;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.initialization.qual.*;
 import org.checkerframework.checker.lock.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 // A related program is the "mr" program (http://kitenet.net/~joey/code/mr/).
@@ -651,7 +654,7 @@ public class MultiVersionControl {
           currentRootIsRepos = false;
           // If the CVSROOT is remote, try to make it local.
           if (currentRoot.startsWith(":ext:")) {
-            String[] rootWords = currentRoot.split(":");
+            String /*@MinLen(1)*/[] rootWords = currentRoot.split(":");
             String possibleRoot = rootWords[rootWords.length - 1];
             if (new File(possibleRoot).isDirectory()) {
               currentRoot = possibleRoot;
@@ -1386,7 +1389,7 @@ public class MultiVersionControl {
                   "update",
                   "-d");
               addArgs(pb, cvs_arg);
-              //         $filter = "grep -v \"config: unrecognized keyword 'UseNewInfoFmtStrings'\"";
+              //       $filter = "grep -v \"config: unrecognized keyword 'UseNewInfoFmtStrings'\"";
               replacers.add(new Replacer("(cvs update: move away )", "$1" + dir + "/"));
               replacers.add(new Replacer("(cvs \\[update aborted)(\\])", "$1 in " + dir + "$2"));
               break;
@@ -1700,7 +1703,7 @@ public class MultiVersionControl {
    */
   static class StreamOfNewlines extends InputStream {
     @Override
-    public int read() {
+    public /*@GTENegativeOne*/ int read() {
       return (int) '\n';
     }
   }

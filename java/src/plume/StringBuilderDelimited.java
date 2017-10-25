@@ -1,6 +1,7 @@
 package plume;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -72,25 +73,30 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   }
 
   @Override
-  public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq, int start, int end) {
+  public StringBuilderDelimited append(
+      /*@Nullable*/ CharSequence csq,
+      /*@IndexOrHigh("#1")*/ int start,
+      /*@IndexOrHigh("#1")*/ int end) {
     appendDelimiter();
     delegate.append(csq, start, end);
     return this;
   }
 
   @Override
-  public char charAt(int index) {
+  public char charAt(/*@ IndexFor("this")*/ int index) {
     return delegate.charAt(index);
   }
 
   /*@Pure*/
   @Override
-  public int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/175
+  public /*@NonNegative*/ int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
 
   @Override
-  public CharSequence subSequence(int start, int end) {
+  public CharSequence subSequence(
+      /*@IndexOrHigh("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {
     return delegate.subSequence(start, end);
   }
 

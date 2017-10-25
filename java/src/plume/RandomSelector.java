@@ -131,7 +131,9 @@ public class RandomSelector<T> {
       if (values.size() < num_elts) {
         values.add(next);
       } else {
-        int rem = generator.nextInt(values.size());
+        @SuppressWarnings("index") // index TODO: list support
+        int rem = generator.nextInt(values.size()); // index TODO: list support:
+        // values should be MinLen(1), meaning that values.size() is positive.
         values.set(rem, next);
       }
     }

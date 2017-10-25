@@ -5,10 +5,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.interning.qual.*;
 import org.checkerframework.checker.lock.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -49,7 +52,7 @@ public final class Intern {
    * @see String#intern
    */
   @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
-  public static /*@Interned*/ String[] internStrings(String[] a) {
+  public static /*@Interned*/ String /*@PolyLength*/ [] internStrings(String /*@PolyLength*/ [] a) {
     for (int i = 0; i < a.length; i++) {
       if (a[i] != null) {
         a[i] = a[i].intern();
@@ -447,7 +450,8 @@ public final class Intern {
    * @return an interned version of the argument, or null if the argument was null
    */
   /*@Pure*/
-  public static /*@Interned*/ /*@PolyNull*/ String intern(/*@PolyNull*/ String a) {
+  public static /*@Interned*/ /*@PolyNull*/ /*@PolyLength*/ String intern(
+      /*@PolyNull*/ /*@PolyLength*/ String a) {
     // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
     if (a == null) {
       return null;
@@ -583,18 +587,22 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static int /*@Interned*/ [] intern(int[] a) {
+  public static int /*@Interned*/ /*@PolyLength*/ [] intern(int /*@PolyLength*/ [] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
 
     WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
-    int[] result1 = (lookup != null) ? lookup.get() : null;
+    @SuppressWarnings({
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
+    int /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ int[] result = (int /*@Interned*/ []) a;
+      /*@Interned*/ int[] result = (int /*@Interned*/ /*@PolyLength*/ []) a;
       internedIntArrays.put(result, new WeakReference<int /*@Interned*/ []>(result));
       return result;
     }
@@ -609,16 +617,20 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static long /*@Interned*/ [] intern(long[] a) {
-    //System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
+  public static long /*@Interned*/ /*@PolyLength*/ [] intern(long /*@PolyLength*/ [] a) {
+    // System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
-    long[] result1 = (lookup != null) ? lookup.get() : null;
+    @SuppressWarnings({
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
+    long /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ long[] result = (long /*@Interned*/ []) a;
+      /*@Interned*/ long[] result = (long /*@Interned*/ /*@PolyLength*/ []) a;
       internedLongArrays.put(result, new WeakReference<long /*@Interned*/ []>(result));
       return result;
     }
@@ -692,14 +704,18 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static double /*@Interned*/ [] intern(double[] a) {
+  public static double /*@Interned*/ /*@PolyLength*/ [] intern(double /*@PolyLength*/ [] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
-    double[] result1 = (lookup != null) ? lookup.get() : null;
+    @SuppressWarnings({
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
+    double /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ double[] result = (double /*@Interned*/ []) a;
+      /*@Interned*/ double[] result = (double /*@Interned*/ /*@PolyLength*/ []) a;
       internedDoubleArrays.put(result, new WeakReference<double /*@Interned*/ []>(result));
       return result;
     }
@@ -719,8 +735,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] intern(
-      /*@PolyNull*/ /*@Interned*/ String[] a) {
+  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ /*@PolyLength*/ [] intern(
+      /*@PolyNull*/ /*@Interned*/ String /*@PolyLength*/ [] a) {
 
     // Make sure each element is already interned
     if (assertsEnabled) {
@@ -739,9 +755,12 @@ public final class Intern {
       internedStringArrays.put(
           result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
     }
-    @SuppressWarnings(
-        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
-    /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] polyresult = result;
+    @SuppressWarnings({
+      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+    })
+    /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
     return polyresult;
   }
 
@@ -759,8 +778,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] intern(
-      /*@PolyNull*/ /*@Interned*/ Object[] a) {
+  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ /*@PolyLength*/ [] intern(
+      /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object[] a) {
     @SuppressWarnings(
         "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup =
@@ -771,9 +790,12 @@ public final class Intern {
       internedObjectArrays.put(
           result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
     }
-    @SuppressWarnings(
-        "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
-    /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] polyresult = result;
+    @SuppressWarnings({
+      "nullness",
+      "index",
+      "value"
+    }) // PolyNull/PolyLength:  value = parameter a, so same type & nullness as for parameter a
+    /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
     return polyresult;
   }
 
@@ -834,7 +856,10 @@ public final class Intern {
    * @param end the index of the end of the subsequence to compute and intern
    * @return a subsequence of seq from start to end that is interned
    */
-  public static int /*@Interned*/ [] internSubsequence(int /*@Interned*/ [] seq, int start, int end) {
+  public static int /*@Interned*/ [] internSubsequence(
+      int /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
     }
@@ -845,6 +870,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start);
       int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
       internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
@@ -862,7 +888,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static long /*@Interned*/ [] internSubsequence(
-      long /*@Interned*/ [] seq, int start, int end) {
+      long /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
     }
@@ -873,6 +901,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
@@ -890,7 +919,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static double /*@Interned*/ [] internSubsequence(
-      double /*@Interned*/ [] seq, int start, int end) {
+      double /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
     }
@@ -901,6 +932,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
@@ -918,7 +950,9 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   /*@Pure*/
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(
-      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq, int start, int end) {
+      /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
     }
@@ -931,6 +965,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
@@ -953,7 +988,9 @@ public final class Intern {
   /*@Pure*/
   @SuppressWarnings("purity") // interning logic
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(
-      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq, int start, int end) {
+      /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq,
+      /*@IndexFor("#1")*/ int start,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
     }
@@ -966,6 +1003,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
+      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
@@ -985,11 +1023,11 @@ public final class Intern {
    */
   private static final class SequenceAndIndices<T extends /*@Interned*/ Object> {
     public T seq;
-    public int start;
+    public /*@NonNegative*/ int start;
     public int end;
 
     /** @param seq an interned array */
-    public SequenceAndIndices(T seq, int start, int end) {
+    public SequenceAndIndices(T seq, /*@NonNegative*/ int start, int end) {
       if (assertsEnabled && !Intern.isInterned(seq)) {
         throw new IllegalArgumentException();
       }

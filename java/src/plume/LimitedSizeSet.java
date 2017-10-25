@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -28,9 +30,11 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * If null, then at least num_values distinct values have been seen. The size is not separately
    * stored, because that would take extra space.
    */
-  protected /*@Nullable*/ T /*@Nullable*/ [] values;
+  protected /*@Nullable*/ T /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
-  int num_values;
+  // Not exactly @IndexOrHigh("values"), because the values field can get
+  // nulled.  But that should be permitted by the type system.
+  /*@IndexOrHigh("this.values")*/ int num_values;
 
   /** Whether assertions are enabled. */
   private static boolean assertsEnabled = false;
@@ -45,17 +49,23 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @param max_values the maximum number of values this set will be able to hold; must be positive
    */
-  public LimitedSizeSet(int max_values) {
+  public LimitedSizeSet(/*@Positive*/ int max_values) {
     if (assertsEnabled && !(max_values > 0)) {
       throw new IllegalArgumentException("max_values should be positive, is " + max_values);
     }
     // this.max_values = max_values;
-    @SuppressWarnings("unchecked")
-    /*@Nullable*/ T[] new_values_array = (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
+    @SuppressWarnings({
+      "unchecked",
+      "index", // https://github.com/kelloggm/checker-framework/issues/174
+      "value"
+    })
+    /*@Nullable*/ T /*@MinLen(1)*/[] new_values_array =
+        (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
     values = new_values_array;
     num_values = 0;
   }
 
+  @SuppressWarnings("index") // num_values may or may not be an index
   public void add(T elt) {
     if (repNulled()) {
       return;
@@ -95,7 +105,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
     // TODO: s.values isn't modified by the call to add.  Use a local variable until
     // https://tinyurl.com/cfissue/984 is fixed.
-    /*@Nullable*/ T[] svalues = s.values;
+    /*@Nullable*/ T /*@SameLen("s.values")*/[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
       assert svalues[i] != null : "@AssumeAssertion(nullness): used portion of array";
       add(svalues[i]);
@@ -105,7 +115,10 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
   }
 
-  @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
+  @SuppressWarnings({
+    "deterministic", // pure wrt equals() but not ==: throws a new exception
+    "index" // num_values may or may not be an index
+  })
   /*@Pure*/
   public boolean contains(T elt) {
     if (repNulled()) {
@@ -128,7 +141,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a number that is a lower bound on the number of elements added to the set
    */
   /*@Pure*/
-  public int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
+  public /*@IndexOrHigh("this.values")*/ int size(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     return num_values;
   }
 
@@ -138,7 +151,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  public int max_size() {
+  @SuppressWarnings("index") // needs EnsuresQualifierIf with annotation argument
+  public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
     } else {
@@ -163,6 +177,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
+  @SuppressWarnings("index") // nulling the rep breaks the invariant
   private void nullRep() {
     if (repNulled()) {
       return;
@@ -199,7 +214,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * @return a LimitedSizeSet that merges the elements of slist
    */
   public static <T> LimitedSizeSet<T> merge(
-      int max_values, List<LimitedSizeSet<? extends T>> slist) {
+      /*@Positive*/ int max_values, List<LimitedSizeSet<? extends T>> slist) {
     LimitedSizeSet<T> result = new LimitedSizeSet<T>(max_values);
     for (LimitedSizeSet<? extends T> s : slist) {
       result.addAll(s);

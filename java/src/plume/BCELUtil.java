@@ -29,6 +29,7 @@ import org.apache.bcel.generic.RETURN;
 import org.apache.bcel.generic.Type;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -495,7 +496,9 @@ public final class BCELUtil {
 
     // Get the parameter types and names.
     Type[] arg_types = mg.getArgumentTypes();
-    String[] arg_names = mg.getArgumentNames();
+    @SuppressWarnings(
+        "index") // mg.getArgumentTypes and mg.getArgumentNames always return arrays with the same length. No annotation on the MethodGen class can express this.
+    String /*@SameLen({"arg_types", "arg_names"})*/[] arg_names = mg.getArgumentNames();
 
     // Remove any existing locals
     mg.setMaxLocals(0);
@@ -654,6 +657,8 @@ public final class BCELUtil {
    * @param new_type the element to add to the beginning of the array
    * @return a new array, with new_type at the beginning
    */
+  @SuppressWarnings(
+      "index") // new_types is @MinLen(1) except in the presence of overflow, which the value checker accounts for, but the index checker does not
   public static Type[] prependToArray(Type new_type, Type[] types) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
@@ -681,7 +686,10 @@ public final class BCELUtil {
    * @param classname the fully-qualified name of a class
    * @return the type corresponding to the given class name
    */
-  @SuppressWarnings("ReferenceEquality")
+  @SuppressWarnings({
+    "ReferenceEquality",
+    "index" // https://github.com/kelloggm/checker-framework/issues/168
+  })
   public static Type classname_to_type(String classname) {
 
     // Get the array depth (if any)

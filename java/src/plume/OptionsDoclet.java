@@ -37,8 +37,10 @@ import org.apache.commons.text.StringEscapeUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -322,7 +324,7 @@ public class OptionsDoclet {
    *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
-  public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
+  public static boolean validOptions(String[] /*@MinLen(1)*/[] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
     boolean hasDestDir = false;
@@ -336,6 +338,10 @@ public class OptionsDoclet {
       if (opt.equals("-docfile")) {
         if (hasDocFile) {
           reporter.printError("-docfile option specified twice");
+          return false;
+        }
+        if (os.length < 2) {
+          reporter.printError("-docfile requires an argument");
           return false;
         }
         docFile = os[1];
@@ -355,6 +361,10 @@ public class OptionsDoclet {
           reporter.printError("-i and -outfile can not be used at the same time");
           return false;
         }
+        if (os.length < 2) {
+          reporter.printError("-outfile requires an argument");
+          return false;
+        }
         outFile = os[1];
         hasOutFile = true;
       }
@@ -368,6 +378,10 @@ public class OptionsDoclet {
       if (opt.equals("-format")) {
         if (hasFormat) {
           reporter.printError("-format option specified twice");
+          return false;
+        }
+        if (os.length < 2) {
+          reporter.printError("-format requries an argument");
           return false;
         }
         String format = os[1];
@@ -401,7 +415,10 @@ public class OptionsDoclet {
    *
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
-  public void setOptions(String[][] options) {
+  @SuppressWarnings(
+      "index" // all literal 1s as indices are safe assuming well-formed command line options. See #validOptions(String[][], DocErrorReporter)
+  )
+  public void setOptions(String[] /*@MinLen(1)*/[] options) {
     String outFilename = null;
     File destDir = null;
     for (int oi = 0; oi < options.length; oi++) {
@@ -607,8 +624,9 @@ public class OptionsDoclet {
   public String optionsToHtml(int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
-    if (includeClassDoc && root.classes().length > 0) {
-      b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
+    ClassDoc[] classes = root.classes();
+    if (includeClassDoc && classes.length > 0) {
+      b.append(OptionsDoclet.javadocToHtml(classes[0]));
       b.append("<p>Command line options:</p>");
     }
 
@@ -705,7 +723,9 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      suffix = in.substring(ulPos + eol.length());
+      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/23
+      String suffix_temp = in.substring(ulPos + eol.length());
+      suffix = suffix_temp;
       in = in.substring(0, ulPos);
     }
 
