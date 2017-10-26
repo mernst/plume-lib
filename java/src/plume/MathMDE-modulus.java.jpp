@@ -119,7 +119,7 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the array contains fewer than 3 elements
    */
   /*@Pure*/ /*@StaticallyExecutable*/
-  @SuppressWarnings("index") // Index TODO
+  //@ SuppressWarnings("index") // Index TODO
   public static INT /*@Nullable*/ /*@ArrayLen(2)*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
     if (nums.length < 3) {
       return null;

@@ -11,7 +11,6 @@ import java.util.jar.JarFile;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
-import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.common.value.qual.*;
 */
 

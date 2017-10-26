@@ -1109,15 +1109,13 @@ public final class UtilMDE {
     String suffix;
 
     public WildcardFilter(String filename) {
-      int astloc = filename.indexOf("*");
+      int astloc = filename.indexOf('*');
       if (astloc == -1) {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
-      @SuppressWarnings("index") // index TODO
-      String suffixTemp = filename.substring(astloc + 1);
-      suffix = suffixTemp;
-      if (filename.indexOf("*") != -1) {
+      suffix = filename.substring(astloc + 1);
+      if (filename.indexOf('*') != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
       }
     }
@@ -2332,7 +2330,7 @@ public final class UtilMDE {
       s = s.substring(delimindex);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // index TODO: list support (vectors)
+    @SuppressWarnings("index") // index checker has no list support (vectors)
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2685,7 +2683,6 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
    */
-  @SuppressWarnings("index")
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
     int delim_len = delimiter.length();
