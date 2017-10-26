@@ -146,10 +146,11 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("lowerbound") // nulling the rep leaves num_values positive
+  @SuppressWarnings(
+      "lowerbound") // nulling the rep leaves num_values positive, need EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
-      return num_values; // index TODO: need EnsuresQualifierIf with annotation argument
+      return num_values;
     } else {
       return values.length + 1;
     }

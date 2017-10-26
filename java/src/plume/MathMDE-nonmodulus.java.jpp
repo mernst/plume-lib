@@ -101,7 +101,7 @@ The correct way to build the system is to run 'make'.
         current_missing = current_nonmissing;
       }
       this.nums_itor = nums_itor;
-      @SuppressWarnings({"lowerbound", "upperbound"}) // unused variable, so value doesn't matter
+      @SuppressWarnings("index") // unused variable, so value doesn't matter
       /*@IndexFor("nums")*/ int unused = Integer.MIN_VALUE;
       current_index = unused;
     }
