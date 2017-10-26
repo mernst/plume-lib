@@ -1109,15 +1109,13 @@ public final class UtilMDE {
     String suffix;
 
     public WildcardFilter(String filename) {
-      int astloc = filename.indexOf("*");
+      int astloc = filename.indexOf('*');
       if (astloc == -1) {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
-      @SuppressWarnings("index") // index TODO
-      String suffixTemp = filename.substring(astloc + 1);
-      suffix = suffixTemp;
-      if (filename.indexOf("*") != -1) {
+      suffix = filename.substring(astloc + 1);
+      if (filename.indexOf('*') != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
       }
     }
