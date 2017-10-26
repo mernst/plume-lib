@@ -1388,7 +1388,7 @@ public class MultiVersionControl {
                   "update",
                   "-d");
               addArgs(pb, cvs_arg);
-              //       $filter = "grep -v \"config: unrecognized keyword 'UseNewInfoFmtStrings'\"";
+              //         $filter = "grep -v \"config: unrecognized keyword 'UseNewInfoFmtStrings'\"";
               replacers.add(new Replacer("(cvs update: move away )", "$1" + dir + "/"));
               replacers.add(new Replacer("(cvs \\[update aborted)(\\])", "$1 in " + dir + "$2"));
               break;

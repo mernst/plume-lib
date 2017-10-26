@@ -90,7 +90,7 @@ public final class FileCompiler {
    *     the full path name or whatever is used on the commandline), plus any command-line options
    * @param timeLimit the maximum permitted compilation time, in msec
    */
-  @SuppressWarnings("value") // index TODO: list support
+  @SuppressWarnings("value") // no index checker list support
   public FileCompiler(/*(at)MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
     this(compiler.toArray(new String[0]), timeLimit);
   }

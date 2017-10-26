@@ -3481,7 +3481,7 @@ public final class ArraysMDE {
    * @return a list of partitionings, where each contains exactly k subsets
    */
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/152
-  // @SuppressWarnings("index") // lists: "p.addToPart(i, ...)" is OK: i is < numNonemptyParts
+  // "p.addToPart(i, ...)" is OK: i is < numNonemptyParts
   //  and p.size() = numNonemptyParts + numEmptyParts, both of which are NN.
   public static <T> List<Partitioning<T>> partitionIntoHelper(
       Queue<T> elts,
