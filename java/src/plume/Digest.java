@@ -67,8 +67,7 @@ public final class Digest {
    * @param bytes the bytes to convert to a String
    * @return a String representation of the input bytes
    */
-  @SuppressWarnings(
-      "upperbound") // the accesses to digits rely on the masks and the shift correctly creating an index
+  @SuppressWarnings("upperbound") // arithmetic (masks and shift) creating an index
   public static String hexEncode(byte[] bytes) {
     StringBuffer s = new StringBuffer(bytes.length * 2);
     for (int i = 0; i < bytes.length; i++) {
