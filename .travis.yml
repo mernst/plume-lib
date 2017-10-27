@@ -1,7 +1,6 @@
 language: java
 
 jdk:
-#  - openjdk7
 #  - oraclejdk7
   - oraclejdk8
 
@@ -14,7 +13,7 @@ script: ./.travis-build.sh
 
 ## Temporarily commented out; do not merge with master.
 # script: set -e && make USE_CODECOV=1 all-but-emacs check
-# 
+#
 # jobs:
 #   include:
 #     - stage: trigger downstream
