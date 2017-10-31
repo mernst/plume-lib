@@ -38,8 +38,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    */
   protected int /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
-  // Not exactly @IndexOrHigh("values"), because the values field can get
-  // nulled.  But that should be permitted by the type system.
+  // Not exactly @IndexOrHigh("values"), because the invariant is broken when
+  // the values field is set to null. Warnings are suppressed when breaking the invariant.
   /*@IndexOrHigh("values")*/ int num_values;
 
   /** Whether assertions are enabled. */

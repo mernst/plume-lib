@@ -2217,7 +2217,7 @@ public final class TestPlume {
             }
           }
           @SuppressWarnings(
-              "index") // Because IotaIterator stores its maximum size as a field, there is no annotation that expresses that the argument to the constructor's type is the same type as the result of its outputs
+              "index") // The IotaIterator only contains indexes for totals.length, and since chosen's elements are selected randomly from the IotaIterator, all of its elements are IF
           List</*@IndexFor("totals")*/ Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
