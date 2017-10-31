@@ -114,7 +114,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
 
   @SuppressWarnings({
     "purity.not.deterministic.not.sideeffectfree.object.creation", // http://tinyurl.com/cfissue/951
-    "index" // num_values may or may not be an index
+    "purity.not.deterministic.object.creation"
   })
   /*@Pure*/
   public boolean contains(int elt) {

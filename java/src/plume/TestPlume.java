@@ -3125,7 +3125,7 @@ public final class TestPlume {
    * @throws ArgException if there is an illegal argument
    */
   @Test
-  @SuppressWarnings("index") // application-specific properties
+  @SuppressWarnings("index") // relies on properties of the command line interface
   public void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
