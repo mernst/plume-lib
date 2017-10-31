@@ -173,9 +173,8 @@ import org.checkerframework.common.value.qual.*;
  * @see plume.Unpublicized
  */
 
-// This doesn't itself use plume.Options for its command-line option
-// processing because a Doclet is required to implement the optionLength
-// and validOptions methods.
+// This doesn't itself use plume.Options for its command-line option processing because a Doclet is
+// required to implement the optionLength() and validOptions() methods.
 @SuppressWarnings("deprecation") // JDK 9 deprecates com.sun.javadoc package
 public class OptionsDoclet {
 
@@ -288,7 +287,7 @@ public class OptionsDoclet {
   /**
    * Given a command-line option of this doclet, returns the number of arguments you must specify on
    * the command line for the given option. Returns 0 if the argument is not recognized. This method
-   * is automatically invoked.
+   * is automatically invoked by Javadoc.
    *
    * @param option the command-line option
    * @return the number of command-line arguments needed when using the option
@@ -315,9 +314,10 @@ public class OptionsDoclet {
 
   /**
    * Tests the validity of command-line arguments passed to this doclet. Returns true if the option
-   * usage is valid, and false otherwise. This method is automatically invoked.
+   * usage is valid, and false otherwise. This method is automatically invoked by Javadoc.
    *
-   * @param options the command-line options to be checked: an array of 1- or 2-element arrays
+   * @param options the command-line options to be checked: an array of 1- or 2-element arrays,
+   *     where the length depends on {@link #optionLength} applied to the first element
    * @param reporter where to report errors
    * @return true iff the command-line options are valid
    * @see <a

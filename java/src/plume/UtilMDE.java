@@ -1068,7 +1068,7 @@ public final class UtilMDE {
   }
 
   /**
-   * Deletes the directory at dirName and all its files.
+   * Deletes the directory at dirName and all its files. Also works on regular files.
    *
    * @param dirName the directory to delete
    * @return true if and only if the file or directory is successfully deleted; false otherwise
@@ -1078,18 +1078,17 @@ public final class UtilMDE {
   }
 
   /**
-   * Deletes the directory at dir and all its files.
+   * Deletes the directory at dir and all its files. Also works on regular files.
    *
    * @param dir the directory to delete
    * @return true if and only if the file or directory is successfully deleted; false otherwise
    */
   public static boolean deleteDir(File dir) {
-    File[] files = dir.listFiles();
-    if (files == null) {
-      return false;
-    }
-    for (int i = 0; i < files.length; i++) {
-      files[i].delete();
+    File[] children = dir.listFiles();
+    if (children != null) { // null means not a directory, or I/O error occurred.
+      for (File child : children) {
+        deleteDir(child);
+      }
     }
     return dir.delete();
   }
