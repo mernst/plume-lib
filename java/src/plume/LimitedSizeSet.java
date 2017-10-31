@@ -115,8 +115,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
   }
 
-  @SuppressWarnings("deterministic" // pure wrt equals() but not ==: throws a new exception
-  )
+  @SuppressWarnings("deterministic") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   public boolean contains(T elt) {
     if (repNulled()) {
