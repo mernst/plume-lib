@@ -83,7 +83,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   }
 
   @Override
-  public char charAt(/*@ IndexFor("this")*/ int index) {
+  public char charAt(/*@IndexFor("this")*/ int index) {
     return delegate.charAt(index);
   }
 

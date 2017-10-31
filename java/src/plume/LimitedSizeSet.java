@@ -32,8 +32,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    */
   protected /*@Nullable*/ T /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
-  // Not exactly @IndexOrHigh("values"), because the values field can get
-  // nulled.  But that should be permitted by the type system.
+  // Not exactly @IndexOrHigh("values"), because the invariant is broken when
+  // the values field is set to null. Warnings are suppressed when breaking the invariant.
   /*@IndexOrHigh("this.values")*/ int num_values;
 
   /** Whether assertions are enabled. */
@@ -151,7 +151,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("index") // needs EnsuresQualifierIf with annotation argument
+  @SuppressWarnings("index") // https://tinyurl.com/cfissue/1606
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -177,7 +177,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
-  @SuppressWarnings("index") // nulling the rep breaks the invariant
+  @SuppressWarnings("index") // nulling the rep: breaks the invariant
   private void nullRep() {
     if (repNulled()) {
       return;

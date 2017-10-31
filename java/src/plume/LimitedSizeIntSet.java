@@ -38,8 +38,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    */
   protected int /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
-  // Not exactly @IndexOrHigh("values"), because the values field can get
-  // nulled.  But that should be permitted by the type system.
+  // Not exactly @IndexOrHigh("values"), because the invariant is broken when
+  // the values field is set to null. Warnings are suppressed when breaking the invariant.
   /*@IndexOrHigh("values")*/ int num_values;
 
   /** Whether assertions are enabled. */
@@ -113,7 +113,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   @SuppressWarnings({
-    "deterministic", // pure wrt equals() but not ==: throws a new exception
+    "purity.not.deterministic.not.sideeffectfree.object.creation", // http://tinyurl.com/cfissue/951
     "index" // num_values may or may not be an index
   })
   /*@Pure*/
@@ -147,7 +147,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   @SuppressWarnings(
-      "lowerbound") // nulling the rep leaves num_values positive, need EnsuresQualifierIf with annotation argument
+      "lowerbound") // nulling the rep: leaves num_values positive, need EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -173,7 +173,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
-  @SuppressWarnings("upperbound") // nulling the rep, after which no indexing will occur
+  @SuppressWarnings("upperbound") // nulling the rep: after which no indexing will occur
   private void nullRep() {
     if (repNulled()) {
       return;
