@@ -56,8 +56,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     // this.max_values = max_values;
     @SuppressWarnings({
       "unchecked",
-      "index", // https://github.com/kelloggm/checker-framework/issues/174
-      "value"
+      "value" // https://github.com/kelloggm/checker-framework/issues/174
     })
     /*@Nullable*/ T /*@MinLen(1)*/[] new_values_array =
         (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
