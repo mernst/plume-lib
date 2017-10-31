@@ -3482,7 +3482,7 @@ public final class ArraysMDE {
    */
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/152
   // "p.addToPart(i, ...)" is OK: i is < numNonemptyParts
-  //  and p.size() = numNonemptyParts + numEmptyParts, both of which are NN.
+  //  and p.size() = numNonemptyParts + numEmptyParts, both of which are non-negative.
   public static <T> List<Partitioning<T>> partitionIntoHelper(
       Queue<T> elts,
       List</*@ LengthIs("#3")*/ Partitioning<T>> resultSoFar,
