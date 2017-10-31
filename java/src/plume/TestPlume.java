@@ -1702,7 +1702,7 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-  @SuppressWarnings("index") // iterator of same size as array, and while loop with ++ on index
+  @SuppressWarnings("index") // same length iterator and array, and while loop with ++ on index
   public static void compareOrderedPairIterator(
       OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
@@ -2680,7 +2680,7 @@ public final class TestPlume {
    * Test the intering of subsequences as triples of the original sequence, the start and the end
    * indices.
    */
-  @SuppressWarnings("index") // test code which relies on assumptions about what is being tested
+  @SuppressWarnings("index") // test code that relies on assumptions about what is being tested
   @Test
   public void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});

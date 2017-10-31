@@ -617,7 +617,7 @@ public final class Intern {
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
   public static long /*@Interned*/ /*@PolyLength*/ [] intern(long /*@PolyLength*/ [] a) {
-    // System.out.printf ("intern %s %s long[] %s%n", a.getClass(),
+    // System.out.printf("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
     @SuppressWarnings({
@@ -790,9 +790,9 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
     }
     @SuppressWarnings({
-      "nullness",
-      "index",
-      "value"
+      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
     }) // PolyNull/PolyLength:  value = parameter a, so same type & nullness as for parameter a
     /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
     return polyresult;

@@ -113,7 +113,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   }
 
   @SuppressWarnings({
-    "deterministic", // pure wrt equals() but not ==: throws a new exception
+    "purity.not.deterministic.not.sideeffectfree.object.creation", // http://tinyurl.com/cfissue/951
     "index" // num_values may or may not be an index
   })
   /*@Pure*/
@@ -147,7 +147,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   @SuppressWarnings(
-      "lowerbound") // nulling the rep leaves num_values positive, need EnsuresQualifierIf with annotation argument
+      "lowerbound") // nulling the rep: leaves num_values positive, need EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -173,7 +173,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
-  @SuppressWarnings("upperbound") // nulling the rep, after which no indexing will occur
+  @SuppressWarnings("upperbound") // nulling the rep: after which no indexing will occur
   private void nullRep() {
     if (repNulled()) {
       return;

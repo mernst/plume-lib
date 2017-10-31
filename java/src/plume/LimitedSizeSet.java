@@ -151,7 +151,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("index") // needs EnsuresQualifierIf with annotation argument
+  @SuppressWarnings("index") // https://tinyurl.com/cfissue/1606
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -177,7 +177,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
-  @SuppressWarnings("index") // nulling the rep breaks the invariant
+  @SuppressWarnings("index") // nulling the rep: breaks the invariant
   private void nullRep() {
     if (repNulled()) {
       return;

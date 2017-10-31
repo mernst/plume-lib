@@ -2330,7 +2330,7 @@ public final class UtilMDE {
       s = s.substring(delimindex);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // index checker has no list support (vectors)
+    @SuppressWarnings("index") // index checker has no list support: vectors
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
