@@ -568,7 +568,7 @@ public final class ArraysMDE {
   /*@Pure*/
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
-      Object elt,
+      /*@Nullable*/ Object elt,
       /*@ IndexFor("#1")*/ int minindex,
       /*@ IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {

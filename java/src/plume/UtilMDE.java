@@ -2326,8 +2326,7 @@ public final class UtilMDE {
     Vector<String> result_list = new Vector<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
-      int delimindex = delimpos + delimlen;
-      s = s.substring(delimindex);
+      s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
     @SuppressWarnings("index") // index checker has no list support: vectors

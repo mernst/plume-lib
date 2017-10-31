@@ -497,8 +497,6 @@ public final class BCELUtil {
 
     // Get the parameter types and names.
     Type /*@SameLen({"arg_types", "mg.getArgumentTypes()"})*/[] arg_types = mg.getArgumentTypes();
-    //@ SuppressWarnings(
-    //    "index") // mg.getArgumentTypes and mg.getArgumentNames always return arrays with the same length. No annotation on the MethodGen class can express this.
     String /*@SameLen({"arg_types", "arg_names", "mg.getArgumentTypes()", "mg.getArgumentNames()"})*/
             []
         arg_names = mg.getArgumentNames();
