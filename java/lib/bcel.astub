@@ -1,8 +1,0 @@
-import org.checkerframework.checker.index.qual.SameLen;
-
-package org.apache.bcel.generic;
-
-class MethodGen {
-    public Type @SameLen({"this.getArgumentNames()", "this.getArgumentTypes()"}) [] getArgumentTypes();
-    public String @SameLen({"this.getArgumentNames()", "this.getArgumentTypes()"}) [] getArgumentNames();
-}
