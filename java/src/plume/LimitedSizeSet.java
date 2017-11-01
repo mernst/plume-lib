@@ -32,8 +32,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    */
   protected /*@Nullable*/ T /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
-  // Not exactly @IndexOrHigh("values"), because the values field can get
-  // nulled.  But that should be permitted by the type system.
+  // Not exactly @IndexOrHigh("values"), because the invariant is broken when
+  // the values field is set to null. Warnings are suppressed when breaking the invariant.
   /*@IndexOrHigh("this.values")*/ int num_values;
 
   /** Whether assertions are enabled. */
@@ -56,8 +56,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     // this.max_values = max_values;
     @SuppressWarnings({
       "unchecked",
-      "index", // https://github.com/kelloggm/checker-framework/issues/174
-      "value"
+      "value" // https://github.com/kelloggm/checker-framework/issues/174
     })
     /*@Nullable*/ T /*@MinLen(1)*/[] new_values_array =
         (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
@@ -115,10 +114,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     }
   }
 
-  @SuppressWarnings({
-    "deterministic", // pure wrt equals() but not ==: throws a new exception
-    "index" // num_values may or may not be an index
-  })
+  @SuppressWarnings("deterministic") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   public boolean contains(T elt) {
     if (repNulled()) {

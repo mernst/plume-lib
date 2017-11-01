@@ -324,6 +324,7 @@ public class OptionsDoclet {
    *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
+  @SuppressWarnings("index") // dependent: os[1] is legal when optionLength(os[0])==2
   public static boolean validOptions(String[] /*@MinLen(1)*/[] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
@@ -338,10 +339,6 @@ public class OptionsDoclet {
       if (opt.equals("-docfile")) {
         if (hasDocFile) {
           reporter.printError("-docfile option specified twice");
-          return false;
-        }
-        if (os.length < 2) {
-          reporter.printError("-docfile requires an argument");
           return false;
         }
         docFile = os[1];
@@ -361,10 +358,6 @@ public class OptionsDoclet {
           reporter.printError("-i and -outfile can not be used at the same time");
           return false;
         }
-        if (os.length < 2) {
-          reporter.printError("-outfile requires an argument");
-          return false;
-        }
         outFile = os[1];
         hasOutFile = true;
       }
@@ -378,10 +371,6 @@ public class OptionsDoclet {
       if (opt.equals("-format")) {
         if (hasFormat) {
           reporter.printError("-format option specified twice");
-          return false;
-        }
-        if (os.length < 2) {
-          reporter.printError("-format requries an argument");
           return false;
         }
         String format = os[1];
@@ -415,9 +404,7 @@ public class OptionsDoclet {
    *
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
-  @SuppressWarnings(
-      "index" // all literal 1s as indices are safe assuming well-formed command line options. See #validOptions(String[][], DocErrorReporter)
-  )
+  @SuppressWarnings("index") // dependent: os[1] is legal when optionLength(os[0])==2
   public void setOptions(String[] /*@MinLen(1)*/[] options) {
     String outFilename = null;
     File destDir = null;
@@ -624,9 +611,8 @@ public class OptionsDoclet {
   public String optionsToHtml(int refillWidth) {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
-    ClassDoc[] classes = root.classes();
-    if (includeClassDoc && classes.length > 0) {
-      b.append(OptionsDoclet.javadocToHtml(classes[0]));
+    if (includeClassDoc && root.classes().length > 0) {
+      b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
       b.append("<p>Command line options:</p>");
     }
 

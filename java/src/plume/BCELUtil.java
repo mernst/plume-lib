@@ -32,6 +32,7 @@ import org.apache.bcel.generic.Type;
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /** Static utility methods for working with BCEL. */
@@ -495,10 +496,10 @@ public final class BCELUtil {
   public static void setup_init_locals(MethodGen mg) {
 
     // Get the parameter types and names.
-    Type[] arg_types = mg.getArgumentTypes();
-    @SuppressWarnings(
-        "index") // mg.getArgumentTypes and mg.getArgumentNames always return arrays with the same length. No annotation on the MethodGen class can express this.
-    String /*@SameLen({"arg_types", "arg_names"})*/[] arg_names = mg.getArgumentNames();
+    Type /*@SameLen({"arg_types", "mg.getArgumentTypes()"})*/[] arg_types = mg.getArgumentTypes();
+    String /*@SameLen({"arg_types", "arg_names", "mg.getArgumentTypes()", "mg.getArgumentNames()"})*/
+            []
+        arg_names = mg.getArgumentNames();
 
     // Remove any existing locals
     mg.setMaxLocals(0);
@@ -657,10 +658,10 @@ public final class BCELUtil {
    * @param new_type the element to add to the beginning of the array
    * @return a new array, with new_type at the beginning
    */
-  @SuppressWarnings(
-      "index") // new_types is @MinLen(1) except in the presence of overflow, which the value checker accounts for, but the index checker does not
   public static Type[] prependToArray(Type new_type, Type[] types) {
-    Type[] new_types = new Type[types.length + 1];
+    @SuppressWarnings("index") // new_types is @MinLen(1) except in the presence of overflow,
+    // which the Value Checker accounts for, but the Index Checker does not.
+    Type /*@MinLen(1)*/[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
     new_types[0] = new_type;
     Type[] new_types_cast = new_types;

@@ -2217,7 +2217,7 @@ public final class TestPlume {
             }
           }
           @SuppressWarnings(
-              "index") // IotaIterator's outputs have the same type as argument to the constructor's type
+              "index") // The IotaIterator only contains indexes for totals.length, and since chosen's elements are selected randomly from the IotaIterator, all of its elements are @IndexFor
           List</*@IndexFor("totals")*/ Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
@@ -3125,7 +3125,7 @@ public final class TestPlume {
    * @throws ArgException if there is an illegal argument
    */
   @Test
-  @SuppressWarnings("index") // application-specific properties
+  @SuppressWarnings("index") // relies on properties of the command line interface
   public void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
