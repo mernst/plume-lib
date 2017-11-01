@@ -169,11 +169,11 @@ endif
 # and -AsuggestPureMethods are fixed, they can be run on plume-lib and Daikon and this
 # can be removed. This warning is issued by the Lock Checker when a method calls another
 # method with a weaker side effect guarantee.
-# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -processor org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.signature.SignatureChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.index.IndexChecker
+JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -processor org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.index.IndexChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.signature.SignatureChecker
 
 ## For testing a single checker, replace the above by:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -processor org.checkerframework.checker.regex.RegexChecker
-JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -AsuppressWarnings=method.evaluation.exception -processor org.checkerframework.checker.index.IndexChecker
+# JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -AsuppressWarnings=method.evaluation.exception -processor org.checkerframework.checker.index.IndexChecker
 ## To filter out warnings for which an issue has been filed, do this in the Emacs *compilation* buffer:
 # (query-replace-regexp "^.*\n.*index TODO: issue [#\"][0-9]+\"?\n .*\n .*\n .*\n" "")
 ## To see the most frequent causes of warnings, run these from the command line:
