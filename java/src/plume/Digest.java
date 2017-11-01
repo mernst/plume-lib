@@ -67,7 +67,7 @@ public final class Digest {
    * @param bytes the bytes to convert to a String
    * @return a String representation of the input bytes
    */
-  @SuppressWarnings("upperbound") // https://github.com/typetools/checker-framework/issues/1623
+  @SuppressWarnings("upperbound") // https://tinyurl.com/cfissue/1623
   public static String hexEncode(byte[] bytes) {
     StringBuffer s = new StringBuffer(bytes.length * 2);
     for (int i = 0; i < bytes.length; i++) {

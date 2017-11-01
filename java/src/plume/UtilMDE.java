@@ -1084,8 +1084,9 @@ public final class UtilMDE {
    * @return true if and only if the file or directory is successfully deleted; false otherwise
    */
   public static boolean deleteDir(File dir) {
-    if (dir.isDirectory()) {
-      for (File child : dir.listFiles()) {
+    File[] children = dir.listFiles();
+    if (children != null) { // null means not a directory, or I/O error occurred.
+      for (File child : children) {
         deleteDir(child);
       }
     }
