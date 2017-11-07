@@ -9,7 +9,7 @@ sudo: false
 before_install:
   - pip install --user pylint
 
-script: ./.travis-build.sh
+script: travis_wait 50 ./.travis-build.sh
 
 ## Temporarily commented out; do not merge with master.
 # script: set -e && make USE_CODECOV=1 all-but-emacs check
