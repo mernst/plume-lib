@@ -292,7 +292,7 @@ public class OptionsDoclet {
    * @param option the command-line option
    * @return the number of command-line arguments needed when using the option
    * @see <a
-   *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
+   *     href="https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
   public static int optionLength(String option) {
@@ -321,7 +321,7 @@ public class OptionsDoclet {
    * @param reporter where to report errors
    * @return true iff the command-line options are valid
    * @see <a
-   *     href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
+   *     href="https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
   @SuppressWarnings("index") // dependent: os[1] is legal when optionLength(os[0])==2
