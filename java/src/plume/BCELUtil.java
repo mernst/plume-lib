@@ -659,8 +659,12 @@ public final class BCELUtil {
    * @return a new array, with new_type at the beginning
    */
   public static Type[] prependToArray(Type new_type, Type[] types) {
-    @SuppressWarnings("index") // new_types is @MinLen(1) except in the presence of overflow,
-    // which the Value Checker accounts for, but the Index Checker does not.
+    @SuppressWarnings({
+      "index", // new_types is @MinLen(1) except in the presence of overflow,
+      // which the Value Checker accounts for, but the Index Checker does not.
+      "value" // new_types is @MinLen(1) except in the presence of overflow,
+      // which the Value Checker accounts for, but the Index Checker does not.
+    })
     Type /*@MinLen(1)*/[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
     new_types[0] = new_type;
