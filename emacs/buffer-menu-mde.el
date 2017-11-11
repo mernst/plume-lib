@@ -54,8 +54,7 @@ Buffers whose names match NAME-REGEXP, or whose major mode is a member of
 MAJOR-MODES, are set unmodified.  Either or both of the arguments may be nil.
 Buffers whose names match optional third argument EXCEPTIONS-REGEXP
 or whose mode is in EXCEPTIONS-MODES are never set unmodified.
-Also sets dired buffer modification flags according to `dired-pending-marks-p',
-if that function is defined."
+Also sets dired buffer modification flags."
   (let ((blist (buffer-list)))
     (while blist
       (save-excursion
@@ -77,8 +76,13 @@ if that function is defined."
               ;; this code only changes the modification flag from t to
               ;; nil, it does the right thing.
               (if (eq major-mode 'dired-mode)
-                  (if (fboundp 'dired-pending-marks-p)
-                      (set-buffer-modified-p (dired-pending-marks-p))))))))))
+                  (set-buffer-modified-p (dired-pending-marks-p)))))))))
+
+(defun dired-pending-marks-p ()
+  "Return non-nil if this Dired buffer contains any marks."
+  (save-excursion
+    (goto-char (point-min))
+    (re-search-forward dired-re-mark nil t)))
 
 
 ;;;
@@ -212,12 +216,11 @@ The regular expressions are implicitly anchored at the front.")
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward (concat "^...[ \"]\\(" regexp "\\)\"?") nil t)
-      (progn
-        (beginning-of-line)
-        (delete-region (point) (progn (end-of-line) (point)))
-        (if (bobp)
-            (delete-char 1)
-          (delete-backward-char 1))))))
+      (beginning-of-line)
+      (delete-region (point) (progn (end-of-line) (point)))
+      (if (bobp)
+          (delete-char 1)
+        (delete-backward-char 1)))))
 
 ;;;
 ;;; Erase the read-only marks and the "current" mark

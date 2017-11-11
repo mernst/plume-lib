@@ -190,8 +190,7 @@ Good for passing to sort in order to sort strings by length."
     (let ((regexp (car regexps))
           (replacement (car replacements)))
       (goto-char (point-min))
-      (while (re-search-forward regexp nil t)
-        (replace-match replacement))
+      (replace-regexp-noninteractive regexp replacement)
       (setq regexps (cdr regexps)
             replacements (cdr replacements)))))
 
@@ -1257,6 +1256,12 @@ If optional arg COUNT is specified, return the COUNTth occurrance from the end."
     result))
 
 ;;; Replace-regexp
+
+(defun replace-string-noninteractive (from-string to-string)
+  "Like `replace-string', but doesn't modify mark or the mark ring."
+  (while (search-forward from-string nil t)
+    (replace-match to-string nil t)))
+(make-obsolete 'replace-string 'replace-string-noninteractive)
 
 (defsubst replace-regexp-noninteractive (regexp replacement &optional delimited)
   "Like `replace-regexp', but doesn't modify mark or the mark ring."

@@ -617,6 +617,7 @@ This is disabled on lines with a comment containing the string \"interned\"."
       ;; normal formatting
       (setq cmd "run-google-java-format.py "))
      ((and (string-match-p "/checker-framework" (buffer-file-name))
+	   (not (string-match-p "/checker-framework-inference" (buffer-file-name)))
 	   (not (string-match-p "/checker/jdk/" (buffer-file-name))))
       ;; non-standard cammand-line arguments
       (setq cmd "run-google-java-format.py -a "))
@@ -993,7 +994,7 @@ This is disabled on lines with a comment containing the string \"interned\"."
         perl-brace-imaginary-offset      0
         perl-label-offset               -2)
   ;; Why is this necessary?
-  (emacs-22+ (setq perl-brace-offset -2))
+  (setq perl-brace-offset -2)
   (make-local-variable 'compile-command)
   (if buffer-file-name
       (if (looking-at ".* -[^ ]T")
@@ -1476,9 +1477,6 @@ otherwise, raise an error after the first problem is encountered."
 
 ;; Should also deal with fi:emacs-lisp-mode (which replaces emacs-lisp-mode
 ;; when ACL extensions are loaded).
-
-;; XEmacs disables this in favor of ilisp.
-(xemacs (autoload 'run-lisp "inf-lisp" nil t))
 
 
 (defun mde-lisp-mode-hook ()
@@ -1963,9 +1961,6 @@ in this directory or some superdirectory."
 (add-hook 'cvs-mode-hook 'set-compile-command-for-directory)
 (add-hook 'svn-status-mode-hook 'set-compile-command-for-directory)
 (add-hook 'magit-status-mode-hook 'set-compile-command-for-directory)
-;; There was no svn-status-mode-hook before "psvn.el 23079 2007-01-17".
-;; (defadvice svn-status-mode (after set-compile-command-for-directory activate)
-;;   (set-compile-command-for-directory))
 
 ;; Below are for modes that have a default to use if there is no makefile
 ;; or build.xml file.
