@@ -112,10 +112,6 @@ This is good for modes like Perl, where the parser can get confused."
   ;; yuck, I don't like this.
   ;; (setq c-tab-always-indent 'not-in-literals)
 
-  ;;; Use guess-offset package instead
-  ;; Indentation
-  ;; (c-set-basic-offset)
-
   ;; Tab width
   (let ((buf-file-name (buffer-file-name (current-buffer))))
     (if (and buf-file-name
@@ -170,66 +166,7 @@ This is good for modes like Perl, where the parser can get confused."
         (setq inleft-string "# ")))
     ))
 
-;; (require 'guess-offset)
-;; ;; Eliminated in favor of http://www.emacswiki.org/elisp/guess-offset.el
-;; ;; also see (less relevant) http://cc-mode.sourceforge.net/src/cc-guess.el
-;; ;; (defvar c-basic-offset-default 2
-;; ;;   "Default value used by `c-set-basic-offset'.
-;; ;; If nil, use the current value of `c-basic-offset' as the default.")
-;; ;; (defun c-set-basic-offset ()
-;; ;;   "If possible set `c-basic-offset' to correspond to text in the buffer.
-;; ;; `c-basic-offset' is used by C, C++, Java, and related modes.
-;; ;; To use, put in your .emacs file:  \(add-hook 'c-mode-hook 'c-set-basic-offset\)"
-;; ;;   (make-local-variable 'c-basic-offset)
-;; ;;   (if c-basic-offset-default
-;; ;;       (setq c-basic-offset c-basic-offset-default))
-;; ;;   (save-excursion
-;; ;;     (goto-char (point-min))
-;; ;;     (while (forward-comment 1)
-;; ;;       ;; nothing to do
-;; ;;       )
-;; ;;     ;; This isn't quite right:  I might find indentation in a C++ initializer
-;; ;;     ;;   Foo::Foo(int arg1) : slot1(arg1),
-;; ;;     ;;                      : slot2(NULL)
-;; ;;     ;; so I should insist that the indentation be found in the body starting with the "{".
-;; ;;     ;; Insist on space around brace to avoid finding @link{...} in a comment.
-;; ;;     (if (re-search-forward "\\([ \t\n\r]{[ \t\n\r]\\|{$\\)" nil t)
-;; ;;   (progn
-;; ;;     (while (forward-comment 1)
-;; ;;       ;; nothing to do
-;; ;;       )
-;; ;;     ;; forward-comment actually brings us all the way to non-whitespace
-;; ;;     (beginning-of-line)
-;; ;;     ;; This isn't quite right:  it could match in comments.  Perhaps demand
-;; ;;     ;; a match for c-Java-defun-prompt-regexp or some other keywords.
-;; ;;     ;; Forbid a trailing colon to avoid matching labels, which have special
-;; ;;     ;; indentation.
-;; ;;     (if (re-search-forward "^\\([ \t]+\\)[^ \t\n\r][^\n\r/*].*[^:\n\r]$" nil t)
-;; ;;         (progn
-;; ;;           (goto-char (match-end 1))
-;; ;;           (if (looking-back "^\t+" (beginning-of-line-point))
-;; ;;               (progn
-;; ;;                 (setq tab-width 2)
-;; ;;                 (make-local-variable 'tab-stop-list)
-;; ;;                 (set-tab-stop-list-width 2)))
-;; ;;           ;; sanity check
-;; ;;           (if (<= (current-column) 8)
-;; ;;               (setq c-basic-offset (current-column))))))))
-;; ;;   (message "Set c-basic-offset to %d" c-basic-offset))
 
-
-;;; This comment seems obsolete as of Eamcs 22.1.
-;;; ;;; This doesn't work, apparently due to a bug.
-;;; ;;; (c-get-syntactic-indentation '((substatement-open 1))) => 2
-;;; ;;; because
-;;; ;;; (c-calc-offset '(substatement-open 1)) => 2
-;;; ;;; because c-basic-common-init calls c-set-style with second argument
-;;; ;;; DONT-OVERRIDE t, so the variables are reversed and my changes are at
-;;; ;;; the front. It seems like a bug that
-;;; ;;; (c-get-style-variables "java2") puts the base styles first (or else
-;;; ;;; it's a bug that DONT-OVERRIDE is t).
-;;; ;;; I should report this, or else just directly change the "java" style.
-;;; ;;; 4/2/2006.
 ;; Like "java" style, but defaults to 2 rather than 4 spaces of indentation.
 (c-add-style "java2" '("java" (c-basic-offset . 2) (substatement-open . 0)))
 (setq c-default-style (cons '(java-mode . "java2") c-default-style))
@@ -464,8 +401,6 @@ With prefix arg, goes to end of class; otherwise to end of method."
 	(progn
 	  (make-variable-buffer-local 'before-save-hook)
 	  (add-hook 'before-save-hook 'delete-trailing-whitespace)))
-    ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
-    ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
     (if (and (buffer-file-name (current-buffer))
              (not (string-match "\.jpp$" (buffer-file-name (current-buffer)))))
         (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry))
@@ -1008,7 +943,6 @@ This is disabled on lines with a comment containing the string \"interned\"."
   ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
   (add-hook 'write-contents-hooks 'shadowed-variables-perl-write-hook)
   (add-hook 'write-contents-hooks 'perl-backup-file-check)
-  ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
   (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry)
   )
 ;; In Emacs 19.34, this doesn't appear to work.  But once I do (run-hooks
@@ -1496,7 +1430,6 @@ otherwise, raise an error after the first problem is encountered."
   (make-local-variable 'write-contents-hooks)
   ;; Is this what I really want?
   ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
-  ;; (add-hook 'write-contents-hooks 'check-for-unbalanced-paren)
   (add-hook 'write-contents-hooks 'check-parens-ignore-on-retry)
 
   (if (string-match "/plume-lib/"
