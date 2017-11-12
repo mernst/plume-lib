@@ -606,7 +606,8 @@ This is disabled on lines with a comment containing the string \"interned\"."
   (interactive)
   (let (cmd)
     (cond
-     ((or (string-match-p "/\\(randoop\\)" (buffer-file-name))
+     ((or (and (string-match-p "/\\(randoop\\)" (buffer-file-name))
+	       (not (string-match-p "CloneVisitor\\.java$" (buffer-file-name))))
 	  (and (string-match-p "/daikon" (buffer-file-name))
 	       (not (string-match-p "\\.jpp$" (buffer-file-name))))
 	  (and (string-match-p "/toradocu" (buffer-file-name))
