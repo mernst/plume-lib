@@ -1422,9 +1422,7 @@ otherwise, raise an error after the first problem is encountered."
 
 (defadvice py-execute-import-or-reload (before save-first activate)
   "Save current buffer first."
-  ;; test of buffer-modified-p prevents "(No changes need to be saved)" message
-  (if (and buffer-file-name (buffer-modified-p))
-      (save-buffer)))
+  (save-buffer-if-modified))
 
 ;; Problem:  after doing this, Python input is queued until the next
 ;; comint-send-input (RET) typed in the process.  That's OK if I actually
@@ -1828,16 +1826,10 @@ How does this differ from whatever is built in?"
 ;;; Compilation
 ;;;
 
-(defun save-if-modified ()
-  "Save current buffer if it is modified."
-  ;; test of buffer-modified-p prevents "(No changes need to be saved)" message
-  (if (and buffer-file-name (buffer-modified-p))
-      (save-buffer)))
-
 (defadvice compile (before save-before-compile activate)
   "Save current buffer before performing compilation.
 This avoids a question, the answer to which would surely be \"Yes\"."
-  (save-if-modified))
+  (save-buffer-if-modified))
 
 (defadvice compile (before check-for-bad-regexps activate)
   "Check that elements of compilation-error-regexp-alist do not start with \".*\".

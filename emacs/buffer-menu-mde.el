@@ -295,12 +295,6 @@ The regular expressions are implicitly anchored at the front.")
   (save-buffer-if-modified (or (get-buffer ".bbdb") (get-buffer " bbdb")))
   (save-buffer-if-modified (get-buffer ".type-break")))
 
-(defun save-buffer-if-modified (buf)
-  "Like `save-buffer', but takes an argument."
-  (if (and buf (buffer-modified-p buf))
-      (save-excursion
-        (set-buffer buf)
-        (save-buffer))))
 
 ;;;
 ;;; Put the cursor in the buffer menu
