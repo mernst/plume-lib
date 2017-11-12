@@ -96,8 +96,7 @@
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while (re-search-forward "\r$" nil t)
-      (replace-match ""))
+    (replace-regexp-noninteractive "\r$" "")
     (goto-char (1- (point-max)))
     (if (looking-at "\C-z")
         (delete-char 1))))
@@ -182,32 +181,11 @@ With prefix arg SAVE-SILENTLY, silently save all file-visiting buffers, then kil
             (bbdb-save-db))
         (save-buffers-kill-emacs save-silently))))
 
-;; (defadvice save-buffers-kill-emacs (before kill-ispell activate)
-;;   "Kill Ispell before exiting Emacs (avoids questions about killing it)."
-;;   (let ((ispell-process (get-process "ispell")))
-;;     (if ispell-process
-;;      (progn
-;;        (emacs-21
-;;          (process-kill-without-query ispell-process))
-;;        (emacs-22+
-;;          (set-process-query-on-exit-flag ispell-process nil))))))
-
-;; Emacs22 or later version
-(emacs-22+
- (defadvice save-buffers-kill-emacs (before kill-ispell activate)
-   "Kill Ispell before exiting Emacs (avoids questions about killing it)."
-   (let ((ispell-process (get-process "ispell")))
-     (if ispell-process
-         (set-process-query-on-exit-flag ispell-process nil)))))
-
-;; Already defined in Emacs 22.
-(if (not (fboundp 'process-query-on-exit-flag))
-  (defun process-query-on-exit-flag (process)
-    "Return the current value of query-on-exit flag for PROCESS."
-    (let ((val (process-kill-without-query process)))
-      ;; restore previous value for whether query needed
-      (process-kill-without-query process val)
-      val)))
+(defadvice save-buffers-kill-emacs (before kill-ispell activate)
+  "Kill Ispell before exiting Emacs (avoids questions about killing it)."
+  (let ((ispell-process (get-process "ispell")))
+    (if ispell-process
+        (set-process-query-on-exit-flag ispell-process nil))))
 
 ;; Like the 21.2 version, but more specific question if only one process.
 ;; I should submit a patch.
@@ -450,8 +428,7 @@ Find WHAT in any file in or under DIR."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while (re-search-forward "^\\([^ :]+:\\)[0-9]+" nil t)
-      (replace-match "\\1"))))
+    (replace-regexp-noninteractive "^\\([^ :]+:\\)[0-9]+" "\\1")))
 
 (defun delete-long-lines (&optional arg)
   "Delete lines longer than 80 (or prefix argument ARG) characters.
@@ -807,23 +784,17 @@ The first column is omitted if the optional argument is specified."
   (interactive "r")
   (save-excursion
     (goto-char beg)
-    (while (search-forward "¯" nil t)
-      (replace-match "fi" nil t))
+    (replace-string-noninteractive "¯" "fi")
     (goto-char beg)
-    (while (search-forward "®" nil t)
-      (replace-match "ff" nil t))
+    (replace-string-noninteractive "®" "ff")
     (goto-char beg)
-    (while (search-forward "±" nil t)
-      (replace-match "ffi" nil t))
+    (replace-string-noninteractive "±" "ffi")
     (goto-char beg)
-    (while (search-forward "|" nil t)
-      (replace-match " -- " nil t))
+    (replace-string-noninteractive "|" " -- ")
     (goto-char beg)
-    (while (re-search-forward "\\([a-z]-\\) \\([a-z]\\)" nil t)
-      (replace-match "\\1\\2"))
+    (replace-regexp-noninteractive "\\([a-z]-\\) \\([a-z]\\)" "\\1\\2")
     (goto-char beg)
-    (while (re-search-forward "\\([ \n]\\)\\\\\\([a-z]+\"\\)" nil t)
-      (replace-match "\\1\"\\2"))
+    (replace-regexp-noninteractive "\\([ \n]\\)\\\\\\([a-z]+\"\\)" "\\1\"\\2")
     ))
 
 
@@ -855,12 +826,6 @@ You can add this function to `after-change-hooks'."
   "Insert the current time at point."
   (interactive)
   (insert (current-time-string)))
-
-(defun replace-string-noninteractive (from-string to-string)
-  "A non-interactive version of `replace-string', which see."
-  (while (search-forward from-string nil t)
-    (replace-match to-string nil t)))
-
 
 (defun regexp-remove-alternative (alternative whole-regexp)
   "Remove regexp ALTERNATIVE from regexp WHOLE-REGEXP.
@@ -1569,12 +1534,10 @@ This is crude, but works for our files."
           (goto-char (point-min))
           ;; Precede quotation marks by a backslash, if there isn't one already.
           ;; (replace-string-noninteractive "\"" "\\\"")
-          (while (re-search-forward "\\([^\\]\\)\"" nil t)
-            (replace-match "\\1\\\\\""))
+          (replace-regexp-noninteractive "\\([^\\]\\)\"" "\\1\\\\\"")
           (goto-char (point-min))
           ;; Add paragraph breaks
-          (while (re-search-forward "\n[ \t]+" nil t)
-            (replace-match "\n\n"))))))
+          (replace-regexp-noninteractive "\n[ \t]+" "\n\n")))))
   ;; Protect from accidentally overwriting the original.
   (setq buffer-file-name (concat buffer-file-name "-comments"))
   (message "Done.  Now write it to a new file."))
@@ -1638,54 +1601,54 @@ This is crude, but works for our files."
 
 ;; Still needed in Emacs 21.2.  (Maybe the library-complete part is now
 ;; built in, perhaps under some other name?)
-(emacs-fsf               ; built into XEmacs, I think
-  ;; Add completing-read to load-library.
-  ;; From: hallvard@IFI.UIO.NO (Hallvard B Furuseth)
 
-  (defun load-library (library)
-    "Load the library named LIBRARY.
+;; Add completing-read to load-library.
+;; From: hallvard@IFI.UIO.NO (Hallvard B Furuseth)
+
+(defun load-library (library)
+  "Load the library named LIBRARY.
 This is an interface to the function `load'."
-    (interactive
-     (list (completing-read "Load Library: " 'library-complete)))
-    (load library))
+  (interactive
+   (list (completing-read "Load Library: " 'library-complete)))
+  (load library))
 
-  (defun library-complete (lib pred-unused all)
-    "Search load-path for LIBRARY.  Returns competion list if 3rd arg ALL is t,
+(defun library-complete (lib pred-unused all)
+  "Search load-path for LIBRARY.  Returns competion list if 3rd arg ALL is t,
 otherwise completion of LIBRARY (t if complete, nil if no completions).
 2nd arg is unused."
-    (let* ((subdir (file-name-directory lib)) ; nil if no directory
-           (match (concat "^" (regexp-quote (file-name-nondirectory lib))
-                          ".*\\.elc?$"))
-           (files (mapcar
-                   (function
-                    (lambda (n)
-                      (substring n 0 (if (string-match "c$" n) -4 -3))))
-                   (apply 'nconc
-                          (mapcar (function
-                                   (lambda (l)
-                                     (if subdir
-                                         (setq l (expand-file-name subdir l))
-                                       (if (null l)
-                                           (setq l default-directory)))
-                                     (and (file-directory-p l)
-                                          (directory-files l nil match))))
-                                  load-path)))))
-      (and all (cdr load-path)
-           (setq files (sort files 'string-lessp)))
-      (let ((ptr files)
-            (this files))
-        (while (setq ptr (cdr ptr))
-          (if (equal (car this) (car ptr))
-              (setcar ptr nil)
-            (setq this ptr)))
-        (setq files (delq nil files)))
-      (if subdir
-          (setq files (mapcar (function (lambda (f)
-                                          (expand-file-name f subdir)))
-                              files)))
-      (if all
-          files
-        (try-completion lib (mapcar 'list files))))))
+  (let* ((subdir (file-name-directory lib)) ; nil if no directory
+         (match (concat "^" (regexp-quote (file-name-nondirectory lib))
+                        ".*\\.elc?$"))
+         (files (mapcar
+                 (function
+                  (lambda (n)
+                    (substring n 0 (if (string-match "c$" n) -4 -3))))
+                 (apply 'nconc
+                        (mapcar (function
+                                 (lambda (l)
+                                   (if subdir
+                                       (setq l (expand-file-name subdir l))
+                                     (if (null l)
+                                         (setq l default-directory)))
+                                   (and (file-directory-p l)
+                                        (directory-files l nil match))))
+                                load-path)))))
+    (and all (cdr load-path)
+         (setq files (sort files 'string-lessp)))
+    (let ((ptr files)
+          (this files))
+      (while (setq ptr (cdr ptr))
+        (if (equal (car this) (car ptr))
+            (setcar ptr nil)
+          (setq this ptr)))
+      (setq files (delq nil files)))
+    (if subdir
+        (setq files (mapcar (function (lambda (f)
+                                        (expand-file-name f subdir)))
+                            files)))
+    (if all
+        files
+      (try-completion lib (mapcar 'list files)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1862,6 +1825,7 @@ If called interactively, prompt for which index."
 ;; Tags
 (eval-after-load "etags" '(load "etags-mde"))
 (setq tags-find-related-names-functions '(mit-scheme-tags-find-related-names))
+(setq tags-revert-without-query t)
 (setq tags-add-tables nil)              ; always use just one TAGS table at a time
 ;; To temporarily use multiple TAGS tables:
 ;; (setq tags-add-tables 'ask-user)
