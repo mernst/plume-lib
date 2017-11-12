@@ -1,3 +1,5 @@
+;; This is superseded by dtrt-indent.el
+
 ;; This code automatically sets the value of c-basic-offset to be
 ;; consistent with the file being edited.  You can place it in your .emacs
 ;; file or load it from your .emacs file.
