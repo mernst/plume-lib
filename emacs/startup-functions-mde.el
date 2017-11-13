@@ -12,8 +12,9 @@
 ;;;
 
 (autoload 'time-less-p "time-date")
-
 (autoload 'file-contents "util-mde")
+(autoload 'mail-text "sendmail")
+
 
 (defalias 'ediff-regions 'ediff-regions-wordwise)
 

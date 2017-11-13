@@ -24,6 +24,8 @@
 
 (defvar debug-buffer-menu-mde t)
 
+(autoload 'save-buffer-if-modified "util-mde")
+
 ;;;
 ;;; Unbind very dangerous keystroke that's too easy to type
 ;;;
