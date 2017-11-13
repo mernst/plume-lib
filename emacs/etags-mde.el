@@ -21,13 +21,9 @@
 ;;   eventually position point on the (defstruct mystruct ...) form which
 ;;   defined that function.
 
-;; * Permit ?: characters in tags in etags-tags-completion-table.
-
 ;; * Add tags-replace, like tags-query-replace.
 
 ;; * Add tags-query-replace-noerror, which throws no error.
-
-;; * Make tags-verify-table never query the user, always use latest TAGS table.
 
 ;; Use this code by placing
 ;;   (eval-after-load "etags" '(load "etags-mde" nil t))
@@ -370,45 +366,14 @@ If the latter returns non-nil, we exit; otherwise we scan the next file."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; etags-tags-completion-table
-;;;
-
-(defun etags-tags-completion-table ()
-  (let ((table (make-vector 511 0)))
-    (save-excursion
-      (goto-char (point-min))
-      ;; This monster regexp matches an etags tag line.
-      ;;   \1 is the string to match;
-      ;;   \2 is not interesting;
-      ;;   \3 is the guessed tag name; XXX guess should be better eg DEFUN
-      ;;   \4 is not interesting;
-      ;;   \5 is the explicitly-specified tag name.
-      ;;   \6 is the line to start searching at;
-      ;;   \7 is the char to start searching at.
-      (while (re-search-forward
-              "^\\(\\(.+[^-a-zA-Z0-9_$]+\\)?\\([-a-zA-Z0-9_$?:]+\\)\
-\[^-a-zA-Z0-9_$?:]*\\)\177\\(\\([^\n\001]+\\)\001\\)?\
-\\([0-9]+\\)?,\\([0-9]+\\)?\n"
-              nil t)
-        (intern (if (match-beginning 5)
-                    ;; There is an explicit tag name.
-                    (buffer-substring (match-beginning 5) (match-end 5))
-                  ;; No explicit tag name.  Best guess.
-                  (buffer-substring (match-beginning 3) (match-end 3)))
-                table)))
-    table))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; tags-replace
 ;;;
-
-;; This function may not be a good idea if you have multiple active TAGS
-;; tables.
 
 (defun tags-replace (from to &optional delimited file-list-form ignore)
   "Replace-regexp FROM with TO through all files listed in tags table.
 Third arg DELIMITED (prefix arg) means replace only word-delimited matches.
+
+Does replacement in all active TAGS tables.
 
 See documentation of variable `tags-file-name'."
   ;; This returns 5 forms, which is the reason for the "ignore" argument.
@@ -431,7 +396,7 @@ See documentation of variable `tags-file-name'."
     (user-error nil)))
 
 (defun tags-query-replace-noerror (from to &optional delimited file-list-form)
-  "Like `tags-query-replace-noerror', but does not throw user-error when done."
+  "Like `tags-query-replace', but does not throw user-error when done."
   (condition-case nil
       (tags-query-replace from to delimited file-list-form)
     (user-error nil)))
