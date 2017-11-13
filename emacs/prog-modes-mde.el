@@ -11,7 +11,10 @@
           'executable-make-buffer-file-executable-if-script-p)
 
 
-(defvar check-parens-previous-try nil)
+(defvar check-parens-previous-try nil
+  "A buffer name if the previous call to check-parens failed.
+Nil if the previous call to check-parens succeeded.
+There might or might not have been edits between the two attempts.")
 ;; This should probably check that the buffer was not edited in between...
 (defun check-parens-ignore-on-retry ()
   "Like 'check-parens' (which see), but a second retry in a row causes success.
@@ -20,6 +23,8 @@ This is good for modes like Perl, where the parser can get confused."
       (progn
         (setq check-parens-previous-try (buffer-name))
         (check-parens)
+	;; If check-parens finds a problem, it throws an exception
+	;; and check-parens-previous-try does not get set to nil.
         (setq check-parens-previous-try nil))))
 
 
@@ -36,26 +41,11 @@ This is good for modes like Perl, where the parser can get confused."
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (delete 'maven compilation-error-regexp-alist)))
-;; If I am using Maven, run:
+;; Disabled by default because the regexp is slow.  If I am using Maven, run:
 ;; (use-maven-compilation-error-regexp)
 (defun use-maven-compilation-error-regexp ()
   (interactive)
   (add-to-list 'compilation-error-regexp-alist 'maven))
-
-;; Is this necessary when I use the above commented-out line?
-;; ;; Maven error messages such as:
-;; ;; [ERROR] /home/mernst/tmp/safer-spring-petclinic/src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java:[30,8] [initialization.fields.uninitialized] the constructor does not initialize fields: name
-;; (eval-after-load "compile"
-;;   '(setq compilation-error-regexp-alist
-;;       (cons '("^\\[ERROR\\] \\([^ ]*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\] " 1 2 3)
-;;             compilation-error-regexp-alist)))
-
-
-(defmacro beginning-of-line-point ()
-  "Return the location of the beginning of the line."
-  `(save-excursion
-     (beginning-of-line)
-     (point)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -75,24 +65,6 @@ This is good for modes like Perl, where the parser can get confused."
 ;;; C and C++
 ;;;
 
-;; cc-mode is the default as of Emacs 19.30
-;; ;; Use cc-mode.el instead of c-mode.el
-;; (fmakunbound 'c-mode)
-;; (makunbound 'c-mode-map)
-;; (fmakunbound 'c++-mode)
-;; (makunbound 'c++-mode-map)
-;; (makunbound 'c-style-alist)
-;; (autoload 'c++-mode  "cc-mode" "C++ editing mode" t)
-;; (autoload 'c-mode    "cc-mode" "C editing mode" t)
-;; (autoload 'objc-mode "cc-mode" "Objective-C editing mode" t)
-;; (autoload 'java-mode "cc-mode" "Java editing mode" t)
-;; ;; (setq auto-mode-alist (append '(("\\.C$"  . c++-mode)
-;; ;;                           ("\\.cc$" . c++-mode)
-;; ;;                           ("\\.c$"  . c-mode)
-;; ;;                           ("\\.h$"  . c-mode)
-;; ;;                           ("\\.m$"  . objc-mode))
-;; ;;                         auto-mode-alist))
-
 ;; Tell cc-mode not to check for old-style (K&R) function declarations.
 ;; This speeds up indenting a lot.
 (setq-default c-recognize-knr-p nil)
@@ -109,41 +81,21 @@ This is good for modes like Perl, where the parser can get confused."
                 (regexp-quote "/* ***************************************************************************")
                 "\\|///////////////////////////////////////////////////////////////////////////"))
   (c-set-compile-command)
-  ;; yuck, I don't like this.
-  ;; (setq c-tab-always-indent 'not-in-literals)
 
-  ;; Tab width
-  (let ((buf-file-name (buffer-file-name (current-buffer))))
-    (if (and buf-file-name
-             ;; (string-match "/\\(frikqcc\\)/" buf-file-name)
-             )
-        (progn
-          (setq tab-width 2)
-          (make-local-variable 'tab-stop-list)
-          (set-tab-stop-list-width 2)))
-    (if (and buf-file-name
-             (or (string-match "/valgrind/fjalar/dwarf.c" buf-file-name)
-                 (string-match "/valgrind/fjalar/readelf.c" buf-file-name))
-             )
-        (progn
-          (setq tab-width 8)
-          (make-local-variable 'tab-stop-list)
-          (set-tab-stop-list-width 8)))
-    )
+  (dtrt-indent-mode t)
 
-  (setq indent-tabs-mode nil)
+  (setq indent-tabs-mode nil)		; never insert tab characters
 
-  ;; experimental, 3/26/2002
   (turn-on-font-lock)
   )
 (add-hook 'c-mode-hook 'mde-c-mode-hook)
 
 
 ;; dtrt-indent is the successor to guess-offset.
-;; For the latest version (wget doesn't work...): http://git.savannah.gnu.org/gitweb/?p=dtrt-indent.git;a=blob_plain;f=dtrt-indent.el;hb=HEAD
-;; To debug, execute this in the buffer with the bad guess:
+;; Homepage:  https://github.com/jscheid/dtrt-indent
+;; To debug dtrt-indent, execute this in the buffer with the bad guess:
 ;;   (dtrt-indent-diagnosis)
-;; Homepage:  http://savannah.nongnu.org/git/?group=dtrt-indent
+
 (if (not (locate-library "dtrt-indent"))
     (message "Could not find dtrt-indent")
   (progn
@@ -165,11 +117,6 @@ This is good for modes like Perl, where the parser can get confused."
         (make-local-variable 'inleft-string)
         (setq inleft-string "# ")))
     ))
-
-
-;; Like "java" style, but defaults to 2 rather than 4 spaces of indentation.
-(c-add-style "java2" '("java" (c-basic-offset . 2) (substatement-open . 0)))
-(setq c-default-style (cons '(java-mode . "java2") c-default-style))
 
 
 ;; I was afraid this would blow away prefix argument info; maybe it doesn't.
@@ -383,7 +330,12 @@ With prefix arg, goes to end of class; otherwise to end of method."
 
 
 
-
+;; google-java-format.el defines these commands but doesn't affect
+;; Emacs's own formatting.  Maybe file google-c-style.el does so?
+;; https://raw.githubusercontent.com/google/styleguide/gh-pages/google-c-style.el
+;; Or maybe dtrt-indent will do the right thing?
+(autoload 'google-java-format-region "google-java-format")
+(autoload 'google-java-format-buffer "google-java-format")
 
 (defun mde-java-mode-hook ()
   "Michael Ernst's Java mode hook."
@@ -395,6 +347,7 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (setq paragraph-start (concat " */* *<p>\\|" paragraph-separate))
     (setq paragraph-separate (concat ".*<p>\\|" paragraph-separate))
     (define-key java-mode-map "\C-hf" 'javadoc-lookup)
+    (define-key java-mode-map [C-M-tab] 'google-java-format-region)
     (make-local-variable 'write-contents-hooks)
     (if (string-match "/\\(checker-framework\\|plume-lib\\|randoop\\)/"
 		      (directory-file-name default-directory))
@@ -419,20 +372,6 @@ With prefix arg, goes to end of class; otherwise to end of method."
             (setq fill-column 100)
             (fci-mode t)                ; show fill-column indicator
             )))
-
-    ;; This is orthogonal to dtrt-indent.el, which doesn't set tab-width.
-    ;; Really, it shouldn't be necessary:  tabs do not belong in source code files.
-    ;; Tab width
-    (let ((buf-file-name (buffer-file-name (current-buffer))))
-      ;; Dubious, gud: Craig Kaplan
-      ;; joie: Geoff Cohen
-      (if (and buf-file-name
-               (string-match "/\\(Dubious\\|gud\\|joie\\|junit\\)/\\|/joie-" buf-file-name))
-          (progn
-            (setq tab-width 2)
-            (make-local-variable 'tab-stop-list)
-            (set-tab-stop-list-width 2)
-            (setq indent-tabs-mode t))))
     ))
 
 (add-hook 'java-mode-hook 'mde-java-mode-hook)
@@ -466,7 +405,7 @@ Interactively, it's probably better to just set variable `tab-width'."
   (let ((class-name (match-string 1 buffer-file-name)))
     (if (not (bolp))
         (insert "\n"))
-    (insert "  public boolean equals( Object other )
+    (insert "  public boolean equals(Object obj)
     {
       if (!(other instanceof " class-name ")) {
         return false;
@@ -537,349 +476,59 @@ This is disabled on lines with a comment containing the string \"interned\"."
 (add-hook 'java-mode-hook 'update-java-mode-hook-for-gjf)
 
 (defun run-google-java-format ()
-  "Run external program run-google-java-format.py on the file."
+  "Run external program run-google-java-format.py on the file,
+if it matches a hard-coded list of directories."
   (interactive)
-  (let (cmd)
-    (cond
-     ((or (and (string-match-p "/\\(randoop\\)" (buffer-file-name))
-	       (not (string-match-p "CloneVisitor\\.java$" (buffer-file-name))))
-	  (and (string-match-p "/daikon" (buffer-file-name))
-	       (not (string-match-p "\\.jpp$" (buffer-file-name))))
-	  (and (string-match-p "/toradocu" (buffer-file-name))
-	       (not (string-match-p "/src/test/resources/" (buffer-file-name))))
-	  (and (string-match-p "/plume-lib" (buffer-file-name))
-	       (not (string-match-p "WeakHasherMap.java$\\|WeakIdentityHashMap.java$"
-				    (buffer-file-name)))))
-      ;; normal formatting
-      (setq cmd "run-google-java-format.py "))
-     ((and (string-match-p "/checker-framework" (buffer-file-name))
-	   (not (string-match-p "/checker-framework-inference" (buffer-file-name)))
-	   (not (string-match-p "/checker/jdk/" (buffer-file-name))))
-      ;; non-standard cammand-line arguments
-      (setq cmd "run-google-java-format.py -a "))
-     (t
-      ;; for all other projects, don't automatically reformat
-      (setq cmd nil)))
+  (let ((cmd
+	 (cond
+	  ((or (and (string-match-p "/\\(randoop\\)" (buffer-file-name))
+		    (not (string-match-p "CloneVisitor\\.java$" (buffer-file-name))))
+	       (and (string-match-p "/daikon" (buffer-file-name))
+		    (not (string-match-p "\\.jpp$" (buffer-file-name))))
+	       (and (string-match-p "/toradocu" (buffer-file-name))
+		    (not (string-match-p "/src/test/resources/" (buffer-file-name))))
+	       (and (string-match-p "/plume-lib" (buffer-file-name))
+		    (not (string-match-p "WeakHasherMap.java$\\|WeakIdentityHashMap.java$"
+					 (buffer-file-name)))))
+					;; normal formatting
+	   "run-google-java-format.py ")
+	  ((and (string-match-p "/checker-framework" (buffer-file-name))
+		(not (string-match-p "/checker-framework-inference" (buffer-file-name)))
+		(not (string-match-p "/checker/jdk/" (buffer-file-name))))
+					;; non-standard cammand-line arguments
+	   "run-google-java-format.py -a ")
+	  (t
+	   ;; for all other projects, don't automatically reformat
+	   nil))))
     (if cmd
-      (progn
-        ;; I would like to avoid the "(Shell command succeeded with no output)"
-        ;; message.
-        (shell-command (concat cmd (buffer-file-name)) "*run-google-java-format*")
-	(bdiff-revert-buffer-maybe)))))
+	(progn
+	  ;; I would like to avoid the "(Shell command succeeded with no output)"
+	  ;; message.
+	  (shell-command (concat cmd (buffer-file-name)) "*run-google-java-format*")
+	  (bdiff-revert-buffer-maybe)))))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Java debugging
-;;;
+(custom-set-variables
+ '(jdee-server-dir (expand-file-name "~/.emacs.d/jdee-server"))
+ )
 
 
 (defadvice jdb (after set-gud-jdb-sourcepath activate)
   "Hard-code some directories whose bin/jar is on my classpath."
   (setq gud-jdb-sourcepath
-        (mapcar #'expand-file-name
-                '(
-                  "~/research/types/annotation-tools/annotation-file-utilities/src"
-                  "~/research/types/annotation-tools/scene-lib/src"
-                  "~/research/types/annotation-tools/scene-lib/src-devel"
-                  "~/research/types/annotation-tools/asmx/src"
-                  "~/research/types/checker-framework/checker/src"
-                  "~/research/types/jsr308-langtools/src/share/classes"
-                  "~/java/java-6-src"
-                  "~/java/junit-4.5-src"
-                  "~/java/iCal4j/source"
-                  ))))
-
-
-
-;; ;;; Using the full classpath makes jdb take forever to start.
-;; ;;; I could instead advise gud-jdb-find-source-file.
-;; ;; (setq gud-jdb-directories
-;; ;;       (let* ((classpath-elts (split-string (getenv "CLASSPATH") ":"))
-;; ;;        (dirs-on-classpath nil))
-;; ;;   (while classpath-elts
-;; ;;     (if (file-directory-p (car classpath-elts))
-;; ;;         (setq dirs-on-classpath (cons (car classpath-elts) dirs-on-classpath)))
-;; ;;     (setq classpath-elts (cdr classpath-elts)))
-;; ;;   (nreverse dirs-on-classpath)))
-;;
-;;
-;; ;; As of JDE 2.2.5, I want to use JDEbug, the JDE's own debugger.  But it
-;; ;; requires use of M-x customize, and worse, I have to set
-;; ;; jde-db-source-directories for each project and must set
-;; ;; jde-bug-jpda-directory to something containing jpdi.jar, which seems to
-;; ;; no longer exist.
-;;
-;;
-;; ;;; All this is for JDE 2.2.1.
-;; ;;; I'll try JDE 2.2.5 without these changes and see how it works.
-;; (defvar jdb-use-jde-db t
-;;   "*Non-nil if invoking `jdb' should instead call `jde-db'.
-;; This doesn't guarantee that JDEbug is used, just that JDE rather than
-;; gud runs jdb.")
-;;
-;; (defun jdb-daikon ()
-;;   (interactive)
-;;   (if jdb-use-jde-db
-;;       (progn
-;;      (require 'jde)
-;;      (jde-db "daikon.Daikon"))
-;;     (error "Implement jdb-daikon for (not jdb-use-jde-db)")))
-;;
-;; (defadvice jde-db (around interactive-spec (app-class) activate)
-;;   "Call `jde-db' interactively."
-;;   (interactive
-;;    (list
-;;     (let ((default (or (and jde-run-application-class
-;;                          (not (string= jde-run-application-class ""))
-;;                          jde-run-application-class)
-;;                     (and (buffer-file-name)
-;;                          (concat (jde-db-get-package)
-;;                                  (file-name-sans-extension
-;;                                   (file-name-nondirectory (buffer-file-name))))))))
-;;       (read-from-minibuffer "Java class to debug: "
-;;                          default nil nil nil))))
-;;   ;; (let ((jde-run-application-class (ad-get-arg 0)))
-;;   ;;   ;; This setting keeps getting wiped out for reasons I don't understand.
-;;   ;;   (add-hook 'jde-db-mode-hook 'mde-jde-db-mode-hook)
-;;   ;;   ad-do-it)
-;;   (setq jde-run-application-class (ad-get-arg 0))
-;;   ;; This setting keeps getting wiped out for reasons I don't understand.
-;;   (add-hook 'jde-db-mode-hook 'mde-jde-db-mode-hook)
-;;   ad-do-it
-;;   )
-;;
-;;
-;; (defadvice jdb (around use-jde-db (&optional arg) activate)
-;;   (interactive)
-;;   (let ((orig-arg (ad-get-arg 0)))
-;;     (if jdb-use-jde-db
-;;      (progn
-;;        (require 'jde)
-;;        (if orig-arg
-;;            (jde-db orig-arg)
-;;          (call-interactively 'jde-db)))
-;;       (progn
-;;      ;; using original jdb, not jde-db
-;;      (if (equal gud-jdb-directories (list "."))
-;;          (progn
-;;            (message "Consider setting `gud-jdb-directories'.")
-;;            (sit-for 1)))
-;;      (if (not orig-arg)
-;;          ;; original jdb `interactive' specification
-;;          (setq orig-arg
-;;                (read-from-minibuffer "Run jdb (like this): "
-;;                                      (if (consp gud-jdb-history)
-;;                                          (car gud-jdb-history)
-;;                                        (concat gud-jdb-command-name " "))
-;;                                      nil nil
-;;                                      '(gud-jdb-history . 1))))
-;;      ad-do-it))))
-;;
-;;
-;;
-;; ;;; Provide missing jdb commands, and permit completion of names.
-;; ;;; I should expand this to ordinary jdb as well as jde-db.
-;;
-;; (defvar jdb-commands-alist
-;;   (append
-;;    (mapcar #'list
-;;         '("threads" "thread" "suspend" "resume" "where" "wherei" "threadgroups"
-;;           "threadgroup" "print" "dump" "locals" "classes" "methods" "stop" "stop"
-;;           "up" "down" "clear" "step" "stepi" "next" "cont" "catch" "ignore"
-;;           "list" "use" "memory" "gc" "load" "run" "!!"  "help" "exit" "quit"))
-;;    ;; My abbreviations
-;;    '(("finish" . "step up")
-;;      ("java" . "run"))))
-;;
-;; (defun wait-for-process-output ()
-;;   "Wait until output appears."
-;;   ;; This code is very bad if no output at all.
-;;   (while (= bsize (buffer-size))
-;;     ;; Edebug barfs on "(sleep-for .1)"
-;;     (sleep-for 0 100))
-;;   )
-;;
-;; (defun wait-for-all-process-output ()
-;;   "Wait until all process output has (apparently) appeared."
-;;   (wait-for-process-output)
-;;   (while (let ((new-bsize (buffer-size)))
-;;         ;; Edebug barfs on "(sleep-for .2)"
-;;         (sleep-for 0 200)
-;;         (not (= new-bsize (buffer-size))))
-;;     ;; do nothing
-;;     )
-;;   )
-;;
-;; (defun jdb-input-sender (proc string)
-;;   "Send to PROC a massaged version of STRING."
-;;   (message "jdb-input-sender: %s" string)
-;;   (let ((first-word (car (split-string string))))
-;;     (if first-word
-;;      (let* ((expanded (try-completion first-word jdb-commands-alist))
-;;             (exp-assoc (assoc (if (eq expanded t) first-word expanded)
-;;                               jdb-commands-alist))
-;;             (substitution (and exp-assoc
-;;                                (or (cdr exp-assoc) (car exp-assoc)))))
-;;        (if substitution
-;;            (progn
-;;              (setq string (concat substitution
-;;                                   (substring string (length first-word))))
-;;              (setq first-word substitution)
-;;              (message "Expanded \"%s\" to \"%s\"" first-word substitution)))))
-;;     ;; Expand environment variables
-;;     (if (member first-word '("run"))
-;;      ;; not the very most efficient implementation (I could keep an
-;;      ;; index instead of modifying remaining), but probably fine.
-;;      (let ((remaining string)
-;;            (new ""))
-;;        (while (string-match "\\$\\([a-zA-Z_0-9]+\\)" remaining)
-;;          (let* ((var (match-string 1 remaining))
-;;                 (varval (getenv var)))
-;;            (if varval
-;;                (setq new (concat new
-;;                                  (substring remaining 0 (match-beginning 0))
-;;                                  (or varval ""))
-;;                      remaining (substring remaining (match-end 0))))))
-;;        (setq new (concat new remaining))
-;;        (if (not (equal new string))
-;;            (progn
-;;              (message "Expanded \"%s\" to \"%s\"" string new)
-;;              (setq string new)))))
-;;
-;;     ;; Expand "*" shell wildcards
-;;     (if (member first-word '("run"))
-;;      ;; not the very most efficient implementation (I could keep an
-;;      ;; index instead of modifying remaining), but probably fine.
-;;      (let ((remaining string)
-;;            (new ""))
-;;        (while (string-match "[ \t]\\(\\([^ \t]*\\)/\\([^ \t/]*\\*[^ \t]*\\)\\)\\b" remaining)
-;;          (let* ((exp-beginning (match-beginning 1))
-;;                 (exp-end (match-end 1))
-;;                 (unexpanded (match-string 1 remaining))
-;;                 (expanded (file-expand-wildcards unexpanded)))
-;;            (if (null expanded)
-;;                (error "Wildcard matches no files: %s" unexpanded))
-;;            (setq new (concat new
-;;                              (substring remaining 0 exp-beginning)
-;;                              (join expanded " "))
-;;                      remaining (substring remaining exp-end))))
-;;        (setq new (concat new remaining))
-;;        (if (not (equal new string))
-;;            (progn
-;;              (message "Expanded \"%s\" to \"%s\"" string new)
-;;              (setq string new)))))
-;;
-;;     (let ((bsize (buffer-size))
-;;        (old-jde-db-stack-depth jde-db-stack-depth))
-;;       (comint-simple-send proc string)
-;;       (if (member first-word '("up" "down" "print" "dump" "run"))
-;;        (progn
-;;          (wait-for-all-process-output)
-;;          (cond ((member first-word '("up" "down"))
-;;                 (if (looking-back comint-prompt-regexp)
-;;                     (delete-region (match-beginning 0) (match-end 0)))
-;;                 (comint-simple-send proc "where"))
-;;                ((member first-word '("print" "dump"))
-;;                 (if (not (equal "1" old-jde-db-stack-depth))
-;;                     (progn
-;;                       (if (looking-back comint-prompt-regexp)
-;;                           (delete-region (match-beginning 0) (match-end 0)))
-;;                       (comint-simple-send proc (concat "up " (int-to-string (1- (string-to-number old-jde-db-stack-depth))))))))
-;;                ((member first-word '("run"))
-;;                 (if (looking-back (concat "VM already running. Use 'cont' to continue after events.\n"
-;;                                              comint-prompt-regexp))
-;;                     (progn
-;;                       ;; (delete-region (match-beginning 0) (match-end 0))
-;;                       (comint-simple-send proc "exit")
-;;                       (wait-for-all-process-output)
-;;                       ;; call jdb again
-;;                       (if jdb-use-jde-db
-;;                           (let* ((bname (buffer-name))
-;;                                  (app-class (and bname
-;;                                                  (string-match "^\\*debug-?\\(.*\\)\\*" bname)
-;;                                                  (match-string 1 bname))))
-;;                             (jde-db app-class))
-;;                         (call-interactively 'jdb))
-;;                       (while (not (get-buffer-process (current-buffer)))
-;;                         (message "No process yet.")
-;;                         (sit-for 1))
-;;                       (comint-simple-send (get-buffer-process (current-buffer)) string))))
-;;                (t
-;;                 (error "What first-word?")))))))
-;;   )
-;;
-;;
-;; ;; As of JDE 2.1.5, this can't be (eval-after-load "jde-db" ...) because it
-;; ;; requires jde-classpath-separator to be defined; that is defined in
-;; ;; jde.el *after* jde.el does (require 'jde-db).  Terrible style!
-;; (eval-after-load "jde"
-;;   '(jde-db-set-source-paths (getenv "CLASSPATH")))
-;;
-;; ;; (setq jde-db-read-app-args t)
-;; (setq jde-db-set-initial-breakpoint nil)
-;;
-;; (defun mde-jde-db-mode-hook ()
-;;   (message "Called mde-jde-db-mode-hook")
-;;   (make-local-variable 'comint-input-sender)
-;;   (setq comint-input-sender (function jdb-input-sender))
-;;
-;;   ;; Instead of (setq jde-db-set-initial-breakpoint nil) set jde-db-read-app-args.
-;;   ;; (Actually, that seems to sometimes hang, so dont...)
-;;   ;; ;; Temporary, yuck.  Needed for new jdb, which doesn't like to restart
-;;   ;; ;; (ignores "run" commands after first one).
-;;   (setq jde-db-set-initial-breakpoint nil)
-;;   (message "Finished mde-jde-db-mode-hook")
-;;   )
-;; ;; This doesn't seem to be working...
-;; (add-hook 'jde-db-mode-hook 'mde-jde-db-mode-hook)
-;; ;; so try this
-;; (eval-after-load "jde"
-;;   '(add-hook 'jde-db-mode-hook 'mde-jde-db-mode-hook))
-;;
-;;
-;; ;; I get errors from the way JDE invokes font lock.
-;; ;; JDE shouldn't do (require 'font-lock) or use font lock by default.
-;; ;; Amazingly, this setq doesn't work because of evilness in
-;; ;; `jde-set-variables-init-value'
-;; (setq jde-use-font-lock nil)
-;; (defadvice jde-set-variables-init-value (after mde-values activate)
-;;   "Ignoring current values in favor of custom values is evil!"
-;;   (setq jde-use-font-lock nil)
-;;   (jde-db-set-source-paths (getenv "CLASSPATH"))
-;;   )
-;;
-;; ;; end of JDE 2.2.1
-;;
-;; ;;; Compatibility code yanked from 2.2.1, to make the above work
-;;
-;; ;;;###autoload
-;; (defun jde-db-set-source-paths (paths)
-;;  "Set the source path list used by JDE to locate Java source files
-;; visited by the debugger. PATHS is a list of source paths separated by
-;; colons or semicolons, depending on the operating system. Note that
-;; for packages, you need enter only the directory containing the
-;; top-level package. For example, including '../jdk1.1/src/' enables the
-;; JDE to locate all source files provided with JDK1.1. Note also that
-;; the paths must end in a slash."
-;;  (interactive
-;;   "sEnter source paths: ")
-;;  (let ((m 0)
-;;        (n (string-match jde-classpath-separator paths)))
-;;    (setq jde-db-source-directories (list))
-;;    (while n
-;;      (let ((path (check-source-path (substring paths m n))))
-;;        (if path
-;;         (setq jde-db-source-directories
-;;               (cons path jde-db-source-directories)))
-;;        (setq m (+ n 1))
-;;        (setq n (string-match jde-classpath-separator paths m))))
-;;    (setq n (length paths))
-;;    (if (and (> n 0) (< m n))
-;;        (let ((path (check-source-path (substring paths m n))))
-;;       (if path
-;;           (setq jde-db-source-directories
-;;                 (cons path jde-db-source-directories)))))
-;;    (setq jde-db-source-directories (nreverse jde-db-source-directories))))
+	(append
+	 gud-jdb-sourcepath
+	 (mapcar #'expand-file-name
+		 '(
+		   "~/research/types/annotation-tools/annotation-file-utilities/src"
+		   "~/research/types/annotation-tools/scene-lib/src"
+		   "~/research/types/annotation-tools/scene-lib/src-devel"
+		   "~/research/types/annotation-tools/asmx/src"
+		   "~/research/types/checker-framework/checker/src"
+		   "~/research/types/jsr308-langtools/src/share/classes"
+		   "~/java/java-6-src"
+		   "~/java/junit-4.5-src"
+		   "~/java/iCal4j/source"
+		   )))))
 
 
 
@@ -1141,26 +790,18 @@ otherwise, raise an error after the first problem is encountered."
 ;;;
 
 ;; There are two modes for editing Python code in Emacs:
-;;  * python-mode.el is from the Python community
-;;    Its varables/routines start with "py-".
 ;;  * python.el is from the Emacs community
 ;;    Its varables/routines start with "python-".
-;; As of Emacs 23, python.el is generally recommended:  it comes with
-;; Emacs, has a few extra features, and works out of the box.
-;; (Maybe python-mode.el supports ipython better??)
-;;
-;; The below was originally for python-mode.el, but I'm now switching to
-;; python.el and some of the below might be out of date?
+;;  * python-mode.el is from the Python community
+;;    Its varables/routines start with "py-".
+;; As of Emacs 23 (and even more so as of Emacs 24), python.el is better:
+;; it comes with Emacs, has a few extra features, and works out of the box.
 
-
-;; Does this only work with python-mode.el, not python.el?
-;; (require 'ipython nil 'noerror)
 
 ;; Avoid errors if various Python support is not available.
 (eval-when-compile (if (locate-library "python-mode") (require 'python-mode)))
 
 (autoload 'python-shell "python" "Start an interactive Python interpreter" t)
-(defalias 'run-python 'py-shell)
 
 (defun mde-python-mode-hook ()
   "Michael Ernst's Python mode hook."
@@ -1175,20 +816,11 @@ otherwise, raise an error after the first problem is encountered."
   ;; never those starting with "##".  I hate that behavior, so I hacked
   ;; my version of python-mode.el.
   (setq python-honour-comment-indentation t)
-  (define-key python-mode-map "\C-c\C-c"  'py-execute-import-or-reload) ; was py-execute-buffer
-  (define-key python-mode-map "\C-cb" 'py-execute-buffer) ; was unbound
   (define-key python-mode-map "\C-hf" 'pylookup-lookup)
-  (define-key python-mode-map "\C-x-" 'python-override-my-kill-buffer-and-window) ; too easy to hit when I intend "C-c -"
+  (define-key python-mode-map "\C-x-" 'kill-buffer-and-window)
   (make-local-variable 'write-contents-hooks)
   ;; (add-hook 'write-contents-hooks 'maybe-delete-trailing-whitespace)
   ;; (add-hook 'write-contents-hooks 'pyflakes-this-file)
-  ;; It isn't enough to rebind M-f and M-b, because I want completion to
-  ;; consider _ to split words, too.
-  (modify-syntax-entry ?\_ "_"  py-mode-syntax-table)
-  ;; This is wrong, because then the end of the defun is considered to be the
-  ;; close paren that matches the beginning of the defun open paren (which
-  ;; is the open paren for the parameter list).
-  ;; (setq defun-prompt-regexp "\ndef [A-Za-z_]+[ \t]*") ; so beginning-of-defun works
   (if (featurep 'filladapt)
       (filladapt-mode 1))
   (setq indent-tabs-mode nil)
@@ -1207,55 +839,24 @@ otherwise, raise an error after the first problem is encountered."
       (end-of-python-def-or-class 'either (ad-get-arg 0))
     ad-do-it))
 
-;; I could do this my-kill-buffer-and-window hacking with advice instead.
-
-(defun python-override-my-kill-buffer-and-window ()
+;; It would be cleaner to do this kill-buffer-and-window hacking with advice instead.
+(defun python-override-kill-buffer-and-window ()
   "Avoid accidental killing of Python shell buffers."
   (interactive)
   (if (string-match "python" (buffer-name))
       (error "You probably meant to hit \"C-c -\", not \"C-x -\"")
-    (my-kill-buffer-and-window)))
-
-;; Problem:  this sets the shell-mode-map, not just the map for python shells.
-(defadvice py-shell (after set-keys activate)
-  "Unset \"\C-x-\", which is easy to type accidentally in Python mode."
-  (local-set-key "\C-x-" 'python-override-my-kill-buffer-and-window))
-
-(defun shell-override-my-kill-buffer-and-window ()
+    (kill-buffer-and-window)))
+(defun shell-override-kill-buffer-and-window ()
   "Avoid accidental killing of shell buffers."
   (interactive)
   (error "Kill shell buffers with C-x k  (M-x kill-buffer)"))
-
 ;; Doing this in all shell buffers seems overkill; but on the other hand,
 ;; I do hate to lose a lot of work in a shell buffer.
 ;; (defadvice shell (after set-keys activate)
 ;;   ;; It's too easy to kill a shell buffer, especially a python-shell
 ;;   ;; in which "C-c -" is bound to a useful keystroke.
-;;   (local-set-key "\C-x-" 'shell-override-my-kill-buffer-and-window))
+;;   (local-set-key "\C-x-" 'shell-override-kill-buffer-and-window))
 
-
-;;; Don't do this; just set variable py-jump-on-exception!
-;; ;; Add this to end of py-process-filter; see defadvice below.
-;; (defun py-postprocess-process-filter ()
-;;   "If a Python error occurs, jump to the source location.
-;; If variable `py-jump-on-exception' is nil, do nothing."
-;;   ;; It doesn't work to wrap this whole body in save-excursion.
-;;   (if (and py-jump-on-exception
-;;         (looking-back "\n>>> " (1- (beginning-of-line-point))
-;;         (save-excursion
-;;           (forward-line -1)
-;;           (looking-at "[A-Za-z]*Error\\b")))
-;;       (if (save-excursion
-;;          (re-search-backward py-traceback-line-re (- (point) 300) 'no-error))
-;;        (let ((file (match-string 1))
-;;              (lineno (string-to-number (match-string 2))))
-;;          (if (not (equal file "<stdin>"))
-;;              (py-jump-to-exception file lineno))))))
-;;
-;; This is gratuitous; I can just use C-c - instead.  (Maybe add that
-;; binding to next-error, or advise it to sometimes do that instead.)
-;; (defadvice py-process-filter (after jump-to-exception activate)
-;;   (py-postprocess-process-filter))
 
 
 (defun python-symbol-around-point ()
@@ -1288,36 +889,6 @@ otherwise, raise an error after the first problem is encountered."
            (looking-at "[ \t]+[^ \t\n]"))
       (goto-char (1- (match-end 0)))
     ad-do-it))
-
-;; Superseded by the below.
-;; ;; Lifted from scheme-describe-function; they should be re-merged (better,
-;; ;; use the Emacs 20 functionality for this).
-;; (defun python-describe-function (function)
-;;   "Display manual entry regarding a FUNCTION (a string or symbol).
-;; When called interactively, prompts for the symbol (defaults to the function
-;; point is currently near)."
-;;   (interactive (list (let* ((default (python-symbol-around-point))
-;;                          (fn (read-string (format "Describe Python function (default %s): " default))))
-;;                     (if (string= fn "") default fn))))
-;;   (if (symbolp function) (setq function (symbol-name function)))
-;;   (let (message)
-;;     (save-window-excursion
-;;       (info)
-;;       ;; was (Info-guess-node 'python-mode); we've partial-evaluated it.
-;;       (eval-when-compile (require 'info))
-;;       (if (not (string-match "python-lib" Info-current-file))
-;;        (progn
-;;          (Info-directory)
-;;          (Info-menu "Python-lib")))
-;;       (setq message (condition-case nil
-;;                      (Info-index function)
-;;                    (error nil))))
-;;     (if message
-;;      (progn
-;;        (switch-to-buffer-other-window "*info*")
-;;        (recenter)
-;;        (message "%s" message))
-;;       (error (format "No \"%s\" in index." function)))))
 
 ;; From https://github.com/tsgates/pylookup
 ;; I need to have done:
@@ -1355,40 +926,6 @@ otherwise, raise an error after the first problem is encountered."
                    ("^SyntaxError: ('invalid syntax', ('\\(.*\\)', \\([0-9]+\\), " 1 2))
                  compilation-error-regexp-alist)))
 
-(defadvice py-execute-import-or-reload (before save-first activate)
-  "Save current buffer first."
-  (save-buffer-if-modified))
-
-;; Problem:  after doing this, Python input is queued until the next
-;; comint-send-input (RET) typed in the process.  That's OK if I actually
-;; do some Python work in between reloading new versions of a file.  The
-;; two calls to comint-send-input in this function appear to be in vain; I
-;; could probably eliminate them and turn this back into a before advice.
-(defadvice py-execute-import-or-reload (around exit-debugger activate)
-  "If in Python debugger, offer to quit before importing/reloading a file."
-  (let* ((py-process (get-process "Python"))
-         (py-buffer (and py-process (process-buffer py-process)))
-         (exit-debugger-p nil))
-    (if (and py-buffer
-             (with-current-buffer py-buffer
-               (equal "(Pdb) "
-                      (buffer-substring (max 1 (- (point-max) 6)) (point-max)))))
-        (if (y-or-n-p "Exit Python debugger first? ")
-            (with-current-buffer py-buffer
-              (setq exit-debugger-p t)
-              (goto-char (point-max))
-              (process-send-string py-process "q\n")
-              (comint-send-input))
-          (message "Warning: in Python debugger, effects may be transient")))
-    ad-do-it
-    (if exit-debugger-p
-        ;; This seems to be necessary to keep the file evaluation from
-        ;; merely being buffered up until the next comint-send-input.
-        ;; This is not so great if there is partial input, but since
-        ;; we saw the debugger prompt at end of buffer, there isn't.
-        (with-current-buffer py-buffer
-          (comint-send-input)))
-    ))
 
 (defun pyflakes-this-file () (interactive)
   (compile (format "pyflakes %s" (buffer-file-name)))
@@ -1401,8 +938,8 @@ otherwise, raise an error after the first problem is encountered."
 ;;; Lisp/Scheme programming
 ;;;
 
-(defvar lisp-major-modes '(emacs-lisp-mode lisp-mode fi:common-lisp-mode
-                                           scheme-mode))
+(defvar lisp-major-modes
+  '(emacs-lisp-mode lisp-mode fi:common-lisp-mode scheme-mode))
 
 ;;;
 ;;; Lisp
@@ -1524,6 +1061,40 @@ If the value is neither nil nor t, then the user is queried first.")
         body))
      (def-edebug-spec crypt-save-point
        (body))))
+
+
+(defun orphaned-elc-files ()
+  "List .elc files on `load-path' for which no .el file exists in the directory."
+  (let ((dirs (remove-duplicates load-path :test 'equal))
+        (result '()))
+    (while dirs
+      (let* ((all-files (and (file-readable-p (car dirs))
+                             (directory-files (car dirs) nil "\\.elc?")))
+             (files all-files))
+        (while files
+          (let ((file (car files)))
+            (if (string-match "\\.elc$" file)
+                (if (not (member (substring file 0 -1) all-files))
+                    (setq result (cons (concat (car dirs) "/" file) result)))))
+          (setq files (cdr files))))
+      (setq dirs (cdr dirs)))
+  result))
+;; (orphaned-elc-files)
+
+
+;; This is most important for systems like Athena where my quota is tight.
+;; (Probably javadoc-index shouldn't be under revision control anyway...)
+(defvar non-byte-compiled-files
+  '("~/.javadoc-index.el"))
+(defun purge-undesired-elc-files ()
+  "Remove .elc files that should not have been made in the first place."
+  (let ((els non-byte-compiled-files))
+    (while els
+      (let ((elc (concat (car els) "c")))
+        (if (file-exists-p elc)
+            (delete-file elc)))
+      (setq els (cdr els)))))
+(run-with-idle-timer 10 nil 'purge-undesired-elc-files)
 
 
 ;;;
@@ -1752,8 +1323,6 @@ How does this differ from whatever is built in?"
 
 ;; For invariant checking
 (put 'with-invariants-check 'lisp-indent-function 1)
-
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2287,170 +1856,6 @@ then set `comment-padding' to nil."
            comment-padding)))
     ad-do-it))
 
-;;; Comment indentation
-
-(defun region-indentation (beg end)
-  "Return the minimum indentation of any line in the current region."
-  (save-excursion
-    (let ((result nil))
-      (goto-char (min beg end))
-      (beginning-of-line)
-      (setq end (max beg end))
-      (while (< (point) end)
-        (skip-chars-forward " \t")
-        (if (not (= ?\n (char-after)))
-            (if result
-                (setq result (min result (current-column)))
-              (setq result (current-column))))
-        (forward-line 1))
-      result)))
-
-;; Implementation 1
-(defadvice comment-region (around indent-comment activate)
-  "Place comment characters as far to the right as possible (not in column 0)."
-  (let* ((my-beg (ad-get-arg 0))
-         (my-end (ad-get-arg 1))
-         (indent (region-indentation my-beg my-end))
-         (beg-marker (make-marker))
-         (end-marker (make-marker)))
-    (set-marker beg-marker (min beg end))
-    (set-marker end-marker (max beg end))
-    (indent-rigidly beg end (- indent))
-    ;; indent-rigidly can change leading space to tabs; when we
-    ;; indent-rigidly a second time, this can make things look screwy.
-    (untabify beg-marker end-marker)
-    (ad-set-arg 0 beg-marker)
-    (ad-set-arg 1 end-marker)
-    ad-do-it
-    (indent-rigidly beg-marker end-marker indent)))
-
-;; ;; Implementation 2
-;; ;; Needs to be fixed to remove the indentation first.
-;; (defadvice comment-region (around indent-comment activate)
-;;   (or comment-start (error "No comment syntax is defined"))
-;;   (let ((indent (region-indentation (ad-get-arg 0) (ad-get-arg 1)))
-;;      ;; "my-" prefix to avoid advice probs.
-;;      (my-arg (ad-get-arg 2))
-;;      (my-cs comment-start)
-;;      (my-ce comment-end))
-;;     ;; Lifted directly from comment-region
-;;     (if (not (consp my-arg))
-;;      (progn
-;;        (setq my-arg (prefix-numeric-value my-arg))
-;;        ;; For positive arg > 1, replicate the comment delims now,
-;;        ;; then insert the replicated strings just once.
-;;        (while (> my-arg 1)
-;;          (setq my-cs (concat my-cs comment-start)
-;;                my-ce (concat my-ce comment-end))
-;;          (setq my-arg (1- my-arg)))
-;;        (setq my-cs (concat (make-string indent ? ) my-cs))
-;;        (ad-set-arg 2 1)))
-;;     (let ((comment-start my-cs)
-;;        (comment-end my-ce))
-;;       ad-do-it)))
-
-
-;; ;; Implementation 3; requires modification of comment-region
-;;
-;; (defadvice comment-region (around indent-comment activate)
-;;   (let ((comment-indentation (region-indentation (ad-get-arg 0) (ad-get-arg 1))))
-;;     ad-do-it))
-;;
-;;
-;; ;; Taken from simple.el of Emacs 20.4
-;;
-;; (defvar comment-indentation 0
-;;   "Number of spaces `comment-region' puts between left margin and comment chars.")
-;;
-;; (defun comment-region (beg end &optional arg)
-;;   "Comment or uncomment each line in the region.
-;; With just C-u prefix arg, uncomment each line in region.
-;; Numeric prefix arg ARG means use ARG comment characters.
-;; If ARG is negative, delete that many comment characters instead.
-;; Comments are terminated on each line, even for syntax in which newline does
-;; not end the comment.  Blank lines do not get comments."
-;;   ;; if someone wants it to only put a comment-start at the beginning and
-;;   ;; comment-end at the end then typing it, C-x C-x, closing it, C-x C-x
-;;   ;; is easy enough.  No option is made here for other than commenting
-;;   ;; every line.
-;;   (interactive "r\nP")
-;;   (or comment-start (error "No comment syntax is defined"))
-;;   (if (> beg end) (let (mid) (setq mid beg beg end end mid)))
-;;   (save-excursion
-;;     (save-restriction
-;;       (let ((cs comment-start) (ce comment-end)
-;;          (cp (when comment-padding
-;;                (make-string comment-padding ? )))
-;;          numarg)
-;;      (if (consp arg) (setq numarg t)
-;;        (setq numarg (prefix-numeric-value arg))
-;;        ;; For positive arg > 1, replicate the comment delims now,
-;;        ;; then insert the replicated strings just once.
-;;        (while (> numarg 1)
-;;          (setq cs (concat cs comment-start)
-;;                ce (concat ce comment-end))
-;;          (setq numarg (1- numarg))))
-;;      ;; Loop over all lines from BEG to END.
-;;      (narrow-to-region beg end)
-;;      (goto-char beg)
-;;      (if (or (eq numarg t) (< numarg 0))
-;;          (while (not (eobp))
-;;            (let (found-comment)
-;;              ;; Delete comment start from beginning of line.
-;;              (if (eq numarg t)
-;;                  (while (looking-at (regexp-quote cs))
-;;                    (setq found-comment t)
-;;                    (delete-char (length cs)))
-;;                (let ((count numarg))
-;;                  (while (and (> 1 (setq count (1+ count)))
-;;                              (looking-at (regexp-quote cs)))
-;;                    (setq found-comment t)
-;;                    (delete-char (length cs)))))
-;;              ;; Delete comment padding from beginning of line
-;;              (when (and found-comment comment-padding
-;;                         (looking-at (regexp-quote cp)))
-;;                (delete-char comment-padding))
-;;              ;; Delete comment end from end of line.
-;;              (if (string= "" ce)
-;;                  nil
-;;                (if (eq numarg t)
-;;                    (progn
-;;                      (end-of-line)
-;;                      ;; This is questionable if comment-end ends in
-;;                      ;; whitespace.  That is pretty brain-damaged,
-;;                      ;; though.
-;;                      (while (progn (skip-chars-backward " \t")
-;;                                    (and (>= (- (point) (point-min)) (length ce))
-;;                                         (save-excursion
-;;                                           (backward-char (length ce))
-;;                                           (looking-at (regexp-quote ce)))))
-;;                          (delete-char (- (length ce)))))
-;;                  (let ((count numarg))
-;;                    (while (> 1 (setq count (1+ count)))
-;;                      (end-of-line)
-;;                      ;; this is questionable if comment-end ends in whitespace
-;;                      ;; that is pretty brain-damaged though
-;;                      (skip-chars-backward " \t")
-;;                      (if (>= (- (point) (point-min)) (length ce))
-;;                          (save-excursion
-;;                            (backward-char (length ce))
-;;                            (if (looking-at (regexp-quote ce))
-;;                                (delete-char (length ce)))))))))
-;;              (forward-line 1)))
-;;
-;;        (when comment-padding
-;;          (setq cs (concat cs cp)))
-;;        (while (not (eobp))
-;;          ;; Insert at beginning and at end.
-;;          (if (looking-at "[ \t]*$") ()
-;;            ;; test added by MDE
-;;            (if (and (boundp 'comment-indentation) comment-indentation
-;;                (move-to-column-force comment-indentation))
-;;            (insert cs)
-;;            (if (string= "" ce) ()
-;;              (end-of-line)
-;;              (insert ce)))
-;;          (search-forward "\n" nil 'move)))))))
 
 
 (provide 'prog-modes-mde)

@@ -61,6 +61,29 @@
 ;; Testing
 ;; (and (primep 97) (primep 2) (primep 7) (not (or (primep 6) (primep 88))))
 
+(defun average (&rest args)
+  "Return the average of the arguments."
+  ;; multiplication by 1.0 ensures floating-point division
+  (/ (apply '+ args) (* 1.0 (length args))))
+
+(defun median (&rest args)
+  "Return the median of the arguments."
+  (let* ((len (length args))
+         (sorted (sort args #'<))
+         (firstmedian (nth (/ (- len 1) 2) sorted))
+         (secondmedian (nth (/ len 2) sorted)))
+    ;; division by 2.0 ensures floating-point division
+    (/ (+ firstmedian secondmedian) 2.0)))
+;; (assert (equal 4.5 (median 1 2 3 4 5 6 7 8)))
+;; (assert (equal 5.0 (median 1 2 3 4 5 6 7 8 9)))
+;; (assert (equal 4.5 (median 4 6 7 1 5 3 8 2)))
+;; (assert (equal 5.0 (median 4 6 7 2 8 1 9 5 3)))
+
+(defun geometric-mean (&rest args)
+  "Return the geometric mean of the arguments."
+  (expt (apply '* args) (/ 1.0 (funcall 'length args))))
+;; (assert (equal 2.0 (geometric-mean 1 2 4))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Strings
@@ -461,9 +484,34 @@ just supply foo itself."
 ;; (macroexpand '(vararg-call foo 3 5 bar baz bum quux quux2))
 
 
+;; for default, could use something on the order of find-tag-tag instead.
+(defun symbol-func (function)
+  "Display the value of (symbol-function FUNCTION); for interactive use."
+  ;; interactive spec snarfed from describe-function
+  (interactive
+   (let ((fn (function-called-at-point))
+         (enable-recursive-minibuffers t)
+         val)
+     (setq val (completing-read (if fn
+                                    (format "Symbol-function (default %s): " fn)
+                                  "Symbol-function: ")
+                                obarray 'fboundp t))
+     (list (if (equal val "")
+               fn (intern val)))))
+  (message "%s" (if (fboundp function)
+                    (symbol-function function))))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Files
 ;;;
+
+(defun save-if-modified ()
+  "Save current buffer if it is modified."
+  ;; test of buffer-modified-p prevents "(No changes need to be saved)" message
+  (if (and buffer-file-name (buffer-modified-p))
+      (save-buffer)))
 
 (defconst writability-mask 146
   "Mask for `set-file-modes'; indicates writable by user, group, and others.")
@@ -615,6 +663,17 @@ Does not handle hard links."
 ;; Use built-in substitute-in-file-name for "environment-var-expand-file-name".
 
 
+(defun delete-file-noerr (file)
+  "Try to delete FILE, but throw no error if it cannot be deleted."
+  ;; I can't wrap this in
+  ;;   (if (file-exists-p (expand-file-name file)) ...)
+  ;; because that returns nil if the file exists but is a symlink to a
+  ;; non-existent file.  In that case, the delete-file call does not err.
+  (condition-case err
+      (delete-file (substitute-in-file-name file))
+    (error nil)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Messages
 ;;;
@@ -688,6 +747,11 @@ This will not disable any messages from built-in C subroutines."
          '((point)))))
 (put 'point-after 'edebug-form-spec '(&rest form))
 
+(defmacro beginning-of-line-point ()
+  "Return the location of the beginning of the line."
+  `(point-after
+     (beginning-of-line)))
+
 (defun forward-line-wrapping (arg)
   "Like forward-line, but wrap around to the beginning of the buffer if
 it encounters the end."
@@ -709,6 +773,12 @@ it encounters the end."
     (save-excursion
       (beginning-of-line)
       (1+ (count-lines 1 (point))))))
+
+(defun jump-to-mark-and-pop ()
+  "Call `set-mark-command' with an argument.
+That is, \"jump to mark, and pop into mark off the mark ring.\""
+  (interactive)
+  (set-mark-command t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -962,6 +1032,45 @@ The key purpose of this function is to prevent the
         (with-current-buffer buf
           (if buffer-file-name
               (save-buffer))))))
+
+
+(defun raise-buffer ()
+  "Switch to the last buffer on the buffer list.
+This one is likely to have been recently buried."
+  (interactive)
+  (let ((blist (nreverse (buffer-list))))
+    (while (string-match "\\` " (buffer-name (car blist)))
+      (setq blist (cdr blist)))
+    (if blist
+        (switch-to-buffer (car blist)))))
+
+(defun bury-or-raise-buffer (arg)
+  "Bury current buffer; with prefix arg, switch to last buffer in `buffer-list'.
+Programmatically, non-nil argument ARG means raise; if nil, then bury."
+  (interactive "P")
+  (if arg
+      (raise-buffer)
+    (bury-buffer)))
+
+;; From: bjaspan@athena.mit.edu (Barr3y Jaspan)
+(defun mapline (beg end f &rest args)
+  "With the point set to the beginning of each line between BEGIN and
+END, apply FUNCTION to ARGS and return a list of the result."
+  (let* ((p (point-marker))
+        (mlist (list 'mlist))
+        (mtail (last mlist)))
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (beginning-of-line)
+      (while (< (point) (point-max))
+        (save-excursion
+          (setcdr mtail (list (apply f args)))
+          (setq mtail (cdr mtail)))
+        (forward-line 1))
+      )
+    (goto-char p)
+    (cdr mlist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1479,6 +1588,15 @@ return a list of replacements creating ambiguity."
 ;;;
 ;;; Proclaim-inline
 ;;;
+
+(defmacro no-err (form)
+  "Execute FORM, suppressing errors.
+If an error occurs, the result value is nil."
+  `(condition-case nil
+       ,form
+     (error nil)))
+;; (macroexpand '(no-err (foo bar baz)))
+
 
 (defun check-proclaim-inline ()
   "Make sure all arguments to `proclaim-inline' are defined as functions.

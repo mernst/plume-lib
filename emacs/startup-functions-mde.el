@@ -11,29 +11,13 @@
 ;;; defined functions
 ;;;
 
-;; Generally useful routine
-(defun average (&rest args)
-  "Return the average of the arguments."
-  ;; multiplication by 1.0 ensures floating-point division
-  (/ (apply '+ args) (* 1.0 (length args))))
+(autoload 'time-less-p "time-date")
+(autoload 'file-contents "util-mde")
+(autoload 'mail-text "sendmail")
 
-(defun median (&rest args)
-  "Return the median of the arguments."
-  (let* ((len (length args))
-         (sorted (sort args #'<))
-         (firstmedian (nth (/ (- len 1) 2) sorted))
-         (secondmedian (nth (/ len 2) sorted)))
-    ;; division by 2.0 ensures floating-point division
-    (/ (+ firstmedian secondmedian) 2.0)))
-;; (assert (equal 4.5 (median 1 2 3 4 5 6 7 8)))
-;; (assert (equal 5.0 (median 1 2 3 4 5 6 7 8 9)))
-;; (assert (equal 4.5 (median 4 6 7 1 5 3 8 2)))
-;; (assert (equal 5.0 (median 4 6 7 2 8 1 9 5 3)))
 
-(defun geometric-mean (&rest args)
-  "Return the geometric mean of the arguments."
-  (expt (apply '* args) (/ 1.0 (funcall 'length args))))
-;; (assert (equal 2.0 (geometric-mean 1 2 4))
+(defalias 'ediff-regions 'ediff-regions-wordwise)
+
 
 (defun mde-split-window-vertically (arg)
   ;; checkdoc-params: (arg)
@@ -66,23 +50,6 @@
 (global-set-key "\C-x3" 'mde-split-window-horizontally)
 
 
-;; for default, could use something on the order of find-tag-tag instead.
-(defun symbol-func (function)
-  "Display the value of (symbol-function FUNCTION); for interactive use."
-  ;; interactive spec snarfed from describe-function
-  (interactive
-   (let ((fn (function-called-at-point))
-         (enable-recursive-minibuffers t)
-         val)
-     (setq val (completing-read (if fn
-                                    (format "Symbol-function (default %s): " fn)
-                                  "Symbol-function: ")
-                                obarray 'fboundp t))
-     (list (if (equal val "")
-               fn (intern val)))))
-  (message "%s" (if (fboundp function)
-                    (symbol-function function))))
-
 
 (defun dos-view ()
   "Hide/unhide carriage returns, for viewing DOS files."
@@ -101,24 +68,6 @@
     (if (looking-at "\C-z")
         (delete-char 1))))
 
-(defun jump-to-mark-and-pop ()
-  "Call `set-mark-command' with an argument.
-That is, \"jump to mark, and pop into mark off the mark ring.\""
-  (interactive)
-  (set-mark-command t))
-
-;; Similar to Emacs 20's kill-buffer-and-window, but that always requires
-;; confirmation.
-(defun my-kill-buffer-and-window ()
-  "Kill the buffer and delete the window it's displayed in."
-  (interactive)
-  (kill-buffer (current-buffer))
-  (if (not (one-window-p t))
-      (delete-window))
-  ;; I hate seeing the "C-x -", which looks like it wants more input.
-  (message ""))
-
-
 (defun make-interactive (symbol &optional interactive-spec)
   "Make the function on SYMBOL be a command (make it interactive).
 Optional INTERACTIVE-SPEC defaults to the list (interactive)."
@@ -131,30 +80,6 @@ Optional INTERACTIVE-SPEC defaults to the list (interactive)."
                         '(interactive))
                       (cdr (cdr fn)))))))
 
-(defun raise-buffer ()
-  "Switch to the last buffer on the buffer list.
-This one is likely to have been recently buried."
-  (interactive)
-  (let ((blist (nreverse (buffer-list))))
-    (while (string-match "\\` " (buffer-name (car blist)))
-      (setq blist (cdr blist)))
-    (if blist
-        (switch-to-buffer (car blist)))))
-
-(defun bury-or-raise-buffer (arg)
-  "Bury current buffer; with prefix arg, switch to last buffer in `buffer-list'.
-Programmatically, non-nil argument ARG means raise; if nil, then bury."
-  (interactive "P")
-  (if arg
-      (raise-buffer)
-    (bury-buffer)))
-
-;; (defun conor-display ()
-;;   "Set up the X parameters for remote login from conor."
-;;   (interactive)
-;;   (x-set-font "7x13")
-;;   (if (eq "white" (x-get-foreground-color))
-;;       (x-flip-color)))
 
 (defun usenet-address (fuzzy-string)
   "Find a random person's email address, if he has ever posted netnews.
@@ -248,7 +173,7 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
       (delete-matching-lines "^#[-./a-z0-9_]+#:")              ; autosave
       (delete-matching-lines "^\\([-./a-z0-9_]+/\\)?\\.#") ; CVS backups
       (delete-matching-lines "^\\.newsrc") ; dotfiles in home directory
-      (delete-matching-lines "^[-./a-z0-9_]+\\.elc:")
+      (delete-matching-lines "^[-./a-z0-9_]+\\.elc:") ; compiled Emacs Lisp files
       (delete-matching-lines "^[-./a-z0-9_]+\\.[gs]fasl42:")
       ;; maybe also "grep: Read error on project: Is a directory"
 
@@ -341,8 +266,7 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
            (string-match "\n$" (ad-get-arg 0)))
       (ad-set-arg 0 (substring (ad-get-arg 0) 0 (match-beginning 0)))))
 
-;; originally from Greg Badros
-(defun update-all-buffers ()
+(defun revert-all-buffers ()
   "Revert all unmodified buffers from disk."
   (interactive)
   (save-excursion
@@ -355,33 +279,6 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
                               (set-buffer b)
                               (revert-buffer 'IGNORE-AUTO 'NOCONFIRM)))))
             (buffer-list))))
-
-(defun delete-netscape-lock ()
-  "Delete Netscape lock file."
-  (interactive)
-  (delete-file-noerr "~/.netscape/lock")
-  ;; Need to generalize for any *.default directory, not jus fnlfahkw
-  (delete-file-noerr "~/.mozilla/firefox/fnlfahkw.default/.parentlock")
-  )
-
-(defun delete-file-noerr (file)
-  "Try to delete FILE, but throw no error if it cannot be deleted."
-  ;; I can't wrap this in
-  ;;   (if (file-exists-p (expand-file-name file)) ...)
-  ;; because that returns nil if the file exists but is a symlink to a
-  ;; non-existent file.  In that case, the delete-file call does not err.
-  (condition-case err
-      (delete-file (substitute-in-file-name file))
-    (error nil)))
-
-
-
-;;; As of 11/2009, ack is broken (ignores some files it shouldn't).
-;;; Also, it doesn't search inside compressed files.
-;; (autoload 'ack "ack" "Run ack to search through files" t)
-;; (if (eq system-site 'laptop)
-;;     (setq ack-command "ack-grep"))
-;; (setq ack-default-flags "-i")
 
 
 (autoload 'ag "ag" "Search using ag in a given DIRECTORY for a given search term STRING." t)
@@ -399,7 +296,8 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 ;; In general, use the "ack" program instead.  But, it doesn't search
 ;; compressed files and has other problems, so fall back to "search" on
 ;; occasion.
-;; For the "search" Perl program; the Emacs function was called `search'.
+;; For the "search" Perl program; the Emacs function was originally called
+;; `search', but I renamed it.
 ;; Fixes submitted to jfriedl@omron.co.jp 8/31/97
 (defun sgrep (what dir)
   "Run search with all grep goodies.
@@ -422,13 +320,6 @@ Find WHAT in any file in or under DIR."
       ;;                   "No more search hits" "grep" nil grep-regexp-alist)
       (compilation-start command 'grep-mode)
       )))
-
-(defun strip-line-numbers ()
-  "Remove line numbers from error messages in current buffer, for easier comparison."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (replace-regexp-noninteractive "^\\([^ :]+:\\)[0-9]+" "\\1")))
 
 (defun delete-long-lines (&optional arg)
   "Delete lines longer than 80 (or prefix argument ARG) characters.
@@ -456,72 +347,10 @@ Applies to lines after point, but does not move point."
           (kill-line 1)
         (forward-line)))))
 
-;; should extend this to work only over the current region
-(defun remove-tex-comments ()
-  "Remove TeX/LaTeX comment from the document."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "[^\\]%" nil t)
-      (delete-region (1+ (match-beginning 0)) (progn (end-of-line) (point))))))
-
 (defun find-repeated-words ()
   "Find duplicated/repeated/doubled words, such as \"the the\"."
   (interactive)
   (tags-search "\\b\\(\\w+\\)\\W\\1\\b"))
-
-(defmacro no-err (form)
-  "Execute FORM, suppressing errors.
-If an error occurs, the result value is nil."
-  `(condition-case nil
-       ,form
-     (error nil)))
-;; (macroexpand '(no-err (foo bar baz)))
-
-
-(defun orphaned-elc-files ()
-  "List .elc files on `load-path' for which no .el file exists in the directory."
-  (let ((dirs (remove-duplicates load-path :test 'equal))
-        (result '()))
-    (while dirs
-      (let* ((all-files (and (file-readable-p (car dirs))
-                             (directory-files (car dirs) nil "\\.elc?")))
-             (files all-files))
-        (while files
-          (let ((file (car files)))
-            (if (string-match "\\.elc$" file)
-                (if (not (member (substring file 0 -1) all-files))
-                    (setq result (cons (concat (car dirs) "/" file) result)))))
-          (setq files (cdr files))))
-      (setq dirs (cdr dirs)))
-  result))
-;; (orphaned-elc-files)
-
-
-;; From: bjaspan@athena.mit.edu (Barr3y Jaspan)
-(defun mapline (beg end f &rest args)
-  "With the point set to the beginning of each line between BEGIN and
-END, apply FUNCTION to ARGS and return a list of the result."
-  (let* ((p (point-marker))
-        (mlist (list 'mlist))
-        (mtail (last mlist)))
-    (save-restriction
-      (narrow-to-region beg end)
-      (goto-char (point-min))
-      (beginning-of-line)
-      (while (< (point) (point-max))
-        (save-excursion
-          (setcdr mtail (list (apply f args)))
-          (setq mtail (cdr mtail)))
-        (forward-line 1))
-      )
-    (goto-char p)
-    (cdr mlist)))
-
-
-(autoload 'time-less-p "time-date")
-
-(autoload 'file-contents "util-mde")
 
 
 (defvar ical-business-hours "8:30am-5pm")
@@ -574,135 +403,6 @@ With just C-u prefix argument, prompt for starting date and days."
             (replace-match ""))))))
 
 
-;; (defvar ical-available-start-hour "08:30")
-;; (defvar ical-available-end-hour "17:00")
-;;
-;; ;; Implementation that uses the Unix ical program.
-;; (defun ical-available-old (&optional days start-date)
-;;   "Insert a summary of my available times from ical.
-;; Optional prefix argument DAYS is days how many days to show (default 8).
-;; With just C-u prefix argument, prompt for starting date and days."
-;;   (interactive "P")
-;;   ;; (error "Should rewrite to grab ical file from Google via the web, then query that.")
-;;   (let* ((ical-args
-;;        (progn
-;;          (if (equal days '(4))
-;;              (setq start-date (read-from-minibuffer "Start date: ")
-;;                    days (read-from-minibuffer "Days: ")))
-;;          (if (or (not days) (equal days ""))
-;;              (setq days 8))
-;;          (if (or (not start-date) (equal start-date ""))
-;;              (setq start-date "today"))
-;;          (list "--date" start-date
-;;                "--days" (format "+%s" days)
-;;                "--starthour" ical-available-start-hour
-;;                "--endhour" ical-available-end-hour))))
-;;     (insert (apply #'call-process "ical-available" nil t nil ical-args))
-;;     (if (= (char-before) 0)
-;;      (delete-backward-char 1))))
-
-;; ;; ical-summarize is deprecated:  use ical-available instead.
-;; (defun ical-summarize (&optional days start-date)
-;;   "Insert a summary of my appointments from ical.
-;; Optional prefix argument DAYS is days how many days to show (default 7).
-;; With just C-u prefix argument, prompt for starting date and days."
-;;   (interactive "P")
-;;   (let* ((ical-args
-;;        (progn
-;;          (if (equal days '(4))
-;;              (setq start-date (read-from-minibuffer "Start date: ")
-;;                    days (read-from-minibuffer "Days: ")))
-;;          (if (or (not days) (equal days ""))
-;;              (setq days 7))
-;;          (append (list "-show" (format "+%s" days))
-;;                  (if (or (not start-date) (equal start-date ""))
-;;                      '()
-;;                    (list "-date" start-date)))))
-;;       (result (with-current-buffer (get-buffer-create " *ical*")
-;;                 (erase-buffer)
-;;                 (apply #'call-process "ical" nil (current-buffer) nil ical-args)
-;;                 (goto-char (point-min))
-;;                 (ical-cleanup)
-;;                 (buffer-string))))
-;;     (cond ((string-equal result "")
-;;         (message "No appointments"))
-;;        ((string-equal "Usage: ical [options]" (substring result 0 21))
-;;         (error "Bad ical command line: ical %s" ical-args))
-;;        (t
-;;         (insert result)))))
-;;
-;; (defun ical-cleanup ()
-;;   "Compress output of ical to list only times unavailable.
-;; Does not show what the commitments are, and merges adjacent times."
-;;   (interactive)
-;;   (error "Should rewrite to process ical file from Google via the web, then query that.")
-;;   (save-excursion
-;;     ;; Mark all times by prefixing with "\22ICAL_TIMES: "
-;;     (goto-char (point-min))
-;;     (while (re-search-forward "^\\( \\* \\)?\\(.*[ap]m to .*[ap]m\n\\)" nil t)
-;;       (replace-match "\22ICAL_TIMES: \\2"))
-;;     ;; Get rid of content of appointments (text following a marker)
-;;     (goto-char (point-min))
-;;     (while (re-search-forward "\\(^\22ICAL_TIMES: .*[ap]m to .*[ap]m\n\\)\\([^\22\n].*\\(\n\\|\\'\\)\\)+\\(\n\\|\22\\|\\'\\)" nil t)
-;;       (replace-match "\\1\\4")
-;;       (goto-char (match-beginning 0)))
-;;     (goto-char (point-min))
-;;     (while (re-search-forward "^\\(\\(Mon\\|Tues\\|Wednes\\|Thurs\\|Fri\\|Satur\\|Sun\\)day \\(January\\|February\\|March\\|April\\|May\\|June\\|July\\|August\\|September\\|October\\|November\\|December\\) [0-9]+, [12][0-9][0-9][0-9]\n\\)\\([^\22\n].*\n\\)+\\(^\n?\22ICAL_TIMES: .*[ap]m to .*[ap]m\n\\)" nil t)
-;;       (replace-match "\\1\\5")
-;;       (goto-char (match-beginning 0)))
-;;     ;; Merge overlapping or adjacent ranges (possibly with one intervening
-;;     ;; line; should generalize that test)
-;;     (goto-char (point-min))
-;;     (while (re-search-forward
-;;          (concat "^\22ICAL_TIMES: \\(.*[ap]m\\) to \\(.*[ap]m\\)\n\n?"
-;;                  "\22ICAL_TIMES: \\(.*[ap]m\\) to \\(.*[ap]m\\)\n")
-;;          nil t)
-;;       (let* ((match-begin (match-beginning 0))
-;;           (start1-string (match-string 1))
-;;           (start1 (apply 'encode-time (parse-time-string-ampm start1-string)))
-;;           (end1-string (match-string 2))
-;;           (end1 (apply 'encode-time (parse-time-string-ampm end1-string)))
-;;           (start2-string (match-string 3))
-;;           (start2 (apply 'encode-time (parse-time-string-ampm start2-string)))
-;;           (end2-string (match-string 4))
-;;           (end2 (apply 'encode-time (parse-time-string-ampm end2-string))))
-;;      (assert (not (time-less-p start2 start1)))
-;;      (if (not (time-less-p end1 start2))
-;;          (let ((end-string (if (time-less-p end1 end2) end2-string end1-string)))
-;;            (replace-match (concat "\22ICAL_TIMES: "
-;;                                   start1-string " to "
-;;                                   end-string "\n"))
-;;            (goto-char match-begin))
-;;        (goto-char (1+ match-begin)))))
-;;     ;; Remove item marks
-;;     (goto-char (point-min))
-;;     (while (re-search-forward "\\(^\n?\22ICAL_TIMES: \\)" nil t)
-;;       (replace-match ""))
-;;     ))
-;;
-;; (autoload 'parse-time-string "parse-time")
-;;
-;; (autoload 'firstn "util-mde")
-;;
-;; (defun parse-time-string-ampm (string)
-;;   "Call `parse-time-string' on STRING, which is in the form \"HH:MM[ap]m\"."
-;;   (let ((ampm (substring string -2))
-;;      (result (append (firstn 3 (parse-time-string (substring string 0 -2)))
-;;                      (cdddr (decode-time)))))
-;;     (if (= 12 (nth 2 result))
-;;      (setf (nth 2 result) 0))
-;;     (cond ((equal "am" ampm)
-;;         result)
-;;        ((equal "pm" ampm)
-;;         (setf (nth 2 result)
-;;               (+ 12 (nth 2 result)))
-;;         result)
-;;        (t
-;;         (error "Bad time %s" string)))))
-;; ;; (equal (parse-time-string-ampm "11:16am") (parse-time-string "11:16"))
-;; ;; (equal (parse-time-string-ampm "1:16pm") (parse-time-string "13:16"))
-
-
 (defun swap-backspace-and-delete ()
   "Swap the backspace and delete keys, via `keyboard-translate'.
 This is particularly useful when they are incorrectly set, as on a TTY.
@@ -715,8 +415,6 @@ Also consider `normal-erase-is-backspace' variable (Emacs 21)."
          (equal (getenv "TERM") "vt100"))
     (swap-backspace-and-delete))
 
-
-(defalias 'ediff-regions 'ediff-regions-wordwise)
 
 
 ;; Manipulation of the other window.
@@ -805,7 +503,7 @@ The first column is omitted if the optional argument is specified."
 ;; MINOR PROBLEM: Edits between paragraphs get recorded in the next one.
 ;; MAJOR PROBLEM: This screws up undo information (and even revert-buffer).
 ;; Thus, it may not be worth using.
-;; (Unfortunately, I don't have CVS info for ~/random/addresses.tex.)
+;; (Unfortunately, I don't have revision info for ~/random/addresses.tex.)
 (defun latex-timestamp-paragraph (beg end pre-change-length)
   "Add/update, after a paragraph, a LaTeX comment containins the current date.
 This is good for indicating when the paragraph was last edited.
@@ -887,6 +585,9 @@ Not guaranteed to work in all cases."
      (keep-lines-read-args "Keep lines containing match for regexp"))))
 
 
+;;; It would be good to offer this to the Emacs maintainers, but probably
+;;; via generalizing flush-lines and redefining both it and this function
+;;; in terms of the generalization.
 ;; The defaliases and defun are copied verbatim from flush-lines, then
 ;; replace each instance of "(forward-line 0)" by "(backward-paragraph)"
 ;; and then "line" by "paragraph".  Not well tested.  One known bug:
@@ -1068,6 +769,10 @@ starting on the same paragraph at which another match ended is ignored."
                   )
                  'fixedcase)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Partial completion
+;;;
 
 ;; Create drop-in replacements for all-completions and try-completion that
 ;; use partial completion.  Surprisingly, no drop-in replacements are
@@ -1363,12 +1068,6 @@ one in the source code."
       (forward-char 1)))
 
 
-;;; Enabled experimentally, 2/23/2005, to see whether it is helpful or annoying.
-;;; Jeff Perkins says this causes the "revert buffer" menu item to crash Emacs!
-;;; It would be nicer to say:
-;;;   file <bla> changed on disk. Reread from disk? (yes or no)
-;;; rather than the more obscure:
-;;;   Revert buffer from file <bla> (yes or no)
 ;; Offer to revert the buffer when changing to a buffer that has been
 ;; modified on disk.
 ;; (There doesn't seem to be a hook in Emacs that gets called on every buffer
@@ -1486,63 +1185,6 @@ command, so it is convenient to have that buffer displayed."
   (shell-command (concat "bibfind " (quote-for-shell-command string))))
 
 
-(defun bib-show-properties ()
-  "Show the PROPERTIES: paragraph of each BibTeX entry that has one."
-  (interactive)
-  (save-excursion
-    (save-excursion
-      (set-buffer (get-buffer-create "bib-properties"))
-      (erase-buffer))
-    (goto-char (point-min))
-    (let (properties prop-end bibentry)
-      (while (re-search-forward "^[ \t]*PROPERTIES:" nil t)
-        (setq properties (buffer-substring (match-beginning 0)
-                                           (progn (search-forward "\n\n")
-                                                  (point)))
-              prop-end (point)
-              bibentry (buffer-substring (progn ;; (beginning-of-bibtex-entry)
-                                           (bibtex-beginning-of-entry)
-                                           (search-forward "{")
-                                           (point))
-                                         (progn (end-of-line) (point))))
-        (goto-char prop-end)
-        (save-excursion
-          (set-buffer (get-buffer "bib-properties"))
-          (insert bibentry "\n" properties)))))
-  (switch-to-buffer "bib-properties")
-  (set-buffer-modified-p nil))
-
-(defun bibtex-comments-to-field ()
-  "Place comments following BibTeX entries into \"comments\" fields in the entries.
-
-The BibTeX entry must end with } at the beginning of a line, and the
-comment must not contain blank lines.  The trailing comment should be
-flush left, except for lines which begin paragraphs, which should be
-indented with space(s) or tab(s).
-
-This is crude, but works for our files."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\\s *\n}\\s *\n\\<" nil t)
-      (replace-match ",\n  comments = \"")
-      (let ((comment-start (point)))
-        (re-search-forward "\n\\(\\s *\n\\|\\'\\)")
-        (replace-match "\"\n}\n\n")
-        (save-restriction
-          (narrow-to-region comment-start (match-beginning 0))
-          (goto-char (point-min))
-          ;; Precede quotation marks by a backslash, if there isn't one already.
-          ;; (replace-string-noninteractive "\"" "\\\"")
-          (replace-regexp-noninteractive "\\([^\\]\\)\"" "\\1\\\\\"")
-          (goto-char (point-min))
-          ;; Add paragraph breaks
-          (replace-regexp-noninteractive "\n[ \t]+" "\n\n")))))
-  ;; Protect from accidentally overwriting the original.
-  (setq buffer-file-name (concat buffer-file-name "-comments"))
-  (message "Done.  Now write it to a new file."))
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Setting variable values
 ;;;
@@ -1578,77 +1220,6 @@ This is crude, but works for our files."
   (interactive)
   (setq visible-bell (not visible-bell))
   (message "visible-bell is %s." visible-bell))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Tags tables
-;;;
-
-(defun emacs-tags-table ()
-  "Use the Emacs TAGS table."
-  (interactive)
-  (visit-tags-table "~/emacs/lisp/"))
-
-(defun mde-emacs-tags-table ()
-  "Use my Emacs Lisp TAGS table."
-  (interactive)
-  (visit-tags-table "~/emacs/"))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Loading Emacs Lisp
-;;;
-
-;; Still needed in Emacs 21.2.  (Maybe the library-complete part is now
-;; built in, perhaps under some other name?)
-
-;; Add completing-read to load-library.
-;; From: hallvard@IFI.UIO.NO (Hallvard B Furuseth)
-
-(defun load-library (library)
-  "Load the library named LIBRARY.
-This is an interface to the function `load'."
-  (interactive
-   (list (completing-read "Load Library: " 'library-complete)))
-  (load library))
-
-(defun library-complete (lib pred-unused all)
-  "Search load-path for LIBRARY.  Returns competion list if 3rd arg ALL is t,
-otherwise completion of LIBRARY (t if complete, nil if no completions).
-2nd arg is unused."
-  (let* ((subdir (file-name-directory lib)) ; nil if no directory
-         (match (concat "^" (regexp-quote (file-name-nondirectory lib))
-                        ".*\\.elc?$"))
-         (files (mapcar
-                 (function
-                  (lambda (n)
-                    (substring n 0 (if (string-match "c$" n) -4 -3))))
-                 (apply 'nconc
-                        (mapcar (function
-                                 (lambda (l)
-                                   (if subdir
-                                       (setq l (expand-file-name subdir l))
-                                     (if (null l)
-                                         (setq l default-directory)))
-                                   (and (file-directory-p l)
-                                        (directory-files l nil match))))
-                                load-path)))))
-    (and all (cdr load-path)
-         (setq files (sort files 'string-lessp)))
-    (let ((ptr files)
-          (this files))
-      (while (setq ptr (cdr ptr))
-        (if (equal (car this) (car ptr))
-            (setcar ptr nil)
-          (setq this ptr)))
-      (setq files (delq nil files)))
-    (if subdir
-        (setq files (mapcar (function (lambda (f)
-                                        (expand-file-name f subdir)))
-                            files)))
-    (if all
-        files
-      (try-completion lib (mapcar 'list files)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1732,90 +1303,6 @@ If called interactively, prompt for which index."
 ;;             (Info-menu "Python-lib"))))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; File mode setting
-;;;
-
-;; ;; This doesn't work in Emacs 19.24+, because basic-save-buffer-1 (called
-;; ;; after the hooks) resets the setmodes variable.
-;; ;;; automagic new file mode setting from craig, see files.el
-;;  (defvar setmodes)
-;;  (defun set-modes-from-dir ()
-;;    ;; Set new modes from file .filemode only if (backup-buffer) and
-;;    ;; other hooks have not already decided the mode:
-;;    (if (not setmodes)
-;;        (setq setmodes
-;;           (file-modes
-;;            (concat
-;;             (file-name-directory buffer-file-name)
-;;             ".filemode"))))
-;;    ;; Return nil since we did not write the file:
-;;    nil)
-;;  (add-hook 'write-file-hooks 'set-modes-from-dir)
-
-; This was the old code.
-; ;; This causes any files created with emacs to have the same protection
-; ;; bits as has a file named ".filemode" in the directory in which the new
-; ;; file is being created.  That is, this allows you to have a "default
-; ;; protection" set for each directory, rather than just the default
-; ;; protection you get with your "umask" setting.
-; (defun set-modes-from-dir ()
-;     (let ((fm-name (concat (file-name-directory buffer-file-name)
-;                          ".filemode")))
-;       (if (file-exists-p fm-name)
-;           (setq setmodes (logior (file-modes fm-name)
-;                                  (if (integerp setmodes)
-;                                      (logand setmodes 73)
-;                                      0))))))
-
-
-;; Sudish Joseph <joseph@cis.ohio-state.edu> says:
-;;
-;; Here's one way of doing it w/o touching files.el, but I'm rather hesitant to
-;; use it.  The way I look at it we could safely do the writing of the file
-;; ourself and then set the mode, provided we knew that we were the last hook,
-;; hence the following code.
-;;
-;; The only thing that bugs me is that I have neither the time (nor the patience)
-;; to understand every check occuring in basic-save-buffer-1 to decide the file
-;; mode, and theres a good possibility that blindly setting the mode could lead
-;; to all sorts of problems.  I tested the hook out on some dummy files and it
-;; works just fine, but I'm not using it for everyday work until someone with
-;; experience (you ;-) says that this is safe.
-;;
-;; [I guess I really should be checking if (listp hooks)]
-;;
-;; (defvar setmodes)
-;; (defvar hooks)
-;; ;; KLUGE ALERT!
-;; (defun set-modes-from-dir ()
-;;   (let (tmpsetmodes)
-;;     ;; we prefer being the last item on the hooks, thankyouverymuch
-;;     (if (cdr hooks)
-;;         ;; put us last on the list
-;;         (setq hooks (append (cdr hooks) (cons (car hooks) nil)))
-;;       ;; Set new modes from file .filemode only if (backup-buffer) and
-;;       ;; other hooks have not already decided the mode:
-;;       (if (not setmodes)
-;;           (setq setmodes
-;;                 (file-modes
-;;                  (concat
-;;                   (file-name-directory buffer-file-name)
-;;                   ".filemode"))))
-;;       (setq tmpsetmodes (basic-save-buffer-1))
-;;       (or (equal setmodes tmpsetmodes)
-;;           (message "Overriding %d, using %d, for perms."
-;;                    (or tmpsetmodes 0) setmodes))
-;;       ;; uh, is this, like, a safe way to live?
-;;       (if setmodes
-;;           (condition-case ()
-;;               (set-file-modes buffer-file-name setmodes)
-;;             (error nil)))))
-;;     ;; Return t only when we actually write the file
-;;   (if (cdr hooks) nil t))
-;; ;(add-hook 'write-file-hooks 'set-modes-from-dir)
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Executed statements
@@ -1830,6 +1317,7 @@ If called interactively, prompt for which index."
 ;; To temporarily use multiple TAGS tables:
 ;; (setq tags-add-tables 'ask-user)
 ;; (setq tags-add-tables t)
+
 
 ;; Fiddle with window title, in particular shorten system name
 (let ((frame-name (cdr (assoc 'name (frame-parameters (selected-frame))))))
@@ -1853,39 +1341,6 @@ If called interactively, prompt for which index."
     ;;  "misty rose" is a bit dark, but the point is to make this unmissable...
     (modify-frame-parameters (selected-frame) (list (cons 'background-color "misty rose"))))
 
-;; Don't use this!!  It disables partial completion.
-;; ;;; Make multiple TABs scroll completions
-;; ;;; Written by Morten Welinder (terra@diku.dk)
-;; (defun minibuf-tab ()
-;;   "Like `minibuffer-complete', but if you use this repeatedly it will scroll
-;; the window showing completions."
-;;   (interactive)
-;;   (or (eq last-command this-command) (setq minibuffer-scroll-window nil))
-;;   (if minibuffer-scroll-window
-;;       (save-excursion
-;;      (set-buffer (window-buffer minibuffer-scroll-window))
-;;      (if (pos-visible-in-window-p (point-max) minibuffer-scroll-window)
-;;          (set-window-start minibuffer-scroll-window (point-min))
-;;        (scroll-other-window)))
-;;     (minibuffer-complete)))
-;;
-;; (define-key minibuffer-local-must-match-map "\t" 'minibuf-tab)
-;; (define-key minibuffer-local-completion-map "\t" 'minibuf-tab)
-
-
-;; This is most important for systems like Athena where my quota is tight.
-;; (Probably javadoc-index shouldn't be under revision control anyway...)
-(defvar non-byte-compiled-files
-  '("~/emacs/javadoc-index.el"))        ; no longer exists, actually
-(defun purge-undesired-elc-files ()
-  "Remove .elc files that should not have been made in the first place."
-  (let ((els non-byte-compiled-files))
-    (while els
-      (let ((elc (concat (car els) "c")))
-        (if (file-exists-p elc)
-            (delete-file elc)))
-      (setq els (cdr els)))))
-(run-with-idle-timer 2 nil 'purge-undesired-elc-files)
 
 ;; Too gaudy for me; maybe try again later.
 ;; (iswitchb-mode t)
@@ -1896,85 +1351,8 @@ If called interactively, prompt for which index."
 ;;;
 
 
-;;; This seems not necessary, since ediff-version-control-package is a symbol.
-;;; It would be a valid patch if the variable were a string.
-;; ;; These two ediff functions differ from that in Emacs 21.2 through Emacs 24.3 only by
-;; ;; lowercasing the "%S" in "ediff-%S-...".  That is required for compatibility
-;; ;; with custom-print (which inserts double-quote marks around "%S" arguments),
-;; ;; and shouldn't affect non-users of custom-print.
-;; ;; I should submit a bug report against Emacs 21.2.
-;; ;;
-;; (eval-after-load "ediff"
-;;   '(progn
-;;      (defun ediff-merge-revisions-with-ancestor (&optional
-;;                                               file startup-hooks
-;;                                               ;; MERGE-BUFFER-FILE is the file to
-;;                                               ;; be associated with the merge
-;;                                               ;; buffer
-;;                                               merge-buffer-file)
-;;        "Run Ediff by merging two revisions of a file with a common ancestor.
-;; The file is the optional FILE argument or the file visited by the current
-;; buffer."
-;;        (interactive)
-;;        (if (stringp file) (find-file file))
-;;        (let (rev1 rev2 ancestor-rev)
-;;       (setq rev1
-;;             (read-string
-;;              (format
-;;               "Version 1 to merge (default %s's working version): "
-;;               (if (stringp file)
-;;                   (file-name-nondirectory file) "current buffer")))
-;;             rev2
-;;             (read-string
-;;              (format
-;;               "Version 2 to merge (default %s): "
-;;               (if (stringp file)
-;;                   (file-name-nondirectory file) "current buffer")))
-;;             ancestor-rev
-;;             (read-string
-;;              (format
-;;               "Ancestor version (default %s's base revision): "
-;;               (if (stringp file)
-;;                   (file-name-nondirectory file) "current buffer"))))
-;;       (ediff-load-version-control)
-;;       (funcall
-;;        (intern (format "ediff-%s-merge-internal" ediff-version-control-package))
-;;        rev1 rev2 ancestor-rev startup-hooks merge-buffer-file)))
-;;
-;;      (defun ediff-revision (&optional file startup-hooks)
-;;        "Run Ediff by comparing versions of a file.
-;; The file is an optional FILE argument or the file entered at the prompt.
-;; Default: the file visited by the current buffer.
-;; Uses `vc.el' or `rcs.el' depending on `ediff-version-control-package'."
-;;        ;; if buffer is non-nil, use that buffer instead of the current buffer
-;;        (interactive "P")
-;;        (if (not (stringp file))
-;;         (setq file
-;;               (ediff-read-file-name "Compare revisions for file"
-;;                                     (if ediff-use-last-dir
-;;                                         ediff-last-dir-A
-;;                                       default-directory)
-;;                                     (ediff-get-default-file-name)
-;;                                     'no-dirs)))
-;;        (find-file file)
-;;        (if (and (buffer-modified-p)
-;;              (y-or-n-p (format "Buffer %s is modified. Save buffer? "
-;;                                (buffer-name))))
-;;         (save-buffer (current-buffer)))
-;;        (let (rev1 rev2)
-;;       (setq rev1
-;;             (read-string
-;;              (format "Revision 1 to compare (default %s's latest revision): "
-;;                      (file-name-nondirectory file)))
-;;             rev2
-;;             (read-string
-;;              (format "Revision 2 to compare (default %s's current state): "
-;;                      (file-name-nondirectory file))))
-;;       (ediff-load-version-control)
-;;       (funcall
-;;        (intern (format "ediff-%s-internal" ediff-version-control-package))
-;;        rev1 rev2 startup-hooks)
-;;       ))))
+;; (none at the moment)
+
 
 
 (provide 'startup-functions-mde)
