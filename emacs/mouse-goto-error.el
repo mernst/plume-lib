@@ -77,12 +77,10 @@ is easier than clicking on the error."
                       ;; (message "%s" (match-data))
                       (setq file (let ((raw (match-string (nth 1 regexp-info)))
                                        format)
-                                   (if (>= emacs-major-version 22)
-                                       (if (listp raw)
-                                           (setq format (cadr raw)
-                                                 ;; bug:  we only try the first format
-                                                 raw (car raw)))
-                                     (setq format (nth 4 regexp-info)))
+				   (if (listp raw)
+				       (setq format (cadr raw)
+					     ;; bug:  we only try the first format
+					     raw (car raw)))
                                    (if format
                                        (format format raw)
                                      raw))
