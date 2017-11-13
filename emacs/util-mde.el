@@ -1016,6 +1016,23 @@ narrowing is in effect."
   (with-current-buffer buffer
     (buffer-substring (point-min) (point-max))))
 
+(defun save-buffer-if-modified (&rest buffer)
+  "Save buffer if it exists and is modified.
+A single buffer argument is optional; if omitted, uses the current buffer;
+if nil, the function has no effect.
+The key purpose of this function is to prevent the
+\"(No changes need to be saved)\" message if the buffer is not modified."
+  (let ((buf (cond ((null buffer)
+                    (current-buffer))
+                   ((= 1 (length buffer))
+                    (first buffer))
+                   (t
+                    (error "wrong number of arguments %s: %s" (length buffer) buffer)))))
+    (if (and buf (buffer-modified-p buf))
+        (with-current-buffer buf
+          (if buffer-file-name
+              (save-buffer))))))
+
 
 (defun raise-buffer ()
   "Switch to the last buffer on the buffer list.

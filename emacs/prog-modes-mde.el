@@ -927,7 +927,6 @@ otherwise, raise an error after the first problem is encountered."
                  compilation-error-regexp-alist)))
 
 
-
 (defun pyflakes-this-file () (interactive)
   (compile (format "pyflakes %s" (buffer-file-name)))
   )
@@ -1333,7 +1332,7 @@ How does this differ from whatever is built in?"
 (defadvice compile (before save-before-compile activate)
   "Save current buffer before performing compilation.
 This avoids a question, the answer to which would surely be \"Yes\"."
-  (save-if-modified))
+  (save-buffer-if-modified))
 
 (defadvice compile (before check-for-bad-regexps activate)
   "Check that elements of compilation-error-regexp-alist do not start with \".*\".
