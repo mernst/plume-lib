@@ -1,7 +1,13 @@
 ;; advice-check-shadowed.el -- fixes to advice.el
 
-;; Add check for shadowed variables.  I only need this until my patch
-;; (submitted 8/21/97 for Emacs 19.34) gets incorporated -- if it does.
+;; Add check for shadowed variables.
+
+;; I submitted a patch on 8/21/97 for Emacs 19.34, but the defadvice
+;; maintainer was strongly opposed.  He suspects that there would be a lot
+;; of false positives (I found none in hundreds of files) and contrived
+;; just one example that he admitted is bad code.  He said that he expected
+;; Lisp programmers who use defadvice to be aware of its dangers and
+;; subtleties, so they don't need warnings.
 
 (eval-when-compile
   (require 'advice))
