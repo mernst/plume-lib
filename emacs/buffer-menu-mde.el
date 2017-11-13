@@ -20,9 +20,9 @@
 
 ;;; Code:
 
-(provide 'buffer-menu-mde)
-
 (defvar debug-buffer-menu-mde t)
+
+(autoload 'save-buffer-if-modified "util-mde")
 
 ;;;
 ;;; Unbind very dangerous keystroke that's too easy to type
@@ -320,5 +320,8 @@ Place cursor on the first buffer line."
       (forward-line 2))
   (message
    "Commands: d, s, x, u; f, o, 1, 2, m, v; ~, %%; q to quit; ? for help."))
+
+
+(provide 'buffer-menu-mde)
 
 ;;; buffer-menu-mde.el ends here
