@@ -101,7 +101,8 @@ of tag regexps to try if that search fails.")
 ;; Maybe Emacs should do this by default.
 (defadvice find-tag (after set-this-command activate)
   "Set `this-command' if called interactively."
-  (if (interactive-p) (setq this-command 'find-tag)))
+  (if (called-interactively-p 'interactive)
+      (setq this-command 'find-tag)))
 
 ;; ;; This needs to be modified for XEmacs.
 ;; ;; And possibly for FSF Emacs 20?
@@ -127,7 +128,7 @@ of tag regexps to try if that search fails.")
 ;;    ;; to be called interactively, even if the advice is called interactively.
 ;;    ;; That's why I have inlined find-tag-noselect here.
 ;;    ;; If my patch makes it to Emacs 19.35, this won't be a problem any more.
-;;    (if (interactive-p) (setq this-command 'find-tag))
+;;    (if (called-interactively-p 'interactive) (setq this-command 'find-tag))
 ;;    (if next-p
 ;;        (switch-to-buffer (find-tag-noselect tagname next-p regexp-p))
 ;;      (condition-case err

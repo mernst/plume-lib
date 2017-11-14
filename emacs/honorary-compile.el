@@ -13,15 +13,13 @@ but without having the keymap installed.")
   ;; Equally efficient to do save-excursion and set-buffer unconditionally?
   (if (or (not buffer) (eq buffer (current-buffer)))
       (setq honorary-compilation-minor-mode t)
-    (save-excursion
-      (set-buffer buffer)
+    (with-current-buffer buffer
       (setq honorary-compilation-minor-mode t))))
 
 ;; ordinarily, only checks compilation-mode and compilation-minor-mode
 (defadvice compilation-buffer-p (after honorary-compilation-buffer activate)
   (if (not ad-return-value)
-      (save-excursion
-        (set-buffer (ad-get-arg 0))     ; 0 = first arg, which is buffer name
+      (with-current-buffer (ad-get-arg 0) ; 0 = first arg, which is buffer name
         (setq ad-return-value honorary-compilation-minor-mode))))
 
 ;; In particular, if Vortex is running in a shell buffer, put point in that

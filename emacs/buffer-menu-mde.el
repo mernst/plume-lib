@@ -57,8 +57,7 @@ or whose mode is in EXCEPTIONS-MODES are never set unmodified.
 Also sets dired buffer modification flags."
   (let ((blist (buffer-list)))
     (while blist
-      (save-excursion
-        (set-buffer (car blist))
+      (with-current-buffer (car blist)
         (setq blist (cdr blist))
         ;; Don't do the work unless the buffer is marked modified.
         (if (buffer-modified-p)
@@ -90,8 +89,7 @@ Also sets dired buffer modification flags."
 ;;;
 
 (defadvice buffer-menu (after do-buffer-menu-replacements activate)
-  (save-excursion
-    (set-buffer "*Buffer List*")
+  (with-current-buffer "*Buffer List*"
     (let ((buffer-read-only nil))
       (do-buffer-menu-replacements))
     (set-buffer-modified-p nil)))
@@ -200,8 +198,7 @@ Here is an example setting:
 The regular expressions are implicitly anchored at the front.")
 
 (defadvice buffer-menu (after kill-some-lines activate)
-  (save-excursion
-    (set-buffer "*Buffer List*")
+  (with-current-buffer "*Buffer List*"
     (let ((buffer-read-only nil))
       ;; Don't want "*" modified mark before "*Buffer List*", which is modified
       ;; by (list-buffers), so set-some-buffers-unmodified does no good.

@@ -624,15 +624,15 @@ if it matches a hard-coded list of directories."
 
 (defadvice indent-perl-exp (after unspace-brace-hash activate)
   "Insert no space before a hash (#) immediately following an open brace."
-  (save-excursion
-    (let ((end (save-excursion
-                 (let ((eol (save-excursion (end-of-line) (point))))
-                   (while (<= (point) eol)
-                     (forward-sexp 1))
-                   (point)))))
+  (let* ((eol (save-excursion (end-of-line) (point)))
+	 (end (save-excursion
+		(while (<= (point) eol)
+		  (forward-sexp 1))
+		(point))))
+    (save-excursion
       (while (re-search-forward "[\{\(]\\(\\s-+\\)#" end t)
-        ;; replace first submatch by a single space
-        (replace-match " " t t nil 1)))))
+	;; replace first submatch by a single space
+	(replace-match " " t t nil 1)))))
 
 (defun perl-in-comment ()
   "Return non-nil if in a Perl comment."
@@ -780,7 +780,7 @@ otherwise, raise an error after the first problem is encountered."
                         (setq result (cons msg result))
                       (error "%s" msg)))))))))
     (goto-char opoint)
-    (if (interactive-p)
+    (if (called-interactively-p 'interactive)
         (message "No shadowed variables.")
       (nreverse result))))
 

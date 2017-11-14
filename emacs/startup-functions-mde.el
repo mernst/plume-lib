@@ -165,8 +165,7 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
       (setq buffer (get-buffer "*grep*")))
   (if (not buffer)
       (error "No *grep* buffer"))
-  (save-excursion
-    (set-buffer buffer)
+  (with-current-buffer buffer
     (goto-char (point-min))
     (let ((buffer-read-only nil))
       (delete-matching-lines "^[-./a-z0-9_~]+~\\([0-9]+~\\)?:") ; backups
@@ -248,8 +247,7 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
              (file-name-sans-extension (buffer-name)))))
          (buffer (get-buffer-create (concat "*Man " Man-arguments "*"))))
     (save-excursion
-      (save-excursion
-        (set-buffer buffer)
+      (with-current-buffer buffer
         (erase-buffer))
       (shell-command-on-region (point-min) (point-max) "nroff -man" buffer)
       (pop-to-buffer buffer)
@@ -262,7 +260,7 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
 
 (defadvice find-file (before delete-trailing-newline activate)
   "Remove any trailing newline in filename (can be caused by cut and paste)."
-  (if (and (interactive-p)
+  (if (and (called-interactively-p 'interactive)
            (string-match "\n$" (ad-get-arg 0)))
       (ad-set-arg 0 (substring (ad-get-arg 0) 0 (match-beginning 0)))))
 
@@ -673,7 +671,9 @@ a previously found match."
             (if (< start end)
                 (delete-region start end))))
 
-        (setq start (save-excursion (forward-paragraph 1) (point)))
+        (setq start (save-excursion
+                      (forward-paragraph 1)
+                      (point)))
         ;; If the match was empty, avoid matching again at same place.
         (and (< (point) rend)
              (= (match-beginning 0) (match-end 0))
@@ -1121,8 +1121,7 @@ one in the source code."
 ;;;
 
 ;; Add
-;;   (save-excursion
-;;     (set-buffer "*Shell Command Output*")
+;;   (with-current-buffer "*Shell Command Output*"
 ;;     (setq buffer-read-only t))
 ;; to each of these when my buffer-read-only hack to simple.el appears in Emacs.
 

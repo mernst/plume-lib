@@ -189,8 +189,7 @@ Good for passing to sort in order to sort strings by length."
 ;; (defun string-replace-regexp-2 (string regexp replacement)
 ;;   "Return the string resulting by replacing all of STRING's instances of REGEXP
 ;; with REPLACEMENT."
-;;   (save-excursion
-;;     (set-buffer (get-buffer-create " *Temporary*"))
+;;   (with-current-buffer (get-buffer-create " *Temporary*")
 ;;     (buffer-disable-undo (current-buffer))
 ;;     (erase-buffer)
 ;;     (insert string)
@@ -201,8 +200,7 @@ Good for passing to sort in order to sort strings by length."
 ;;     ))
 
 (defun string-replace-regexps (string regexps replacements)
-  (save-excursion
-    (set-buffer (get-buffer-create " *Temporary*"))
+  (with-current-buffer (get-buffer-create " *Temporary*")
     (erase-buffer)
     (save-excursion (insert string))
     (buffer-replace-regexps regexps replacements)
@@ -701,8 +699,7 @@ BODY is not a thunk (a function of no arguments) but simply a set of forms."
 (defun best-fit-message (text &optional buffer)
   "Show TEXT in echo area if it fits or in optional BUFFER (default *Message*)."
   (or buffer (setq buffer "*Message*"))
-  (save-excursion
-    (set-buffer (get-buffer-create " temp printing buffer"))
+  (with-current-buffer (get-buffer-create " temp printing buffer")
     (erase-buffer)
     (buffer-disable-undo (current-buffer))
     (insert text)
@@ -1430,8 +1427,7 @@ screen column."
   "Return a character not used in STRING, or nil.
 This function attempts to return a character that can be displayed in a single
 screen column."
-  (save-excursion
-    (set-buffer (get-buffer-create " *Temporary*"))
+  (with-current-buffer (get-buffer-create " *Temporary*")
     (buffer-disable-undo (current-buffer))
     (erase-buffer)
     (insert string)
