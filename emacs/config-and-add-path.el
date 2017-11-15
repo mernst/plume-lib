@@ -4,54 +4,6 @@
 ;;; Emacs versions, but (we think) no byte-compilation format does.
 
 
-;;; {{{ Configuration management macros and variables
-
-(provide 'config-and-add-path)
-
-(defvar running-emacs-22 (= 22 emacs-major-version))
-(defvar running-emacs-23 (= 23 emacs-major-version))
-(defvar running-xemacs (featurep 'xemacs))
-(defvar running-emacs-fsf (not (featurep 'xemacs)))
-
-(defmacro emacs-22 (&rest body)
-  "Execute BODY if running Emacs 22."
-  `(if running-emacs-22
-         (progn ,@body)))
-(defmacro emacs-23 (&rest body)
-  "Execute BODY if running Emacs 23."
-  `(if running-emacs-23
-         (progn ,@body)))
-(defmacro emacs-fsf (&rest body)
-  "Execute BODY if running (FSF) Emacs."
-  `(if running-emacs-fsf
-         (progn ,@body)))
-(defmacro xemacs (&rest body)
-  "Execute BODY if running XEmacs."
-  `(if running-xemacs
-         (progn ,@body)))
-
-(xemacs
- ;; Put xemacs byte-compiled files in "xemacs" subdir!
- (defvar byte-compile-use-xemacs-subdir t)
- (defun byte-compile-dest-file (filename)
-   "Convert an Emacs Lisp source file name to a compiled file name.
-GJB: this version adds the directory \"xemacs/\" as a prefix so
-that xemacs byte-compiled files can coexist with GNU Emacs ones"
-   (setq filename (byte-compiler-base-file-name filename))
-   (setq filename (file-name-sans-versions filename))
-   (let ((newname
-          (cond ((eq system-type 'vax-vms)
-                 (concat (substring filename 0 (string-match ";" filename)) "c"))
-                ((string-match emacs-lisp-file-regexp filename)
-                 (concat (substring filename 0 (match-beginning 0)) ".elc"))
-                (t (concat filename ".elc")))))
-     (concat (file-name-directory newname)
-             (if byte-compile-use-xemacs-subdir "xemacs/" "")
-             (file-name-nondirectory newname)))))
-
-
-;;; }}}
-
 ;;; {{{ Load path manipulation functions and settings
 
 ;;; This is from Geoffroy Ville and Jerry Quin
@@ -82,21 +34,6 @@ instead of prepend."
              (if append
                  (nconc (symbol-value oldpath) (list new))
                (cons new (symbol-value oldpath)))))))
-
-;; Typical usage:
-;;  (add-path-maybe-xemacs 'load-path "/uns/share/emacs/site-lisp/elib")
-(defun add-path-maybe-xemacs (oldpath newpath &optional append)
-  "Add to the value of OLDPATH the path NEWPATH (similar to add-hook).
-If we're using xemacs, also add NEWPATH/xemacs.  Uses `add-path'."
-  (if append
-      (progn
-        ;; add xemacs first if we're appending
-        (xemacs (add-path oldpath (concat newpath "/xemacs") 'APPEND))
-        (add-path oldpath newpath 'APPEND))
-    ;; add xemacs second if we're prepending
-    (add-path oldpath newpath)
-    (xemacs (add-path oldpath (concat newpath "/xemacs")))))
-
 
 ;; This prevents things from being added to load-path, but doesn't remove
 ;; them from load-path.
@@ -205,16 +142,7 @@ precedes its parent in the list (if the parent also appears in the list)."
         (subdir-regexp (concat "/" subdir-name "/?$")))
     (while pl
       (let ((this-dir (car pl)))
-        (if (string-match "/xemacs/?$" this-dir)
-            (let* ((parent (substring this-dir 0 (match-beginning 0)))
-                   (parent-tail (or (member parent result)
-                                    (member (concat parent "/") result))))
-              (if parent-tail
-                  ;; The parent is already in result.  We should insert this
-                  ;; directory after the parent (because result is reversed).
-                  (setcdr parent-tail (cons this-dir (cdr parent-tail)))
-                (setq result (cons this-dir result))))
-          (setq result (cons this-dir result))))
+        (setq result (cons this-dir result)))
       (setq pl (cdr pl)))
     (setq load-path (reverse result))))
 
@@ -288,7 +216,7 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
 (defun load-path-normal-add (dir)
   (if (file-exists-p (expand-file-name dir))
       (let ((default-directory dir))
-        (add-path-maybe-xemacs 'load-path default-directory)
+        (add-path 'load-path default-directory)
         (normal-top-level-add-subdirs-to-load-path-pruning))))
 
 
@@ -299,14 +227,6 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
       (load-path-normal-add (car dirs))
       (setq dirs (cdr dirs))))
   (load-path-normal-add "~/emacs")
-
-  ;; Remove inappropriate elements from load-path
-  (emacs-fsf
-    (setq load-path (remove-matching-strings "/xemacs\\($\\|/\\)" load-path)))
-  (xemacs
-    (setq load-path (remove-matching-strings "/emacs-fsf\\($\\|/\\)" load-path)))
-  (emacs-22
-    (setq load-path (remove-matching-strings "/emacs-\\(20\\|NOT21\\)\\($\\|/\\)" load-path)))
 
   ;; backup directories in w3
   (setq load-path (remove-matching-strings "/bak\\($\\|/\\)" load-path))
@@ -320,16 +240,7 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
         (if dup
             ;; no need to setq:  we know it's not the first element of load-path
             (delete (cdr dup) load-path)))
-      (setq true-load-path (cdr true-load-path))))
-
-  ;; Make sure more specific subdirectories precede their parents.
-  (xemacs
-    (setq load-path (move-subdirs-before-parents "xemacs" load-path)))
-  (emacs-22
-    (setq load-path (move-subdirs-before-parents "emacs-22" load-path)))
-  (emacs-23
-    (setq load-path (move-subdirs-before-parents "emacs-23" load-path)))
-  )
+      (setq true-load-path (cdr true-load-path)))))
 
 
 ;; Try to look up the load-path in .path.el;
@@ -382,3 +293,10 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
 
 
 ;; }}}
+
+;;; {{{ Provide feature
+
+(provide 'config-and-add-path)
+
+;;; }}}
+

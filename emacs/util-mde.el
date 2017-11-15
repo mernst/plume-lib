@@ -61,6 +61,29 @@
 ;; Testing
 ;; (and (primep 97) (primep 2) (primep 7) (not (or (primep 6) (primep 88))))
 
+(defun average (&rest args)
+  "Return the average of the arguments."
+  ;; multiplication by 1.0 ensures floating-point division
+  (/ (apply '+ args) (* 1.0 (length args))))
+
+(defun median (&rest args)
+  "Return the median of the arguments."
+  (let* ((len (length args))
+         (sorted (sort args #'<))
+         (firstmedian (nth (/ (- len 1) 2) sorted))
+         (secondmedian (nth (/ len 2) sorted)))
+    ;; division by 2.0 ensures floating-point division
+    (/ (+ firstmedian secondmedian) 2.0)))
+;; (assert (equal 4.5 (median 1 2 3 4 5 6 7 8)))
+;; (assert (equal 5.0 (median 1 2 3 4 5 6 7 8 9)))
+;; (assert (equal 4.5 (median 4 6 7 1 5 3 8 2)))
+;; (assert (equal 5.0 (median 4 6 7 2 8 1 9 5 3)))
+
+(defun geometric-mean (&rest args)
+  "Return the geometric mean of the arguments."
+  (expt (apply '* args) (/ 1.0 (funcall 'length args))))
+;; (assert (equal 2.0 (geometric-mean 1 2 4))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Strings
@@ -166,8 +189,7 @@ Good for passing to sort in order to sort strings by length."
 ;; (defun string-replace-regexp-2 (string regexp replacement)
 ;;   "Return the string resulting by replacing all of STRING's instances of REGEXP
 ;; with REPLACEMENT."
-;;   (save-excursion
-;;     (set-buffer (get-buffer-create " *Temporary*"))
+;;   (with-current-buffer (get-buffer-create " *Temporary*")
 ;;     (buffer-disable-undo (current-buffer))
 ;;     (erase-buffer)
 ;;     (insert string)
@@ -178,8 +200,7 @@ Good for passing to sort in order to sort strings by length."
 ;;     ))
 
 (defun string-replace-regexps (string regexps replacements)
-  (save-excursion
-    (set-buffer (get-buffer-create " *Temporary*"))
+  (with-current-buffer (get-buffer-create " *Temporary*")
     (erase-buffer)
     (save-excursion (insert string))
     (buffer-replace-regexps regexps replacements)
@@ -190,8 +211,7 @@ Good for passing to sort in order to sort strings by length."
     (let ((regexp (car regexps))
           (replacement (car replacements)))
       (goto-char (point-min))
-      (while (re-search-forward regexp nil t)
-        (replace-match replacement))
+      (replace-regexp-noninteractive regexp replacement)
       (setq regexps (cdr regexps)
             replacements (cdr replacements)))))
 
@@ -462,9 +482,34 @@ just supply foo itself."
 ;; (macroexpand '(vararg-call foo 3 5 bar baz bum quux quux2))
 
 
+;; for default, could use something on the order of find-tag-tag instead.
+(defun symbol-func (function)
+  "Display the value of (symbol-function FUNCTION); for interactive use."
+  ;; interactive spec snarfed from describe-function
+  (interactive
+   (let ((fn (function-called-at-point))
+         (enable-recursive-minibuffers t)
+         val)
+     (setq val (completing-read (if fn
+                                    (format "Symbol-function (default %s): " fn)
+                                  "Symbol-function: ")
+                                obarray 'fboundp t))
+     (list (if (equal val "")
+               fn (intern val)))))
+  (message "%s" (if (fboundp function)
+                    (symbol-function function))))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Files
 ;;;
+
+(defun save-if-modified ()
+  "Save current buffer if it is modified."
+  ;; test of buffer-modified-p prevents "(No changes need to be saved)" message
+  (if (and buffer-file-name (buffer-modified-p))
+      (save-buffer)))
 
 (defconst writability-mask 146
   "Mask for `set-file-modes'; indicates writable by user, group, and others.")
@@ -616,6 +661,17 @@ Does not handle hard links."
 ;; Use built-in substitute-in-file-name for "environment-var-expand-file-name".
 
 
+(defun delete-file-noerr (file)
+  "Try to delete FILE, but throw no error if it cannot be deleted."
+  ;; I can't wrap this in
+  ;;   (if (file-exists-p (expand-file-name file)) ...)
+  ;; because that returns nil if the file exists but is a symlink to a
+  ;; non-existent file.  In that case, the delete-file call does not err.
+  (condition-case err
+      (delete-file (substitute-in-file-name file))
+    (error nil)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Messages
 ;;;
@@ -643,8 +699,7 @@ BODY is not a thunk (a function of no arguments) but simply a set of forms."
 (defun best-fit-message (text &optional buffer)
   "Show TEXT in echo area if it fits or in optional BUFFER (default *Message*)."
   (or buffer (setq buffer "*Message*"))
-  (save-excursion
-    (set-buffer (get-buffer-create " temp printing buffer"))
+  (with-current-buffer (get-buffer-create " temp printing buffer")
     (erase-buffer)
     (buffer-disable-undo (current-buffer))
     (insert text)
@@ -689,6 +744,11 @@ This will not disable any messages from built-in C subroutines."
          '((point)))))
 (put 'point-after 'edebug-form-spec '(&rest form))
 
+(defmacro beginning-of-line-point ()
+  "Return the location of the beginning of the line."
+  `(point-after
+     (beginning-of-line)))
+
 (defun forward-line-wrapping (arg)
   "Like forward-line, but wrap around to the beginning of the buffer if
 it encounters the end."
@@ -710,6 +770,12 @@ it encounters the end."
     (save-excursion
       (beginning-of-line)
       (1+ (count-lines 1 (point))))))
+
+(defun jump-to-mark-and-pop ()
+  "Call `set-mark-command' with an argument.
+That is, \"jump to mark, and pop into mark off the mark ring.\""
+  (interactive)
+  (set-mark-command t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -946,6 +1012,62 @@ narrowing is in effect."
       (setq buffer (get-buffer buffer)))
   (with-current-buffer buffer
     (buffer-substring (point-min) (point-max))))
+
+(defun save-buffer-if-modified (&rest buffer)
+  "Save buffer if it exists and is modified.
+A single buffer argument is optional; if omitted, uses the current buffer;
+if nil, the function has no effect.
+The key purpose of this function is to prevent the
+\"(No changes need to be saved)\" message if the buffer is not modified."
+  (let ((buf (cond ((null buffer)
+                    (current-buffer))
+                   ((= 1 (length buffer))
+                    (first buffer))
+                   (t
+                    (error "wrong number of arguments %s: %s" (length buffer) buffer)))))
+    (if (and buf (buffer-modified-p buf))
+        (with-current-buffer buf
+          (if buffer-file-name
+              (save-buffer))))))
+
+
+(defun raise-buffer ()
+  "Switch to the last buffer on the buffer list.
+This one is likely to have been recently buried."
+  (interactive)
+  (let ((blist (nreverse (buffer-list))))
+    (while (string-match "\\` " (buffer-name (car blist)))
+      (setq blist (cdr blist)))
+    (if blist
+        (switch-to-buffer (car blist)))))
+
+(defun bury-or-raise-buffer (arg)
+  "Bury current buffer; with prefix arg, switch to last buffer in `buffer-list'.
+Programmatically, non-nil argument ARG means raise; if nil, then bury."
+  (interactive "P")
+  (if arg
+      (raise-buffer)
+    (bury-buffer)))
+
+;; From: bjaspan@athena.mit.edu (Barr3y Jaspan)
+(defun mapline (beg end f &rest args)
+  "With the point set to the beginning of each line between BEGIN and
+END, apply FUNCTION to ARGS and return a list of the result."
+  (let* ((p (point-marker))
+        (mlist (list 'mlist))
+        (mtail (last mlist)))
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (beginning-of-line)
+      (while (< (point) (point-max))
+        (save-excursion
+          (setcdr mtail (list (apply f args)))
+          (setq mtail (cdr mtail)))
+        (forward-line 1))
+      )
+    (goto-char p)
+    (cdr mlist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1258,6 +1380,12 @@ If optional arg COUNT is specified, return the COUNTth occurrance from the end."
 
 ;;; Replace-regexp
 
+(defun replace-string-noninteractive (from-string to-string)
+  "Like `replace-string', but doesn't modify mark or the mark ring."
+  (while (search-forward from-string nil t)
+    (replace-match to-string nil t)))
+(make-obsolete 'replace-string 'replace-string-noninteractive)
+
 (defsubst replace-regexp-noninteractive (regexp replacement &optional delimited)
   "Like `replace-regexp', but doesn't modify mark or the mark ring."
   (if delimited
@@ -1299,8 +1427,7 @@ screen column."
   "Return a character not used in STRING, or nil.
 This function attempts to return a character that can be displayed in a single
 screen column."
-  (save-excursion
-    (set-buffer (get-buffer-create " *Temporary*"))
+  (with-current-buffer (get-buffer-create " *Temporary*")
     (buffer-disable-undo (current-buffer))
     (erase-buffer)
     (insert string)
@@ -1457,6 +1584,15 @@ return a list of replacements creating ambiguity."
 ;;;
 ;;; Proclaim-inline
 ;;;
+
+(defmacro no-err (form)
+  "Execute FORM, suppressing errors.
+If an error occurs, the result value is nil."
+  `(condition-case nil
+       ,form
+     (error nil)))
+;; (macroexpand '(no-err (foo bar baz)))
+
 
 (defun check-proclaim-inline ()
   "Make sure all arguments to `proclaim-inline' are defined as functions.

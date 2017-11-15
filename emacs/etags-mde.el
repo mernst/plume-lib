@@ -21,13 +21,9 @@
 ;;   eventually position point on the (defstruct mystruct ...) form which
 ;;   defined that function.
 
-;; * Permit ?: characters in tags in etags-tags-completion-table.
-
 ;; * Add tags-replace, like tags-query-replace.
 
 ;; * Add tags-query-replace-noerror, which throws no error.
-
-;; * Make tags-verify-table never query the user, always use latest TAGS table.
 
 ;; Use this code by placing
 ;;   (eval-after-load "etags" '(load "etags-mde" nil t))
@@ -63,16 +59,10 @@ pay to try to merge them."
         (or default-re (error "There is no default tag"))
       spec)))
 
-(emacs-fsf
- (defun tags-search-tag-default-function ()
-   (or find-tag-default-function
-       (get major-mode 'find-tag-default-function)
-       'find-tag-default)))
-(xemacs
- (defun tags-search-tag-default-function ()
-   (or find-tag-default-hook
-       (get major-mode 'find-tag-default-hook)
-       'find-tag-default)))
+(defun tags-search-tag-default-function ()
+  (or find-tag-default-function
+      (get major-mode 'find-tag-default-function)
+      'find-tag-default))
 
 (defadvice tags-search (before interactive-enhancement activate)
   "Use `tags-search-tag' to read interactive argument."
@@ -111,7 +101,8 @@ of tag regexps to try if that search fails.")
 ;; Maybe Emacs should do this by default.
 (defadvice find-tag (after set-this-command activate)
   "Set `this-command' if called interactively."
-  (if (interactive-p) (setq this-command 'find-tag)))
+  (if (called-interactively-p 'interactive)
+      (setq this-command 'find-tag)))
 
 ;; ;; This needs to be modified for XEmacs.
 ;; ;; And possibly for FSF Emacs 20?
@@ -137,7 +128,7 @@ of tag regexps to try if that search fails.")
 ;;    ;; to be called interactively, even if the advice is called interactively.
 ;;    ;; That's why I have inlined find-tag-noselect here.
 ;;    ;; If my patch makes it to Emacs 19.35, this won't be a problem any more.
-;;    (if (interactive-p) (setq this-command 'find-tag))
+;;    (if (called-interactively-p 'interactive) (setq this-command 'find-tag))
 ;;    (if next-p
 ;;        (switch-to-buffer (find-tag-noselect tagname next-p regexp-p))
 ;;      (condition-case err
@@ -376,134 +367,41 @@ If the latter returns non-nil, we exit; otherwise we scan the next file."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; etags-tags-completion-table
-;;;
-
-(defun etags-tags-completion-table ()
-  (let ((table (make-vector 511 0)))
-    (save-excursion
-      (goto-char (point-min))
-      ;; This monster regexp matches an etags tag line.
-      ;;   \1 is the string to match;
-      ;;   \2 is not interesting;
-      ;;   \3 is the guessed tag name; XXX guess should be better eg DEFUN
-      ;;   \4 is not interesting;
-      ;;   \5 is the explicitly-specified tag name.
-      ;;   \6 is the line to start searching at;
-      ;;   \7 is the char to start searching at.
-      (while (re-search-forward
-              "^\\(\\(.+[^-a-zA-Z0-9_$]+\\)?\\([-a-zA-Z0-9_$?:]+\\)\
-\[^-a-zA-Z0-9_$?:]*\\)\177\\(\\([^\n\001]+\\)\001\\)?\
-\\([0-9]+\\)?,\\([0-9]+\\)?\n"
-              nil t)
-        (intern (if (match-beginning 5)
-                    ;; There is an explicit tag name.
-                    (buffer-substring (match-beginning 5) (match-end 5))
-                  ;; No explicit tag name.  Best guess.
-                  (buffer-substring (match-beginning 3) (match-end 3)))
-                table)))
-    table))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; tags-replace
 ;;;
 
-;; This function may not be a good idea if you have multiple active TAGS
-;; tables.
-
-(emacs-fsf
- (defun tags-replace (from to &optional delimited file-list-form ignore)
-   "Replace-regexp FROM with TO through all files listed in tags table.
+(defun tags-replace (from to &optional delimited file-list-form ignore)
+  "Replace-regexp FROM with TO through all files listed in tags table.
 Third arg DELIMITED (prefix arg) means replace only word-delimited matches.
+
+Does replacement in all active TAGS tables.
 
 See documentation of variable `tags-file-name'."
-   ;; This returns 5 forms, which is the reason for the "ignore" argument.
-   (interactive (query-replace-read-args "Tags replace (regexp)" t))
-   (setq tags-loop-scan (list 'prog1
-                              (list 'if (list 're-search-forward
-                                              (list 'quote from) nil t)
-                                    ;; When we find a match, move back
-                                    ;; to the beginning of it so perform-replace
-                                    ;; will see it.
-                                    '(goto-char (match-beginning 0))))
-         tags-loop-operate (list 'progn
-                                 (list 'replace-regexp
-                                       (list 'quote from) (list 'quote to)
-                                       (list 'quote delimited))
-                                 ;; the loop is exited if nil is returned
-                                 t))
-   (condition-case nil
-       (tags-loop-continue (or file-list-form t))
-     (user-error nil))))
-
-(xemacs
- (defun tags-replace (from to &optional delimited file-list-form)
-  "Query-replace-regexp FROM with TO through all files listed in tags table.
-Third arg DELIMITED (prefix arg) means replace only word-delimited matches.
-
-See documentation of variable `tag-table-alist'."
-  (interactive
-   "sTags replace (regexp): \nsTags replace %s by: \nP")
-  (setq tags-loop-scan `(with-caps-disable-folding ,from
-                          (if (re-search-forward ,from nil t)
-                              ;; When we find a match, move back
-                              ;; to the beginning of it so perform-replace
-                              ;; will see it.
-                              (progn (goto-char (match-beginning 0)) t)))
-        tags-loop-operate (list 'progn
-                                 (list 'replace-regexp
-                                       from to (not (null delimited)))
-                                 ;; the loop is exited if nil is returned
-                                 t))
-   (tags-loop-continue (or file-list-form t))))
-
+  ;; This returns 5 forms, which is the reason for the "ignore" argument.
+  (interactive (query-replace-read-args "Tags replace (regexp)" t))
+  (setq tags-loop-scan (list 'prog1
+			     (list 'if (list 're-search-forward
+					     (list 'quote from) nil t)
+				   ;; When we find a match, move back
+				   ;; to the beginning of it so perform-replace
+				   ;; will see it.
+				   '(goto-char (match-beginning 0))))
+	tags-loop-operate (list 'progn
+				(list 'replace-regexp
+				      (list 'quote from) (list 'quote to)
+				      (list 'quote delimited))
+				;; the loop is exited if nil is returned
+				t))
+  (condition-case nil
+      (tags-loop-continue (or file-list-form t))
+    (user-error nil)))
 
 (defun tags-query-replace-noerror (from to &optional delimited file-list-form)
-  "Like `tags-query-replace-noerror', but does not throw user-error when done."
+  "Like `tags-query-replace', but does not throw user-error when done."
   (condition-case nil
       (tags-query-replace from to delimited file-list-form)
     (user-error nil)))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; tags-verify-table
-;;;
-
-(xemacs
- (setq tags-auto-read-changed-tag-files t))
-
-;; This is lifted out of Emacs 19.34, but the yes-or-no-p always returns true.
-(defun tags-verify-table (file)
-  "Read FILE into a buffer and verify that it is a valid tags table.
-Sets the current buffer to one visiting FILE (if it exists).
-Returns non-nil iff it is a valid table."
-  (if (get-file-buffer file)
-      ;; The file is already in a buffer.  Check for the visited file
-      ;; having changed since we last used it.
-      (let (win)
-        (set-buffer (get-file-buffer file))
-        (setq win (or verify-tags-table-function (initialize-new-tags-table)))
-        (if (or (verify-visited-file-modtime (current-buffer))
-                (and nil ;; added by MDE
-                (not (yes-or-no-p
-                      (format "Tags file %s has changed, read new contents? "
-                              file)))))
-            (and win (funcall verify-tags-table-function))
-          (revert-buffer t t)
-          (initialize-new-tags-table)))
-    (and (file-exists-p file)
-         (progn
-           (set-buffer (find-file-noselect file))
-           (or (string= file buffer-file-name)
-               ;; find-file-noselect has changed the file name.
-               ;; Propagate the change to tags-file-name and tags-table-list.
-               (let ((tail (member file tags-table-list)))
-                 (if tail
-                     (setcar tail buffer-file-name))
-                 (if (eq file tags-file-name)
-                     (setq tags-file-name buffer-file-name))))
-           (initialize-new-tags-table)))))
 
 (provide 'etags-mde)
 

@@ -127,8 +127,7 @@ The mapping is created by the javadoc-index-to-alist program.")
 ;; (defun compilation-java-insert-imports ()
 ;;   "Insert an import for every class mentioned in the *compilation* buffer."
 ;;   (interactive)
-;;   (save-excursion
-;;     (set-buffer "*compilation*")
+;;   (with-current-buffer "*compilation*"
 ;;     (goto-char (point-min))
 ;;     (while (re-search-forward
 ;; 	    "error: cannot find symbol.*\n.*\n.*\n  symbol:   variable \\([A-Za-z0-9_]+\\)"

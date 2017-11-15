@@ -108,8 +108,7 @@ same (modification mark doesn't change otherwise).
 					 "-"))
 	      (setq modified (not (zerop process-result))))))
 	;; old version
-	;; (setq modified (save-excursion
-	;;                  (set-buffer standard-output)
+	;; (setq modified (with-current-buffer standard-output
 	;;                  (goto-char (point-min))
 	;;                  (not (looking-at
 	;;                        "\\'\\|\\`No differences encountered\n\\'"))))
@@ -123,8 +122,7 @@ same (modification mark doesn't change otherwise).
 	      (set-buffer-modified-p modified)))
 	(if (and modified (not quiet))
 	    (let ((orig-tab-width tab-width))
-	      (save-excursion
-		(set-buffer bdiff-buffer-name)
+	      (with-current-buffer bdiff-buffer-name
 		(setq tab-width orig-tab-width)
 		(if bdiff-text-output
 		    (progn
@@ -133,7 +131,7 @@ same (modification mark doesn't change otherwise).
 			(replace-match "" nil t))))))
 	    (progn
 	      (setq temp-buffer-show-function (function ignore))
-	      (if (and (interactive-p) (not quiet))
+	      (if (and (called-interactively-p 'interactive) (not quiet))
 		  (message "No differences encountered"))))
 	(with-current-buffer bdiff-buffer-name
 	  (diff-mode))
@@ -147,8 +145,8 @@ same (modification mark doesn't change otherwise).
 	  (not bdiff-set-modified-if-different))
 	 ((and (consp current-prefix-arg)
 	       (= (car current-prefix-arg) 16))
-	  (save-excursion (set-buffer buf)
-			  (make-auto-save-file-name)))
+	  (with-current-buffer buf
+	    (make-auto-save-file-name)))
 	 ((eq current-prefix-arg '-)
 	  (bdiff---prefix-file (buffer-file-name buf)))
 	 ((numberp current-prefix-arg)
@@ -217,8 +215,7 @@ same (modification mark doesn't change otherwise).
   (let ((buf (Buffer-menu-buffer t)))
     (or (buffer-file-name buf)
 	(error "Not a file buffer"))
-    (save-excursion
-      (set-buffer buf)
+    (with-current-buffer buf
       (revert-buffer t t))
     ;; was (forward-line 1)
     (let ((buffer-read-only nil))
@@ -255,8 +252,7 @@ Prefix arg toggles interpretation of `list-munged-buffers-do-bdiff'."
 		    (or (if (not arg)
 			    (not list-munged-buffers-do-bdiff)
 			  list-munged-buffers-do-bdiff)
-			(save-excursion
-			  (set-buffer b)
+			(with-current-buffer b
 			  (bdiff-p))))))
    "None of your buffer files has been altered on disk."))
 
@@ -295,8 +291,7 @@ Prefix arg toggles interpretation of `list-munged-buffers-do-bdiff'."
   (list-buffers t)
   (set-window-point
    (get-buffer-window (get-buffer "*Buffer List*"))
-   (save-excursion
-     (set-buffer "*Buffer List*")
+   (with-current-buffer "*Buffer List*"
      (goto-char (point-min))
      (if (not (and (boundp 'Buffer-menu-use-header-line)
 		   Buffer-menu-use-header-line))
@@ -335,13 +330,12 @@ differences and query the user whether the buffer should be reverted."
   (interactive "bBuffer to verify: ")
   (setq buf (get-buffer buf))
   (if (verify-visited-file-modtime buf)
-      (and (interactive-p)
+      (and (called-interactively-p 'interactive)
 	   (message "Buffer is up to date."))
     (let ((filename (buffer-file-name buf)))
       (if (not (file-exists-p filename))
 	  (error "File %s no longer exists!" filename)
-	(save-excursion
-	  (set-buffer buf)
+	(with-current-buffer buf
 	  (if (save-window-excursion
 		(delete-other-windows (display-buffer buf))
 		(or (not (bdiff t))

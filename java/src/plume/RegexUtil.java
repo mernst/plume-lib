@@ -1,10 +1,9 @@
-// This class should be kept in sync with checkers.regex.RegexUtil.
+// This class should be kept in sync with org.checkerframework.checker.regex.RegexUtil.
 
 package plume;
 
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
+// Uses annotations in comments because it may be run on a Java 7 JVM
+// when called from user code.
 /*>>>
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
@@ -14,6 +13,9 @@ import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.EnsuresQualifierIf;
 */
+
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Utility methods for regular expressions, most notably for testing whether a string is a regular
@@ -152,7 +154,7 @@ public final class RegexUtil {
    *
    * @param s string to check for being a regular expression
    * @param groups number of groups expected
-   * @return true iff s is a regular expression with groups groups
+   * @return true iff s is a regular expression with {@code groups} groups
    */
   @SuppressWarnings({"regex", "deterministic"}) // RegexUtil; for purity, catches an exception
   /*@Pure*/
@@ -181,7 +183,7 @@ public final class RegexUtil {
   }) // RegexUtil; temp value used in pure method is equal up to equals but not up to ==
   /*@Pure*/
   /*@EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)*/
-  public static boolean isRegex(char c) {
+  public static boolean isRegex(final char c) {
     return isRegex(Character.toString(c));
   }
 

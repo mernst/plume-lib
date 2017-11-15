@@ -305,16 +305,11 @@ searching twice for a non-existing file the user actually wants to create")
 ;;  non-existing file because ffap will check for existence, crush the
 ;;  choice and display a fresh prompt.
 
-(defvar ff-paths-is-XEmacs
-  (not (null (save-match-data (string-match "XEmacs\\|Lucid" emacs-version)))))
-
 ;;TODO FIXME: Should use defface
 (defvar ff-paths-non-existent-file-face 'ff-paths-non-existent-file-face
   "Face to use for message marked for deletion in mh-e folder-mode.")
 (make-face 'ff-paths-non-existent-file-face)
-(if ff-paths-is-XEmacs
-    (make-face-bold 'ff-paths-non-existent-file-face nil)
-  (make-face-bold 'ff-paths-non-existent-file-face nil t))
+(make-face-bold 'ff-paths-non-existent-file-face nil t)
 (set-face-foreground 'ff-paths-non-existent-file-face "NavyBlue" nil)
 
 (defvar buf)

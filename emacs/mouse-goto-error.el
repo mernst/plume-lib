@@ -6,21 +6,6 @@
 ;;    Otherwise, call `mouse-yank-at-click'.
 
 
-;;;
-;;; Cross-version compatibility
-;;;
-
-(defvar running-xemacs (featurep 'xemacs))
-(defvar running-emacs-fsf (not (featurep 'xemacs)))
-(defmacro emacs-fsf (&rest body)
-  "Execute BODY if running (FSF) Emacs."
-  `(if running-emacs-fsf
-         (progn ,@body)))
-(defmacro xemacs (&rest body)
-  "Execute BODY if running XEmacs."
-  `(if running-xemacs
-         (progn ,@body)))
-
 (defmacro beginning-of-line-point ()
   "Return the location of the beginning of the line."
   `(save-excursion
@@ -32,31 +17,17 @@
 ;;;
 
 
-(emacs-fsf
- ;; In XEmacs, this attaches itself to button2up, not button2.  Thus, both
- ;; button2 (bound to mouse-yank) and this get run.
- (eval-after-load "shell"
-   '(define-key shell-mode-map [mouse-2] 'mouse-yank-or-goto-error))
- (eval-after-load "gud"
-   '(define-key gud-mode-map [mouse-2] 'mouse-yank-or-goto-error))
- (eval-after-load "compile"
-   '(progn
-      (define-key compilation-mode-map [mouse-2] 'mouse-yank-or-goto-error)
-      (if (boundp 'compilation-button-map)
-          (define-key compilation-button-map [mouse-2] 'mouse-yank-or-goto-error))))
- ;; There is no fundamental-mode-map; want this for "*Shell Command Output*" buf
- (define-key global-map [mouse-2] 'mouse-yank-or-goto-error))
-(xemacs
- (eval-after-load "shell"
-   '(define-key shell-mode-map [button2] 'mouse-yank-or-goto-error))
- (eval-after-load "gud"
-   '(define-key gud-mode-map [button2] 'mouse-yank-or-goto-error))
- (eval-after-load "compile"
-   '(progn
-      (define-key compilation-mode-map [button2] 'mouse-yank-or-goto-error)
-      (define-key compilation-button-map [button2] 'mouse-yank-or-goto-error)))
- ;; There is no fundamental-mode-map; want this for "*Shell Command Output*" buf
- (define-key global-map [button2] 'mouse-yank-or-goto-error))
+(eval-after-load "shell"
+  '(define-key shell-mode-map [mouse-2] 'mouse-yank-or-goto-error))
+(eval-after-load "gud"
+  '(define-key gud-mode-map [mouse-2] 'mouse-yank-or-goto-error))
+(eval-after-load "compile"
+  '(progn
+     (define-key compilation-mode-map [mouse-2] 'mouse-yank-or-goto-error)
+     (if (boundp 'compilation-button-map)
+	 (define-key compilation-button-map [mouse-2] 'mouse-yank-or-goto-error))))
+;; There is no fundamental-mode-map; want this for "*Shell Command Output*" buf
+(define-key global-map [mouse-2] 'mouse-yank-or-goto-error)
 
 
 ;;;
@@ -75,9 +46,7 @@ Arguments CLICK and ARG are as for `mouse-yank-at-click'.
 In many cases -- for instance, in compilation buffers -- using `next-error'
 is easier than clicking on the error."
   (interactive "@e\nP")
-  (let ((click-point (or (emacs-fsf (posn-point (event-end click)))
-                         (xemacs (event-point click))
-                         (error "Where is the click?")))
+  (let ((click-point (posn-point (event-end click)))
         file line)
     (if (save-excursion
           (goto-char click-point)
@@ -108,12 +77,10 @@ is easier than clicking on the error."
                       ;; (message "%s" (match-data))
                       (setq file (let ((raw (match-string (nth 1 regexp-info)))
                                        format)
-                                   (if (>= emacs-major-version 22)
-                                       (if (listp raw)
-                                           (setq format (cadr raw)
-                                                 ;; bug:  we only try the first format
-                                                 raw (car raw)))
-                                     (setq format (nth 4 regexp-info)))
+				   (if (listp raw)
+				       (setq format (cadr raw)
+					     ;; bug:  we only try the first format
+					     raw (car raw)))
                                    (if format
                                        (format format raw)
                                      raw))
@@ -232,9 +199,7 @@ is invoked the first time; the jdb buffer needs to be current before using
 this mouseclick."
   ;; arguments: (click arg)
   (let* ((click-advice (ad-get-arg 0))
-         (click-point (or (emacs-fsf (posn-point (event-end click-advice)))
-                          (xemacs (event-point click-advice))
-                          (error "Where is the click?")))
+         (click-point (posn-point (event-end click-advice)))
          (hex-at-point
           (and (eq major-mode 'gud-mode)
                (boundp 'gud-find-file)

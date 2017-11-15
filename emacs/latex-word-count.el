@@ -122,8 +122,7 @@ Strips off TeX commands, comments, figures, etc."
           (delete-region (match-beginning 0) (1- (match-end 0)))
           (backward-char 1)
           (kill-sexp argp)))
-    (while (re-search-forward regexp nil t)
-      (delete-region (match-beginning 0) (match-end 0)))))
+    (replace-regexp-noninteractive regexp "")))
 
 (defun delete-tex-comments ()
   (goto-char (point-min))
@@ -135,6 +134,4 @@ Strips off TeX commands, comments, figures, etc."
     (kill-line 1)
     (backward-char 1))
   (goto-char (point-min))
-  (while (re-search-forward "^\\s \\s *%" nil t)
-    (beginning-of-line nil)
-    (kill-line 1)))
+  (replace-regexp-noninteractive "^\\s +%.*$" ""))
