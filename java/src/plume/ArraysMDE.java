@@ -2782,6 +2782,7 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
+  @SuppressWarnings("nullness") // https://github.com/typetools/checker-framework/issues/1654
   public static /*@PolyAll*/ int /*@SameLen("#1")*/[] fn_compose(
       /*@IndexFor("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
     /*@PolyAll*/ int[] result = new int[a.length];
