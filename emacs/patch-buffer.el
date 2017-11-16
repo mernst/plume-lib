@@ -59,8 +59,7 @@ With a prefix argument, this applies the reversed patch."
 	    (write-region (point-min) (point-max) iname nil 1))
 	  (let ((save-point (point))
 		(status
-		 (save-excursion
-		   (set-buffer patch-buffer)
+		 (with-current-buffer patch-buffer
 		   (call-process-region
 		    beg end patch-program nil standard-output nil
 		    "-d" patch-tmp-directory

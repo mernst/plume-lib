@@ -20,9 +20,9 @@
 
 ;;; Code:
 
-(provide 'buffer-menu-mde)
-
 (defvar debug-buffer-menu-mde t)
+
+(autoload 'save-buffer-if-modified "util-mde")
 
 ;;;
 ;;; Unbind very dangerous keystroke that's too easy to type
@@ -54,12 +54,10 @@ Buffers whose names match NAME-REGEXP, or whose major mode is a member of
 MAJOR-MODES, are set unmodified.  Either or both of the arguments may be nil.
 Buffers whose names match optional third argument EXCEPTIONS-REGEXP
 or whose mode is in EXCEPTIONS-MODES are never set unmodified.
-Also sets dired buffer modification flags according to `dired-pending-marks-p',
-if that function is defined."
+Also sets dired buffer modification flags."
   (let ((blist (buffer-list)))
     (while blist
-      (save-excursion
-        (set-buffer (car blist))
+      (with-current-buffer (car blist)
         (setq blist (cdr blist))
         ;; Don't do the work unless the buffer is marked modified.
         (if (buffer-modified-p)
@@ -77,8 +75,13 @@ if that function is defined."
               ;; this code only changes the modification flag from t to
               ;; nil, it does the right thing.
               (if (eq major-mode 'dired-mode)
-                  (if (fboundp 'dired-pending-marks-p)
-                      (set-buffer-modified-p (dired-pending-marks-p))))))))))
+                  (set-buffer-modified-p (dired-pending-marks-p)))))))))
+
+(defun dired-pending-marks-p ()
+  "Return non-nil if this Dired buffer contains any marks."
+  (save-excursion
+    (goto-char (point-min))
+    (re-search-forward dired-re-mark nil t)))
 
 
 ;;;
@@ -86,8 +89,7 @@ if that function is defined."
 ;;;
 
 (defadvice buffer-menu (after do-buffer-menu-replacements activate)
-  (save-excursion
-    (set-buffer "*Buffer List*")
+  (with-current-buffer "*Buffer List*"
     (let ((buffer-read-only nil))
       (do-buffer-menu-replacements))
     (set-buffer-modified-p nil)))
@@ -196,8 +198,7 @@ Here is an example setting:
 The regular expressions are implicitly anchored at the front.")
 
 (defadvice buffer-menu (after kill-some-lines activate)
-  (save-excursion
-    (set-buffer "*Buffer List*")
+  (with-current-buffer "*Buffer List*"
     (let ((buffer-read-only nil))
       ;; Don't want "*" modified mark before "*Buffer List*", which is modified
       ;; by (list-buffers), so set-some-buffers-unmodified does no good.
@@ -212,12 +213,11 @@ The regular expressions are implicitly anchored at the front.")
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward (concat "^...[ \"]\\(" regexp "\\)\"?") nil t)
-      (progn
-        (beginning-of-line)
-        (delete-region (point) (progn (end-of-line) (point)))
-        (if (bobp)
-            (delete-char 1)
-          (delete-backward-char 1))))))
+      (beginning-of-line)
+      (delete-region (point) (progn (end-of-line) (point)))
+      (if (bobp)
+          (delete-char 1)
+        (delete-backward-char 1)))))
 
 ;;;
 ;;; Erase the read-only marks and the "current" mark
@@ -292,12 +292,6 @@ The regular expressions are implicitly anchored at the front.")
   (save-buffer-if-modified (or (get-buffer ".bbdb") (get-buffer " bbdb")))
   (save-buffer-if-modified (get-buffer ".type-break")))
 
-(defun save-buffer-if-modified (buf)
-  "Like `save-buffer', but takes an argument."
-  (if (and buf (buffer-modified-p buf))
-      (save-excursion
-        (set-buffer buf)
-        (save-buffer))))
 
 ;;;
 ;;; Put the cursor in the buffer menu
@@ -323,5 +317,8 @@ Place cursor on the first buffer line."
       (forward-line 2))
   (message
    "Commands: d, s, x, u; f, o, 1, 2, m, v; ~, %%; q to quit; ? for help."))
+
+
+(provide 'buffer-menu-mde)
 
 ;;; buffer-menu-mde.el ends here

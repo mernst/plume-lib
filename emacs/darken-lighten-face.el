@@ -2,8 +2,7 @@
 
 
 ;; The default colors for font lock, and some other Emacs features, are too
-;; bright and distracting.  This code lets you tone it down a bit.  Example
-;; use:
+;; bright and distracting.  This code tones it down a bit.  Example use:
 ;;
 ;; (require 'darken-lighten-face)
 ;;

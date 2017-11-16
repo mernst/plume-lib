@@ -1,12 +1,11 @@
 ;;; Timelog
 
-;; This is a very primitive time logging system; it works for me, but is
-;; not guaranteed to work for you.  It should probably be generalized,
-;; better documented, etc.
+;; This is a very primitive time logging system that works for me.
+;; It could probably be generalized.
 ;; (In Emacs 21.2, timeclock.el gave me errors, and isn't really what I want.)
 
 ;; There are two commands:
-;;  M-x timelog   causes you to edit your timelog file
+;;  M-x timelog   opens your timelog file and inserts the current time
 ;;  M-x timelog-summarize   summarizes the timelog entries in the current region
 
 ;; The timelog file contains newline-separated entries of the following form:
