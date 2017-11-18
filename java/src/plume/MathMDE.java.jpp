@@ -391,7 +391,6 @@ public final class MathMDE {
     return pow_fast(base, expt);
   }
 
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // https://tinyurl.com/cfissue/951
   /*@Pure*/ /*@StaticallyExecutable*/
   private static int pow_fast(int base, int expt) throws ArithmeticException {
     if (expt < 0) {
@@ -410,7 +409,6 @@ public final class MathMDE {
     return result;
   }
 
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // https://tinyurl.com/cfissue/951
   /*@Pure*/ /*@StaticallyExecutable*/
   private static long pow_fast(long base, long expt) throws ArithmeticException {
     if (expt < 0) {
@@ -429,7 +427,6 @@ public final class MathMDE {
     return result;
   }
 
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // https://tinyurl.com/cfissue/951
   /*@Pure*/ /*@StaticallyExecutable*/
   private static int pow_slow(int base, int expt) throws ArithmeticException {
     if (expt < 0) {
