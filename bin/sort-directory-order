@@ -44,7 +44,8 @@
 
 ## Note a directory name will appear immediately before its contents if it
 ## ends with a slash (/), but a directory name that lacks a slash will
-## appear with the contents of the parent directory.
+## appear with the contents of the parent directory.  If this is
+## undesirable, then you want to use `sort` instead of this program.
 
 ## Mac OS X has a "-s" option to "find" that is similar (but not
 ## necessarily identical) to "find | sort".
