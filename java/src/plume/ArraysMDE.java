@@ -325,8 +325,6 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int /*@ArrayLen(2)*/[] min_max(int[] a) {
@@ -350,8 +348,6 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long /*@ArrayLen(2)*/[] min_max(long[] a) {
@@ -375,8 +371,6 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int element_range(int[] a) {
@@ -395,8 +389,6 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long element_range(long[] a) {
