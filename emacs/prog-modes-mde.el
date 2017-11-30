@@ -1508,6 +1508,7 @@ Use as a hook, like so:
            (if (equal dir "src")
                (setq dir "all"))
            (setq dir (replace-regexp-in-string "_" "-" dir))
+	   (setq dir (replace-regexp-in-string "flow2" "flow" dir))
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
         ;; Checker Framework demos

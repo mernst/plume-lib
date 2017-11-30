@@ -112,10 +112,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     }
   }
 
-  @SuppressWarnings({
-    "purity.not.deterministic.not.sideeffectfree.object.creation", // http://tinyurl.com/cfissue/951
-    "purity.not.deterministic.object.creation"
-  })
+  @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
   /*@Pure*/
   public boolean contains(int elt) {
     if (repNulled()) {

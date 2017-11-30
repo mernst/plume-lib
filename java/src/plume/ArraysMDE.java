@@ -50,8 +50,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static int min(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(int[])");
@@ -71,8 +69,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static long min(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(long[])");
@@ -92,8 +88,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static double min(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(double[])");
@@ -113,8 +107,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Integer min(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Integer[])");
@@ -138,8 +130,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Long min(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Long[])");
@@ -163,8 +153,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Double min(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Double[])");
@@ -188,8 +176,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static int max(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(int[])");
@@ -209,8 +195,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static long max(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(long[])");
@@ -230,8 +214,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static double max(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(double[])");
@@ -251,8 +233,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Integer max(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Integer[])");
@@ -276,8 +256,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Long max(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Long[])");
@@ -301,8 +279,6 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Double max(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Double[])");
@@ -325,8 +301,6 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int /*@ArrayLen(2)*/[] min_max(int[] a) {
@@ -350,8 +324,6 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long /*@ArrayLen(2)*/[] min_max(long[] a) {
@@ -375,8 +347,6 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int element_range(int[] a) {
@@ -395,8 +365,6 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings(
-      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long element_range(long[] a) {
@@ -2782,7 +2750,7 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
-  @SuppressWarnings("nullness") // https://github.com/typetools/checker-framework/issues/1654
+  @SuppressWarnings("nullness") // https://tinyurl.com/cfissue/1654
   public static /*@PolyAll*/ int /*@SameLen("#1")*/[] fn_compose(
       /*@IndexFor("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
     /*@PolyAll*/ int[] result = new int[a.length];

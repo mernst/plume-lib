@@ -279,20 +279,20 @@ Arbitrary BUFFER may be supplied (defaults to *grep*)."
             (buffer-list))))
 
 
-(autoload 'ag "ag" "Search using ag in a given DIRECTORY for a given search term STRING." t)
-(setq ag-regexp-default t)              ; default to regexp search
-(setq ag-group-matches nil)             ; don't add filename header lines
+;;; ag itself is broken, and the ag Emacs support is poor.
+;; (autoload 'ag "ag" "Search using ag in a given DIRECTORY for a given search term STRING." t)
+;; (setq ag-regexp-default t)              ; default to regexp search
+;; (setq ag-group-matches nil)             ; don't add filename header lines
 
 ;; Some VCS ignore files (such as .gitignore) indicate generated files that
 ;; should be ignored, but others should be searched; ag's default of ignoring
 ;; everything mentioned in an ignore file is too extreme.
-;; TODO: What is an example of what should be searched?
+;; An example is anytime that two clones are nested, as in ~/emacs and ~/emacs/plume-lib.
 ;; (eval-after-load "ag"
 ;;   '(setq ag-arguments (cons "--skip-vcs-ignores" ag-arguments)))
 
 
-;; In general, use the "ack" program instead.  But, it doesn't search
-;; compressed files and has other problems, so fall back to "search" on
+;; In general, use the "pt" program instead.  But, fall back to "search" on
 ;; occasion.
 ;; For the "search" Perl program; the Emacs function was originally called
 ;; `search', but I renamed it.
