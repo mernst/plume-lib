@@ -1275,7 +1275,6 @@ public final class UtilMDE {
    * @param file the file to write to
    * @param contents the text to put in the file
    */
-  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/172
   public static void writeFile(File file, String contents) {
 
     try {
