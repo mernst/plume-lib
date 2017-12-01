@@ -29,8 +29,10 @@ import org.apache.bcel.generic.RETURN;
 import org.apache.bcel.generic.Type;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /** Static utility methods for working with BCEL. */
@@ -494,8 +496,16 @@ public final class BCELUtil {
   public static void setup_init_locals(MethodGen mg) {
 
     // Get the parameter types and names.
-    Type[] arg_types = mg.getArgumentTypes();
-    String[] arg_names = mg.getArgumentNames();
+    @SuppressWarnings(
+        "nullness") // The arguments to the annotation aren't necessarily initialized before they
+    // are written here. Since annotations are erased at runtime, this is safe.
+    Type /*@SameLen({"arg_types", "mg.getArgumentTypes()"})*/[] arg_types = mg.getArgumentTypes();
+    @SuppressWarnings(
+        "nullness") // The arguments to the annotation aren't necessarily initialized before they
+    // are written here. Since annotations are erased at runtime, this is safe.
+    String /*@SameLen({"arg_types", "arg_names", "mg.getArgumentTypes()", "mg.getArgumentNames()"})*/
+            []
+        arg_names = mg.getArgumentNames();
 
     // Remove any existing locals
     mg.setMaxLocals(0);
@@ -655,7 +665,13 @@ public final class BCELUtil {
    * @return a new array, with new_type at the beginning
    */
   public static Type[] prependToArray(Type new_type, Type[] types) {
-    Type[] new_types = new Type[types.length + 1];
+    @SuppressWarnings({
+      "index", // new_types is @MinLen(1) except in the presence of overflow,
+      // which the Value Checker accounts for, but the Index Checker does not.
+      "value" // new_types is @MinLen(1) except in the presence of overflow,
+      // which the Value Checker accounts for, but the Index Checker does not.
+    })
+    Type /*@MinLen(1)*/[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
     new_types[0] = new_type;
     Type[] new_types_cast = new_types;

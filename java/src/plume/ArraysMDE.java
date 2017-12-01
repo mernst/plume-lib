@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.Vector;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -48,6 +49,7 @@ public final class ArraysMDE {
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static int min(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(int[])");
@@ -66,6 +68,7 @@ public final class ArraysMDE {
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static long min(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(long[])");
@@ -84,6 +87,7 @@ public final class ArraysMDE {
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static double min(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(double[])");
@@ -102,6 +106,7 @@ public final class ArraysMDE {
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static Integer min(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Integer[])");
@@ -124,6 +129,7 @@ public final class ArraysMDE {
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static Long min(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Long[])");
@@ -146,6 +152,7 @@ public final class ArraysMDE {
    * @return the smallest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static Double min(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Double[])");
@@ -168,6 +175,7 @@ public final class ArraysMDE {
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static int max(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(int[])");
@@ -186,6 +194,7 @@ public final class ArraysMDE {
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static long max(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(long[])");
@@ -204,6 +213,7 @@ public final class ArraysMDE {
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static double max(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(double[])");
@@ -222,6 +232,7 @@ public final class ArraysMDE {
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static Integer max(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Integer[])");
@@ -244,6 +255,7 @@ public final class ArraysMDE {
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static Long max(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Long[])");
@@ -266,6 +278,7 @@ public final class ArraysMDE {
    * @return the largest value in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
+  /*@Pure*/
   public static Double max(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Double[])");
@@ -290,7 +303,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   /*@StaticallyExecutable*/
-  public static int[] min_max(int[] a) {
+  public static int /*@ArrayLen(2)*/[] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(int[])");
@@ -313,7 +326,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   /*@StaticallyExecutable*/
-  public static long[] min_max(long[] a) {
+  public static long /*@ArrayLen(2)*/[] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(long[])");
@@ -477,7 +490,11 @@ public final class ArraysMDE {
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
+  public static <T> int indexOf(
+      T[] a,
+      /*@Nullable*/ Object elt,
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -520,8 +537,9 @@ public final class ArraysMDE {
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      int minindex,
-      int indexlimit) {
+      /*@ IndexFor("#1")*/
+      /*@NonNegative*/ int minindex,
+      /*@ IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -567,7 +585,10 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static int indexOfEq(
-      /*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
+      /*@PolyNull*/ Object[] a,
+      /*@Nullable*/ Object elt,
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -612,8 +633,9 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      int minindex,
-      int indexlimit) {
+      /*@ IndexFor("#1")*/
+      /*@NonNegative*/ int minindex,
+      /*@ IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
         return i;
@@ -672,7 +694,8 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(int[] a, int elt, int minindex, int indexlimit) {
+  public static int indexOf(
+      int[] a, int elt, /*@IndexFor("#1")*/ int minindex, /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -693,7 +716,8 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(long[] a, long elt, int minindex, int indexlimit) {
+  public static int indexOf(
+      long[] a, long elt, /*@IndexFor("#1")*/ int minindex, /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -752,7 +776,11 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(boolean[] a, boolean elt, int minindex, int indexlimit) {
+  public static int indexOf(
+      boolean[] a,
+      boolean elt,
+      /*@IndexFor("#1")*/ int minindex,
+      /*@IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -1062,7 +1090,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ Object[] subarray(
-      /*@PolyAll*/ Object[] a, int startindex, int length) {
+      /*@PolyAll*/ Object[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     /*@PolyAll*/ Object[] result = new /*@PolyAll*/ Object[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1079,7 +1109,8 @@ public final class ArraysMDE {
    * @return a sublist of the given list
    */
   /*@SideEffectFree*/
-  public static <T> List<T> subarray(List<T> a, int startindex, int length) {
+  public static <T> List<T> subarray(
+      List<T> a, /*@IndexFor("#1")*/ int startindex, /*@IndexOrHigh("#1")*/ int length) {
     return a.subList(startindex, startindex + length);
   }
 
@@ -1094,7 +1125,9 @@ public final class ArraysMDE {
    */
   /*@SideEffectFree*/
   public static /*@PolyAll*/ String[] subarray(
-      /*@PolyAll*/ String[] a, int startindex, int length) {
+      /*@PolyAll*/ String[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     /*@PolyAll*/ String[] result = new /*@PolyAll*/ String[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1110,7 +1143,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static byte[] subarray(byte[] a, int startindex, int length) {
+  public static byte[] subarray(
+      byte[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     byte[] result = new byte[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1126,7 +1162,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static boolean[] subarray(boolean[] a, int startindex, int length) {
+  public static boolean[] subarray(
+      boolean[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     boolean[] result = new boolean[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1142,7 +1181,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static char[] subarray(char[] a, int startindex, int length) {
+  public static char[] subarray(
+      char[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     char[] result = new char[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1158,7 +1200,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static double[] subarray(double[] a, int startindex, int length) {
+  public static double[] subarray(
+      double[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     double[] result = new double[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1174,7 +1219,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static float[] subarray(float[] a, int startindex, int length) {
+  public static float[] subarray(
+      float[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     float[] result = new float[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1190,7 +1238,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static int[] subarray(int[] a, int startindex, int length) {
+  public static int[] subarray(
+      int[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     int[] result = new int[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1206,7 +1257,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static long[] subarray(long[] a, int startindex, int length) {
+  public static long[] subarray(
+      long[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     long[] result = new long[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1222,7 +1276,10 @@ public final class ArraysMDE {
    * @return a subarray of the given array
    */
   /*@SideEffectFree*/
-  public static short[] subarray(short[] a, int startindex, int length) {
+  public static short[] subarray(
+      short[] a,
+      /*@NonNegative*/ int startindex,
+      /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int length) {
     short[] result = new short[length];
     System.arraycopy(a, startindex, result, 0, length);
     return result;
@@ -1244,7 +1301,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarray(
-      /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
+      /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1268,7 +1325,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static boolean isSubarrayEq(
-      /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, int a_offset) {
+      /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1292,7 +1349,8 @@ public final class ArraysMDE {
    *     element is found in the array
    */
   /*@Pure*/
-  public static boolean isSubarray(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
+  public static boolean isSubarray(
+      /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.size() > a.length) {
       return false;
     }
@@ -1315,7 +1373,8 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
+  public static boolean isSubarrayEq(
+      /*@PolyAll*/ Object[] a, List<?> sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.size() > a.length) {
       return false;
     }
@@ -1339,7 +1398,8 @@ public final class ArraysMDE {
    *     element is found in the array
    */
   /*@Pure*/
-  public static boolean isSubarray(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
+  public static boolean isSubarray(
+      List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.size()) {
       return false;
     }
@@ -1362,7 +1422,8 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
+  public static boolean isSubarrayEq(
+      List<?> a, /*@PolyAll*/ Object[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.size()) {
       return false;
     }
@@ -1386,7 +1447,7 @@ public final class ArraysMDE {
    *     element is found in the array
    */
   /*@Pure*/
-  public static boolean isSubarray(List<?> a, List<?> sub, int a_offset) {
+  public static boolean isSubarray(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.size() > a.size()) {
       return false;
     }
@@ -1409,7 +1470,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
+  public static boolean isSubarrayEq(List<?> a, List<?> sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.size() > a.size()) {
       return false;
     }
@@ -1432,7 +1493,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
+  public static boolean isSubarray(int[] a, int[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1455,7 +1516,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
+  public static boolean isSubarray(long[] a, long[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1478,7 +1539,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
+  public static boolean isSubarray(double[] a, double[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1501,7 +1562,7 @@ public final class ArraysMDE {
    * @return true iff sub is a contiguous subarray of a
    */
   /*@Pure*/
-  public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
+  public static boolean isSubarray(boolean[] a, boolean[] sub, /*@NonNegative*/ int a_offset) {
     if (a_offset + sub.length > a.length) {
       return false;
     }
@@ -1593,7 +1654,9 @@ public final class ArraysMDE {
         System.arraycopy(a, 0, result, 0, a.length);
         // System.arraycopy(b, 0, result, a.length, b.size());
         for (int i = 0; i < b.size(); i++) {
-          result[i + a.length] = b.get(i);
+          @SuppressWarnings("index") // index checker has no list support
+          /*@IndexFor("result")*/ int index = i + a.length;
+          result[index] = b.get(i);
         }
         return result;
       }
@@ -1627,7 +1690,9 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.size());
         for (int i = 0; i < a.size(); i++) {
-          result[i] = a.get(i);
+          @SuppressWarnings("index") // index checker has no list support
+          /*@IndexFor("result")*/ int index = i;
+          result[index] = a.get(i);
         }
         System.arraycopy(b, 0, result, a.size(), b.length);
         return result;
@@ -1662,11 +1727,15 @@ public final class ArraysMDE {
 
         // System.arraycopy(a, 0, result, 0, a.length);
         for (int i = 0; i < a.size(); i++) {
-          result[i] = a.get(i);
+          @SuppressWarnings("index") // index checker has no list support
+          /*@IndexFor("result")*/ int index = i;
+          result[index] = a.get(i);
         }
         // System.arraycopy(b, 0, result, a.length, b.length);
         for (int i = 0; i < b.size(); i++) {
-          result[i + a.size()] = b.get(i);
+          @SuppressWarnings("index") // index checker has no list support
+          /*@IndexFor("result")*/ int index = i + a.size();
+          result[index] = b.get(i);
         }
         return result;
       }
@@ -2235,7 +2304,7 @@ public final class ArraysMDE {
    */
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
   /*@Pure*/
-  public static int length(Object obj) throws IllegalArgumentException {
+  public static /*@NonNegative*/ int length(Object obj) throws IllegalArgumentException {
     if (obj instanceof boolean[]) {
       return ((boolean[]) obj).length;
     } else if (obj instanceof double[]) {
@@ -2627,7 +2696,7 @@ public final class ArraysMDE {
    * @param length the length of the result
    * @return fresh array that is the identity function of the given length
    */
-  public static int[] fn_identity(int length) {
+  public static int[] fn_identity(/*@NonNegative*/ int length) {
     int[] result = new int[length];
     for (int i = 0; i < length; i++) {
       result[i] = i;
@@ -2656,7 +2725,7 @@ public final class ArraysMDE {
    * @throws IllegalArgumentException if a value of a is outside of arange
    * @exception UnsupportedOperationException when the function is not invertible
    */
-  public static int[] fn_inverse(int[] a, int arange) {
+  public static int[] fn_inverse(int[] a, /*@NonNegative*/ int arange) {
     int[] result = new int[arange];
     Arrays.fill(result, -1);
     for (int i = 0; i < a.length; i++) {
@@ -2683,8 +2752,10 @@ public final class ArraysMDE {
    * @param b function from [0..b.length) to range R
    * @return function from [0..a.length) to range R that is the composition of a and b
    */
-  public static int[] fn_compose(int[] a, int[] b) {
-    int[] result = new int[a.length];
+  @SuppressWarnings("nullness") // https://tinyurl.com/cfissue/1654
+  public static /*@PolyAll*/ int /*@SameLen("#1")*/[] fn_compose(
+      /*@IndexFor("#2")*/ int[] a, /*@PolyAll*/ int[] b) {
+    /*@PolyAll*/ int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       result[i] = b[a[i]];
     }
@@ -2700,7 +2771,8 @@ public final class ArraysMDE {
    * @return function from [0..a.length) to {range R} union {-1}, that is the composition of a and
    *     b.
    */
-  public static int[] partial_fn_compose(int[] a, int[] b) {
+  public static int /*@SameLen("#1")*/[] partial_fn_compose(
+      /*@IndexOrLow("#2")*/ int[] a, int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
       int inner = a[i];
@@ -3345,7 +3417,8 @@ public final class ArraysMDE {
    * @param k number of subsets into which to partition {@code elts}
    * @return a list of partitionings, where each contains exactly k subsets
    */
-  public static <T> List<Partitioning<T>> partitionInto(Collection<T> elts, int k) {
+  public static <T> List<Partitioning<T>> partitionInto(
+      Collection<T> elts, /*@NonNegative*/ int k) {
     return partitionInto(new LinkedList<T>(elts), k);
   }
 
@@ -3359,7 +3432,7 @@ public final class ArraysMDE {
    * @param k number of subsets into which to partition {@code elts}
    * @return a list of partitionings, where each contains exactly k subsets
    */
-  public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, int k) {
+  public static <T> List<Partitioning<T>> partitionInto(Queue<T> elts, /*@NonNegative*/ int k) {
     if (elts.size() < k) {
       throw new IllegalArgumentException();
     }
@@ -3378,8 +3451,14 @@ public final class ArraysMDE {
    *     member so far
    * @return a list of partitionings, where each contains exactly k subsets
    */
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/152
+  // "p.addToPart(i, ...)" is OK: i is < numNonemptyParts
+  //  and p.size() = numNonemptyParts + numEmptyParts, both of which are non-negative.
   public static <T> List<Partitioning<T>> partitionIntoHelper(
-      Queue<T> elts, List<Partitioning<T>> resultSoFar, int numEmptyParts, int numNonemptyParts) {
+      Queue<T> elts,
+      List</*@ LengthIs("#3")*/ Partitioning<T>> resultSoFar,
+      /*@NonNegative*/ int numEmptyParts,
+      /*@NonNegative*/ int numNonemptyParts) {
 
     if (numEmptyParts > elts.size()) {
       throw new IllegalArgumentException(numEmptyParts + " > " + elts.size());
@@ -3451,7 +3530,7 @@ public final class ArraysMDE {
     }
 
     /** Returns a new partition just like this one, but with elt added to the ith part. */
-    Partitioning<T> addToPart(int i, T elt) {
+    Partitioning<T> addToPart(/*@NonNegative*/ int i, T elt) {
       Partitioning<T> result = new Partitioning<T>(this);
       if (size() == i) {
         ArrayList<T> newPart = newArrayList(elt);

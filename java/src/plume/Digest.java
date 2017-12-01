@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 
+/*>>>
+import org.checkerframework.common.value.qual.*;
+*/
+
 /**
  * Computes a message digest for a file. The primary entry point into this class is {@link
  * #getFileDigest(String,MessageDigest)}.
@@ -85,6 +89,7 @@ public final class Digest {
       int len = s.length();
       byte[] r = new byte[len / 2];
       for (int i = 0; i < r.length; i++) {
+        @SuppressWarnings("index") // correlated length: two arrays with correlated, nonequal length
         int digit1 = s.charAt(i * 2), digit2 = s.charAt(i * 2 + 1);
         if ((digit1 >= '0') && (digit1 <= '9')) {
           digit1 -= '0';
