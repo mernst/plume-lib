@@ -497,10 +497,12 @@ public final class BCELUtil {
 
     // Get the parameter types and names.
     @SuppressWarnings(
-        "nullness") // The initialization checker warns here when the SameLen annotations are added.
+        "nullness") // The arguments to the annotation aren't necessarily initialized before they
+    // are written here. Since annotations are erased at runtime, this is safe.
     Type /*@SameLen({"arg_types", "mg.getArgumentTypes()"})*/[] arg_types = mg.getArgumentTypes();
     @SuppressWarnings(
-        "nullness") // The initialization checker warns here when the SameLen annotations are added.
+        "nullness") // The arguments to the annotation aren't necessarily initialized before they
+    // are written here. Since annotations are erased at runtime, this is safe.
     String /*@SameLen({"arg_types", "arg_names", "mg.getArgumentTypes()", "mg.getArgumentNames()"})*/
             []
         arg_names = mg.getArgumentNames();

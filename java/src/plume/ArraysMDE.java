@@ -537,7 +537,8 @@ public final class ArraysMDE {
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      /*@ IndexFor("#1")*/ int minindex,
+      /*@ IndexFor("#1")*/
+      /*@NonNegative*/ int minindex,
       /*@ IndexOrHigh("#1")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
@@ -632,7 +633,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      /*@ IndexFor("#1")*/ int minindex,
+      /*@ IndexFor("#1")*/
+      /*@NonNegative*/ int minindex,
       /*@ IndexOrHigh("#1")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
