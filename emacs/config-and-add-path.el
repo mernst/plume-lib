@@ -301,4 +301,3 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
 (provide 'config-and-add-path)
 
 ;;; }}}
-
