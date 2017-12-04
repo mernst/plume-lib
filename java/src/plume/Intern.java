@@ -51,7 +51,8 @@ public final class Intern {
    * @see String#intern
    */
   @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
-  public static /*@Interned*/ String /*@PolyLength*/ [] internStrings(String /*@PolyLength*/ [] a) {
+  public static /*@Interned*/ String /*@PolyValue*/ /*@SameLen("#1")*/[] internStrings(
+      String /*@PolyValue*/ [] a) {
     for (int i = 0; i < a.length; i++) {
       if (a[i] != null) {
         a[i] = a[i].intern();
@@ -449,8 +450,8 @@ public final class Intern {
    * @return an interned version of the argument, or null if the argument was null
    */
   /*@Pure*/
-  public static /*@Interned*/ /*@PolyNull*/ /*@PolyLength*/ String intern(
-      /*@PolyNull*/ /*@PolyLength*/ String a) {
+  public static /*@Interned*/ /*@PolyNull*/ /*@PolyValue*/ /*@SameLen("#1")*/ String intern(
+      /*@PolyNull*/ /*@PolyValue*/ String a) {
     // Checker Framework cannot typecheck:  return (a == null) ? null : a.intern();
     if (a == null) {
       return null;
@@ -586,22 +587,23 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static int /*@Interned*/ /*@PolyLength*/ [] intern(int /*@PolyLength*/ [] a) {
+  public static int /*@Interned*/ /*@PolyValue*/ /*@SameLen("#1")*/[] intern(
+      int /*@PolyValue*/ [] a) {
     // Throwable stack = new Throwable("debug traceback");
     // stack.fillInStackTrace();
     // stack.printStackTrace();
 
     WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
     @SuppressWarnings({
-      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @SameLen("#1")
       "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
     })
-    int /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
+    int /*@PolyValue*/ /*@SameLen("a")*/[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ int[] result = (int /*@Interned*/ /*@PolyLength*/ []) a;
+      /*@Interned*/ int[] result = (int /*@Interned*/ /*@PolyValue*/ []) a;
       internedIntArrays.put(result, new WeakReference<int /*@Interned*/ []>(result));
       return result;
     }
@@ -616,20 +618,21 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static long /*@Interned*/ /*@PolyLength*/ [] intern(long /*@PolyLength*/ [] a) {
+  public static long /*@Interned*/ /*@PolyValue*/ /*@SameLen("#1")*/[] intern(
+      long /*@PolyValue*/ [] a) {
     // System.out.printf("intern %s %s long[] %s%n", a.getClass(),
     //                   a, Arrays.toString (a));
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
     @SuppressWarnings({
-      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @SameLen("#1")
       "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
     })
-    long /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
+    long /*@PolyValue*/ /*@SameLen("a")*/[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ long[] result = (long /*@Interned*/ /*@PolyLength*/ []) a;
+      /*@Interned*/ long[] result = (long /*@Interned*/ /*@PolyValue*/ []) a;
       internedLongArrays.put(result, new WeakReference<long /*@Interned*/ []>(result));
       return result;
     }
@@ -703,18 +706,19 @@ public final class Intern {
    */
   @SuppressWarnings({"interning", "purity"})
   /*@Pure*/
-  public static double /*@Interned*/ /*@PolyLength*/ [] intern(double /*@PolyLength*/ [] a) {
+  public static double /*@Interned*/ /*@PolyValue*/ /*@SameLen("#1")*/[] intern(
+      double /*@PolyValue*/ [] a) {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
     @SuppressWarnings({
-      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @SameLen("#1")
       "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
     })
-    double /*@PolyLength*/ [] result1 = (lookup != null) ? lookup.get() : null;
+    double /*@PolyValue*/ /*@SameLen("a")*/[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
       return result1;
     } else {
       @SuppressWarnings("cast") // cast is redundant (except in JSR 308)
-      /*@Interned*/ double[] result = (double /*@Interned*/ /*@PolyLength*/ []) a;
+      /*@Interned*/ double[] result = (double /*@Interned*/ /*@PolyValue*/ []) a;
       internedDoubleArrays.put(result, new WeakReference<double /*@Interned*/ []>(result));
       return result;
     }
@@ -734,8 +738,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ /*@PolyLength*/ [] intern(
-      /*@PolyNull*/ /*@Interned*/ String /*@PolyLength*/ [] a) {
+  public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ /*@PolyValue*/ /*@SameLen("#1")*/[]
+      intern(/*@PolyNull*/ /*@Interned*/ String /*@PolyValue*/ [] a) {
 
     // Make sure each element is already interned
     if (assertsEnabled) {
@@ -756,10 +760,10 @@ public final class Intern {
     }
     @SuppressWarnings({
       "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
-      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @SameLen("#1")
       "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
     })
-    /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ String /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
+    /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ /*@PolyValue*/ /*@SameLen("a")*/[] polyresult = result;
     return polyresult;
   }
 
@@ -777,8 +781,8 @@ public final class Intern {
     "cast"
   }) // cast is redundant (except in JSR 308)
   /*@Pure*/
-  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ /*@PolyLength*/ [] intern(
-      /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object[] a) {
+  public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ /*@PolyValue*/ /*@SameLen("#1")*/[]
+      intern(/*@PolyNull*/ /*@Interned*/ /*@PolyValue*/ Object[] a) {
     @SuppressWarnings(
         "nullness") // Polynull:  value = parameter a, so same type & nullness as for parameter a
     WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []> lookup =
@@ -791,10 +795,10 @@ public final class Intern {
     }
     @SuppressWarnings({
       "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
-      "index", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "index", // for this map, get() can be annotated as @SameLen("#1")
       "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
-    }) // PolyNull/PolyLength:  value = parameter a, so same type & nullness as for parameter a
-    /*@PolyNull*/ /*@Interned*/ /*@PolyLength*/ Object /*@Interned*/ /*@PolyLength*/ [] polyresult = result;
+    }) // PolyNull/PolyValue:  value = parameter a, so same type & nullness as for parameter a
+    /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ /*@PolyValue*/ /*@SameLen("a")*/[] polyresult = result;
     return polyresult;
   }
 
