@@ -51,7 +51,8 @@ public final class Intern {
    * @see String#intern
    */
   @SuppressWarnings("interning") // side-effects the array in place (dangerous, but convenient)
-  public static /*@Interned*/ String /*@PolyLength*/ [] internStrings(String /*@PolyLength*/ [] a) {
+  public static /*@Interned*/ String /*@PolyValue*/ /*@SameLen("#1")*/[] internStrings(
+      String /*@PolyValue*/ [] a) {
     for (int i = 0; i < a.length; i++) {
       if (a[i] != null) {
         a[i] = a[i].intern();
