@@ -5,9 +5,9 @@ import java.util.List;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.common.value.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
@@ -21,6 +21,7 @@ import org.checkerframework.dataflow.qual.*;
  *
  * @see LimitedSizeSet
  */
+// I have not evaluated the importance of the optimizations in this class.
 // Consider adding:
 //  * @deprecated Use LimitedSizeSet instead
 // @Deprecated
@@ -104,7 +105,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     // TODO: s.values isn't modified by the call to add.  Use a local variable until
     // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
-    for (int i = 0; i < svalues.length; i++) {
+    for (int i = 0; i < s.size(); i++) {
       add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
@@ -144,7 +145,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   @SuppressWarnings(
-      "lowerbound") // nulling the rep: leaves num_values positive, need EnsuresQualifierIf with annotation argument
+      "lowerbound") // https://tinyurl.com/cfissue/1606: nulling the rep leaves num_values positive
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;

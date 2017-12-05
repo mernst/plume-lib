@@ -37,7 +37,7 @@ import org.checkerframework.common.value.qual.*;
 // run like this:
 //   java plume.TestPlume
 
-// Files to test:
+// Files yet to test:
 // ArraysMDE.java
 // ClassFileVersion.java
 // CountingPrintWriter.java
