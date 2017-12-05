@@ -106,7 +106,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
-      add(svalues[i]);
+      @SuppressWarnings("index") // svalues is always shorter than or equal to the length of s.size()
+      /*@IndexFor("svalues")*/ int index = i;
+      add(svalues[index]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
       }
