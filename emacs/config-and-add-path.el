@@ -1,5 +1,7 @@
 ;; config-and-add-path.el
 
+;; This is probably obsoleted by Emacs function normal-top-level-add-subdirs-to-load-path.
+
 ;;; Don't byte-compile this file, because it is supposed to work in all
 ;;; Emacs versions, but (we think) no byte-compilation format does.
 
@@ -299,4 +301,3 @@ Returns the original PATH-LIST (guaranteed to have the same first cons)."
 (provide 'config-and-add-path)
 
 ;;; }}}
-

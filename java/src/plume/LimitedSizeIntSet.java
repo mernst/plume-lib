@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -34,9 +36,11 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * If null, then at least num_values distinct values have been seen. The size is not separately
    * stored, because that would take extra space.
    */
-  protected int /*@Nullable*/ [] values;
+  protected int /*@Nullable*/ /*@MinLen(1)*/[] values;
   /** The number of active elements (equivalently, the first unused index). */
-  int num_values;
+  // Not exactly @IndexOrHigh("values"), because the invariant is broken when
+  // the values field is set to null. Warnings are suppressed when breaking the invariant.
+  /*@IndexOrHigh("values")*/ int num_values;
 
   /** Whether assertions are enabled. */
   private static boolean assertsEnabled = false;
@@ -51,7 +55,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @param max_values the maximum number of values this set will be able to hold; must be positive
    */
-  public LimitedSizeIntSet(int max_values) {
+  public LimitedSizeIntSet(/*@Positive*/ int max_values) {
     if (assertsEnabled && !(max_values > 0)) {
       throw new IllegalArgumentException("max_values should be positive, is " + max_values);
     }
@@ -100,7 +104,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     // TODO: s.values isn't modified by the call to add.  Use a local variable until
     // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
-    for (int i = 0; i < s.size(); i++) {
+    for (int i = 0; i < svalues.length; i++) {
       add(svalues[i]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
@@ -139,7 +143,9 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  public int max_size() {
+  @SuppressWarnings(
+      "lowerbound") // nulling the rep: leaves num_values positive, need EnsuresQualifierIf with annotation argument
+  public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
     } else {
@@ -164,6 +170,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
+  @SuppressWarnings("upperbound") // nulling the rep: after which no indexing will occur
   private void nullRep() {
     if (repNulled()) {
       return;
@@ -196,7 +203,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @param slist a list of LimitedSizeIntSet, whose elements will be merged
    * @return a LimitedSizeIntSet that merges the elements of slist
    */
-  public static LimitedSizeIntSet merge(int max_values, List<LimitedSizeIntSet> slist) {
+  public static LimitedSizeIntSet merge(
+      /*@Positive*/ int max_values, List<LimitedSizeIntSet> slist) {
     LimitedSizeIntSet result = new LimitedSizeIntSet(max_values);
     for (LimitedSizeIntSet s : slist) {
       result.addAll(s);

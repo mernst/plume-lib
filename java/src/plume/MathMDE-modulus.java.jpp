@@ -14,8 +14,9 @@ The correct way to build the system is to run 'make'.
    * @param y modulus
    * @return x % y, where the result is constrained to be non-negative
    */
+  @SuppressWarnings("lowerbound") // result is non-negative because either y is positive (-> x % y is non-negative) or |y| is added to x % y, which is also non-negative
   /*@Pure*/ /*@StaticallyExecutable*/
-  public static INT mod_positive(INT x, INT y) {
+  public static /*@NonNegative*/ INT mod_positive(INT x, INT y) {
     INT result = x % y;
     if (result < 0) {
       result += Math.abs(y);
@@ -34,7 +35,7 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the iterator contains fewer than 3 elements
    */
   /*@Pure*/ /*@StaticallyExecutable*/
-  public static INT /*@Nullable*/ [] modulus(INT[] nums) {
+  public static INT /*@Nullable*/ /*@ArrayLen(2)*/ [] modulus(INT[] nums) {
     if (nums.length < 3) {
       return null;
     }
@@ -62,7 +63,7 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the iterator contains fewer than 3 elements
    * @see #modulus(INT[])
    */
-  public static INT /*@Nullable*/ [] modulus_INT(Iterator<INTEGER> itor) {
+  public static INT /*@Nullable*/ /*@ArrayLen(2)*/ [] modulus_INT(Iterator<INTEGER> itor) {
     if (!itor.hasNext()) {
       return null;
     }
@@ -118,7 +119,7 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the array contains fewer than 3 elements
    */
   /*@Pure*/ /*@StaticallyExecutable*/
-  public static INT /*@Nullable*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
+  public static INT /*@Nullable*/ /*@ArrayLen(2)*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
     if (nums.length < 3) {
       return null;
     }
@@ -171,7 +172,7 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the iterator contains fewer than 3 elements
    * @see #modulus_strict(int[], boolean)
    */
-  public static INT /*@Nullable*/ [] modulus_strict_INT(Iterator<INTEGER> itor, boolean nonstrict_ends) {
+  public static INT /*@Nullable*/ /*@ArrayLen(2)*/ [] modulus_strict_INT(Iterator<INTEGER> itor, boolean nonstrict_ends) {
     if (!itor.hasNext()) {
       return null;
     }

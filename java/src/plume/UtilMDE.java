@@ -59,6 +59,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
@@ -97,7 +98,7 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, int i) {
+  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, /*@NonNegative*/ int i) {
     // Here are three implementation strategies to determine the
     // cardinality of the intersection:
     // 1. a.clone().and(b).cardinality()
@@ -133,7 +134,8 @@ public final class UtilMDE {
    */
   @SuppressWarnings("purity") // side effect to local state (BitSet)
   /*@Pure*/
-  public static boolean intersectionCardinalityAtLeast(BitSet a, BitSet b, BitSet c, int i) {
+  public static boolean intersectionCardinalityAtLeast(
+      BitSet a, BitSet b, BitSet c, /*@NonNegative*/ int i) {
     // See comments in intersectionCardinalityAtLeast(BitSet, BitSet, int).
     // This is a copy of that.
 
@@ -732,7 +734,7 @@ public final class UtilMDE {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
-    int pos = 1;
+    /*@Positive*/ int pos = 1;
     while (pos < arglist.length() - 1) {
       if (pos > 1) {
         result += ", ";
@@ -746,11 +748,13 @@ public final class UtilMDE {
       }
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
-        int semi_pos = arglist.indexOf(";", nonarray_pos);
+        int semi_pos = arglist.indexOf(';', nonarray_pos);
         if (semi_pos == -1) {
           throw new Error("Malformed arglist: " + arglist);
         }
-        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
+        @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/176
+        String fieldDescriptor = arglist.substring(pos, semi_pos + 1);
+        result += fieldDescriptorToBinaryName(fieldDescriptor);
         pos = semi_pos + 1;
       } else {
         String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos + 1));
@@ -1104,13 +1108,13 @@ public final class UtilMDE {
     String suffix;
 
     public WildcardFilter(String filename) {
-      int astloc = filename.indexOf("*");
+      int astloc = filename.indexOf('*');
       if (astloc == -1) {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
       suffix = filename.substring(astloc + 1);
-      if (filename.indexOf("*") != -1) {
+      if (filename.indexOf('*') != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
       }
     }
@@ -2270,7 +2274,7 @@ public final class UtilMDE {
     }
 
     StringBuffer result = new StringBuffer();
-    int lastend = 0;
+    /*@IndexOrHigh("target")*/ int lastend = 0;
     int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
       result.append(target.substring(lastend, pos));
@@ -2323,6 +2327,7 @@ public final class UtilMDE {
       s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
+    @SuppressWarnings("index") // index checker has no list support: vectors
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
@@ -2429,7 +2434,7 @@ public final class UtilMDE {
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen right before this position.
-    int post_esc = 0;
+    /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int orig_len = orig.length();
     for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);
@@ -2557,7 +2562,7 @@ public final class UtilMDE {
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
-    int post_esc = 0;
+    /*@LTEqLengthOf("orig")*/ int post_esc = 0;
     int this_esc = orig.indexOf('\\');
     while (this_esc != -1) {
       if (this_esc == orig.length() - 1) {
@@ -2757,7 +2762,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return s truncated or padded to length characters
    */
-  public static String lpad(String s, int length) {
+  public static String lpad(String s, /*@NonNegative*/ int length) {
     if (s.length() < length) {
       StringBuffer buf = new StringBuffer();
       for (int i = s.length(); i < length; i++) {
@@ -2777,7 +2782,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return s truncated or padded to length characters
    */
-  public static String rpad(String s, int length) {
+  public static String rpad(String s, /*@NonNegative*/ int length) {
     if (s.length() < length) {
       StringBuffer buf = new StringBuffer(s);
       for (int i = s.length(); i < length; i++) {
@@ -2796,7 +2801,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
    */
-  public static String rpad(int num, int length) {
+  public static String rpad(int num, /*@NonNegative*/ int length) {
     return rpad(String.valueOf(num), length);
   }
 
@@ -2807,7 +2812,7 @@ public final class UtilMDE {
    * @param length goal length
    * @return a string representation of num truncated or padded to length characters
    */
-  public static String rpad(double num, int length) {
+  public static String rpad(double num, /*@NonNegative*/ int length) {
     return rpad(String.valueOf(num), length);
   }
 
@@ -3141,7 +3146,8 @@ public final class UtilMDE {
    * @param objs list of elements to create combinations of
    * @return list of lists of length dims, each of which combines elements from objs
    */
-  public static <T> List<List<T>> create_combinations(int dims, int start, List<T> objs) {
+  public static <T> List<List<T>> create_combinations(
+      int dims, /*@NonNegative*/ int start, List<T> objs) {
 
     if (dims < 1) {
       throw new IllegalArgumentException();
@@ -3191,7 +3197,8 @@ public final class UtilMDE {
    * @param cnt maximum element value
    * @return list of lists of length arity, each of which combines integers from start to cnt
    */
-  public static ArrayList<ArrayList<Integer>> create_combinations(int arity, int start, int cnt) {
+  public static ArrayList<ArrayList<Integer>> create_combinations(
+      int arity, /*@NonNegative*/ int start, int cnt) {
 
     ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
 

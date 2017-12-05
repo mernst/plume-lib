@@ -37,8 +37,10 @@ import org.apache.commons.text.StringEscapeUtils;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 /**
@@ -322,7 +324,8 @@ public class OptionsDoclet {
    *     href="https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet
    *     overview</a>
    */
-  public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
+  @SuppressWarnings("index") // dependent: os[1] is legal when optionLength(os[0])==2
+  public static boolean validOptions(String[] /*@MinLen(1)*/[] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
     boolean hasDestDir = false;
@@ -401,7 +404,8 @@ public class OptionsDoclet {
    *
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
-  public void setOptions(String[][] options) {
+  @SuppressWarnings("index") // dependent: os[1] is legal when optionLength(os[0])==2
+  public void setOptions(String[] /*@MinLen(1)*/[] options) {
     String outFilename = null;
     File destDir = null;
     for (int oi = 0; oi < options.length; oi++) {
@@ -705,7 +709,9 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      suffix = in.substring(ulPos + eol.length());
+      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/23
+      String suffix_temp = in.substring(ulPos + eol.length());
+      suffix = suffix_temp;
       in = in.substring(0, ulPos);
     }
 

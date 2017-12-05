@@ -27,9 +27,11 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.common.value.qual.*;
 */
 
 // run like this:
@@ -524,6 +526,7 @@ public final class TestPlume {
     assert ArraysMDE.fn_is_total(new int[] {0, 0, 0, 0}) == true;
   }
 
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/147
   @Test
   public void testArraysMDE_functions() {
 
@@ -1032,7 +1035,7 @@ public final class TestPlume {
 
         Random random_gen = new Random();
 
-        int[][] arrays = new int[100][];
+        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100] /*@ArrayLen(10)*/[];
         for (int i = 0; i < arrays.length; i++) {
           int[] a = new int[10];
           for (int j = 0; j < a.length; j++) {
@@ -1233,7 +1236,7 @@ public final class TestPlume {
   }
 
   // Add 100 elements randomly selected from the range 0..limit-1 to the set.
-  private static void lsis_add_elts(int limit, LimitedSizeSet<Integer> s) {
+  private static void lsis_add_elts(/*@Positive*/ int limit, LimitedSizeSet<Integer> s) {
     Random r = new Random(20140613);
     for (int i = 0; i < 100; i++) {
       s.add(r.nextInt(limit));
@@ -1241,7 +1244,7 @@ public final class TestPlume {
   }
 
   // Create a LimitedSizeSet of the given size, and add elements to it.
-  private static void lsis_test(int max_size) {
+  private static void lsis_test(/*@Positive*/ int max_size) {
     LimitedSizeSet<Integer> s = new LimitedSizeSet<Integer>(max_size);
     for (int i = 1; i < 2 * max_size; i++) {
       lsis_add_elts(i, s);
@@ -1699,7 +1702,9 @@ public final class TestPlume {
    * @param ints an array of two-element arrays of integers
    * @throws AssertionError iff the iterator returns the same values as the argument array contains
    */
-  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
+  @SuppressWarnings("index") // same length iterator and array, and while loop with ++ on index
+  public static void compareOrderedPairIterator(
+      OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -1810,7 +1815,7 @@ public final class TestPlume {
   /// UtilMDE
   ///
 
-  private static BitSet randomBitSet(int length, Random r) {
+  private static BitSet randomBitSet(/*@NonNegative*/ int length, Random r) {
     BitSet result = new BitSet(length);
     for (int i = 0; i < length; i++) {
       result.set(i, r.nextBoolean());
@@ -2211,7 +2216,10 @@ public final class TestPlume {
               nextNotification.add(Calendar.MINUTE, 1);
             }
           }
-          List<Integer> chosen = UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
+          @SuppressWarnings(
+              "index") // The IotaIterator only contains indexes for totals.length, and since chosen's elements are selected randomly from the IotaIterator, all of its elements are @IndexFor
+          List</*@IndexFor("totals")*/ Integer> chosen =
+              UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
               if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
@@ -2672,6 +2680,7 @@ public final class TestPlume {
    * Test the intering of subsequences as triples of the original sequence, the start and the end
    * indices.
    */
+  @SuppressWarnings("index") // test code that relies on assumptions about what is being tested
   @Test
   public void testSequenceAndIndices() {
     int[] a1 = Intern.intern(new int[] {1, 2, 3, 4, 5, 6, 7});
@@ -2988,8 +2997,8 @@ public final class TestPlume {
   }
 
   /** Initialize f2 to be the same as two copies of f1 */
-  @SuppressWarnings("index") // length of f1 is exactly 10, length of f2 is exactly 20
-  void initialize_f1_and_f2(int j, double[] f1, double[] f2) {
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/147
+  void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
 
     // start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
@@ -3116,6 +3125,7 @@ public final class TestPlume {
    * @throws ArgException if there is an illegal argument
    */
   @Test
+  @SuppressWarnings("index") // relies on properties of the command line interface
   public void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
@@ -3415,7 +3425,8 @@ public final class TestPlume {
   public void testSplitLines() {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
-    String[] sa = UtilMDE.splitLines(str);
+    @SuppressWarnings("value") // method that returns an array is not StaticallyExecutable
+    String /*@ArrayLen(11)*/[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
     assert sa.length == 11;

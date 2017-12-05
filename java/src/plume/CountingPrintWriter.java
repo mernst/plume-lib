@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
@@ -387,7 +388,8 @@ public class CountingPrintWriter extends PrintWriter {
    * @param len number of characters to write
    */
   @Override
-  public void write(char[] buf, int off, int len) {
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/144
+  public void write(char[] buf, /*@IndexOrHigh("#1")*/ int off, /*@IndexOrHigh("#1")*/ int len) {
     for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);
     }
@@ -414,8 +416,12 @@ public class CountingPrintWriter extends PrintWriter {
    * @param off offset from which to start writing characters
    * @param len number of characters to write
    */
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/170
   @Override
-  public void write(String s, int off, int len) {
+  public void write(
+      String s,
+      /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#3")*/ int off,
+      /*@IndexOrHigh("#1")*/ int len) {
     writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);
