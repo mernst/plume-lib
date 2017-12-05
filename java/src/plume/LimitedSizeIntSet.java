@@ -107,7 +107,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     int[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
       @SuppressWarnings(
-          "index") // svalues is always shorter than or equal to the length of s.size()
+          "index") // svalues is the internal rep of s, and s.size() <= s.values.length
       /*@IndexFor("svalues")*/ int index = i;
       add(svalues[index]);
       if (repNulled()) {
