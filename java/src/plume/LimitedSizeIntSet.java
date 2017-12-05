@@ -1,6 +1,7 @@
 package plume;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /*>>>
@@ -216,6 +217,6 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   /*@SideEffectFree*/
   @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
-    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
+    return ("[size=" + size() + "; " + Arrays.toString(values) + "]");
   }
 }

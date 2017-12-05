@@ -80,8 +80,7 @@ public final class TestPlume {
   public static void assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
-      System.out.println(
-          "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
+      System.out.println("Arrays differ: " + Arrays.toString(a1) + ", " + Arrays.toString(a2));
     }
     assert result;
     //      assert(Arrays.equals(a1, a2),
@@ -451,9 +450,9 @@ public final class TestPlume {
     }
 
     // static String toString(int[] a)
-    assert ArraysMDE.toString(new int[] {}).equals("[]");
-    assert ArraysMDE.toString(new int[] {0}).equals("[0]");
-    assert ArraysMDE.toString(new int[] {0, 1, 2}).equals("[0, 1, 2]");
+    assert Arrays.toString(new int[] {}).equals("[]");
+    assert Arrays.toString(new int[] {0}).equals("[0]");
+    assert Arrays.toString(new int[] {0, 1, 2}).equals("[0, 1, 2]");
   }
 
   @Test
@@ -1081,11 +1080,11 @@ public final class TestPlume {
           } else {
             System.out.println("================");
             for (int i = 0; i < arrays.length; i++) {
-              System.out.println(ArraysMDE.toString(arrays[i]));
+              System.out.println(Arrays.toString(arrays[i]));
             }
             System.out.println("================");
             for (Iterator<int[]> itor = Intern.intArrays(); itor.hasNext(); ) {
-              System.out.println(ArraysMDE.toString(itor.next()));
+              System.out.println(Arrays.toString(itor.next()));
             }
             String message =
                 ("Size should have been " + size2 + ", actually was " + Intern.numIntArrays());
@@ -1411,10 +1410,7 @@ public final class TestPlume {
         int[] rm = MathMDE.modulus(nums);
         if (!Arrays.equals(rm, goal_rm)) {
           throw new Error(
-              "Expected (r,m)="
-                  + ArraysMDE.toString(goal_rm)
-                  + ", saw (r,m)="
-                  + ArraysMDE.toString(rm));
+              "Expected (r,m)=" + Arrays.toString(goal_rm) + ", saw (r,m)=" + Arrays.toString(rm));
         }
         if (rm == null) {
           return;
@@ -1494,10 +1490,7 @@ public final class TestPlume {
         }
         if (!Arrays.equals(rm, goal_rm)) {
           throw new Error(
-              "Expected (r,m)="
-                  + ArraysMDE.toString(goal_rm)
-                  + ", saw (r,m)="
-                  + ArraysMDE.toString(rm));
+              "Expected (r,m)=" + Arrays.toString(goal_rm) + ", saw (r,m)=" + Arrays.toString(rm));
         }
         if (rm == null) {
           return;

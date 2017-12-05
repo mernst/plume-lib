@@ -2136,23 +2136,10 @@ public final class ArraysMDE {
    * @return a string representation of the array
    * @see java.util.Vector#toString
    */
-  @SuppressWarnings("purity") // side effect to local state (string creation)
+  @Deprecated
   /*@SideEffectFree*/
   public static String toString(int /*@Nullable*/ [] a) {
-    if (a == null) {
-      return "null";
-    }
-    StringBuffer sb = new StringBuffer();
-    sb.append("[");
-    if (a.length > 0) {
-      sb.append(a[0]);
-      for (int i = 1; i < a.length; i++) {
-        sb.append(", ");
-        sb.append(a[i]);
-      }
-    }
-    sb.append("]");
-    return sb.toString();
+    return Arrays.toString(a);
   }
 
   /**
@@ -2166,20 +2153,7 @@ public final class ArraysMDE {
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
   public static String toString(long /*@Nullable*/ [] a) {
-    if (a == null) {
-      return "null";
-    }
-    StringBuffer sb = new StringBuffer();
-    sb.append("[");
-    if (a.length > 0) {
-      sb.append(a[0]);
-      for (int i = 1; i < a.length; i++) {
-        sb.append(", ");
-        sb.append(a[i]);
-      }
-    }
-    sb.append("]");
-    return sb.toString();
+    return Arrays.toString(a);
   }
 
   /**
@@ -2193,20 +2167,7 @@ public final class ArraysMDE {
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
   public static String toString(double /*@Nullable*/ [] a) {
-    if (a == null) {
-      return "null";
-    }
-    StringBuffer sb = new StringBuffer();
-    sb.append("[");
-    if (a.length > 0) {
-      sb.append(a[0]);
-      for (int i = 1; i < a.length; i++) {
-        sb.append(", ");
-        sb.append(a[i]);
-      }
-    }
-    sb.append("]");
-    return sb.toString();
+    return Arrays.toString(a);
   }
 
   /**
@@ -2220,20 +2181,7 @@ public final class ArraysMDE {
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
   public static String toString(float /*@Nullable*/ [] a) {
-    if (a == null) {
-      return "null";
-    }
-    StringBuffer sb = new StringBuffer();
-    sb.append("[");
-    if (a.length > 0) {
-      sb.append(a[0]);
-      for (int i = 1; i < a.length; i++) {
-        sb.append(", ");
-        sb.append(a[i]);
-      }
-    }
-    sb.append("]");
-    return sb.toString();
+    return Arrays.toString(a);
   }
 
   /**
@@ -2247,20 +2195,7 @@ public final class ArraysMDE {
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
   public static String toString(boolean /*@Nullable*/ [] a) {
-    if (a == null) {
-      return "null";
-    }
-    StringBuffer sb = new StringBuffer();
-    sb.append("[");
-    if (a.length > 0) {
-      sb.append(a[0]);
-      for (int i = 1; i < a.length; i++) {
-        sb.append(", ");
-        sb.append(a[i]);
-      }
-    }
-    sb.append("]");
-    return sb.toString();
+    return Arrays.toString(a);
   }
 
   /**
@@ -2274,7 +2209,9 @@ public final class ArraysMDE {
   @SuppressWarnings("purity") // defensive coding: throw exception when argument is invalid
   /*@SideEffectFree*/
   public static String toString(Object obj) throws IllegalArgumentException {
-    if (obj instanceof boolean[]) {
+    if (obj == null) {
+      return "null";
+    } else if (obj instanceof boolean[]) {
       return toString((boolean[]) obj);
     } else if (obj instanceof double[]) {
       return toString((double[]) obj);
@@ -2289,8 +2226,7 @@ public final class ArraysMDE {
     } else if (obj instanceof List<?>) {
       return toString((List<?>) obj);
     } else {
-      throw new IllegalArgumentException(
-          "Argument is " + ((obj == null) ? "null" : "of class " + obj.getClass().getName()));
+      throw new IllegalArgumentException("Argument is of class " + obj.getClass().getName());
     }
   }
 
