@@ -101,7 +101,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    // TODO: s.values isn't modified by the call to add.  Use a local variable Until
+    // TODO: s.values isn't modified by the call to add.  Use a local variable until
     // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
     for (int i = 0; i < svalues.length; i++) {
