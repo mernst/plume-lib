@@ -1,13 +1,14 @@
 package plume;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
-import org.checkerframework.common.value.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
+import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
@@ -21,6 +22,7 @@ import org.checkerframework.dataflow.qual.*;
  *
  * @see LimitedSizeSet
  */
+// I have not evaluated the importance of the optimizations in this class.
 // Consider adding:
 //  * @deprecated Use LimitedSizeSet instead
 // @Deprecated
@@ -101,11 +103,14 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
             "Arg is rep-nulled, so we don't know its values and can't add them to this.");
       }
     }
-    // TODO: s.values isn't modified by the call to add.  Use a local variable Until
+    // TODO: s.values isn't modified by the call to add.  Use a local variable until
     // https://tinyurl.com/cfissue/984 is fixed.
     int[] svalues = s.values;
-    for (int i = 0; i < svalues.length; i++) {
-      add(svalues[i]);
+    for (int i = 0; i < s.size(); i++) {
+      @SuppressWarnings(
+          "index") // svalues is the internal rep of s, and s.size() <= s.values.length
+      /*@IndexFor("svalues")*/ int index = i;
+      add(svalues[index]);
       if (repNulled()) {
         return; // optimization, not necessary for correctness
       }
@@ -144,7 +149,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    * @return maximum capacity of the set representation
    */
   @SuppressWarnings(
-      "lowerbound") // nulling the rep: leaves num_values positive, need EnsuresQualifierIf with annotation argument
+      "lowerbound") // https://tinyurl.com/cfissue/1606: nulling the rep leaves num_values positive
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -215,6 +220,6 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   /*@SideEffectFree*/
   @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
-    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
+    return ("[size=" + size() + "; " + Arrays.toString(values) + "]");
   }
 }

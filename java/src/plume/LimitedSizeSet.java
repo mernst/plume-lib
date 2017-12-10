@@ -2,13 +2,14 @@ package plume;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
-import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.common.value.qual.*;
+import org.checkerframework.dataflow.qual.*;
 */
 
 /**
@@ -34,7 +35,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   /** The number of active elements (equivalently, the first unused index). */
   // Not exactly @IndexOrHigh("values"), because the invariant is broken when
   // the values field is set to null. Warnings are suppressed when breaking the invariant.
-  /*@IndexOrHigh("this.values")*/ int num_values;
+  /*@IndexOrHigh("values")*/ int num_values;
 
   /** Whether assertions are enabled. */
   private static boolean assertsEnabled = false;
@@ -64,7 +65,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     num_values = 0;
   }
 
-  @SuppressWarnings("index") // num_values may or may not be an index
   public void add(T elt) {
     if (repNulled()) {
       return;
@@ -106,6 +106,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     // https://tinyurl.com/cfissue/984 is fixed.
     /*@Nullable*/ T /*@SameLen("s.values")*/[] svalues = s.values;
     for (int i = 0; i < s.size(); i++) {
+      // This implies that the set cannot hold null.
       assert svalues[i] != null : "@AssumeAssertion(nullness): used portion of array";
       add(svalues[i]);
       if (repNulled()) {
@@ -121,9 +122,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       throw new UnsupportedOperationException();
     }
     for (int i = 0; i < num_values; i++) {
-      @SuppressWarnings("nullness") // object invariant: used portion of array is non-null
-      T value = values[i];
-      if (value == elt || (value != null && value.equals(elt))) {
+      if (Objects.equals(values[i], elt)) {
         return true;
       }
     }
@@ -147,7 +146,8 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("index") // https://tinyurl.com/cfissue/1606
+  @SuppressWarnings(
+      "lowerbound") // https://tinyurl.com/cfissue/1606: nulling the rep leaves num_values positive
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values;
@@ -173,7 +173,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
    * than it can contain (which is the integer that was passed to the constructor when creating this
    * set).
    */
-  @SuppressWarnings("index") // nulling the rep: breaks the invariant
+  @SuppressWarnings("upperbound") // nulling the rep: after which no indexing will occur
   private void nullRep() {
     if (repNulled()) {
       return;

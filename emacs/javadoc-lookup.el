@@ -119,8 +119,9 @@ The mapping is created by the javadoc-index-to-alist program.")
 	(save-excursion
 	  ;; Requires that compilation is run at top level; makefile must not do "cd", for example.
 	  (find-file filename)
-	  (jimport class-to-import)
-	  )))))
+	  (if (not buffer-read-only) ;; silently ignore read-only buffers
+	      (java-insert-import class-to-import)
+	    ))))))
 
 
 ;; ;; I cannot get this to work; the current buffer stays at *compilation* after compile-goto-error.
