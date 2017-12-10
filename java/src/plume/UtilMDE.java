@@ -1160,14 +1160,14 @@ public final class UtilMDE {
   }
 
   /**
-   * Return a string version of the name that can be used in Java source. On Windows, the file will
-   * return a backslash separated string. Since backslash is an escape character, it must be quoted
-   * itself inside the string.
+   * Return a string version of the filename that can be used in Java source. On Windows, the file
+   * will return a backslash separated string. Since backslash is an escape character, it must be
+   * quoted itself inside the string.
    *
    * <p>The current implementation presumes that backslashes don't appear in filenames except as
    * windows path separators. That seems like a reasonable assumption.
    *
-   * @param name file to quote
+   * @param name file whose name to quote
    * @return a string version of the name that can be used in Java source
    */
   public static String java_source(File name) {
@@ -2628,37 +2628,6 @@ public final class UtilMDE {
     sb.append(orig.substring(post_esc));
     return sb.toString();
   }
-
-  // Use the built-in String.trim()!
-  // /** Return the string with all leading and trailing whitespace stripped. */
-  // public static String trimWhitespace(String s) {
-  //   int len = s.length();
-  //   if (len == 0)
-  //     return s;
-  //   int first_non_ws = 0;
-  //   int last_non_ws = len-1;
-  //   while ((first_non_ws < len) && Character.isWhitespace(s.charAt(first_non_ws)))
-  //     first_non_ws++;
-  //   if (first_non_ws == len)
-  //     return "";
-  //   while (Character.isWhitespace(s.charAt(last_non_ws)))
-  //     last_non_ws--;
-  //   if ((first_non_ws == 0) && (last_non_ws == len)) {
-  //     return s;
-  //   } else {
-  //     return s.substring(first_non_ws, last_non_ws+1);
-  //   }
-  // }
-  // // // Testing:
-  // // assert(UtilMDE.trimWhitespace("foo").equals("foo"));
-  // // assert(UtilMDE.trimWhitespace(" foo").equals("foo"));
-  // // assert(UtilMDE.trimWhitespace("    foo").equals("foo"));
-  // // assert(UtilMDE.trimWhitespace("foo ").equals("foo"));
-  // // assert(UtilMDE.trimWhitespace("foo    ").equals("foo"));
-  // // assert(UtilMDE.trimWhitespace("  foo   ").equals("foo"));
-  // // assert(UtilMDE.trimWhitespace("  foo  bar   ").equals("foo  bar"));
-  // // assert(UtilMDE.trimWhitespace("").equals(""));
-  // // assert(UtilMDE.trimWhitespace("   ").equals(""));
 
   /**
    * Remove all whitespace before or after instances of delimiter.
