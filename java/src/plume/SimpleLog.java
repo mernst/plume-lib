@@ -1,7 +1,7 @@
 package plume;
 
 import java.io.PrintStream;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 /*>>>
 import org.checkerframework.checker.formatter.qual.*;
@@ -44,7 +44,7 @@ public final class SimpleLog {
    */
   public boolean line_oriented = true;
 
-  public Stack<Long> start_times = new Stack<Long>();
+  public ArrayDeque<Long> start_times = new ArrayDeque<Long>();
 
   /**
    * Create a new SimpleLog object.

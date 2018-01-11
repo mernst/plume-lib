@@ -216,6 +216,9 @@ public final class Lookup {
    * @param args command-line arguments; see documentation
    * @throws IOException if there is a problem reading a file
    */
+  @SuppressWarnings({
+    "StringSplitter" // don't add dependence on Guava
+  })
   public static void main(String[] args) throws IOException {
 
     Options options = new Options(usage_string, Lookup.class);

@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.Vector;
 import java.util.regex.Pattern;
 import org.junit.Test;
 
@@ -57,7 +56,10 @@ import org.checkerframework.common.value.qual.*;
 // WeakHasherMap.java
 
 /** Test code for the plume package. */
-@SuppressWarnings({"interning"}) // interning is due to apparent bugs
+@SuppressWarnings({
+  "interning", // interning is due to apparent bugs
+  "UseCorrectAssertInTests" // I don't see the problem with using `assert`
+})
 public final class TestPlume {
 
   // If true, do 100 instead of 100000 iterations when testing randomElements.
@@ -109,27 +111,27 @@ public final class TestPlume {
   }
 
   public static int[] int_iterator_array(Iterator<Integer> itor) {
-    Vector<Integer> v = new Vector<Integer>();
+    ArrayList<Integer> v = new ArrayList<Integer>();
     while (itor.hasNext()) {
       v.add(itor.next());
     }
     int[] a = new int[v.size()];
     for (int i = 0; i < a.length; i++) {
-      a[i] = v.elementAt(i).intValue();
+      a[i] = v.get(i).intValue();
     }
     return a;
   }
 
-  public static <T> Vector<T> toVector(Iterator<T> itor) {
-    Vector<T> v = new Vector<T>();
+  public static <T> ArrayList<T> toArrayList(Iterator<T> itor) {
+    ArrayList<T> v = new ArrayList<T>();
     while (itor.hasNext()) {
       v.add(itor.next());
     }
     return v;
   }
 
-  public static <T> Vector<T> toVector(Enumeration<T> e) {
-    Vector<T> v = new Vector<T>();
+  public static <T> ArrayList<T> toArrayList(Enumeration<T> e) {
+    ArrayList<T> v = new ArrayList<T>();
     while (e.hasMoreElements()) {
       v.add(e.nextElement());
     }
@@ -1531,15 +1533,15 @@ public final class TestPlume {
   public void testOrderedPairIterator() {
     final int NULL = -2222;
 
-    Vector<Integer> ones = new Vector<Integer>();
+    ArrayList<Integer> ones = new ArrayList<Integer>();
     for (int i = 1; i <= 30; i++) {
       ones.add(i);
     }
-    Vector<Integer> twos = new Vector<Integer>();
+    ArrayList<Integer> twos = new ArrayList<Integer>();
     for (int i = 2; i <= 30; i += 2) {
       twos.add(i);
     }
-    Vector<Integer> threes = new Vector<Integer>();
+    ArrayList<Integer> threes = new ArrayList<Integer>();
     for (int i = 3; i <= 30; i += 3) {
       threes.add(i);
     }
@@ -2055,15 +2057,15 @@ public final class TestPlume {
     {
       // These names are taken from APL notation, where iota creates an
       // array of all the numbers up to its argument.
-      Vector<Integer> iota0 = new Vector<Integer>();
-      Vector<Integer> iota10 = new Vector<Integer>();
+      ArrayList<Integer> iota0 = new ArrayList<Integer>();
+      ArrayList<Integer> iota10 = new ArrayList<Integer>();
       for (int i = 0; i < 10; i++) {
         iota10.add(i);
       }
-      Vector<Integer> iota10_twice = new Vector<Integer>();
+      ArrayList<Integer> iota10_twice = new ArrayList<Integer>();
       iota10_twice.addAll(iota10);
       iota10_twice.addAll(iota10);
-      Vector<Integer> iota10_thrice = new Vector<Integer>();
+      ArrayList<Integer> iota10_thrice = new ArrayList<Integer>();
       iota10_thrice.addAll(iota10);
       iota10_thrice.addAll(iota10);
       iota10_thrice.addAll(iota10);
@@ -2071,48 +2073,45 @@ public final class TestPlume {
       // public static class EnumerationIterator implements Iterator
       // public static class IteratorEnumeration implements Enumeration
 
-      assert iota0.equals(toVector(iota0.iterator()));
-      assert iota0.equals(toVector(new UtilMDE.IteratorEnumeration<Integer>(iota0.iterator())));
-      assert iota0.equals(toVector(iota0.elements()));
-      assert iota0.equals(toVector(new UtilMDE.EnumerationIterator<Integer>(iota0.elements())));
-      assert iota10.equals(toVector(iota10.iterator()));
-      assert iota10.equals(toVector(new UtilMDE.IteratorEnumeration<Integer>(iota10.iterator())));
-      assert iota10.equals(toVector(iota10.elements()));
-      assert iota10.equals(toVector(new UtilMDE.EnumerationIterator<Integer>(iota10.elements())));
+      assert iota0.equals(toArrayList(iota0.iterator()));
+      assert iota0.equals(toArrayList(new UtilMDE.IteratorEnumeration<Integer>(iota0.iterator())));
+      assert iota10.equals(toArrayList(iota10.iterator()));
+      assert iota10.equals(
+          toArrayList(new UtilMDE.IteratorEnumeration<Integer>(iota10.iterator())));
 
       // public static class MergedIterator2 implements Iterator {
       assert iota10_twice.equals(
-          toVector(new UtilMDE.MergedIterator2<Integer>(iota10.iterator(), iota10.iterator())));
+          toArrayList(new UtilMDE.MergedIterator2<Integer>(iota10.iterator(), iota10.iterator())));
       assert iota10.equals(
-          toVector(new UtilMDE.MergedIterator2<Integer>(iota0.iterator(), iota10.iterator())));
+          toArrayList(new UtilMDE.MergedIterator2<Integer>(iota0.iterator(), iota10.iterator())));
       assert iota10.equals(
-          toVector(new UtilMDE.MergedIterator2<Integer>(iota10.iterator(), iota0.iterator())));
+          toArrayList(new UtilMDE.MergedIterator2<Integer>(iota10.iterator(), iota0.iterator())));
 
       // public static class MergedIterator implements Iterator {
-      Vector<Iterator<Integer>> iota10_iterator_thrice = new Vector<Iterator<Integer>>();
+      ArrayList<Iterator<Integer>> iota10_iterator_thrice = new ArrayList<Iterator<Integer>>();
       iota10_iterator_thrice.add(iota10.iterator());
       iota10_iterator_thrice.add(iota10.iterator());
       iota10_iterator_thrice.add(iota10.iterator());
       assert iota10_thrice.equals(
-          toVector(new UtilMDE.MergedIterator<Integer>(iota10_iterator_thrice.iterator())));
-      Vector<Iterator<Integer>> iota10_iterator_twice_1 = new Vector<Iterator<Integer>>();
+          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_thrice.iterator())));
+      ArrayList<Iterator<Integer>> iota10_iterator_twice_1 = new ArrayList<Iterator<Integer>>();
       iota10_iterator_twice_1.add(iota0.iterator());
       iota10_iterator_twice_1.add(iota10.iterator());
       iota10_iterator_twice_1.add(iota10.iterator());
-      Vector<Iterator<Integer>> iota10_iterator_twice_2 = new Vector<Iterator<Integer>>();
+      ArrayList<Iterator<Integer>> iota10_iterator_twice_2 = new ArrayList<Iterator<Integer>>();
       iota10_iterator_twice_2.add(iota10.iterator());
       iota10_iterator_twice_2.add(iota0.iterator());
       iota10_iterator_twice_2.add(iota10.iterator());
-      Vector<Iterator<Integer>> iota10_iterator_twice_3 = new Vector<Iterator<Integer>>();
+      ArrayList<Iterator<Integer>> iota10_iterator_twice_3 = new ArrayList<Iterator<Integer>>();
       iota10_iterator_twice_3.add(iota10.iterator());
       iota10_iterator_twice_3.add(iota10.iterator());
       iota10_iterator_twice_3.add(iota0.iterator());
       assert iota10_twice.equals(
-          toVector(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_1.iterator())));
+          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_1.iterator())));
       assert iota10_twice.equals(
-          toVector(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_2.iterator())));
+          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_2.iterator())));
       assert iota10_twice.equals(
-          toVector(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_3.iterator())));
+          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_3.iterator())));
 
       class OddFilter implements Filter<Integer> {
         public OddFilter() {}
@@ -2125,29 +2124,29 @@ public final class TestPlume {
 
       // public static final class FilteredIterator implements Iterator
 
-      Vector<Integer> iota10_odd = new Vector<Integer>();
+      ArrayList<Integer> iota10_odd = new ArrayList<Integer>();
       for (int i = 0; i < iota10.size(); i++) {
         if (i % 2 != 0) {
           iota10_odd.add(i);
         }
       }
       assert iota10_odd.equals(
-          toVector(new UtilMDE.FilteredIterator<Integer>(iota10.iterator(), new OddFilter())));
+          toArrayList(new UtilMDE.FilteredIterator<Integer>(iota10.iterator(), new OddFilter())));
     }
 
     // public static final class RemoveFirstAndLastIterator implements Iterator
     {
-      Vector<Integer> iota5 = new Vector<Integer>();
+      ArrayList<Integer> iota5 = new ArrayList<Integer>();
       for (int i = 0; i < 5; i++) {
         iota5.add(i);
       }
-      Vector<Integer> iota5middle = new Vector<Integer>();
+      ArrayList<Integer> iota5middle = new ArrayList<Integer>();
       for (int i = 1; i < 4; i++) {
         iota5middle.add(i);
       }
       UtilMDE.RemoveFirstAndLastIterator<Integer> rfali =
           new UtilMDE.RemoveFirstAndLastIterator<Integer>(iota5.iterator());
-      Vector<Integer> rfali_vector = toVector(rfali);
+      ArrayList<Integer> rfali_vector = toArrayList(rfali);
       assert iota5middle.equals(rfali_vector);
       assert rfali.getFirst().equals(0);
       assert rfali.getLast().equals(4);
@@ -2306,13 +2305,13 @@ public final class TestPlume {
     assert Arrays.equals(UtilMDE.split(", foo, ", ", "), new String[] {"", "foo", ""});
 
     // public static String join(Object[] a, String delim)
-    // public static String join(Vector v, String delim)
+    // public static String join(ArrayList v, String delim)
 
     assert UtilMDE.join(new String[] {"foo", "bar", "baz"}, ", ").equals("foo, bar, baz");
     assert UtilMDE.join(new String[] {"foo"}, ", ").equals("foo");
     assert UtilMDE.join(new String[] {}, ", ").equals("");
     assert UtilMDE.join(new Integer[] {0, 1, 2, 3, 4}, "").equals("01234");
-    Vector<Object> potpourri = new Vector<Object>();
+    ArrayList<Object> potpourri = new ArrayList<Object>();
     potpourri.add("day");
     potpourri.add(2);
     potpourri.add("day");
@@ -2475,9 +2474,9 @@ public final class TestPlume {
     assert UtilMDE.count("daeaaa", 'a') == 4;
 
     // This will be easy to write tests for, when I get around to it.
-    // public static Vector tokens(String str, String delim, boolean returnTokens)
-    // public static Vector tokens(String str, String delim)
-    // public static Vector tokens(String str)
+    // public static ArrayList tokens(String str, String delim, boolean returnTokens)
+    // public static ArrayList tokens(String str, String delim)
+    // public static ArrayList tokens(String str)
 
     // public static List sortList (List l, Comparator c)
     // public static <T> List<T> removeDuplicates(List<T> l) {
@@ -2544,7 +2543,7 @@ public final class TestPlume {
     assert !UtilMDE.deepEquals(l2, l3);
 
     // This is tested by the tokens methods.
-    // public static Vector makeVector(Enumeration e)
+    // public static ArrayList makeArrayList(Enumeration e)
 
     Locale.setDefault(Locale.US);
     assert UtilMDE.abbreviateNumber(5).equals("5.00");

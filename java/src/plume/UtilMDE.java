@@ -54,7 +54,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -1549,6 +1548,7 @@ public final class UtilMDE {
   }
 
   /** Converts an Iterator into an Enumeration. */
+  @SuppressWarnings("JdkObsolete")
   public static final class IteratorEnumeration<T> implements Enumeration<T> {
     Iterator<T> itor;
 
@@ -2273,7 +2273,7 @@ public final class UtilMDE {
       throw new IllegalArgumentException();
     }
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     /*@IndexOrHigh("target")*/ int lastend = 0;
     int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
@@ -2321,7 +2321,7 @@ public final class UtilMDE {
     if (delimlen == 0) {
       throw new Error("Second argument to split was empty.");
     }
-    Vector<String> result_list = new Vector<String>();
+    ArrayList<String> result_list = new ArrayList<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
       s = s.substring(delimpos + delimlen);
@@ -2367,7 +2367,7 @@ public final class UtilMDE {
     if (a.length == 1) {
       return String.valueOf(a[0]);
     }
-    StringBuffer sb = new StringBuffer(String.valueOf(a[0]));
+    StringBuilder sb = new StringBuilder(String.valueOf(a[0]));
     for (int i = 1; i < a.length; i++) {
       sb.append(delim).append(a[i]);
     }
@@ -2396,7 +2396,7 @@ public final class UtilMDE {
    *     between
    */
   public static String join(Iterable<? extends Object> v, String delim) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     boolean first = true;
     Iterator<?> itor = v.iterator();
     while (itor.hasNext()) {
@@ -2432,7 +2432,7 @@ public final class UtilMDE {
    * @return quoted version of orig
    */
   public static String escapeNonJava(String orig) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     // The previous escape character was seen right before this position.
     /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int orig_len = orig.length();
@@ -2504,7 +2504,7 @@ public final class UtilMDE {
    * @return quoted version of orig
    */
   public static String escapeNonASCII(String orig) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     int orig_len = orig.length();
     for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);
@@ -2560,7 +2560,7 @@ public final class UtilMDE {
    * @return quoted version of orig
    */
   public static String unescapeNonJava(String orig) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     // The previous escape character was seen just before this position.
     /*@LTEqLengthOf("orig")*/ int post_esc = 0;
     int this_esc = orig.indexOf('\\');
@@ -2733,7 +2733,7 @@ public final class UtilMDE {
    */
   public static String lpad(String s, /*@NonNegative*/ int length) {
     if (s.length() < length) {
-      StringBuffer buf = new StringBuffer();
+      StringBuilder buf = new StringBuilder();
       for (int i = s.length(); i < length; i++) {
         buf.append(' ');
       }
@@ -2753,7 +2753,7 @@ public final class UtilMDE {
    */
   public static String rpad(String s, /*@NonNegative*/ int length) {
     if (s.length() < length) {
-      StringBuffer buf = new StringBuffer(s);
+      StringBuilder buf = new StringBuilder(s);
       for (int i = s.length(); i < length; i++) {
         buf.append(' ');
       }
@@ -2884,10 +2884,10 @@ public final class UtilMDE {
   ///
 
   /**
-   * Return a Vector of the Strings returned by {@link
+   * Return a ArrayList of the Strings returned by {@link
    * java.util.StringTokenizer#StringTokenizer(String,String,boolean)} with the given arguments.
    *
-   * <p>The static type is {@code Vector<Object>} because StringTokenizer extends {@code
+   * <p>The static type is {@code ArrayList<Object>} because StringTokenizer extends {@code
    * Enumeration<Object>} instead of {@code Enumeration<String>} as it should (probably due to
    * backward-compatibility).
    *
@@ -2896,31 +2896,31 @@ public final class UtilMDE {
    * @param returnDelims flag indicating whether to return the delimiters as tokens
    * @return vector of strings resulting from tokenization
    */
-  public static Vector<Object> tokens(String str, String delim, boolean returnDelims) {
-    return makeVector(new StringTokenizer(str, delim, returnDelims));
+  public static ArrayList<Object> tokens(String str, String delim, boolean returnDelims) {
+    return makeArrayList(new StringTokenizer(str, delim, returnDelims));
   }
 
   /**
-   * Return a Vector of the Strings returned by {@link
+   * Return a ArrayList of the Strings returned by {@link
    * java.util.StringTokenizer#StringTokenizer(String,String)} with the given arguments.
    *
    * @param str a string to be parsed
    * @param delim the delimiters
    * @return vector of strings resulting from tokenization
    */
-  public static Vector<Object> tokens(String str, String delim) {
-    return makeVector(new StringTokenizer(str, delim));
+  public static ArrayList<Object> tokens(String str, String delim) {
+    return makeArrayList(new StringTokenizer(str, delim));
   }
 
   /**
-   * Return a Vector of the Strings returned by {@link
+   * Return a ArrayList of the Strings returned by {@link
    * java.util.StringTokenizer#StringTokenizer(String)} with the given arguments.
    *
    * @param str a string to be parsed
    * @return vector of strings resulting from tokenization
    */
-  public static Vector<Object> tokens(String str) {
-    return makeVector(new StringTokenizer(str));
+  public static ArrayList<Object> tokens(String str) {
+    return makeArrayList(new StringTokenizer(str));
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -3069,25 +3069,25 @@ public final class UtilMDE {
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  /// Vector
+  /// ArrayList
   ///
 
   /**
    * Returns a vector containing the elements of the enumeration.
    *
    * @param <T> type of the enumeration and vector elements
-   * @param e an enumeration to convert to a Vector
+   * @param e an enumeration to convert to a ArrayList
    * @return a vector containing the elements of the enumeration
    */
-  public static <T> Vector<T> makeVector(Enumeration<T> e) {
-    Vector<T> result = new Vector<T>();
+  public static <T> ArrayList<T> makeArrayList(Enumeration<T> e) {
+    ArrayList<T> result = new ArrayList<T>();
     while (e.hasMoreElements()) {
-      result.addElement(e.nextElement());
+      result.add(e.nextElement());
     }
     return result;
   }
 
-  // Rather than writing something like VectorToStringArray, use
+  // Rather than writing something like ArrayListToStringArray, use
   //   v.toArray(new String[0])
 
   /**

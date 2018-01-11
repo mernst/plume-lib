@@ -123,6 +123,7 @@ public class TaskManager {
       }
     }
 
+    @SuppressWarnings("StringSplitter")
     public Task(String body, String filename, long line_number) throws IOException {
 
       this.filename = filename;

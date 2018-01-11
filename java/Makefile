@@ -577,7 +577,7 @@ plume.tar.gz: $(JAVA_AND_CPP_FILES) Makefile README
 ###
 
 # See version numbers at https://github.com/google/error-prone/releases
-ERRORPRONE_VERSION := 2.1.1
+ERRORPRONE_VERSION := 2.2.0
 
 error-prone: errorprone
 errorprone:

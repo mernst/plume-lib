@@ -1242,6 +1242,9 @@ public class Options {
    *
    * @throws ArgException if there are any errors
    */
+  @SuppressWarnings({
+    "StringSplitter" // don't add dependence on Guava
+  })
   private void set_arg(OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
       throws ArgException {
 

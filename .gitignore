@@ -14,6 +14,7 @@ java/ical4j.properties
 java/jacoco.exec
 java/lib/error_prone_ant-2.0.21.jar
 java/lib/error_prone_ant-2.1.1.jar
+java/lib/error_prone_ant-2.2.0.jar
 java/lookup.html
 java/lookup.jar
 java/lookup.txt
