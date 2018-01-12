@@ -195,7 +195,7 @@ public class FuzzyFloat {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public int indexOf(double[] a, double elt) {
@@ -215,7 +215,7 @@ public class FuzzyFloat {
    * @param sub the sequence to search for
    * @return the first index whose subarray is equal to the specified array or -1 if no such
    *     subarray is found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/

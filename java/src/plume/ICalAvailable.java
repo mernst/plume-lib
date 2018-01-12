@@ -153,7 +153,10 @@ public final class ICalAvailable {
 
   /// Procedures
 
-  @SuppressWarnings("deprecation") // for iCal4j's use of Date.{get,set}Minutes
+  @SuppressWarnings({
+    "deprecation", // for iCal4j's use of Date.{get,set}Minutes
+    "StringSplitter" // don't add dependence on Guava
+  })
   /*@EnsuresNonNull("tz1")*/
   static void processOptions(String[] args) {
     Options options = new Options("ICalAvailable [options]", ICalAvailable.class);

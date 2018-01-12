@@ -68,7 +68,7 @@ public final class Digest {
    * @return a String representation of the input bytes
    */
   public static String hexEncode(byte[] bytes) {
-    StringBuffer s = new StringBuffer(bytes.length * 2);
+    StringBuilder s = new StringBuilder(bytes.length * 2);
     for (int i = 0; i < bytes.length; i++) {
       byte b = bytes[i];
       s.append(digits[(b & 0xf0) >> 4]);

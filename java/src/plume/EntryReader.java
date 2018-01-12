@@ -11,9 +11,9 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.CharBuffer;
+import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,7 +100,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
   ///
 
   /** Stack of readers. Used to support include files. */
-  private final Stack<FlnReader> readers = new Stack<FlnReader>();
+  private final ArrayDeque<FlnReader> readers = new ArrayDeque<FlnReader>();
 
   /** Line that is pushed back to be reread. */
   /*@Nullable*/ String pushback_line = null;
@@ -352,7 +352,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     // we won't use superclass methods, but passing null as an argument
     // leads to a NullPointerException.
     super(new DummyReader());
-    readers.push(new FlnReader(reader, filename));
+    readers.addFirst(new FlnReader(reader, filename));
     if (comment_re_string == null) {
       comment_re = null;
     } else {
@@ -518,14 +518,14 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
         File filename = new File(UtilMDE.expandFilename(filename_string));
         // System.out.printf ("Trying to include filename %s%n", filename);
         if (!filename.isAbsolute()) {
-          FlnReader reader = readers.peek();
+          FlnReader reader = readers.peekFirst();
           File current_filename = new File(reader.filename);
           File current_parent = current_filename.getParentFile();
           filename = new File(current_parent, filename.toString());
           // System.out.printf ("absolute filename = %s %s %s%n",
           //                     current_filename, current_parent, filename);
         }
-        readers.push(new FlnReader(filename.getAbsolutePath()));
+        readers.addFirst(new FlnReader(filename.getAbsolutePath()));
         return readLine();
       }
     }
@@ -705,14 +705,14 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       return (null);
     }
 
-    FlnReader ri1 = readers.peek();
+    FlnReader ri1 = readers.peekFirst();
     String line = ri1.readLine();
     while (line == null) {
-      readers.pop();
-      if (readers.empty()) {
+      readers.removeFirst();
+      if (readers.isEmpty()) {
         return (null);
       }
-      FlnReader ri2 = readers.peek();
+      FlnReader ri2 = readers.peekFirst();
       line = ri2.readLine();
     }
     return (line);
@@ -724,7 +724,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return the current filename
    */
   public String getFileName() {
-    FlnReader ri = readers.peek();
+    FlnReader ri = readers.peekFirst();
     if (ri == null) {
       throw new Error("Past end of input");
     }
@@ -738,7 +738,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   @Override
   public /*@NonNegative*/ int getLineNumber() {
-    FlnReader ri = readers.peek();
+    FlnReader ri = readers.peekFirst();
     if (ri == null) {
       throw new Error("Past end of input");
     }
@@ -752,7 +752,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   @Override
   public void setLineNumber(/*@NonNegative*/ int lineNumber) {
-    FlnReader ri = readers.peek();
+    FlnReader ri = readers.peekFirst();
     if (ri == null) {
       throw new Error("Past end of input");
     }

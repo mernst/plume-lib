@@ -619,6 +619,9 @@ public class MultiVersionControl {
   ///
 
   /** Read checkouts from the file (in .mvc-checkouts format), and add them to the set. */
+  @SuppressWarnings({
+    "StringSplitter" // don't add dependence on Guava
+  })
   static void readCheckouts(File file, Set<Checkout> checkouts) throws IOException {
     RepoType currentType = RepoType.BZR; // arbitrary choice
     String currentRoot = null;

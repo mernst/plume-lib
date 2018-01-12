@@ -4,18 +4,17 @@
 package plume;
 
 import java.io.Serializable;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Vector;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
@@ -559,7 +558,7 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOfEq(/*@PolyAll*/ Object[] a, /*@Nullable*/ Object elt) {
@@ -581,7 +580,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element, such that {@code minindex &le; i <
    *     indexlimit}, or -1 if the element is not found in that section of the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOfEq(
@@ -605,7 +604,7 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the list
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOfEq(List<? extends /*@PolyNull*/ Object> a, /*@Nullable*/ Object elt) {
@@ -627,7 +626,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element, such that {@code minindex &le; i <
    *     indexlimit}, or -1 if the element is not found in that section of the list
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOfEq(
@@ -651,7 +650,7 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(int[] a, int elt) {
@@ -670,7 +669,7 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(long[] a, long elt) {
@@ -691,7 +690,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element, such that {@code minindex &le; i <
    *     indexlimit}, or -1 if the element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(
@@ -713,7 +712,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element, such that {@code minindex &le; i <
    *     indexlimit}, or -1 if the element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(
@@ -733,7 +732,7 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(boolean[] a, boolean elt) {
@@ -752,7 +751,7 @@ public final class ArraysMDE {
    * @param elt the element to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(double[] a, double elt) {
@@ -773,7 +772,7 @@ public final class ArraysMDE {
    * @param indexlimit first index at which not to search
    * @return the first index i containing the specified element, such that {@code minindex &le; i <
    *     indexlimit}, or -1 if the element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    */
   /*@Pure*/
   public static int indexOf(
@@ -806,7 +805,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array, or -1 if no such
    *     element is found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -828,7 +827,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array, or -1 if the
    *     element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   // The signature on this method is unnecessarily strict because it
@@ -854,7 +853,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first list, or -1 if no such
    *     element is found in the list
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -876,7 +875,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first list, or -1 if the
    *     element is not found in the list
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -898,7 +897,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first array, or -1 if no such
    *     element is found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -920,7 +919,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first array, or -1 if the
    *     element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -942,7 +941,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first list, or -1 if no such
    *     element is found in the list
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -964,7 +963,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second list starts in the first list, or -1 if the element
    *     is not found in the list
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -985,7 +984,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array, or -1 if the
    *     element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -1006,7 +1005,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array, or -1 if the
    *     element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -1027,7 +1026,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index at which the second array starts in the first array, or -1 if the
    *     element is not found in the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -1048,7 +1047,7 @@ public final class ArraysMDE {
    * @param sub subsequence to search for
    * @return the first index containing the specified element, or -1 if the element is not found in
    *     the array
-   * @see java.util.Vector#indexOf(java.lang.Object)
+   * @see java.util.ArrayList#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
   /*@Pure*/
@@ -2001,16 +2000,16 @@ public final class ArraysMDE {
   ///
 
   // This should be extended to all types, when I get around to it.  The
-  // methods are patterned after that of java.util.Vector (and use its
+  // methods are patterned after that of java.util.ArrayList (and use its
   // output format).
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a an array
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   /*@SideEffectFree*/
   public static String toString(/*@PolyAll*/ Object /*@Nullable*/ [] a) {
@@ -2019,11 +2018,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector. Furthermore, each element is quoted like a Java String.
+   * java.util.ArrayList. Furthermore, each element is quoted like a Java String.
    *
    * @param a an array
    * @return a string representation of the array, with the elements quoted
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   /*@SideEffectFree*/
   public static String toStringQuoted(/*@PolyAll*/ Object /*@Nullable*/ [] a) {
@@ -2032,13 +2031,13 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector. Furthermore, if quoted is true, then each element is quoted like a Java
+   * java.util.ArrayList. Furthermore, if quoted is true, then each element is quoted like a Java
    * String.
    *
    * @param a an array
    * @param quoted whether to quote the array elements
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
@@ -2046,7 +2045,7 @@ public final class ArraysMDE {
     if (a == null) {
       return "null";
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[");
     if (a.length > 0) {
       sb.append(a[0]);
@@ -2068,11 +2067,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the collection. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a a collection
    * @return a string representation of the collection
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   /*@SideEffectFree*/
   public static String toString(/*@Nullable*/ Collection<?> a) {
@@ -2081,11 +2080,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the collection. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a a collection
    * @return a string representation of the collection, with the elements quoted
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   /*@SideEffectFree*/
   public static String toStringQuoted(/*@Nullable*/ Collection<?> a) {
@@ -2094,12 +2093,12 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the collection. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a a collection
    * @param quoted whether to quote the collection elements that are Java strings
    * @return a string representation of the list
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
@@ -2107,7 +2106,7 @@ public final class ArraysMDE {
     if (a == null) {
       return "null";
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[");
     if (a.size() > 0) {
       Iterator<?> itor = a.iterator();
@@ -2130,11 +2129,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a an array
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @Deprecated
   /*@SideEffectFree*/
@@ -2144,11 +2143,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a an array
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
@@ -2158,11 +2157,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a an array
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
@@ -2172,11 +2171,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a an array
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
@@ -2186,11 +2185,11 @@ public final class ArraysMDE {
 
   /**
    * Return a string representation of the array. The representation is patterned after that of
-   * java.util.Vector.
+   * java.util.ArrayList.
    *
    * @param a an array
    * @return a string representation of the array
-   * @see java.util.Vector#toString
+   * @see java.util.ArrayList#toString
    */
   @SuppressWarnings("purity") // side effect to local state (string creation)
   /*@SideEffectFree*/
@@ -3355,7 +3354,7 @@ public final class ArraysMDE {
    */
   public static <T> List<Partitioning<T>> partitionInto(
       Collection<T> elts, /*@NonNegative*/ int k) {
-    return partitionInto(new LinkedList<T>(elts), k);
+    return partitionInto(new ArrayDeque<T>(elts), k);
   }
 
   /**
@@ -3404,7 +3403,7 @@ public final class ArraysMDE {
       return resultSoFar;
     }
 
-    Queue<T> eltsRemaining = new LinkedList<T>(elts);
+    Queue<T> eltsRemaining = new ArrayDeque<T>(elts);
     T elt = eltsRemaining.remove();
 
     List<Partitioning<T>> result = new ArrayList<Partitioning<T>>();
@@ -3487,21 +3486,10 @@ public final class ArraysMDE {
     return result;
   }
 
-  /** Return a singleton LinkedList containing the given element. */
-  private static <T> LinkedList<T> newLinkedList(T elt) {
-    LinkedList<T> result = new LinkedList<T>();
+  /** Return a singleton ArrayDeque containing the given element. */
+  private static <T> ArrayDeque<T> newArrayDeque(T elt) {
+    ArrayDeque<T> result = new ArrayDeque<T>();
     result.add(elt);
     return result;
   }
-
-  ///////////////////////////////////////////////////////////////////////////
-  /// javadoc hacks
-  ///
-
-  // Without this, the Javadoc mentions of "java.util.Vector", are not links
-  // in the generated HTML.
-  // "private static Vector v;" doesn't work, nor does
-  // "static { new java.util.Vector(); }", nor does "private Vector v".
-  // Yuck!
-  public Vector<?> javadocLossage;
 }
