@@ -518,7 +518,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
         File filename = new File(UtilMDE.expandFilename(filename_string));
         // System.out.printf ("Trying to include filename %s%n", filename);
         if (!filename.isAbsolute()) {
-          FlnReader reader = readers.peekFirst();
+          FlnReader reader = readers.getFirst();
           File current_filename = new File(reader.filename);
           File current_parent = current_filename.getParentFile();
           filename = new File(current_parent, filename.toString());
@@ -705,7 +705,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       return (null);
     }
 
-    FlnReader ri1 = readers.peekFirst();
+    FlnReader ri1 = readers.getFirst();
     String line = ri1.readLine();
     while (line == null) {
       readers.removeFirst();

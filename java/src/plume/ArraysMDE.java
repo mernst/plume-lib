@@ -3343,7 +3343,7 @@ public final class ArraysMDE {
   ///
 
   /**
-   * Partition a set of elements into exactly k subsets. A partitioning is of type {@code
+   * Partition a set of non-null elements into exactly k subsets. A partitioning is of type {@code
    * List<List<T>>}, where the union of the inner lists is {@code elts}. This method returns a list
    * of such partitionings.
    *
@@ -3352,7 +3352,7 @@ public final class ArraysMDE {
    * @param k number of subsets into which to partition {@code elts}
    * @return a list of partitionings, where each contains exactly k subsets
    */
-  public static <T> List<Partitioning<T>> partitionInto(
+  public static <T extends /*@NonNull*/ Object> List<Partitioning<T>> partitionInto(
       Collection<T> elts, /*@NonNegative*/ int k) {
     return partitionInto(new ArrayDeque<T>(elts), k);
   }
@@ -3389,7 +3389,7 @@ public final class ArraysMDE {
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/152
   // "p.addToPart(i, ...)" is OK: i is < numNonemptyParts
   //  and p.size() = numNonemptyParts + numEmptyParts, both of which are non-negative.
-  public static <T> List<Partitioning<T>> partitionIntoHelper(
+  public static <T extends /*@NonNull*/ Object> List<Partitioning<T>> partitionIntoHelper(
       Queue<T> elts,
       List</*@ LengthIs("#3")*/ Partitioning<T>> resultSoFar,
       /*@NonNegative*/ int numEmptyParts,
@@ -3487,7 +3487,7 @@ public final class ArraysMDE {
   }
 
   /** Return a singleton ArrayDeque containing the given element. */
-  private static <T> ArrayDeque<T> newArrayDeque(T elt) {
+  private static <T extends /*@NonNull*/ Object> ArrayDeque<T> newArrayDeque(T elt) {
     ArrayDeque<T> result = new ArrayDeque<T>();
     result.add(elt);
     return result;
