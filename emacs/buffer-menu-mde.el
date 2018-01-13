@@ -217,7 +217,9 @@ The regular expressions are implicitly anchored at the front.")
       (delete-region (point) (progn (end-of-line) (point)))
       (if (bobp)
           (delete-char 1)
-        (delete-backward-char 1)))))
+        (progn
+          (backward-char 1)
+          (delete-char 1))))))
 
 ;;;
 ;;; Erase the read-only marks and the "current" mark
@@ -228,6 +230,7 @@ The regular expressions are implicitly anchored at the front.")
 ;; So don't move the columns.
 
 (defadvice buffer-menu (after erase-read-only-marks activate)
+  (require 'cl)                         ; for `assert'
   (let ((buffer-read-only nil))
     (save-excursion
       (goto-char (point-min))

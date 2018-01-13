@@ -370,7 +370,10 @@ With prefix arg, goes to end of class; otherwise to end of method."
           (progn
             ;; Google Java style sets fill column to 100
             (setq fill-column 100)
-            (fci-mode t)                ; show fill-column indicator
+	    (emacs-25
+	      (require 'fill-column-indicator)
+	      (fci-mode t)
+	      )				; show fill-column indicator
             )))
     ))
 
