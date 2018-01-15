@@ -126,7 +126,7 @@ is easier than clicking on the error."
                         (beginning-of-line)
                         ;; eg, "        at joie.code.BranchInstruction.getString(BranchInstruction.java:64)"
 
-                        (and (looking-at "      at \\([^()]+\\.\\)?[^.]+\\.[^.]+([^()]+.java:[0-9]+)$")
+                        (and (looking-at ".*[ \t]at \\([^()]+\\.\\)?[^.]+\\.[^.]+([^()]+.java:[0-9]+)$")
                              ;; We dropped the last two components from the dotted operation name.
                              (let ((dir (or (match-string 1) "")))
                                (while (string-match "\\." dir)
@@ -177,7 +177,13 @@ is easier than clicking on the error."
               ;; return the buffer
               (find-file-noselect
                (concat default-directory
-                       (buffer-substring (point) (line-beginning-position)))))))))
+                       (buffer-substring (point) (line-beginning-position))))
+	    (let ((result nil))
+	      (while (and (not result)
+			  (re-search-forward "\n\\(.*\\),include$" nil t))
+		(save-excursion
+		  (setq result (find-in-tags-table file (match-string 1)))))
+	      result))))))
 
 
 ;;;

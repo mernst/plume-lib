@@ -1604,6 +1604,18 @@ Use as a hook, like so:
          (cons '("^\\(?::validate\\)?\\(?:WARNING:html5validator.validator:\\)?\"file:\\(.*\\)\":\\([0-9]+\\).\\([0-9]+\\)" 1 2 3)
                compilation-error-regexp-alist)))
 
+;; JUnit under ant, such as
+;;    [junit] 	at org.checkerframework.framework.stub.StubParser.processCompilationUnit(StubParser.java:447)
+(eval-after-load "compile"
+  '(setq compilation-error-regexp-alist
+         (cons (list
+                (concat "    \\[junit\\] 	at [^ \n]+"
+                        "("
+                        "\\([a-zA-Z][a-zA-Z._0-9]+.java\\):\\([0-9,]+\\)"
+                        ")$")
+                1 2)
+               compilation-error-regexp-alist)))
+
 ;; I suspect this regexp is extremely inefficient, and I don't understand it.
 ;; ;; ant output, such as
 ;; ;; "    [javac] /afs/athena.mit.edu/user/m/e/mernst/6.170/ps0/src/ps0/Ball.java:18: cannot find symbol"
