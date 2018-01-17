@@ -59,12 +59,14 @@ public class OrderedPairIterator<T>
   }
   /** Set the next1 variable. */
   /*@RequiresNonNull("itor1")*/
-  private void setnext1(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
+  private void setnext1(
+      /*>>> @GuardSatisfied @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
     next1 = itor1.hasNext() ? itor1.next() : null;
   }
   /** Set the next2 variable. */
   /*@RequiresNonNull("itor2")*/
-  private void setnext2(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
+  private void setnext2(
+      /*>>> @GuardSatisfied @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
     next2 = itor2.hasNext() ? itor2.next() : null;
   }
   // Have the caller do this directly, probably.
