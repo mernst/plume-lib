@@ -107,7 +107,7 @@ The correct way to build the system is to run 'make'.
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext(/*>>>@GuardSatisfied MissingNumbersIteratorINT this*/) {
       if (current_missing < current_nonmissing) {
         return true;
       }
@@ -155,7 +155,7 @@ The correct way to build the system is to run 'make'.
     }
 
     @Override
-    public INTEGER next() {
+    public INTEGER next(/*>>>@GuardSatisfied MissingNumbersIteratorINT this*/) {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
@@ -165,7 +165,7 @@ The correct way to build the system is to run 'make'.
     }
 
     @Override
-    public void remove() {
+    public void remove(/*>>>@GuardSatisfied MissingNumbersIteratorINT this*/) {
       throw new UnsupportedOperationException();
     }
   }

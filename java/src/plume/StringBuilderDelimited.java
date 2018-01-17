@@ -83,7 +83,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   }
 
   @Override
-  public char charAt(/*@IndexFor("this")*/ int index) {
+  public char charAt(/*>>>@IndexFor("this")*/ int index) {
     return delegate.charAt(index);
   }
 
@@ -95,7 +95,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
 
   @Override
   public CharSequence subSequence(
-      /*@IndexOrHigh("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {
+      /*>>>@IndexOrHigh("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {
     return delegate.subSequence(start, end);
   }
 

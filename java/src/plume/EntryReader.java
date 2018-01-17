@@ -555,7 +555,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return whether there is another line to read
    */
   @Override
-  public boolean hasNext() {
+  public boolean hasNext(/*>>>@GuardSatisfied EntryReader this*/) {
     if (pushback_line != null) {
       return true;
     }
@@ -582,7 +582,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @throws NoSuchElementException at end of file
    */
   @Override
-  public String next() {
+  public String next(/*>>>@GuardSatisfied EntryReader this*/) {
     try {
       String result = readLine();
       if (result != null) {
@@ -597,7 +597,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /** remove() is not supported. */
   @Override
-  public void remove() {
+  public void remove(/*>>>@GuardSatisfied EntryReader this*/) {
     throw new UnsupportedOperationException("can't remove lines from file");
   }
 
@@ -791,7 +791,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   // TODO:  This would probably be better implemented with the "mark" mechanism
   // of BufferedReader (which is also in LineNumberReader and FlnReader).
-  public void putback(String line) {
+  public void putback(/*>>>@GuardSatisfied EntryReader this, */ String line) {
     assert pushback_line == null
         : "push back '" + line + "' when '" + pushback_line + "' already back";
     pushback_line = line;

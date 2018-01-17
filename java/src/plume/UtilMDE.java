@@ -59,6 +59,7 @@ import java.util.zip.GZIPOutputStream;
 
 /*>>>
 import org.checkerframework.checker.index.qual.*;
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
@@ -1532,17 +1533,17 @@ public final class UtilMDE {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext(/*>>>@GuardSatisfied EnumerationIterator<T> this*/) {
       return e.hasMoreElements();
     }
 
     @Override
-    public T next() {
+    public T next(/*>>>@GuardSatisfied EnumerationIterator<T> this*/) {
       return e.nextElement();
     }
 
     @Override
-    public void remove() {
+    public void remove(/*>>>@GuardSatisfied EnumerationIterator<T> this*/) {
       throw new UnsupportedOperationException();
     }
   }
@@ -1582,12 +1583,12 @@ public final class UtilMDE {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext(/*>>>@GuardSatisfied MergedIterator2<T> this*/) {
       return (itor1.hasNext() || itor2.hasNext());
     }
 
     @Override
-    public T next() {
+    public T next(/*>>>@GuardSatisfied MergedIterator2<T> this*/) {
       if (itor1.hasNext()) {
         return itor1.next();
       } else if (itor2.hasNext()) {
@@ -1598,7 +1599,7 @@ public final class UtilMDE {
     }
 
     @Override
-    public void remove() {
+    public void remove(/*>>>@GuardSatisfied MergedIterator2<T> this*/) {
       throw new UnsupportedOperationException();
     }
   }
@@ -1620,7 +1621,7 @@ public final class UtilMDE {
     Iterator<T> current = new ArrayList<T>().iterator();
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext(/*>>>@GuardSatisfied MergedIterator<T> this*/) {
       while ((!current.hasNext()) && (itorOfItors.hasNext())) {
         current = itorOfItors.next();
       }
@@ -1628,13 +1629,13 @@ public final class UtilMDE {
     }
 
     @Override
-    public T next() {
+    public T next(/*>>>@GuardSatisfied MergedIterator<T> this*/) {
       hasNext(); // for side effect
       return current.next();
     }
 
     @Override
-    public void remove() {
+    public void remove(/*>>>@GuardSatisfied MergedIterator<T> this*/) {
       throw new UnsupportedOperationException();
     }
   }
@@ -1657,7 +1658,7 @@ public final class UtilMDE {
     boolean current_valid = false;
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext(/*>>>@GuardSatisfied FilteredIterator<T> this*/) {
       while ((!current_valid) && itor.hasNext()) {
         current = itor.next();
         current_valid = filter.accept(current);
@@ -1666,7 +1667,7 @@ public final class UtilMDE {
     }
 
     @Override
-    public T next() {
+    public T next(/*>>>@GuardSatisfied FilteredIterator<T> this*/) {
       if (hasNext()) {
         current_valid = false;
         @SuppressWarnings("interning")
@@ -1679,7 +1680,7 @@ public final class UtilMDE {
     }
 
     @Override
-    public void remove() {
+    public void remove(/*>>>@GuardSatisfied FilteredIterator<T> this*/) {
       throw new UnsupportedOperationException();
     }
   }
@@ -1710,12 +1711,12 @@ public final class UtilMDE {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext(/*>>>@GuardSatisfied RemoveFirstAndLastIterator<T> this*/) {
       return itor.hasNext();
     }
 
     @Override
-    public T next() {
+    public T next(/*>>>@GuardSatisfied RemoveFirstAndLastIterator<T> this*/) {
       if (!itor.hasNext()) {
         throw new NoSuchElementException();
       }
@@ -1744,7 +1745,7 @@ public final class UtilMDE {
     }
 
     @Override
-    public void remove() {
+    public void remove(/*>>>@GuardSatisfied RemoveFirstAndLastIterator<T> this*/) {
       throw new UnsupportedOperationException();
     }
   }
