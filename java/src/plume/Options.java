@@ -907,11 +907,12 @@ public class Options {
   /**
    * Parses a command line and sets the options accordingly.
    *
-   * <p>{@link #parse(String[])} is usually a better method to call. This one is appropriate when
-   * the {@code String[]} version of the arguments is not available &mdash; for example, for the
-   * {@code premain} method of a Java agent. This method splits the argument string into
-   * command-line arguments, respecting single and double quotes, then calls {@link
-   * #parse(String[])}.
+   * <p>This method splits the argument string into command-line arguments, respecting single and
+   * double quotes, then calls {@link #parse(String[])}.
+   *
+   * <p>You should usually call {@link #parse(String[])} instead of this method. This method is only
+   * appropriate when the {@code String[]} version of the arguments is not available &mdash; for
+   * example, for the {@code premain} method of a Java agent.
    *
    * @param args the command line to parse
    * @return all non-option arguments
@@ -962,7 +963,76 @@ public class Options {
   /**
    * Parses a command line and sets the options accordingly. Returns non-option arguments.
    *
-   * <p>If an error occurs, prints the usage message that was passed into the constructor, then
+   * <p>If an error occurs, prints the exception's message, prints the given message, and then
+   * terminates the program. The program is terminated rather than throwing an error to create
+   * cleaner output.
+   *
+   * @param message a message to print, such as "Pass --help for a list of all command-line
+   *     arguments."
+   * @param args the command line to parse
+   * @return all non-option arguments
+   * @see #parse(String[])
+   */
+  public String[] parse_or_message(String message, String[] args) {
+
+    String[] non_options = null;
+
+    try {
+      non_options = parse(args);
+    } catch (ArgException ae) {
+      String exceptionMessage = ae.getMessage();
+      if (exceptionMessage != null) {
+        System.out.println(exceptionMessage);
+      }
+      System.out.println(message);
+      System.exit(-1);
+      // throw new Error ("message error: ", ae);
+    }
+    return (non_options);
+  }
+
+  /**
+   * Parses a command line and sets the options accordingly. Returns non-option arguments.
+   *
+   * <p>If an error occurs, prints the exception's message, prints the given message, and then
+   * terminates the program. The program is terminated rather than throwing an error to create
+   * cleaner output.
+   *
+   * <p>This method splits the argument string into command-line arguments, respecting single and
+   * double quotes, then calls {@link #parse_or_message(String, String[])}.
+   *
+   * <p>You should usually call {@link #parse_or_message(String, String[])} instead of this method.
+   * This method is only appropriate when the {@code String[]} version of the arguments is not
+   * available &mdash; for example, for the {@code premain} method of a Java agent.
+   *
+   * @param message a message to print, such as "Pass --help for a list of all command-line
+   *     arguments."
+   * @param args the command line to parse
+   * @return all non-option arguments
+   * @see #parse_or_message(String, String[])
+   */
+  public String[] parse_or_message(String message, String args) {
+
+    String[] non_options = null;
+
+    try {
+      non_options = parse(args);
+    } catch (ArgException ae) {
+      String exceptionMessage = ae.getMessage();
+      if (exceptionMessage != null) {
+        System.out.println(exceptionMessage);
+      }
+      System.out.println(message);
+      System.exit(-1);
+      // throw new Error ("usage error: ", ae);
+    }
+    return (non_options);
+  }
+
+  /**
+   * Parses a command line and sets the options accordingly. Returns non-option arguments.
+   *
+   * <p>If an error occurs, prints the exception's message, prints usage inoframtion, and then
    * terminates the program. The program is terminated rather than throwing an error to create
    * cleaner output.
    *
@@ -992,15 +1062,15 @@ public class Options {
   /**
    * Parses a command line and sets the options accordingly. Returns non-option arguments.
    *
-   * <p>If an error occurs, prints the usage message that was passed into the constructor, then
-   * terminates the program. The program is terminated rather than throwing an error to create
-   * cleaner output.
+   * <p>If an error occurs, prints the exception's message, calls print_usage, and then terminates
+   * the program. The program is terminated rather than throwing an error to create cleaner output.
    *
-   * <p>{@link #parse_or_usage(String[])} is usually a better method to call. This one is
-   * appropriate when the {@code String[]} version of the arguments is not available &mdash; for
-   * example, for the {@code premain} method of a Java agent. This method splits the argument string
-   * into command-line arguments, respecting single and double quotes, then calls {@link
-   * #parse_or_usage(String[])}.
+   * <p>This method splits the argument string into command-line arguments, respecting single and
+   * double quotes, then calls {@link #parse_or_usage(String[])}.
+   *
+   * <p>You should usually call {@link #parse_or_usage(String[])} instead of this method. This
+   * method is only appropriate when the {@code String[]} version of the arguments is not available
+   * &mdash; for example, for the {@code premain} method of a Java agent.
    *
    * @param args the command line to parse
    * @return all non-option arguments
