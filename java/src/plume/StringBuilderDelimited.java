@@ -89,6 +89,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
 
   /*@Pure*/
   @Override
+  @SuppressWarnings("upperbound:override.return.invalid") // mutable-length subclass of CharSequence
   public /*@NonNegative*/ int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
@@ -101,6 +102,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
 
   /*@SideEffectFree*/
   @Override
+  @SuppressWarnings("samelen:override.return.invalid") // mutable-length subclass of CharSequence
   public String toString(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.toString();
   }
