@@ -289,7 +289,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
 
     @Override
-    public void mark(int readAheadLimit) {
+    public void mark(/*>>>@GuardSatisfied DummyReader this, */ int readAheadLimit) {
       throw new Error("DummyReader");
     }
 
@@ -299,22 +299,24 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
 
     @Override
-    public /*@GTENegativeOne*/ int read() {
+    public /*@GTENegativeOne*/ int read(/*>>>@GuardSatisfied DummyReader this*/) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public /*@IndexOrLow("#1")*/ int read(char[] cbuf) {
+    public /*@IndexOrLow("#1")*/ int read(/*>>>@GuardSatisfied DummyReader this, */ char[] cbuf) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public /*@IndexOrLow("#1")*/ int read(char[] cbuf, int off, int len) {
+    public /*@IndexOrLow("#1")*/ int read(
+        /*>>>@GuardSatisfied DummyReader this, */ char[] cbuf, int off, int len) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public /*@GTENegativeOne*/ int read(CharBuffer target) {
+    public /*@GTENegativeOne*/ int read(
+        /*>>>@GuardSatisfied DummyReader this, */ CharBuffer target) {
       throw new Error("DummyReader");
     }
 
@@ -324,12 +326,12 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
 
     @Override
-    public void reset() {
+    public void reset(/*>>>@GuardSatisfied DummyReader this*/) {
       throw new Error("DummyReader");
     }
 
     @Override
-    public long skip(long n) {
+    public long skip(/*>>>@GuardSatisfied DummyReader this, */ long n) {
       throw new Error("DummyReader");
     }
   }
@@ -473,7 +475,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return the string that was read, or null at end of file
    */
   @Override
-  public /*@Nullable*/ String readLine() throws IOException {
+  public /*@Nullable*/ String readLine(
+      /*>>>@GuardSatisfied EntryReader this*/) throws IOException {
 
     // System.out.printf ("Entering size = %d%n", readers.size());
 
@@ -555,7 +558,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return whether there is another line to read
    */
   @Override
-  public boolean hasNext() {
+  public boolean hasNext(/*>>>@GuardSatisfied EntryReader this*/) {
     if (pushback_line != null) {
       return true;
     }
@@ -582,7 +585,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @throws NoSuchElementException at end of file
    */
   @Override
-  public String next() {
+  public String next(/*>>>@GuardSatisfied EntryReader this*/) {
     try {
       String result = readLine();
       if (result != null) {
@@ -597,7 +600,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /** remove() is not supported. */
   @Override
-  public void remove() {
+  public void remove(/*>>>@GuardSatisfied EntryReader this*/) {
     throw new UnsupportedOperationException("can't remove lines from file");
   }
 
@@ -609,7 +612,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return the next entry (paragraph) in the file
    * @throws IOException if there is a problem reading the file
    */
-  public /*@Nullable*/ Entry get_entry() throws IOException {
+  public /*@Nullable*/ Entry get_entry(
+      /*>>>@GuardSatisfied EntryReader this*/) throws IOException {
 
     // Skip any preceding blank lines
     String line = readLine();
@@ -699,7 +703,8 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *
    * @return next line from the reader, or null if there is no more input
    */
-  private /*@Nullable*/ String get_next_line() throws IOException {
+  private /*@Nullable*/ String get_next_line(
+      /*>>>@GuardSatisfied EntryReader this*/) throws IOException {
 
     if (readers.size() == 0) {
       return (null);
@@ -723,7 +728,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    *
    * @return the current filename
    */
-  public String getFileName() {
+  public String getFileName(/*>>>@GuardSatisfied EntryReader this*/) {
     FlnReader ri = readers.peekFirst();
     if (ri == null) {
       throw new Error("Past end of input");
@@ -737,7 +742,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @return the current line number
    */
   @Override
-  public /*@NonNegative*/ int getLineNumber() {
+  public /*@NonNegative*/ int getLineNumber(/*>>>@GuardSatisfied EntryReader this*/) {
     FlnReader ri = readers.peekFirst();
     if (ri == null) {
       throw new Error("Past end of input");
@@ -751,7 +756,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param lineNumber new line number for the current file
    */
   @Override
-  public void setLineNumber(/*@NonNegative*/ int lineNumber) {
+  public void setLineNumber(
+      /*>>>@GuardSatisfied EntryReader this, */
+      /*@NonNegative*/ int lineNumber) {
     FlnReader ri = readers.peekFirst();
     if (ri == null) {
       throw new Error("Past end of input");
@@ -767,6 +774,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param entry_stop_re regular expression that ends a long entry
    */
   public void set_entry_start_stop(
+      /*>>>@GuardSatisfied EntryReader this, */
       /*@Regex(1)*/ String entry_start_re, /*@Regex*/ String entry_stop_re) {
     this.entry_start_re = Pattern.compile(entry_start_re);
     this.entry_stop_re = Pattern.compile(entry_stop_re);
@@ -779,7 +787,9 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param entry_start_re regular expression that starts a long entry
    * @param entry_stop_re regular expression that ends a long entry
    */
-  public void set_entry_start_stop(/*@Regex(1)*/ Pattern entry_start_re, Pattern entry_stop_re) {
+  public void set_entry_start_stop(
+      /*>>>@GuardSatisfied EntryReader this, */
+      /*@Regex(1)*/ Pattern entry_start_re, Pattern entry_stop_re) {
     this.entry_start_re = entry_start_re;
     this.entry_stop_re = entry_stop_re;
   }
@@ -791,7 +801,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    */
   // TODO:  This would probably be better implemented with the "mark" mechanism
   // of BufferedReader (which is also in LineNumberReader and FlnReader).
-  public void putback(String line) {
+  public void putback(/*>>>@GuardSatisfied EntryReader this, */ String line) {
     assert pushback_line == null
         : "push back '" + line + "' when '" + pushback_line + "' already back";
     pushback_line = line;
@@ -799,27 +809,28 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
 
   /** Mark the present position in the stream. */
   @Override
-  public void mark(int readAheadLimit) {
+  public void mark(/*>>>@GuardSatisfied EntryReader this, */ int readAheadLimit) {
     throw new Error("not yet implemented");
   }
   /** Read a single character. */
   @Override
-  public /*@GTENegativeOne*/ int read() {
+  public /*@GTENegativeOne*/ int read(/*>>>@GuardSatisfied EntryReader this*/) {
     throw new Error("not yet implemented");
   }
   /** Read characters into a portion of an array. */
   @Override
-  public /*@IndexOrLow("#1")*/ int read(char[] cbuf, int off, int len) {
+  public /*@IndexOrLow("#1")*/ int read(
+      /*>>>@GuardSatisfied EntryReader this, */ char[] cbuf, int off, int len) {
     throw new Error("not yet implemented");
   }
   /** Reset the stream to the most recent mark. */
   @Override
-  public void reset() {
+  public void reset(/*>>>@GuardSatisfied EntryReader this*/) {
     throw new Error("not yet implemented");
   }
   /** Skip characters. */
   @Override
-  public long skip(long n) {
+  public long skip(/*>>>@GuardSatisfied EntryReader this, */ long n) {
     throw new Error("not yet implemented");
   }
 

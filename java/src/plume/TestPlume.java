@@ -2165,12 +2165,12 @@ public final class TestPlume {
       }
 
       @Override
-      public boolean hasNext() {
+      public boolean hasNext(/*>>>@GuardSatisfied IotaIterator this*/) {
         return i < limit;
       }
 
       @Override
-      public Integer next() {
+      public Integer next(/*>>>@GuardSatisfied IotaIterator this*/) {
         if (!hasNext()) {
           throw new NoSuchElementException();
         }
@@ -2178,7 +2178,8 @@ public final class TestPlume {
       }
 
       @Override
-      public void remove() {
+      public void remove(/*>>>
+@GuardSatisfied IotaIterator this*/ ) {
         throw new UnsupportedOperationException();
       }
     }

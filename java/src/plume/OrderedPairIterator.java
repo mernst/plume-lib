@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
+import org.checkerframework.checker.lock.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
@@ -58,12 +59,14 @@ public class OrderedPairIterator<T>
   }
   /** Set the next1 variable. */
   /*@RequiresNonNull("itor1")*/
-  private void setnext1(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
+  private void setnext1(
+      /*>>> @GuardSatisfied @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
     next1 = itor1.hasNext() ? itor1.next() : null;
   }
   /** Set the next2 variable. */
   /*@RequiresNonNull("itor2")*/
-  private void setnext2(/*>>> @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
+  private void setnext2(
+      /*>>> @GuardSatisfied @UnknownInitialization @Raw OrderedPairIterator<T> this*/) {
     next2 = itor2.hasNext() ? itor2.next() : null;
   }
   // Have the caller do this directly, probably.
@@ -71,25 +74,28 @@ public class OrderedPairIterator<T>
   //   this((new TreeSet(s1)).iterator(), (new TreeSet(s2)).iterator());
   // }
   @Override
-  public boolean hasNext() {
+  public boolean hasNext(/*>>>@GuardSatisfied OrderedPairIterator<T> this*/) {
     return ((next1 != null) || (next2 != null));
   }
   /** Return an element of the first iterator, paired with null. */
-  private Pair</*@Nullable*/ T, /*@Nullable*/ T> return1() {
+  private Pair</*@Nullable*/ T, /*@Nullable*/ T> return1(
+      /*>>>@GuardSatisfied OrderedPairIterator<T> this*/) {
     Pair</*@Nullable*/ T, /*@Nullable*/ T> result =
         Pair.</*@Nullable*/ T, /*@Nullable*/ T>of(next1, (/*@Nullable*/ T) null);
     setnext1();
     return result;
   }
   /** Return a pair of null and an element of the second iterator. */
-  private Pair</*@Nullable*/ T, /*@Nullable*/ T> return2() {
+  private Pair</*@Nullable*/ T, /*@Nullable*/ T> return2(
+      /*>>>@GuardSatisfied OrderedPairIterator<T> this*/) {
     Pair</*@Nullable*/ T, /*@Nullable*/ T> result =
         Pair.</*@Nullable*/ T, /*@Nullable*/ T>of((/*@Nullable*/ T) null, next2);
     setnext2();
     return result;
   }
   /** Return a pair containing an element from each iterator. */
-  private Pair</*@Nullable*/ T, /*@Nullable*/ T> returnboth() {
+  private Pair</*@Nullable*/ T, /*@Nullable*/ T> returnboth(
+      /*>>>@GuardSatisfied OrderedPairIterator<T> this*/) {
     Pair</*@Nullable*/ T, /*@Nullable*/ T> result =
         Pair.</*@Nullable*/ T, /*@Nullable*/ T>of(next1, next2);
     setnext1();
@@ -98,7 +104,8 @@ public class OrderedPairIterator<T>
   }
 
   @Override
-  public Pair</*@Nullable*/ T, /*@Nullable*/ T> next() {
+  public Pair</*@Nullable*/ T, /*@Nullable*/ T> next(
+      /*>>>@GuardSatisfied OrderedPairIterator<T> this*/) {
     if (next1 == null) {
       if (next2 == null) {
         throw new NoSuchElementException();
@@ -143,7 +150,7 @@ public class OrderedPairIterator<T>
   }
 
   @Override
-  public void remove() {
+  public void remove(/*>>>@GuardSatisfied OrderedPairIterator<T> this*/) {
     throw new UnsupportedOperationException();
   }
 }

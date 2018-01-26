@@ -198,7 +198,7 @@ public class StrTok {
    * @param errorHandler the new error handler
    * @see ErrorHandler
    */
-  /*@EnsuresNonNull("this.errorHandler")*/
+  /*>>>@EnsuresNonNull("this.errorHandler")*/
   public void set_error_handler(
       /*>>>@UnknownInitialization @Raw StrTok this,*/ ErrorHandler errorHandler) {
     this.errorHandler = errorHandler;
