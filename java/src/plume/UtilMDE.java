@@ -752,7 +752,6 @@ public final class UtilMDE {
         if (semi_pos == -1) {
           throw new Error("Malformed arglist: " + arglist);
         }
-        @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/176
         String fieldDescriptor = arglist.substring(pos, semi_pos + 1);
         result += fieldDescriptorToBinaryName(fieldDescriptor);
         pos = semi_pos + 1;
