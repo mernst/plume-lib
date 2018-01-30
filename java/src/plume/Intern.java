@@ -861,7 +861,7 @@ public final class Intern {
    */
   public static int /*@Interned*/ [] internSubsequence(
       int /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/  /*@LessThan("#3")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -891,7 +891,7 @@ public final class Intern {
   /*@Pure*/
   public static long /*@Interned*/ [] internSubsequence(
       long /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/  /*@LessThan("#3")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -921,7 +921,7 @@ public final class Intern {
   /*@Pure*/
   public static double /*@Interned*/ [] internSubsequence(
       double /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/  /*@LessThan("#3")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -988,7 +988,7 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/  /*@LessThan("#3")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
