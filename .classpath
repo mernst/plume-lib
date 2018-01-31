@@ -18,8 +18,6 @@
   <classpathentry kind="lib" path="java/lib/slf4j-api-1.7.25.jar"/>
   <classpathentry kind="lib" path="java/lib/slf4j-simple-1.7.25.jar"/>
   <classpathentry kind="lib" path="java/lib/svnkit-1.8.15-complete.jar"/>
-  <classpathentry kind="lib" path="java/lib/tagsoup-1.2.1.jar"/>
-  <classpathentry kind="lib" path="java/lib/xom-1.2.10.jar"/>
   <classpathentry kind="lib" path="jdk/lib/tools.jar"/>
   <classpathentry kind="output" path="bin-eclipse"/>
 </classpath>

@@ -34,11 +34,7 @@ slf4j-api-1.7.25.jar : http://www.slf4j.org/download.html
 slf4j-simple-1.7.25.jar : http://www.slf4j.org/download.html
 svnkit-1.8.15-complete.jar : see below
   (used by MultiVersionControl)
-tagsoup-1.2.1.jar : https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup
-  (used by HtmlPrettyPrint)
 utilMDE-20091207.jar : do not update
-xom-1.2.10.jar : http://www.xom.nu/
-  (used by HtmlPrettyPrint)
 
 Two libraries are nonstandard:
 
