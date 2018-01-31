@@ -30,10 +30,10 @@ public final class SimpleLog {
   public boolean always_traceback = false;
 
   /** Where to write logging output. Null if nothing has been output yet. */
-  public PrintStream logfile;
+  private @MonotonicNonNull PrintStream logfile = null;
 
   /** The file for logging output. If null or "-", System.out is used. */
-  private String filename;
+  private @Nullable String filename = null;
 
   /** The current indentation string. */
   private String indent_str = "";
@@ -97,6 +97,7 @@ public final class SimpleLog {
    * output is performed. Otherwise, it would be annoying to create a zero-size logfile if no output
    * is ever performed.
    */
+  /*@EnsuresNonNull("logfile")*/
   private void setLogfile() {
     if (logfile != null) {
       return;
