@@ -30,10 +30,10 @@ public final class SimpleLog {
   public boolean always_traceback = false;
 
   /** Where to write logging output. Null if nothing has been output yet. */
-  private @MonotonicNonNull PrintStream logfile = null;
+  private /*@MonotonicNonNull*/ PrintStream logfile = null;
 
   /** The file for logging output. If null or "-", System.out is used. */
-  private @Nullable String filename = null;
+  private /*@Nullable*/ String filename = null;
 
   /** The current indentation string. */
   private String indent_str = "";
