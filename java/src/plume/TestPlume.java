@@ -1828,7 +1828,7 @@ public final class TestPlume {
   public void compareJoinAndSBD(String[] strings) {
     StringBuilderDelimited sbd = new StringBuilderDelimited(",");
     for (String str : strings) {
-      sbd.append(str);
+      sbd.add(str);
     }
     assert sbd.toString().equals(UtilMDE.join(strings, ","));
   }

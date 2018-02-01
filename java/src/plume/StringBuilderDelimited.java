@@ -18,7 +18,8 @@ import org.checkerframework.dataflow.qual.*;
  * calling the wrong version of append. Also, I don't (yet) want to override all the methods; this
  * simpler version seems sufficient for the time being.
  *
- * <p>Obsoleted by the Java 8 StringJoiner class.
+ * <p>Obsoleted by the Java 8 StringJoiner class. Use only if your code must compile or run under
+ * Java 7.
  */
 public class StringBuilderDelimited implements Appendable, CharSequence {
 
@@ -46,18 +47,48 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     }
   }
 
+  public StringBuilderDelimited add(CharSequence newElement) {
+    appendDelimiter();
+    delegate.append(newElement);
+    return this;
+  }
+
+  /**
+   * Appends the specified string to this.
+   *
+   * @param str the string to append to this StringBuilderDelimited
+   * @return a reference to this StringBuilderDelimited
+   * @deprecated Use #add(CharSequence)
+   */
+  @Deprecated
   public StringBuilderDelimited append(/*@Nullable*/ String str) {
     appendDelimiter();
     delegate.append(str);
     return this;
   }
 
+  /**
+   * Appends the specified object's printed representatioin to this.
+   *
+   * @param o the object whose toString() to append to this StringBuilderDelimited
+   * @return a reference to this StringBuilderDelimited
+   * @deprecated Use #add(CharSequence)
+   */
+  @Deprecated
   public StringBuilderDelimited append(/*@Nullable*/ Object o) {
     appendDelimiter();
     delegate.append(o);
     return this;
   }
 
+  /**
+   * Appends the specified character to this.
+   *
+   * @param c the character to append to this StringBuilderDelimited
+   * @return a reference to this StringBuilderDelimited
+   * @deprecated Use #add(CharSequence)
+   */
+  @Deprecated
   @Override
   public StringBuilderDelimited append(char c) {
     appendDelimiter();
@@ -65,6 +96,14 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
+  /**
+   * Appends the specified character sequence to this.
+   *
+   * @param csq the character sequence to append to this StringBuilderDelimited
+   * @return a reference to this StringBuilderDelimited
+   * @deprecated Use #add(CharSequence)
+   */
+  @Deprecated
   @Override
   public StringBuilderDelimited append(/*@Nullable*/ CharSequence csq) {
     appendDelimiter();
@@ -72,6 +111,8 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
+  /** @deprecated Use #add(CharSequence) */
+  @Deprecated
   @Override
   public StringBuilderDelimited append(
       /*@Nullable*/ CharSequence csq,
@@ -82,6 +123,8 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return this;
   }
 
+  /** @deprecated Not supported by StringJoiner which will supersede this */
+  @Deprecated
   @Override
   public char charAt(/*>>>@IndexFor("this")*/ int index) {
     return delegate.charAt(index);
@@ -94,6 +137,8 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     return delegate.length();
   }
 
+  /** @deprecated Not supported by StringJoiner which will supersede this */
+  @Deprecated
   @Override
   public CharSequence subSequence(
       /*>>>@IndexOrHigh("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {

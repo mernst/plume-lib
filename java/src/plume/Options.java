@@ -17,6 +17,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -780,7 +782,10 @@ public class Options {
           "Exception in call to f.getAnnotation(%s)%n  for f=%s%n  %s%nClasspath =%n",
           annotationClass, f, e.getMessage());
       // e.printStackTrace();
-      JWhich.printClasspath();
+      System.out.println("Classpath:");
+      for (URL url : ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs()) {
+        System.out.println(url.getFile());
+      }
       annotation = null;
     }
 
@@ -1237,8 +1242,8 @@ public class Options {
 
     StringBuilderDelimited buf = new StringBuilderDelimited(eol);
     for (OptionGroupInfo gi : groups) {
-      buf.append(String.format("%n%s:", gi.name));
-      buf.append(format_options(gi.optionList, max_len, include_unpublicized));
+      buf.add(String.format("%n%s:", gi.name));
+      buf.add(format_options(gi.optionList, max_len, include_unpublicized));
     }
 
     return buf.toString();
@@ -1260,7 +1265,7 @@ public class Options {
       @SuppressWarnings("formatter") // format string computed from max_len argument
       String use =
           String.format("  %-" + max_len + "s - %s%s", oi.synopsis(), oi.description, default_str);
-      buf.append(use);
+      buf.add(use);
     }
     return buf.toString();
   }
@@ -1312,9 +1317,6 @@ public class Options {
    *
    * @throws ArgException if there are any errors
    */
-  @SuppressWarnings({
-    "StringSplitter" // don't add dependence on Guava
-  })
   private void set_arg(OptionInfo oi, String arg_name, /*@Nullable*/ String arg_value)
       throws ArgException {
 
@@ -1549,7 +1551,7 @@ public class Options {
       } catch (Exception e) {
         throw new Error("unexpected exception reading field " + oi.field, e);
       }
-      out.append(use);
+      out.add(use);
     }
 
     return out.toString();
@@ -1568,7 +1570,7 @@ public class Options {
     StringBuilderDelimited out = new StringBuilderDelimited(eol);
 
     for (OptionInfo oi : options) {
-      out.append(oi);
+      out.add(oi.toString());
     }
 
     return out.toString();
@@ -1585,9 +1587,7 @@ public class Options {
       super(s);
     }
 
-    // TODO: re-enable by removing the @SuppressWarnings() and the space, after Nov 1 2017.
-    @SuppressWarnings("format.string.invalid")
-    /*@ FormatMethod*/
+    /*@FormatMethod*/
     public ArgException(String format, /*@Nullable*/ Object... args) {
       super(String.format(format, args));
     }
