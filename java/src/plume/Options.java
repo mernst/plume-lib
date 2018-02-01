@@ -782,9 +782,15 @@ public class Options {
           "Exception in call to f.getAnnotation(%s)%n  for f=%s%n  %s%nClasspath =%n",
           annotationClass, f, e.getMessage());
       // e.printStackTrace();
-      System.out.println("Classpath:");
-      for (URL url : ((URLClassLoader) ClassLoader.getSystemClassLoader()).getURLs()) {
-        System.out.println(url.getFile());
+      URLClassLoader sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+      if (sysLoader == null) {
+        System.out.println(
+            "No system class loader. (Maybe means bootstrap class loader is being used?)");
+      } else {
+        System.out.println("Classpath:");
+        for (URL url : sysLoader.getURLs()) {
+          System.out.println(url.getFile());
+        }
       }
       annotation = null;
     }
