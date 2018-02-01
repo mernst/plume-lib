@@ -492,8 +492,9 @@ if it matches a hard-coded list of directories."
 		    (not (string-match-p "/src/test/resources/" (buffer-file-name))))
 	       (and (string-match-p "/plume-lib" (buffer-file-name))
 		    (not (string-match-p "WeakHasherMap.java$\\|WeakIdentityHashMap.java$"
-					 (buffer-file-name)))))
-					;; normal formatting
+					 (buffer-file-name))))
+	       (string-match-p "/org/plumelib/" (buffer-file-name)))
+	   ;; normal formatting
 	   "run-google-java-format.py ")
 	  ((and (string-match-p "/checker-framework" (buffer-file-name))
 		(not (string-match-p "/checker-framework-inference" (buffer-file-name)))
