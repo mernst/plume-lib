@@ -10,6 +10,9 @@ plume-lib 1.2.0, released January 31, 2018
 The HtmlPrettyPrint program has been removed and moved to its own repository:
 https://github.com/plume-lib/html-pretty-print
 
+StringBuilderDelimited's append() methods have been deprecated in favor of
+add(), in order to conform to the interface of StringJoiner.
+
 Many other bug fixes and minor enhancements, but no major new features.
 
 ===========================================================================
