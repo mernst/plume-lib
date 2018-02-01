@@ -484,10 +484,7 @@ public final class ICalAvailable {
         }
         continue;
       }
-      @SuppressWarnings({
-        "interning",
-        "ReferenceEquality"
-      }) // interned fields from a library, but not annotated so
+      @SuppressWarnings({"interning"}) // interned fields from a library, but not annotated so
       boolean isFree = (freefb.getParameter(Parameter.FBTYPE) == FbType.FREE);
       assert isFree;
       PeriodList freePeriods = freefb.getPeriods();
