@@ -5,7 +5,7 @@ by cloning its repository; run:
 
 ===========================================================================
 
-plume-lib 1.2.0, released January 31, 2018
+plume-lib 1.2.0, released February 1, 2018
 
 The HtmlPrettyPrint program has been removed and moved to its own repository:
 https://github.com/plume-lib/html-pretty-print
