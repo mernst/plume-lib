@@ -10,6 +10,9 @@ plume-lib 1.3.0, released ???
 Deprecated Options and its supporting classes.  They have been moved to
 https://github.com/plume-lib/options .
 
+Removed checklink, checklink-args.txt, and checklink-persistent-errors.
+They have moved to https://github.com/plume-lib/checklink .
+
 ===========================================================================
 
 plume-lib 1.2.0, released February 1, 2018

@@ -1,5 +1,4 @@
 test:
-	${MAKE} -C checklink-persistent-errors-test test
 	${MAKE} -C lines-test test
 # html-update-link-dates-test is not automated.
 # I could use libfaketime; see

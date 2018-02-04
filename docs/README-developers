@@ -70,11 +70,11 @@ are repeated below, but you must replace x.y.z with the correct version number.
  * attach plume-lib-x.y.z.tar.gz
 
 11. Update the web version of the Javadoc.  On a machine connected to the UW
-CSE file system:
+CSE file system, let $CL be a clone of https://github.com/plume-lib/checklink.
 
     cd plume-lib/java
     git pull
     make javadoc-publish
-    $pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` https://types.cs.washington.edu/plume-lib/
+    $CL/checklink -q -r `grep -v '^#' $CL/checklink-args.txt` https://types.cs.washington.edu/plume-lib/
 
 This step can be done even without making a new release.
