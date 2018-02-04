@@ -5,6 +5,13 @@ by cloning its repository; run:
 
 ===========================================================================
 
+plume-lib 1.3.0, released ???
+
+Deprecated Options and its supporting classes.  They have been moved to
+https://github.com/plume-lib/options .
+
+===========================================================================
+
 plume-lib 1.2.0, released February 1, 2018
 
 The HtmlPrettyPrint program has been removed and moved to its own repository:

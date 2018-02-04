@@ -167,12 +167,13 @@ import org.checkerframework.common.value.qual.*;
  * gjdoc, the GNU Classpath implementation of Javadoc. To avoid the problem, upgrade or use a
  * different Javadoc implementation.
  *
+ * @deprecated Use org.plumelib.options.Option
  * @see plume.Option
  * @see plume.Options
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  */
-
+@Deprecated
 // This doesn't itself use plume.Options for its command-line option processing because a Doclet is
 // required to implement the optionLength() and validOptions() methods.
 @SuppressWarnings("deprecation") // JDK 9 deprecates com.sun.javadoc package

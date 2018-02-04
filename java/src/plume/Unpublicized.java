@@ -18,11 +18,13 @@ import java.lang.annotation.Target;
  * included in the usage message, unless an optional include_unpublicized argument is supplied to
  * the usage message method and is true.
  *
+ * @deprecated Use org.plumelib.options.Option
  * @see plume.Option
  * @see plume.Options
  * @see plume.OptionGroup
  * @see plume.OptionsDoclet
  */
+@Deprecated
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Unpublicized {}

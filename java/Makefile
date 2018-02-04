@@ -76,7 +76,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -333,16 +333,16 @@ else
 #	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	$(DOS2UNIX) src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 	$(DOS2UNIX) src/plume/ICalAvailable.java
 	@rm -f ical4j.properties
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
 	$(DOS2UNIX) src/plume/MultiVersionControl.java
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	$(DOS2UNIX) src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
 endif
@@ -441,6 +441,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 #	(cd jar-contents; "${JAR}" xf ../lib/hamcrest-core-1.3.jar)
 #	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 # ical4j-2.0.0 requrires slf4j
+	(cd jar-contents; "${JAR}" xf ../lib/options-all-0.3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.15-complete.jar)
@@ -496,7 +497,7 @@ plume-core.jar: ${JAVA_AND_CPP_FILES} lib
 ###
 
 lookup.html: src/plume/Lookup.java
-	${JAVADOC} -docletpath "${CLASSPATH}" -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
+	${JAVADOC} -docletpath "${CLASSPATH}" -classpath "${CLASSPATH}" -J-ea -quiet -doclet org.plumelib.options.OptionsDoclet -classdoc $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
@@ -505,7 +506,7 @@ LOOKUP_JAR_CLASSES = \
 	src/plume/Lookup.class \
 	src/plume/RegexUtil.class \
 	src/plume/UtilMDE*.class src/plume/EntryReader*.class \
-	src/plume/Option*.class src/plume/StringBuilderDelimited.class \
+	src/plume/StringBuilderDelimited.class \
 	src/plume/Unpublicized.class src/plume/SimpleLog.class
 
 # So that lookup.jar is self-contained for execution on JDK 6 (without JDK

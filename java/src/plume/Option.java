@@ -35,11 +35,13 @@ import org.checkerframework.framework.qual.IgnoreInWholeProgramInference;
  * <p>The command-line options are processed by the {@link plume.Options} class. For example usage,
  * see the documentation for {@link plume.Options}.
  *
+ * @deprecated Use org.plumelib.options.Option
  * @see plume.Options
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  * @see plume.OptionsDoclet
  */
+@Deprecated
 /*@IgnoreInWholeProgramInference*/
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

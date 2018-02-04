@@ -15,6 +15,7 @@
   <classpathentry kind="lib" path="java/lib/ical4j-2.0.0.jar"/>
   <classpathentry kind="lib" path="java/lib/ini4j-0.5.4.jar"/>
   <classpathentry kind="lib" path="java/lib/junit-4.12.jar"/>
+  <classpathentry kind="lib" path="java/lib/options-all-0.3.1.jar"/>
   <classpathentry kind="lib" path="java/lib/slf4j-api-1.7.25.jar"/>
   <classpathentry kind="lib" path="java/lib/slf4j-simple-1.7.25.jar"/>
   <classpathentry kind="lib" path="java/lib/svnkit-1.8.15-complete.jar"/>

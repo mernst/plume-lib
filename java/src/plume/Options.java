@@ -212,11 +212,13 @@ import org.checkerframework.dataflow.qual.*;
  *       supported.
  * </ul>
  *
+ * @deprecated Use org.plumelib.options.Option
  * @see plume.Option
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  * @see plume.OptionsDoclet
  */
+@Deprecated
 public class Options {
 
   /** The system-dependent line separator. */

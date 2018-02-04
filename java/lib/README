@@ -30,6 +30,8 @@ jacocoagent-0.7.9.jar : http://www.eclemma.org/jacoco/
   (used by Makefile when testing coverage.  Does not need to be in jar file.)
 junit-4.12.jar : http://search.maven.org/#search|gav|1|g:"junit" AND a:"junit"
   only used when running tests, does not need to be in .jar file
+options-all-0.3.1.jar : https://github.com/plume-lib/options
+  uncomment and run shadowJar task
 slf4j-api-1.7.25.jar : http://www.slf4j.org/download.html
 slf4j-simple-1.7.25.jar : http://www.slf4j.org/download.html
 svnkit-1.8.15-complete.jar : see below
