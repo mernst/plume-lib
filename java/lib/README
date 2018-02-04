@@ -14,8 +14,10 @@ commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
   (used by ICalAvailable, transitively, because ical4j uses it)
 commons-io-2.5.jar : https://commons.apache.org/proper/commons-io/download_io.cgi
 commons-lang3-3.6.jar : https://commons.apache.org/proper/commons-lang/
+  (used by OptionsDoclet)
 commons-logging-1.2.jar : https://commons.apache.org/proper/commons-logging/
 commons-text-1.1.jar : https://commons.apache.org/proper/commons-text/
+  (used by OptionsDoclet)
 guava-20.0.jar : https://github.com/google/guava/releases but jar files
   (used by DeclarationAnnotations)
   Guava 21 and 22 require Java 8.
