@@ -434,8 +434,10 @@ public class MultiVersionControl {
   /*@EnsuresNonNull("action")*/
   public void parseArgs(
       /*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
-    @SuppressWarnings(
-        "initialization") // new C(underInit) yields @UnderInitialization; @Initialized is safe
+    @SuppressWarnings({
+      "initialization", // new C(underInit) yields @UnderInitialization; @Initialized is safe
+      "nullness" // temporary problem with type annotations in Options jarfile
+    })
     /*@Initialized*/ Options options =
         new Options("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse(true, args);
