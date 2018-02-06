@@ -1850,11 +1850,21 @@ If in Python mode, look for a buffer associated with a python process, etc."
                (switch-to-buffer result)
              ad-do-it)))))
 
-(defadvice shell-directory-tracker (before handle-back activate)
-  "Convert \"back\" into \"cd -\", which `shell-directory-tracker' understands."
-  (if (and shell-dirtrackp
-           (string-match "^\\s-*back\\s-*$" (ad-get-arg 0)))
-      (ad-set-arg 0 "cd -")))
+;; (defadvice shell-directory-tracker (before handle-back activate)
+;;   "Convert \"back\" into \"cd -\", which `shell-directory-tracker' understands."
+;;   (if (and shell-dirtrackp
+;;            (string-match "^\\s-*back\\s-*$" (ad-get-arg 0)))
+;;       (ad-set-arg 0 "cd -")))
+
+;; This does not work; "(dirs)" is executed before the command is executed,
+;; even if this command sleeps first.  I should create a new funtion and
+;; install it on `comint-output-filter-functions' rather than modify
+;; shell-directory-tracker, which is on comint-input-filter-functions.
+
+;; (defadvice shell-directory-tracker (after handle-gcb-gnb activate)
+;;   "Handle gcb and gnb commands that checkout or create a branch."
+;;   (if (string-match "^\\s-*g[cn]b\\s-+" (ad-get-arg 0))
+;;       (shell-resync-dirs)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
