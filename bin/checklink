@@ -1,5 +1,11 @@
 #!/usr/bin/env perl
 
+###
+### THIS FILE IS OBSOLETE!
+###
+
+### Use it from https://github.com/plume-lib/checklink instead.
+
 eval 'exec /usr/bin/perl -T -S $0 ${1+"$@"}'
     if 0; # not running under some shell
 
@@ -1348,7 +1354,7 @@ EOF
                     # printf("Exists \$results{%s}{fragments}{%s}: %s\n", $u, $fragment, exists $results{$u}{fragments}{$fragment});
                     $results{$u}{fragments}{$fragment} = 0;
                 }
-                
+
                 if ($Opts{Verbose}) {
                     my @line_nums = sort { $a <=> $b } keys(%$lines);
                     &hprintf(

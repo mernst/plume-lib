@@ -1,3 +1,9 @@
+###
+### THIS FILE IS OBSOLETE!
+###
+
+### Use it from https://github.com/plume-lib/checklink instead.
+
 # Sometimes, the checklink program issues a warning even though visiting the
 # page in a browser works fine.  In such cases, you should suppress the warning
 # from the checklink program.  This file contains such warning suppressions.
