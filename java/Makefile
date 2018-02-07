@@ -8,7 +8,6 @@ PLUME_DIR_DEFAULT := $(realpath $(dir $(lastword $(MAKEFILE_LIST)))..)
 -include Makefile.user
 
 PLUME_DIR ?= ${PLUME_DIR_DEFAULT}
-HTMLTOOLS ?= ${HOME}/bin/src/html-tools
 
 UNAME_S := $(shell uname -s)
 ifndef JAVA_HOME
@@ -278,11 +277,14 @@ run-chicory-arrays:
 	set JAVA_COMPILER=NONE; ${JAVA} -ea daikon.Chicory --ppt-select-pattern=ArraysMDE --output-dir=/tmp plume.TestPlume --shortrun
 
 
+../bin/html-files:
+
+
 api: javadoc
 doc: javadoc
 javadoc: .javadoc-timestamp
 
-.javadoc-timestamp: $(JAVA_FILES)
+.javadoc-timestamp: $(JAVA_FILES) update-html-tools
 	$(MAKE) optionsdoc
 # The "rm -rf" is necessary or else any old version of stylesheet.css is
 # retained rather than overwritten
@@ -292,7 +294,7 @@ javadoc: .javadoc-timestamp
 	${JAVADOC} -d api ${JAVA_FILES}
 	rm -f ical4j.properties
 	cp -pf ../bin/plume-lib-favicon.png api
-	cd api && ${HTMLTOOLS}/html-add-favicon . plume-lib-favicon.png
+	cd api && ../.html-tools/html-add-favicon . plume-lib-favicon.png
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
@@ -614,6 +616,9 @@ endif
 checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
+
+update-html-tools:
+	@[ -d .html-tools ] && (cd .html-tools && git pull -q) || git clone -q https://github.com/plume-lib/html-tools.git .html-tools
 
 update-run-google-java-format:
 	@[ -d .run-google-java-format ] && (cd .run-google-java-format && git pull -q) || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
