@@ -523,6 +523,7 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
+	(cd jar-contents; "${JAR}" xf ../lib/options-all-0.3.1.jar)
 	cp -p lookup.txt lookup.html jar-contents/plume
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
 	(cd jar-contents; "${JAR}" cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
