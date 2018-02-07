@@ -1,7 +1,10 @@
 #!/usr/bin/perl -n
 # hevea-retarget-crossrefs
 # Michael Ernst
-# Last updated: February 20, 2013
+# Last updated: February 6, 2018
+
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
 
 # To use:
 #   hevea-retarget-crossrefs < orig.html > new.html

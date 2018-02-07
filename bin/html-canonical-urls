@@ -1,6 +1,9 @@
 # Help Emacs read and write this file: -*- coding: raw-text -*-
 # (because it contains non-UTF-8 characters used by bibtex2web).
 #
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
+#
 # This file can be found at
 # http://plume-lib.googlecode.com/hg/bin/html-canonical-urls
 #

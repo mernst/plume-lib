@@ -8,6 +8,7 @@ PLUME_DIR_DEFAULT := $(realpath $(dir $(lastword $(MAKEFILE_LIST)))..)
 -include Makefile.user
 
 PLUME_DIR ?= ${PLUME_DIR_DEFAULT}
+HTMLTOOLS ?= ${HOME}/bin/src/html-tools
 
 UNAME_S := $(shell uname -s)
 ifndef JAVA_HOME
@@ -291,7 +292,7 @@ javadoc: .javadoc-timestamp
 	${JAVADOC} -d api ${JAVA_FILES}
 	rm -f ical4j.properties
 	cp -pf ../bin/plume-lib-favicon.png api
-	cd api && ../../bin/add-favicon . plume-lib-favicon.png
+	cd api && ${HTMLTOOLS}/html-add-favicon . plume-lib-favicon.png
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
