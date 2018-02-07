@@ -14,8 +14,10 @@ commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
   (used by ICalAvailable, transitively, because ical4j uses it)
 commons-io-2.5.jar : https://commons.apache.org/proper/commons-io/download_io.cgi
 commons-lang3-3.6.jar : https://commons.apache.org/proper/commons-lang/
+  (used by OptionsDoclet)
 commons-logging-1.2.jar : https://commons.apache.org/proper/commons-logging/
 commons-text-1.1.jar : https://commons.apache.org/proper/commons-text/
+  (used by OptionsDoclet)
 guava-20.0.jar : https://github.com/google/guava/releases but jar files
   (used by DeclarationAnnotations)
   Guava 21 and 22 require Java 8.
@@ -30,6 +32,8 @@ jacocoagent-0.7.9.jar : http://www.eclemma.org/jacoco/
   (used by Makefile when testing coverage.  Does not need to be in jar file.)
 junit-4.12.jar : http://search.maven.org/#search|gav|1|g:"junit" AND a:"junit"
   only used when running tests, does not need to be in .jar file
+options-all-0.3.1.jar : https://github.com/plume-lib/options
+  uncomment and run shadowJar task
 slf4j-api-1.7.25.jar : http://www.slf4j.org/download.html
 slf4j-simple-1.7.25.jar : http://www.slf4j.org/download.html
 svnkit-1.8.15-complete.jar : see below

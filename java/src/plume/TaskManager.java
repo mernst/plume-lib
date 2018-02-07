@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.plumelib.options.Option;
+import org.plumelib.options.Options;
 
 /*>>>
 import org.checkerframework.checker.initialization.qual.*;
@@ -307,7 +309,7 @@ public class TaskManager {
   public static void main(String[] args) throws IOException {
 
     Options options = new Options(usage_string, TaskManager.class);
-    String[] filenames = options.parse_or_usage(args);
+    String[] filenames = options.parse(true, args);
 
     if (verbose) {
       System.out.printf("Option settings: %s%n", options.settings());
@@ -315,7 +317,8 @@ public class TaskManager {
 
     // Make sure at least one file was specified
     if (filenames.length == 0) {
-      options.print_usage("Error: No task files specified");
+      System.out.printf("Error: No task files specified");
+      options.printUsage();
       System.exit(254);
     }
 
