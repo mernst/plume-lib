@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/run-google-java-format
+
 # The google-java-format program (https://github.com/google/google-java-format)
 # reformats Java source code, but it creates poor formatting for annotations
 # in comments.
