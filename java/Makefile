@@ -301,8 +301,8 @@ javadoc: .javadoc-timestamp
 
 # Puts Javadoc at https://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
-# Try thrice because sometimes the first time doesn't succeed
-	chgrp -R types_www api || (sleep 3 && chgrp -R types_www api) || (sleep 5 && chgrp -R types_www api)
+# Try multiple times:  sometimes need to change directories first before contents
+	chgrp -R types_www api > /dev/null 2>&1 || (sleep 1 && chgrp -R types_www api > /dev/null 2>&1) || (sleep 1 && chgrp -R types_www api > /dev/null 2>&1) || (sleep 1 && chgrp -R types_www api)
 	chmod -R o+r api
 # This rsync has stopped working, so do the chgrp before the rsync.
 	rsync -a api /cse/www2/types/plume-lib/
