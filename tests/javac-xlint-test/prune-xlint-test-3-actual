@@ -1,6 +1,6 @@
 cd /afs/csail.mit.edu/u/m/mernst/research/invariants/java/myLib/
 make -k xlint
-javac -g -g -J-Xmx800m -Xlint -Xmaxwarns 1000 ./MathMDE.java ./ArraysMDE.java ./Assert.java ./CountingPrintWriter.java ./Digest.java ./FileIOException.java ./Filter.java ./Fmt.java ./FuzzyFloat.java ./Hasher.java ./Intern.java ./MultiRandSelector.java ./OrderedPairIterator.java ./Pair.java ./Partitioner.java ./RandomSelector.java ./Stopwatch.java ./StrTok.java ./TestUtilMDE.java ./UtilMDE.java ./LimitedSizeIntSet.java ./BCELUtil.java ./WeakIdentityHashMap.java ./SimpleLog.java ./FileCompiler.java ./TimeLimitProcess.java ./WeakHasherMap.java ./Triple.java ./NoType.java | prune-xlint.pl
+javac -g -g -J-Xmx800m -Xlint -Xmaxwarns 1000 ./MathMDE.java ./ArraysMDE.java ./Assert.java ./CountingPrintWriter.java ./Digest.java ./FileIOException.java ./Filter.java ./Fmt.java ./FuzzyFloat.java ./Hasher.java ./Intern.java ./MultiRandSelector.java ./OrderedPairIterator.java ./Pair.java ./Partitioner.java ./RandomSelector.java ./Stopwatch.java ./StrTok.java ./TestUtilMDE.java ./UtilMDE.java ./LimitedSizeIntSet.java ./BCELUtil.java ./WeakIdentityHashMap.java ./SimpleLog.java ./FileCompiler.java ./WeakHasherMap.java ./Triple.java ./NoType.java | prune-xlint.pl
 ./WeakHasherMap.java:163: warning: [unchecked] unchecked conversion
 found   : java.lang.ref.ReferenceQueue
 required: java.lang.ref.ReferenceQueue<? super K>
