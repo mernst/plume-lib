@@ -15,6 +15,9 @@ hevea-add-verbatim-linenos, hevea-retarget-crossrefs, html-add-favicon,
 html-canonical-urls, html-toc, html-update-link-dates, and html-update-toc.
 They have moved to https://github.com/plume-lib/html-tools .
 
+Deprecated checklink, checklink-args.txt, and checklink-persistent-errors.
+They have moved to https://github.com/plume-lib/checklink .
+
 ===========================================================================
 
 plume-lib 1.2.0, released February 1, 2018

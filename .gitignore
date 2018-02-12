@@ -30,8 +30,6 @@ java/src/plume/lookup.jar
 java/src/plume/task_manager.jar
 java/src/plume/utilMDE.jar
 java/task_manager.jar
-tests/checklink-persistent-errors-test/errors1.output
-tests/checklink-persistent-errors-test/errors2.output
 tests/sort-directory-order-test/lines1.output
 
 # Ignore Eclipse output
