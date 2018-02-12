@@ -1,4 +1,8 @@
 #!/bin/sh
+
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
+
 # Add favicon to header of HTML files.
 # One use case is for javadoc-generated API documentation.
 #

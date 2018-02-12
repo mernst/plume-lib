@@ -2,7 +2,10 @@
 # html-update-toc
 # Update (in place) table of contents for an HTML document.
 # Michael Ernst <mernst@cs.washington.edu>
-# Time-stamp: <2016-07-12 08:07:23 mernst>
+# Time-stamp: <2018-02-06 20:49:41 mernst>
+
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
 
 # This script edits a HTML file in place to modify an existing table of
 # contents.  The contents start (and end, respectively) with "<!-- start

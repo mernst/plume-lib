@@ -1,0 +1,152 @@
+#! /usr/bin/env python
+
+###
+### THIS FILE IS OBSOLETE!
+###
+
+### Use it from https://github.com/plume-lib/checklink instead.
+
+
+r"""This script allows you to ignore transient errors in checklink output.
+Run it like this:
+  checklink-persistent-errors BASENAME N
+BASENAME is a prefix for files containing the output of the checklink program.
+N is an integer; this program will read that many of the most recent files.
+
+The checklink program checks for broken links.  It is a hassle when
+checklink reports a broken link that is really due to network problems or
+server downtime.  This program takes the output of multiple runs of
+checklink, and it only reports the errors that appear in all of them.
+
+For example, you might put in your crontab file:
+  pl=/homes/gws/mernst/bin/src/plume-lib
+  00 20 * * *	$pl/bin/checklink -q -r `grep -v '^#' $pl/bin/checklink-args.txt` http://www.cs.washington.edu/education/courses/cse140/13wi/ > /scratch/mernst/checklink-output/140.txt-`date +\%Y\%m\%d` 2>&1
+  59 20 * * *	$pl/bin/checklink-persistent-errors /scratch/mernst/checklink-output/140.txt 2
+where the first job runs checklink every day, saving the output to a file,
+and the second job reports all errors that are in the two most recent files.
+"""
+
+# This script could optionally delete older output files.
+# But, they are small and there is no harm in keeping them around indefinitely.
+
+import glob
+import os
+import re
+import sys
+
+# For debugging
+import pprint
+pp = pprint.PrettyPrinter()
+
+DEBUG_PARSING = False
+DEBUG_PRINTING = False
+DEBUG_INTERSECTION = False
+# For debugging
+# DEBUG_PARSING = True
+# DEBUG_PRINTING = True
+# DEBUG_INTERSECTION = True
+
+def main():
+    """Main routine for checklink-persistent-errors.
+Takes 2 arguments, a basename and a number of files to read."""
+
+    if len(sys.argv) != 3:
+        print("%s requires exactly 2 arguments, got %d" % (sys.argv[0], len(sys.argv)-1))
+        exit(1)
+    basename = sys.argv[1]
+    instances = int(sys.argv[2])
+
+    files = glob.glob(basename + "*")
+    if len(files) < instances:
+        exit(0)
+
+    # Sort by file time
+    files.sort(key=lambda x: os.stat(x).st_mtime)
+
+    # results is a list of maps
+    results = []
+    for i in range(0, instances):
+        this_file = files[-(i+1)]
+        results.append(parse_checklink_output_file(this_file))
+
+    urls = set(results[0].keys())
+    if DEBUG_INTERSECTION: print("initial urls = %s" % urls)
+    for r in results:
+        if DEBUG_INTERSECTION: print("merging in %s" % set(r.keys()))
+        urls = urls & set(r.keys())
+        if DEBUG_INTERSECTION: print("intersection (new urls) = %s" % urls)
+
+    for url in sorted(urls):
+        if DEBUG_PRINTING: print("processing URL: %s" % url)
+        persistent = results[0][url]
+        if DEBUG_PRINTING: print("initial persistent = %s" % persistent)
+        for r in results:
+            # if DEBUG_PRINTING: print("r = %s" % r)
+            if DEBUG_PRINTING: print("r[url] = %s" % r[url])
+            persistent = [x for x in persistent if x in r[url]]
+            if DEBUG_PRINTING: print("persistent at end of loop = %s" % persistent)
+        if DEBUG_PRINTING: print("final persistent = %s" % persistent)
+        if persistent:             # equivalent to "if len(persistent > 0)"
+            print("")
+            print("----------------------------------------")
+            print("")
+            print(url)
+            # It's not worth outputting "List of broken links and other issues:"
+            for report in persistent:
+                print("")
+                print(report)
+
+
+def paragraphs(fileobj, separator='\n'):
+    """Yield each paragraph from fileobj, one by one."""
+    if separator[-1:] != '\n': separator += '\n'
+    paragraph = []
+    for line in fileobj:
+        if line == separator:
+            if paragraph:
+                yield ''.join(paragraph)
+                paragraph = []
+        else:
+            paragraph.append(line)
+    if paragraph: yield ''.join(paragraph)
+
+LISTOF1 = "\nList of broken links and other issues:\n"
+LISTOF2 = "\nList of redirects\n"
+
+def parse_checklink_output_file(checklink_output_file):
+    "Returns a map from URLs to list of problem reports for the URL"
+    if DEBUG_PARSING: print("parse_checklink_output_file: %s" % checklink_output_file)
+    result = {}
+    url = None
+    f = open(checklink_output_file, 'r')
+    paras = f.read().split("\n\n") # paragraphs
+    for p in paras:
+        if DEBUG_PARSING: print("url = %s, paragraph = <<<%s>>>" % (url, p))
+        if re.match("\n?Processing\t", p):
+            url = p
+            continue
+        if (p == "----------------------------------------"
+                # for very first record
+                or p == "\n----------------------------------------"
+                # for empty file
+                or p == ""):
+            url = None
+            continue
+        if p.startswith(LISTOF1):
+            p = p[len(LISTOF1):]
+        if p.startswith(LISTOF2):
+            p = p[len(LISTOF2):]
+        if p.endswith("\n"):
+            p = p[:-1]
+        if DEBUG_PARSING: print("Cleaned-up paragraph: <<<%s>>>" % p)
+        if (url is None): print("bad url None for <<<%s>>>" % p)
+        if not (url in result):
+            result[url] = []
+        if DEBUG_PARSING: print("adding to result[%s]: <<<%s>>>" % (url, p))
+        result[url].append(p)
+        if DEBUG_PARSING: print("result = %s" % result)
+
+    return result
+
+
+main()

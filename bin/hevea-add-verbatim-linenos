@@ -1,5 +1,8 @@
 #! /usr/bin/env python
 
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
+
 """Given a file produced by Hevea that contains "??" in place of line
 references, replace those by actual line numbers, read from an aux file.
 

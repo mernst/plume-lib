@@ -2,7 +2,10 @@
 # html-toc
 # Michael Ernst <mernst@cs.washington.edu>
 # Thanks to C. Scott Ananian <cscott@cscott.net>
-# Time-stamp: <2016-10-08 17:45:51 mernst>
+# Time-stamp: <2018-02-06 20:49:41 mernst>
+
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
 
 # Generate (to standard out) table of contents for an HTML document.
 # The table of contents is based on the header tags (<h1>, <h2>, etc.).
