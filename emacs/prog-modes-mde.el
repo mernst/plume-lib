@@ -1442,14 +1442,14 @@ in this directory or some superdirectory."
                      (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn package"))
+             (setq compile-command "mvn -B package"))
             ((file-in-super-directory "pom.xml" default-directory)
              (let* ((buildfile (file-in-super-directory
                                 "pom.xml" default-directory)))
 
                (make-local-variable 'compile-command)
                (setq compile-command
-                     (concat "mvn" " -f " buildfile " package"))))
+                     (concat "mvn -B" " -f " buildfile " package"))))
 	    ((file-readable-p "Rakefile")
              (make-local-variable 'compile-command)
              (setq compile-command "rake"))
@@ -1560,7 +1560,7 @@ Use as a hook, like so:
          (setq compile-command "make -C $HOME/bin/src/plume-lib/java"))
 	((string-match "^\\(.*commons-io-fork-nikshinde1996[^/]*/\\)" default-directory)
          (make-local-variable 'compile-command)
-         (setq compile-command (concat "cd " (match-string 1 default-directory) " && mvn install")))
+         (setq compile-command (concat "cd " (match-string 1 default-directory) " && mvn -B install")))
         ))
 (add-hook 'find-file-hooks 'special-case-set-compile-command 'append)
 (add-hook 'dired-mode-hook 'special-case-set-compile-command 'append)
