@@ -179,7 +179,11 @@ if point is not in a function."
 
 (setq auto-mode-alist
       (append '(("\\.javax\\'" . java-mode) ; ConstJava uses ".javax" extension
-                ("\\.jpp\\'" . java-mode)) ; for preprocessed files; can't specify ".java.jpp"
+                ("\\.jpp\\'" . java-mode) ; for preprocessed files; can't specify ".java.jpp"
+		("\\.astub\\'" . java-mode) ; Checker Framework annotated libraries
+		("\\.java-ORIG\\'" . java-mode)
+		("\\.java-SAVE\\'" . java-mode)
+		)
               auto-mode-alist))
 (defun java-beginning-of-defun (&optional arg)
   "See `c-beginning-of-defun'.
@@ -498,8 +502,10 @@ if it matches a hard-coded list of directories."
 	   "run-google-java-format.py ")
 	  ((and (string-match-p "/checker-framework" (buffer-file-name))
 		(not (string-match-p "/checker-framework-inference" (buffer-file-name)))
-		(not (string-match-p "/checker/jdk/" (buffer-file-name))))
-					;; non-standard cammand-line arguments
+		(not (string-match-p "/checker/jdk/" (buffer-file-name)))
+		(not (string-match-p "\.astub$" (buffer-file-name)))
+		)
+	   ;; non-standard cammand-line arguments
 	   "run-google-java-format.py -a ")
 	  (t
 	   ;; for all other projects, don't automatically reformat
