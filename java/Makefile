@@ -119,7 +119,6 @@ endif
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-options -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND ?= ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
-JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 # A string like "18" for "1.8", because `test` can only do < and > on integers
 JAVA_VERSION := $(shell ${JAVA} -version 2>&1 | sed -n ';s/.* version "\(.*\)\.\(.*\)\..*"/\1\2/p;')
 JAVA_8_OR_HIGHER := $(shell test $(JAVA_VERSION) -gt 17; echo $$?)
@@ -327,13 +326,7 @@ endif
 
 # This target does not create any new files -- it just updates existing ones.
 .optionsdoc-timestamp: $(JAVA_FILES)
-# This should presumably test for other buggy versions of gjdoc as well.
-# The symptom is output such as:  ARGH! @Option
-ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
-	echo "Skipping optionsdoc target because of bugs in $(JAVADOC) version $(JAVADOC_VERSION)"
-else
 #	@echo "JAVADOC = $(JAVADOC)"
-#	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
@@ -348,7 +341,6 @@ else
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	$(DOS2UNIX) src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
-endif
 
 tools_jar_exists:
 ifeq (cygwin,$(OSTYPE))
@@ -381,7 +373,6 @@ showvars:
 	@echo JAVA_VERSION = $(JAVA_VERSION)
 	@echo JAVA_8_OR_HIGHER = $(JAVA_8_OR_HIGHER)
 # Produces long output
-	@echo JAVADOC_VERSION = "$(JAVADOC_VERSION)"
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
