@@ -448,7 +448,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.15-complete.jar)
-	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
+## This is huge.  Just expect that clients will have it on the classpath.
+# 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
