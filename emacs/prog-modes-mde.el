@@ -1522,15 +1522,17 @@ Use as a hook, like so:
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
         ;; Checker Framework demos
-;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
-;;       (make-local-variable 'compile-command)
-;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
-;;      ((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
-;;       (make-local-variable 'compile-command)
-;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
-;;      ((string-match "/annotations/demos/nonnull-interned-demo/junit/" default-directory)
-;;       (make-local-variable 'compile-command)
-;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
+	;; These commented-out demos aren't currently working.
+	;; ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
+	;;  (make-local-variable 'compile-command)
+	;;  (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
+	;; ((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
+	;;  (make-local-variable 'compile-command)
+	;;  (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
+	;; ((string-match "/annotations/demos/nonnull-interned-demo/junit/"
+	;; 	       default-directory)
+	;;  (make-local-variable 'compile-command)
+	;;  (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
         ((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotationLocation.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml location"))
@@ -1556,6 +1558,11 @@ Use as a hook, like so:
               (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "make typecheck-only"))
+        ((and buffer-file-name
+              (string-match "/checker/tests/optional/" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command (concat "javacheck -processor optional "
+				       (file-name-nondirectory buffer-file-name))))
         ;; end of Checker Framework demos
 
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
