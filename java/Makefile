@@ -76,7 +76,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.6.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -424,7 +424,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-text-1.1.jar)
