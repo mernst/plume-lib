@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-### NOTE: This script is obsolescent.  For its replacement, see
+### NOTE: This script is deprecated.  It has moved to
 ###   https://github.com/plume-lib/run-google-java-format
 
 # This script checks whether the files supplied on the command line conform

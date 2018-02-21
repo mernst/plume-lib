@@ -11,6 +11,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.plumelib.options.Option;
+import org.plumelib.options.OptionGroup;
+import org.plumelib.options.Options;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -222,7 +225,7 @@ public final class Lookup {
   public static void main(String[] args) throws IOException {
 
     Options options = new Options(usage_string, Lookup.class);
-    String[] keywords = options.parse_or_usage(args);
+    String[] keywords = options.parse(true, args);
 
     // If help was requested, print it and exit
     if (help) {
@@ -247,7 +250,8 @@ public final class Lookup {
 
     // Make sure at least one keyword was specified
     if (keywords.length == 0) {
-      options.print_usage("Error: No keywords specified");
+      System.out.println("Error: No keywords specified");
+      options.printUsage();
       System.exit(254);
     }
 

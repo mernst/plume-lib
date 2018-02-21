@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
+
 # This program takes as arguments a .png file for a "favicon" and a set of
 # .html files.  It makes each HTML file use the given favicon.  A favicon
 # is a favorites icon, which is intended to appear in the address bar of

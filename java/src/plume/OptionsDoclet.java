@@ -167,12 +167,13 @@ import org.checkerframework.common.value.qual.*;
  * gjdoc, the GNU Classpath implementation of Javadoc. To avoid the problem, upgrade or use a
  * different Javadoc implementation.
  *
+ * @deprecated Use org.plumelib.options.Option
  * @see plume.Option
  * @see plume.Options
  * @see plume.OptionGroup
  * @see plume.Unpublicized
  */
-
+@Deprecated
 // This doesn't itself use plume.Options for its command-line option processing because a Doclet is
 // required to implement the optionLength() and validOptions() methods.
 @SuppressWarnings("deprecation") // JDK 9 deprecates com.sun.javadoc package
@@ -514,19 +515,19 @@ public class OptionsDoclet {
         }
       }
 
-      b.append(docline);
+      b.add(docline);
 
       if (!replaced_once && docline.trim().equals(startDelim)) {
         if (formatJavadoc) {
           int starIndex = docline.indexOf('*');
-          b.append(docline.substring(0, starIndex + 1));
+          b.add(docline.substring(0, starIndex + 1));
           String jdoc = optionsToJavadoc(starIndex, 100);
-          b.append(jdoc);
+          b.add(jdoc);
           if (jdoc.endsWith("</ul>")) {
-            b.append(docline.substring(0, starIndex + 1));
+            b.add(docline.substring(0, starIndex + 1));
           }
         } else {
-          b.append(optionsToHtml(0));
+          b.add(optionsToHtml(0));
         }
         replaced_once = true;
         replacing = true;
@@ -612,13 +613,13 @@ public class OptionsDoclet {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 
     if (includeClassDoc && root.classes().length > 0) {
-      b.append(OptionsDoclet.javadocToHtml(root.classes()[0]));
-      b.append("<p>Command line options:</p>");
+      b.add(OptionsDoclet.javadocToHtml(root.classes()[0]));
+      b.add("<p>Command line options:</p>");
     }
 
-    b.append("<ul>");
+    b.add("<ul>");
     if (!options.isUsingGroups()) {
-      b.append(optionListToHtml(options.getOptions(), 6, 2, refillWidth));
+      b.add(optionListToHtml(options.getOptions(), 6, 2, refillWidth));
     } else {
       for (Options.OptionGroupInfo gi : options.getOptionGroups()) {
         // Do not include groups without publicized options in output
@@ -631,19 +632,19 @@ public class OptionsDoclet {
                 + gi.name.replace(" ", "-").replace("/", "-")
                 + "\">"
                 + gi.name;
-        b.append(refill(ogroupHeader, 6, 2, refillWidth));
-        b.append("      <ul>");
-        b.append(optionListToHtml(gi.optionList, 12, 8, refillWidth));
-        b.append("      </ul>");
-        // b.append("  </li>");
+        b.add(refill(ogroupHeader, 6, 2, refillWidth));
+        b.add("      <ul>");
+        b.add(optionListToHtml(gi.optionList, 12, 8, refillWidth));
+        b.add("      </ul>");
+        // b.add("  </li>");
       }
     }
-    b.append("</ul>");
+    b.add("</ul>");
 
     for (Options.OptionInfo oi : options.getOptions()) {
       if (oi.list != null && !oi.unpublicized) {
-        b.append("");
-        b.append(LIST_HELP);
+        b.add("");
+        b.add(LIST_HELP);
         break;
       }
     }
@@ -671,7 +672,7 @@ public class OptionsDoclet {
       } else {
         bb.append("* ").append(line);
       }
-      b.append(bb);
+      b.add(bb);
     }
 
     return b.toString();
@@ -691,9 +692,9 @@ public class OptionsDoclet {
       bb.append("<li id=\"option:" + oi.long_name + "\">").append(optHtml);
       // .append("</li>");
       if (refillWidth <= 0) {
-        b.append(bb);
+        b.add(bb);
       } else {
-        b.append(refill(bb.toString(), padding, firstLinePadding, refillWidth));
+        b.add(refill(bb.toString(), padding, firstLinePadding, refillWidth));
       }
     }
     return b.toString();
@@ -733,14 +734,14 @@ public class OptionsDoclet {
       if (firstPart.trim().isEmpty()) {
         break;
       }
-      multiLine.append(firstPart);
+      multiLine.add(firstPart);
       oneLine = StringUtils.repeat(" ", padding) + oneLine.substring(breakLoc + 1);
     }
-    multiLine.append(oneLine);
+    multiLine.add(oneLine);
     if (suffix != null) {
       Scanner s = new Scanner(suffix);
       while (s.hasNextLine()) {
-        multiLine.append(StringUtils.repeat(" ", padding) + s.nextLine());
+        multiLine.add(StringUtils.repeat(" ", padding) + s.nextLine());
       }
     }
     return multiLine.toString();
@@ -834,7 +835,7 @@ public class OptionsDoclet {
       {
         StringBuilderDelimited bb = new StringBuilderDelimited(", ");
         for (SeeTag tag : seetags) {
-          bb.append("<code>" + tag.text() + "</code>");
+          bb.add("<code>" + tag.text() + "</code>");
         }
         b.append(bb);
       }

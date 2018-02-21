@@ -1,7 +1,10 @@
 #!/usr/bin/perl -wpi.bak
 # html-update-link-dates
 # Michael Ernst <mernst@alum.mit.edu>
-# Time-stamp: <2016-10-04 10:35:20 mernst>
+# Time-stamp: <2018-02-06 20:49:42 mernst>
+
+### NOTE: This script is deprecated.  It has moved to
+###   https://github.com/plume-lib/html-tools
 
 # usage:
 #   html-update-link-dates file [...]

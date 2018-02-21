@@ -76,7 +76,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:lib/tagsoup-1.2.1.jar:lib/xom-1.2.10.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.6.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -119,7 +119,6 @@ endif
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-options -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND ?= ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
-JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 # A string like "18" for "1.8", because `test` can only do < and > on integers
 JAVA_VERSION := $(shell ${JAVA} -version 2>&1 | sed -n ';s/.* version "\(.*\)\.\(.*\)\..*"/\1\2/p;')
 JAVA_8_OR_HIGHER := $(shell test $(JAVA_VERSION) -gt 17; echo $$?)
@@ -277,11 +276,14 @@ run-chicory-arrays:
 	set JAVA_COMPILER=NONE; ${JAVA} -ea daikon.Chicory --ppt-select-pattern=ArraysMDE --output-dir=/tmp plume.TestPlume --shortrun
 
 
+../bin/html-files:
+
+
 api: javadoc
 doc: javadoc
 javadoc: .javadoc-timestamp
 
-.javadoc-timestamp: $(JAVA_FILES)
+.javadoc-timestamp: $(JAVA_FILES) update-html-tools
 	$(MAKE) optionsdoc
 # The "rm -rf" is necessary or else any old version of stylesheet.css is
 # retained rather than overwritten
@@ -291,14 +293,15 @@ javadoc: .javadoc-timestamp
 	${JAVADOC} -d api ${JAVA_FILES}
 	rm -f ical4j.properties
 	cp -pf ../bin/plume-lib-favicon.png api
-	cd api && ../../bin/add-favicon . plume-lib-favicon.png
+	cd api && ../.html-tools/html-add-favicon . plume-lib-favicon.png
 	# jdk-add-munged-anchor-names api/plume/*.html
 	touch .javadoc-timestamp
 	@echo "Optionally run javadoc-index-to-alist (for Emacs support)"
 
 # Puts Javadoc at https://types.cs.washington.edu/plume-lib/api/
 javadoc-publish: javadoc
-	chgrp -R types_www api
+# Try multiple times:  sometimes need to change directories first before contents
+	chgrp -R types_www api > /dev/null 2>&1 || (sleep 2 && chgrp -R types_www api > /dev/null 2>&1) || (sleep 2 && chgrp -R types_www api > /dev/null 2>&1) || (sleep 2 && chgrp -R types_www api)
 	chmod -R o+r api
 # This rsync has stopped working, so do the chgrp before the rsync.
 	rsync -a api /cse/www2/types/plume-lib/
@@ -323,28 +326,21 @@ endif
 
 # This target does not create any new files -- it just updates existing ones.
 .optionsdoc-timestamp: $(JAVA_FILES)
-# This should presumably test for other buggy versions of gjdoc as well.
-# The symptom is output such as:  ARGH! @Option
-ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
-	echo "Skipping optionsdoc target because of bugs in $(JAVADOC) version $(JAVADOC_VERSION)"
-else
 #	@echo "JAVADOC = $(JAVADOC)"
-#	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	$(DOS2UNIX) src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
 	@touch ical4j.properties
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
 	$(DOS2UNIX) src/plume/ICalAvailable.java
 	@rm -f ical4j.properties
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
 	$(DOS2UNIX) src/plume/MultiVersionControl.java
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet plume.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
+	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	$(DOS2UNIX) src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
-endif
 
 tools_jar_exists:
 ifeq (cygwin,$(OSTYPE))
@@ -377,7 +373,6 @@ showvars:
 	@echo JAVA_VERSION = $(JAVA_VERSION)
 	@echo JAVA_8_OR_HIGHER = $(JAVA_8_OR_HIGHER)
 # Produces long output
-	@echo JAVADOC_VERSION = "$(JAVADOC_VERSION)"
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
@@ -429,7 +424,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-text-1.1.jar)
@@ -440,12 +435,12 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 #	(cd jar-contents; "${JAR}" xf ../lib/hamcrest-core-1.3.jar)
 #	(cd jar-contents; "${JAR}" xf ../lib/junit-4.12.jar)
 # ical4j-2.0.0 requrires slf4j
+	(cd jar-contents; "${JAR}" xf ../lib/options-all-0.3.1.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.15-complete.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/tagsoup-1.2.1.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/xom-1.2.10.jar)
-	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
+## This is huge.  Just expect that clients will have it on the classpath.
+# 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
@@ -473,7 +468,6 @@ verify-plume.jar:
 # included in plume-core.
 PLUME_CORE_REMOVE = \
 	core-jar-contents/plume/ICalAvailable*.class \
-	core-jar-contents/plume/HtmlPrettyPrint*.class \
 	core-jar-contents/plume/TimeLimitProcess*.class \
 	core-jar-contents/plume/DeclarationAnnotations*.class \
 	core-jar-contents/plume/BCELUtil*.class \
@@ -486,7 +480,7 @@ plume-core.jar: ${JAVA_AND_CPP_FILES} lib
 	mkdir core-jar-contents
 	mkdir core-jar-contents/plume
 	cp -p src/plume/*.class core-jar-contents/plume
-	rm ${PLUME_CORE_REMOVE}
+	rm -f ${PLUME_CORE_REMOVE}
 # Put contents in alphabetical order.
 	(cd core-jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > core-jar-contents.txt)
 	(cd core-jar-contents; "${JAR}" cf ../plume-core.jar @core-jar-contents.txt)
@@ -498,7 +492,7 @@ plume-core.jar: ${JAVA_AND_CPP_FILES} lib
 ###
 
 lookup.html: src/plume/Lookup.java
-	${JAVADOC} -docletpath "${CLASSPATH}" -J-ea -quiet -doclet plume.OptionsDoclet -classdoc $< > $@
+	${JAVADOC} -docletpath "${CLASSPATH}" -classpath "${CLASSPATH}" -J-ea -quiet -doclet org.plumelib.options.OptionsDoclet -classdoc $< > $@
 lookup.txt: lookup.html
 # Note no space between command and argument.
 	$(HTML_TO_TEXT)$< > $@
@@ -507,7 +501,7 @@ LOOKUP_JAR_CLASSES = \
 	src/plume/Lookup.class \
 	src/plume/RegexUtil.class \
 	src/plume/UtilMDE*.class src/plume/EntryReader*.class \
-	src/plume/Option*.class src/plume/StringBuilderDelimited.class \
+	src/plume/StringBuilderDelimited.class \
 	src/plume/Unpublicized.class src/plume/SimpleLog.class
 
 # So that lookup.jar is self-contained for execution on JDK 6 (without JDK
@@ -524,6 +518,7 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	mkdir jar-contents
 	mkdir jar-contents/plume
 	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
+	(cd jar-contents; "${JAR}" xf ../lib/options-all-0.3.1.jar)
 	cp -p lookup.txt lookup.html jar-contents/plume
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
 	(cd jar-contents; "${JAR}" cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
@@ -582,7 +577,7 @@ ERRORPRONE_VERSION := 2.2.0
 error-prone: errorprone
 errorprone:
 	${MAKE} lib/error_prone_ant-${ERRORPRONE_VERSION}.jar
-	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-${ERRORPRONE_VERSION}.jar com.google.errorprone.ErrorProneCompiler -Werror"
+	$(MAKE) JAVAC_COMMAND="java -Xbootclasspath/p:lib/error_prone_ant-${ERRORPRONE_VERSION}.jar com.google.errorprone.ErrorProneCompiler -Xep:ReferenceEquality:OFF -Xep:StringSplitter:OFF -Werror"
 
 lib/error_prone_ant-${ERRORPRONE_VERSION}.jar:
 	(cd lib && wget https://repo1.maven.org/maven2/com/google/errorprone/error_prone_ant/${ERRORPRONE_VERSION}/error_prone_ant-${ERRORPRONE_VERSION}.jar)
@@ -613,6 +608,9 @@ endif
 checkstyle: ${JAVA_AND_CPP_FILES}
 # This invocation works on Ubuntu.
 	checkstyle -c /usr/share/checkstyle/sun_checks.xml ${JAVA_FILES_FOR_STYLE}
+
+update-html-tools:
+	@[ -d .html-tools ] && (cd .html-tools && git pull -q) || git clone -q https://github.com/plume-lib/html-tools.git .html-tools
 
 update-run-google-java-format:
 	@[ -d .run-google-java-format ] && (cd .run-google-java-format && git pull -q) || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format

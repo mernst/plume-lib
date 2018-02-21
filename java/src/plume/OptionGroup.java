@@ -38,11 +38,13 @@ import java.lang.annotation.Target;
  * {@literal @}Option("the first option")
  *  public static int first_option = blah;</pre>
  *
+ * @deprecated Use org.plumelib.options.Option
  * @see plume.Options
  * @see plume.Option
  * @see plume.Unpublicized
  * @see plume.OptionsDoclet
  */
+@Deprecated
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface OptionGroup {

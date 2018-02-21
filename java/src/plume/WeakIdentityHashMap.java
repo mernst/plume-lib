@@ -314,8 +314,7 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Expunge stale entries from the table.
      */
-    @SuppressWarnings({"purity", // actually has side effects due to weak pointers
-                "ReferenceEquality"}) // suppress Error Prone warning
+    @SuppressWarnings("purity") // actually has side effects due to weak pointers
     /*@SideEffectFree*/
     private void expungeStaleEntries() {
 	Entry<K,V> e;
@@ -590,7 +589,7 @@ public class WeakIdentityHashMap<K,V>
      *	       also indicate that the map previously associated <code>null</code>
      *	       with the specified key.
      */
-    @SuppressWarnings({"NonAtomicVolatileUpdate", "ReferenceEquality"})
+    @SuppressWarnings("NonAtomicVolatileUpdate")
     @Override
     public /*@Nullable*/ V remove(Object key) {
         Object k = maskNull(key);
@@ -621,7 +620,7 @@ public class WeakIdentityHashMap<K,V>
 
 
     /** Special version of remove needed by Entry set */
-    @SuppressWarnings({"NonAtomicVolatileUpdate", "ReferenceEquality"})
+    @SuppressWarnings("NonAtomicVolatileUpdate")
     /*@Nullable*/ Entry<K,V> removeMapping(/*@Nullable*/ Object o) {
         if (!(o instanceof Map.Entry))
             return null;

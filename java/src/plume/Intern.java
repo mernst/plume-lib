@@ -733,7 +733,6 @@ public final class Intern {
    */
   @SuppressWarnings({
     "interning", // interns its argument
-    "ReferenceEquality",
     "purity",
     "cast"
   }) // cast is redundant (except in JSR 308)

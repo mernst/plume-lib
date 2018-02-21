@@ -29,8 +29,11 @@ public final class SimpleLog {
   /** Always provide a backtrace (traceback) when calling {@code log()}. */
   public boolean always_traceback = false;
 
-  /** Where to write logging output. */
-  public PrintStream logfile = System.out;
+  /** Where to write logging output. Null if nothing has been output yet. */
+  private /*@MonotonicNonNull*/ PrintStream logfile = null;
+
+  /** The file for logging output. If null or "-", System.out is used. */
+  private /*@Nullable*/ String filename = null;
 
   /** The current indentation string. */
   private String indent_str = "";
@@ -70,27 +73,44 @@ public final class SimpleLog {
   /**
    * Create a new SimpleLog object.
    *
-   * @param filename file name, or use "-" for standard output
+   * @param filename file name, or use "-" or null for standard output
    * @param enabled whether the logger starts out enabled
    */
   public SimpleLog(String filename, boolean enabled) {
     this(enabled);
-    if (!filename.equals("-")) {
-      try {
-        logfile = new PrintStream(filename);
-      } catch (Exception e) {
-        throw new RuntimeException("Can't open " + filename, e);
-      }
-    }
+    this.filename = filename;
   }
 
-  /** @param filename file name, or use "-" for standard output */
+  /** @param filename file name, or use "-" or null for standard output */
   public SimpleLog(String filename) {
     this(filename, true);
   }
 
   public boolean enabled() {
     return enabled;
+  }
+
+  /**
+   * Set the private field logfile, based on the private field filename.
+   *
+   * <p>This creates the file if it does not exist. Therefore, this should be called lazily, when
+   * output is performed. Otherwise, it would be annoying to create a zero-size logfile if no output
+   * is ever performed.
+   */
+  /*@EnsuresNonNull("logfile")*/
+  private void setLogfile() {
+    if (logfile != null) {
+      return;
+    }
+    if (filename == null || filename.equals("-")) {
+      logfile = System.out;
+    } else {
+      try {
+        logfile = new PrintStream(filename);
+      } catch (Exception e) {
+        throw new RuntimeException("Can't open " + filename, e);
+      }
+    }
   }
 
   /**
@@ -103,6 +123,7 @@ public final class SimpleLog {
   public void log(String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
+      setLogfile();
       format = add_newline(format);
       logfile.print(indent_str);
       logfile.printf(format, args);
@@ -121,6 +142,7 @@ public final class SimpleLog {
   /*@FormatMethod*/
   public void log_tb(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
+      setLogfile();
       log(format, args);
       tb();
     }
@@ -128,12 +150,15 @@ public final class SimpleLog {
 
   /** Print a backtrace (traceback, or tb) to the log. */
   public void tb() {
-    Throwable t = new Throwable();
-    t.fillInStackTrace();
-    StackTraceElement[] ste_arr = t.getStackTrace();
-    for (int ii = 2; ii < ste_arr.length; ii++) {
-      StackTraceElement ste = ste_arr[ii];
-      logfile.printf("%s  %s%n", indent_str, ste);
+    if (enabled) {
+      setLogfile();
+      Throwable t = new Throwable();
+      t.fillInStackTrace();
+      StackTraceElement[] ste_arr = t.getStackTrace();
+      for (int ii = 2; ii < ste_arr.length; ii++) {
+        StackTraceElement ste = ste_arr[ii];
+        logfile.printf("%s  %s%n", indent_str, ste);
+      }
     }
   }
 
@@ -198,6 +223,7 @@ public final class SimpleLog {
   /*@FormatMethod*/
   public void clear(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
+      setLogfile();
       clear();
       log(format, args);
     }
@@ -210,6 +236,7 @@ public final class SimpleLog {
       if (start_times.isEmpty()) {
         boolean old_always_traceback = always_traceback;
         always_traceback = true;
+        setLogfile();
         log("Called exdent when indentation was 0.");
         always_traceback = old_always_traceback;
       } else {
@@ -228,6 +255,7 @@ public final class SimpleLog {
   /*@FormatMethod*/
   public void exdent_time(String format, /*@Nullable*/ Object... args) {
     if (enabled) {
+      setLogfile();
       // This puts the time inside, not outside, the indentation.
       log_time(format, args);
       exdent();
@@ -271,6 +299,7 @@ public final class SimpleLog {
   public void log_time(String format, /*@Nullable*/ Object... args) {
 
     if (enabled) {
+      setLogfile();
       Long start_time = start_times.peek();
       if (start_time == null) {
         throw new Error("Too many pops before calling log_time");

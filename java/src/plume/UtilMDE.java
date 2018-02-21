@@ -1135,7 +1135,7 @@ public final class UtilMDE {
   public static File expandFilename(File name) {
     String path = name.getPath();
     String newname = expandFilename(path);
-    @SuppressWarnings({"interning", "ReferenceEquality"})
+    @SuppressWarnings("interning")
     boolean changed = (newname != path);
     if (changed) {
       return new File(newname);

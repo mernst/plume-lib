@@ -1,5 +1,12 @@
 #! /usr/bin/env python
 
+###
+### THIS FILE IS OBSOLETE!
+###
+
+### Use it from https://github.com/plume-lib/checklink instead.
+
+
 r"""This script allows you to ignore transient errors in checklink output.
 Run it like this:
   checklink-persistent-errors BASENAME N

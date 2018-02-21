@@ -142,14 +142,23 @@ webpage that you maintain.
     <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-update-link-dates">Documentation</a> at top of file.
   </li>
 </ul>
+<p>
+Do not use the scripts from here; use the versions in
+<a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 
 <dt>checklink</dt>
 <dd>
-  A slightly <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/checklink-4.6.diff">modified</a> version of the
+  A
+  slightly <a href="https://raw.githubusercontent.com/plume-lib/checklink/master/checklink-4.6.diff">modified</a>
+  version of the
   <a href="http://search.cpan.org/dist/W3C-LinkChecker/">W3C Link
   Checker</a>.
+  <p>
+
+  This has moved; get it
+  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
 </dd>
 
 <dt>checklink-args.txt</dt>
@@ -160,6 +169,10 @@ webpage that you maintain.
 <pre>
    plume-lib/bin/checklink -q -r `grep -v '^#' plume-lib/bin/checklink-args.txt` MYURL
 </pre>
+  <p>
+
+  This has moved; get it
+  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
 </dd>
 
 <dt>checklink-persistent-errors</dt>
@@ -167,24 +180,23 @@ webpage that you maintain.
   This script reports errors that persist over multiple runs of the
   checklink program, ignoring transient errors.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/checklink-persistent-errors">Documentation</a> at top of file.
-</dd>
+  <p>
 
-
-<dt>HtmlPrettyPrint</dt>
-<dd>
-  Pretty-prints an HTML file, after converting it to valid XML.
-  To use:  <pre>  java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
-  <!-- Don't link to more documentation, because the above is all there is! -->
+  This has moved; get it
+  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
 </dd>
 
 
 <dt>html-canonical-urls</dt>
 <dd>
   This file maps a textual string (such as the name of a person,
-  institution, er event) to the a canonical URL for that string.
+  institution, er event) to the canonical URL for that string.
   It is used by the
   <a href="http://homes.cs.washington.edu/~mernst/software/bibtex2web.html">bibtex2web</a>
   program.
+  <p>
+  Do not use this file; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 
@@ -215,6 +227,9 @@ webpage that you maintain.
   favicon is a favorites icon, which is intended to appear in the address
   bar of your browser when you browse to the given page.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-add-favicon">Documentation</a> at top of file.
+  <p>
+  Do not use the script from here; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 <dt>add-favicon</dt>
@@ -224,6 +239,9 @@ webpage that you maintain.
   favicon is a favorites icon, which is intended to appear in the address
   bar of your browser when you browse to the given page.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/add-favicon">Documentation</a> at top of file.
+  <p>
+  Do not use the script from here; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 </dl>
 
@@ -360,6 +378,9 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   The former variety (which is generated, for example, by the Hevea
   program) is brittle, as it may change from run to run of Hevea.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/hevea-retarget-crossrefs">Documentation</a> at top of file.
+  <p>
+  Do not use the script from here; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 <dt>pdfinterleave</dt>
@@ -887,7 +908,7 @@ generally well-documented, so feel free to browse.
 <dl>
 <dt>Options</dt>
 <dd>
-  The <a href="https://types.cs.washington.edu/plume-lib/api/plume/Options.html">Options</a> class:
+  The <a href="http://plumelib.org/options/api/org/plumelib/options/Options.html">Options</a> class:
   <ul>
     <li>parses command-line options and sets fields in your program accordingly,</li>
     <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
@@ -895,8 +916,11 @@ generally well-documented, so feel free to browse.
   </ul>
   Thus, the programmer is freed from writing duplicative, boilerplate code
   and documentation that could get out of sync with the rest of the program.
-  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Options.html">Documentation</a>.
-  <!-- The popular JCommander library was written later and takes a similar approach to plume-lib, having many of the same features.  But it does not generate usage messages nor manual/manpage/webpage documentation. -->
+  <p>
+  If you use this, the Javadoc tool needs to be on your classpath.
+  <p>
+  Don't ues this version.  The Options class has moved to <a
+  href="https://github.com/plume-lib/options">https://github.com/plume-lib/options</a>.
 </dd>
 </dl>
 

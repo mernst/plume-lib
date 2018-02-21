@@ -2,7 +2,6 @@ Unless otherwise noted, plume-lib is distributed under the MIT license,
 which appears below.  Some files in plume-lib are distributed under a
 different license, which is indicated at the top of that particular file.
 These exceptions are:
-  bin/checklink (W3C Software License)
   bin/cronic (no license stated)
   bin/pspage (GPL)
   bin/search (public domain)

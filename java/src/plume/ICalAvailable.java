@@ -32,6 +32,8 @@ import net.fortuna.ical4j.model.component.VFreeBusy;
 import net.fortuna.ical4j.model.parameter.FbType;
 import net.fortuna.ical4j.model.property.DtStart;
 import net.fortuna.ical4j.model.property.FreeBusy;
+import org.plumelib.options.Option;
+import org.plumelib.options.Options;
 
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
@@ -69,7 +71,10 @@ import org.checkerframework.dataflow.qual.Pure;
  * <!-- end options doc -->
  * If you are perplexed because of odd results, maybe it is because of the transparency of your iCal
  * items (this shows up as "available/busy" in Google calendar).
+ *
+ * @deprecated use org.plumelib.icalavailable.ICalAvailable instead
  */
+@Deprecated
 public final class ICalAvailable {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -160,7 +165,7 @@ public final class ICalAvailable {
   /*@EnsuresNonNull("tz1")*/
   static void processOptions(String[] args) {
     Options options = new Options("ICalAvailable [options]", ICalAvailable.class);
-    String[] remaining_args = options.parse_or_usage(args);
+    String[] remaining_args = options.parse(true, args);
     if (remaining_args.length != 0) {
       System.err.println("Unrecognized arguments: " + Arrays.toString(remaining_args));
       System.exit(1);
@@ -308,7 +313,8 @@ public final class ICalAvailable {
       System.err.println("Bad time: " + time);
       System.exit(1);
     }
-    @SuppressWarnings("nullness") // interaction of Nullness and Regex:  group 1 is not optional
+    @SuppressWarnings(
+        "nullness") // Regex Checker imprecision:  matches() guarantees that group 1 exists in regexp
     /*@NonNull*/ String hourString = m.group(1);
     String minuteString = m.group(3);
     String ampmString = m.group(4);
@@ -484,10 +490,7 @@ public final class ICalAvailable {
         }
         continue;
       }
-      @SuppressWarnings({
-        "interning",
-        "ReferenceEquality"
-      }) // interned fields from a library, but not annotated so
+      @SuppressWarnings("interning") // interned fields from a library, but not annotated so
       boolean isFree = (freefb.getParameter(Parameter.FBTYPE) == FbType.FREE);
       assert isFree;
       PeriodList freePeriods = freefb.getPeriods();

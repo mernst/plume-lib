@@ -16,6 +16,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.ini4j.Ini;
+import org.plumelib.options.Option;
+import org.plumelib.options.Options;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
@@ -432,15 +434,18 @@ public class MultiVersionControl {
   /*@EnsuresNonNull("action")*/
   public void parseArgs(
       /*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
-    @SuppressWarnings(
-        "initialization") // new C(underInit) yields @UnderInitialization; @Initialized is safe
+    @SuppressWarnings({
+      "initialization", // new C(underInit) yields @UnderInitialization; @Initialized is safe
+      "nullness" // temporary problem with type annotations in Options jarfile
+    })
     /*@Initialized*/ Options options =
         new Options("mvc [options] {checkout,status,update,list}", this);
-    String[] remaining_args = options.parse_or_usage(args);
+    String[] remaining_args = options.parse(true, args);
     if (remaining_args.length != 1) {
-      options.print_usage(
+      System.out.printf(
           "Please supply exactly one argument (found %d)%n%s",
           remaining_args.length, UtilMDE.join(remaining_args, " "));
+      options.printUsage();
       System.exit(1);
     }
     String action_string = remaining_args[0];
@@ -457,7 +462,8 @@ public class MultiVersionControl {
     } else if ("update".startsWith(action_string)) {
       action = PULL;
     } else {
-      options.print_usage("Unrecognized action \"%s\"", action_string);
+      System.out.printf("Unrecognized action \"%s\"", action_string);
+      options.printUsage();
       System.exit(1);
     }
 
