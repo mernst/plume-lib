@@ -697,7 +697,8 @@ public final class BCELUtil {
    * @param classname the fully-qualified name of a class
    * @return the type corresponding to the given class name
    */
-  public static Type classname_to_type(String classname) {
+  @SuppressWarnings("signature") // stripping off "[]" does not affect type
+  public static Type classname_to_type(/*@ClassGetName*/ String classname) {
 
     // Get the array depth (if any)
     int array_depth = 0;
