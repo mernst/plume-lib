@@ -1,13 +1,21 @@
 package plume;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecuteResultHandler;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteException;
+import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.PumpStreamHandler;
 
 /*>>>
 import org.checkerframework.common.value.qual.*;
@@ -33,6 +41,21 @@ public final class FileCompiler {
   private String /*@MinLen(1)*/[] compiler;
   /** Time limit for compilation jobs. */
   private long timeLimit;
+
+  /** stderr from compile */
+  private String compile_errors;
+  /** stdout from compile */
+  private String compile_output;
+
+  /** Apache Commons Exec objects */
+  private CommandLine cmdLine;
+
+  private DefaultExecuteResultHandler resultHandler;
+  private DefaultExecutor executor;
+  private ExecuteWatchdog watchdog;
+  private ByteArrayOutputStream outStream;
+  private ByteArrayOutputStream errStream;
+  private PumpStreamHandler streamHandler;
 
   static {
     try {
@@ -119,31 +142,7 @@ public final class FileCompiler {
     // System.out.printf ("compileFiles: %s%n", fileNames);
 
     // Start a process to compile all of the files (in one command)
-    TimeLimitProcess p = compile_source(fileNames);
-
-    String compile_errors = "";
-    String compile_output = "";
-
-    try {
-      int result = p.waitFor();
-    } catch (Throwable e) {
-      // Print stderr and stdout if there is an unexpected exception (timeout).
-      compile_errors = UtilMDE.streamString(p.getErrorStream());
-      compile_output = UtilMDE.streamString(p.getInputStream());
-      System.out.println("Unexpected exception while compiling " + e);
-      if (p.timed_out()) {
-        System.out.println("Compile timed out after " + p.timeout_msecs() + " msecs");
-      }
-      // System.out.println ("Compile errors: " + compile_errors);
-      // System.out.println ("Compile output: " + compile_output);
-      e.printStackTrace();
-      runtime.exit(1);
-    }
-
-    compile_errors = UtilMDE.streamString(p.getErrorStream());
-    compile_output = UtilMDE.streamString(p.getInputStream());
-    // System.out.println ("Compile errors: " + compile_errors);
-    // System.out.println ("Compile output: " + compile_output);
+    compile_source(fileNames);
 
     // javac tends to stop without completing the compilation if there
     // is an error in one of the files.  Remove all the erring files
@@ -155,35 +154,69 @@ public final class FileCompiler {
     return compile_errors;
   }
 
-  //   /**
-  //    * @param filename the path of the Java source to be compiled
-  //    */
-  //   private TimeLimitProcess compile_source(String filename) throws IOException {
-  //     String command = compiler + " " + filename;
-  //     // System.out.println ("\nexecuting compile command: " + command);
-  //     return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
-  //   }
-
   /**
    * @param filenames the paths of the Java source to be compiled as Strings
    * @return the process that executed the external compile command
    * @throws Error if an empty list of filenames is provided
    */
-  private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
-    int num_files = filenames.size();
+  private void compile_source(List<String> filenames) throws IOException {
 
-    if (num_files == 0) {
+    if (filenames.size() == 0) {
       throw new Error("no files to compile were provided");
     }
 
-    String[] command = new String[num_files + compiler.length];
-    System.arraycopy(compiler, 0, command, 0, compiler.length);
-    for (int i = 0; i < num_files; i++) {
-      command[i + compiler.length] = filenames.get(i);
+    cmdLine = new CommandLine(compiler[0]); // constructor requires executable name
+    // add rest of compiler command arguments
+    cmdLine.addArguments(Arrays.copyOfRange(compiler, 1, compiler.length));
+    // add file name arguments
+    cmdLine.addArguments(filenames.toArray(new String[0]));
+
+    resultHandler = new DefaultExecuteResultHandler();
+    executor = new DefaultExecutor();
+    watchdog = new ExecuteWatchdog(timeLimit);
+    executor.setWatchdog(watchdog);
+    outStream = new ByteArrayOutputStream();
+    errStream = new ByteArrayOutputStream();
+    streamHandler = new PumpStreamHandler(outStream, errStream);
+    executor.setStreamHandler(streamHandler);
+
+    // System.out.println ("\nexecuting compile command: " + cmdLine);
+    try {
+      executor.execute(cmdLine, resultHandler);
+    } catch (IOException e) {
+      throw new Error("exception starting process", e);
     }
 
-    // System.out.println ("\nexecuting compile command: " + command);
-    return new TimeLimitProcess(runtime.exec(command), timeLimit, true);
+    int exitValue = -1;
+    try {
+      resultHandler.waitFor();
+      exitValue = resultHandler.getExitValue();
+    } catch (InterruptedException e) {
+      //Ignore exception, but watchdog.killedProcess() records that the process timed out.
+    }
+    boolean timedOut = executor.isFailure(exitValue) && watchdog.killedProcess();
+
+    try {
+      compile_errors = errStream.toString();
+    } catch (RuntimeException e) {
+      throw new Error("Exception getting process error output", e);
+    }
+
+    try {
+      compile_output = outStream.toString();
+    } catch (RuntimeException e) {
+      throw new Error("Exception getting process standard output", e);
+    }
+
+    if (timedOut) {
+      // Print stderr and stdout if there is an unexpected exception (timeout).
+      System.out.println("Compile timed out after " + timeLimit + " msecs");
+      // System.out.println ("Compile errors: " + compile_errors);
+      // System.out.println ("Compile output: " + compile_output);
+      ExecuteException e = resultHandler.getException();
+      if (e != null) e.printStackTrace();
+      runtime.exit(1);
+    }
   }
 
   /**
@@ -222,13 +255,7 @@ public final class FileCompiler {
       }
 
       if (retry.size() > 0) {
-        TimeLimitProcess tp = compile_source(retry);
-
-        try {
-          tp.waitFor();
-        } catch (InterruptedException e) {
-          System.out.println("Compile of " + filenames + " interrupted: " + e);
-        }
+        compile_source(retry);
       }
     }
   }
