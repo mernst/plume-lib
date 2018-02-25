@@ -16,8 +16,9 @@ else
 (cd $ROOT/checker-framework/ && ./.travis-build-without-test.sh downloadjdk)
 export CHECKERFRAMEWORK=$ROOT/checker-framework
 
-## Obtain plume-lib
-(cd $ROOT && git clone https://github.com/mernst/plume-lib.git) || (cd $ROOT && git clone https://github.com/mernst/plume-lib.git)
+## No need to do this -- plume-lib already exists.
+# ## Obtain plume-lib
+# (cd $ROOT && git clone https://github.com/mernst/plume-lib.git) || (cd $ROOT && git clone https://github.com/mernst/plume-lib.git)
 
 # -Afilenames is to prevent the job from timing out if it goes 10 minutes without output
 make -C $ROOT/plume-lib/java JAVACHECK_EXTRA_ARGS=-Afilenames check-types
