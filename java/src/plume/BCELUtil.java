@@ -35,7 +35,12 @@ import org.checkerframework.checker.signature.qual.*;
 import org.checkerframework.common.value.qual.*;
 */
 
-/** Static utility methods for working with BCEL. */
+/**
+ * Static utility methods for working with BCEL.
+ *
+ * @deprecated use org.plumelib.bcelutil instead
+ */
+@Deprecated
 public final class BCELUtil {
   /** This class is a collection of methods; it does not represent anything. */
   private BCELUtil() {

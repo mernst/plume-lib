@@ -505,6 +505,7 @@ public final class UtilMDE {
     return false;
   }
 
+  /** Used by {@link #classForName}. */
   private static HashMap<String, Class<?>> primitiveClasses = new HashMap<String, Class<?>>(8);
 
   static {
@@ -518,13 +519,15 @@ public final class UtilMDE {
     primitiveClasses.put("short", Short.TYPE);
   }
 
+  // TODO: should create a method that works exactly for the desired argument type.
   /**
    * Like {@link Class#forName(String)}, but also works when the string represents a primitive type
    * or a fully-qualified name (as opposed to a binary name).
    *
    * <p>If the given name can't be found, this method changes the last '.' to a dollar sign ($) and
    * tries again. This accounts for inner classes that are incorrectly passed in in fully-qualified
-   * format instead of binary format.
+   * format instead of binary format. (It should try multiple dollar signs, not just at the last
+   * position.)
    *
    * <p>Recall the rather odd specification for {@link Class#forName(String)}: the argument is a
    * binary name for non-arrays, but a field descriptor for arrays. This method uses the same rules,
@@ -561,6 +564,7 @@ public final class UtilMDE {
     }
   }
 
+  @Deprecated
   private static HashMap</*@SourceNameForNonArrayNonInner*/ String, /*@FieldDescriptor*/ String>
       primitiveClassesJvm =
           new HashMap</*@SourceNameForNonArrayNonInner*/ String, /*@FieldDescriptor*/ String>(8);
@@ -582,7 +586,9 @@ public final class UtilMDE {
    *
    * @param classname name of the class, in binary class name format
    * @return name of the class, in field descriptor format
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   @SuppressWarnings("signature") // conversion routine
   public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(
       /*@BinaryName*/ String classname) {
@@ -609,7 +615,9 @@ public final class UtilMDE {
    * @param primitive_name name of the type, in Java format
    * @return name of the type, in field descriptor format
    * @throws IllegalArgumentException if primitive_name is not a valid primitive type name
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(
       String primitive_name) {
     String result = primitiveClassesJvm.get(primitive_name);
@@ -624,7 +632,9 @@ public final class UtilMDE {
    *
    * @param bn the binary name to convert
    * @return the class name, in Class.getName format
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   @SuppressWarnings("signature") // conversion routine
   public static /*@ClassGetName*/ String binaryNameToClassGetName(/*BinaryName*/ String bn) {
     if (bn.endsWith("[]")) {
@@ -639,7 +649,9 @@ public final class UtilMDE {
    *
    * @param fd the class, in field descriptor format
    * @return the class name, in Class.getName format
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   @SuppressWarnings("signature") // conversion routine
   public static /*@ClassGetName*/ String fieldDescriptorToClassGetName(
       /*FieldDescriptor*/ String fd) {
@@ -657,7 +669,9 @@ public final class UtilMDE {
    *
    * @param arglist an argument list, in Java format
    * @return argument list, in JVML format
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   public static String arglistToJvm(String arglist) {
     if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -675,6 +689,7 @@ public final class UtilMDE {
     return result;
   }
 
+  @Deprecated
   private static HashMap<String, String> primitiveClassesFromJvm = new HashMap<String, String>(8);
 
   static {
@@ -695,7 +710,9 @@ public final class UtilMDE {
    *
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   @SuppressWarnings("signature") // conversion routine
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
@@ -728,7 +745,9 @@ public final class UtilMDE {
    *
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
+   * @deprecated use version in org.plumelib.bcelutil instead
    */
+  @Deprecated
   public static String arglistFromJvm(String arglist) {
     if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
