@@ -179,7 +179,11 @@ if point is not in a function."
 
 (setq auto-mode-alist
       (append '(("\\.javax\\'" . java-mode) ; ConstJava uses ".javax" extension
-                ("\\.jpp\\'" . java-mode)) ; for preprocessed files; can't specify ".java.jpp"
+                ("\\.jpp\\'" . java-mode) ; for preprocessed files; can't specify ".java.jpp"
+		("\\.astub\\'" . java-mode) ; Checker Framework annotated libraries
+		("\\.java-ORIG\\'" . java-mode)
+		("\\.java-SAVE\\'" . java-mode)
+		)
               auto-mode-alist))
 (defun java-beginning-of-defun (&optional arg)
   "See `c-beginning-of-defun'.
@@ -498,8 +502,10 @@ if it matches a hard-coded list of directories."
 	   "run-google-java-format.py ")
 	  ((and (string-match-p "/checker-framework" (buffer-file-name))
 		(not (string-match-p "/checker-framework-inference" (buffer-file-name)))
-		(not (string-match-p "/checker/jdk/" (buffer-file-name))))
-					;; non-standard cammand-line arguments
+		(not (string-match-p "/checker/jdk/" (buffer-file-name)))
+		(not (string-match-p "\.astub$" (buffer-file-name)))
+		)
+	   ;; non-standard cammand-line arguments
 	   "run-google-java-format.py -a ")
 	  (t
 	   ;; for all other projects, don't automatically reformat
@@ -1442,14 +1448,14 @@ in this directory or some superdirectory."
                      (concat gradle-command " -b " buildfile " build"))))
             ((file-readable-p "pom.xml")
              (make-local-variable 'compile-command)
-             (setq compile-command "mvn package"))
+             (setq compile-command "mvn -B package"))
             ((file-in-super-directory "pom.xml" default-directory)
              (let* ((buildfile (file-in-super-directory
                                 "pom.xml" default-directory)))
 
                (make-local-variable 'compile-command)
                (setq compile-command
-                     (concat "mvn" " -f " buildfile " package"))))
+                     (concat "mvn -B" " -f " buildfile " package"))))
 	    ((file-readable-p "Rakefile")
              (make-local-variable 'compile-command)
              (setq compile-command "rake"))
@@ -1516,15 +1522,17 @@ Use as a hook, like so:
            (make-local-variable 'compile-command)
            (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
         ;; Checker Framework demos
-;;      ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
-;;       (make-local-variable 'compile-command)
-;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
-;;      ((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
-;;       (make-local-variable 'compile-command)
-;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
-;;      ((string-match "/annotations/demos/nonnull-interned-demo/junit/" default-directory)
-;;       (make-local-variable 'compile-command)
-;;       (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
+	;; These commented-out demos aren't currently working.
+	;; ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
+	;;  (make-local-variable 'compile-command)
+	;;  (setq compile-command "cd $anno/demos/nonnull-interned-demo/checker/; ant -e framework"))
+	;; ((string-match "/annotations/demos/nonnull-interned-demo/personalblog-demo/" default-directory)
+	;;  (make-local-variable 'compile-command)
+	;;  (setq compile-command "cd $anno/demos/nonnull-interned-demo/personalblog-demo/; ant -e"))
+	;; ((string-match "/annotations/demos/nonnull-interned-demo/junit/"
+	;; 	       default-directory)
+	;;  (make-local-variable 'compile-command)
+	;;  (setq compile-command "cd $anno/demos/nonnull-interned-demo/junit/; ant -e"))
         ((and buffer-file-name (string-match "demos/nonnull-interned-demo/IGJChecker/src/checkers/types/AnnotationLocation.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml location"))
@@ -1550,6 +1558,11 @@ Use as a hook, like so:
               (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "make typecheck-only"))
+        ((and buffer-file-name
+              (string-match "/checker/tests/optional/" buffer-file-name))
+         (make-local-variable 'compile-command)
+         (setq compile-command (concat "javacheck -processor optional "
+				       (file-name-nondirectory buffer-file-name))))
         ;; end of Checker Framework demos
 
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
@@ -1560,7 +1573,7 @@ Use as a hook, like so:
          (setq compile-command "make -C $HOME/bin/src/plume-lib/java"))
 	((string-match "^\\(.*commons-io-fork-nikshinde1996[^/]*/\\)" default-directory)
          (make-local-variable 'compile-command)
-         (setq compile-command (concat "cd " (match-string 1 default-directory) " && mvn install")))
+         (setq compile-command (concat "cd " (match-string 1 default-directory) " && mvn -B install")))
         ))
 (add-hook 'find-file-hooks 'special-case-set-compile-command 'append)
 (add-hook 'dired-mode-hook 'special-case-set-compile-command 'append)

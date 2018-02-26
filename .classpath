@@ -6,7 +6,7 @@
   <classpathentry kind="lib" path="java/lib/checker-qual-2.1.12.jar"/>
   <classpathentry kind="lib" path="java/lib/backport-util-concurrent-3.1.jar"/>
   <classpathentry kind="lib" path="java/lib/commons-codec-1.10.jar"/>
-  <classpathentry kind="lib" path="java/lib/commons-io-2.5.jar"/>
+  <classpathentry kind="lib" path="java/lib/commons-io-2.6.jar"/>
   <classpathentry kind="lib" path="java/lib/commons-lang3-3.6.jar"/>
   <classpathentry kind="lib" path="java/lib/commons-logging-1.2.jar"/>
   <classpathentry kind="lib" path="java/lib/commons-text-1.1.jar"/>

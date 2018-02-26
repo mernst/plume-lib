@@ -860,7 +860,7 @@ public final class Intern {
    */
   public static int /*@Interned*/ [] internSubsequence(
       int /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -872,7 +872,6 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start);
       int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
       internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
@@ -891,7 +890,7 @@ public final class Intern {
   /*@Pure*/
   public static long /*@Interned*/ [] internSubsequence(
       long /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -903,7 +902,6 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
@@ -922,7 +920,7 @@ public final class Intern {
   /*@Pure*/
   public static double /*@Interned*/ [] internSubsequence(
       double /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -934,7 +932,6 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
@@ -953,7 +950,7 @@ public final class Intern {
   /*@Pure*/
   public static /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] internSubsequence(
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -967,7 +964,6 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
@@ -991,7 +987,7 @@ public final class Intern {
   @SuppressWarnings("purity") // interning logic
   public static /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] internSubsequence(
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] seq,
-      /*@IndexFor("#1")*/ int start,
+      /*@IndexFor("#1")*/ /*@LessThan("#3")*/ int start,
       /*@NonNegative*/ /*@LTLengthOf(value="#1", offset="#2 - 1")*/ int end) {
     if (assertsEnabled && !Intern.isInterned(seq)) {
       throw new IllegalArgumentException();
@@ -1005,7 +1001,6 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      @SuppressWarnings("lowerbound") // https://github.com/kelloggm/checker-framework/issues/158
       /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects

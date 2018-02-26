@@ -12,7 +12,8 @@ bcel.jar : see below
 checker-qual-2.1.12.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
 commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
   (used by ICalAvailable, transitively, because ical4j uses it)
-commons-io-2.5.jar : https://commons.apache.org/proper/commons-io/download_io.cgi
+commons-exec-1.3.jar : https://commons.apache.org/proper/commons-exec/
+commons-io-2.6.jar : https://search.maven.org/remotecontent?filepath=org/checkerframework/annotatedlib/commons-io/2.6/commons-io-2.6.jar
 commons-lang3-3.6.jar : https://commons.apache.org/proper/commons-lang/
   (used by OptionsDoclet)
 commons-logging-1.2.jar : https://commons.apache.org/proper/commons-logging/
@@ -20,8 +21,9 @@ commons-text-1.1.jar : https://commons.apache.org/proper/commons-text/
   (used by OptionsDoclet)
 guava-20.0.jar : https://github.com/google/guava/releases but jar files
   (used by DeclarationAnnotations)
-  Guava 21 and 22 require Java 8.
-  I could use guava "22.0-android" which supports Java 7.
+  Guava 21 and later require Java 8.
+  I could use Guava's "android" variant which supports Java 7,
+  but it doesn't yet have type annotations.
 hamcrest-core-1.3.jar : http://search.maven.org/#search|ga|1|g%3Aorg.hamcrest
 ical4j-2.0.0.jar : run:
   git clone https://github.com/ical4j/ical4j.git && cd ical4j && ./gradlew jar && mv build/libs/ical4j-2.0.1-develop-SNAPSHOT.jar $pl/java/lib/

@@ -26,7 +26,8 @@ The HtmlPrettyPrint program has been removed and moved to its own repository:
 https://github.com/plume-lib/html-pretty-print
 
 StringBuilderDelimited's append() methods have been deprecated in favor of
-add(), in order to conform to the interface of StringJoiner.
+add(), in order to conform to the interface of StringJoiner.  Convert calls
+like sbd.append(arg) into sbd.add(arg) or sbd.add(arg.toString()).
 
 Many other bug fixes and minor enhancements, but no major new features.
 

@@ -35,7 +35,12 @@ import org.checkerframework.checker.signature.qual.*;
 import org.checkerframework.common.value.qual.*;
 */
 
-/** Static utility methods for working with BCEL. */
+/**
+ * Static utility methods for working with BCEL.
+ *
+ * @deprecated use org.plumelib.bcelutil instead
+ */
+@Deprecated
 public final class BCELUtil {
   /** This class is a collection of methods; it does not represent anything. */
   private BCELUtil() {
@@ -697,7 +702,8 @@ public final class BCELUtil {
    * @param classname the fully-qualified name of a class
    * @return the type corresponding to the given class name
    */
-  public static Type classname_to_type(String classname) {
+  @SuppressWarnings("signature") // stripping off "[]" does not affect type
+  public static Type classname_to_type(/*@ClassGetName*/ String classname) {
 
     // Get the array depth (if any)
     int array_depth = 0;

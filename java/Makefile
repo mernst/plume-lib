@@ -76,7 +76,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-io-2.5.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-exec-1.3.jar:lib/commons-io-2.6.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -119,7 +119,6 @@ endif
 JAVAC_ARGS ?= -g -Xlint -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-options -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND ?= ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
-JAVADOC_VERSION := $(shell $(JAVADOC) -version 2>&1)
 # A string like "18" for "1.8", because `test` can only do < and > on integers
 JAVA_VERSION := $(shell ${JAVA} -version 2>&1 | sed -n ';s/.* version "\(.*\)\.\(.*\)\..*"/\1\2/p;')
 JAVA_8_OR_HIGHER := $(shell test $(JAVA_VERSION) -gt 17; echo $$?)
@@ -169,7 +168,7 @@ endif
 # and -AsuggestPureMethods are fixed, they can be run on plume-lib and Daikon and this
 # can be removed. This warning is issued by the Lock Checker when a method calls another
 # method with a weaker side effect guarantee.
-JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -Astubs=${CHECKERFRAMEWORK}/checker/lib/javadoc.astub -processor org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.index.IndexChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.signature.SignatureChecker
+JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AsuppressWarnings=lock:method.guarantee.violated -AprintErrorStack -Astubs=${CHECKERFRAMEWORK}/checker/resources/javadoc.astub -processor org.checkerframework.checker.formatter.FormatterChecker,org.checkerframework.checker.index.IndexChecker,org.checkerframework.checker.interning.InterningChecker,org.checkerframework.checker.lock.LockChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.nullness.NullnessRawnessChecker,org.checkerframework.checker.regex.RegexChecker,org.checkerframework.checker.signature.SignatureChecker
 
 ## For testing a single checker, replace the above by:
 # JAVACHECK_ARGS ?= -source 7 -target 7 -Xlint:-options -Awarns -implicit:class -Xlint:-processing -AcheckPurityAnnotations -AprintErrorStack -processor org.checkerframework.checker.regex.RegexChecker
@@ -327,13 +326,7 @@ endif
 
 # This target does not create any new files -- it just updates existing ones.
 .optionsdoc-timestamp: $(JAVA_FILES)
-# This should presumably test for other buggy versions of gjdoc as well.
-# The symptom is output such as:  ARGH! @Option
-ifeq (gjdoc 0.7.9,$(JAVADOC_VERSION))
-	echo "Skipping optionsdoc target because of bugs in $(JAVADOC) version $(JAVADOC_VERSION)"
-else
 #	@echo "JAVADOC = $(JAVADOC)"
-#	@echo "JAVADOC_VERSION = $(JAVADOC_VERSION)"
 #Can also use -verbose for debugging
 	$(MAKE) compile
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
@@ -348,7 +341,6 @@ else
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	$(DOS2UNIX) src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
-endif
 
 tools_jar_exists:
 ifeq (cygwin,$(OSTYPE))
@@ -381,7 +373,6 @@ showvars:
 	@echo JAVA_VERSION = $(JAVA_VERSION)
 	@echo JAVA_8_OR_HIGHER = $(JAVA_8_OR_HIGHER)
 # Produces long output
-	@echo JAVADOC_VERSION = "$(JAVADOC_VERSION)"
 	@echo JAVA_AND_CPP_FILES = $(JAVA_AND_CPP_FILES)
 	@echo JAVA_FILES = $(JAVA_FILES)
 	@echo JAVA_CPP_FILES = $(JAVA_CPP_FILES)
@@ -433,7 +424,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.5.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-exec-1.3.jar)
+	(cd jar-contents; "${JAR}" xf ../lib/commons-io-2.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-lang3-3.6.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-logging-1.2.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-text-1.1.jar)
@@ -448,7 +440,8 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-api-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/slf4j-simple-1.7.25.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/svnkit-1.8.15-complete.jar)
-	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
+## This is huge.  Just expect that clients will have it on the classpath.
+# 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
 	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
@@ -460,7 +453,7 @@ verify-plume-jar-classfile-version:
 	rm -rf jar-contents
 	mkdir jar-contents
 	(cd jar-contents; jar xf ../plume.jar)
-	(cd jar-contents; find . -type f -name '*.class' | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
+	(cd jar-contents; find . -type f -name '*.class' | grep -v nullness/Opt.class | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
 	if [ -s jar-contents/version-52-files.txt ] ; then echo "Version 52.0 files exist: see list in jar-contents/version-52-files.txt"; exit 1; fi
 	rm -rf jar-contents
 
