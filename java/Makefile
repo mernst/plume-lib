@@ -453,7 +453,7 @@ verify-plume-jar-classfile-version:
 	rm -rf jar-contents
 	mkdir jar-contents
 	(cd jar-contents; jar xf ../plume.jar)
-	(cd jar-contents; find . -type f -name '*.class' | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
+	(cd jar-contents; find . -type f -name '*.class' | grep -v nullness/Opt.class | xargs file | grep 'version 52\.0' > version-52-files.txt || true)
 	if [ -s jar-contents/version-52-files.txt ] ; then echo "Version 52.0 files exist: see list in jar-contents/version-52-files.txt"; exit 1; fi
 	rm -rf jar-contents
 
