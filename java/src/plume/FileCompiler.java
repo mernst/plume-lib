@@ -42,21 +42,6 @@ public final class FileCompiler {
   /** Time limit for compilation jobs. */
   private long timeLimit;
 
-  /** stderr from compile */
-  private String compile_errors;
-  /** stdout from compile */
-  private String compile_output;
-
-  /** Apache Commons Exec objects */
-  private CommandLine cmdLine;
-
-  private DefaultExecuteResultHandler resultHandler;
-  private DefaultExecutor executor;
-  private ExecuteWatchdog watchdog;
-  private ByteArrayOutputStream outStream;
-  private ByteArrayOutputStream errStream;
-  private PumpStreamHandler streamHandler;
-
   static {
     try {
       @SuppressWarnings(
@@ -133,8 +118,8 @@ public final class FileCompiler {
   /**
    * Compiles the files given by fileNames. Returns the error output.
    *
-   * @return the error output from compiling the files
    * @param fileNames paths to the files to be compiled as Strings
+   * @return the error output from compiling the files
    * @throws IOException if there is a problem reading a file
    */
   public String compileFiles(List<String> fileNames) throws IOException {
@@ -142,7 +127,7 @@ public final class FileCompiler {
     // System.out.printf ("compileFiles: %s%n", fileNames);
 
     // Start a process to compile all of the files (in one command)
-    compile_source(fileNames);
+    String compile_errors = compile_source(fileNames);
 
     // javac tends to stop without completing the compilation if there
     // is an error in one of the files.  Remove all the erring files
@@ -156,10 +141,20 @@ public final class FileCompiler {
 
   /**
    * @param filenames the paths of the Java source to be compiled as Strings
-   * @return the process that executed the external compile command
+   * @return the error output from compiling the files
    * @throws Error if an empty list of filenames is provided
    */
-  private void compile_source(List<String> filenames) throws IOException {
+  private String compile_source(List<String> filenames) throws IOException {
+    /* Apache Commons Exec objects */
+    CommandLine cmdLine;
+    DefaultExecuteResultHandler resultHandler;
+    DefaultExecutor executor;
+    ExecuteWatchdog watchdog;
+    ByteArrayOutputStream outStream;
+    ByteArrayOutputStream errStream;
+    PumpStreamHandler streamHandler;
+    String compile_errors;
+    String compile_output;
 
     if (filenames.size() == 0) {
       throw new Error("no files to compile were provided");
@@ -219,6 +214,7 @@ public final class FileCompiler {
       if (e != null) e.printStackTrace();
       runtime.exit(1);
     }
+    return compile_errors;
   }
 
   /**
