@@ -47,7 +47,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
     }
   }
 
-  public StringBuilderDelimited add(CharSequence newElement) {
+  public StringBuilderDelimited add(/*@Nullable*/ CharSequence newElement) {
     appendDelimiter();
     delegate.append(newElement);
     return this;
