@@ -112,7 +112,7 @@ The mapping is created by the javadoc-index-to-alist program.")
   (with-current-buffer "*compilation*"
     (goto-char (point-min))
     (while (re-search-forward
-	    "^\\(?:\\[\\(?:ERROR\\|WARNING\\)\\] \\|:compileJava\\)?\\(.*\\.java\\):\\(?:[0-9]+:\\|\\[[0-9]+,[0-9]+\\]\\) error: cannot find symbol.*\n\\(?:.*\n.*\n\\)?  symbol:   \\(?:variable\\|class\\) \\([A-Za-z0-9_]+\\)\n"
+	    "^\\(?:\\[\\(?:ERROR\\|WARNING\\)\\] \\|:compileJava\\)?\\(.*\\.java\\):\\(?:[0-9]+:\\|\\[[0-9]+,[0-9]+\\]\\) error: cannot find symbol.*\n\\(?:.*\n.*\n\\)?  symbol: +\\(?:variable\\|class\\) \\([A-Za-z0-9_]+\\)\n"
 	    nil t)
       (let ((filename (match-string 1))
 	    (class-to-import (match-string 2)))
