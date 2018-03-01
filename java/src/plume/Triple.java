@@ -7,12 +7,16 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /**
- * Mutable triple class: type-safely holds three objects of possibly-different types.
+ * Mutable triple class: type-safely holds three objects of possibly-different types. Defines
+ * toStrng(), equals(), and hashCode() routines. If you don't need them (and maybe even if you do),
+ * you are better off defining your own tiny class.
  *
  * @param <T1> the type of the first element of the triple
  * @param <T2> the type of the second element of the triple
  * @param <T3> the type of the third element of the triple
+ * @deprecated define your own custom class rather than using this
  */
+@Deprecated // define your own class instead
 public class Triple<T1, T2, T3> {
   public T1 a;
   public T2 b;

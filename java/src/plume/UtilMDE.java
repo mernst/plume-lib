@@ -519,7 +519,8 @@ public final class UtilMDE {
     primitiveClasses.put("short", Short.TYPE);
   }
 
-  // TODO: should create a method that works exactly for the desired argument type.
+  // TODO: should create a method that handles any ClassGetName (including
+  // primitives), but not fully-qualified names.
   /**
    * Like {@link Class#forName(String)}, but also works when the string represents a primitive type
    * or a fully-qualified name (as opposed to a binary name).
@@ -1262,6 +1263,9 @@ public final class UtilMDE {
   /**
    * Reads the entire contents of the file and returns it as a string. Any IOException encountered
    * will be turned into an Error.
+   *
+   * <p>You could use {@code new String(Files.readAllBytes(...))}, but it requires a Path rather
+   * than a File, and it can throw IOException which has to be caught.
    *
    * @param file the file to read
    * @return the entire contents of the reader, as a string

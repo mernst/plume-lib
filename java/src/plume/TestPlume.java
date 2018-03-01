@@ -1747,6 +1747,7 @@ public final class TestPlume {
 
   // timePerNumber needs to be small so tests run fast, but large so that
   // more output doesn't sneak out before the timeout kicks in.
+  @SuppressWarnings("deprecation") // use of Triple class
   private static Triple<Integer, String, String> printFive(
       int timePerNumber, int timeLimit, boolean cache_stdout) {
     String command = "java plume.TestPlume$PrintOneIntPerTimePeriod 5 " + timePerNumber;
@@ -1773,6 +1774,7 @@ public final class TestPlume {
     return Triple.of(result, out, err);
   }
 
+  @SuppressWarnings("deprecation") // use of Triple class
   private static void checkPrintFive(
       int timePerNumber, int timeLimit, boolean cache_stdout, String out, String err) {
     Triple<Integer, String, String> results = printFive(timePerNumber, timeLimit, cache_stdout);
