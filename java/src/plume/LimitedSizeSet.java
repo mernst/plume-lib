@@ -224,6 +224,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   /*@SideEffectFree*/
   @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
-    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysPlume.toString(values)) + "]");
+    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
   }
 }

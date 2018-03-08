@@ -292,7 +292,7 @@ public class TaskManager {
 
     // Read in each specified task file
     for (String filename : filenames) {
-      filename = UtilPlume.expandFilename(filename);
+      filename = UtilMDE.expandFilename(filename);
       try (EntryReader reader = new EntryReader(filename, comment_re, include_re)) {
         while (true) {
           EntryReader.Entry entry = reader.get_entry();

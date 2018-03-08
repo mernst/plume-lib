@@ -18,10 +18,10 @@ import org.checkerframework.checker.nullness.qual.*;
  * @deprecated use org.plumelib.util.GraphPlume
  */
 @Deprecated // use org.plumelib.util.GraphPlume
-public final class GraphPlume {
+public final class GraphMDE {
 
   /** This class is a collection of methods; it does not represent anything. */
-  private GraphPlume() {
+  private GraphMDE() {
     throw new Error("do not instantiate");
   }
 

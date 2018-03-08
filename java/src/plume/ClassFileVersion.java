@@ -28,6 +28,7 @@ import org.checkerframework.common.value.qual.*;
  * <pre>find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6
  * </pre>
  */
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class ClassFileVersion {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -59,7 +60,7 @@ public final class ClassFileVersion {
       } else if (minversion == 1.7) {
         minversion = 7;
       }
-      args = ArraysPlume.subarray(args, 2, args.length - 2);
+      args = ArraysMDE.subarray(args, 2, args.length - 2);
     }
 
     // System.out.println("newargs: " + java.util.Arrays.toString(args));

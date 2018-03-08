@@ -4,7 +4,7 @@ You first need to preprocess it with cpp, the C preprocessor.
 The correct way to build the system is to run 'make'.
 #endif
 
-#include "MathPlume-help.java.jpp"
+#include "MathMDE-help.java.jpp"
 
   /**
    * Return z such that {@code (z == x mod y) && (0 <= z < abs(y))}.
@@ -81,7 +81,7 @@ The correct way to build the system is to run 'make'.
       if (i == avalue) {
         continue;
       }
-      modulus = MathPlume.gcd(modulus, Math.abs(avalue - i));
+      modulus = MathMDE.gcd(modulus, Math.abs(avalue - i));
       count++;
       if (modulus == 1) {
         return null;
@@ -90,7 +90,7 @@ The correct way to build the system is to run 'make'.
     if (count < 3) {
       return null;
     }
-    return new INT[] { MathPlume.mod_positive(avalue, modulus), modulus };
+    return new INT[] { MathMDE.mod_positive(avalue, modulus), modulus };
   }
 
 
@@ -210,7 +210,7 @@ The correct way to build the system is to run 'make'.
       return null;
     }
 
-    INT r = MathPlume.mod_positive(next, modulus);
+    INT r = MathMDE.mod_positive(next, modulus);
     if (nonstrict_ends) {
       if ((r != mod_positive(first_nonstrict, modulus))
           || (r != mod_positive(last_nonstrict, modulus))) {
@@ -222,4 +222,4 @@ The correct way to build the system is to run 'make'.
   }
 
 
-#include "MathPlume-helpend.java.jpp"
+#include "MathMDE-helpend.java.jpp"

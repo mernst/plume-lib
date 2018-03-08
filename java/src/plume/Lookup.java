@@ -1,7 +1,6 @@
 package plume;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static plume.EntryReader.Entry;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -116,6 +115,7 @@ import org.checkerframework.checker.regex.qual.*;
  *
  * <!-- end options doc -->
  */
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class Lookup {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -270,7 +270,7 @@ public final class Lookup {
     String[] entry_files = entry_file.split(":");
     List<Exception> file_errors = new ArrayList<Exception>();
     for (String ef : entry_files) {
-      ef = UtilPlume.expandFilename(ef);
+      ef = UtilMDE.expandFilename(ef);
       try {
         reader = new EntryReader(ef, comment_re, include_re);
       } catch (FileNotFoundException e) {
@@ -291,12 +291,12 @@ public final class Lookup {
     // Setup the regular expressions for long entries
     reader.set_entry_start_stop(entry_start_re, entry_stop_re);
 
-    List<Entry> matching_entries = new ArrayList<Entry>();
+    List<EntryReader.Entry> matching_entries = new ArrayList<>();
 
     try {
       // Process each entry looking for matches
       int entry_cnt = 0;
-      Entry entry = reader.get_entry();
+      EntryReader.Entry entry = reader.get_entry();
       while (entry != null) {
         entry_cnt++;
         if (verbose && ((entry_cnt % 1000) == 0)) {
@@ -355,7 +355,7 @@ public final class Lookup {
     if (matching_entries.size() == 0) {
       System.out.println("Nothing found.");
     } else if (matching_entries.size() == 1) {
-      Entry e = matching_entries.get(0);
+      EntryReader.Entry e = matching_entries.get(0);
       if (show_location) {
         System.out.printf("%s:%d:%n", e.filename, e.line_number);
       }
@@ -371,7 +371,7 @@ public final class Lookup {
               "Illegal --item-num %d, should be <= %d%n", item_num, matching_entries.size());
           System.exit(1);
         }
-        Entry e = matching_entries.get(item_num - 1);
+        EntryReader.Entry e = matching_entries.get(item_num - 1);
         if (show_location) {
           System.out.printf("%s:%d:%n", e.filename, e.line_number);
         }
@@ -387,7 +387,7 @@ public final class Lookup {
               matching_entries.size());
         }
 
-        for (Entry e : matching_entries) {
+        for (EntryReader.Entry e : matching_entries) {
           i++;
           if (print_all) {
             if (show_location) {
@@ -415,7 +415,8 @@ public final class Lookup {
    * @return the next entry, or null
    * @throws IOException if there is a problem reading a file
    */
-  public static /*@Nullable*/ Entry old_get_entry(EntryReader reader) throws IOException {
+  public static EntryReader./*@Nullable*/ Entry old_get_entry(EntryReader reader)
+      throws IOException {
 
     try {
 
@@ -428,7 +429,7 @@ public final class Lookup {
         return (null);
       }
 
-      Entry entry = null;
+      EntryReader.Entry entry = null;
       String filename = reader.getFileName();
       long line_number = reader.getLineNumber();
 
@@ -460,7 +461,7 @@ public final class Lookup {
           reader.putback(line);
         }
 
-        entry = new Entry(first_line, body.toString(), filename, line_number, false);
+        entry = new EntryReader.Entry(first_line, body.toString(), filename, line_number, false);
 
       } else { // blank separated entry
 
@@ -474,7 +475,7 @@ public final class Lookup {
           line = reader.readLine();
         }
 
-        entry = new Entry(first_line, body.toString(), filename, line_number, true);
+        entry = new EntryReader.Entry(first_line, body.toString(), filename, line_number, true);
       }
 
       return (entry);

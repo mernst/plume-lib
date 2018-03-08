@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 // "long entries" start after a blank line.  (That can be considered an
 // EntryReader bug, or at least inflexibility in its interface.)
 
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class BibtexClean {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -49,7 +50,7 @@ public final class BibtexClean {
     for (String filename : args) {
       File in = new File(filename);
       try (PrintWriter out =
-              new PrintWriter(UtilPlume.bufferedFileWriter(in.getName())); // in current directory
+              new PrintWriter(UtilMDE.bufferedFileWriter(in.getName())); // in current directory
           EntryReader er = new EntryReader(filename)) {
         for (String line : er) {
           if (line.equals("") || line.startsWith("%")) {

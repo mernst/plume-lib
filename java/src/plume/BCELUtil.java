@@ -614,7 +614,7 @@ public final class BCELUtil {
    */
   public static /*@ClassGetName*/ String type_to_classgetname(Type type) {
     String signature = type.getSignature();
-    return UtilPlume.fieldDescriptorToClassGetName(signature);
+    return UtilMDE.fieldDescriptorToClassGetName(signature);
   }
 
   /**
@@ -627,7 +627,7 @@ public final class BCELUtil {
 
     String classname = type_to_classgetname(type);
     try {
-      Class<?> c = UtilPlume.classForName(classname);
+      Class<?> c = UtilMDE.classForName(classname);
       return c;
     } catch (Exception e) {
       throw new RuntimeException("can't find class for " + classname, e);

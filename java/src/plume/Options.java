@@ -884,7 +884,7 @@ public class Options {
           msg.append(String.format("unknown option name '%s' in arg '%s'", arg_name, arg));
           if (false) { // for debugging
             msg.append("; known options:");
-            for (String option_name : UtilPlume.sortedKeySet(name_map)) {
+            for (String option_name : UtilMDE.sortedKeySet(name_map)) {
               msg.append(" ");
               msg.append(option_name);
             }
