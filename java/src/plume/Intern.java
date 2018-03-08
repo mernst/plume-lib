@@ -116,6 +116,7 @@ public final class Intern {
    *
    * @see Hasher
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class IntegerHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -135,6 +136,7 @@ public final class Intern {
    *
    * @see Hasher
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class LongHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -154,6 +156,7 @@ public final class Intern {
    * @see Hasher
    * @see Arrays#equals(int[], int[])
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class IntArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -172,6 +175,7 @@ public final class Intern {
    * @see Hasher
    * @see Arrays#equals (long[], long[])
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class LongArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -193,6 +197,7 @@ public final class Intern {
    *
    * @see Hasher
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class DoubleHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -212,6 +217,7 @@ public final class Intern {
    * @see Hasher
    * @see Arrays#equals(Object[],Object[])
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class DoubleArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -253,6 +259,7 @@ public final class Intern {
    * @see Hasher
    * @see Arrays.equals
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class StringArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -271,6 +278,7 @@ public final class Intern {
    * @see Hasher
    * @see Arrays#equals(Object[], Object[])
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class ObjectArrayHasher implements Hasher {
     @Override
     public boolean equals(Object a1, Object a2) {
@@ -1078,6 +1086,7 @@ public final class Intern {
    *
    * @see Hasher
    */
+  @SuppressWarnings("deprecation") // needed in JDK 7
   private static final class SequenceAndIndicesHasher<T extends /*@Interned*/ Object>
       implements Hasher {
     @Override
