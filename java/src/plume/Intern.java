@@ -26,6 +26,7 @@ import org.checkerframework.common.value.qual.*;
  * @deprecated use org.plumelib.util.Intern
  */
 @Deprecated // use org.plumelib.util.Intern
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class Intern {
 
   /** This class is a collection of methods; it does not represent anything. */
