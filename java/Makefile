@@ -116,6 +116,7 @@ endif
 
 # A user can add flags like "-source 7" or "-target 7" to JAVAC_TARGET_FLAGS.
 # That variable appears last and overrides the values we provide here.
+# "-deprecation" is only needed on JDK 7.
 JAVAC_ARGS ?= -g -Xlint:all,-deprecation -Xmaxwarns 1000 -J-Xmx2000m -source 7 -target 7 -Xlint:-options -Werror -Xlint:-classfile ${JAVAC_TARGET_FLAGS}
 JAVAC_COMMAND ?= ${JAVAC} ${JAVAC_ARGS} ${JAVAC_EXTRA_ARGS}
 
