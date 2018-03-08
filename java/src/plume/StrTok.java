@@ -23,6 +23,7 @@ import java.io.StringReader;
  * <p>Other differences are:
  *
  * <ul>
+ *   <li>Only handles tokenizing strings, not other sources of characters.
  *   <li>Automatic setup for tokenizing strings.
  *   <li>Underscores are included in identifiers (words).
  *   <li>I/O errors (which should be impossible when tokenizing strings) are converted to

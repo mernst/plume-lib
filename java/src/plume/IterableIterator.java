@@ -46,7 +46,9 @@ import java.util.Iterator;
  * interfere with one another. That is not the case for this Iterable.
  *
  * @param <T> the element type of the IterableIterator
+ * @deprecated use {@link UtilMDE#iteratorToIterable}
  */
+@Deprecated // use UtilMDE.iteratorToIterable()
 public class IterableIterator<T> implements Iterable<T> {
   /** The Iterator that this is a wrapper around. */
   private Iterator<T> iter;
