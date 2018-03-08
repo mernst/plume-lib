@@ -65,7 +65,9 @@ import org.checkerframework.checker.regex.qual.*;
  * }</pre>
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
+ * @deprecated use org.plumelib.util.FOOBARBAZ
  */
+@Deprecated // use org.plumelib.util.FOOBARBAZ
 @SuppressWarnings("IterableAndIterator")
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
 
@@ -137,7 +139,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
      * @param filename file from which to read
      */
     public FlnReader(String filename) throws IOException {
-      super(UtilMDE.fileReader(filename));
+      super(UtilPlume.fileReader(filename));
       this.filename = filename;
     }
   }
@@ -393,7 +395,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
       /*@Nullable*/ /*@Regex*/ String comment_re,
       /*@Nullable*/ /*@Regex(1)*/ String include_re)
       throws IOException {
-    this(UtilMDE.fileReader(file), file.toString(), comment_re, include_re);
+    this(UtilPlume.fileReader(file), file.toString(), comment_re, include_re);
   }
 
   /**
@@ -416,7 +418,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @see #EntryReader(File,String,String)
    */
   public EntryReader(File file, String charsetName) throws IOException {
-    this(UtilMDE.fileInputStream(file), charsetName, file.toString(), null, null);
+    this(UtilPlume.fileInputStream(file), charsetName, file.toString(), null, null);
   }
 
   /// Filename constructors
@@ -517,7 +519,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
           throw new Error(
               String.format("include_re (%s) does not capture group 1 in %s", include_re, line));
         }
-        File filename = new File(UtilMDE.expandFilename(filename_string));
+        File filename = new File(UtilPlume.expandFilename(filename_string));
         // System.out.printf ("Trying to include filename %s%n", filename);
         if (!filename.isAbsolute()) {
           FlnReader reader = readers.getFirst();

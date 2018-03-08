@@ -13,7 +13,10 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <p>Differs from Pair in the following ways: is immutable, cannot hold null, holds its elements
  * with weak pointers, and its equals() method uses object equality to compare its elements.
+ *
+ * @deprecated use org.plumelib.util.WeakIdentityPair
  */
+@Deprecated // use org.plumelib.util.WeakIdentityPair
 public class WeakIdentityPair<T1 extends Object, T2 extends Object> {
 
   private final WeakReference<T1> a;

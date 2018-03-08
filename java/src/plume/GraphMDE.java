@@ -12,11 +12,16 @@ import java.util.Set;
 import org.checkerframework.checker.nullness.qual.*;
 */
 
-/** Graph utility methods. This class does not model a graph: all methods are static. */
-public final class GraphMDE {
+/**
+ * Graph utility methods. This class does not model a graph: all methods are static.
+ *
+ * @deprecated use org.plumelib.util.GraphPlume
+ */
+@Deprecated // use org.plumelib.util.GraphPlume
+public final class GraphPlume {
 
   /** This class is a collection of methods; it does not represent anything. */
-  private GraphMDE() {
+  private GraphPlume() {
     throw new Error("do not instantiate");
   }
 

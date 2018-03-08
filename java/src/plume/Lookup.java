@@ -270,7 +270,7 @@ public final class Lookup {
     String[] entry_files = entry_file.split(":");
     List<Exception> file_errors = new ArrayList<Exception>();
     for (String ef : entry_files) {
-      ef = UtilMDE.expandFilename(ef);
+      ef = UtilPlume.expandFilename(ef);
       try {
         reader = new EntryReader(ef, comment_re, include_re);
       } catch (FileNotFoundException e) {

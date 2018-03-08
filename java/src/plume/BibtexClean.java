@@ -49,7 +49,7 @@ public final class BibtexClean {
     for (String filename : args) {
       File in = new File(filename);
       try (PrintWriter out =
-              new PrintWriter(UtilMDE.bufferedFileWriter(in.getName())); // in current directory
+              new PrintWriter(UtilPlume.bufferedFileWriter(in.getName())); // in current directory
           EntryReader er = new EntryReader(filename)) {
         for (String line : er) {
           if (line.equals("") || line.startsWith("%")) {

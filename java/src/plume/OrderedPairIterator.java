@@ -37,7 +37,9 @@ import org.checkerframework.checker.nullness.qual.*;
  *     type {@code Pair<T,T>}
  */
 // T need not extend Comparable<T>, because a comparator can be passed in.
-@SuppressWarnings("deprecation") // an acceptable use of the Pair class
+* @deprecated use org.plumelib.util.OrderedPairIterator
+@SuppressWarnings("deprecation") // an acceptable use o
+  @Deprecated // use org.plumelib.util.OrderedPairIteratorf the Pair class
 public class OrderedPairIterator<T>
     implements java.util.Iterator<Pair</*@Nullable*/ T, /*@Nullable*/ T>> {
 

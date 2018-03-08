@@ -444,7 +444,7 @@ public class MultiVersionControl {
     if (remaining_args.length != 1) {
       System.out.printf(
           "Please supply exactly one argument (found %d)%n%s",
-          remaining_args.length, UtilMDE.join(remaining_args, " "));
+          remaining_args.length, UtilPlume.join(remaining_args, " "));
       options.printUsage();
       System.exit(1);
     }
@@ -852,8 +852,8 @@ public class MultiVersionControl {
       // apparently it wasn't a version control directory
       return;
     }
-    String pathInRepo = UtilMDE.readFile(repositoryFile).trim();
-    String repoRoot = UtilMDE.readFile(rootFile).trim();
+    String pathInRepo = UtilPlume.readFile(repositoryFile).trim();
+    String repoRoot = UtilPlume.readFile(rootFile).trim();
     /*@NonNull*/ File repoFileRoot = new File(pathInRepo);
     while (repoFileRoot.getParentFile() != null) {
       @SuppressWarnings("nullness") // just checked that parent is non-null
@@ -907,7 +907,7 @@ public class MultiVersionControl {
 
   /** Given a directory named ".git" , create a corresponding Checkout object for its parent. */
   static Checkout dirToCheckoutGit(File gitDir, File dir) {
-    String repository = UtilMDE.backticks("git", "config", "remote.origin.url");
+    String repository = UtilPlume.backticks("git", "config", "remote.origin.url");
 
     return new Checkout(RepoType.GIT, dir, repository, null);
   }
@@ -1600,10 +1600,10 @@ public class MultiVersionControl {
       // Try printing always, to better understand this question.
       if (show_normal_output || p.exitValue() != 0 || debug_replacers || debug_process_output) {
         // Filter then print the output.
-        // String output = UtilMDE.readerContents(new BufferedReader(new
+        // String output = UtilPlume.readerContents(new BufferedReader(new
         //     InputStreamReader(p.getInputStream())));
-        // String output = UtilMDE.streamString(p.getInputStream());
-        String output = UtilMDE.streamString(p.getInputStream());
+        // String output = UtilPlume.streamString(p.getInputStream());
+        String output = UtilPlume.streamString(p.getInputStream());
         if (debug_replacers || debug_process_output) {
           System.out.println("preoutput=<<<" + output + ">>>");
         }
@@ -1643,7 +1643,7 @@ public class MultiVersionControl {
   }
 
   String command(ProcessBuilder pb) {
-    return "  cd " + pb.directory() + "\n  " + UtilMDE.join(pb.command(), " ");
+    return "  cd " + pb.directory() + "\n  " + UtilPlume.join(pb.command(), " ");
   }
 
   //     # Show the command.

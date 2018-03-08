@@ -67,11 +67,16 @@ import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
-/** Utility functions that do not belong elsewhere in the plume package. */
-public final class UtilMDE {
+/**
+ * Utility functions that do not belong elsewhere in the plume package.
+ *
+ * @deprecated use org.plumelib.util.UtilPlume
+ */
+@Deprecated // use org.plumelib.util.UtilPlume
+public final class UtilPlume {
 
   /** This class is a collection of methods; it does not represent anything. */
-  private UtilMDE() {
+  private UtilPlume() {
     throw new Error("do not instantiate");
   }
 
@@ -81,7 +86,7 @@ public final class UtilMDE {
   /// Array
   ///
 
-  // For arrays, see ArraysMDE.java.
+  // For arrays, see ArraysPlume.java.
 
   ///////////////////////////////////////////////////////////////////////////
   /// BitSet
@@ -883,7 +888,7 @@ public final class UtilMDE {
    */
   public static long count_lines(String filename) throws IOException {
     long count = 0;
-    try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
+    try (LineNumberReader reader = UtilPlume.lineNumberFileReader(filename)) {
       while (reader.readLine() != null) {
         count++;
       }
@@ -900,7 +905,7 @@ public final class UtilMDE {
    */
   public static List<String> fileLines(String filename) throws IOException {
     List<String> textList = new ArrayList<>();
-    try (LineNumberReader reader = UtilMDE.lineNumberFileReader(filename)) {
+    try (LineNumberReader reader = UtilPlume.lineNumberFileReader(filename)) {
       String line;
       while ((line = reader.readLine()) != null) {
         textList.add(line);
@@ -928,7 +933,7 @@ public final class UtilMDE {
    * @throws IOException if there is trouble reading the file
    */
   public static String inferLineSeparator(File file) throws IOException {
-    try (BufferedReader r = UtilMDE.bufferedFileReader(file)) {
+    try (BufferedReader r = UtilPlume.bufferedFileReader(file)) {
       int unix = 0;
       int dos = 0;
       int mac = 0;
@@ -986,8 +991,8 @@ public final class UtilMDE {
   @SuppressWarnings("purity") // reads files, side effects local state
   /*@Pure*/
   public static boolean equalFiles(String file1, String file2, boolean trimLines) {
-    try (LineNumberReader reader1 = UtilMDE.lineNumberFileReader(file1);
-        LineNumberReader reader2 = UtilMDE.lineNumberFileReader(file2); ) {
+    try (LineNumberReader reader1 = UtilPlume.lineNumberFileReader(file1);
+        LineNumberReader reader2 = UtilPlume.lineNumberFileReader(file2); ) {
       String line1 = reader1.readLine();
       String line2 = reader2.readLine();
       while (line1 != null && line2 != null) {
@@ -1273,7 +1278,7 @@ public final class UtilMDE {
   public static String readFile(File file) {
 
     try {
-      BufferedReader reader = UtilMDE.bufferedFileReader(file);
+      BufferedReader reader = UtilPlume.bufferedFileReader(file);
       StringBuilder contents = new StringBuilder();
       String line = reader.readLine();
       while (line != null) {
@@ -1944,9 +1949,9 @@ public final class UtilMDE {
    * <p>Example calls are:
    *
    * <pre>
-   * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String, java.lang.String, java.lang.Class[])")
-   * UtilMDE.methodForName("plume.UtilMDE.methodForName(java.lang.String,java.lang.String,java.lang.Class[])")
-   * UtilMDE.methodForName("java.lang.Math.min(int,int)")
+   * UtilPlume.methodForName("plume.UtilPlume.methodForName(java.lang.String, java.lang.String, java.lang.Class[])")
+   * UtilPlume.methodForName("plume.UtilPlume.methodForName(java.lang.String,java.lang.String,java.lang.Class[])")
+   * UtilPlume.methodForName("java.lang.Math.min(int,int)")
    * </pre>
    *
    * @param method a method signature
@@ -2053,7 +2058,7 @@ public final class UtilMDE {
     try {
       Process p = pb.start();
       @SuppressWarnings("nullness") // didn't redirect stream, so getter returns non-null
-      String output = UtilMDE.streamString(p.getInputStream());
+      String output = UtilPlume.streamString(p.getInputStream());
       return output;
     } catch (IOException e) {
       return "IOException: " + e.getMessage();
@@ -2377,7 +2382,7 @@ public final class UtilMDE {
    *
    * <p>If you are using Java 8 or later, then use the {@code String.join()} method instead.
    *
-   * @see plume.ArraysMDE#toString(int[])
+   * @see plume.ArraysPlume#toString(int[])
    * @param a array of values to concatenate
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter
@@ -2401,7 +2406,7 @@ public final class UtilMDE {
    * Concatenate the string representations of the objects, placing the system-specific line
    * separator between them.
    *
-   * @see plume.ArraysMDE#toString(int[])
+   * @see plume.ArraysPlume#toString(int[])
    * @param a array of values to concatenate
    * @return the concatenation of the string representations of the values, each on its own line
    */

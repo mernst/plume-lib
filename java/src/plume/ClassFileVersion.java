@@ -59,7 +59,7 @@ public final class ClassFileVersion {
       } else if (minversion == 1.7) {
         minversion = 7;
       }
-      args = ArraysMDE.subarray(args, 2, args.length - 2);
+      args = ArraysPlume.subarray(args, 2, args.length - 2);
     }
 
     // System.out.println("newargs: " + java.util.Arrays.toString(args));

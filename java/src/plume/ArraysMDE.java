@@ -27,11 +27,14 @@ import org.checkerframework.framework.qual.*;
 /**
  * Utilities for manipulating arrays and collections. This complements {@link java.util.Arrays} and
  * {@link java.util.Collections}.
+ *
+ * @deprecated use org.plumelib.util.FOOBARBAZ
  */
+@Deprecated // use org.plumelib.util.FOOBARBAZ
 @SuppressWarnings("interning") // to do later
-public final class ArraysMDE {
+public final class ArraysPlume {
   /** This class is a collecton of methods; it does not represent anything. */
-  private ArraysMDE() {
+  private ArraysPlume() {
     throw new Error("do not instantiate");
   }
 
@@ -2054,7 +2057,7 @@ public final class ArraysMDE {
         if (quoted && a[i] instanceof String) {
           String elt = (String) a[i];
           sb.append('\"');
-          sb.append(UtilMDE.escapeNonJava(elt));
+          sb.append(UtilPlume.escapeNonJava(elt));
           sb.append('\"');
         } else {
           sb.append(a[i]);
@@ -2116,7 +2119,7 @@ public final class ArraysMDE {
         Object elt = itor.next();
         if (quoted && elt instanceof String) {
           sb.append('\"');
-          sb.append(UtilMDE.escapeNonJava((String) elt));
+          sb.append(UtilPlume.escapeNonJava((String) elt));
           sb.append('\"');
         } else {
           sb.append(elt);
@@ -3221,7 +3224,7 @@ public final class ArraysMDE {
     }
   }
 
-  private static final UtilMDE.ObjectComparator objectComparator = new UtilMDE.ObjectComparator();
+  private static final UtilPlume.ObjectComparator objectComparator = new UtilPlume.ObjectComparator();
 
   /**
    * Compare two arrays first by length (a shorter array is considered less), and if of equal length

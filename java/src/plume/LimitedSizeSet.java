@@ -18,7 +18,9 @@ import org.checkerframework.dataflow.qual.*;
  * (because the internal representation is nulled, in order to save space).
  *
  * @param <T> the type of elements in the set
+ * @deprecated use org.plumelib.util.LimitedSizeSet
  */
+@Deprecated // use org.plumelib.util.LimitedSizeSet
 public class LimitedSizeSet<T> implements Serializable, Cloneable {
   // We are Serializable, so we specify a version to allow changes to
   // method signatures without breaking serialization.  If you add or
@@ -222,6 +224,6 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   /*@SideEffectFree*/
   @Override
   public String toString(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
-    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysMDE.toString(values)) + "]");
+    return ("[size=" + size() + "; " + ((repNulled()) ? "null" : ArraysPlume.toString(values)) + "]");
   }
 }

@@ -34,21 +34,21 @@ import org.checkerframework.common.value.qual.*;
 //   java plume.TestPlume
 
 // Files yet to test:
-// ArraysMDE.java
+// ArraysPlume.java
 // ClassFileVersion.java
 // CountingPrintWriter.java
 // Digest.java
 // FileIOException.java
 // FuzzyFloat.java
-// GraphMDE.java
+// GraphPlume.java
 // Hasher.java
 // Intern.java
 // ICalAvailable.java
 // LimitedSizeIntSet.java
-// MathMDE.java
+// MathPlume.java
 // OrderedPairIterator.java
 // StringBuilderDelimited.java
-// UtilMDE.java
+// UtilPlume.java
 // WeakHasherMap.java
 
 /** Test code for the plume package. */
@@ -64,11 +64,11 @@ public final class TestPlume {
   static boolean short_run = false;
 
   //   public static void main(String[] args) {
-  //     testUtilMDE();
-  //     testArraysMDE();
+  //     testUtilPlume();
+  //     testArraysPlume();
   //     testHasher();
   //     testIntern();
-  //     testMathMDE();
+  //     testMathPlume();
   //     testOrderedPairIterator();
   //     testPlume();
   //     testWeakHasherMap();
@@ -82,14 +82,14 @@ public final class TestPlume {
     }
     assert result;
     //      assert(Arrays.equals(a1, a2),
-    //         "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
+    //         "Arrays differ: " + ArraysPlume.toString(a1) + ", " + ArraysPlume.toString(a2));
   }
 
   public static void assert_arrays_equals(double[] a1, double[] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
       System.out.println(
-          "Arrays differ: " + ArraysMDE.toString(a1) + ", " + ArraysMDE.toString(a2));
+          "Arrays differ: " + ArraysPlume.toString(a1) + ", " + ArraysPlume.toString(a2));
     }
     assert result;
   }
@@ -139,69 +139,69 @@ public final class TestPlume {
   ///
 
   ///////////////////////////////////////////////////////////////////////////
-  /// ArraysMDE
+  /// ArraysPlume
   ///
 
   @Test
-  public void testArraysMDE_min_max() {
+  public void testArraysPlume_min_max() {
 
     // public static int min(int[] a)
-    assert ArraysMDE.min(new int[] {1, 2, 3}) == 1;
-    assert ArraysMDE.min(new int[] {2, 33, 1}) == 1;
-    assert ArraysMDE.min(new int[] {3, -2, 1}) == -2;
-    assert ArraysMDE.min(new int[] {3}) == 3;
+    assert ArraysPlume.min(new int[] {1, 2, 3}) == 1;
+    assert ArraysPlume.min(new int[] {2, 33, 1}) == 1;
+    assert ArraysPlume.min(new int[] {3, -2, 1}) == -2;
+    assert ArraysPlume.min(new int[] {3}) == 3;
 
     // public static int max(int[] a)
-    assert ArraysMDE.max(new int[] {1, 2, 3}) == 3;
-    assert ArraysMDE.max(new int[] {2, 33, 1}) == 33;
-    assert ArraysMDE.max(new int[] {3, -2, 1}) == 3;
-    assert ArraysMDE.max(new int[] {3}) == 3;
+    assert ArraysPlume.max(new int[] {1, 2, 3}) == 3;
+    assert ArraysPlume.max(new int[] {2, 33, 1}) == 33;
+    assert ArraysPlume.max(new int[] {3, -2, 1}) == 3;
+    assert ArraysPlume.max(new int[] {3}) == 3;
 
     // public static int[] min_max(int[] a)
-    assert_arrays_equals(ArraysMDE.min_max(new int[] {1, 2, 3}), new int[] {1, 3});
-    assert_arrays_equals(ArraysMDE.min_max(new int[] {2, 33, 1}), new int[] {1, 33});
-    assert_arrays_equals(ArraysMDE.min_max(new int[] {3, -2, 1}), new int[] {-2, 3});
-    assert_arrays_equals(ArraysMDE.min_max(new int[] {3}), new int[] {3, 3});
+    assert_arrays_equals(ArraysPlume.min_max(new int[] {1, 2, 3}), new int[] {1, 3});
+    assert_arrays_equals(ArraysPlume.min_max(new int[] {2, 33, 1}), new int[] {1, 33});
+    assert_arrays_equals(ArraysPlume.min_max(new int[] {3, -2, 1}), new int[] {-2, 3});
+    assert_arrays_equals(ArraysPlume.min_max(new int[] {3}), new int[] {3, 3});
     try {
-      ArraysMDE.min_max(new int[] {});
+      ArraysPlume.min_max(new int[] {});
       throw new Error("Didn't throw ArrayIndexOutOfBoundsException");
     } catch (ArrayIndexOutOfBoundsException e) {
     }
     try {
-      ArraysMDE.min_max(new long[] {});
+      ArraysPlume.min_max(new long[] {});
       throw new Error("Didn't throw ArrayIndexOutOfBoundsException");
     } catch (ArrayIndexOutOfBoundsException e) {
     }
 
     // public static int element_range(int[] a)
-    assert ArraysMDE.element_range(new int[] {1, 2, 3}) == 2;
-    assert ArraysMDE.element_range(new int[] {2, 33, 1}) == 32;
-    assert ArraysMDE.element_range(new int[] {3, -2, 1}) == 5;
-    assert ArraysMDE.element_range(new int[] {3}) == 0;
+    assert ArraysPlume.element_range(new int[] {1, 2, 3}) == 2;
+    assert ArraysPlume.element_range(new int[] {2, 33, 1}) == 32;
+    assert ArraysPlume.element_range(new int[] {3, -2, 1}) == 5;
+    assert ArraysPlume.element_range(new int[] {3}) == 0;
   }
 
   @Test
-  public void testArraysMDE_sum() {
+  public void testArraysPlume_sum() {
 
     // public static int sum(int[] a)
-    assert 0 == ArraysMDE.sum(new int[0]);
-    assert 10 == ArraysMDE.sum(new int[] {10});
-    assert 10 == ArraysMDE.sum(new int[] {1, 2, 3, 4});
+    assert 0 == ArraysPlume.sum(new int[0]);
+    assert 10 == ArraysPlume.sum(new int[] {10});
+    assert 10 == ArraysPlume.sum(new int[] {1, 2, 3, 4});
 
     // public static int sum(int[][] a)
-    assert 0 == ArraysMDE.sum(new int[0][0]);
-    assert 78 == ArraysMDE.sum(new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}});
-    assert 68 == ArraysMDE.sum(new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 11, 12}});
+    assert 0 == ArraysPlume.sum(new int[0][0]);
+    assert 78 == ArraysPlume.sum(new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}});
+    assert 68 == ArraysPlume.sum(new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 11, 12}});
 
     // public static double sum(double[] a)
-    assert 0 == ArraysMDE.sum(new double[0]);
-    assert 3.14 == ArraysMDE.sum(new double[] {3.14});
-    assert 8.624 == ArraysMDE.sum(new double[] {3.14, 2.718, -1.234, 4});
+    assert 0 == ArraysPlume.sum(new double[0]);
+    assert 3.14 == ArraysPlume.sum(new double[] {3.14});
+    assert 8.624 == ArraysPlume.sum(new double[] {3.14, 2.718, -1.234, 4});
 
     // public static double sum(double[][] a)
-    assert 0 == ArraysMDE.sum(new double[0][0]);
+    assert 0 == ArraysPlume.sum(new double[0][0]);
     assert 79.5
-        == ArraysMDE.sum(new double[][] {{1.1, 2.2, 3.3, 4.4}, {5.5, 6, 7, 8}, {9, 10, 11, 12}});
+        == ArraysPlume.sum(new double[][] {{1.1, 2.2, 3.3, 4.4}, {5.5, 6, 7, 8}, {9, 10, 11, 12}});
   }
 
   /**
@@ -239,7 +239,7 @@ public final class TestPlume {
 
   @SuppressWarnings({"deprecation", "BoxedPrimitiveConstructor"}) // interning tests
   @Test
-  public void testArraysMDE_indexOf() {
+  public void testArraysPlume_indexOf() {
 
     // public static int indexOf(Object[] a, Object elt)
     // public static int indexOfEq(Object[] a, Object elt)
@@ -248,26 +248,26 @@ public final class TestPlume {
       for (int i = 0; i < a.length; i++) {
         a[i] = new Integer(i);
       }
-      assert ArraysMDE.indexOf(a, new Integer(-1)) == -1;
-      assert ArraysMDE.indexOf(a, new Integer(0)) == 0;
-      assert ArraysMDE.indexOf(a, new Integer(7)) == 7;
-      assert ArraysMDE.indexOf(a, new Integer(9)) == 9;
-      assert ArraysMDE.indexOf(a, new Integer(10)) == -1;
-      assert ArraysMDE.indexOf(a, new Integer(20)) == -1;
-      assert ArraysMDE.indexOf(a, (Object) null) == -1;
-      assert ArraysMDE.indexOf(a, (Object) null, 1, 5) == -1;
+      assert ArraysPlume.indexOf(a, new Integer(-1)) == -1;
+      assert ArraysPlume.indexOf(a, new Integer(0)) == 0;
+      assert ArraysPlume.indexOf(a, new Integer(7)) == 7;
+      assert ArraysPlume.indexOf(a, new Integer(9)) == 9;
+      assert ArraysPlume.indexOf(a, new Integer(10)) == -1;
+      assert ArraysPlume.indexOf(a, new Integer(20)) == -1;
+      assert ArraysPlume.indexOf(a, (Object) null) == -1;
+      assert ArraysPlume.indexOf(a, (Object) null, 1, 5) == -1;
 
-      assert ArraysMDE.indexOfEq(a, new Integer(-1)) == -1;
-      assert ArraysMDE.indexOfEq(a, new Integer(0)) == -1;
-      assert ArraysMDE.indexOfEq(a, new Integer(7)) == -1;
-      assert ArraysMDE.indexOfEq(a, new Integer(9)) == -1;
-      assert ArraysMDE.indexOfEq(a, new Integer(10)) == -1;
-      assert ArraysMDE.indexOfEq(a, new Integer(20)) == -1;
-      assert ArraysMDE.indexOfEq(a, (Object) null) == -1;
-      assert ArraysMDE.indexOfEq(a, (Object) null, 1, 5) == -1;
-      assert ArraysMDE.indexOfEq(a, a[0]) == 0;
-      assert ArraysMDE.indexOfEq(a, a[7]) == 7;
-      assert ArraysMDE.indexOfEq(a, a[9]) == 9;
+      assert ArraysPlume.indexOfEq(a, new Integer(-1)) == -1;
+      assert ArraysPlume.indexOfEq(a, new Integer(0)) == -1;
+      assert ArraysPlume.indexOfEq(a, new Integer(7)) == -1;
+      assert ArraysPlume.indexOfEq(a, new Integer(9)) == -1;
+      assert ArraysPlume.indexOfEq(a, new Integer(10)) == -1;
+      assert ArraysPlume.indexOfEq(a, new Integer(20)) == -1;
+      assert ArraysPlume.indexOfEq(a, (Object) null) == -1;
+      assert ArraysPlume.indexOfEq(a, (Object) null, 1, 5) == -1;
+      assert ArraysPlume.indexOfEq(a, a[0]) == 0;
+      assert ArraysPlume.indexOfEq(a, a[7]) == 7;
+      assert ArraysPlume.indexOfEq(a, a[9]) == 9;
     }
 
     // public static int indexOf(List<?> a, Object elt)
@@ -275,10 +275,10 @@ public final class TestPlume {
     // public static int indexOfEq(List<?> a, Object elt, int minindex, int indexlimit)
     // public static int indexOfEq(List<?> a, Object elt)
     {
-      assert ArraysMDE.indexOf((List<?>) new ArrayList<Object>(), (Object) null) == -1;
-      assert ArraysMDE.indexOf((List<?>) new ArrayList<Object>(), (Object) null, 0, -1) == -1;
-      assert ArraysMDE.indexOfEq((List<?>) new ArrayList<Object>(), (Object) null) == -1;
-      assert ArraysMDE.indexOfEq((List<?>) new ArrayList<Object>(), (Object) null, 0, -1) == -1;
+      assert ArraysPlume.indexOf((List<?>) new ArrayList<Object>(), (Object) null) == -1;
+      assert ArraysPlume.indexOf((List<?>) new ArrayList<Object>(), (Object) null, 0, -1) == -1;
+      assert ArraysPlume.indexOfEq((List<?>) new ArrayList<Object>(), (Object) null) == -1;
+      assert ArraysPlume.indexOfEq((List<?>) new ArrayList<Object>(), (Object) null, 0, -1) == -1;
     }
 
     // public static int indexOf(int[] a, int elt)
@@ -287,12 +287,12 @@ public final class TestPlume {
       for (int i = 0; i < a.length; i++) {
         a[i] = i;
       }
-      assert ArraysMDE.indexOf(a, -1) == -1;
-      assert ArraysMDE.indexOf(a, 0) == 0;
-      assert ArraysMDE.indexOf(a, 7) == 7;
-      assert ArraysMDE.indexOf(a, 9) == 9;
-      assert ArraysMDE.indexOf(a, 10) == -1;
-      assert ArraysMDE.indexOf(a, 20) == -1;
+      assert ArraysPlume.indexOf(a, -1) == -1;
+      assert ArraysPlume.indexOf(a, 0) == 0;
+      assert ArraysPlume.indexOf(a, 7) == 7;
+      assert ArraysPlume.indexOf(a, 9) == 9;
+      assert ArraysPlume.indexOf(a, 10) == -1;
+      assert ArraysPlume.indexOf(a, 20) == -1;
     }
 
     // public static int indexOf(boolean[] a, boolean elt)
@@ -301,22 +301,22 @@ public final class TestPlume {
       for (int i = 0; i < a.length; i++) {
         a[i] = false;
       }
-      assert ArraysMDE.indexOf(a, true) == -1;
-      assert ArraysMDE.indexOf(a, false) == 0;
+      assert ArraysPlume.indexOf(a, true) == -1;
+      assert ArraysPlume.indexOf(a, false) == 0;
       a[9] = true;
-      assert ArraysMDE.indexOf(a, true) == 9;
-      assert ArraysMDE.indexOf(a, false) == 0;
+      assert ArraysPlume.indexOf(a, true) == 9;
+      assert ArraysPlume.indexOf(a, false) == 0;
       a[7] = true;
-      assert ArraysMDE.indexOf(a, true) == 7;
-      assert ArraysMDE.indexOf(a, false) == 0;
+      assert ArraysPlume.indexOf(a, true) == 7;
+      assert ArraysPlume.indexOf(a, false) == 0;
       a[0] = true;
-      assert ArraysMDE.indexOf(a, true) == 0;
-      assert ArraysMDE.indexOf(a, false) == 1;
+      assert ArraysPlume.indexOf(a, true) == 0;
+      assert ArraysPlume.indexOf(a, false) == 1;
       for (int i = 0; i < a.length; i++) {
         a[i] = true;
       }
-      assert ArraysMDE.indexOf(a, true) == 0;
-      assert ArraysMDE.indexOf(a, false) == -1;
+      assert ArraysPlume.indexOf(a, true) == 0;
+      assert ArraysPlume.indexOf(a, false) == -1;
     }
 
     // public static int indexOf(Object[] a, Object[] sub)
@@ -342,32 +342,32 @@ public final class TestPlume {
       Integer[] e2 = new Integer[] {new Integer(2), new Integer(3), new Integer(4), new Integer(5)};
       Integer[] f2 = new Integer[] {new Integer(7), new Integer(8), new Integer(9)};
 
-      assert ArraysMDE.indexOf(a, b) == 0;
-      assert ArraysMDE.indexOfEq(a, b) == 0;
-      assert ArraysMDE.indexOf(a, c) == 0;
-      assert ArraysMDE.indexOfEq(a, c) == 0;
-      assert ArraysMDE.indexOf(a, c2) == 0;
-      assert ArraysMDE.indexOfEq(a, c2) == -1;
-      assert ArraysMDE.indexOf(a, d) == 1;
-      assert ArraysMDE.indexOfEq(a, d) == 1;
-      assert ArraysMDE.indexOf(a, d2) == 1;
-      assert ArraysMDE.indexOfEq(a, d2) == -1;
-      assert ArraysMDE.indexOf(a, e) == 2;
-      assert ArraysMDE.indexOfEq(a, e) == 2;
-      assert ArraysMDE.indexOf(a, e2) == 2;
-      assert ArraysMDE.indexOfEq(a, e2) == -1;
-      assert ArraysMDE.indexOf(a, f) == 7;
-      assert ArraysMDE.indexOfEq(a, f) == 7;
-      assert ArraysMDE.indexOf(a, f2) == 7;
-      assert ArraysMDE.indexOfEq(a, f2) == -1;
-      assert ArraysMDE.indexOf(a, g) == 7;
-      assert ArraysMDE.indexOfEq(a, g) == -1;
-      assert ArraysMDE.indexOf(a, h) == -1;
-      assert ArraysMDE.indexOfEq(a, h) == -1;
-      assert ArraysMDE.indexOf(i, j) == 1;
-      assert ArraysMDE.indexOfEq(i, j) == 1;
-      assert ArraysMDE.indexOf(a, i) == -1;
-      assert ArraysMDE.indexOfEq(a, i) == -1;
+      assert ArraysPlume.indexOf(a, b) == 0;
+      assert ArraysPlume.indexOfEq(a, b) == 0;
+      assert ArraysPlume.indexOf(a, c) == 0;
+      assert ArraysPlume.indexOfEq(a, c) == 0;
+      assert ArraysPlume.indexOf(a, c2) == 0;
+      assert ArraysPlume.indexOfEq(a, c2) == -1;
+      assert ArraysPlume.indexOf(a, d) == 1;
+      assert ArraysPlume.indexOfEq(a, d) == 1;
+      assert ArraysPlume.indexOf(a, d2) == 1;
+      assert ArraysPlume.indexOfEq(a, d2) == -1;
+      assert ArraysPlume.indexOf(a, e) == 2;
+      assert ArraysPlume.indexOfEq(a, e) == 2;
+      assert ArraysPlume.indexOf(a, e2) == 2;
+      assert ArraysPlume.indexOfEq(a, e2) == -1;
+      assert ArraysPlume.indexOf(a, f) == 7;
+      assert ArraysPlume.indexOfEq(a, f) == 7;
+      assert ArraysPlume.indexOf(a, f2) == 7;
+      assert ArraysPlume.indexOfEq(a, f2) == -1;
+      assert ArraysPlume.indexOf(a, g) == 7;
+      assert ArraysPlume.indexOfEq(a, g) == -1;
+      assert ArraysPlume.indexOf(a, h) == -1;
+      assert ArraysPlume.indexOfEq(a, h) == -1;
+      assert ArraysPlume.indexOf(i, j) == 1;
+      assert ArraysPlume.indexOfEq(i, j) == 1;
+      assert ArraysPlume.indexOf(a, i) == -1;
+      assert ArraysPlume.indexOfEq(a, i) == -1;
     }
 
     // public static int indexOf(int[] a, int[] sub)
@@ -384,13 +384,13 @@ public final class TestPlume {
       int[] g = new int[] {a[7], 22, a[9]};
       int[] h = new int[] {a[7], a[8], a[9], 10};
 
-      assert ArraysMDE.indexOf(a, b) == 0;
-      assert ArraysMDE.indexOf(a, c) == 0;
-      assert ArraysMDE.indexOf(a, d) == 1;
-      assert ArraysMDE.indexOf(a, e) == 2;
-      assert ArraysMDE.indexOf(a, f) == 7;
-      assert ArraysMDE.indexOf(a, g) == -1;
-      assert ArraysMDE.indexOf(a, h) == -1;
+      assert ArraysPlume.indexOf(a, b) == 0;
+      assert ArraysPlume.indexOf(a, c) == 0;
+      assert ArraysPlume.indexOf(a, d) == 1;
+      assert ArraysPlume.indexOf(a, e) == 2;
+      assert ArraysPlume.indexOf(a, f) == 7;
+      assert ArraysPlume.indexOf(a, g) == -1;
+      assert ArraysPlume.indexOf(a, h) == -1;
 
       // Tests pulled from actual StackAr data
       int[] origTheArray =
@@ -400,13 +400,13 @@ public final class TestPlume {
           };
 
       int[] postTheArray = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-      assert ArraysMDE.indexOf(postTheArray, origTheArray) == -1;
-      assert ArraysMDE.indexOf(origTheArray, postTheArray) == -1;
+      assert ArraysPlume.indexOf(postTheArray, origTheArray) == -1;
+      assert ArraysPlume.indexOf(origTheArray, postTheArray) == -1;
     }
   }
 
   @Test
-  public void testArraysMDE_subarray() {
+  public void testArraysPlume_subarray() {
 
     // public static int indexOf(boolean[] a, boolean[] sub)
     // [I'm punting on this for now; deal with it later...]
@@ -430,7 +430,7 @@ public final class TestPlume {
   }
 
   @Test
-  public void testArraysMDE_printing() {
+  public void testArraysPlume_printing() {
 
     // public static String toString(Object /*@Nullable*/ [] a)
     // public static String toStringQuoted(Object /*@Nullable*/ [] a)
@@ -439,11 +439,11 @@ public final class TestPlume {
     // public static String toStringQuoted(List<?> a)
     // public static String toString(List<?> a, boolean quoted)
     {
-      assert ArraysMDE.toString((Object[]) null).equals("null");
-      assert ArraysMDE.toStringQuoted((Object[]) null).equals("null");
-      assert ArraysMDE.toString((List<?>) null).equals("null");
-      assert ArraysMDE.toStringQuoted((List<?>) null).equals("null");
-      assert ArraysMDE.toStringQuoted(Arrays.asList(new Object[] {3.14, null, "hello"}))
+      assert ArraysPlume.toString((Object[]) null).equals("null");
+      assert ArraysPlume.toStringQuoted((Object[]) null).equals("null");
+      assert ArraysPlume.toString((List<?>) null).equals("null");
+      assert ArraysPlume.toStringQuoted((List<?>) null).equals("null");
+      assert ArraysPlume.toStringQuoted(Arrays.asList(new Object[] {3.14, null, "hello"}))
           .equals("[3.14, null, \"hello\"]");
     }
 
@@ -454,110 +454,110 @@ public final class TestPlume {
   }
 
   @Test
-  public void testArraysMDE_sorting() {
+  public void testArraysPlume_sorting() {
 
     // public static boolean sorted(int[] a)
-    assert ArraysMDE.sorted(new int[] {0, 1, 2});
-    assert ArraysMDE.sorted(new int[] {0, 1, 2, 2, 3, 3});
-    assert ArraysMDE.sorted(new int[] {});
-    assert ArraysMDE.sorted(new int[] {0});
-    assert ArraysMDE.sorted(new int[] {0, 1});
-    assert !ArraysMDE.sorted(new int[] {1, 0});
-    assert !ArraysMDE.sorted(new int[] {0, 1, 2, 1, 2, 3});
+    assert ArraysPlume.sorted(new int[] {0, 1, 2});
+    assert ArraysPlume.sorted(new int[] {0, 1, 2, 2, 3, 3});
+    assert ArraysPlume.sorted(new int[] {});
+    assert ArraysPlume.sorted(new int[] {0});
+    assert ArraysPlume.sorted(new int[] {0, 1});
+    assert !ArraysPlume.sorted(new int[] {1, 0});
+    assert !ArraysPlume.sorted(new int[] {0, 1, 2, 1, 2, 3});
 
     // public static int noDuplicates(int[] a)
-    assert ArraysMDE.noDuplicates(new int[] {1, 2, 3, 5, 4, 0}) == true;
-    assert ArraysMDE.noDuplicates(new int[] {1, 2, 3, 5, 4, 100}) == true;
-    assert ArraysMDE.noDuplicates(new int[] {2, 2, 3, 5, 4, 0}) == false;
-    assert ArraysMDE.noDuplicates(new int[] {1, 2, 3, 5, 4, 1}) == false;
-    assert ArraysMDE.noDuplicates(new int[] {1, 2, -3, -5, 4, 0}) == true;
-    assert ArraysMDE.noDuplicates(new int[] {1, 2, -2, -2, 4, 100}) == false;
-    assert ArraysMDE.noDuplicates(new int[] {}) == true;
-    assert ArraysMDE.noDuplicates(new int[] {42}) == true;
+    assert ArraysPlume.noDuplicates(new int[] {1, 2, 3, 5, 4, 0}) == true;
+    assert ArraysPlume.noDuplicates(new int[] {1, 2, 3, 5, 4, 100}) == true;
+    assert ArraysPlume.noDuplicates(new int[] {2, 2, 3, 5, 4, 0}) == false;
+    assert ArraysPlume.noDuplicates(new int[] {1, 2, 3, 5, 4, 1}) == false;
+    assert ArraysPlume.noDuplicates(new int[] {1, 2, -3, -5, 4, 0}) == true;
+    assert ArraysPlume.noDuplicates(new int[] {1, 2, -2, -2, 4, 100}) == false;
+    assert ArraysPlume.noDuplicates(new int[] {}) == true;
+    assert ArraysPlume.noDuplicates(new int[] {42}) == true;
 
     // public static int noDuplicates(long[] a)
-    assert ArraysMDE.noDuplicates(new long[] {1, 2, 3, 5, 4, 0}) == true;
-    assert ArraysMDE.noDuplicates(new long[] {1, 2, 3, 5, 4, 100}) == true;
-    assert ArraysMDE.noDuplicates(new long[] {2, 2, 3, 5, 4, 0}) == false;
-    assert ArraysMDE.noDuplicates(new long[] {1, 2, 3, 5, 4, 1}) == false;
-    assert ArraysMDE.noDuplicates(new long[] {1, 2, -3, -5, 4, 0}) == true;
-    assert ArraysMDE.noDuplicates(new long[] {1, 2, -2, -2, 4, 100}) == false;
-    assert ArraysMDE.noDuplicates(new long[] {}) == true;
-    assert ArraysMDE.noDuplicates(new long[] {42}) == true;
+    assert ArraysPlume.noDuplicates(new long[] {1, 2, 3, 5, 4, 0}) == true;
+    assert ArraysPlume.noDuplicates(new long[] {1, 2, 3, 5, 4, 100}) == true;
+    assert ArraysPlume.noDuplicates(new long[] {2, 2, 3, 5, 4, 0}) == false;
+    assert ArraysPlume.noDuplicates(new long[] {1, 2, 3, 5, 4, 1}) == false;
+    assert ArraysPlume.noDuplicates(new long[] {1, 2, -3, -5, 4, 0}) == true;
+    assert ArraysPlume.noDuplicates(new long[] {1, 2, -2, -2, 4, 100}) == false;
+    assert ArraysPlume.noDuplicates(new long[] {}) == true;
+    assert ArraysPlume.noDuplicates(new long[] {42}) == true;
 
     // public static int noDuplicates(double[] a)
-    assert ArraysMDE.noDuplicates(new double[] {1, 2, 3, 5, 4, 0}) == true;
-    assert ArraysMDE.noDuplicates(new double[] {1, 2, 3, 5, 4, 100}) == true;
-    assert ArraysMDE.noDuplicates(new double[] {2, 2, 3, 5, 4, 0}) == false;
-    assert ArraysMDE.noDuplicates(new double[] {1, 2, 3, 5, 4, 1}) == false;
-    assert ArraysMDE.noDuplicates(new double[] {1., 1.001, -3, -5, 4, 0}) == true;
-    assert ArraysMDE.noDuplicates(new double[] {1., 2, -2.00, -2, 4, 100}) == false;
-    assert ArraysMDE.noDuplicates(new double[] {}) == true;
-    assert ArraysMDE.noDuplicates(new double[] {42}) == true;
+    assert ArraysPlume.noDuplicates(new double[] {1, 2, 3, 5, 4, 0}) == true;
+    assert ArraysPlume.noDuplicates(new double[] {1, 2, 3, 5, 4, 100}) == true;
+    assert ArraysPlume.noDuplicates(new double[] {2, 2, 3, 5, 4, 0}) == false;
+    assert ArraysPlume.noDuplicates(new double[] {1, 2, 3, 5, 4, 1}) == false;
+    assert ArraysPlume.noDuplicates(new double[] {1., 1.001, -3, -5, 4, 0}) == true;
+    assert ArraysPlume.noDuplicates(new double[] {1., 2, -2.00, -2, 4, 100}) == false;
+    assert ArraysPlume.noDuplicates(new double[] {}) == true;
+    assert ArraysPlume.noDuplicates(new double[] {42}) == true;
 
     // public static int noDuplicates(String[] a)
-    assert ArraysMDE.noDuplicates(new String[] {"1", "2", "3", "5", "4", "0"}) == true;
-    assert ArraysMDE.noDuplicates(new String[] {"A", "a", "foo", "Foo", ""}) == true;
-    assert ArraysMDE.noDuplicates(new String[] {" ", " "}) == false;
-    assert ArraysMDE.noDuplicates(new String[] {"  ", " "}) == true;
+    assert ArraysPlume.noDuplicates(new String[] {"1", "2", "3", "5", "4", "0"}) == true;
+    assert ArraysPlume.noDuplicates(new String[] {"A", "a", "foo", "Foo", ""}) == true;
+    assert ArraysPlume.noDuplicates(new String[] {" ", " "}) == false;
+    assert ArraysPlume.noDuplicates(new String[] {"  ", " "}) == true;
 
     // public static boolean fn_is_permutation(int[] a)
-    assert ArraysMDE.fn_is_permutation(new int[] {0, 1, 2, 3}) == true;
-    assert ArraysMDE.fn_is_permutation(new int[] {1, 2, 3, 0}) == true;
-    assert ArraysMDE.fn_is_permutation(new int[] {3, 2, 1, 0}) == true;
-    assert ArraysMDE.fn_is_permutation(new int[] {0, 1, 2, 2}) == false;
-    assert ArraysMDE.fn_is_permutation(new int[] {0, -1, 2, 3}) == false;
-    assert ArraysMDE.fn_is_permutation(new int[] {0, 1, 2, 4}) == false;
-    assert ArraysMDE.fn_is_permutation(new int[] {0, 0, 0, 0}) == false;
+    assert ArraysPlume.fn_is_permutation(new int[] {0, 1, 2, 3}) == true;
+    assert ArraysPlume.fn_is_permutation(new int[] {1, 2, 3, 0}) == true;
+    assert ArraysPlume.fn_is_permutation(new int[] {3, 2, 1, 0}) == true;
+    assert ArraysPlume.fn_is_permutation(new int[] {0, 1, 2, 2}) == false;
+    assert ArraysPlume.fn_is_permutation(new int[] {0, -1, 2, 3}) == false;
+    assert ArraysPlume.fn_is_permutation(new int[] {0, 1, 2, 4}) == false;
+    assert ArraysPlume.fn_is_permutation(new int[] {0, 0, 0, 0}) == false;
 
     // public static boolean fn_is_total(int[] a)
-    assert ArraysMDE.fn_is_total(new int[] {0, 1, 2, 3}) == true;
-    assert ArraysMDE.fn_is_total(new int[] {1, 2, 3, 0}) == true;
-    assert ArraysMDE.fn_is_total(new int[] {3, 2, 1, 0}) == true;
-    assert ArraysMDE.fn_is_total(new int[] {0, 1, 2, 2}) == true;
-    assert ArraysMDE.fn_is_total(new int[] {-1, 0, 2, 3}) == false;
-    assert ArraysMDE.fn_is_total(new int[] {0, -1, 2, 3}) == false;
-    assert ArraysMDE.fn_is_total(new int[] {0, -2, 1, 3}) == true; // weird
-    assert ArraysMDE.fn_is_total(new int[] {0, 2, 3, -1}) == false;
-    assert ArraysMDE.fn_is_total(new int[] {0, 1, 2, 4}) == true;
-    assert ArraysMDE.fn_is_total(new int[] {0, 0, 0, 0}) == true;
+    assert ArraysPlume.fn_is_total(new int[] {0, 1, 2, 3}) == true;
+    assert ArraysPlume.fn_is_total(new int[] {1, 2, 3, 0}) == true;
+    assert ArraysPlume.fn_is_total(new int[] {3, 2, 1, 0}) == true;
+    assert ArraysPlume.fn_is_total(new int[] {0, 1, 2, 2}) == true;
+    assert ArraysPlume.fn_is_total(new int[] {-1, 0, 2, 3}) == false;
+    assert ArraysPlume.fn_is_total(new int[] {0, -1, 2, 3}) == false;
+    assert ArraysPlume.fn_is_total(new int[] {0, -2, 1, 3}) == true; // weird
+    assert ArraysPlume.fn_is_total(new int[] {0, 2, 3, -1}) == false;
+    assert ArraysPlume.fn_is_total(new int[] {0, 1, 2, 4}) == true;
+    assert ArraysPlume.fn_is_total(new int[] {0, 0, 0, 0}) == true;
   }
 
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/147
   @Test
-  public void testArraysMDE_functions() {
+  public void testArraysPlume_functions() {
 
     // public static int[] fn_identity(int length)
-    assert_arrays_equals(ArraysMDE.fn_identity(0), new int[] {});
-    assert_arrays_equals(ArraysMDE.fn_identity(1), new int[] {0});
-    assert_arrays_equals(ArraysMDE.fn_identity(2), new int[] {0, 1});
-    assert_arrays_equals(ArraysMDE.fn_identity(3), new int[] {0, 1, 2});
+    assert_arrays_equals(ArraysPlume.fn_identity(0), new int[] {});
+    assert_arrays_equals(ArraysPlume.fn_identity(1), new int[] {0});
+    assert_arrays_equals(ArraysPlume.fn_identity(2), new int[] {0, 1});
+    assert_arrays_equals(ArraysPlume.fn_identity(3), new int[] {0, 1, 2});
 
     // public static int[] fn_inverse_permutation(int[] a)
     assert_arrays_equals(
-        ArraysMDE.fn_inverse_permutation(new int[] {0, 1, 2, 3}), new int[] {0, 1, 2, 3});
+        ArraysPlume.fn_inverse_permutation(new int[] {0, 1, 2, 3}), new int[] {0, 1, 2, 3});
     assert_arrays_equals(
-        ArraysMDE.fn_inverse_permutation(new int[] {1, 2, 3, 0}), new int[] {3, 0, 1, 2});
+        ArraysPlume.fn_inverse_permutation(new int[] {1, 2, 3, 0}), new int[] {3, 0, 1, 2});
     assert_arrays_equals(
-        ArraysMDE.fn_inverse_permutation(new int[] {3, 2, 1, 0}), new int[] {3, 2, 1, 0});
+        ArraysPlume.fn_inverse_permutation(new int[] {3, 2, 1, 0}), new int[] {3, 2, 1, 0});
 
     // public static int[] fn_inverse(int[] a, int arange)
-    assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {0, 1, 2, 3}, 4), new int[] {0, 1, 2, 3});
-    assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {1, 2, 3, 0}, 4), new int[] {3, 0, 1, 2});
-    assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {3, 2, 1, 0}, 4), new int[] {3, 2, 1, 0});
+    assert_arrays_equals(ArraysPlume.fn_inverse(new int[] {0, 1, 2, 3}, 4), new int[] {0, 1, 2, 3});
+    assert_arrays_equals(ArraysPlume.fn_inverse(new int[] {1, 2, 3, 0}, 4), new int[] {3, 0, 1, 2});
+    assert_arrays_equals(ArraysPlume.fn_inverse(new int[] {3, 2, 1, 0}, 4), new int[] {3, 2, 1, 0});
     try {
-      ArraysMDE.fn_inverse(new int[] {1, 0, 3, 0}, 4);
+      ArraysPlume.fn_inverse(new int[] {1, 0, 3, 0}, 4);
       throw new Error();
     } catch (UnsupportedOperationException e) {
       assert e.getMessage() != null && e.getMessage().equals("Not invertible; a[1]=0 and a[3]=0");
     }
-    assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {5}, 6), new int[] {-1, -1, -1, -1, -1, 0});
+    assert_arrays_equals(ArraysPlume.fn_inverse(new int[] {5}, 6), new int[] {-1, -1, -1, -1, -1, 0});
     assert_arrays_equals(
-        ArraysMDE.fn_inverse(new int[] {1, 2, 3, 5}, 6), new int[] {-1, 0, 1, 2, -1, 3});
+        ArraysPlume.fn_inverse(new int[] {1, 2, 3, 5}, 6), new int[] {-1, 0, 1, 2, -1, 3});
 
     try {
       assert_arrays_equals(
-          ArraysMDE.fn_inverse(new int[] {100, 101, 102, 103}, 4), new int[] {40, 41, 42, 43});
+          ArraysPlume.fn_inverse(new int[] {100, 101, 102, 103}, 4), new int[] {40, 41, 42, 43});
       throw new Error();
     } catch (IllegalArgumentException e) {
       assert e.getMessage() != null && e.getMessage().equals("Bad range value: a[0]=100");
@@ -575,17 +575,17 @@ public final class TestPlume {
       int[] a9 = new int[] {1, 2, 3, 5};
       int[] a10 = new int[] {1, 2, 3, 5, -1, -1};
 
-      assert_arrays_equals(ArraysMDE.fn_compose(a1, a1), a1);
-      assert_arrays_equals(ArraysMDE.fn_compose(a2, a2), new int[] {2, 3, 0, 1});
-      assert_arrays_equals(ArraysMDE.fn_compose(a3, a3), a1);
-      assert_arrays_equals(ArraysMDE.fn_compose(a4, a5), new int[] {0, 5, 0, 1});
-      assert_arrays_equals(ArraysMDE.fn_compose(a7, a8), new int[] {5});
-      assert_arrays_equals(ArraysMDE.fn_compose(a9, a10), new int[] {2, 3, 5, -1});
+      assert_arrays_equals(ArraysPlume.fn_compose(a1, a1), a1);
+      assert_arrays_equals(ArraysPlume.fn_compose(a2, a2), new int[] {2, 3, 0, 1});
+      assert_arrays_equals(ArraysPlume.fn_compose(a3, a3), a1);
+      assert_arrays_equals(ArraysPlume.fn_compose(a4, a5), new int[] {0, 5, 0, 1});
+      assert_arrays_equals(ArraysPlume.fn_compose(a7, a8), new int[] {5});
+      assert_arrays_equals(ArraysPlume.fn_compose(a9, a10), new int[] {2, 3, 5, -1});
     }
   }
 
   @Test
-  public void testArraysMDE_set_operations() {
+  public void testArraysPlume_set_operations() {
 
     // public static boolean isSubset(long[] smaller, long[] bigger)
     // public static boolean isSubset(double[] smaller, double[] bigger)
@@ -610,7 +610,7 @@ public final class TestPlume {
         double[] f1_copy = f1.clone();
         double[] f2_copy = f2.clone();
 
-        assert ArraysMDE.isSubset(f1, f2);
+        assert ArraysPlume.isSubset(f1, f2);
         assert_arrays_equals(f1, f1_copy);
         assert_arrays_equals(f2, f2_copy);
       }
@@ -622,24 +622,24 @@ public final class TestPlume {
       double[] a5 = new double[] {1, 10, 15, 20};
       double[] a6 = new double[] {10, 10, 10, 10, 10, 1};
 
-      assert ArraysMDE.isSubset(a2, a1);
-      assert !ArraysMDE.isSubset(a1, a2);
-      assert !ArraysMDE.isSubset(a1, a5);
-      assert ArraysMDE.isSubset(a3, a1);
-      assert ArraysMDE.isSubset(a4, a1);
-      assert ArraysMDE.isSubset(a6, a1);
-      assert !ArraysMDE.isSubset(a1, a6);
+      assert ArraysPlume.isSubset(a2, a1);
+      assert !ArraysPlume.isSubset(a1, a2);
+      assert !ArraysPlume.isSubset(a1, a5);
+      assert ArraysPlume.isSubset(a3, a1);
+      assert ArraysPlume.isSubset(a4, a1);
+      assert ArraysPlume.isSubset(a6, a1);
+      assert !ArraysPlume.isSubset(a1, a6);
     }
   }
 
   @Test
-  public void testArraysMDE_comparators() {
+  public void testArraysPlume_comparators() {
 
     // public static class IntArrayComparatorLexical implements Comparator
     // public static class IntArrayComparatorLengthFirst implements Comparator
     {
-      Comparator<int[]> iacl = new ArraysMDE.IntArrayComparatorLexical();
-      Comparator<int[]> iaclf = new ArraysMDE.IntArrayComparatorLengthFirst();
+      Comparator<int[]> iacl = new ArraysPlume.IntArrayComparatorLexical();
+      Comparator<int[]> iaclf = new ArraysPlume.IntArrayComparatorLengthFirst();
 
       int[] a0 = new int[] {};
       int[] a1 = new int[] {};
@@ -705,8 +705,8 @@ public final class TestPlume {
     // public static class LongArrayComparatorLexical implements Comparator
     // public static class LongArrayComparatorLengthFirst implements Comparator
     {
-      Comparator<long[]> lacl = new ArraysMDE.LongArrayComparatorLexical();
-      Comparator<long[]> laclf = new ArraysMDE.LongArrayComparatorLengthFirst();
+      Comparator<long[]> lacl = new ArraysPlume.LongArrayComparatorLexical();
+      Comparator<long[]> laclf = new ArraysPlume.LongArrayComparatorLengthFirst();
       long[] a0 = new long[] {};
       long[] a1 = new long[] {};
       long[] a2 = new long[] {0, 1, 2, 3};
@@ -770,7 +770,7 @@ public final class TestPlume {
 
     // public static class DoubleArrayComparatorLexical implements Comparator
     {
-      Comparator<double[]> dacl = new ArraysMDE.DoubleArrayComparatorLexical();
+      Comparator<double[]> dacl = new ArraysPlume.DoubleArrayComparatorLexical();
       double[] a0 = new double[] {};
       double[] a1 = new double[] {};
       double[] a2 = new double[] {0, 1, 2, 3};
@@ -823,8 +823,8 @@ public final class TestPlume {
     // public static final class ComparableArrayComparatorLexical implements Comparator
     // public static final class ComparableArrayComparatorLengthFirst implements Comparator
     {
-      Comparator<String[]> cacl = new ArraysMDE.ComparableArrayComparatorLexical<String>();
-      Comparator<String[]> caclf = new ArraysMDE.ComparableArrayComparatorLengthFirst<String>();
+      Comparator<String[]> cacl = new ArraysPlume.ComparableArrayComparatorLexical<String>();
+      Comparator<String[]> caclf = new ArraysPlume.ComparableArrayComparatorLengthFirst<String>();
       String[] a0 = new String[] {};
       String[] a1 = new String[] {};
       String[] a2 = new String[] {"0", "1", "2", "3"};
@@ -896,26 +896,26 @@ public final class TestPlume {
   }
 
   @Test
-  public void testArraysMDE_nullness() {
+  public void testArraysPlume_nullness() {
 
     // public static boolean any_null(Object[] a)
     {
       Object o = new Object();
-      assert ArraysMDE.any_null(new Object[] {}) == false;
-      assert ArraysMDE.any_null(new Object[] {null}) == true;
-      assert ArraysMDE.any_null(new Object[] {null, null}) == true;
-      assert ArraysMDE.any_null(new Object[] {o}) == false;
-      assert ArraysMDE.any_null(new Object[] {o, o}) == false;
-      assert ArraysMDE.any_null(new Object[] {o, null, null}) == true;
-      assert ArraysMDE.any_null(new Object[] {null, o, null}) == true;
-      assert ArraysMDE.any_null(new Object[] {o, null, o}) == true;
-      assert ArraysMDE.any_null(new Object[] {null, o, o}) == true;
-      assert ArraysMDE.any_null(new Object[][] {}) == false;
-      assert ArraysMDE.any_null(new Object[][] {null}) == true;
+      assert ArraysPlume.any_null(new Object[] {}) == false;
+      assert ArraysPlume.any_null(new Object[] {null}) == true;
+      assert ArraysPlume.any_null(new Object[] {null, null}) == true;
+      assert ArraysPlume.any_null(new Object[] {o}) == false;
+      assert ArraysPlume.any_null(new Object[] {o, o}) == false;
+      assert ArraysPlume.any_null(new Object[] {o, null, null}) == true;
+      assert ArraysPlume.any_null(new Object[] {null, o, null}) == true;
+      assert ArraysPlume.any_null(new Object[] {o, null, o}) == true;
+      assert ArraysPlume.any_null(new Object[] {null, o, o}) == true;
+      assert ArraysPlume.any_null(new Object[][] {}) == false;
+      assert ArraysPlume.any_null(new Object[][] {null}) == true;
       // Extraneous @Nullable on the following lines are due to https://tinyurl.com/cfissue/599
-      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
-      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == true;
-      assert ArraysMDE.any_null(
+      assert ArraysPlume.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
+      assert ArraysPlume.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == true;
+      assert ArraysPlume.any_null(
               new /*@Nullable*/ Object[][] {new Object[] {null}, new Object[] {o}})
           == false;
     }
@@ -923,21 +923,21 @@ public final class TestPlume {
     // public static boolean all_null(Object[] a)
     {
       Object o = new Object();
-      assert ArraysMDE.all_null(new Object[] {}) == true;
-      assert ArraysMDE.all_null(new Object[] {null}) == true;
-      assert ArraysMDE.all_null(new Object[] {null, null}) == true;
-      assert ArraysMDE.all_null(new Object[] {o}) == false;
-      assert ArraysMDE.all_null(new Object[] {o, o}) == false;
-      assert ArraysMDE.all_null(new Object[] {o, null, null}) == false;
-      assert ArraysMDE.all_null(new Object[] {null, o, null}) == false;
-      assert ArraysMDE.all_null(new Object[] {o, null, o}) == false;
-      assert ArraysMDE.all_null(new Object[] {null, o, o}) == false;
-      assert ArraysMDE.all_null(new Object[][] {}) == true;
-      assert ArraysMDE.all_null(new Object[][] {null}) == true;
-      assert ArraysMDE.all_null(new Object[][] {null, null}) == true;
-      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
-      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == false;
-      assert ArraysMDE.all_null(
+      assert ArraysPlume.all_null(new Object[] {}) == true;
+      assert ArraysPlume.all_null(new Object[] {null}) == true;
+      assert ArraysPlume.all_null(new Object[] {null, null}) == true;
+      assert ArraysPlume.all_null(new Object[] {o}) == false;
+      assert ArraysPlume.all_null(new Object[] {o, o}) == false;
+      assert ArraysPlume.all_null(new Object[] {o, null, null}) == false;
+      assert ArraysPlume.all_null(new Object[] {null, o, null}) == false;
+      assert ArraysPlume.all_null(new Object[] {o, null, o}) == false;
+      assert ArraysPlume.all_null(new Object[] {null, o, o}) == false;
+      assert ArraysPlume.all_null(new Object[][] {}) == true;
+      assert ArraysPlume.all_null(new Object[][] {null}) == true;
+      assert ArraysPlume.all_null(new Object[][] {null, null}) == true;
+      assert ArraysPlume.all_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
+      assert ArraysPlume.all_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == false;
+      assert ArraysPlume.all_null(
               new /*@Nullable*/ Object[][] {new Object[] {null}, new Object[] {o}})
           == false;
     }
@@ -957,21 +957,21 @@ public final class TestPlume {
   }
 
   @Test
-  public void testArraysMDE_partitioning() {
+  public void testArraysPlume_partitioning() {
 
     assert equalElementStrings(
-        ArraysMDE.partitionInto(Arrays.asList("a"), 1), Arrays.asList("[[a]]"));
+        ArraysPlume.partitionInto(Arrays.asList("a"), 1), Arrays.asList("[[a]]"));
     assert equalElementStrings(
-        ArraysMDE.partitionInto(Arrays.asList("a", "b"), 1), Arrays.asList("[[a, b]]"));
+        ArraysPlume.partitionInto(Arrays.asList("a", "b"), 1), Arrays.asList("[[a, b]]"));
     assert equalElementStrings(
-        ArraysMDE.partitionInto(Arrays.asList("a", "b"), 2), Arrays.asList("[[a], [b]]"));
+        ArraysPlume.partitionInto(Arrays.asList("a", "b"), 2), Arrays.asList("[[a], [b]]"));
     assert equalElementStrings(
-        ArraysMDE.partitionInto(Arrays.asList("a", "b", "c"), 1), Arrays.asList("[[a, b, c]]"));
+        ArraysPlume.partitionInto(Arrays.asList("a", "b", "c"), 1), Arrays.asList("[[a, b, c]]"));
     assert equalElementStrings(
-        ArraysMDE.partitionInto(Arrays.asList("a", "b", "c"), 2),
+        ArraysPlume.partitionInto(Arrays.asList("a", "b", "c"), 2),
         Arrays.asList("[[a, b], [c]]", "[[a, c], [b]]", "[[a], [b, c]]"));
     assert equalElementStrings(
-        ArraysMDE.partitionInto(Arrays.asList("a", "b", "c", "d", "e"), 2),
+        ArraysPlume.partitionInto(Arrays.asList("a", "b", "c", "d", "e"), 2),
         Arrays.asList(
             "[[a, b, c, d], [e]]",
             "[[a, b, c, e], [d]]",
@@ -1043,7 +1043,7 @@ public final class TestPlume {
             }
           }
           arrays[i] = a;
-          // System.out.println(ArraysMDE.toString(a));
+          // System.out.println(ArraysPlume.toString(a));
           // Sadly, this is required to get the last array to be
           // garbage-collected with Jikes 1.03 and JDK 1.2.2.
           a = null;
@@ -1278,97 +1278,97 @@ public final class TestPlume {
 
   // This cannot be static because it instantiates an inner class.
   @Test
-  public void testMathMDE() {
+  public void testMathPlume() {
 
     // int negate(int a)
-    assert MathMDE.negate(3) == -3;
-    assert MathMDE.negate(-22) == 22;
-    assert MathMDE.negate(0) == 0;
+    assert MathPlume.negate(3) == -3;
+    assert MathPlume.negate(-22) == 22;
+    assert MathPlume.negate(0) == 0;
 
     // int bitwiseComplement(int a)
-    assert MathMDE.bitwiseComplement(3) == -4;
-    assert MathMDE.bitwiseComplement(-22) == 21;
-    assert MathMDE.bitwiseComplement(0) == -1;
+    assert MathPlume.bitwiseComplement(3) == -4;
+    assert MathPlume.bitwiseComplement(-22) == 21;
+    assert MathPlume.bitwiseComplement(0) == -1;
 
     // int sign(int a)
-    assert MathMDE.sign(3) == 1;
-    assert MathMDE.sign(-22) == -1;
-    assert MathMDE.sign(0) == 0;
+    assert MathPlume.sign(3) == 1;
+    assert MathPlume.sign(-22) == -1;
+    assert MathPlume.sign(0) == 0;
 
     // int pow(int base, int expt)
     try {
-      assert MathMDE.pow(3, 3) == 27;
-      assert MathMDE.pow(-5, 5) == -3125;
-      assert MathMDE.pow(22, 0) == 1;
-      assert MathMDE.pow(4, 6) == 4096;
-      assert MathMDE.pow(1, 222222) == 1;
-      assert MathMDE.pow(-2, 25) == -33554432;
+      assert MathPlume.pow(3, 3) == 27;
+      assert MathPlume.pow(-5, 5) == -3125;
+      assert MathPlume.pow(22, 0) == 1;
+      assert MathPlume.pow(4, 6) == 4096;
+      assert MathPlume.pow(1, 222222) == 1;
+      assert MathPlume.pow(-2, 25) == -33554432;
       // This is beyond the precision.  Maybe return a long instead of an int?
-      // assert MathMDE.pow(-3, 25) == ...;
+      // assert MathPlume.pow(-3, 25) == ...;
     } catch (Exception e) {
       e.printStackTrace();
       throw new Error(e);
     }
     try {
-      MathMDE.pow(3, -3);
+      MathPlume.pow(3, -3);
       throw new Error("Didn't throw ArithmeticException");
     } catch (ArithmeticException e) {
     }
 
     // int gcd(int a, int b)
-    assert MathMDE.gcd(2, 50) == 2;
-    assert MathMDE.gcd(50, 2) == 2;
-    assert MathMDE.gcd(12, 144) == 12;
-    assert MathMDE.gcd(144, 12) == 12;
-    assert MathMDE.gcd(96, 144) == 48;
-    assert MathMDE.gcd(144, 96) == 48;
-    assert MathMDE.gcd(10, 25) == 5;
-    assert MathMDE.gcd(25, 10) == 5;
-    assert MathMDE.gcd(17, 25) == 1;
-    assert MathMDE.gcd(25, 17) == 1;
-    assert MathMDE.gcd(0, 10) == 10;
-    assert MathMDE.gcd(10, 0) == 10;
-    assert MathMDE.gcd(25, -10) == 5;
-    assert MathMDE.gcd(-25, -10) == 5;
-    assert MathMDE.gcd(-25, 10) == 5;
+    assert MathPlume.gcd(2, 50) == 2;
+    assert MathPlume.gcd(50, 2) == 2;
+    assert MathPlume.gcd(12, 144) == 12;
+    assert MathPlume.gcd(144, 12) == 12;
+    assert MathPlume.gcd(96, 144) == 48;
+    assert MathPlume.gcd(144, 96) == 48;
+    assert MathPlume.gcd(10, 25) == 5;
+    assert MathPlume.gcd(25, 10) == 5;
+    assert MathPlume.gcd(17, 25) == 1;
+    assert MathPlume.gcd(25, 17) == 1;
+    assert MathPlume.gcd(0, 10) == 10;
+    assert MathPlume.gcd(10, 0) == 10;
+    assert MathPlume.gcd(25, -10) == 5;
+    assert MathPlume.gcd(-25, -10) == 5;
+    assert MathPlume.gcd(-25, 10) == 5;
 
     // int gcd(int[] a)
-    assert MathMDE.gcd(new int[] {2, 50}) == 2;
-    assert MathMDE.gcd(new int[] {12, 144}) == 12;
-    assert MathMDE.gcd(new int[] {96, 144}) == 48;
-    assert MathMDE.gcd(new int[] {10, 25}) == 5;
-    assert MathMDE.gcd(new int[] {100, 10, 25}) == 5;
-    assert MathMDE.gcd(new int[] {768, 324}) == 12;
-    assert MathMDE.gcd(new int[] {2400, 48, 36}) == 12;
-    assert MathMDE.gcd(new int[] {2400, 72, 36}) == 12;
+    assert MathPlume.gcd(new int[] {2, 50}) == 2;
+    assert MathPlume.gcd(new int[] {12, 144}) == 12;
+    assert MathPlume.gcd(new int[] {96, 144}) == 48;
+    assert MathPlume.gcd(new int[] {10, 25}) == 5;
+    assert MathPlume.gcd(new int[] {100, 10, 25}) == 5;
+    assert MathPlume.gcd(new int[] {768, 324}) == 12;
+    assert MathPlume.gcd(new int[] {2400, 48, 36}) == 12;
+    assert MathPlume.gcd(new int[] {2400, 72, 36}) == 12;
 
     // int gcd_differences(int[] a)
     // Weak set of tests, derived directly from those of "int gcd(int[] a)".
-    assert MathMDE.gcd_differences(new int[] {0, 2, 52}) == 2;
-    assert MathMDE.gcd_differences(new int[] {0, 12, 156}) == 12;
-    assert MathMDE.gcd_differences(new int[] {0, 96, 240}) == 48;
-    assert MathMDE.gcd_differences(new int[] {0, 10, 35}) == 5;
-    assert MathMDE.gcd_differences(new int[] {0, 100, 110, 135}) == 5;
-    assert MathMDE.gcd_differences(new int[] {0, 768, 1092}) == 12;
-    assert MathMDE.gcd_differences(new int[] {0, 2400, 2448, 2484}) == 12;
-    assert MathMDE.gcd_differences(new int[] {0, 2400, 2472, 2508}) == 12;
-    assert MathMDE.gcd_differences(new int[] {5, 5, 5, 5}) == 0;
+    assert MathPlume.gcd_differences(new int[] {0, 2, 52}) == 2;
+    assert MathPlume.gcd_differences(new int[] {0, 12, 156}) == 12;
+    assert MathPlume.gcd_differences(new int[] {0, 96, 240}) == 48;
+    assert MathPlume.gcd_differences(new int[] {0, 10, 35}) == 5;
+    assert MathPlume.gcd_differences(new int[] {0, 100, 110, 135}) == 5;
+    assert MathPlume.gcd_differences(new int[] {0, 768, 1092}) == 12;
+    assert MathPlume.gcd_differences(new int[] {0, 2400, 2448, 2484}) == 12;
+    assert MathPlume.gcd_differences(new int[] {0, 2400, 2472, 2508}) == 12;
+    assert MathPlume.gcd_differences(new int[] {5, 5, 5, 5}) == 0;
 
     // int mod_positive(int x, int y)
-    assert MathMDE.mod_positive(33, 5) == 3;
-    assert MathMDE.mod_positive(-33, 5) == 2;
-    assert MathMDE.mod_positive(33, -5) == 3;
-    assert MathMDE.mod_positive(-33, -5) == 2;
+    assert MathPlume.mod_positive(33, 5) == 3;
+    assert MathPlume.mod_positive(-33, 5) == 2;
+    assert MathPlume.mod_positive(33, -5) == 3;
+    assert MathPlume.mod_positive(-33, -5) == 2;
 
     // int[] missing_numbers(int[] nums)
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 5, 6, 7, 8}), new int[] {});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 6, 7, 8}), new int[] {5});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 8}), new int[] {5, 6, 7});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 5, 6, 8}), new int[] {4, 7});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 6, 8}), new int[] {4, 5, 7});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 5, 5, 6, 7, 8}), new int[] {});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 4, 4, 6, 6, 7, 8}), new int[] {5});
-    assert_arrays_equals(MathMDE.missing_numbers(new int[] {3, 3, 3}), new int[] {});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 4, 5, 6, 7, 8}), new int[] {});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 4, 6, 7, 8}), new int[] {5});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 4, 8}), new int[] {5, 6, 7});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 5, 6, 8}), new int[] {4, 7});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 6, 8}), new int[] {4, 5, 7});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 4, 5, 5, 6, 7, 8}), new int[] {});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 4, 4, 6, 6, 7, 8}), new int[] {5});
+    assert_arrays_equals(MathPlume.missing_numbers(new int[] {3, 3, 3}), new int[] {});
 
     // class MissingNumbersIteratorInt
     class TestMissingNumbersIteratorInt {
@@ -1376,7 +1376,7 @@ public final class TestPlume {
       void test(int[] orig, boolean add_ends, int[] goal_missing) {
         Iterator<Integer> orig_iterator = int_array_iterator(orig);
         Iterator<Integer> missing_iterator =
-            new MathMDE.MissingNumbersIteratorInt(orig_iterator, add_ends);
+            new MathPlume.MissingNumbersIteratorInt(orig_iterator, add_ends);
         int[] missing = TestPlume.int_iterator_array(missing_iterator);
         assert_arrays_equals(missing, goal_missing);
       }
@@ -1405,7 +1405,7 @@ public final class TestPlume {
     class TestModulus {
       // javadoc won't let this be static
       void check(int[] nums, int /*@Nullable*/ [] goal_rm) {
-        int[] rm = MathMDE.modulus(nums);
+        int[] rm = MathPlume.modulus(nums);
         if (!Arrays.equals(rm, goal_rm)) {
           throw new Error(
               "Expected (r,m)=" + Arrays.toString(goal_rm) + ", saw (r,m)=" + Arrays.toString(rm));
@@ -1431,7 +1431,7 @@ public final class TestPlume {
         // There would be no point to this:  it's testing
         // int_iterator_array, not the iterator version!
         // return check(int_iterator_array(itor), goal_rm);
-        assert_arrays_equals(MathMDE.modulus_int(itor), goal_rm);
+        assert_arrays_equals(MathPlume.modulus_int(itor), goal_rm);
       }
 
       // javadoc won't let this be static
@@ -1470,7 +1470,7 @@ public final class TestPlume {
       void check_strict(int[] nums, int /*@Nullable*/ [] goal_rm) {
         check(nums, goal_rm, true);
         Iterator<Integer> itor = int_array_iterator(nums);
-        assert_arrays_equals(MathMDE.nonmodulus_strict_int(itor), goal_rm);
+        assert_arrays_equals(MathPlume.nonmodulus_strict_int(itor), goal_rm);
       }
 
       // javadoc won't let this be static
@@ -1482,9 +1482,9 @@ public final class TestPlume {
       void check(int[] nums, int /*@Nullable*/ [] goal_rm, boolean strict) {
         int[] rm;
         if (strict) {
-          rm = MathMDE.nonmodulus_strict(nums);
+          rm = MathPlume.nonmodulus_strict(nums);
         } else {
-          rm = MathMDE.nonmodulus_nonstrict(nums);
+          rm = MathPlume.nonmodulus_nonstrict(nums);
         }
         if (!Arrays.equals(rm, goal_rm)) {
           throw new Error(
@@ -1767,8 +1767,8 @@ public final class TestPlume {
     // System.out.printf("result:%s%n", result);
     // System.out.printf("buffered stdout:%s%n", p.cached_stdout);
     // System.out.printf("buffered stderr:%s%n", p.cached_stderr);
-    String out = UtilMDE.streamString(p.getInputStream());
-    String err = UtilMDE.streamString(p.getErrorStream());
+    String out = UtilPlume.streamString(p.getInputStream());
+    String err = UtilPlume.streamString(p.getErrorStream());
     // System.out.printf("out:%s%n", out);
     // System.out.printf("err:%s%n", err);
     return Triple.of(result, out, err);
@@ -1805,7 +1805,7 @@ public final class TestPlume {
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  /// UtilMDE
+  /// UtilPlume
   ///
 
   private static BitSet randomBitSet(/*@NonNegative*/ int length, Random r) {
@@ -1828,13 +1828,13 @@ public final class TestPlume {
     for (String str : strings) {
       sbd.add(str);
     }
-    assert sbd.toString().equals(UtilMDE.join(strings, ","));
+    assert sbd.toString().equals(UtilPlume.join(strings, ","));
   }
 
   // This cannot be static because it instantiates an inner class.
   @SuppressWarnings("ArrayEquals")
   @Test
-  public void testUtilMDE() {
+  public void testUtilPlume() {
 
     // public static intersectionCardinalityAtLeast(BitSet a, BitSet b, int i)
     {
@@ -1847,12 +1847,12 @@ public final class TestPlume {
         intersection.and(b2);
         int card = intersection.cardinality();
         for (int j = 0; j < 100; j++) {
-          assert UtilMDE.intersectionCardinalityAtLeast(b1, b2, j) == (card >= j);
+          assert UtilPlume.intersectionCardinalityAtLeast(b1, b2, j) == (card >= j);
         }
         intersection.and(b3);
         card = intersection.cardinality();
         for (int j = 0; j < 100; j++) {
-          assert UtilMDE.intersectionCardinalityAtLeast(b1, b2, b3, j) == (card >= j);
+          assert UtilPlume.intersectionCardinalityAtLeast(b1, b2, b3, j) == (card >= j);
         }
       }
     }
@@ -1863,24 +1863,24 @@ public final class TestPlume {
     // public static Class classForName(String className)
 
     // private boolean isSubtype(Class<?> sub, Class<?> sup) {
-    assert UtilMDE.isSubtype(Integer.class, Integer.class);
-    assert UtilMDE.isSubtype(Cloneable.class, Cloneable.class);
-    assert UtilMDE.isSubtype(Object.class, Object.class);
-    assert UtilMDE.isSubtype(Integer.class, Number.class);
-    assert !UtilMDE.isSubtype(Number.class, Integer.class);
-    assert UtilMDE.isSubtype(Integer.class, Comparable.class);
-    assert !UtilMDE.isSubtype(Comparable.class, Integer.class);
-    assert UtilMDE.isSubtype(Integer.class, Object.class);
-    assert !UtilMDE.isSubtype(Object.class, Integer.class);
-    assert !UtilMDE.isSubtype(Integer.class, Float.class);
-    assert UtilMDE.isSubtype(Collection.class, Iterable.class);
-    assert !UtilMDE.isSubtype(Iterable.class, Collection.class);
-    assert UtilMDE.isSubtype(ArrayList.class, Iterable.class);
-    assert !UtilMDE.isSubtype(Iterable.class, ArrayList.class);
-    assert UtilMDE.isSubtype(ArrayList.class, Cloneable.class);
-    assert !UtilMDE.isSubtype(Cloneable.class, ArrayList.class);
-    assert UtilMDE.isSubtype(ArrayList.class, List.class);
-    assert !UtilMDE.isSubtype(List.class, ArrayList.class);
+    assert UtilPlume.isSubtype(Integer.class, Integer.class);
+    assert UtilPlume.isSubtype(Cloneable.class, Cloneable.class);
+    assert UtilPlume.isSubtype(Object.class, Object.class);
+    assert UtilPlume.isSubtype(Integer.class, Number.class);
+    assert !UtilPlume.isSubtype(Number.class, Integer.class);
+    assert UtilPlume.isSubtype(Integer.class, Comparable.class);
+    assert !UtilPlume.isSubtype(Comparable.class, Integer.class);
+    assert UtilPlume.isSubtype(Integer.class, Object.class);
+    assert !UtilPlume.isSubtype(Object.class, Integer.class);
+    assert !UtilPlume.isSubtype(Integer.class, Float.class);
+    assert UtilPlume.isSubtype(Collection.class, Iterable.class);
+    assert !UtilPlume.isSubtype(Iterable.class, Collection.class);
+    assert UtilPlume.isSubtype(ArrayList.class, Iterable.class);
+    assert !UtilPlume.isSubtype(Iterable.class, ArrayList.class);
+    assert UtilPlume.isSubtype(ArrayList.class, Cloneable.class);
+    assert !UtilPlume.isSubtype(Cloneable.class, ArrayList.class);
+    assert UtilPlume.isSubtype(ArrayList.class, List.class);
+    assert !UtilPlume.isSubtype(List.class, ArrayList.class);
 
     // public static void addToClasspath(String dir)
     // public static final class WildcardFilter implements FilenameFilter
@@ -1894,7 +1894,7 @@ public final class TestPlume {
     // public Object incrementHashMap(HashMap hm, Object key, int count)
 
     try {
-      assert UtilMDE.canCreateAndWrite(new File("TestPlume.java"));
+      assert UtilPlume.canCreateAndWrite(new File("TestPlume.java"));
 
       // This test fails if run by the superuser (who can overwrite
       // any file).
@@ -1902,15 +1902,15 @@ public final class TestPlume {
         File readOnly = new File("temp");
         readOnly.createNewFile();
         readOnly.setReadOnly();
-        assert !UtilMDE.canCreateAndWrite(readOnly);
+        assert !UtilPlume.canCreateAndWrite(readOnly);
         readOnly.delete();
       }
 
-      assert UtilMDE.canCreateAndWrite(new File("temp"));
-      assert !UtilMDE.canCreateAndWrite(new File("temp/temp"));
+      assert UtilPlume.canCreateAndWrite(new File("temp"));
+      assert !UtilPlume.canCreateAndWrite(new File("temp/temp"));
     } catch (IOException e) {
       e.printStackTrace();
-      org.junit.Assert.fail("failure while testing UtilMDE.canCreateAndWrite(): " + e.toString());
+      org.junit.Assert.fail("failure while testing UtilPlume.canCreateAndWrite(): " + e.toString());
     }
 
     {
@@ -1933,18 +1933,18 @@ public final class TestPlume {
       // public static class IteratorEnumeration implements Enumeration
 
       assert iota0.equals(toArrayList(iota0.iterator()));
-      assert iota0.equals(toArrayList(new UtilMDE.IteratorEnumeration<Integer>(iota0.iterator())));
+      assert iota0.equals(toArrayList(new UtilPlume.IteratorEnumeration<Integer>(iota0.iterator())));
       assert iota10.equals(toArrayList(iota10.iterator()));
       assert iota10.equals(
-          toArrayList(new UtilMDE.IteratorEnumeration<Integer>(iota10.iterator())));
+          toArrayList(new UtilPlume.IteratorEnumeration<Integer>(iota10.iterator())));
 
       // public static class MergedIterator2 implements Iterator {
       assert iota10_twice.equals(
-          toArrayList(new UtilMDE.MergedIterator2<Integer>(iota10.iterator(), iota10.iterator())));
+          toArrayList(new UtilPlume.MergedIterator2<Integer>(iota10.iterator(), iota10.iterator())));
       assert iota10.equals(
-          toArrayList(new UtilMDE.MergedIterator2<Integer>(iota0.iterator(), iota10.iterator())));
+          toArrayList(new UtilPlume.MergedIterator2<Integer>(iota0.iterator(), iota10.iterator())));
       assert iota10.equals(
-          toArrayList(new UtilMDE.MergedIterator2<Integer>(iota10.iterator(), iota0.iterator())));
+          toArrayList(new UtilPlume.MergedIterator2<Integer>(iota10.iterator(), iota0.iterator())));
 
       // public static class MergedIterator implements Iterator {
       ArrayList<Iterator<Integer>> iota10_iterator_thrice = new ArrayList<Iterator<Integer>>();
@@ -1952,7 +1952,7 @@ public final class TestPlume {
       iota10_iterator_thrice.add(iota10.iterator());
       iota10_iterator_thrice.add(iota10.iterator());
       assert iota10_thrice.equals(
-          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_thrice.iterator())));
+          toArrayList(new UtilPlume.MergedIterator<Integer>(iota10_iterator_thrice.iterator())));
       ArrayList<Iterator<Integer>> iota10_iterator_twice_1 = new ArrayList<Iterator<Integer>>();
       iota10_iterator_twice_1.add(iota0.iterator());
       iota10_iterator_twice_1.add(iota10.iterator());
@@ -1966,11 +1966,11 @@ public final class TestPlume {
       iota10_iterator_twice_3.add(iota10.iterator());
       iota10_iterator_twice_3.add(iota0.iterator());
       assert iota10_twice.equals(
-          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_1.iterator())));
+          toArrayList(new UtilPlume.MergedIterator<Integer>(iota10_iterator_twice_1.iterator())));
       assert iota10_twice.equals(
-          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_2.iterator())));
+          toArrayList(new UtilPlume.MergedIterator<Integer>(iota10_iterator_twice_2.iterator())));
       assert iota10_twice.equals(
-          toArrayList(new UtilMDE.MergedIterator<Integer>(iota10_iterator_twice_3.iterator())));
+          toArrayList(new UtilPlume.MergedIterator<Integer>(iota10_iterator_twice_3.iterator())));
 
       class OddFilter implements Filter<Integer> {
         public OddFilter() {}
@@ -1990,7 +1990,7 @@ public final class TestPlume {
         }
       }
       assert iota10_odd.equals(
-          toArrayList(new UtilMDE.FilteredIterator<Integer>(iota10.iterator(), new OddFilter())));
+          toArrayList(new UtilPlume.FilteredIterator<Integer>(iota10.iterator(), new OddFilter())));
     }
 
     // public static final class RemoveFirstAndLastIterator implements Iterator
@@ -2003,8 +2003,8 @@ public final class TestPlume {
       for (int i = 1; i < 4; i++) {
         iota5middle.add(i);
       }
-      UtilMDE.RemoveFirstAndLastIterator<Integer> rfali =
-          new UtilMDE.RemoveFirstAndLastIterator<Integer>(iota5.iterator());
+      UtilPlume.RemoveFirstAndLastIterator<Integer> rfali =
+          new UtilPlume.RemoveFirstAndLastIterator<Integer>(iota5.iterator());
       ArrayList<Integer> rfali_vector = toArrayList(rfali);
       assert iota5middle.equals(rfali_vector);
       assert rfali.getFirst().equals(0);
@@ -2072,7 +2072,7 @@ public final class TestPlume {
             "index", "value"
           }) // The IotaIterator only contains indexes for totals.length, and since chosen's elements are selected randomly from the IotaIterator, all of its elements are @IndexFor
           List</*@IndexFor("totals")*/ Integer> chosen =
-              UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
+              UtilPlume.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
               if (chosen.get(m).intValue() == chosen.get(n).intValue()) {
@@ -2086,7 +2086,7 @@ public final class TestPlume {
         }
         int i_truncated = Math.min(itor_size, i);
         int grand_total = tries * i_truncated;
-        assert ArraysMDE.sum(totals) == grand_total : "Totals = " + ArraysMDE.sum(totals);
+        assert ArraysPlume.sum(totals) == grand_total : "Totals = " + ArraysPlume.sum(totals);
         // System.out.print("chosen:\t");
         for (int k = 0; k < num_elts_limit; k++) {
           int this_total = totals[k];
@@ -2113,18 +2113,18 @@ public final class TestPlume {
     // essentially I am just testing whether the return is erroneous
     try {
       assert null
-          != UtilMDE.methodForName(
-              "plume.UtilMDE.methodForName(java.lang.String, java.lang.String, java.lang.Class[])");
+          != UtilPlume.methodForName(
+              "plume.UtilPlume.methodForName(java.lang.String, java.lang.String, java.lang.Class[])");
       assert null
-          != UtilMDE.methodForName(
-              "plume.UtilMDE.methodForName(java.lang.String,java.lang.String,java.lang.Class[])");
-      assert null != UtilMDE.methodForName("java.lang.Math.min(int,int)");
+          != UtilPlume.methodForName(
+              "plume.UtilPlume.methodForName(java.lang.String,java.lang.String,java.lang.Class[])");
+      assert null != UtilPlume.methodForName("java.lang.Math.min(int,int)");
     } catch (Exception e) {
       e.printStackTrace();
       throw new Error(e);
     }
     try {
-      java.lang.reflect.Method m = UtilMDE.methodForName("plume.UtilMDE.methodForName()");
+      java.lang.reflect.Method m = UtilPlume.methodForName("plume.UtilPlume.methodForName()");
       throw new Error("Didn't throw NoSuchMethodException");
     } catch (NoSuchMethodException e) {
       // nothing to do; this is the expected case
@@ -2140,185 +2140,185 @@ public final class TestPlume {
 
     // public static String replaceString(String target, String oldStr, String newStr)
 
-    assert UtilMDE.replaceString("hello dolly well hello dolly", " ", "  ")
+    assert UtilPlume.replaceString("hello dolly well hello dolly", " ", "  ")
         .equals("hello  dolly  well  hello  dolly");
-    assert UtilMDE.replaceString("  hello  dolly well hello dolly  ", " ", "  ")
+    assert UtilPlume.replaceString("  hello  dolly well hello dolly  ", " ", "  ")
         .equals("    hello    dolly  well  hello  dolly    ");
-    assert UtilMDE.replaceString("hello dolly well hello dolly", "ll", "y")
+    assert UtilPlume.replaceString("hello dolly well hello dolly", "ll", "y")
         .equals("heyo doyy wey heyo doyy");
-    assert UtilMDE.replaceString("hello dolly well hello dolly", "q", "yyy")
+    assert UtilPlume.replaceString("hello dolly well hello dolly", "q", "yyy")
         .equals("hello dolly well hello dolly");
 
     // public static String[] split(String s, char delim)
     // public static String[] split(String s, String delim)
 
-    assert Arrays.equals(UtilMDE.split("foo,bar,baz", ','), new String[] {"foo", "bar", "baz"});
-    assert Arrays.equals(UtilMDE.split("foo", ','), new String[] {"foo"});
-    assert Arrays.equals(UtilMDE.split("", ','), new String[] {""});
-    assert Arrays.equals(UtilMDE.split(",foo,", ','), new String[] {"", "foo", ""});
-    assert Arrays.equals(UtilMDE.split("foo,bar,baz", ","), new String[] {"foo", "bar", "baz"});
-    assert Arrays.equals(UtilMDE.split("foo", ","), new String[] {"foo"});
-    assert Arrays.equals(UtilMDE.split("", ","), new String[] {""});
-    assert Arrays.equals(UtilMDE.split(",foo,", ","), new String[] {"", "foo", ""});
-    assert Arrays.equals(UtilMDE.split("foo, bar, baz", ", "), new String[] {"foo", "bar", "baz"});
-    assert Arrays.equals(UtilMDE.split("foo", ", "), new String[] {"foo"});
-    assert Arrays.equals(UtilMDE.split("", ", "), new String[] {""});
-    assert Arrays.equals(UtilMDE.split(", foo, ", ", "), new String[] {"", "foo", ""});
+    assert Arrays.equals(UtilPlume.split("foo,bar,baz", ','), new String[] {"foo", "bar", "baz"});
+    assert Arrays.equals(UtilPlume.split("foo", ','), new String[] {"foo"});
+    assert Arrays.equals(UtilPlume.split("", ','), new String[] {""});
+    assert Arrays.equals(UtilPlume.split(",foo,", ','), new String[] {"", "foo", ""});
+    assert Arrays.equals(UtilPlume.split("foo,bar,baz", ","), new String[] {"foo", "bar", "baz"});
+    assert Arrays.equals(UtilPlume.split("foo", ","), new String[] {"foo"});
+    assert Arrays.equals(UtilPlume.split("", ","), new String[] {""});
+    assert Arrays.equals(UtilPlume.split(",foo,", ","), new String[] {"", "foo", ""});
+    assert Arrays.equals(UtilPlume.split("foo, bar, baz", ", "), new String[] {"foo", "bar", "baz"});
+    assert Arrays.equals(UtilPlume.split("foo", ", "), new String[] {"foo"});
+    assert Arrays.equals(UtilPlume.split("", ", "), new String[] {""});
+    assert Arrays.equals(UtilPlume.split(", foo, ", ", "), new String[] {"", "foo", ""});
 
     // public static String join(Object[] a, String delim)
     // public static String join(ArrayList v, String delim)
 
-    assert UtilMDE.join(new String[] {"foo", "bar", "baz"}, ", ").equals("foo, bar, baz");
-    assert UtilMDE.join(new String[] {"foo"}, ", ").equals("foo");
-    assert UtilMDE.join(new String[] {}, ", ").equals("");
-    assert UtilMDE.join(new Integer[] {0, 1, 2, 3, 4}, "").equals("01234");
+    assert UtilPlume.join(new String[] {"foo", "bar", "baz"}, ", ").equals("foo, bar, baz");
+    assert UtilPlume.join(new String[] {"foo"}, ", ").equals("foo");
+    assert UtilPlume.join(new String[] {}, ", ").equals("");
+    assert UtilPlume.join(new Integer[] {0, 1, 2, 3, 4}, "").equals("01234");
     ArrayList<Object> potpourri = new ArrayList<Object>();
     potpourri.add("day");
     potpourri.add(2);
     potpourri.add("day");
-    assert UtilMDE.join(potpourri, " ").equals("day 2 day");
+    assert UtilPlume.join(potpourri, " ").equals("day 2 day");
 
     // public static String escapeNonJava(String orig)
     // public static String escapeNonJava(Character ch)
 
-    assert UtilMDE.escapeNonJava("foobar").equals("foobar");
-    assert UtilMDE.escapeNonJava("").equals("");
-    assert UtilMDE.escapeNonJava("\\").equals("\\\\");
-    assert UtilMDE.escapeNonJava("\\\n\r\"").equals("\\\\\\n\\r\\\"");
-    assert UtilMDE.escapeNonJava("split\nlines").equals("split\\nlines");
-    assert UtilMDE.escapeNonJava("\\relax").equals("\\\\relax");
-    assert UtilMDE.escapeNonJava("\"hello\"").equals("\\\"hello\\\"");
-    assert UtilMDE.escapeNonJava("\"hello\" \"world\"").equals("\\\"hello\\\" \\\"world\\\"");
+    assert UtilPlume.escapeNonJava("foobar").equals("foobar");
+    assert UtilPlume.escapeNonJava("").equals("");
+    assert UtilPlume.escapeNonJava("\\").equals("\\\\");
+    assert UtilPlume.escapeNonJava("\\\n\r\"").equals("\\\\\\n\\r\\\"");
+    assert UtilPlume.escapeNonJava("split\nlines").equals("split\\nlines");
+    assert UtilPlume.escapeNonJava("\\relax").equals("\\\\relax");
+    assert UtilPlume.escapeNonJava("\"hello\"").equals("\\\"hello\\\"");
+    assert UtilPlume.escapeNonJava("\"hello\" \"world\"").equals("\\\"hello\\\" \\\"world\\\"");
 
     // public static String escapeNonASCII(String orig)
 
-    assert UtilMDE.escapeNonASCII("foobar").equals("foobar");
-    assert UtilMDE.escapeNonASCII("").equals("");
-    assert UtilMDE.escapeNonASCII("\\").equals("\\\\");
-    assert UtilMDE.escapeNonASCII("\\\n\r\"").equals("\\\\\\n\\r\\\"");
-    assert UtilMDE.escapeNonASCII("split\nlines").equals("split\\nlines");
-    assert UtilMDE.escapeNonASCII("\\relax").equals("\\\\relax");
-    assert UtilMDE.escapeNonASCII("\"hello\"").equals("\\\"hello\\\"");
-    assert UtilMDE.escapeNonASCII("\"hello\" \"world\"").equals("\\\"hello\\\" \\\"world\\\"");
-    assert UtilMDE.escapeNonASCII("\0\1\2\7\12\70\100\111\222")
+    assert UtilPlume.escapeNonASCII("foobar").equals("foobar");
+    assert UtilPlume.escapeNonASCII("").equals("");
+    assert UtilPlume.escapeNonASCII("\\").equals("\\\\");
+    assert UtilPlume.escapeNonASCII("\\\n\r\"").equals("\\\\\\n\\r\\\"");
+    assert UtilPlume.escapeNonASCII("split\nlines").equals("split\\nlines");
+    assert UtilPlume.escapeNonASCII("\\relax").equals("\\\\relax");
+    assert UtilPlume.escapeNonASCII("\"hello\"").equals("\\\"hello\\\"");
+    assert UtilPlume.escapeNonASCII("\"hello\" \"world\"").equals("\\\"hello\\\" \\\"world\\\"");
+    assert UtilPlume.escapeNonASCII("\0\1\2\7\12\70\100\111\222")
         .equals("\\000\\001\\002\\007\\n8@I\\222");
-    assert UtilMDE.escapeNonASCII("\u0100\u1000\ucafe\uffff")
+    assert UtilPlume.escapeNonASCII("\u0100\u1000\ucafe\uffff")
         .equals("\\u0100\\u1000\\ucafe\\uffff");
 
     // private static String escapeNonASCII(char c)
 
     // public static String unescapeNonJava(String orig)
 
-    assert UtilMDE.unescapeNonJava("foobar").equals("foobar");
-    assert UtilMDE.unescapeNonJava("").equals("");
-    assert UtilMDE.unescapeNonJava("\\\\").equals("\\");
-    assert UtilMDE.unescapeNonJava("\\\"").equals("\"");
-    assert UtilMDE.unescapeNonJava("\\n").equals("\n"); // not lineSep
-    assert UtilMDE.unescapeNonJava("\\r").equals("\r");
-    assert UtilMDE.unescapeNonJava("split\\nlines").equals("split\nlines");
-    assert UtilMDE.unescapeNonJava("\\\\\\n").equals("\\\n"); // not lineSep
-    assert UtilMDE.unescapeNonJava("\\n\\r").equals("\n\r"); // not lineSep
-    assert UtilMDE.unescapeNonJava("\\\\\\n\\r\\\"").equals("\\\n\r\"");
-    assert UtilMDE.unescapeNonJava("\\\\relax").equals("\\relax");
-    assert UtilMDE.unescapeNonJava("\\\"hello\\\"").equals("\"hello\"");
-    assert UtilMDE.unescapeNonJava("\\\"hello\\\" \\\"world\\\"").equals("\"hello\" \"world\"");
-    assert UtilMDE.unescapeNonJava("\\").equals("\\");
-    assert UtilMDE.unescapeNonJava("foo\\").equals("foo\\");
-    assert UtilMDE.unescapeNonJava("\\*abc").equals("*abc");
+    assert UtilPlume.unescapeNonJava("foobar").equals("foobar");
+    assert UtilPlume.unescapeNonJava("").equals("");
+    assert UtilPlume.unescapeNonJava("\\\\").equals("\\");
+    assert UtilPlume.unescapeNonJava("\\\"").equals("\"");
+    assert UtilPlume.unescapeNonJava("\\n").equals("\n"); // not lineSep
+    assert UtilPlume.unescapeNonJava("\\r").equals("\r");
+    assert UtilPlume.unescapeNonJava("split\\nlines").equals("split\nlines");
+    assert UtilPlume.unescapeNonJava("\\\\\\n").equals("\\\n"); // not lineSep
+    assert UtilPlume.unescapeNonJava("\\n\\r").equals("\n\r"); // not lineSep
+    assert UtilPlume.unescapeNonJava("\\\\\\n\\r\\\"").equals("\\\n\r\"");
+    assert UtilPlume.unescapeNonJava("\\\\relax").equals("\\relax");
+    assert UtilPlume.unescapeNonJava("\\\"hello\\\"").equals("\"hello\"");
+    assert UtilPlume.unescapeNonJava("\\\"hello\\\" \\\"world\\\"").equals("\"hello\" \"world\"");
+    assert UtilPlume.unescapeNonJava("\\").equals("\\");
+    assert UtilPlume.unescapeNonJava("foo\\").equals("foo\\");
+    assert UtilPlume.unescapeNonJava("\\*abc").equals("*abc");
     // Should add more tests here.
 
     // Unfortunately, there isn't yet a unescapeNonASCII function.
     // If implemented, it should have the following behavior:
-    // assert UtilMDE.unescapeNonASCII("\\115").equals("M");
-    // assert UtilMDE.unescapeNonASCII("\\115\\111\\124").equals("MIT");
+    // assert UtilPlume.unescapeNonASCII("\\115").equals("M");
+    // assert UtilPlume.unescapeNonASCII("\\115\\111\\124").equals("MIT");
 
     // public static String removeWhitespaceAround(String arg, String delimiter)
     // public static String removeWhitespaceAfter(String arg, String delimiter)
     // public static String removeWhitespaceBefore(String arg, String delimiter)
 
-    assert UtilMDE.removeWhitespaceBefore("a,b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceBefore("a, b", ",").equals("a, b");
-    assert UtilMDE.removeWhitespaceBefore("a ,b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceBefore("a , b", ",").equals("a, b");
-    assert UtilMDE.removeWhitespaceBefore("ab=>cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceBefore("ab=> cd", "=>").equals("ab=> cd");
-    assert UtilMDE.removeWhitespaceBefore("ab =>cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceBefore("ab => cd", "=>").equals("ab=> cd");
-    assert UtilMDE.removeWhitespaceBefore("123cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceBefore(" 123 cd", "123").equals("123 cd");
-    assert UtilMDE.removeWhitespaceBefore(" 123cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceBefore("123 cd", "123").equals("123 cd");
-    assert UtilMDE.removeWhitespaceBefore("cd123", "123").equals("cd123");
-    assert UtilMDE.removeWhitespaceBefore("cd 123 ", "123").equals("cd123 ");
-    assert UtilMDE.removeWhitespaceBefore("cd123 ", "123").equals("cd123 ");
-    assert UtilMDE.removeWhitespaceBefore("cd 123", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceBefore("a,b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceBefore("a, b", ",").equals("a, b");
+    assert UtilPlume.removeWhitespaceBefore("a ,b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceBefore("a , b", ",").equals("a, b");
+    assert UtilPlume.removeWhitespaceBefore("ab=>cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceBefore("ab=> cd", "=>").equals("ab=> cd");
+    assert UtilPlume.removeWhitespaceBefore("ab =>cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceBefore("ab => cd", "=>").equals("ab=> cd");
+    assert UtilPlume.removeWhitespaceBefore("123cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceBefore(" 123 cd", "123").equals("123 cd");
+    assert UtilPlume.removeWhitespaceBefore(" 123cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceBefore("123 cd", "123").equals("123 cd");
+    assert UtilPlume.removeWhitespaceBefore("cd123", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceBefore("cd 123 ", "123").equals("cd123 ");
+    assert UtilPlume.removeWhitespaceBefore("cd123 ", "123").equals("cd123 ");
+    assert UtilPlume.removeWhitespaceBefore("cd 123", "123").equals("cd123");
 
-    assert UtilMDE.removeWhitespaceAfter("a,b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceAfter("a, b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceAfter("a ,b", ",").equals("a ,b");
-    assert UtilMDE.removeWhitespaceAfter("a , b", ",").equals("a ,b");
-    assert UtilMDE.removeWhitespaceAfter("ab=>cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceAfter("ab=> cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceAfter("ab =>cd", "=>").equals("ab =>cd");
-    assert UtilMDE.removeWhitespaceAfter("ab => cd", "=>").equals("ab =>cd");
-    assert UtilMDE.removeWhitespaceAfter("123cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceAfter(" 123 cd", "123").equals(" 123cd");
-    assert UtilMDE.removeWhitespaceAfter(" 123cd", "123").equals(" 123cd");
-    assert UtilMDE.removeWhitespaceAfter("123 cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceAfter("cd123", "123").equals("cd123");
-    assert UtilMDE.removeWhitespaceAfter("cd 123 ", "123").equals("cd 123");
-    assert UtilMDE.removeWhitespaceAfter("cd123 ", "123").equals("cd123");
-    assert UtilMDE.removeWhitespaceAfter("cd 123", "123").equals("cd 123");
+    assert UtilPlume.removeWhitespaceAfter("a,b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceAfter("a, b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceAfter("a ,b", ",").equals("a ,b");
+    assert UtilPlume.removeWhitespaceAfter("a , b", ",").equals("a ,b");
+    assert UtilPlume.removeWhitespaceAfter("ab=>cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceAfter("ab=> cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceAfter("ab =>cd", "=>").equals("ab =>cd");
+    assert UtilPlume.removeWhitespaceAfter("ab => cd", "=>").equals("ab =>cd");
+    assert UtilPlume.removeWhitespaceAfter("123cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceAfter(" 123 cd", "123").equals(" 123cd");
+    assert UtilPlume.removeWhitespaceAfter(" 123cd", "123").equals(" 123cd");
+    assert UtilPlume.removeWhitespaceAfter("123 cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceAfter("cd123", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceAfter("cd 123 ", "123").equals("cd 123");
+    assert UtilPlume.removeWhitespaceAfter("cd123 ", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceAfter("cd 123", "123").equals("cd 123");
 
-    assert UtilMDE.removeWhitespaceAround("a,b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceAround("a, b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceAround("a ,b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceAround("a , b", ",").equals("a,b");
-    assert UtilMDE.removeWhitespaceAround("ab=>cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceAround("ab=> cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceAround("ab =>cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceAround("ab => cd", "=>").equals("ab=>cd");
-    assert UtilMDE.removeWhitespaceAround("123cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceAround(" 123 cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceAround(" 123cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceAround("123 cd", "123").equals("123cd");
-    assert UtilMDE.removeWhitespaceAround("cd123", "123").equals("cd123");
-    assert UtilMDE.removeWhitespaceAround("cd 123 ", "123").equals("cd123");
-    assert UtilMDE.removeWhitespaceAround("cd123 ", "123").equals("cd123");
-    assert UtilMDE.removeWhitespaceAround("cd 123", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceAround("a,b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceAround("a, b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceAround("a ,b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceAround("a , b", ",").equals("a,b");
+    assert UtilPlume.removeWhitespaceAround("ab=>cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceAround("ab=> cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceAround("ab =>cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceAround("ab => cd", "=>").equals("ab=>cd");
+    assert UtilPlume.removeWhitespaceAround("123cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceAround(" 123 cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceAround(" 123cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceAround("123 cd", "123").equals("123cd");
+    assert UtilPlume.removeWhitespaceAround("cd123", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceAround("cd 123 ", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceAround("cd123 ", "123").equals("cd123");
+    assert UtilPlume.removeWhitespaceAround("cd 123", "123").equals("cd123");
 
     // public static String nplural(int n, String noun)
 
-    assert UtilMDE.nplural(0, "fuss").equals("0 fusses");
-    assert UtilMDE.nplural(1, "fuss").equals("1 fuss");
-    assert UtilMDE.nplural(2, "fuss").equals("2 fusses");
-    assert UtilMDE.nplural(0, "fox").equals("0 foxes");
-    assert UtilMDE.nplural(1, "fox").equals("1 fox");
-    assert UtilMDE.nplural(2, "fox").equals("2 foxes");
-    assert UtilMDE.nplural(0, "fish").equals("0 fishes");
-    assert UtilMDE.nplural(1, "fish").equals("1 fish");
-    assert UtilMDE.nplural(2, "fish").equals("2 fishes");
-    assert UtilMDE.nplural(0, "fletch").equals("0 fletches");
-    assert UtilMDE.nplural(1, "fletch").equals("1 fletch");
-    assert UtilMDE.nplural(2, "fletch").equals("2 fletches");
-    assert UtilMDE.nplural(0, "fund").equals("0 funds");
-    assert UtilMDE.nplural(1, "fund").equals("1 fund");
-    assert UtilMDE.nplural(2, "fund").equals("2 funds");
-    assert UtilMDE.nplural(0, "f-stop").equals("0 f-stops");
-    assert UtilMDE.nplural(1, "f-stop").equals("1 f-stop");
-    assert UtilMDE.nplural(2, "f-stop").equals("2 f-stops");
+    assert UtilPlume.nplural(0, "fuss").equals("0 fusses");
+    assert UtilPlume.nplural(1, "fuss").equals("1 fuss");
+    assert UtilPlume.nplural(2, "fuss").equals("2 fusses");
+    assert UtilPlume.nplural(0, "fox").equals("0 foxes");
+    assert UtilPlume.nplural(1, "fox").equals("1 fox");
+    assert UtilPlume.nplural(2, "fox").equals("2 foxes");
+    assert UtilPlume.nplural(0, "fish").equals("0 fishes");
+    assert UtilPlume.nplural(1, "fish").equals("1 fish");
+    assert UtilPlume.nplural(2, "fish").equals("2 fishes");
+    assert UtilPlume.nplural(0, "fletch").equals("0 fletches");
+    assert UtilPlume.nplural(1, "fletch").equals("1 fletch");
+    assert UtilPlume.nplural(2, "fletch").equals("2 fletches");
+    assert UtilPlume.nplural(0, "fund").equals("0 funds");
+    assert UtilPlume.nplural(1, "fund").equals("1 fund");
+    assert UtilPlume.nplural(2, "fund").equals("2 funds");
+    assert UtilPlume.nplural(0, "f-stop").equals("0 f-stops");
+    assert UtilPlume.nplural(1, "f-stop").equals("1 f-stop");
+    assert UtilPlume.nplural(2, "f-stop").equals("2 f-stops");
 
     // public static String rpad(String s, int length)
     // public static String rpad(int num, int length)
     // public static String rpad(double num, int length)
 
-    assert UtilMDE.rpad("", 5).equals("     ");
-    assert UtilMDE.rpad("abcd", 5).equals("abcd ");
-    assert UtilMDE.rpad("abcde", 5).equals("abcde");
-    assert UtilMDE.rpad("abcdef", 5).equals("abcde");
-    assert UtilMDE.rpad("abcde ghij", 5).equals("abcde");
-    assert UtilMDE.rpad(10, 5).equals("10   ");
-    assert UtilMDE.rpad(3.14, 5).equals("3.14 ");
+    assert UtilPlume.rpad("", 5).equals("     ");
+    assert UtilPlume.rpad("abcd", 5).equals("abcd ");
+    assert UtilPlume.rpad("abcde", 5).equals("abcde");
+    assert UtilPlume.rpad("abcdef", 5).equals("abcde");
+    assert UtilPlume.rpad("abcde ghij", 5).equals("abcde");
+    assert UtilPlume.rpad(10, 5).equals("10   ");
+    assert UtilPlume.rpad(3.14, 5).equals("3.14 ");
 
     // public static class NullableStringComparator
     //   public int compare(Object o1, Object o2)
@@ -2326,13 +2326,13 @@ public final class TestPlume {
     // public static int count(String s, int ch)
     // public static int count(String s, String sub)
 
-    assert UtilMDE.count("abcde", 'a') == 1;
-    assert UtilMDE.count("abcde", 'c') == 1;
-    assert UtilMDE.count("abcde", 'e') == 1;
-    assert UtilMDE.count("abcde", 'z') == 0;
-    assert UtilMDE.count("abacadaea", 'a') == 5;
-    assert UtilMDE.count("aaa aea", 'a') == 5;
-    assert UtilMDE.count("daeaaa", 'a') == 4;
+    assert UtilPlume.count("abcde", 'a') == 1;
+    assert UtilPlume.count("abcde", 'c') == 1;
+    assert UtilPlume.count("abcde", 'e') == 1;
+    assert UtilPlume.count("abcde", 'z') == 0;
+    assert UtilPlume.count("abacadaea", 'a') == 5;
+    assert UtilPlume.count("aaa aea", 'a') == 5;
+    assert UtilPlume.count("daeaaa", 'a') == 4;
 
     // This will be easy to write tests for, when I get around to it.
     // public static ArrayList tokens(String str, String delim, boolean returnTokens)
@@ -2370,11 +2370,11 @@ public final class TestPlume {
     l1233.add(2);
     l1233.add(3);
 
-    assert UtilMDE.removeDuplicates(l123).equals(l123);
-    assert UtilMDE.removeDuplicates(l123123).equals(l123);
-    assert UtilMDE.removeDuplicates(l12223).equals(l123);
-    assert UtilMDE.removeDuplicates(l1123).equals(l123);
-    assert UtilMDE.removeDuplicates(l1233).equals(l123);
+    assert UtilPlume.removeDuplicates(l123).equals(l123);
+    assert UtilPlume.removeDuplicates(l123123).equals(l123);
+    assert UtilPlume.removeDuplicates(l12223).equals(l123);
+    assert UtilPlume.removeDuplicates(l1123).equals(l123);
+    assert UtilPlume.removeDuplicates(l1233).equals(l123);
 
     // public boolean deepEquals(Object o1, Object o2)
 
@@ -2382,9 +2382,9 @@ public final class TestPlume {
     boolean[] zatft2 = new boolean[] {true, false, true};
     boolean[] zatff = new boolean[] {true, false, false};
     assert !zatft1.equals(zatft2);
-    assert UtilMDE.deepEquals(zatft1, zatft2);
+    assert UtilPlume.deepEquals(zatft1, zatft2);
     assert !zatft1.equals(zatff);
-    assert !UtilMDE.deepEquals(zatft1, zatff);
+    assert !UtilPlume.deepEquals(zatft1, zatff);
 
     List<Object> l1 = new ArrayList<Object>();
     List<Object> l2 = new ArrayList<Object>();
@@ -2399,42 +2399,42 @@ public final class TestPlume {
     // assert ! l1.equals(l2);
     // assert ! l1.equals(l3);
     // assert ! l2.equals(l3);
-    assert UtilMDE.deepEquals(l1, l2);
-    assert !UtilMDE.deepEquals(l1, l3);
-    assert !UtilMDE.deepEquals(l2, l3);
+    assert UtilPlume.deepEquals(l1, l2);
+    assert !UtilPlume.deepEquals(l1, l3);
+    assert !UtilPlume.deepEquals(l2, l3);
 
     // This is tested by the tokens methods.
     // public static ArrayList makeArrayList(Enumeration e)
 
     Locale.setDefault(Locale.US);
-    assert UtilMDE.abbreviateNumber(5).equals("5.00");
-    assert UtilMDE.abbreviateNumber(5000).equals("5.00K");
-    assert UtilMDE.abbreviateNumber(5000000).equals("5.00M");
-    assert UtilMDE.abbreviateNumber(1000000000).equals("1.00G");
-    assert UtilMDE.abbreviateNumber(1).equals("1.00");
-    assert UtilMDE.abbreviateNumber(12).equals("12.0");
-    assert UtilMDE.abbreviateNumber(123).equals("123");
-    assert UtilMDE.abbreviateNumber(1234).equals("1.23K");
-    assert UtilMDE.abbreviateNumber(12345).equals("12.3K");
-    assert UtilMDE.abbreviateNumber(123456).equals("123K");
-    assert UtilMDE.abbreviateNumber(1234567).equals("1.23M");
-    assert UtilMDE.abbreviateNumber(12345678).equals("12.3M");
-    assert UtilMDE.abbreviateNumber(123456789).equals("123M");
-    assert UtilMDE.abbreviateNumber(1234567890).equals("1.23G");
-    assert UtilMDE.abbreviateNumber(9).equals("9.00");
-    assert UtilMDE.abbreviateNumber(98).equals("98.0");
-    assert UtilMDE.abbreviateNumber(987).equals("987");
-    assert UtilMDE.abbreviateNumber(9876).equals("9.88K");
-    assert UtilMDE.abbreviateNumber(98765).equals("98.8K");
-    assert UtilMDE.abbreviateNumber(987654).equals("988K");
-    assert UtilMDE.abbreviateNumber(9876543).equals("9.88M");
-    assert UtilMDE.abbreviateNumber(98765432).equals("98.8M");
-    assert UtilMDE.abbreviateNumber(987654321).equals("988M");
-    assert UtilMDE.abbreviateNumber(9876543210L).equals("9.88G");
+    assert UtilPlume.abbreviateNumber(5).equals("5.00");
+    assert UtilPlume.abbreviateNumber(5000).equals("5.00K");
+    assert UtilPlume.abbreviateNumber(5000000).equals("5.00M");
+    assert UtilPlume.abbreviateNumber(1000000000).equals("1.00G");
+    assert UtilPlume.abbreviateNumber(1).equals("1.00");
+    assert UtilPlume.abbreviateNumber(12).equals("12.0");
+    assert UtilPlume.abbreviateNumber(123).equals("123");
+    assert UtilPlume.abbreviateNumber(1234).equals("1.23K");
+    assert UtilPlume.abbreviateNumber(12345).equals("12.3K");
+    assert UtilPlume.abbreviateNumber(123456).equals("123K");
+    assert UtilPlume.abbreviateNumber(1234567).equals("1.23M");
+    assert UtilPlume.abbreviateNumber(12345678).equals("12.3M");
+    assert UtilPlume.abbreviateNumber(123456789).equals("123M");
+    assert UtilPlume.abbreviateNumber(1234567890).equals("1.23G");
+    assert UtilPlume.abbreviateNumber(9).equals("9.00");
+    assert UtilPlume.abbreviateNumber(98).equals("98.0");
+    assert UtilPlume.abbreviateNumber(987).equals("987");
+    assert UtilPlume.abbreviateNumber(9876).equals("9.88K");
+    assert UtilPlume.abbreviateNumber(98765).equals("98.8K");
+    assert UtilPlume.abbreviateNumber(987654).equals("988K");
+    assert UtilPlume.abbreviateNumber(9876543).equals("9.88M");
+    assert UtilPlume.abbreviateNumber(98765432).equals("98.8M");
+    assert UtilPlume.abbreviateNumber(987654321).equals("988M");
+    assert UtilPlume.abbreviateNumber(9876543210L).equals("9.88G");
   }
 
   @Test
-  public void testTestUtilMDE() {
+  public void testTestUtilPlume() {
     int[] a = new int[] {3, 4, 5};
     assert_arrays_equals(int_iterator_array(int_array_iterator(a)), a);
   }
@@ -2553,8 +2553,8 @@ public final class TestPlume {
     assert s1 == s2;
     assert s3 == s4;
     assert s3 == s5;
-    assert ArraysMDE.isSubarray(s1, ArraysMDE.subarray(a1, i, j - i), 0);
-    assert ArraysMDE.isSubarray(ArraysMDE.subarray(a1, i, j - i), s1, 0);
+    assert ArraysPlume.isSubarray(s1, ArraysPlume.subarray(a1, i, j - i), 0);
+    assert ArraysPlume.isSubarray(ArraysPlume.subarray(a1, i, j - i), s1, 0);
 
     long[] l1 = Intern.intern(new long[] {1, 2, 3, 4, 5, 6});
     assert l1 == Intern.internSubsequence(l1, 0, l1.length);
@@ -2865,7 +2865,7 @@ public final class TestPlume {
     }
   }
 
-  /** Tests UtilMDE create_combinations routines. */
+  /** Tests UtilPlume create_combinations routines. */
   @Test
   public void test_create_combinations() {
 
@@ -2884,13 +2884,13 @@ public final class TestPlume {
     List<Object> bc = Arrays.<Object>asList(new Object[] {b, c});
 
     List<Object> abc = Arrays.asList(a, b, c);
-    List<List<Object>> combo1 = UtilMDE.create_combinations(1, 0, abc);
+    List<List<Object>> combo1 = UtilPlume.create_combinations(1, 0, abc);
     assert combo1.size() == 3;
     assert combo1.contains(a_list);
     assert combo1.contains(b_list);
     assert combo1.contains(c_list);
 
-    List<List<Object>> combo2 = UtilMDE.create_combinations(2, 0, abc);
+    List<List<Object>> combo2 = UtilPlume.create_combinations(2, 0, abc);
     assert combo2.size() == 6;
     assert combo2.contains(aa);
     assert combo2.contains(ab);
@@ -2907,13 +2907,13 @@ public final class TestPlume {
     Integer i11 = 11;
     Integer i12 = 12;
 
-    List<ArrayList<Integer>> combo3 = UtilMDE.create_combinations(1, 0, 2);
+    List<ArrayList<Integer>> combo3 = UtilPlume.create_combinations(1, 0, 2);
     assert combo3.size() == 3;
     assert combo3.contains(Arrays.asList(new Integer[] {i0}));
     assert combo3.contains(Arrays.asList(new Integer[] {i1}));
     assert combo3.contains(Arrays.asList(new Integer[] {i2}));
 
-    List<ArrayList<Integer>> combo4 = UtilMDE.create_combinations(2, 0, 2);
+    List<ArrayList<Integer>> combo4 = UtilPlume.create_combinations(2, 0, 2);
     assert combo4.size() == 6;
     assert combo4.contains(Arrays.asList(new Integer[] {i0, i0}));
     assert combo4.contains(Arrays.asList(new Integer[] {i0, i1}));
@@ -2922,7 +2922,7 @@ public final class TestPlume {
     assert combo4.contains(Arrays.asList(new Integer[] {i1, i2}));
     assert combo4.contains(Arrays.asList(new Integer[] {i2, i2}));
 
-    List<ArrayList<Integer>> combo5 = UtilMDE.create_combinations(2, 10, 12);
+    List<ArrayList<Integer>> combo5 = UtilPlume.create_combinations(2, 10, 12);
     assert combo5.size() == 6;
     assert combo5.contains(Arrays.asList(new Integer[] {i10, i10}));
     assert combo5.contains(Arrays.asList(new Integer[] {i10, i11}));
@@ -2935,8 +2935,8 @@ public final class TestPlume {
   @Test
   public void test_fullyQualifiedNameToSimpleName() {
 
-    assert UtilMDE.fullyQualifiedNameToSimpleName("java.lang.String").equals("String");
-    assert UtilMDE.fullyQualifiedNameToSimpleName("String").equals("String");
+    assert UtilPlume.fullyQualifiedNameToSimpleName("java.lang.String").equals("String");
+    assert UtilPlume.fullyQualifiedNameToSimpleName("String").equals("String");
   }
 
   @Test
@@ -2944,7 +2944,7 @@ public final class TestPlume {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
     @SuppressWarnings("value") // method that returns an array is not StaticallyExecutable
-    String /*@ArrayLen(11)*/[] sa = UtilMDE.splitLines(str);
+    String /*@ArrayLen(11)*/[] sa = UtilPlume.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
     assert sa.length == 11;
@@ -3001,11 +3001,11 @@ public final class TestPlume {
 
   @SuppressWarnings("nullness") // test code
   @Test
-  public void testGraphMDE() {
+  public void testGraphPlume() {
 
     initializePreds1AndSucc1();
 
-    Map<Integer, List<Integer>> dom1post = GraphMDE.dominators(succs1);
+    Map<Integer, List<Integer>> dom1post = GraphPlume.dominators(succs1);
     assert dom1post.get(0).toString().equals("[7, 1, 0]");
     assert dom1post.get(1).toString().equals("[7, 1]");
     assert dom1post.get(2).toString().equals("[7, 2]");
@@ -3015,7 +3015,7 @@ public final class TestPlume {
     assert dom1post.get(6).toString().equals("[7, 5, 4, 6]");
     assert dom1post.get(7).toString().equals("[7]");
 
-    Map<Integer, List<Integer>> dom1pre = GraphMDE.dominators(preds1);
+    Map<Integer, List<Integer>> dom1pre = GraphPlume.dominators(preds1);
     assert dom1pre.get(0).toString().equals("[0]");
     assert dom1pre.get(1).toString().equals("[0, 1]");
     assert dom1pre.get(2).toString().equals("[0, 1, 2]");

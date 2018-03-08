@@ -25,7 +25,9 @@ import org.checkerframework.dataflow.qual.*;
 // I have not evaluated the importance of the optimizations in this class.
 // Consider adding:
 //  * @deprecated Use LimitedSizeSet instead
+* @deprecated use org.plumelib.util.LimitedSizeIntSet
 // @Deprecated
+  @Deprecated // use org.plumelib.util.LimitedSizeIntSet
 public class LimitedSizeIntSet implements Serializable, Cloneable {
   // We are Serializable, so we specify a version to allow changes to
   // method signatures without breaking serialization.  If you add or

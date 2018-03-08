@@ -22,7 +22,10 @@ import org.checkerframework.common.value.qual.*;
  *
  * <p>Java builds in interning for Strings, but not for other objects. The methods in this class
  * extend interning to all Java objects.
+ *
+ * @deprecated use org.plumelib.util.Intern
  */
+@Deprecated // use org.plumelib.util.Intern
 public final class Intern {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -872,7 +875,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      int[] subseqUninterned = ArraysMDE.subarray(seq, start, end - start);
+      int[] subseqUninterned = ArraysPlume.subarray(seq, start, end - start);
       int /*@Interned*/ [] subseq = Intern.intern(subseqUninterned);
       internedIntSequenceAndIndices.put(sai, new WeakReference<int /*@Interned*/ []>(subseq));
       return subseq;
@@ -902,7 +905,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      long[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
+      long[] subseq_uninterned = ArraysPlume.subarray(seq, start, end - start);
       long /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedLongSequenceAndIndices.put(sai, new WeakReference<long /*@Interned*/ []>(subseq));
       return subseq;
@@ -932,7 +935,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      double[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
+      double[] subseq_uninterned = ArraysPlume.subarray(seq, start, end - start);
       double /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       internedDoubleSequenceAndIndices.put(sai, new WeakReference<double /*@Interned*/ []>(subseq));
       return subseq;
@@ -964,7 +967,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
+      /*@PolyNull*/ /*@Interned*/ Object[] subseq_uninterned = ArraysPlume.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
       Object
@@ -1001,7 +1004,7 @@ public final class Intern {
     if (result1 != null) {
       return result1;
     } else {
-      /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysMDE.subarray(seq, start, end - start);
+      /*@PolyNull*/ /*@Interned*/ String[] subseq_uninterned = ArraysPlume.subarray(seq, start, end - start);
       /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ [] subseq = Intern.intern(subseq_uninterned);
       @SuppressWarnings("nullness") // safe because map does no side effects
       Object
@@ -1065,7 +1068,7 @@ public final class Intern {
     /*@SideEffectFree*/
     @Override
     public String toString(/*>>>@GuardSatisfied SequenceAndIndices<T> this*/) {
-      return "SAI(" + start + "," + end + ") from: " + ArraysMDE.toString(seq);
+      return "SAI(" + start + "," + end + ") from: " + ArraysPlume.toString(seq);
     }
   }
 
