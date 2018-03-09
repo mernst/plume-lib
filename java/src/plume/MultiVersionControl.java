@@ -250,6 +250,7 @@ import org.checkerframework.common.value.qual.*;
 //       '*' a newer revision exists on the server
 //       ' ' the working copy is up to date
 
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public class MultiVersionControl {
 
   @Option(value = "User home directory", noDocDefault = true)

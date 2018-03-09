@@ -13,7 +13,10 @@ package plume;
  *     boolean equals(Object o, Object o2) { return o.equals(o2); }
  *   }
  * </pre>
+ *
+ * @deprecated use org.plumelib.util.Hasher
  */
+@Deprecated // use org.plumelib.util.Hasher
 public interface Hasher {
 
   /**

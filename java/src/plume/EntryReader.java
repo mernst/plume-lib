@@ -65,7 +65,9 @@ import org.checkerframework.checker.regex.qual.*;
  * }</pre>
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
+ * @deprecated use org.plumelib.util.FOOBARBAZ
  */
+@Deprecated // use org.plumelib.util.FOOBARBAZ
 @SuppressWarnings("IterableAndIterator")
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
 

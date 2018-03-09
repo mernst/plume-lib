@@ -25,8 +25,6 @@ import java.util.NoSuchElementException;
 import java.lang.ref.WeakReference;
 import java.lang.ref.ReferenceQueue;
 
-import plume.Hasher;
-
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
@@ -115,8 +113,9 @@ import org.checkerframework.dataflow.qual.*;
  * @since	JDK1.2
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
+ * @deprecated use org.plumelib.util.WeakHasherMap
  */
-
+@Deprecated // use org.plumelib.util.WeakHasherMap
 @SuppressWarnings({"index", "interning", "keyfor", "lock", "nullness", "purity", "regex"}) // old, non-typesafe Sun code, not worth annotating or checking
 public final class WeakHasherMap<K,V> extends AbstractMap<K,V> implements Map<K,V> {
 

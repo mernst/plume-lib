@@ -128,7 +128,9 @@ import org.checkerframework.dataflow.qual.*;
  * @since	1.2
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
+ * @deprecated use org.plumelib.util.WeakIdentityHashMap
  */
+@Deprecated // use org.plumelib.util.WeakIdentityHashMap
 @SuppressWarnings({"unchecked", "rawtypes", "index", "interning", "keyfor", "lock", "nullness", "purity", "regex"}) // old, non-typesafe Sun code, not worth annotating or checking
 public class WeakIdentityHashMap<K,V>
     extends AbstractMap<K,V>

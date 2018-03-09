@@ -68,7 +68,12 @@ import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
-/** Utility functions that do not belong elsewhere in the plume package. */
+/**
+ * Utility functions that do not belong elsewhere in the plume package.
+ *
+ * @deprecated use org.plumelib.util.UtilPlume
+ */
+@Deprecated // use org.plumelib.util.UtilPlume
 public final class UtilMDE {
 
   /** This class is a collection of methods; it does not represent anything. */

@@ -44,7 +44,9 @@ import java.util.Random;
  * }</pre>
  *
  * @param <T> the type of elements being selected over
+ * @deprecated use org.plumelib.util.RandomSelector
  */
+@Deprecated // use org.plumelib.util.RandomSelector
 public class RandomSelector<T> {
 
   // Rep Invariant: values != null && values.size() <= num_elts &&

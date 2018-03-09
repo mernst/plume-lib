@@ -28,6 +28,7 @@ import org.checkerframework.common.value.qual.*;
  * <pre>find . \( -name '*.class' -o -name '*.jar' \) -print | xargs java ClassFileVersion -min 6
  * </pre>
  */
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class ClassFileVersion {
 
   /** This class is a collection of methods; it does not represent anything. */

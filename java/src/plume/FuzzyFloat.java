@@ -22,7 +22,10 @@ import org.checkerframework.dataflow.qual.*;
  * zero is never equal to a non-zero number using this method.
  *
  * <p>Two NaN floats are not considered equal (consistent with the == operator).
+ *
+ * @deprecated use org.plumelib.util.FuzzyFloat
  */
+@Deprecated // use org.plumelib.util.FuzzyFloat
 public class FuzzyFloat {
 
   /** Minimum ratio between two floats that will act as equal. */

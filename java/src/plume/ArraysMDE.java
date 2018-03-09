@@ -27,7 +27,10 @@ import org.checkerframework.framework.qual.*;
 /**
  * Utilities for manipulating arrays and collections. This complements {@link java.util.Arrays} and
  * {@link java.util.Collections}.
+ *
+ * @deprecated use org.plumelib.util.ArraysPlume
  */
+@Deprecated // use org.plumelib.util.ArraysPlume
 @SuppressWarnings("interning") // to do later
 public final class ArraysMDE {
   /** This class is a collecton of methods; it does not represent anything. */

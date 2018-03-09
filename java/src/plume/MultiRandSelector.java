@@ -24,7 +24,9 @@ import java.util.Random;
  *
  * @param <T> the type of elements to be selected among
  * @see RandomSelector
+ * @deprecated use org.plumelib.util.MultiRandSelector
  */
+@Deprecated // use org.plumelib.util.MultiRandSelector
 public class MultiRandSelector<T> {
 
   private int num_elts = -1;

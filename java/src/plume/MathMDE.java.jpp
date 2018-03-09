@@ -24,7 +24,10 @@ import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
-/** Mathematical utilities. */
+/** Mathematical utilities.
+ * @deprecated use org.plumelib.util.MathMDE
+ */
+@Deprecated // use org.plumelib.util.MathMDE
 public final class MathMDE {
 
   /** This class is a collection of methods; it does not represent anything. */
