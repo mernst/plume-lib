@@ -2707,6 +2707,9 @@ public final class UtilMDE {
    * @return version of arg, with whitespace after delimiter removed
    */
   public static String removeWhitespaceAfter(String arg, String delimiter) {
+    if (delimiter == null || delimiter.equals("")) {
+      throw new IllegalArgumentException("Bad delimiter: \"" + delimiter + "\"");
+    }
     // String orig = arg;
     int delim_len = delimiter.length();
     int delim_index = arg.indexOf(delimiter);
@@ -2737,6 +2740,9 @@ public final class UtilMDE {
    * @return version of arg, with whitespace before delimiter removed
    */
   public static String removeWhitespaceBefore(String arg, String delimiter) {
+    if (delimiter == null || delimiter.equals("")) {
+      throw new IllegalArgumentException("Bad delimiter: \"" + delimiter + "\"");
+    }
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
     // String orig = arg;
     int delim_index = arg.indexOf(delimiter);
