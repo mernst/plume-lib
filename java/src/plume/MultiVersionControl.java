@@ -1582,7 +1582,7 @@ public class MultiVersionControl {
     // members to construct the Commons Exec objects.
 
     @SuppressWarnings({"index", "value"}) // ProcessBuilder.command() returns a non-empty list
-    String @MinLen(1) [] args = (pb.command()).toArray(new String[0]);
+    String /*@MinLen(1)*/[] args = (pb.command()).toArray(new String[0]);
     CommandLine cmdLine = new CommandLine(args[0]); // constructor requires executable name
     @SuppressWarnings("nullness") // indices are in bounds, so no null values in resulting array
     String[] argArray = Arrays.copyOfRange(args, 1, args.length);
@@ -1590,7 +1590,7 @@ public class MultiVersionControl {
     DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
     DefaultExecutor executor = new DefaultExecutor();
     @SuppressWarnings("nullness") // defaults to non-null and was never reset
-    @NonNull File defaultDirectory = pb.directory();
+    /*@NonNull*/ File defaultDirectory = pb.directory();
     executor.setWorkingDirectory(defaultDirectory);
 
     ExecuteWatchdog watchdog = new ExecuteWatchdog(timeout * 1000);
