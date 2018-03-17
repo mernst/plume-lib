@@ -1581,9 +1581,12 @@ public class MultiVersionControl {
     // we have kept the ProcessBuilder argument but now only use its
     // members to construct the Commons Exec objects.
 
-    String[] args = (pb.command()).toArray(new String[0]);
+    @SuppressWarnings("index") // ProcessBuilder.command() returns a non-empty list
+    String @MinLen(1) [] args = (pb.command()).toArray(new String[0]);
     CommandLine cmdLine = new CommandLine(args[0]); // constructor requires executable name
-    cmdLine.addArguments(Arrays.copyOfRange(args, 1, args.length));
+    @SuppressWarnings("nullness") // indices are in bounds, so no null values in resulting array
+    String[] argArray = Arrays.copyOfRange(args, 1, args.length);
+    cmdLine.addArguments(argArray);
 
     DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
     DefaultExecutor executor = new DefaultExecutor();
