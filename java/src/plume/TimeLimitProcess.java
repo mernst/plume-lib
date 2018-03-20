@@ -1,3 +1,5 @@
+// This class is deprecated.  Use Apache Commons Exec instead.
+
 package plume;
 
 import java.io.ByteArrayInputStream;
@@ -37,7 +39,10 @@ import org.checkerframework.checker.nullness.qual.*;
  *   <li>This class provides a workaround, in which it busy-waits reading the standard and error
  *       outputs and stores them away. Use ...
  * </ul>
+ *
+ * @deprecated use Apache Commons Exec
  */
+@Deprecated // use Apache Commons Exec
 public class TimeLimitProcess extends Process {
 
   private Process p;

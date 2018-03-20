@@ -1744,67 +1744,6 @@ public final class TestPlume {
     }
   }
 
-  private static Runtime runtime = java.lang.Runtime.getRuntime();
-
-  // timePerNumber needs to be small so tests run fast, but large so that
-  // more output doesn't sneak out before the timeout kicks in.
-  @SuppressWarnings("deprecation") // use of Triple class
-  private static Triple<Integer, String, String> printFive(
-      int timePerNumber, int timeLimit, boolean cache_stdout) {
-    String command = "java plume.TestPlume$PrintOneIntPerTimePeriod 5 " + timePerNumber;
-    TimeLimitProcess p;
-    try {
-      p = new TimeLimitProcess(runtime.exec(command), timeLimit, cache_stdout);
-    } catch (IOException e) {
-      throw new Error(e);
-    }
-    int result;
-    try {
-      result = p.waitFor();
-    } catch (InterruptedException e) {
-      throw new Error(e);
-    }
-    // System.out.printf("command:%s%n", command);
-    // System.out.printf("result:%s%n", result);
-    // System.out.printf("buffered stdout:%s%n", p.cached_stdout);
-    // System.out.printf("buffered stderr:%s%n", p.cached_stderr);
-    String out = UtilMDE.streamString(p.getInputStream());
-    String err = UtilMDE.streamString(p.getErrorStream());
-    // System.out.printf("out:%s%n", out);
-    // System.out.printf("err:%s%n", err);
-    return Triple.of(result, out, err);
-  }
-
-  @SuppressWarnings("deprecation") // use of Triple class
-  private static void checkPrintFive(
-      int timePerNumber, int timeLimit, boolean cache_stdout, String out, String err) {
-    Triple<Integer, String, String> results = printFive(timePerNumber, timeLimit, cache_stdout);
-    if (!results.b.equals(out)) {
-      throw new Error(String.format("Expected %s, got %s", out, results.b));
-    }
-    if (!results.c.equals(err)) {
-      throw new Error(String.format("Expected %s, got %s", err, results.c));
-    }
-  }
-
-  /**
-   * On a heavily-loaded machine, this test fails. You should run the test again when the load is
-   * lower. (Better might be exponential backoff up to some limit.)
-   */
-  @Test
-  public void testTimeLimitProcess() {
-    // checkPrintFive(10, 1000, false, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
-    // checkPrintFive(10, 1000, true, "out0 out1 out2 out3 out4 ", "err0 err1 err2 err3 err4 ");
-
-    // These are too timing-dependent -- they sometimes succeed and
-    // sometimes fail -- so leave them commented out.
-    // checkPrintFive(2000, 1000, true, "out0 ", "err0 ");
-    // checkPrintFive(2000, 3000, true, "out0 out1 ", "err0 err1 ");
-
-    // This is expected to fail because of trying to read a closed stream.
-    // printFive(3, false);
-  }
-
   ///////////////////////////////////////////////////////////////////////////
   /// UtilMDE
   ///
