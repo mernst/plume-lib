@@ -2,6 +2,7 @@ package plume;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -15,6 +16,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecuteResultHandler;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.ini4j.Ini;
 import org.plumelib.options.Option;
 import org.plumelib.options.Options;
@@ -250,6 +256,7 @@ import org.checkerframework.common.value.qual.*;
 //       '*' a newer revision exists on the server
 //       ' ' the working copy is up to date
 
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public class MultiVersionControl {
 
   @Option(value = "User home directory", noDocDefault = true)
@@ -1555,80 +1562,47 @@ public class MultiVersionControl {
   // completed normally.  Ordinarily, output is displayed only if the
   // process completed erroneously.
   void perform_command(ProcessBuilder pb, List<Replacer> replacers, boolean show_normal_output) {
-    /// The redirectOutput method only exists in Java 1.7.  Sigh.
-    /// The workaround is to make TimeLimitProcess buffer its output.
-    // File tempFile;
-    // try {
-    //   tempFile = File.createTempFile("mvc", null);
-    // } catch (IOException e) {
-    //   throw new Error("File.createTempFile can't create temporary file.", e);
-    // }
-    // tempFile.deleteOnExit();
-    // pb.redirectOutput(tempFile);
-
     if (show) {
       System.out.println(command(pb));
     }
     if (dry_run) {
       return;
     }
+    // Perform the command
+
+    // For debugging
+    //  my $command_cwd_sanitized = $command_cwd;
+    //  $command_cwd_sanitized =~ s/\//_/g;
+    //  $tmpfile = "/tmp/cmd-output-$$-$command_cwd_sanitized";
+    // my $command_redirected = "$command > $tmpfile 2>&1";
+
+    // We have changed from using plume.TimeLimitProcess to using
+    // the Apache Commons Exec package.  To simplify the conversion
+    // we have kept the ProcessBuilder argument but now only use its
+    // members to construct the Commons Exec objects.
+
+    @SuppressWarnings({"index", "value"}) // ProcessBuilder.command() returns a non-empty list
+    String /*@MinLen(1)*/[] args = (pb.command()).toArray(new String[0]);
+    CommandLine cmdLine = new CommandLine(args[0]); // constructor requires executable name
+    @SuppressWarnings("nullness") // indices are in bounds, so no null values in resulting array
+    String[] argArray = Arrays.copyOfRange(args, 1, args.length);
+    cmdLine.addArguments(argArray);
+    DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
+    DefaultExecutor executor = new DefaultExecutor();
+    @SuppressWarnings("nullness") // defaults to non-null and was never reset
+    /*@NonNull*/ File defaultDirectory = pb.directory();
+    executor.setWorkingDirectory(defaultDirectory);
+
+    ExecuteWatchdog watchdog = new ExecuteWatchdog(timeout * 1000);
+    executor.setWatchdog(watchdog);
+
+    final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+    PumpStreamHandler streamHandler =
+        new PumpStreamHandler(outStream); // send both stderr and stdout
+    executor.setStreamHandler(streamHandler);
+
     try {
-      // Perform the command
-
-      // For debugging
-      //  my $command_cwd_sanitized = $command_cwd;
-      //  $command_cwd_sanitized =~ s/\//_/g;
-      //  $tmpfile = "/tmp/cmd-output-$$-$command_cwd_sanitized";
-      // my $command_redirected = "$command > $tmpfile 2>&1";
-      TimeLimitProcess p = new TimeLimitProcess(pb.start(), timeout * 1000, true);
-      p.waitFor();
-      // For reasons that are mysterious to me, this is necessary in order to
-      // reliably capture the process's output.  I don't know why.  Calling
-      // waitFor on the result of pb.start() didn't help -- only this did.
-      Thread.sleep(10);
-      if (p.timed_out()) {
-        System.out.printf("Timed out (limit: %ss):%n", timeout);
-        System.out.println(command(pb));
-        // Don't return; also show the output
-      }
-
-      // Under what conditions should the output be printed?
-      //  * for status, always
-      //  * whenever the process exited non-normally
-      //  * when debugging
-      //  * other circumstances?
-      // Try printing always, to better understand this question.
-      if (show_normal_output || p.exitValue() != 0 || debug_replacers || debug_process_output) {
-        // Filter then print the output.
-        // String output = UtilMDE.readerContents(new BufferedReader(new
-        //     InputStreamReader(p.getInputStream())));
-        // String output = UtilMDE.streamString(p.getInputStream());
-        String output = UtilMDE.streamString(p.getInputStream());
-        if (debug_replacers || debug_process_output) {
-          System.out.println("preoutput=<<<" + output + ">>>");
-        }
-        for (Replacer r : replacers) {
-          if (debug_replacers) {
-            System.out.println("midoutput_pre[" + r.regexp + "]=<<<" + output + ">>>");
-          }
-          // Don't loop, because some regexps will continue to match repeatedly
-          output = r.replaceAll(output);
-          if (debug_replacers) {
-            System.out.println("midoutput_post[" + r.regexp + "]=<<<" + output + ">>>");
-          }
-        }
-        if (debug_replacers || debug_process_output) {
-          System.out.println("postoutput=<<<" + output + ">>>");
-        }
-        if (debug_replacers) {
-          for (int i = 0; i < Math.min(100, output.length()); i++) {
-            System.out.println(
-                i + ": " + (int) output.charAt(i) + "\n        \"" + output.charAt(i) + "\"");
-          }
-        }
-        System.out.print(output);
-      }
-
+      executor.execute(cmdLine, resultHandler);
     } catch (IOException e) {
       String msg = e.toString();
       if (msg.startsWith("java.io.IOException: Cannot run program \"")
@@ -1637,8 +1611,61 @@ public class MultiVersionControl {
       } else {
         throw new Error(e);
       }
+    }
+
+    int exitValue = -1;
+    try {
+      resultHandler.waitFor();
+      exitValue = resultHandler.getExitValue();
     } catch (InterruptedException e) {
       throw new Error(e);
+    }
+    boolean timedOut = executor.isFailure(exitValue) && watchdog.killedProcess();
+
+    if (timedOut) {
+      System.out.printf("Timed out (limit: %ss):%n", timeout);
+      System.out.println(command(pb));
+      // Don't return; also show the output
+    }
+
+    // Under what conditions should the output be printed?
+    //  * for status, always
+    //  * whenever the process exited non-normally
+    //  * when debugging
+    //  * other circumstances?
+    // Try printing always, to better understand this question.
+    if (show_normal_output || exitValue != 0 || debug_replacers || debug_process_output) {
+      // Filter then print the output.
+      String output;
+      try {
+        output = outStream.toString();
+      } catch (RuntimeException e) {
+        throw new Error("Exception getting process standard output");
+      }
+
+      if (debug_replacers || debug_process_output) {
+        System.out.println("preoutput=<<<" + output + ">>>");
+      }
+      for (Replacer r : replacers) {
+        if (debug_replacers) {
+          System.out.println("midoutput_pre[" + r.regexp + "]=<<<" + output + ">>>");
+        }
+        // Don't loop, because some regexps will continue to match repeatedly
+        output = r.replaceAll(output);
+        if (debug_replacers) {
+          System.out.println("midoutput_post[" + r.regexp + "]=<<<" + output + ">>>");
+        }
+      }
+      if (debug_replacers || debug_process_output) {
+        System.out.println("postoutput=<<<" + output + ">>>");
+      }
+      if (debug_replacers) {
+        for (int i = 0; i < Math.min(100, output.length()); i++) {
+          System.out.println(
+              i + ": " + (int) output.charAt(i) + "\n        \"" + output.charAt(i) + "\"");
+        }
+      }
+      System.out.print(output);
     }
   }
 

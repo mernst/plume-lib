@@ -54,6 +54,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -67,7 +68,12 @@ import org.checkerframework.common.value.qual.*;
 import org.checkerframework.dataflow.qual.*;
 */
 
-/** Utility functions that do not belong elsewhere in the plume package. */
+/**
+ * Utility functions that do not belong elsewhere in the plume package.
+ *
+ * @deprecated use org.plumelib.util.UtilPlume
+ */
+@Deprecated // use org.plumelib.util.UtilPlume
 public final class UtilMDE {
 
   /** This class is a collection of methods; it does not represent anything. */
@@ -519,7 +525,8 @@ public final class UtilMDE {
     primitiveClasses.put("short", Short.TYPE);
   }
 
-  // TODO: should create a method that works exactly for the desired argument type.
+  // TODO: should create a method that handles any ClassGetName (including
+  // primitives), but not fully-qualified names.
   /**
    * Like {@link Class#forName(String)}, but also works when the string represents a primitive type
    * or a fully-qualified name (as opposed to a binary name).
@@ -1263,6 +1270,9 @@ public final class UtilMDE {
    * Reads the entire contents of the file and returns it as a string. Any IOException encountered
    * will be turned into an Error.
    *
+   * <p>You could use {@code new String(Files.readAllBytes(...))}, but it requires a Path rather
+   * than a File, and it can throw IOException which has to be caught.
+   *
    * @param file the file to read
    * @return the entire contents of the reader, as a string
    */
@@ -1538,6 +1548,34 @@ public final class UtilMDE {
   ///////////////////////////////////////////////////////////////////////////
   /// Iterator
   ///
+
+  /**
+   * Converts an Iterator to an Iterable. The resulting Iterable can be used to produce a single,
+   * working Iterator (the one that was passed in). Subsequent calls to its iterator() method will
+   * fail, because otherwise they would return the same Iterator instance, which may have been
+   * exhausted, or otherwise be in some indeterminate state. Calling iteratorToIterable twice on the
+   * same argument can have similar problems, so don't do that.
+   *
+   * @param source the Iterator to be converted to Iterable
+   * @param <T> the element type
+   * @return source, converted to Iterable
+   */
+  public static <T> Iterable<T> iteratorToIterable(final Iterator<T> source) {
+    if (source == null) {
+      throw new NullPointerException();
+    }
+    return new Iterable<T>() {
+      private AtomicBoolean used = new AtomicBoolean();
+
+      @Override
+      public Iterator<T> iterator() {
+        if (used.getAndSet(true)) {
+          throw new Error("Call iterator() just once");
+        }
+        return source;
+      }
+    };
+  }
 
   // Making these classes into functions didn't work because I couldn't get
   // their arguments into a scope that Java was happy with.
@@ -2669,6 +2707,9 @@ public final class UtilMDE {
    * @return version of arg, with whitespace after delimiter removed
    */
   public static String removeWhitespaceAfter(String arg, String delimiter) {
+    if (delimiter == null || delimiter.equals("")) {
+      throw new IllegalArgumentException("Bad delimiter: \"" + delimiter + "\"");
+    }
     // String orig = arg;
     int delim_len = delimiter.length();
     int delim_index = arg.indexOf(delimiter);
@@ -2699,6 +2740,9 @@ public final class UtilMDE {
    * @return version of arg, with whitespace before delimiter removed
    */
   public static String removeWhitespaceBefore(String arg, String delimiter) {
+    if (delimiter == null || delimiter.equals("")) {
+      throw new IllegalArgumentException("Bad delimiter: \"" + delimiter + "\"");
+    }
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
     // String orig = arg;
     int delim_index = arg.indexOf(delimiter);

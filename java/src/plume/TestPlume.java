@@ -40,7 +40,7 @@ import org.checkerframework.common.value.qual.*;
 // Digest.java
 // FileIOException.java
 // FuzzyFloat.java
-// GraphMDE.java
+// GraphPlume.java
 // Hasher.java
 // Intern.java
 // ICalAvailable.java
@@ -54,7 +54,8 @@ import org.checkerframework.common.value.qual.*;
 /** Test code for the plume package. */
 @SuppressWarnings({
   "interning", // interning is due to apparent bugs
-  "UseCorrectAssertInTests" // I don't see the problem with using `assert`
+  "UseCorrectAssertInTests", // I don't see the problem with using `assert`
+  "deprecation" // uses deprecated classes in this package
 })
 public final class TestPlume {
 

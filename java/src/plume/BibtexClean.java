@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 // "long entries" start after a blank line.  (That can be considered an
 // EntryReader bug, or at least inflexibility in its interface.)
 
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class BibtexClean {
 
   /** This class is a collection of methods; it does not represent anything. */

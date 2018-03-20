@@ -25,13 +25,14 @@ public final class Stopwatch {
     }
   }
 
-  /** Also starts the stopwatch. */
+  /** Clears and restarts the stopwatch. */
   public void reset() {
     startTime = 0;
     elapsedMillis = 0;
     start();
   }
 
+  /** Clears the stopwatch without restarting it. */
   public void clear() {
     startTime = 0;
     elapsedMillis = 0;

@@ -22,7 +22,11 @@ import org.checkerframework.common.value.qual.*;
  *
  * <p>Java builds in interning for Strings, but not for other objects. The methods in this class
  * extend interning to all Java objects.
+ *
+ * @deprecated use org.plumelib.util.Intern
  */
+@Deprecated // use org.plumelib.util.Intern
+@SuppressWarnings("deprecation") // uses deprecated classes in this package
 public final class Intern {
 
   /** This class is a collection of methods; it does not represent anything. */

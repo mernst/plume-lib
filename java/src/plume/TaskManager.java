@@ -50,7 +50,10 @@ import org.checkerframework.dataflow.qual.*;
  * </ul>
  *
  * <!-- end options doc -->
+ *
+ * @deprecated Is undocumented
  */
+@Deprecated
 public class TaskManager {
 
   /** The format in which to output the TaskManager information. */

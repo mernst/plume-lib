@@ -40,7 +40,8 @@ import org.checkerframework.checker.regex.qual.*;
 //    iterator gets to the end (or the end is otherwise reached).
 
 /**
- * Class that reads "entries" from a file. In the simplest case, entries can be lines. It supports:
+ * Class that reads records or "entries" from a file. In the simplest case, entries can be lines. It
+ * supports:
  *
  * <ul>
  *   <li>include files,
@@ -53,20 +54,20 @@ import org.checkerframework.checker.regex.qual.*;
  * <p>Example use:
  *
  * <pre>{@code
- * // args are filename, comment regexp, include regexp
+ * // EntryReader constructor args are: filename, comment regexp, include regexp
  * try (EntryReader er = new EntryReader(filename, "^#.*", null)) {
  *   for (String line : er) {
  *     ...
  *   }
  * } catch (IOException e) {
  *   System.err.println("Problem reading " + filename + ": " + e.getMessage());
- *   System.exit(2);
- *   throw new Error("This can't happen"); // for definite assignment check
  * }
  * }</pre>
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
+ * @deprecated use org.plumelib.util.FOOBARBAZ
  */
+@Deprecated // use org.plumelib.util.FOOBARBAZ
 @SuppressWarnings("IterableAndIterator")
 public class EntryReader extends LineNumberReader implements Iterable<String>, Iterator<String> {
 
@@ -143,7 +144,7 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     }
   }
 
-  /** Descriptor for an entry (paragraph). */
+  /** Descriptor for an entry (record, paragraph, etc.). */
   public static class Entry {
     /** First line of the entry. */
     public String first_line;
@@ -807,28 +808,28 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
     pushback_line = line;
   }
 
-  /** Mark the present position in the stream. */
+  // No Javadoc on these methods, so the Javadoc is inherited.
   @Override
   public void mark(/*>>>@GuardSatisfied EntryReader this, */ int readAheadLimit) {
     throw new Error("not yet implemented");
   }
-  /** Read a single character. */
+
   @Override
   public /*@GTENegativeOne*/ int read(/*>>>@GuardSatisfied EntryReader this*/) {
     throw new Error("not yet implemented");
   }
-  /** Read characters into a portion of an array. */
+
   @Override
   public /*@IndexOrLow("#1")*/ int read(
       /*>>>@GuardSatisfied EntryReader this, */ char[] cbuf, int off, int len) {
     throw new Error("not yet implemented");
   }
-  /** Reset the stream to the most recent mark. */
+
   @Override
   public void reset(/*>>>@GuardSatisfied EntryReader this*/) {
     throw new Error("not yet implemented");
   }
-  /** Skip characters. */
+
   @Override
   public long skip(/*>>>@GuardSatisfied EntryReader this, */ long n) {
     throw new Error("not yet implemented");
