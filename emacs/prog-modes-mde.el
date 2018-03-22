@@ -1418,17 +1418,7 @@ Sets the variable to an invocation of \"ant\", \"gradle\", \"mvn\", etc.
 depending on whether a build.xml, build.gradle, or pom.xml file exists
 in this directory or some superdirectory."
   (if (should-set-compile-command)
-      (cond ((file-readable-p "build.xml")
-             (make-local-variable 'compile-command)
-             (setq compile-command "ant -e "))
-            ((let ((buildfile (file-in-super-directory
-                               "build.xml" default-directory)))
-               (and buildfile
-                    ;; hack to account for mysterious directory named build.xml
-                    (not (file-directory-p buildfile))))
-             (make-local-variable 'compile-command)
-             (setq compile-command "ant -e -find build.xml "))
-            ((file-readable-p "build.gradle")
+      (cond ((file-readable-p "build.gradle")
              (make-local-variable 'compile-command)
              (let ((gradle-command (if (file-readable-p "gradlew")
                                        (setq compile-command "./gradlew")
@@ -1456,6 +1446,16 @@ in this directory or some superdirectory."
                (make-local-variable 'compile-command)
                (setq compile-command
                      (concat "mvn -B" " -f " buildfile " package"))))
+	    ((file-readable-p "build.xml")
+             (make-local-variable 'compile-command)
+             (setq compile-command "ant -e "))
+            ((let ((buildfile (file-in-super-directory
+                               "build.xml" default-directory)))
+               (and buildfile
+                    ;; hack to account for mysterious directory named build.xml
+                    (not (file-directory-p buildfile))))
+             (make-local-variable 'compile-command)
+             (setq compile-command "ant -e -find build.xml "))
 	    ((file-readable-p "Rakefile")
              (make-local-variable 'compile-command)
              (setq compile-command "rake"))
