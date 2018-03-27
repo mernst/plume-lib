@@ -214,6 +214,8 @@ import org.checkerframework.common.value.qual.*;
  *
  * SVNREPOS: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/annotations
  * ~/research/typequals/annotations</pre>
+ *
+ * @deprecated use org.plumelib.multiversioncontrol.MultiVersionControl
  */
 
 // TODO:
@@ -256,6 +258,7 @@ import org.checkerframework.common.value.qual.*;
 //       '*' a newer revision exists on the server
 //       ' ' the working copy is up to date
 
+@Deprecated // use org.plumelib.multiversioncontrol.MultiVersionControl
 @SuppressWarnings("deprecation") // uses deprecated classes in this package
 public class MultiVersionControl {
 
