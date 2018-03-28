@@ -35,8 +35,6 @@ tests/sort-directory-order-test/lines1.output
 # Ignore Eclipse output
 bin-eclipse/
 
-syntax: regexp
-# Not a glob because it starts with # which looks like a comment.
-(.*/)?\#[^/]*\#$
-(.*/)?\.\#.*
-plume-lib-[0-9.]*.tar.gz
+\#*\#
+.\#*
+plume-lib-*.tar.gz
