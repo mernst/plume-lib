@@ -1316,7 +1316,10 @@ If called interactively, prompt for which index."
 ;; To temporarily use multiple TAGS tables:
 ;; (setq tags-add-tables 'ask-user)
 ;; (setq tags-add-tables t)
-
+(defun tags-table-ask-user ()
+  "Set `tags-add-tables' to 'ask-user."
+  (interactive)
+  (setq tags-add-tables 'ask-user))
 
 ;; Fiddle with window title, in particular shorten system name
 (let ((frame-name (cdr (assoc 'name (frame-parameters (selected-frame))))))
