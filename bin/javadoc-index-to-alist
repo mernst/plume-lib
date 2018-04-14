@@ -65,11 +65,11 @@ for my $file (@ARGV) {
     if (m%^  <dt> public interface <(?:b|strong|span class="strong")>(\w+)</(?:b|strong|span)>%) {
       $refs{$1} .= " \"" . $this_dir . $1 . ".html\"";
     }
-    # Get rid of type parameters.
+    # Get rid of type parameters; a user never wants to look up their names.
     # This cannot just use the "g" modifier (global replace), because
     # type parameters may be nested:  Enum<E extends Enum<E>>.
     if (m/type parameter in/) {
-      if ($debug) { print STDERR "Considering: $_"; }
+      if ($debug) { print STDERR "Replacing 'type parameter in': $_"; }
     }
     while (s%&lt;((\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(\?|<a href="[^ ]*" title="type parameter in [^ ]*?">[^ ]*?</a>)( extends (\@[^ ]+ |<a href="[^<>]*">\@[^ ]+</a> )*(<a [^>]*>[^ <]*</a>(&lt;\?(,\?)*&gt;)?|[^ ]+))?,?)+&gt;%%i) {
       # empty body
@@ -94,8 +94,8 @@ for my $file (@ARGV) {
       $this_ref =~ s%/(\./)+%/%g;
       $this_item =~ s%&lt;%<%g;
       $this_item =~ s%&gt;%>%g;
-      if ($debug) { print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>>\n"; }
-      # if ($debug) { print "<<<$this_dir>>><<<$this_ref>>><<<$this_item>>><<<$this_args>>>\n"; }
+      if ($debug) { print ";; <<<$this_dir>>><<<$this_ref>>><<<$this_item>>>\n"; }
+      # if ($debug) { print ";; <<<$this_dir>>><<<$this_ref>>><<<$this_item>>><<<$this_args>>>\n"; }
       $refs{$this_item} .= " \"$this_ref\"";
     }
   }
