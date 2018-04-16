@@ -173,6 +173,12 @@ if point is not in a function."
 ;; (remove-hook 'post-command-hook 'message-c-name-of-enclosing-function)
 
 
+;; Also works for Java.
+(autoload 'google-set-c-style "google-c-style")
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Java
 ;;;
@@ -334,10 +340,6 @@ With prefix arg, goes to end of class; otherwise to end of method."
 
 
 
-;; google-java-format.el defines these commands but doesn't affect
-;; Emacs's own formatting.  Maybe file google-c-style.el does so?
-;; https://raw.githubusercontent.com/google/styleguide/gh-pages/google-c-style.el
-;; Or maybe dtrt-indent will do the right thing?
 (autoload 'google-java-format-region "google-java-format")
 (autoload 'google-java-format-buffer "google-java-format")
 
