@@ -175,6 +175,7 @@ if point is not in a function."
 
 ;; Also works for Java.
 (autoload 'google-set-c-style "google-c-style")
+(autoload 'google-make-newline-indent "google-c-style")
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
