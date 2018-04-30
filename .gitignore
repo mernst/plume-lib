@@ -2,12 +2,9 @@
 *.elc
 *~
 TAGS
-bin/google-java-format-1.0-all-deps.jar
-java/.run-google-java-format/
 java/.html-tools/
 java/.class-files-timestamp
 java/.javadoc-timestamp
-java/.optionsdoc-timestamp
 java/.test-timestamp
 java/Makefile.user
 java/api

@@ -76,7 +76,7 @@ endif
 # This wildcard doesn't seem to work, so list the jar files individually.
 # CLASSPATH:=lib/*:$(JAVA_HOME)/lib/tools.jar
 # Don't quote TOOLS_JAR; it will be quoted when it is used
-CLASSPATH := .:src:..:lib/bcel.jar:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-exec-1.3.jar:lib/commons-io-2.6.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
+CLASSPATH := .:src:..:lib/backport-util-concurrent-3.1.jar:lib/checker-qual-2.1.12.jar:lib/commons-codec-1.10.jar:lib/commons-exec-1.3.jar:lib/commons-io-2.6.jar:lib/commons-lang3-3.6.jar:lib/commons-logging-1.2.jar:lib/commons-text-1.1.jar:lib/guava-20.0.jar:lib/hamcrest-core-1.3.jar:lib/ical4j-2.0.0.jar:lib/ini4j-0.5.4.jar:lib/junit-4.12.jar:lib/options-all-0.3.1.jar:lib/slf4j-api-1.7.25.jar:lib/slf4j-simple-1.7.25.jar:lib/svnkit-1.8.15-complete.jar:${TOOLS_JAR}
 
 # hack to add a space
 nullstring :=
@@ -333,12 +333,6 @@ endif
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/Lookup.java src/plume/Lookup.java
 	$(DOS2UNIX) src/plume/Lookup.java
 	$(MAKE) lookup.html lookup.txt
-	@touch ical4j.properties
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/ICalAvailable.java src/plume/ICalAvailable.java
-	$(DOS2UNIX) src/plume/ICalAvailable.java
-	@rm -f ical4j.properties
-	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/MultiVersionControl.java src/plume/MultiVersionControl.java
-	$(DOS2UNIX) src/plume/MultiVersionControl.java
 	$(JAVADOC) -quiet -docletpath "${CLASSPATH}" -doclet org.plumelib.options.OptionsDoclet -format javadoc -i -docfile src/plume/TaskManager.java src/plume/TaskManager.java
 	$(DOS2UNIX) src/plume/TaskManager.java
 	touch .optionsdoc-timestamp
@@ -422,7 +416,6 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 	mkdir jar-contents/plume
 	cp -p src/plume/*.class jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/backport-util-concurrent-3.1.jar)
-	(cd jar-contents; "${JAR}" xf ../lib/bcel.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/checker-qual-2.1.12.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-codec-1.10.jar)
 	(cd jar-contents; "${JAR}" xf ../lib/commons-exec-1.3.jar)
@@ -469,10 +462,8 @@ verify-plume.jar:
 # Files that depend on the jar files in java/lib and shouldn't be
 # included in plume-core.
 PLUME_CORE_REMOVE = \
-	core-jar-contents/plume/ICalAvailable*.class \
 	core-jar-contents/plume/TimeLimitProcess*.class \
 	core-jar-contents/plume/DeclarationAnnotations*.class \
-	core-jar-contents/plume/BCELUtil*.class \
 
 plume-core.jar: ${JAVA_AND_CPP_FILES} lib
 	$(MAKE) tools_jar_exists
@@ -614,28 +605,7 @@ checkstyle: ${JAVA_AND_CPP_FILES}
 update-html-tools:
 	@[ -d .html-tools ] && (cd .html-tools && git pull -q) || git clone -q https://github.com/plume-lib/html-tools.git .html-tools
 
-update-run-google-java-format:
-	@[ -d .run-google-java-format ] && (cd .run-google-java-format && git pull -q) || git clone -q https://github.com/plume-lib/run-google-java-format.git .run-google-java-format
-
-# Requires Java 8.
-reformat:
-ifeq ($(JAVA_8_OR_HIGHER),0)
-	${MAKE} update-run-google-java-format
-	@.run-google-java-format/run-google-java-format.py ${JAVA_FILES_FOR_STYLE}
-else
-	echo "Skipping reformat job, which requires Java 8 or higher"
-endif
-
-# Requires Java 8.
-check-format:
-ifeq ($(JAVA_8_OR_HIGHER),0)
-	${MAKE} update-run-google-java-format
-	@./.run-google-java-format/check-google-java-format.py ${JAVA_FILES_FOR_STYLE} || (echo "Try running:  make reformat" && /bin/false)
-else
-	echo "Skipping check-format job, which requires Java 8 or higher"
-endif
-
-.PHONY: typecheck checkers check-types checkstyle reformat check-format
+.PHONY: typecheck checkers check-types checkstyle
 
 
 ###########################################################################

@@ -68,7 +68,7 @@ are governed by a different license.  See file <a href="https://raw.githubuserco
 <ul>
   <li><a href="#Programs">Programs</a>
     <ul>
-      <li><a href="#HTML_and_WWW">HTML and WWW</a>
+      <li>
         <ul>
           <li><a href="#Images">Images</a></li>
         </ul></li>
@@ -87,7 +87,6 @@ are governed by a different license.  See file <a href="https://raw.githubuserco
           <li><a href="#Compilation">Compilation</a></li>
           <li><a href="#Dependences">Dependences</a></li>
           <li><a href="#.class_file_processing">.class file processing</a></li>
-          <li><a href="#indentation-and-formatting">Indentation and formatting</a></li>
         </ul></li>
       <li><a href="#Scheduling">Scheduling</a></li>
       <li><a href="#Email">Email</a></li>
@@ -101,7 +100,6 @@ are governed by a different license.  See file <a href="https://raw.githubuserco
       <li><a href="#Emacs_libraries">Emacs libraries</a></li>
       <li><a href="#Java_libraries">Java libraries</a>
         <ul>
-          <li><a href="#Command-line_option_argument_processing">Command-line option argument processing</a></li>
           <li><a href="#Collections_and_iterators">Collections and iterators</a></li>
           <li><a href="#Text_processing">Text processing</a></li>
           <li><a href="#Math">Math</a></li>
@@ -119,97 +117,6 @@ are governed by a different license.  See file <a href="https://raw.githubuserco
 <h1 id="Programs">Programs</h1>
 
 
-<h2 id="HTML_and_WWW">HTML and WWW</h2>
-
-<dl>
-<dt>html-update</dt>
-<dd>
-The "html-update" family of programs automatically updates text on a
-webpage that you maintain.
-<ul>
-  <li>
-    <tt>html-update-toc</tt> updates a webpage's table of contents, in place.
-    <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-update-toc">Documentation</a> at top of file.
-  </li>
-  <li>
-    <tt>html-toc</tt> computes a webpage's table of contents, based on its
-    header tags (<tt>&lt;h1&gt;</tt>, <tt>&lt;h2&gt;</tt>, etc.).
-    <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-toc">Documentation in html-update-toc</a>.
-  </li>
-  <li>
-    <tt>html-update-link-dates</tt> updates webpage text that refers to the date
-    and/or size of a linked-to file.
-    <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-update-link-dates">Documentation</a> at top of file.
-  </li>
-</ul>
-<p>
-Do not use the scripts from here; use the versions in
-<a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
-</dd>
-
-
-<dt>checklink</dt>
-<dd>
-  A
-  slightly <a href="https://raw.githubusercontent.com/plume-lib/checklink/master/checklink-4.6.diff">modified</a>
-  version of the
-  <a href="http://search.cpan.org/dist/W3C-LinkChecker/">W3C Link
-  Checker</a>.
-  <p>
-
-  This has moved; get it
-  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
-</dd>
-
-<dt>checklink-args.txt</dt>
-<dd>
-  A set of command-line arguments to the checklink program, that suppress
-  spurious warnings and thus make the output easier to scan for real problems.
-  Run <tt>checklink</tt> like this:
-<pre>
-   plume-lib/bin/checklink -q -r `grep -v '^#' plume-lib/bin/checklink-args.txt` MYURL
-</pre>
-  <p>
-
-  This has moved; get it
-  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
-</dd>
-
-<dt>checklink-persistent-errors</dt>
-<dd>
-  This script reports errors that persist over multiple runs of the
-  checklink program, ignoring transient errors.
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/checklink-persistent-errors">Documentation</a> at top of file.
-  <p>
-
-  This has moved; get it
-  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
-</dd>
-
-
-<dt>html-canonical-urls</dt>
-<dd>
-  This file maps a textual string (such as the name of a person,
-  institution, er event) to the canonical URL for that string.
-  It is used by the
-  <a href="http://homes.cs.washington.edu/~mernst/software/bibtex2web.html">bibtex2web</a>
-  program.
-  <p>
-  Do not use this file; use the version in
-  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
-</dd>
-
-
-<!-- How is this used?
-<dt>
-./bin/html-valid-urls
-</dt>
-<dd>
-</dd>
--->
-</dl>
-
-
 <h3 id="Images">Images</h3>
 
 
@@ -220,42 +127,11 @@ Do not use the scripts from here; use the versions in
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/transgif">Documentation</a> at top of file.
 </dd>
 
-<dt>html-add-favicon</dt>
-<dd>
-  Takes as arguments a <tt>.png</tt> file for a "favicon", and a set of
-  <tt>.html</tt> files.  It makes each HTML file use the given favicon.  A
-  favicon is a favorites icon, which is intended to appear in the address
-  bar of your browser when you browse to the given page.
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-add-favicon">Documentation</a> at top of file.
-  <p>
-  Do not use the script from here; use the version in
-  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
-</dd>
-
-<dt>add-favicon</dt>
-<dd>
-  Takes as arguments a directory and a <tt>.png</tt> file for a "favicon".
-  It makes each HTML file under the given directory use the given favicon.  A
-  favicon is a favorites icon, which is intended to appear in the address
-  bar of your browser when you browse to the given page.
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/add-favicon">Documentation</a> at top of file.
-  <p>
-  Do not use the script from here; use the version in
-  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
-</dd>
 </dl>
 
 
 
 <h2 id="Version_control">Version control</h2>
-
-<dl>
-<dt>mvc or MultiVersionControl</dt>
-<dd>
-  Lets you run a version control command, such as "status" or "update", on
-  a set of CVS/Git/Hg/SVN checkouts rather than just one.
-  <a href="https://types.cs.washington.edu/plume-lib/api/plume/MultiVersionControl.html">Documentation</a>.
-</dd>
 
 <dt>cvschanges</dt>
 <dd>
@@ -369,20 +245,6 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   </ol>
 </dd>
 
-<dt>hevea-retarget-crossrefs</dt>
-<dd>
-  Replaces HTML cross-references of the form
-    <tt>&lt;a href="#htoc1"&gt;</tt>
-  by cross-references to named labels, such as
-    <tt>&lt;a href="#introduction"&gt;</tt>.
-  The former variety (which is generated, for example, by the Hevea
-  program) is brittle, as it may change from run to run of Hevea.
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/hevea-retarget-crossrefs">Documentation</a> at top of file.
-  <p>
-  Do not use the script from here; use the version in
-  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
-</dd>
-
 <dt>pdfinterleave</dt>
 <dd>
   Suppose you scanned two-side paper in two passes (doing the second side
@@ -423,10 +285,6 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   file for an explanation of its benefits and features.
 </dd>
 
-<!--
-This contains no documentation, so don't include it in this README file.
-./bin/slide2html
--->
 </dl>
 
 
@@ -636,54 +494,9 @@ This contains no documentation, so don't include it in this README file.
 </dl>
 
 
-<h3 id="indentation-and-formatting">Indentation and formatting</h3>
-
-<dl>
-<dt>run-google-java-format.py</dt>
-<dd>
-  <p><b>Don't use this version.</b>  Use it from the <a href="https://github.com/plume-lib/run-google-java-format">run-google-java-format repository</a> instead.</p>
-
-  <p>The
-  <a href="https://github.com/google/google-java-format">google-java-format</a>
-  program reformats Java source code, but it creates poor formatting for
-  annotations in comments.  This script runs google-java-format and then
-  performs small changes to improve formatting of annotations in comments.
-  If called with no arguments, it reads from and writes to standard output.
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py">Documentation</a>
-  at top of file.
-  </p>
-</dd>
-
-<dt>check-google-java-format.py</dt>
-<dd>
-  <p><b>Don't use this version.</b>  Use it from the <a href="https://github.com/plume-lib/run-google-java-format">run-google-java-format repository</a> instead.</p>
-
-  Given <code>.java</code> file names on the command line, reports any that
-  would be reformatted by the run-google-java-format.py program, and returns
-  non-zero status if there were any.
-  If called with no arguments, it reads from standard output.
-  <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/check-google-java-format.py">Documentation</a>
-  at top of file.
-</dd>
-</dl>
-
-
-
-
 <h2 id="Scheduling">Scheduling</h2>
 
 <dl>
-<dt>ICalAvailable</dt>
-<dd>
-  Given one or more calendars in
-  <a href="http://en.wikipedia.org/wiki/ICalendar">iCalendar format</a>,
-  produces a textual summary of available times.
-  This is useful for sending someone a list of acceptable times for a meeting.
-  Also see the <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/emacs/startup-functions-mde.el"><tt>ical-available</tt></a> Emacs function, which inserts the
-  output of this program.
-  <a href="https://types.cs.washington.edu/plume-lib/api/plume/ICalAvailable.html">Documentation</a>.
-</dd>
-
 <dt>schedule</dt>
 <dd>
   Given a set of scheduling constraints (times that are impossible, and
@@ -692,9 +505,6 @@ This contains no documentation, so don't include it in this README file.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/schedule">Documentation</a> at top of file.
 </dd>
 
-<!-- TaskManager is not documented, so leave it out of the README.html file
-./java/src/plume/TaskManager.java
--->
 </dl>
 
 
@@ -903,27 +713,6 @@ generally well-documented, so feel free to browse.
 
 <h2 id="Java_libraries">Java libraries</h2>
 
-<h3 id="Command-line_option_argument_processing">Command-line option argument processing</h3>
-
-<dl>
-<dt>Options</dt>
-<dd>
-  The <a href="http://plumelib.org/options/api/org/plumelib/options/Options.html">Options</a> class:
-  <ul>
-    <li>parses command-line options and sets fields in your program accordingly,</li>
-    <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
-    <li>creates documentation suitable for a manual, webpage, or manpage.</li>
-  </ul>
-  Thus, the programmer is freed from writing duplicative, boilerplate code
-  and documentation that could get out of sync with the rest of the program.
-  <p>
-  If you use this, the Javadoc tool needs to be on your classpath.
-  <p>
-  This version is deprecated; the Options class has moved to <a
-  href="https://github.com/plume-lib/options">https://github.com/plume-lib/options</a>.
-</dd>
-</dl>
-
 
 <h3 id="Collections_and_iterators">Collections and iterators</h3>
 
@@ -1120,15 +909,8 @@ generally well-documented, so feel free to browse.
 
 <h3 id="java-miscellaneous">Miscellaneous</h3>
 
-<dl>
-<dt>BCELUtil</dt>
-<dd>
-  Static utility methods for working with BCEL.
-  <a href="https://types.cs.washington.edu/plume-lib/api/plume/BCELUtil.html">Documentation</a>.
-</dd>
-
 <dt>DeterministicObject</dt>
-<dd>
+`<dd>
   A version of <tt>Object</tt> with a deterministic <tt>hashCode()</tt> method.
   Instantiate this instead of <tt>Object</tt> to remove a source of
   nondeterminism from your programs.
@@ -1191,7 +973,7 @@ generally well-documented, so feel free to browse.
 </body>
 </html>
 
-<!--  LocalWords:  mvc MultiVersionControl cvschanges cvs cvsdiff diff diffs pl PostScript Cygwin
+<!--  LocalWords:  cvschanges cvs cvsdiff diff diffs pl PostScript Cygwin
  -->
 <!--  LocalWords:  cvslog checkins checkin cvsupdate standalone stdout mailto
  -->
@@ -1201,11 +983,11 @@ generally well-documented, so feel free to browse.
  -->
 <!--  LocalWords:  outfile pspage acm dl BibtexClean Friedl's grep manpage ical
  -->
-<!--  LocalWords:  uwisdom preplace timestamp ICalAvailable iCalendar regexps
+<!--  LocalWords:  uwisdom preplace timestamp regexps
  -->
 <!--  LocalWords:  regexp notbetween upto striplines checkargs hg cd emacs
  -->
-<!--  LocalWords:  gz txt html webpage's checklink args HtmlPrettyPrint
+<!--  LocalWords:  gz txt html webpage's args HtmlPrettyPrint
  -->
 <!--  LocalWords:  filepp urls bibtex transgif java CLASSPATH
  -->

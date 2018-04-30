@@ -6,4 +6,4 @@
 # Fail if any command fails
 set -e
 
-make all-but-emacs
+true

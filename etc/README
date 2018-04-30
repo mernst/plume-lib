@@ -1,7 +1,0 @@
-These files:
-  frameset.dtd
-  loose.dtd
-  xhtml1-transitional.dtd
-  xhtml-rdfa-1.dtd
-are used only by checklink which is deprecated in this repository.
-The files should be used from https://github.com/plume-lib/checklink .

@@ -341,9 +341,6 @@ With prefix arg, goes to end of class; otherwise to end of method."
 
 
 
-(autoload 'google-java-format-region "google-java-format")
-(autoload 'google-java-format-buffer "google-java-format")
-
 (defun mde-java-mode-hook ()
   "Michael Ernst's Java mode hook."
   (eval-when-compile (require 'cc-mode)) ; defines java-mode
@@ -354,7 +351,6 @@ With prefix arg, goes to end of class; otherwise to end of method."
     (setq paragraph-start (concat " */* *<p>\\|" paragraph-separate))
     (setq paragraph-separate (concat ".*<p>\\|" paragraph-separate))
     (define-key java-mode-map "\C-hf" 'javadoc-lookup)
-    (define-key java-mode-map [C-M-tab] 'google-java-format-region)
     (make-local-variable 'write-contents-hooks)
     (if (string-match "/\\(checker-framework\\|plume-lib\\|randoop\\)/"
 		      (directory-file-name default-directory))
@@ -481,44 +477,6 @@ This is disabled on lines with a comment containing the string \"interned\"."
 
 (autoload 'bdiff-revert-buffer-maybe "bdiff")
 
-(defun update-java-mode-hook-for-gjf ()
-  (add-hook 'after-save-hook 'run-google-java-format nil 'local))
-(add-hook 'java-mode-hook 'update-java-mode-hook-for-gjf)
-
-(defun run-google-java-format ()
-  "Run external program run-google-java-format.py on the file,
-if it matches a hard-coded list of directories."
-  (interactive)
-  (let ((cmd
-	 (cond
-	  ((or (and (string-match-p "/\\(randoop\\)" (buffer-file-name))
-		    (not (string-match-p "CloneVisitor\\.java$" (buffer-file-name))))
-	       (and (string-match-p "/daikon" (buffer-file-name))
-		    (not (string-match-p "\\.jpp$" (buffer-file-name))))
-	       (and (string-match-p "/toradocu" (buffer-file-name))
-		    (not (string-match-p "/src/test/resources/" (buffer-file-name))))
-	       (and (string-match-p "/plume-lib" (buffer-file-name))
-		    (not (string-match-p "WeakHasherMap.java$\\|WeakIdentityHashMap.java$"
-					 (buffer-file-name))))
-	       (string-match-p "/org/plumelib/" (buffer-file-name)))
-	   ;; normal formatting
-	   "run-google-java-format.py ")
-	  ((and (string-match-p "/checker-framework" (buffer-file-name))
-		(not (string-match-p "/checker-framework-inference" (buffer-file-name)))
-		(not (string-match-p "/checker/jdk/" (buffer-file-name)))
-		(not (string-match-p "\.astub$" (buffer-file-name)))
-		)
-	   ;; non-standard cammand-line arguments
-	   "run-google-java-format.py -a ")
-	  (t
-	   ;; for all other projects, don't automatically reformat
-	   nil))))
-    (if cmd
-	(progn
-	  ;; I would like to avoid the "(Shell command succeeded with no output)"
-	  ;; message.
-	  (shell-command (concat cmd (buffer-file-name)) "*run-google-java-format*")
-	  (bdiff-revert-buffer-maybe)))))
 
 (custom-set-variables
  '(jdee-server-dir (expand-file-name "~/.emacs.d/jdee-server"))
@@ -1557,10 +1515,6 @@ Use as a hook, like so:
                 (not (search-forward "executeQuery(constructQuery" nil t))))
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml pblog-tainting"))
-        ((and buffer-file-name
-              (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
-         (make-local-variable 'compile-command)
-         (setq compile-command "make typecheck-only"))
         ((and buffer-file-name
               (string-match "/checker/tests/optional/" buffer-file-name))
          (make-local-variable 'compile-command)

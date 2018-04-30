@@ -5,13 +5,7 @@ TODO: To avoid the hassle of updating libraries, I should make plume-lib use Mav
 
 Most libraries are standard, downloaded from their respective webpages:
 
-backport-util-concurrent-3.1.jar : https://sourceforge.net/projects/backport-jsr166/files/backport-jsr166/
-  (used by ICalAvailable)
-bcel.jar : see below
-  (used by BCELUtil)
 checker-qual-2.1.12.jar : http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22checker-qual%22
-commons-codec-1.10.jar : https://commons.apache.org/proper/commons-codec/
-  (used by ICalAvailable, transitively, because ical4j uses it)
 commons-exec-1.3.jar : https://commons.apache.org/proper/commons-exec/
 commons-io-2.6.jar : https://search.maven.org/remotecontent?filepath=org/checkerframework/annotatedlib/commons-io/2.6/commons-io-2.6.jar
 commons-lang3-3.6.jar : https://commons.apache.org/proper/commons-lang/
@@ -25,11 +19,6 @@ guava-20.0.jar : https://github.com/google/guava/releases but jar files
   I could use Guava's "android" variant which supports Java 7,
   but it doesn't yet have type annotations.
 hamcrest-core-1.3.jar : http://search.maven.org/#search|ga|1|g%3Aorg.hamcrest
-ical4j-2.0.0.jar : run:
-  git clone https://github.com/ical4j/ical4j.git && cd ical4j && ./gradlew jar && mv build/libs/ical4j-2.0.1-develop-SNAPSHOT.jar $pl/java/lib/
-  (used by ICalAvailable)
-ini4j-0.5.4.jar : https://sourceforge.net/projects/ini4j/files/ini4j-bin/
-  (used by MultiVersionControl)
 jacocoagent-0.7.9.jar : http://www.eclemma.org/jacoco/
   (used by Makefile when testing coverage.  Does not need to be in jar file.)
 junit-4.12.jar : http://search.maven.org/#search|gav|1|g:"junit" AND a:"junit"
@@ -38,55 +27,4 @@ options-all-0.3.1.jar : https://github.com/plume-lib/options
   uncomment and run shadowJar task
 slf4j-api-1.7.25.jar : http://www.slf4j.org/download.html
 slf4j-simple-1.7.25.jar : http://www.slf4j.org/download.html
-svnkit-1.8.15-complete.jar : see below
-  (used by MultiVersionControl)
 utilMDE-20091207.jar : do not update
-
-Two libraries are nonstandard:
-
-BCEL (bcel.jar)
-- Java class file reader/writer
-- Git repository: https://github.com/typetools/commons-bcel.git
-   - Explanation of repositories:
-      https://github.com/typetools/commons-bcel.git
-     contains type annotations compared to its upstream repository at
-      https://github.com/codespecs/commons-bcel
-     which contains bug fixes compared to its upstream repository at
-      https://github.com/apache/commons-bcel
-- to build (must be done using JDK 7, not JDK 8):
-    git clone git@github.com:typetools/commons-bcel.git
-    # or: git clone https://github.com/typetools/commons-bcel.git
-    cd commons-bcel
-    git pull https://github.com/codespecs/commons-bcel.git
-    # Resolve any conflicts before running the next command.
-    git push
-    # The below command uses the the current Checker Framework from the
-    # version control repository.  To use the latest released version of the
-    # Checker Framework, instead run:
-    #   mvn versions:use-latest-versions -Dincludes="org.checkerframework:*"
-    #   mvn clean verify
-    mvn clean verify -P checkerframework-local
-    \cp -pf target/bcel-6.1-SNAPSHOT.jar ../bcel.jar
-    cd ..
-    rm -rf commons-bcel
-
-svnkit-1.8.15-complete.jar: for use by MultiVersionControl program
-Check for latest version at: https://svnkit.com/
-To create the file, I ran the following commands, using JDK 7, not JDK 8:
-  cd ~/tmp
-  VER=1.8.15
-  wget http://www.svnkit.com/org.tmatesoft.svn_${VER}.standalone.zip
-  unzip org.tmatesoft.svn_${VER}.standalone.zip
-  cd svnkit-${VER}/lib
-  mkdir jar-contents
-  cd jar-contents
-  for file in ../*.jar; do
-    jar xf $file;
-  done
-  find * -type f | $pl/bin/sort-directory-order > jar-contents.txt
-  jar cf ../svnkit-${VER}-complete.jar @jar-contents.txt
-  cd ..
-  mv svnkit-${VER}-complete.jar $pl/java/lib
-  \rm -rf jar-contents
-  cd ~/tmp
-  \rm -rf org.tmatesoft.svn_${VER}.standalone.zip svnkit-${VER}
