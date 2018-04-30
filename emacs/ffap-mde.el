@@ -6,6 +6,8 @@
 (require 'ffap)
 (ffap-bindings)
 
+(setq ffap-url-regexp null)              ; don't match URLs
+
 (defun set-ffap-require-prefix-true-locally ()
   "Set variable `ffap-require-prefix' true in this buffer only."
   (make-local-variable 'ffap-require-prefix)
