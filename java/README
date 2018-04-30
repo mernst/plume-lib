@@ -2,8 +2,8 @@ This package, plume, is intended to supplement java.util.
 It provides general functionality, not specific to any particular client.
 
 For documentation, please see
-  http://plume-lib.googlecode.com/hg/README.html#Java_libraries
-or file ../README.html .
+  https://mernst.github.io/plume-lib/
+or file ../docs/index.html .
 
 
 A note about licenses, which augments the main text in ../docs/LICENSE.txt :
