@@ -492,7 +492,8 @@ if it matches a hard-coded list of directories."
   (let ((cmd
 	 (cond
 	  ((or (and (string-match-p "/\\(randoop\\)" (buffer-file-name))
-		    (not (string-match-p "CloneVisitor\\.java$" (buffer-file-name))))
+		    (not (string-match-p "CloneVisitor\\.java$" (buffer-file-name)))
+		    (not (string-match-p "/src/testinput/" (buffer-file-name))))
 	       (and (string-match-p "/daikon" (buffer-file-name))
 		    (not (string-match-p "\\.jpp$" (buffer-file-name))))
 	       (and (string-match-p "/toradocu" (buffer-file-name))
