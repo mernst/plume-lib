@@ -1667,10 +1667,10 @@ Use as a hook, like so:
          (cons '("^In file \\([a-zA-Z0-9_$]+\\)\\.[a-zA-Z0-9_$]+: .* at line \\([0-9]+\\), column \\([0-9]+\\)" 1 2 3)
                compilation-error-regexp-alist)))
 
-;; gradle leaves text in front of error message.
+;; gradle leaves text such as ":util:compileJava" in front of error message.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (cons '("^\\(?::[a-zA-Z]+\\)\\(/.*\\):\\([0-9]+\\): " 1 2)
+         (cons '("^\\(?::[a-zA-Z]+\\)\\{0,2\\}\\(/.*\\):\\([0-9]+\\): " 1 2)
                compilation-error-regexp-alist)))
 
 
