@@ -2384,7 +2384,6 @@ public final class UtilMDE {
       s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // index checker has no list support: vectors
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }
