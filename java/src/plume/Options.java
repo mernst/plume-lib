@@ -732,7 +732,6 @@ public class Options {
           group_map.put(name, gi);
           current_group = name;
         } // current_group is non-null at this point
-        @SuppressWarnings("nullness") // map key
         /*@NonNull*/ OptionGroupInfo ogi = group_map.get(current_group);
         ogi.optionList.add(oi);
       } // loop through fields

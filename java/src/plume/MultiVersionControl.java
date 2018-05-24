@@ -444,10 +444,7 @@ public class MultiVersionControl {
   /*@EnsuresNonNull("action")*/
   public void parseArgs(
       /*>>> @UnknownInitialization @Raw MultiVersionControl this,*/ String[] args) {
-    @SuppressWarnings({
-      "initialization", // new C(underInit) yields @UnderInitialization; @Initialized is safe
-      "nullness" // temporary problem with type annotations in Options jarfile
-    })
+    @SuppressWarnings("initialization") // new C(underInit) yields @UnderInitialization; @Initialized is safe
     /*@Initialized*/ Options options =
         new Options("mvc [options] {checkout,status,update,list}", this);
     String[] remaining_args = options.parse(true, args);
@@ -599,7 +596,6 @@ public class MultiVersionControl {
     }
 
     @Override
-    @SuppressWarnings("interning")
     /*@Pure*/
     public boolean equals(
         /*>>>@GuardSatisfied Checkout this,*/
@@ -866,9 +862,7 @@ public class MultiVersionControl {
     String repoRoot = UtilMDE.readFile(rootFile).trim();
     /*@NonNull*/ File repoFileRoot = new File(pathInRepo);
     while (repoFileRoot.getParentFile() != null) {
-      @SuppressWarnings("nullness") // just checked that parent is non-null
-      /*@NonNull*/ File newRepoFileRoot = repoFileRoot.getParentFile();
-      repoFileRoot = newRepoFileRoot;
+      repoFileRoot = repoFileRoot.getParentFile();
     }
 
     // strip common suffix off of local dir and repo url

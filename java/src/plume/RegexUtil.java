@@ -197,7 +197,6 @@ public final class RegexUtil {
    * @param s string to check for being a regular expression
    * @return null, or a string describing why the argument is not a regex
    */
-  @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
   public static /*@Nullable*/ String regexError(String s) {
     return regexError(s, 0);
@@ -233,7 +232,6 @@ public final class RegexUtil {
    * @param s string to check for being a regular expression
    * @return null, or a PatternSyntaxException describing why the argument is not a regex
    */
-  @SuppressWarnings("regex") // RegexUtil
   /*@SideEffectFree*/
   public static /*@Nullable*/ PatternSyntaxException regexException(String s) {
     return regexException(s, 0);
