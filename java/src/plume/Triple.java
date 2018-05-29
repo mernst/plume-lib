@@ -49,7 +49,6 @@ public class Triple<T1, T2, T3> {
     return "<" + String.valueOf(a) + "," + String.valueOf(b) + "," + String.valueOf(c) + ">";
   }
 
-  @SuppressWarnings("interning") // equality testing optimization
   /*@Pure*/
   @Override
   public boolean equals(

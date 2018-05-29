@@ -2086,7 +2086,6 @@ public final class UtilMDE {
     // TimeLimitProcess p = new TimeLimitProcess(pb.start(), TIMEOUT_SEC * 1000);
     try {
       Process p = pb.start();
-      @SuppressWarnings("nullness") // didn't redirect stream, so getter returns non-null
       String output = UtilMDE.streamString(p.getInputStream());
       return output;
     } catch (IOException e) {
@@ -2384,7 +2383,6 @@ public final class UtilMDE {
       s = s.substring(delimpos + delimlen);
     }
     result_list.add(s);
-    @SuppressWarnings("index") // index checker has no list support: vectors
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
     return result;
   }

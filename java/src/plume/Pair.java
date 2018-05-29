@@ -54,7 +54,6 @@ public class Pair<T1 extends /*@Nullable*/ Object, T2 extends /*@Nullable*/ Obje
   }
 
   @Override
-  @SuppressWarnings("interning") // equality testing optimization
   /*@Pure*/
   public boolean equals(
       /*>>>@GuardSatisfied Pair<T1,T2> this,*/

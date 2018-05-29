@@ -732,7 +732,6 @@ public class Options {
           group_map.put(name, gi);
           current_group = name;
         } // current_group is non-null at this point
-        @SuppressWarnings("nullness") // map key
         /*@NonNull*/ OptionGroupInfo ogi = group_map.get(current_group);
         ogi.optionList.add(oi);
       } // loop through fields
@@ -830,7 +829,6 @@ public class Options {
    * @return all non-option arguments
    * @throws ArgException if the command line contains unknown option or misused options
    */
-  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/169
   public String[] parse(String[] args) throws ArgException {
 
     List<String> non_options = new ArrayList<String>();
