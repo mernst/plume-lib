@@ -732,7 +732,9 @@ public class Options {
           group_map.put(name, gi);
           current_group = name;
         } // current_group is non-null at this point
-        /*@NonNull*/ OptionGroupInfo ogi = group_map.get(current_group);
+        @SuppressWarnings("keyfor:assignment.type.incompatible")
+        /*@KeyFor("group_map")*/ String tmp_current_group = current_group;
+        /*@NonNull*/ OptionGroupInfo ogi = group_map.get(tmp_current_group);
         ogi.optionList.add(oi);
       } // loop through fields
     } // loop through args
