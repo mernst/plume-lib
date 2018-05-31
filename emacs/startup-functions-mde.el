@@ -526,7 +526,7 @@ You can add this function to `after-change-hooks'."
 (defun regexp-remove-alternative (alternative whole-regexp)
   "Remove regexp ALTERNATIVE from regexp WHOLE-REGEXP.
 Not guaranteed to work in all cases."
-  (flet ((grouped (re) (concat "\\(" re "\\)")))
+  (cl-flet ((grouped (re) (concat "\\(" re "\\)")))
     (let* ((qalternative (regexp-quote alternative))
            (qopen (regexp-quote "\\("))
            (gqopen (grouped (concat qopen "\\|^")))
