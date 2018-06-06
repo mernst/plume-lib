@@ -1514,17 +1514,7 @@ Use as a hook, like so:
   (cond ((string-match "/eclat/" default-directory)
          (make-local-variable 'compile-command)
          (setq compile-command "ant -e -find build.xml compile-no-eclipse"))
-        ((string-match "/pastry/" default-directory)
-         (make-local-variable 'compile-command)
-         (setq compile-command "ant -e -find build.xml -Djsr308.checker.dir=$ch -Djsr308.javac=$anno/langtools/dist/bin/javac -Dorg.checkerframework.checker.interning.InterningChecker checker"))
-        ((string-match "/\\(checker\\|framework\\)/tests/\\([^/]*\\)/" default-directory)
-         (let ((dir (match-string 2 default-directory)))
-           (if (equal dir "src")
-               (setq dir "all"))
-           (setq dir (replace-regexp-in-string "_" "-" dir))
-	   (setq dir (replace-regexp-in-string "flow2" "flow" dir))
-           (make-local-variable 'compile-command)
-           (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
+
         ;; Checker Framework demos
 	;; These commented-out demos aren't currently working.
 	;; ((string-match "/annotations/demos/nonnull-interned-demo/checker/" default-directory)
@@ -1562,12 +1552,49 @@ Use as a hook, like so:
               (string-match "plume-lib-for-demo/java/src/plume/ICalAvailable.java" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command "make typecheck-only"))
-        ((and buffer-file-name
+
+	;; Optional demo
+	((and buffer-file-name
+	      (string-match
+	       "checker-framework-optional-demo/checker/src/main/java/org/checkerframework/checker/optional/"
+	      (file-truename buffer-file-name)))
+         (make-local-variable 'compile-command)
+         (setq compile-command "gradle -p $cf assemble"))
+	((and buffer-file-name
+	      (string-match
+	       "checker-framework-optional-demo/checker/tests/optional/SubtypeCheck.java"
+	       (file-truename buffer-file-name)))
+         (make-local-variable 'compile-command)
+         (setq compile-command "$ch/bin/javac \\
+  -processor org.checkerframework.common.subtyping.SubtypingChecker \\
+  -Aquals=org.checkerframework.checker.optional.qual.Present,org.checkerframework.checker.optional.qual.MaybePresent \\
+  SubtypeCheck.java")
+         (make-local-variable 'compile-history)
+	 (setq compile-history (list "$ch/bin/javac -processor optional SubtypeCheck.java")))
+	((and buffer-file-name
+	      (string-match
+	       "checker-framework-optional-demo/checker/tests/optional/"
+	       (file-truename buffer-file-name)))
+         (make-local-variable 'compile-command)
+         (setq compile-command
+	       (concat "$ch/bin/javac -processor optional "
+		       (file-name-nondirectory buffer-file-name))))
+	((and buffer-file-name
               (string-match "/checker/tests/optional/" buffer-file-name))
          (make-local-variable 'compile-command)
          (setq compile-command (concat "javacheck -processor optional "
 				       (file-name-nondirectory buffer-file-name))))
+
         ;; end of Checker Framework demos
+	;; General Checker Framework rule
+        ((string-match "/\\(checker\\|framework\\)/tests/\\([^/]*\\)/" default-directory)
+         (let ((dir (match-string 2 default-directory)))
+           (if (equal dir "src")
+               (setq dir "all"))
+           (setq dir (replace-regexp-in-string "_" "-" dir))
+	   (setq dir (replace-regexp-in-string "flow2" "flow" dir))
+           (make-local-variable 'compile-command)
+           (setq compile-command (concat "ant -e -find build.xml " dir "-tests"))))
 
         ((string-match "/bzr/.*/doc/en/user-guide/" default-directory)
          (make-local-variable 'compile-command)
