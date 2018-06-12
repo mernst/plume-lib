@@ -450,6 +450,8 @@ Also consider `normal-erase-is-backspace' variable (Emacs 21)."
   (set-text-properties begin end nil (current-buffer)))
 
 
+;; This is for textual tables, not for code indentation.
+;; See dtrt-indent.el for code indentation.
 (defun infer-tab-width (&optional omit-first-column)
   "Set tab-width so that columns line up.
 The first column is omitted if the optional argument is specified."
