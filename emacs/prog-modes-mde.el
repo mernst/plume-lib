@@ -45,6 +45,7 @@ This is good for modes like Perl, where the parser can get confused."
 ;; (use-maven-compilation-error-regexp)
 (defun use-maven-compilation-error-regexp ()
   (interactive)
+  (require 'compile)
   (add-to-list 'compilation-error-regexp-alist 'maven))
 
 

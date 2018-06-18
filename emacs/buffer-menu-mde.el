@@ -20,6 +20,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'cl)                         ; for `assert'
+)
+
 (defvar debug-buffer-menu-mde t)
 
 (autoload 'save-buffer-if-modified "util-mde")
