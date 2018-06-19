@@ -5,6 +5,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'cl)                         ; for `assert'
+)
+
 (add-hook 'before-save-hook 'time-stamp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
