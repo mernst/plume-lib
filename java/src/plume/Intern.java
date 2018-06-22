@@ -600,7 +600,8 @@ public final class Intern {
     WeakReference<int /*@Interned*/ []> lookup = internedIntArrays.get(a);
     @SuppressWarnings({
       "index", // for this map, get() can be annotated as @SameLen("#1")
-      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see
+      // https://github.com/kelloggm/checker-framework/issues/177
     })
     int /*@PolyValue*/ /*@SameLen("a")*/[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
@@ -629,7 +630,8 @@ public final class Intern {
     WeakReference<long /*@Interned*/ []> lookup = internedLongArrays.get(a);
     @SuppressWarnings({
       "index", // for this map, get() can be annotated as @SameLen("#1")
-      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see
+      // https://github.com/kelloggm/checker-framework/issues/177
     })
     long /*@PolyValue*/ /*@SameLen("a")*/[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
@@ -715,7 +717,8 @@ public final class Intern {
     WeakReference<double /*@Interned*/ []> lookup = internedDoubleArrays.get(a);
     @SuppressWarnings({
       "index", // for this map, get() can be annotated as @SameLen("#1")
-      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see
+      // https://github.com/kelloggm/checker-framework/issues/177
     })
     double /*@PolyValue*/ /*@SameLen("a")*/[] result1 = (lookup != null) ? lookup.get() : null;
     if (result1 != null) {
@@ -762,9 +765,11 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ String /*@Interned*/ []>(result));
     }
     @SuppressWarnings({
-      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also
+      // see https://github.com/kelloggm/checker-framework/issues/177
       "index", // for this map, get() can be annotated as @SameLen("#1")
-      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see
+      // https://github.com/kelloggm/checker-framework/issues/177
     })
     /*@PolyNull*/ /*@Interned*/ String /*@Interned*/ /*@PolyValue*/ /*@SameLen("a")*/[] polyresult = result;
     return polyresult;
@@ -795,9 +800,11 @@ public final class Intern {
           result, new WeakReference</*@Nullable*/ /*@Interned*/ Object /*@Interned*/ []>(result));
     }
     @SuppressWarnings({
-      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "nullness", // for this map, get() can be annotated as @PolyAll (except not interning); also
+      // see https://github.com/kelloggm/checker-framework/issues/177
       "index", // for this map, get() can be annotated as @SameLen("#1")
-      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see https://github.com/kelloggm/checker-framework/issues/177
+      "value" // for this map, get() can be annotated as @PolyAll (except not interning); also see
+      // https://github.com/kelloggm/checker-framework/issues/177
     }) // PolyNull/PolyValue:  value = parameter a, so same type & nullness as for parameter a
     /*@PolyNull*/ /*@Interned*/ Object /*@Interned*/ /*@PolyValue*/ /*@SameLen("a")*/[] polyresult = result;
     return polyresult;
