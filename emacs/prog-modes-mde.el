@@ -1699,7 +1699,7 @@ Use as a hook, like so:
 ;; gradle leaves text such as ":util:compileJava" in front of error message.
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (cons '("^\\(?::[a-zA-Z]+\\)\\{0,2\\}\\(/.*\\):\\([0-9]+\\): " 1 2)
+         (cons '("^\\(?::[-_a-zA-Z0-9]+\\)\\{0,2\\}\\(/.*\\):\\([0-9]+\\): " 1 2)
                compilation-error-regexp-alist)))
 
 
