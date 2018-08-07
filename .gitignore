@@ -5,6 +5,7 @@ TAGS
 java/.html-tools/
 java/.class-files-timestamp
 java/.javadoc-timestamp
+java/.run-google-java-format
 java/.test-timestamp
 java/Makefile.user
 java/api
