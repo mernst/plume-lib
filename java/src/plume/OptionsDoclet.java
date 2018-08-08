@@ -239,7 +239,7 @@ public class OptionsDoclet {
       Class<?> clazz;
       try {
         @SuppressWarnings("signature") // Javadoc source code is not yet annotated
-        /*@BinaryNameForNonArray*/ String className = doc.qualifiedName();
+        /*@BinaryName*/ String className = doc.qualifiedName();
         clazz = Class.forName(className, true, Thread.currentThread().getContextClassLoader());
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
