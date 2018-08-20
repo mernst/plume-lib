@@ -48,7 +48,7 @@ and library.
 
 <p><b>License:</b>
 Plume-lib is distributed under the MIT License, except for a few files that
-are governed by a different license.  See file <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/LICENSE.txt">LICENSE.txt</a> for details.
+are governed by a different license.  See file <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/docs/LICENSE.txt">docs/LICENSE.txt</a> for details.
 </p>
 
 
@@ -162,14 +162,23 @@ webpage that you maintain.
     <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-update-link-dates">Documentation</a> at top of file.
   </li>
 </ul>
+<p>
+Do not use the scripts from here; use the versions in
+<a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 
 <dt>checklink</dt>
 <dd>
-  A slightly <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/checklink-4.6.diff">modified</a> version of the
+  A
+  slightly <a href="https://raw.githubusercontent.com/plume-lib/checklink/master/checklink-4.6.diff">modified</a>
+  version of the
   <a href="http://search.cpan.org/dist/W3C-LinkChecker/">W3C Link
   Checker</a>.
+  <p>
+
+  This has moved; get it
+  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
 </dd>
 
 <dt>checklink-args.txt</dt>
@@ -180,6 +189,10 @@ webpage that you maintain.
 <pre>
    plume-lib/bin/checklink -q -r `grep -v '^#' plume-lib/bin/checklink-args.txt` MYURL
 </pre>
+  <p>
+
+  This has moved; get it
+  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
 </dd>
 
 <dt>checklink-persistent-errors</dt>
@@ -187,24 +200,23 @@ webpage that you maintain.
   This script reports errors that persist over multiple runs of the
   checklink program, ignoring transient errors.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/checklink-persistent-errors">Documentation</a> at top of file.
-</dd>
+  <p>
 
-
-<dt>HtmlPrettyPrint</dt>
-<dd>
-  Pretty-prints an HTML file, after converting it to valid XML.
-  To use:  <pre>  java plume.HtmlPrettyPrint file.html &gt; filepp.html</pre>
-  <!-- Don't link to more documentation, because the above is all there is! -->
+  This has moved; get it
+  from <a href="https://github.com/plume-lib/checklink">https://github.com/plume-lib/checklink</a>.
 </dd>
 
 
 <dt>html-canonical-urls</dt>
 <dd>
   This file maps a textual string (such as the name of a person,
-  institution, er event) to the a canonical URL for that string.
+  institution, er event) to the canonical URL for that string.
   It is used by the
   <a href="http://homes.cs.washington.edu/~mernst/software/bibtex2web.html">bibtex2web</a>
   program.
+  <p>
+  Do not use this file; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 
@@ -228,6 +240,9 @@ webpage that you maintain.
   favicon is a favorites icon, which is intended to appear in the address
   bar of your browser when you browse to the given page.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/html-add-favicon">Documentation</a> at top of file.
+  <p>
+  Do not use the script from here; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 <dt>add-favicon</dt>
@@ -237,6 +252,9 @@ webpage that you maintain.
   favicon is a favorites icon, which is intended to appear in the address
   bar of your browser when you browse to the given page.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/add-favicon">Documentation</a> at top of file.
+  <p>
+  Do not use the script from here; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 </dl>
 
@@ -249,7 +267,7 @@ webpage that you maintain.
 <dd>
   Lets you run a version control command, such as "status" or "update", on
   a set of CVS/Git/Hg/SVN checkouts rather than just one.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MultiVersionControl.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/MultiVersionControl.html">Documentation</a>.
 </dd>
 
 <dt>cvschanges</dt>
@@ -312,7 +330,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   respects comments (ignores matches within them), respects
   <tt>\include</tt> directives (searches the named file), and has other
   options.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Lookup.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Lookup.html">Documentation</a>.
   <br/>
   For an example application, see the
   <a href="https://github.com/mernst/uwisdom/tree/wiki">uwisdom</a> project and its
@@ -373,6 +391,9 @@ Eliminates empty entries from <tt>cvs log</tt> output.
   The former variety (which is generated, for example, by the Hevea
   program) is brittle, as it may change from run to run of Hevea.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/hevea-retarget-crossrefs">Documentation</a> at top of file.
+  <p>
+  Do not use the script from here; use the version in
+  <a href="https://github.com/plume-lib/html-tools">https://github.com/plume-lib/html-tools</a>.
 </dd>
 
 <dt>pdfinterleave</dt>
@@ -403,7 +424,7 @@ Eliminates empty entries from <tt>cvs log</tt> output.
 <dt>BibtexClean</dt>
 <dd>
   Clean a BibTeX file by removing text outside BibTeX entries.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/BibtexClean.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/BibtexClean.html">Documentation</a>.
 </dd>
 
 <dt>plume-bib</dt>
@@ -521,7 +542,7 @@ This contains no documentation, so don't include it in this README file.
 <dd>
   Given a Java class name, display the absolute pathname of the class file
   that would be loaded first by the class loader.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/JWhich.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/JWhich.html">Documentation</a>.
 </dd>
 
 <dt>find-java</dt>
@@ -616,12 +637,12 @@ This contains no documentation, so don't include it in this README file.
   Given a list of <tt>.class</tt> files, or a <tt>.jar</tt> file, print the
   class file version and also the JDK/JRE version required to run each
   <tt>.class</tt> file.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ClassFileVersion.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/ClassFileVersion.html">Documentation</a>.
 </dd>
 
 <dt>classfile_check_version</dt>
 <dd>
-  Check that the version of the classfile format is <= the specified version.
+  Check that the version of the classfile format is &leq; the specified version.
   Used to ensure that classfiles are OK for a particular version of Java.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/classfile_check_version">Documentation</a> at top of file.
 </dd>
@@ -633,7 +654,9 @@ This contains no documentation, so don't include it in this README file.
 <dl>
 <dt>run-google-java-format.py</dt>
 <dd>
-  The
+  <p><b>Don't use this version.</b>  Use it from the <a href="https://github.com/plume-lib/run-google-java-format">run-google-java-format repository</a> instead.</p>
+
+  <p>The
   <a href="https://github.com/google/google-java-format">google-java-format</a>
   program reformats Java source code, but it creates poor formatting for
   annotations in comments.  This script runs google-java-format and then
@@ -641,10 +664,13 @@ This contains no documentation, so don't include it in this README file.
   If called with no arguments, it reads from and writes to standard output.
   <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/bin/run-google-java-format.py">Documentation</a>
   at top of file.
+  </p>
 </dd>
 
 <dt>check-google-java-format.py</dt>
 <dd>
+  <p><b>Don't use this version.</b>  Use it from the <a href="https://github.com/plume-lib/run-google-java-format">run-google-java-format repository</a> instead.</p>
+
   Given <code>.java</code> file names on the command line, reports any that
   would be reformatted by the run-google-java-format.py program, and returns
   non-zero status if there were any.
@@ -668,7 +694,7 @@ This contains no documentation, so don't include it in this README file.
   This is useful for sending someone a list of acceptable times for a meeting.
   Also see the <a href="https://raw.githubusercontent.com/mernst/plume-lib/master/emacs/startup-functions-mde.el"><tt>ical-available</tt></a> Emacs function, which inserts the
   output of this program.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ICalAvailable.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/ICalAvailable.html">Documentation</a>.
 </dd>
 
 <dt>schedule</dt>
@@ -896,7 +922,7 @@ generally well-documented, so feel free to browse.
 <dl>
 <dt>Options</dt>
 <dd>
-  The <a href="http://types.cs.washington.edu/plume-lib/api/plume/Options.html">Options</a> class:
+  The <a href="http://plumelib.org/options/api/org/plumelib/options/Options.html">Options</a> class:
   <ul>
     <li>parses command-line options and sets fields in your program accordingly,</li>
     <li>creates usage messages (such as printed by a <tt>--help</tt> option), and</li>
@@ -904,8 +930,11 @@ generally well-documented, so feel free to browse.
   </ul>
   Thus, the programmer is freed from writing duplicative, boilerplate code
   and documentation that could get out of sync with the rest of the program.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Options.html">Documentation</a>.
-  <!-- The popular JCommander library was written later and takes a similar approach to plume-lib, having many of the same features.  But it does not generate usage messages nor manual/manpage/webpage documentation. -->
+  <p>
+  If you use this, the Javadoc tool needs to be on your classpath.
+  <p>
+  This version is deprecated; the Options class has moved to <a
+  href="https://github.com/plume-lib/options">https://github.com/plume-lib/options</a>.
 </dd>
 </dl>
 
@@ -917,7 +946,7 @@ generally well-documented, so feel free to browse.
 <dd>
   Utilities for manipulating arrays and collections.
   This complements java.util.Arrays and java.util.Collections.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/ArraysMDE.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/ArraysMDE.html">Documentation</a>.
 </dd>
 
 <dt>LimitedSizeIntSet
@@ -925,24 +954,24 @@ generally well-documented, so feel free to browse.
 <dd>
   LimitedSizeSet stores up to some maximum number of unique
   values, at which point its rep is nulled, in order to save space.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/LimitedSizeSet.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/LimitedSizeSet.html">Documentation</a>.
   <br/>
   There is also LimitedSizeIntSet, which takes less memory than LimitedSizeSet&lt;Integer&gt;.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/LimitedSizeIntSet.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/LimitedSizeIntSet.html">Documentation</a>.
 </dd>
 
 <dt>WeakHasherMap</dt>
 <dd>
   WeakHashMap is a modified version of WeakHashMap from JDK 1.2.2, that
-  adds a constructor that takes a <a href="http://types.cs.washington.edu/plume-lib/api/plume/Hasher.html">Hasher</a> argument.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/WeakHasherMap.html">Documentation</a>.
+  adds a constructor that takes a <a href="https://types.cs.washington.edu/plume-lib/api/plume/Hasher.html">Hasher</a> argument.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/WeakHasherMap.html">Documentation</a>.
 </dd>
 
 <dt>WeakIdentityHashMap</dt>
 <dd>
   WeakIdentityHashMap is a modified version of WeakHashMap from JDK 1.5,
   that uses System.identityHashCode() rather than the object's hash code.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/WeakIdentityHashMap.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/WeakIdentityHashMap.html">Documentation</a>.
 </dd>
 
 <dt>OrderedPairIterator</dt>
@@ -951,7 +980,7 @@ generally well-documented, so feel free to browse.
   sequence/iterator/whatever that pairs the matching elements of the
   inputs, according to their respective sort orders.  (This opertation is
   sometimes called "zipping".)
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/OrderedPairIterator.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/OrderedPairIterator.html">Documentation</a>.
 </dd>
 
 <dt>IterableIterator</dt>
@@ -959,7 +988,7 @@ generally well-documented, so feel free to browse.
   In Java, Iterators are not Iterable, so they cannot be used in new-style
   for loops.  The IterableIterator wrapper makes an Iterator that is
   also Iterable &mdash; that is, it implements the <tt>iterator()</tt> method.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/IterableIterator.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/IterableIterator.html">Documentation</a>.
 </dd>
 </dl>
 
@@ -971,7 +1000,7 @@ generally well-documented, so feel free to browse.
 <dd>
   Provides a somewhat simpler interface for tokenizing strings than
   does StreamTokenizer.  All tokenizing is done by StreamTokenizer.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/StrTok.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/StrTok.html">Documentation</a>.
 </dd>
 
 <dt>EntryReader</dt>
@@ -982,21 +1011,21 @@ generally well-documented, so feel free to browse.
     comments, and
     multi-line entries (paragraphs).
   The syntax of each of these is customizable.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/EntryReader.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/EntryReader.html">Documentation</a>.
 </dd>
 
 <dt>RegexUtil</dt>
 <dd>
   Utility methods for regular expressions, most notably for testing whether
   a string is a regular expression.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/RegexUtil.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/RegexUtil.html">Documentation</a>.
 </dd>
 
 <dt>FileIOException</dt>
 <dd>
   Extends IOException by also reporting a file name and line
   number at which the exception occurred.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/FileIOException.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/FileIOException.html">Documentation</a>.
 </dd>
 
 <dt>StringBuilderDelimited</dt>
@@ -1004,20 +1033,20 @@ generally well-documented, so feel free to browse.
   Like StringBuilder, but adds a delimiter between each pair of strings
   that are insered into the Stringbuilder.  This can simplify the logic of
   programs and also avoid errors.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/StringBuilderDelimited.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/StringBuilderDelimited.html">Documentation</a>.
 </dd>
 
 <dt>CountingPrintWriter</dt>
 <dd>
   Prints formatted representations of objects to a text-output
   stream counting the number of bytes and characters printed.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/CountingPrintWriter.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/CountingPrintWriter.html">Documentation</a>.
 </dd>
 
 <dt>Digest</dt>
 <dd>
   Computes a message digest for a file.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Digest.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Digest.html">Documentation</a>.
 </dd>
 
 </dl>
@@ -1029,7 +1058,7 @@ generally well-documented, so feel free to browse.
 <dt>MathMDE</dt>
 <dd>
   Mathematical utilities.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MathMDE.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/MathMDE.html">Documentation</a>.
 </dd>
 
 <dt>FuzzyFloat</dt>
@@ -1038,7 +1067,7 @@ generally well-documented, so feel free to browse.
   Those are comparisons that only require the floating point numbers to be
   relatively close to one another to be equal, rather than exactly
   equal.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/FuzzyFloat.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/FuzzyFloat.html">Documentation</a>.
 </dd>
 
 </dl>
@@ -1051,7 +1080,7 @@ generally well-documented, so feel free to browse.
 <dd>
   Selects k elements uniformly at random from
   an arbitrary iterator, using <em>O(k)</em> space.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/RandomSelector.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/RandomSelector.html">Documentation</a>.
 </dd>
 
 <dt>MultiRandSelector</dt>
@@ -1059,7 +1088,7 @@ generally well-documented, so feel free to browse.
   Like RandomSelector, performs a uniform random selection over an
   iterator.  However, the objects in the iteration may be partitioned so
   that the random selection chooses the same number from each group.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/MultiRandSelector.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/MultiRandSelector.html">Documentation</a>.
 </dd>
 </dl>
 
@@ -1072,13 +1101,15 @@ generally well-documented, so feel free to browse.
 <dd>
   A subclass of Process such that the process is killed if it runs for more
   than the specified amount of wall clock time.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/TimeLimitProcess.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/TimeLimitProcess.html">Documentation</a>.
+  <p>
+  This class is deprecated; use <a href="https://commons.apache.org/proper/commons-exec/">Apache Commons Exec</a> instead.
 </dd>
 
 <dt>FileCompiler</dt>
 <dd>
   Defines methods that compile Java source files.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/FileCompiler.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/FileCompiler.html">Documentation</a>.
 </dd>
 </dl>
 
@@ -1090,13 +1121,13 @@ generally well-documented, so feel free to browse.
 <dt>Pair</dt>
 <dd>
   Mutable pair class:  type-safely holds two objects of possibly-different types.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Pair.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Pair.html">Documentation</a>.
 </dd>
 
 <dt>Triple</dt>
 <dd>
   Mutable triple class:  type-safely holds three objects of possibly-different types.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Triple.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Triple.html">Documentation</a>.
 </dd>
 </dl>
 
@@ -1107,7 +1138,7 @@ generally well-documented, so feel free to browse.
 <dt>BCELUtil</dt>
 <dd>
   Static utility methods for working with BCEL.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/BCELUtil.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/BCELUtil.html">Documentation</a>.
 </dd>
 
 <dt>DeterministicObject</dt>
@@ -1121,7 +1152,7 @@ generally well-documented, so feel free to browse.
 <dd>
   Graph utility methods.  This class does not model a graph:  all methods
   are static.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/GraphMDE.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/GraphMDE.html">Documentation</a>.
 </dd>
 
 <dt>Intern</dt>
@@ -1130,26 +1161,26 @@ generally well-documented, so feel free to browse.
   canonicalization or hash-consing:  it returns a single representative
   object that <tt>.equals()</tt> the object, and the client discards the
   argument and uses the result instead.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Intern.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Intern.html">Documentation</a>.
 </dd>
 
 <dt>SimpleLog</dt>
 <dd>
   A simple logging class with timers, subtasks, backtraces, output to
   file or standard out, and the ability to be enabled or disabled.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/SimpleLog.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/SimpleLog.html">Documentation</a>.
 </dd>
 
 <dt>Stopwatch</dt>
 <dd>
   A simple class for recording computing elapsed time.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/Stopwatch.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/Stopwatch.html">Documentation</a>.
 </dd>
 
 <dt>UtilMDE</dt>
 <dd>
   Utility functions that do not belong elsewhere in the plume package.
-  <a href="http://types.cs.washington.edu/plume-lib/api/plume/UtilMDE.html">Documentation</a>.
+  <a href="https://types.cs.washington.edu/plume-lib/api/plume/UtilMDE.html">Documentation</a>.
 </dd>
 </dl>
 
