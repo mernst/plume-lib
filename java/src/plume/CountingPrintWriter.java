@@ -181,7 +181,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param s the string to be printed, or null
    */
   @Override
-  public void print(/*@Nullable*/ String s) {
+  public void print(@Nullable String s) {
     if (s == null) {
       printedBytes += countBytes("null");
       printedChars += 4;
@@ -328,7 +328,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param obj the object to be printed
    */
   @Override
-  public void print(/*@Nullable*/ Object obj) {
+  public void print(@Nullable Object obj) {
     String s = String.valueOf(obj);
     printedBytes += countBytes(s);
     printedChars += s.length();
@@ -360,7 +360,7 @@ public class CountingPrintWriter extends PrintWriter {
    * @param s the string to be printed
    */
   @Override
-  public void println(/*@Nullable*/ String s) {
+  public void println(@Nullable String s) {
     print(s);
     println();
   }
@@ -389,7 +389,7 @@ public class CountingPrintWriter extends PrintWriter {
    */
   @Override
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/144
-  public void write(char[] buf, /*@IndexOrHigh("#1")*/ int off, /*@IndexOrHigh("#1")*/ int len) {
+  public void write(char[] buf, @IndexOrHigh("#1") int off, @IndexOrHigh("#1") int len) {
     for (int i = off; i < off + len; i++) {
       writtenBytes += countBytes(buf[i]);
     }
@@ -420,8 +420,8 @@ public class CountingPrintWriter extends PrintWriter {
   @Override
   public void write(
       String s,
-      /*@NonNegative*/ /*@LTLengthOf(value = "#1", offset = "#3")*/ int off,
-      /*@IndexOrHigh("#1")*/ int len) {
+      @NonNegative @LTLengthOf(value = "#1", offset = "#3") int off,
+      @IndexOrHigh("#1") int len) {
     writtenBytes += countBytes(s.substring(off, off + len));
     writtenChars += len;
     super.write(s, off, len);

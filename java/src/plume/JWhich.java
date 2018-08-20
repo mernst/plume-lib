@@ -72,7 +72,7 @@ import org.checkerframework.checker.nullness.qual.*;
  */
 public final class JWhich {
 
-  private static /*@MonotonicNonNull*/ String CLASSPATH;
+  private static @MonotonicNonNull String CLASSPATH;
 
   // Do not call; this class is a collection of functions rather than
   // representing an object.
@@ -86,7 +86,7 @@ public final class JWhich {
    *
    * @param className name of the class
    */
-  /*@EnsuresNonNull("CLASSPATH")*/
+  @EnsuresNonNull("CLASSPATH")
   public static void which(String className) {
 
     URL classUrl = findClass(className);
@@ -109,7 +109,7 @@ public final class JWhich {
    * @param className name of the class
    * @return class URL, or null of the class was not found
    */
-  public static /*@Nullable*/ URL findClass(final String className) {
+  public static @Nullable URL findClass(final String className) {
     return JWhich.class.getResource(asResourceName(className));
   }
 
@@ -127,7 +127,7 @@ public final class JWhich {
    *
    * <p>Valid class path entries include directories, {@code .zip} files, and {@code .jar} files.
    */
-  /*@EnsuresNonNull("CLASSPATH")*/
+  @EnsuresNonNull("CLASSPATH")
   public static void validate() {
 
     StringTokenizer tokenizer = new StringTokenizer(getClasspath(), File.pathSeparator);
@@ -152,7 +152,7 @@ public final class JWhich {
   }
 
   /** Print the classpath to System.out. */
-  /*@EnsuresNonNull("CLASSPATH")*/
+  @EnsuresNonNull("CLASSPATH")
   public static void printClasspath() {
 
     System.out.println("\nClasspath:");
@@ -167,7 +167,7 @@ public final class JWhich {
    *
    * @param classpath the new classpath
    */
-  /*@EnsuresNonNull("CLASSPATH")*/
+  @EnsuresNonNull("CLASSPATH")
   public static void setClasspath(String classpath) {
     CLASSPATH = classpath;
   }
@@ -177,7 +177,7 @@ public final class JWhich {
    *
    * @return the classpath
    */
-  /*@EnsuresNonNull("CLASSPATH")*/
+  @EnsuresNonNull("CLASSPATH")
   protected static String getClasspath() {
     if (CLASSPATH == null) {
       String classpath = System.getProperty("java.class.path");

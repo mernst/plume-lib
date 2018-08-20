@@ -75,7 +75,7 @@ public final class TestPlume {
   //     System.out.println("All plume tests succeeded.");
   //   }
 
-  public static void assert_arrays_equals(int /*@Nullable*/ [] a1, int /*@Nullable*/ [] a2) {
+  public static void assert_arrays_equals(int @Nullable [] a1, int @Nullable [] a2) {
     boolean result = Arrays.equals(a1, a2);
     if (!result) {
       System.out.println("Arrays differ: " + Arrays.toString(a1) + ", " + Arrays.toString(a2));
@@ -222,8 +222,8 @@ public final class TestPlume {
 
     @Override
     public boolean equals(
-        /*>>>@GuardSatisfied MyInteger this,*/
-        /*@GuardSatisfied*/ /*@Nullable*/ Object other) {
+        @GuardSatisfied MyInteger this,
+        @GuardSatisfied @Nullable Object other) {
       if (!(other instanceof MyInteger)) {
         return false;
       }
@@ -232,7 +232,7 @@ public final class TestPlume {
     }
 
     @Override
-    public int hashCode(/*>>>@GuardSatisfied MyInteger this*/) {
+    public int hashCode(@GuardSatisfied MyInteger this) {
       return value;
     }
   }
@@ -432,9 +432,9 @@ public final class TestPlume {
   @Test
   public void testArraysMDE_printing() {
 
-    // public static String toString(Object /*@Nullable*/ [] a)
-    // public static String toStringQuoted(Object /*@Nullable*/ [] a)
-    // public static String toString(Object /*@Nullable*/ [] a, boolean quoted)
+    // public static String toString(Object @Nullable [] a)
+    // public static String toStringQuoted(Object @Nullable [] a)
+    // public static String toString(Object @Nullable [] a, boolean quoted)
     // public static String toString(List<?> a)
     // public static String toStringQuoted(List<?> a)
     // public static String toString(List<?> a, boolean quoted)
@@ -913,10 +913,10 @@ public final class TestPlume {
       assert ArraysMDE.any_null(new Object[][] {}) == false;
       assert ArraysMDE.any_null(new Object[][] {null}) == true;
       // Extraneous @Nullable on the following lines are due to https://tinyurl.com/cfissue/599
-      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
-      assert ArraysMDE.any_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == true;
+      assert ArraysMDE.any_null(new @Nullable Object[][] {new Object[] {null}}) == false;
+      assert ArraysMDE.any_null(new @Nullable Object[][] {new Object[] {null}, null}) == true;
       assert ArraysMDE.any_null(
-              new /*@Nullable*/ Object[][] {new Object[] {null}, new Object[] {o}})
+              new @Nullable Object[][] {new Object[] {null}, new Object[] {o}})
           == false;
     }
 
@@ -935,10 +935,10 @@ public final class TestPlume {
       assert ArraysMDE.all_null(new Object[][] {}) == true;
       assert ArraysMDE.all_null(new Object[][] {null}) == true;
       assert ArraysMDE.all_null(new Object[][] {null, null}) == true;
-      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] {new Object[] {null}}) == false;
-      assert ArraysMDE.all_null(new /*@Nullable*/ Object[][] {new Object[] {null}, null}) == false;
+      assert ArraysMDE.all_null(new @Nullable Object[][] {new Object[] {null}}) == false;
+      assert ArraysMDE.all_null(new @Nullable Object[][] {new Object[] {null}, null}) == false;
       assert ArraysMDE.all_null(
-              new /*@Nullable*/ Object[][] {new Object[] {null}, new Object[] {o}})
+              new @Nullable Object[][] {new Object[] {null}, new Object[] {o}})
           == false;
     }
   }
@@ -1032,7 +1032,7 @@ public final class TestPlume {
 
         Random random_gen = new Random();
 
-        int /*@ArrayLen(100)*/[] /*@ArrayLen(10)*/[] arrays = new int[100] /*@ArrayLen(10)*/[];
+        int @ArrayLen(100)[] @ArrayLen(10)[] arrays = new int[100] @ArrayLen(10)[];
         for (int i = 0; i < arrays.length; i++) {
           int[] a = new int[10];
           for (int j = 0; j < a.length; j++) {
@@ -1064,7 +1064,7 @@ public final class TestPlume {
         }
         for (int i = 10; i < arrays.length; i++) {
           @SuppressWarnings("nullness") // test code: permit garbage collection to test interning
-          int /*@NonNull*/ [] reset_value = null;
+          int @NonNull [] reset_value = null;
           arrays[i] = reset_value;
         }
         System.gc();
@@ -1119,7 +1119,7 @@ public final class TestPlume {
   @SuppressWarnings({"deprecation", "BoxedPrimitiveConstructor"}) // interning test
   @Test
   public void testInternObject() {
-    Object nIntern = Intern.intern((/*@Nullable*/ Object) null);
+    Object nIntern = Intern.intern((@Nullable Object) null);
     assert nIntern == null;
 
     String sOrig = new String("foo");
@@ -1233,7 +1233,7 @@ public final class TestPlume {
   }
 
   // Add 100 elements randomly selected from the range 0..limit-1 to the set.
-  private static void lsis_add_elts(/*@Positive*/ int limit, LimitedSizeSet<Integer> s) {
+  private static void lsis_add_elts(@Positive int limit, LimitedSizeSet<Integer> s) {
     Random r = new Random(20140613);
     for (int i = 0; i < 100; i++) {
       s.add(r.nextInt(limit));
@@ -1241,7 +1241,7 @@ public final class TestPlume {
   }
 
   // Create a LimitedSizeSet of the given size, and add elements to it.
-  private static void lsis_test(/*@Positive*/ int max_size) {
+  private static void lsis_test(@Positive int max_size) {
     LimitedSizeSet<Integer> s = new LimitedSizeSet<Integer>(max_size);
     for (int i = 1; i < 2 * max_size; i++) {
       lsis_add_elts(i, s);
@@ -1254,7 +1254,7 @@ public final class TestPlume {
   }
 
   private static void lss_with_null_test() {
-    LimitedSizeSet</*@Nullable*/ Integer> s = new LimitedSizeSet</*@Nullable*/ Integer>(10);
+    LimitedSizeSet<@Nullable Integer> s = new LimitedSizeSet<@Nullable Integer>(10);
     s.add(1);
     s.add(2);
     s.add(null);
@@ -1404,7 +1404,7 @@ public final class TestPlume {
 
     class TestModulus {
       // javadoc won't let this be static
-      void check(int[] nums, int /*@Nullable*/ [] goal_rm) {
+      void check(int[] nums, int @Nullable [] goal_rm) {
         int[] rm = MathMDE.modulus(nums);
         if (!Arrays.equals(rm, goal_rm)) {
           throw new Error(
@@ -1427,7 +1427,7 @@ public final class TestPlume {
       }
 
       // javadoc won't let this be static
-      void check(Iterator<Integer> itor, int /*@Nullable*/ [] goal_rm) {
+      void check(Iterator<Integer> itor, int @Nullable [] goal_rm) {
         // There would be no point to this:  it's testing
         // int_iterator_array, not the iterator version!
         // return check(int_iterator_array(itor), goal_rm);
@@ -1435,7 +1435,7 @@ public final class TestPlume {
       }
 
       // javadoc won't let this be static
-      void check_iterator(int[] nums, int /*@Nullable*/ [] goal_rm) {
+      void check_iterator(int[] nums, int @Nullable [] goal_rm) {
         check(int_array_iterator(nums), goal_rm);
       }
     }
@@ -1467,19 +1467,19 @@ public final class TestPlume {
 
     class TestNonModulus {
       // javadoc won't let this be static
-      void check_strict(int[] nums, int /*@Nullable*/ [] goal_rm) {
+      void check_strict(int[] nums, int @Nullable [] goal_rm) {
         check(nums, goal_rm, true);
         Iterator<Integer> itor = int_array_iterator(nums);
         assert_arrays_equals(MathMDE.nonmodulus_strict_int(itor), goal_rm);
       }
 
       // javadoc won't let this be static
-      void check_nonstrict(int[] nums, int /*@Nullable*/ [] goal_rm) {
+      void check_nonstrict(int[] nums, int @Nullable [] goal_rm) {
         check(nums, goal_rm, false);
       }
 
       // javadoc won't let this be static
-      void check(int[] nums, int /*@Nullable*/ [] goal_rm, boolean strict) {
+      void check(int[] nums, int @Nullable [] goal_rm, boolean strict) {
         int[] rm;
         if (strict) {
           rm = MathMDE.nonmodulus_strict(nums);
@@ -1695,10 +1695,10 @@ public final class TestPlume {
    */
   @SuppressWarnings("index") // same length iterator and array, and while loop with ++ on index
   public static void compareOrderedPairIterator(
-      OrderedPairIterator<Integer> opi, int[] /*@ArrayLen(2)*/[] ints) {
+      OrderedPairIterator<Integer> opi, int[] @ArrayLen(2)[] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
-      Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
+      Pair<@Nullable Integer, @Nullable Integer> pair = opi.next();
       // System.out.println("Iterator: <" + pair.a + "," + pair.b + ">, array: <" + ints[pairno][0]
       //     + "," + ints[pairno][1] + ">");
       assert (pair.a == null) || (pair.a.intValue() == ints[pairno][0]);
@@ -1747,7 +1747,7 @@ public final class TestPlume {
   /// UtilMDE
   ///
 
-  private static BitSet randomBitSet(/*@NonNegative*/ int length, Random r) {
+  private static BitSet randomBitSet(@NonNegative int length, Random r) {
     BitSet result = new BitSet(length);
     for (int i = 0; i < length; i++) {
       result.set(i, r.nextBoolean());
@@ -1963,12 +1963,12 @@ public final class TestPlume {
       }
 
       @Override
-      public boolean hasNext(/*>>>@GuardSatisfied IotaIterator this*/) {
+      public boolean hasNext(@GuardSatisfied IotaIterator this) {
         return i < limit;
       }
 
       @Override
-      public Integer next(/*>>>@GuardSatisfied IotaIterator this*/) {
+      public Integer next(@GuardSatisfied IotaIterator this) {
         if (!hasNext()) {
           throw new NoSuchElementException();
         }
@@ -2010,7 +2010,7 @@ public final class TestPlume {
           @SuppressWarnings({
             "index", "value"
           }) // The IotaIterator only contains indexes for totals.length, and since chosen's elements are selected randomly from the IotaIterator, all of its elements are @IndexFor
-          List</*@IndexFor("totals")*/ Integer> chosen =
+          List<@IndexFor("totals") Integer> chosen =
               UtilMDE.randomElements(new IotaIterator(itor_size), i, r);
           for (int m = 0; m < chosen.size(); m++) {
             for (int n = m + 1; n < chosen.size(); n++) {
@@ -2039,12 +2039,12 @@ public final class TestPlume {
       }
     }
 
-    // public static <T> /*@Nullable*/ Integer incrementMap(Map<T,Integer> m, T key, int count) {
+    // public static <T> @Nullable Integer incrementMap(Map<T,Integer> m, T key, int count) {
     // public static <K,V> String mapToString(Map<K,V> m) {
     // public static <K,V> void mapToString(Appendable sb, Map<K,V> m, String linePrefix) {
-    // public static <K extends Comparable<? super K>,V> Collection</*@KeyFor("#1")*/ K>
+    // public static <K extends Comparable<? super K>,V> Collection<@KeyFor("#1") K>
     //     sortedKeySet(Map<K,V> m) {
-    // public static <K,V> Collection</*@KeyFor("#1")*/ K>
+    // public static <K,V> Collection<@KeyFor("#1") K>
     //     sortedKeySet(Map<K,V> m, Comparator<K> comparator) {
 
     // public static Method methodForName(String methodname) throws ClassNotFoundException
@@ -2790,7 +2790,7 @@ public final class TestPlume {
 
   /** Initialize f2 to be the same as two copies of f1 */
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/147
-  void initialize_f1_and_f2(int j, double /*@ArrayLen(10)*/[] f1, double /*@ArrayLen(20)*/[] f2) {
+  void initialize_f1_and_f2(int j, double @ArrayLen(10)[] f1, double @ArrayLen(20)[] f2) {
 
     // start two arrays out exactly equal
     for (int i = 0; i < f1.length; i++) {
@@ -2883,7 +2883,7 @@ public final class TestPlume {
 
     String str = "one\ntwo\n\rthree\r\nfour\rfive\n\n\nsix\r\n\r\n\r\n";
     @SuppressWarnings("value") // method that returns an array is not StaticallyExecutable
-    String /*@ArrayLen(11)*/[] sa = UtilMDE.splitLines(str);
+    String @ArrayLen(11)[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
     assert sa.length == 11;
@@ -2902,11 +2902,11 @@ public final class TestPlume {
 
   // Figure 1 from
   // http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
-  private static /*@Nullable*/ Map<Integer, List</*@KeyFor("preds1")*/ Integer>> preds1;
-  private static /*@Nullable*/ Map<Integer, List</*@KeyFor("succs1")*/ Integer>> succs1;
+  private static @Nullable Map<Integer, List<@KeyFor("preds1") Integer>> preds1;
+  private static @Nullable Map<Integer, List<@KeyFor("succs1") Integer>> succs1;
 
   @SuppressWarnings({"keyfor", "nullness"}) // test code
-  /*@EnsuresNonNull({"preds1", "succs1"})*/
+  @EnsuresNonNull({"preds1", "succs1"})
   private static void initializePreds1AndSucc1() {
     if (preds1 != null) {
       return;

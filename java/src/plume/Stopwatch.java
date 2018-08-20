@@ -38,7 +38,7 @@ public final class Stopwatch {
     elapsedMillis = 0;
   }
 
-  public void start(/*>>> @UnknownInitialization @Raw Stopwatch this*/) {
+  public void start(@UnknownInitialization @Raw Stopwatch this) {
     if (startTime != 0) {
       throw new Error("Stopwatch is not stopped");
     }
@@ -89,7 +89,7 @@ public final class Stopwatch {
     return format(1);
   }
 
-  public String format(/*@IndexFor("Stopwatch.timeFormat")*/ int digits) {
+  public String format(@IndexFor("Stopwatch.timeFormat") int digits) {
     long runningMillis = elapsedMillis;
     if (startTime != 0) {
       runningMillis += (System.currentTimeMillis() - startTime);

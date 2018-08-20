@@ -86,7 +86,7 @@ public class StrTok {
    *
    * @return the next token
    */
-  public /*@Nullable*/ /*@Interned*/ String nextToken() {
+  public @Nullable @Interned String nextToken() {
 
     // Get the next token.  Turn IO exceptions into runtime exceptions
     // so that callers don't have to catch them.
@@ -110,7 +110,7 @@ public class StrTok {
    * @return the current token
    * @see #nextToken()
    */
-  public /*@Nullable*/ /*@Interned*/ String token() {
+  public @Nullable @Interned String token() {
 
     int ttype = stok.ttype;
 
@@ -178,7 +178,7 @@ public class StrTok {
    *
    * @return true iff the current token is a word (identifier)
    */
-  /*@Pure*/
+  @Pure
   public boolean isWord() {
     return (stok.ttype == StreamTokenizer.TT_WORD);
   }
@@ -188,7 +188,7 @@ public class StrTok {
    *
    * @return true iff the current token is a quoted string
    */
-  /*@Pure*/
+  @Pure
   public boolean isQString() {
     return ((stok.sval != null) && (stok.ttype > 0));
   }
@@ -199,9 +199,9 @@ public class StrTok {
    * @param errorHandler the new error handler
    * @see ErrorHandler
    */
-  /*>>>@EnsuresNonNull("this.errorHandler")*/
+  @EnsuresNonNull("this.errorHandler")
   public void set_error_handler(
-      /*>>>@UnknownInitialization @Raw StrTok this,*/ ErrorHandler errorHandler) {
+      @UnknownInitialization @Raw StrTok this, ErrorHandler errorHandler) {
     this.errorHandler = errorHandler;
   }
 
@@ -228,7 +228,7 @@ public class StrTok {
    *
    * @return next token, if if it is a word; otherwise calls the error handling routine
    */
-  public /*@Interned*/ String need_word() {
+  public @Interned String need_word() {
     String t = nextToken();
     if (!isWord()) {
       errorHandler.tok_error(String.format("'%s' found where identifier expected", t));
