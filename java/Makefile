@@ -445,7 +445,7 @@ plume.jar: ${JAVA_AND_CPP_FILES} lib
 # 	(cd jar-contents; "${JAR}" xf "$(TOOLS_JAR)" com/sun/javadoc)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
 # Put contents in alphabetical order.
-	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
+	(cd jar-contents; find * -type f | "${PLUME_DIR}/bin/sort-directory-order" > jar-contents.txt)
 	(cd jar-contents; "${JAR}" cf ../plume.jar @jar-contents.txt)
 	rm -rf jar-contents
 
@@ -484,7 +484,7 @@ plume-core.jar: ${JAVA_AND_CPP_FILES} lib
 	cp -p src/plume/*.class core-jar-contents/plume
 	rm -f ${PLUME_CORE_REMOVE}
 # Put contents in alphabetical order.
-	(cd core-jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > core-jar-contents.txt)
+	(cd core-jar-contents; find * -type f | "${PLUME_DIR}/bin/sort-directory-order" > core-jar-contents.txt)
 	(cd core-jar-contents; "${JAR}" cf ../plume-core.jar @core-jar-contents.txt)
 	rm -rf core-jar-contents
 
@@ -522,7 +522,7 @@ lookup.jar : .class-files-timestamp lookup.manifest lookup.txt lookup.html
 	cp -p $(LOOKUP_JAR_CLASSES) jar-contents/plume
 	(cd jar-contents; "${JAR}" xf ../lib/options-all-0.3.1.jar)
 	cp -p lookup.txt lookup.html jar-contents/plume
-	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents.txt)
+	(cd jar-contents; find * -type f | "${PLUME_DIR}/bin/sort-directory-order" > jar-contents.txt)
 	(cd jar-contents; "${JAR}" cfm ../lookup.jar ../lookup.manifest @jar-contents.txt)
 	rm -rf jar-contents
 	echo "Done making lookup.jar"
@@ -543,7 +543,7 @@ task_manager.jar: plume.jar task_manager.manifest
 	mkdir jar-contents
 	(cd jar-contents; "${JAR}" xf ../plume.jar)
 	rm -rf jar-contents/meta-inf jar-contents/META-INF
-	(cd jar-contents; find * -type f | ${PLUME_DIR}/bin/sort-directory-order > jar-contents-list.txt)
+	(cd jar-contents; find * -type f | "${PLUME_DIR}/bin/sort-directory-order" > jar-contents-list.txt)
 	(cd jar-contents; "${JAR}" cfm ../task_manager.jar ../task_manager.manifest @jar-contents-list.txt)
 	rm -rf jar-contents
 	echo "Done making task_manager.jar"
