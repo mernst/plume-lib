@@ -7,6 +7,6 @@ Each one is smaller and more focused.
  * The [Java libraries](https://search.maven.org/search?q=g:org.plumelib) are conveniently available from the Maven Central Repository.
  * Obtain the Java programs, and the non-Java libraries and programs, from their repositories.
 
-The documentation for monolithic plume-lib is available:
+The old documentation for monolithic plume-lib is still available:
  * in file docs/index.html , or
  * at the plume-lib homepage: https://mernst.github.io/plume-lib/

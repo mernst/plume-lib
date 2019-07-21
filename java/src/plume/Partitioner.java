@@ -10,7 +10,8 @@ import org.checkerframework.checker.nullness.qual.*;
  * @param <ELEMENT> the type of elements to be classified
  * @param <CLASS> the type of equivalence classes (classification buckets)
  * @see MultiRandSelector
- * @deprecated use org.plumelib.util.Partitioner
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/Partitioner.html">org.plumelib.util.Partitioner</a>
  */
 @Deprecated // use org.plumelib.util.Partitioner
 public interface Partitioner<

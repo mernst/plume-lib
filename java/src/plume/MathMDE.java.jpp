@@ -25,9 +25,9 @@ import org.checkerframework.dataflow.qual.*;
 */
 
 /** Mathematical utilities.
- * @deprecated use org.plumelib.util.MathMDE
+ * @deprecated use <a href="http://plumelib.org/plume-util/api/org/plumelib/util/MathPlume.html">org.plumelib.util.MathPlume</a>
  */
-@Deprecated // use org.plumelib.util.MathMDE
+@Deprecated // use org.plumelib.util.MathPlume
 public final class MathMDE {
 
   /** This class is a collection of methods; it does not represent anything. */

@@ -13,7 +13,8 @@ import org.checkerframework.dataflow.qual.*;
  *
  * @param <T1> the type of the first element of the pair
  * @param <T2> the type of the second element of the pair
- * @deprecated use org.plumelib.util.Pair
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/Pair.html">org.plumelib.util.Pair</a>
  */
 @Deprecated // use org.plumelib.util.Pair
 public class Pair<T1 extends /*@Nullable*/ Object, T2 extends /*@Nullable*/ Object> {

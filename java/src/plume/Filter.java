@@ -8,7 +8,8 @@ import org.checkerframework.checker.nullness.qual.*;
  * Interface for things that make boolean decisions. This is inspired by java.io.FilenameFilter.
  *
  * @param <T> the type of arguments to {@link #accept}.
- * @deprecated use org.plumelib.util.Filter
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/Filter.html">org.plumelib.util.Filter</a>
  */
 @Deprecated // use org.plumelib.util.Filter
 public interface Filter<T extends /*@Nullable*/ Object> {

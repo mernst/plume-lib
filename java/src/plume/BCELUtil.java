@@ -38,7 +38,8 @@ import org.checkerframework.common.value.qual.*;
 /**
  * Static utility methods for working with BCEL.
  *
- * @deprecated use org.plumelib.bcelutil instead
+ * @deprecated use <a
+ *     href="http://plumelib.org/bcel-util/api/org/plumelib/bcelutil/BcelUtil.html">org.plumelib.bcelutil.BcelUtil</a>
  */
 @Deprecated
 public final class BCELUtil {

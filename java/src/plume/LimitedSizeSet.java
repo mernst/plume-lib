@@ -18,7 +18,8 @@ import org.checkerframework.dataflow.qual.*;
  * (because the internal representation is nulled, in order to save space).
  *
  * @param <T> the type of elements in the set
- * @deprecated use org.plumelib.util.LimitedSizeSet
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/LimitedSizeSet.html">org.plumelib.util.LimitedSizeSet</a>
  */
 @Deprecated // use org.plumelib.util.LimitedSizeSet
 public class LimitedSizeSet<T> implements Serializable, Cloneable {

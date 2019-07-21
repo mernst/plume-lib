@@ -61,7 +61,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
    *
    * @param str the string to append to this StringBuilderDelimited
    * @return a reference to this StringBuilderDelimited
-   * @deprecated Use #add(CharSequence); change sbd.append(str) into sbd.add(str)
+   * @deprecated Use {@link #add(CharSequence)}; change sbd.append(str) into sbd.add(str)
    */
   @Deprecated
   public StringBuilderDelimited append(/*@Nullable*/ String str) {
@@ -75,7 +75,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
    *
    * @param o the object whose toString() to append to this StringBuilderDelimited
    * @return a reference to this StringBuilderDelimited
-   * @deprecated Use #add(CharSequence); change sbd.append(o) into sbd.add(o.toString())
+   * @deprecated Use {@link #add(CharSequence)}; change sbd.append(o) into sbd.add(o.toString())
    */
   @Deprecated
   public StringBuilderDelimited append(/*@Nullable*/ Object o) {
@@ -89,7 +89,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
    *
    * @param c the character to append to this StringBuilderDelimited
    * @return a reference to this StringBuilderDelimited
-   * @deprecated Use #add(CharSequence); change sbd.append(c) into sbd.add(c.toString())
+   * @deprecated Use {@link #add(CharSequence)}; change sbd.append(c) into sbd.add(c.toString())
    */
   @Deprecated
   @Override
@@ -104,7 +104,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
    *
    * @param csq the character sequence to append to this StringBuilderDelimited
    * @return a reference to this StringBuilderDelimited
-   * @deprecated Use #add(CharSequence); change sbd.append(csq) into sbd.add(csq)
+   * @deprecated Use {@link #add(CharSequence)}; change sbd.append(csq) into sbd.add(csq)
    */
   @Deprecated
   @Override
@@ -115,7 +115,7 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
   }
 
   /**
-   * @deprecated Use #add(CharSequence); change sbd.append(csq, start, end) into
+   * @deprecated Use {@link #add(CharSequence)}; change sbd.append(csq, start, end) into
    *     sbd.add(csq.subSequence(start, end)
    */
   @Deprecated

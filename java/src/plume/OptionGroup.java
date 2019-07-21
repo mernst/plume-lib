@@ -38,7 +38,8 @@ import java.lang.annotation.Target;
  * {@literal @}Option("the first option")
  *  public static int first_option = blah;</pre>
  *
- * @deprecated Use org.plumelib.options.Option
+ * @deprecated Use <a
+ *     href="http://plumelib.org/options/api/org/plumelib/options/OptionGroup.html">org.plumelib.options.OptionGroup</a>
  * @see plume.Options
  * @see plume.Option
  * @see plume.Unpublicized

@@ -72,7 +72,8 @@ import org.checkerframework.dataflow.qual.Pure;
  * If you are perplexed because of odd results, maybe it is because of the transparency of your iCal
  * items (this shows up as "available/busy" in Google calendar).
  *
- * @deprecated use org.plumelib.icalavailable.ICalAvailable instead
+ * @deprecated use <a
+ *     href="http://plumelib.org/icalavailable/api/org/plumelib/icalavailable/ICalAvailable.html">org.plumelib.icalavailable.ICalAvailable</a>
  */
 @Deprecated
 public final class ICalAvailable {

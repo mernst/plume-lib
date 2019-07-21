@@ -44,7 +44,8 @@ import java.util.Random;
  * }</pre>
  *
  * @param <T> the type of elements being selected over
- * @deprecated use org.plumelib.util.RandomSelector
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/RandomSelector.html">org.plumelib.util.RandomSelector</a>
  */
 @Deprecated // use org.plumelib.util.RandomSelector
 public class RandomSelector<T> {

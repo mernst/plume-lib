@@ -128,7 +128,7 @@ import org.checkerframework.dataflow.qual.*;
  * @since	1.2
  * @see		java.util.HashMap
  * @see		java.lang.ref.WeakReference
- * @deprecated use org.plumelib.util.WeakIdentityHashMap
+ * @deprecated use <a href="http://plumelib.org/plume-util/api/org/plumelib/util/WeakIdentityHashMap.html">org.plumelib.util.WeakIdentityHashMap</a>
  */
 @Deprecated // use org.plumelib.util.WeakIdentityHashMap
 @SuppressWarnings({"unchecked", "rawtypes", "index", "interning", "keyfor", "lock", "nullness", "purity", "regex"}) // old, non-typesafe Sun code, not worth annotating or checking

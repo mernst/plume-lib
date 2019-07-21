@@ -35,7 +35,8 @@ import org.checkerframework.checker.nullness.qual.*;
  *
  * @param <T> the element type of the component iterator; this OrderedPairIterator has elements of
  *     type {@code Pair<T,T>}
- * @deprecated use org.plumelib.util.OrderedPairIterator
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/OrderedPairIterator.html">org.plumelib.util.OrderedPairIterator</a>
  */
 // T need not extend Comparable<T>, because a comparator can be passed in.
 @SuppressWarnings("deprecation") // an acceptable use o

@@ -15,7 +15,8 @@ import org.checkerframework.checker.nullness.qual.*;
 /**
  * Graph utility methods. This class does not model a graph: all methods are static.
  *
- * @deprecated use org.plumelib.util.GraphPlume
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/GraphPlume.html">org.plumelib.util.GraphPlume</a>
  */
 @Deprecated // use org.plumelib.util.GraphPlume
 public final class GraphMDE {

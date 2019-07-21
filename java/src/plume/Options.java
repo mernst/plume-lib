@@ -212,7 +212,8 @@ import org.checkerframework.dataflow.qual.*;
  *       supported.
  * </ul>
  *
- * @deprecated Use org.plumelib.options.Option
+ * @deprecated Use <a
+ *     href="http://plumelib.org/options/api/org/plumelib/options/Options.html">org.plumelib.options.Options</a>
  * @see plume.Option
  * @see plume.OptionGroup
  * @see plume.Unpublicized

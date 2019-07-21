@@ -167,7 +167,8 @@ import org.checkerframework.common.value.qual.*;
  * gjdoc, the GNU Classpath implementation of Javadoc. To avoid the problem, upgrade or use a
  * different Javadoc implementation.
  *
- * @deprecated Use org.plumelib.options.Option
+ * @deprecated Use <a
+ *     href="http://plumelib.org/options/api/org/plumelib/options/OptionsDoclet.html">org.plumelib.options.OptionsDoclet</a>
  * @see plume.Option
  * @see plume.Options
  * @see plume.OptionGroup

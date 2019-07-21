@@ -215,7 +215,8 @@ import org.checkerframework.common.value.qual.*;
  * SVNREPOS: svn+ssh://login.csail.mit.edu/afs/csail/group/pag/projects/annotations
  * ~/research/typequals/annotations</pre>
  *
- * @deprecated use org.plumelib.multiversioncontrol.MultiVersionControl
+ * @deprecated use <a
+ *     href="http://plumelib.org/multiversioncontrol/api/org/plumelib/multiversioncontrol/MultiVersionControl.html">org.plumelib.multiversioncontrol.MultiVersionControl</a>
  */
 
 // TODO:

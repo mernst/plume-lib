@@ -24,7 +24,8 @@ import java.util.Random;
  *
  * @param <T> the type of elements to be selected among
  * @see RandomSelector
- * @deprecated use org.plumelib.util.MultiRandSelector
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/MultiRandSelector.html">org.plumelib.util.MultiRandSelector</a>
  */
 @Deprecated // use org.plumelib.util.MultiRandSelector
 public class MultiRandSelector<T> {

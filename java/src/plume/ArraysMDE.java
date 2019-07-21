@@ -28,7 +28,8 @@ import org.checkerframework.framework.qual.*;
  * Utilities for manipulating arrays and collections. This complements {@link java.util.Arrays} and
  * {@link java.util.Collections}.
  *
- * @deprecated use org.plumelib.util.ArraysPlume
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/ArraysPlume.html">org.plumelib.util.ArraysPlume</a>
  */
 @Deprecated // use org.plumelib.util.ArraysPlume
 @SuppressWarnings("interning") // to do later

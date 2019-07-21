@@ -65,7 +65,8 @@ import org.checkerframework.checker.regex.qual.*;
  * }</pre>
  *
  * @see #get_entry() and @see #set_entry_start_stop(String,String)
- * @deprecated use org.plumelib.util.FOOBARBAZ
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/EntryReader.html">org.plumelib.util.EntryReader</a>
  */
 @Deprecated // use org.plumelib.util.FOOBARBAZ
 @SuppressWarnings("IterableAndIterator")

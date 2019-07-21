@@ -18,7 +18,8 @@ import java.lang.annotation.Target;
  * included in the usage message, unless an optional include_unpublicized argument is supplied to
  * the usage message method and is true.
  *
- * @deprecated Use org.plumelib.options.Option
+ * @deprecated Use <a
+ *     href="http://plumelib.org/options/api/org/plumelib/options/Unpublicized.html">org.plumelib.options.Unpublicized</a>
  * @see plume.Option
  * @see plume.Options
  * @see plume.OptionGroup

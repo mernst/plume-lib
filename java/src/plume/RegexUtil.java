@@ -25,7 +25,8 @@ import java.util.regex.PatternSyntaxException;
  * href="https://checkerframework.org/manual/#regexutil-methods">Testing whether a string is a
  * regular expression</a> in the Checker Framework manual.
  *
- * @deprecated use org.plumelib.util.RegexUtil
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/RegexUtil.html">org.plumelib.util.RegexUtil</a>
  */
 @Deprecated // use org.plumelib.util.RegexUtil
 // The Purity Checker cannot show for most methods in this class that

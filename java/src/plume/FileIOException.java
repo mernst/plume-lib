@@ -21,7 +21,8 @@ import org.checkerframework.dataflow.qual.*;
  * This class extends IOException by also reporting a file name and line number at which the
  * exception occurred. It requires use of a {@link LineNumberReader}.
  *
- * @deprecated use org.plumelib.util.FOOBARBAZ
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/FileIOException.html">org.plumelib.util.FileIOException</a>
  */
 @Deprecated // use org.plumelib.util.FOOBARBAZ
 public class FileIOException extends IOException {

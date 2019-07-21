@@ -21,7 +21,8 @@ import org.checkerframework.dataflow.qual.*;
  * the int values, so it takes less memory.
  *
  * @see LimitedSizeSet
- * @deprecated use org.plumelib.util.LimitedSizeIntSet
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/LimitedSizeIntSet.html">org.plumelib.util.LimitedSizeIntSet</a>
  */
 // I have not evaluated the importance of the optimizations in this class.
 // Consider adding:

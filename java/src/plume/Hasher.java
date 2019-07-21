@@ -14,7 +14,8 @@ package plume;
  *   }
  * </pre>
  *
- * @deprecated use org.plumelib.util.Hasher
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/Hasher.html">org.plumelib.util.Hasher</a>
  */
 @Deprecated // use org.plumelib.util.Hasher
 public interface Hasher {

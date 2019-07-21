@@ -71,7 +71,8 @@ import org.checkerframework.dataflow.qual.*;
 /**
  * Utility functions that do not belong elsewhere in the plume package.
  *
- * @deprecated use org.plumelib.util.UtilPlume
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/UtilPlume.html">org.plumelib.util.UtilPlume</a>
  */
 @Deprecated // use org.plumelib.util.UtilPlume
 public final class UtilMDE {
@@ -594,7 +595,8 @@ public final class UtilMDE {
    *
    * @param classname name of the class, in binary class name format
    * @return name of the class, in field descriptor format
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#binaryNameToFieldDescriptor-java.lang.String-">org.plumelib.reflection.Signatures.binaryNameToFieldDescriptor</a>
    */
   @Deprecated
   @SuppressWarnings("signature") // conversion routine
@@ -623,7 +625,8 @@ public final class UtilMDE {
    * @param primitive_name name of the type, in Java format
    * @return name of the type, in field descriptor format
    * @throws IllegalArgumentException if primitive_name is not a valid primitive type name
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#primitiveTypeNameToFieldDescriptor-java.lang.String-">org.plumelib.reflection.Signatures.primitiveTypeNameToFieldDescriptor</a>
    */
   @Deprecated
   public static /*@FieldDescriptor*/ String primitiveTypeNameToFieldDescriptor(
@@ -640,7 +643,8 @@ public final class UtilMDE {
    *
    * @param bn the binary name to convert
    * @return the class name, in Class.getName format
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#binaryNameToClassGetName-java.lang.String-">org.plumelib.reflection.Signatures.binaryNameToClassGetName</a>
    */
   @Deprecated
   @SuppressWarnings("signature") // conversion routine
@@ -657,7 +661,8 @@ public final class UtilMDE {
    *
    * @param fd the class, in field descriptor format
    * @return the class name, in Class.getName format
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#fieldDescriptorToClassGetName-java.lang.String-">org.plumelib.reflection.Signatures.fieldDescriptorToClassGetName</a>
    */
   @Deprecated
   @SuppressWarnings("signature") // conversion routine
@@ -677,7 +682,8 @@ public final class UtilMDE {
    *
    * @param arglist an argument list, in Java format
    * @return argument list, in JVML format
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#arglistToJvm-java.lang.String-">org.plumelib.reflection.Signatures.arglistToJvm</a>
    */
   @Deprecated
   public static String arglistToJvm(String arglist) {
@@ -718,7 +724,8 @@ public final class UtilMDE {
    *
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#fieldDescriptorToBinaryName-java.lang.String-">org.plumelib.reflection.Signatures.fieldDescriptorToBinaryName</a>
    */
   @Deprecated
   @SuppressWarnings("signature") // conversion routine
@@ -753,7 +760,8 @@ public final class UtilMDE {
    *
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
-   * @deprecated use version in org.plumelib.bcelutil instead
+   * @deprecated use <a
+   *     href="http://plumelib.org/reflection-util/api/org/plumelib/reflection/Signatures.html#arglistFromJvm-java.lang.String-">org.plumelib.reflection.Signatures.arglistFromJvm</a>
    */
   @Deprecated
   public static String arglistFromJvm(String arglist) {

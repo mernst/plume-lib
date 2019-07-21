@@ -23,7 +23,8 @@ import org.checkerframework.dataflow.qual.*;
  *
  * <p>Two NaN floats are not considered equal (consistent with the == operator).
  *
- * @deprecated use org.plumelib.util.FuzzyFloat
+ * @deprecated use <a
+ *     href="http://plumelib.org/plume-util/api/org/plumelib/util/FuzzyFloat.html">org.plumelib.util.FuzzyFloat</a>
  */
 @Deprecated // use org.plumelib.util.FuzzyFloat
 public class FuzzyFloat {
